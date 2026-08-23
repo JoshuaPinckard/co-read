@@ -1,0 +1,11 @@
+.env
+__pycache__/
+*.pyc
+node_modules/
+corpus/_clones/
+exploratory/hazard/*.ndjson
+exploratory/retrieval/*.jsonl
+exploratory/retrieval/.retrieval-head-*/
+exploratory/**/git-stream/
+*.partial
+error.log
