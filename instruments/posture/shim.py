@@ -308,6 +308,7 @@ def acquire_claims(context: Context, claims: list[dict[str, Any]]) -> dict[str, 
                 return {
                     "claims": claims,
                     "radius": radius,
+                    "radius_reported_to_agent": True,
                     "collision_exposed": bool(all_conflicting_agents or conflicts),
                     "wait_seconds": wait_seconds,
                 }

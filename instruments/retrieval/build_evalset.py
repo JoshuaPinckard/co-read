@@ -25,8 +25,8 @@ from pathlib import Path
 from typing import Any, Iterable
 
 
-DEFAULT_CORPUS = Path(r"C:/Users/USER/.claude/projects")
-DEFAULT_OUTPUT = Path(r"C:/Users/USER/Desktop/Blast-Radius/exploratory/retrieval")
+DEFAULT_CORPUS = Path(r"C:/Users/joshp/.claude/projects")
+DEFAULT_OUTPUT = Path(r"C:/Users/joshp/Desktop/Blast-Radius/exploratory/retrieval")
 WINDOWS = (60, 300, 900)  # fixed by SPEC.md; never tune these on the labels
 
 WINDOWS_ABS = re.compile(r"^(?:[A-Za-z]:[\\/]|\\\\)")

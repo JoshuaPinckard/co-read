@@ -23,6 +23,17 @@ from instruments.posture.radius import FrozenCochangeRadius
 from instruments.posture.task_builder import atomic_json, first_parent_diff, load_stream, paths_for_commit
 
 
+PREPARATION_APPARATUS_FILES = (
+    Path("instruments/posture/prepare.py"),
+    Path("instruments/posture/gate_repository.py"),
+    Path("instruments/posture/radius.py"),
+    Path("instruments/posture/task_builder.py"),
+    Path("instruments/replay/common.py"),
+    Path("instruments/replay/extract.py"),
+    Path("instruments/replay/replay.py"),
+)
+
+
 def run(
     arguments: Sequence[str],
     *,
@@ -70,6 +81,22 @@ def relative(path: Path) -> str:
         return resolved.relative_to(PROJECT_ROOT).as_posix()
     except ValueError:
         return str(resolved)
+
+
+def preparation_artifact_hashes(
+    design_path: Path, design: dict[str, Any]
+) -> dict[str, str]:
+    """Pin every file loaded as construction data or executable policy."""
+
+    paths = {design_path.resolve(strict=True)}
+    paths.update((PROJECT_ROOT / path).resolve(strict=True) for path in PREPARATION_APPARATUS_FILES)
+    for key in ("repository_gate",):
+        path = Path(design[key])
+        paths.add((PROJECT_ROOT / path).resolve(strict=True) if not path.is_absolute() else path.resolve(strict=True))
+    stream = Path(design["radius"]["stream"])
+    paths.add((PROJECT_ROOT / stream).resolve(strict=True) if not stream.is_absolute() else stream.resolve(strict=True))
+    paths.add(compatibility_sitecustomize(design["repository"]).resolve(strict=True))
+    return {relative(path): sha256(path.read_bytes()) for path in sorted(paths)}
 
 
 def compatibility_sitecustomize(repository: dict[str, Any]) -> Path:
@@ -132,6 +159,26 @@ def compatibility_probe(design: dict[str, Any]) -> dict[str, Any]:
         **payload,
         "sitecustomize_sha256": sha256(sitecustomize.read_bytes()),
         "PYTHONPATH": environment["PYTHONPATH"],
+    }
+
+
+def test_runtime_snapshot(design: dict[str, Any]) -> dict[str, str]:
+    """Capture the interpreter/package environment used for reference suites."""
+
+    python = Path(design["repository"]["test_python"])
+    if not python.is_absolute():
+        python = PROJECT_ROOT / python
+    python = python.resolve(strict=True)
+    return {
+        "test_python_executable": str(python),
+        "test_python_sha256": sha256(python.read_bytes()),
+        "test_python_version": text(run([str(python), "--version"], cwd=PROJECT_ROOT)),
+        "pytest_version": text(
+            run([str(python), "-m", "pytest", "--version"], cwd=PROJECT_ROOT)
+        ),
+        "test_environment_freeze": text(
+            run([str(python), "-m", "pip", "freeze", "--all"], cwd=PROJECT_ROOT)
+        ),
     }
 
 
@@ -1067,7 +1114,14 @@ def main() -> int:
         help="Fresh ground-truth and oracle artifact root.",
     )
     args = parser.parse_args()
-    design = json.loads(args.design.read_text(encoding="utf-8"))
+    design_path = args.design.resolve(strict=True)
+    output_path = args.output.resolve()
+    if output_path.exists():
+        raise FileExistsError(f"task manifest must be fresh; refusing to replace {output_path}")
+    design_bytes = design_path.read_bytes()
+    design = json.loads(design_bytes.decode("utf-8"))
+    construction_hashes_before = preparation_artifact_hashes(design_path, design)
+    test_runtime_before = test_runtime_snapshot(design)
     compatibility_before = compatibility_probe(design)
     repository = Path(design["repository"]["clone"]).resolve(strict=True)
     header, commits = load_stream(design["repository"]["slug"])
@@ -1114,6 +1168,14 @@ def main() -> int:
     compatibility_after = compatibility_probe(design)
     if compatibility_after != compatibility_before:
         raise RuntimeError("Python compatibility layer changed during task construction")
+    test_runtime_after = test_runtime_snapshot(design)
+    if test_runtime_after != test_runtime_before:
+        raise RuntimeError("test interpreter or package freeze changed during task construction")
+    construction_hashes_after = preparation_artifact_hashes(design_path, design)
+    if construction_hashes_after != construction_hashes_before:
+        raise RuntimeError(
+            "design, construction apparatus, or source evidence changed during task construction"
+        )
     prepared_repository = dict(design["repository"])
     prepared_repository["python_compat_sitecustomize_sha256"] = compatibility_before[
         "sitecustomize_sha256"
@@ -1123,8 +1185,10 @@ def main() -> int:
         "schema_version": 1,
         "measurement": "posture-preregistered-task-construction",
         "prepared_at_utc": dt.datetime.now(dt.timezone.utc).isoformat(timespec="milliseconds"),
-        "design_path": args.design.resolve().relative_to(PROJECT_ROOT).as_posix(),
-        "design_sha256": sha256(args.design.read_bytes()),
+        "design_path": design_path.relative_to(PROJECT_ROOT).as_posix(),
+        "design_sha256": sha256(design_bytes),
+        "construction_artifact_sha256": construction_hashes_before,
+        "preparation_test_runtime": test_runtime_before,
         "repository": prepared_repository,
         "repository_gate": repository_gate,
         "design_validation": {
@@ -1148,7 +1212,7 @@ def main() -> int:
         "interpretations": design["interpretations"],
         "bundles": bundles,
     }
-    atomic_json(args.output.resolve(), output)
+    atomic_json(output_path, output)
     print(json.dumps({"output": str(args.output), "bundles": [bundle["bundle_id"] for bundle in bundles]}, indent=2))
     return 0
 

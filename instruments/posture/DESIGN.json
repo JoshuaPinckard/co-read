@@ -1,0 +1,134 @@
+{
+  "repository_gate": "exploratory/posture/repository-gates/recovery-20260823T183731Z/pallets__click/gate.json",
+  "repository": {
+    "slug": "pallets__click",
+    "clone": "exploratory/posture/repositories/pallets-click",
+    "test_python": "exploratory/posture/envs/click-historical/Scripts/python.exe",
+    "python_compat": "instruments/posture/python39_compat",
+    "pytest_arguments": [],
+    "test_timeout_seconds": 120
+  },
+  "radius": {
+    "stream": "exploratory/language-hole/streams/pallets__click.jsonl.gz",
+    "top_k": 10,
+    "threshold": 0.1,
+    "threshold_inclusive": true,
+    "decayed": true
+  },
+  "pilot": {
+    "arms": [
+      "advisory",
+      "blocking",
+      "isolate"
+    ],
+    "draws_per_cell": 5,
+    "concurrent_agents_per_draw": 4,
+    "model_timeout_seconds": 1200,
+    "random_seed": "0x504f5354555245",
+    "clean_null_rule": {
+      "scope": "accepted overlap-bundle draws pooled across the three arms",
+      "metric": "sum of realised designed unique agent pairs divided by sum of preregistered designed pair opportunities",
+      "near_zero_below": 0.1,
+      "arm_specific_warning_below": 0.1,
+      "claim_uptake_reported_separately": true,
+      "decision": "If the pooled rate is below 0.10, RESULTS starts by saying the pilot measured no contention and stops all posture comparisons. Any arm below 0.10 is individually non-comparable even when the pooled gate passes."
+    }
+  },
+  "bundles": [
+    {
+      "bundle_id": "overlap",
+      "anchor_sha": "8c95c73bd5ef89eac638f85f1904a104ba4b1a32",
+      "expected_pairs_with_collision": 6,
+      "required_shared_seed_path": "src/click/core.py",
+      "factor": "overlap-clique-degree-3",
+      "tasks": [
+        {
+          "task_id": "pr-3239",
+          "sha": "8c95c73bd5ef89eac638f85f1904a104ba4b1a32",
+          "task_text": "This is an attempt to address #3111, and explore the consequences of reconciling the two meaning of the `default` parameter:\r\n1. \"Pass this Python value to my function if the flag isn't used\", i.e. when `default=True` then function gets `True`\r\n2. \"Activate this flag by default\", i.e. when `default=True` then function gets `flag_value`\r\n\r\nA way to do that would be to consider `default=True` as a sentinel (yes, you can call me the sentinel-guy), for non-boolean flags. We do it lazily in the `get_default` method to not interfere with class instanciation, which we implemented in https://github.com/pallets/click/pull/3225 to fix https://github.com/pallets/click/issues/3121.\r\n\r\nThis has the side-effect of refining the test cases introduced in https://github.com/pallets/click/commit/06847da9126a99c88bf347adf213d33bfe4e4af2 for #3030.",
+          "task_source_url": "https://github.com/pallets/click/pull/3239",
+          "task_retrieved_at": "2026-08-23T15:59:11.257Z"
+        },
+        {
+          "task_id": "pr-3299",
+          "sha": "1458800409ed12076f18451889b0857db36aa522",
+          "task_text": "Fix #3298 by checking against a speculative empty string.\r\n\r\nThat not unreasonable given the hard-coded nature of the empty string.",
+          "task_source_url": "https://github.com/pallets/click/pull/3299",
+          "task_retrieved_at": "2026-08-23T15:59:11.257Z"
+        },
+        {
+          "task_id": "pr-3137",
+          "sha": "b91bb9548a5617b1197add95e084d569f57149c3",
+          "task_text": "PR to fix:\r\n- https://github.com/pallets/click/issues/3136\r\n- https://github.com/pallets/flask/issues/5836\r\n\r\nThis highlight a side-effect introduced in:\r\n- https://github.com/pallets/click/pull/3079\r\n- https://github.com/pallets/click/issues/3071\r\n\r\nCC @dotlambda",
+          "task_source_url": "https://github.com/pallets/click/pull/3137",
+          "task_retrieved_at": "2026-08-23T15:59:11.257Z"
+        },
+        {
+          "task_id": "pr-2972",
+          "sha": "0be2bd385064053bb75f92db317de128db729d52",
+          "task_text": "Add a check for if `envvar` is `None` before appending to the error hint text.\r\n\r\nfixes #2971",
+          "task_source_url": "https://github.com/pallets/click/pull/2972",
+          "task_retrieved_at": "2026-08-23T15:59:11.257Z"
+        }
+      ]
+    },
+    {
+      "bundle_id": "control",
+      "anchor_sha": "b0c7523494a9f2f7a7be43ee8a8b22157a33b696",
+      "expected_pairs_with_collision": 0,
+      "factor": "pairwise-path-independent-control",
+      "tasks": [
+        {
+          "task_id": "pr-994",
+          "sha": "1ea6a75059979af2aff6223a03552dfa1a6862f5",
+          "task_text": "Fix issue #926 - copy option attrs so that custom classes can be re-used.",
+          "task_source_url": "https://github.com/pallets/click/pull/994",
+          "task_retrieved_at": "2026-08-23T19:05:37.400Z"
+        },
+        {
+          "task_id": "pr-1014",
+          "sha": "b0c7523494a9f2f7a7be43ee8a8b22157a33b696",
+          "task_text": "This attempts to satisfy issue #574 by avoiding the situation encountered in #568. It was actually not necessary to validate the `*args` passed since I could not find uses/instances of multiple parameter declarations for `Argument`s. Instead, this change simply requires exactly one parameter declaration. See #574 for a more thorough explanation of my rationale.",
+          "task_source_url": "https://github.com/pallets/click/pull/1014",
+          "task_retrieved_at": "2026-08-23T17:24:21.972Z"
+        },
+        {
+          "task_id": "pr-999",
+          "sha": "467fb8dfa466b2bf7daa678f6829fb01ec8fe840",
+          "task_text": "Fixes `TypeError` caused by when trying to set `prog_name` as an an `extra` parameter.\r\n\r\n`invoke()` was already explicitly setting the `prog_name` parameter,  so sending it in `extra` was providing multiple values for it.",
+          "task_source_url": "https://github.com/pallets/click/pull/999",
+          "task_retrieved_at": "2026-08-23T17:24:21.972Z"
+        },
+        {
+          "task_id": "pr-973",
+          "sha": "a43b9477c20fe38c9cb6234858a145c2d3f63a17",
+          "task_text": "Fix a typo in parsing boolean values",
+          "task_source_url": "https://github.com/pallets/click/pull/973",
+          "task_retrieved_at": "2026-08-23T17:24:21.972Z"
+        }
+      ]
+    }
+  ],
+  "interpretations": {
+    "full_suite": "The full suite is the repository's default ordinary pytest suite, without stress flags, repetition, or race amplification.",
+    "claim_interval": "Each claimed file is represented as the half-open whole-file byte interval [0, MAX).",
+    "radius_cutoff": "Each bundle uses one historical cutoff immediately before its own oldest selected task. This prevents every selected task in that bundle from leaking into the signal while keeping renamed ground-truth paths in the co-change universe; preparation fails if any designed ground-truth path is absent at the cutoff.",
+    "hidden_historical_tests": "Historical test hunks from each ground-truth commit are held out from agents and overlaid only by the evaluator as hidden focal tests.",
+    "historical_python_compatibility": "All task-construction checks and all pilot arms prepend the same hashed sitecustomize layer that restores only the Python 3.9 collections.Iterable alias removed in Python 3.10. This permits the structurally valid 2018 control base to run on the frozen Python 3.11.9 interpreter without changing repository source or tests.",
+    "clean_null": "Near-zero contention is decided before outcomes using the pilot.clean_null_rule. The denominator is every preregistered designed pair opportunity, not only tasks that chose to claim; claim uptake is reported separately.",
+    "headline_event_unit": "The exchange-rate denominator is the per-task count required by SPEC: a task has a verified landing and the actual integrated visible suite fails at least one exact testcase identity that passed on that bundle's all-reverted synthetic base immediately before the run. A shared-arm landing is collective rather than byte-authorship: it requires agent-attributable evidence that apply_patch completed successfully plus the audited final integrated tree. If the live contract cannot map a completed Codex file-change item to a successful PostToolUse response, shared-arm task landings remain unverified and the exchange rate is unavailable. Failures of held-out focal tests measure task non-completion separately and are never semantic wrong-landings because those tests are red on the reverted base.",
+    "exchange_rate_scope": "The headline uses task events from the five accepted overlap-bundle slots per arm: (sum blocking agent-minutes minus sum advisory agent-minutes) divided by (advisory landed-and-wrong tasks minus blocking landed-and-wrong tasks). Independent-control cells diagnose posture overhead and false-positive collisions but are not pooled into the exchange rate. Excluded retry minutes are reported separately under the slot-based fairness rule.",
+    "green_before_evidence": "A wrong landing requires every cited failure/error testcase identity to have outcome passed in the preregistered five-run deterministic synthetic-base JUnit record. Agent-added failures, collection errors without a pre-run-green identity, missing cases, and held-out focal failures do not enter the wrong-landing count.",
+    "integrated_hidden_tests": "The actual integrated final tree is also evaluated in a disposable worktree with every held-out historical test file restored exactly from the all-ground-truth anchor. Required focal testcase identities must be collected and passed for task completion; unknown failures, missing cases, or collection drift are not silently called correct. This task-completion oracle is separate from the visible pre-run-green regression outcome.",
+    "task_attribution": "Shared-worktree Pre/Post byte deltas can be race-contaminated and never establish byte or net authorship. A shared per-task landing can be verified only by an agent-attributable completed Codex file-change mapped to a successful apply_patch PostToolUse response, combined with the audited final integrated tree; it is explicitly a collective landing and later overwrite is part of the contention result. Isolate merge/presence records remain directly attributable.",
+    "shared_write_instrumentation": "No instrumentation mutex is added around apply_patch: advisory withholds no write. Shared Pre/Post patches and causal rework attribution are therefore not used for the headline and are reported as unverified where races matter; the final integrated tree and exact JUnit identities are the primary observed state.",
+    "task_outcome_scope": "Per-task hidden-case outcomes in shared arms describe whether the actual collective integrated landing satisfies each task's preregistered focal cases; they do not claim byte-level authorship. A hidden focal failure is task-incomplete, not landed-and-wrong. The primary wrong event remains per task and requires both fail-closed landing evidence and a visible pre-run-green regression.",
+    "wall_clock": "Bundle wall time runs from the synchronized prompt release through the actual integrated hidden-test suite, including isolate merges and primary evaluation. Total agent-minutes run from prompt release through each model's completed response and include verified blocking wait; evaluator time is not agent time.",
+    "live_hook_contract": "Before schedule creation, one no-outcome live smoke must use the exact Codex model/configuration and exact CHANGES.rst operations to demonstrate SessionStart, the requested byte read and whole-file claim, denial of exactly git status, a completed Codex file-change mapped to successful apply_patch Pre/Post logging of the exact marker, final marker presence, claim release, a finished response, unchanged start/end apparatus hashes, and zero apparatus-invalid events. Its apparatus fingerprint and complete contract are sealed into the schedule.",
+    "bundle_population": "There is one fixed task bundle per overlap condition. The n=5 pilot estimates model/run stochasticity within those bundles, not task-population variance, and bundle era is confounded with overlap condition.",
+    "rework_scope": "Shared-arm rework would require a direct whole-file read hash, another agent's changed write in the same workspace, a direct reread with a new hash, and a later write; cost is reread-to-write elapsed time. Shared Pre/Post races make that attribution unavailable without a forbidden mutex. Isolate contention-rework is structurally zero because agents cannot see one another's worktrees before the end-of-run merge; merge conflicts are a separate outcome after agent completion.",
+    "outcome_blinding": "Repository, bundles, tasks, factors, arms, radius policy, and outcome rules are frozen before any task-outcome inspection.",
+    "fairness": "A model process that never reaches a finished response is excluded and retried in the same randomized slot; a finished but bad response remains data.",
+    "signal_limitation": "The harness radius comes from co-change. A separate project measurement found that this signal overlaps what agents actually read together by only 7.8%, below a popularity null. This experiment therefore compares postures given the current signal and is not a verdict on the radius itself."
+  }
+}

@@ -28,13 +28,19 @@ PROJECT_ROOT = Path(__file__).resolve().parents[2]
 DEFAULT_TASKS = PROJECT_ROOT / "exploratory" / "posture" / "TASKS.json"
 DEFAULT_SCHEDULE = PROJECT_ROOT / "exploratory" / "posture" / "pilot" / "SCHEDULE.json"
 DEFAULT_RUN_ROOT = PROJECT_ROOT / "exploratory" / "posture" / "pilot" / "runs"
+DEFAULT_SMOKE_ROOT = PROJECT_ROOT / "exploratory" / "posture" / "smoke" / "live-hook-contract"
+DEFAULT_SMOKE_SUMMARY = DEFAULT_SMOKE_ROOT / "summary.json"
 
 APPARATUS_FILES = (
+    Path("instruments/posture/analyze.py"),
     Path("instruments/posture/pilot.py"),
     Path("instruments/posture/prepare.py"),
+    Path("instruments/posture/gate_repository.py"),
     Path("instruments/posture/radius.py"),
     Path("instruments/posture/shim.py"),
+    Path("instruments/posture/task_builder.py"),
     Path("instruments/replay/extract.py"),
+    Path("instruments/replay/common.py"),
     Path("instruments/replay/replay.py"),
 )
 
@@ -108,6 +114,8 @@ def pinned_artifacts(tasks_path: Path, tasks: dict[str, Any]) -> dict[str, str]:
     """Hash every file whose contents can change a measured draw."""
 
     paths = {tasks_path.resolve(), *(PROJECT_ROOT / path for path in APPARATUS_FILES)}
+    design_path = project_path(tasks["design_path"])
+    paths.add(design_path)
     compatibility = project_path(tasks["repository"]["python_compat"])
     compatibility_sitecustomize = compatibility / "sitecustomize.py"
     if (compatibility / "__pycache__").exists():
@@ -125,6 +133,8 @@ def pinned_artifacts(tasks_path: Path, tasks: dict[str, Any]) -> dict[str, str]:
     if missing:
         raise RuntimeError(f"pinned apparatus files are missing: {missing}")
     hashes = {relative(path): sha256_file(path) for path in sorted(paths)}
+    if hashes.get(relative(design_path)) != tasks.get("design_sha256"):
+        raise RuntimeError("DESIGN.json differs from the task-construction record")
     compatibility_path = relative(compatibility_sitecustomize)
     expected_compatibility_hash = tasks["repository"].get(
         "python_compat_sitecustomize_sha256"
@@ -154,16 +164,86 @@ def test_pythonpath(repository_config: dict[str, Any], worktree: Path) -> str:
     return os.pathsep.join((str(compatibility), str(source_root)))
 
 
+def codex_runtime_artifacts(codex_path: Path) -> dict[str, str]:
+    """Hash the launcher and the actual npm/native execution chain it selects."""
+
+    package_root = codex_path.parent / "node_modules" / "@openai" / "codex"
+    if not package_root.is_dir():
+        raise RuntimeError(
+            f"cannot resolve the installed @openai/codex package from {codex_path}"
+        )
+    node = shutil.which("node")
+    if not node:
+        raise RuntimeError("Node.js is unavailable for the Codex npm launcher")
+    node_path = Path(node).resolve(strict=True)
+    node_arch = command_version([str(node_path), "-p", "process.arch"])
+    target_by_host = {
+        ("win32", "x64"): ("codex-win32-x64", "x86_64-pc-windows-msvc"),
+        ("win32", "arm64"): ("codex-win32-arm64", "aarch64-pc-windows-msvc"),
+        ("linux", "x64"): ("codex-linux-x64", "x86_64-unknown-linux-musl"),
+        ("linux", "arm64"): ("codex-linux-arm64", "aarch64-unknown-linux-musl"),
+        ("darwin", "x64"): ("codex-darwin-x64", "x86_64-apple-darwin"),
+        ("darwin", "arm64"): ("codex-darwin-arm64", "aarch64-apple-darwin"),
+    }
+    platform_key = sys.platform
+    selection = target_by_host.get((platform_key, node_arch))
+    if selection is None:
+        raise RuntimeError(
+            f"unsupported host while pinning the Codex runtime: {platform_key}/{node_arch}"
+        )
+    platform_package, target = selection
+    platform_root = package_root / "node_modules" / "@openai" / platform_package
+    vendor_root = platform_root / "vendor" / target
+    required = {
+        codex_path,
+        package_root / "package.json",
+        package_root / "bin" / "codex.js",
+        platform_root / "package.json",
+    }
+    required.update(path for path in vendor_root.rglob("*") if path.is_file())
+    required.add(node_path)
+    missing = sorted(str(path) for path in required if not path.is_file())
+    if missing:
+        raise RuntimeError(f"Codex runtime files are missing: {missing}")
+    return {str(path.resolve()): sha256_file(path) for path in sorted(required)}
+
+
 def runtime_versions(tasks: dict[str, Any]) -> dict[str, str]:
     codex = shutil.which("codex")
     if not codex:
         raise RuntimeError("codex CLI is unavailable")
     test_python = project_path(tasks["repository"]["test_python"])
     codex_path = Path(codex).resolve(strict=True)
+    codex_artifacts = codex_runtime_artifacts(codex_path)
     harness_python = Path(sys.executable).resolve(strict=True)
-    return {
+    compatibility = project_path(tasks["repository"]["python_compat"])
+    compatibility_environment = os.environ.copy()
+    compatibility_environment["PYTHONDONTWRITEBYTECODE"] = "1"
+    compatibility_environment["PYTHONPATH"] = str(compatibility)
+    compatibility_script = (
+        "import collections, json, sitecustomize, sys; "
+        "print(json.dumps({'python': sys.version, 'sitecustomize': sitecustomize.__file__, "
+        "'iterable_module': collections.Iterable.__module__, "
+        "'iterable_name': collections.Iterable.__name__}, sort_keys=True))"
+    )
+    compatibility_result = run(
+        [str(test_python), "-c", compatibility_script],
+        cwd=PROJECT_ROOT,
+        environment=compatibility_environment,
+    )
+    compatibility_probe = json.loads(
+        compatibility_result.stdout.decode("utf-8", errors="strict").strip()
+    )
+    expected_activation = tasks["repository"].get("python_compat_activation", {})
+    for key in ("python", "sitecustomize", "iterable_module", "iterable_name"):
+        if compatibility_probe.get(key) != expected_activation.get(key):
+            raise RuntimeError(f"Python compatibility activation changed for {key}")
+    snapshot = {
         "codex_executable": str(codex_path),
         "codex_executable_sha256": sha256_file(codex_path),
+        "codex_runtime_artifact_sha256": json.dumps(
+            codex_artifacts, sort_keys=True, separators=(",", ":")
+        ),
         "codex_version": command_version([codex, "--version"]),
         "git_version": command_version(["git", "--version"]),
         "harness_python_executable": str(harness_python),
@@ -176,7 +256,24 @@ def runtime_versions(tasks: dict[str, Any]) -> dict[str, str]:
         "test_environment_freeze": command_version(
             [str(test_python), "-m", "pip", "freeze", "--all"]
         ),
+        "test_python_compatibility_probe": json.dumps(
+            compatibility_probe, sort_keys=True, separators=(",", ":")
+        ),
     }
+    preparation_runtime = tasks.get("preparation_test_runtime")
+    comparable_keys = (
+        "test_python_executable",
+        "test_python_sha256",
+        "test_python_version",
+        "pytest_version",
+        "test_environment_freeze",
+    )
+    current_test_runtime = {key: snapshot[key] for key in comparable_keys}
+    if preparation_runtime != current_test_runtime:
+        raise RuntimeError(
+            "test interpreter/package environment differs from task construction"
+        )
+    return snapshot
 
 
 def apparatus_fingerprint(artifacts: dict[str, str], versions: dict[str, str]) -> str:
@@ -204,6 +301,9 @@ def verify_schedule_apparatus(
         raise RuntimeError("schedule random seed differs from TASKS.json")
     current_artifacts = pinned_artifacts(tasks_path, tasks)
     current_versions = runtime_versions(tasks)
+    current_smoke = verify_live_smoke(tasks_path, tasks, current_artifacts, current_versions)
+    if schedule.get("live_hook_smoke") != current_smoke:
+        raise RuntimeError("schedule live-hook smoke record is missing or stale")
     expected_artifacts = schedule.get("artifact_sha256")
     expected_versions = schedule.get("runtime_versions")
     if current_artifacts != expected_artifacts:
@@ -218,6 +318,29 @@ def verify_schedule_apparatus(
         "artifact_sha256": current_artifacts,
         "runtime_versions": current_versions,
         "fingerprint": fingerprint,
+    }
+
+
+def verify_snapshot_unchanged(
+    tasks_path: Path,
+    tasks: dict[str, Any],
+    expected_artifacts: dict[str, str],
+    expected_versions: dict[str, str],
+) -> dict[str, Any]:
+    """Fail closed if files or runtimes change while one measured operation runs."""
+
+    try:
+        current_artifacts = pinned_artifacts(tasks_path, tasks)
+        current_versions = runtime_versions(tasks)
+    except Exception as error:  # retained verbatim as apparatus evidence
+        return {"verified": False, "error": f"{type(error).__name__}: {error}"}
+    artifacts_match = current_artifacts == expected_artifacts
+    versions_match = current_versions == expected_versions
+    return {
+        "verified": artifacts_match and versions_match,
+        "artifact_hashes_match": artifacts_match,
+        "runtime_versions_match": versions_match,
+        "fingerprint": apparatus_fingerprint(current_artifacts, current_versions),
     }
 
 
@@ -313,6 +436,7 @@ def make_schedule(tasks_path: Path, schedule_path: Path) -> dict[str, Any]:
     draws = deterministic_draws(tasks)
     artifacts = pinned_artifacts(tasks_path, tasks)
     versions = runtime_versions(tasks)
+    smoke = verify_live_smoke(tasks_path, tasks, artifacts, versions)
     schedule = {
         "schema_version": 1,
         "measurement": "posture-pilot-preregistered-schedule",
@@ -325,6 +449,7 @@ def make_schedule(tasks_path: Path, schedule_path: Path) -> dict[str, Any]:
         "artifact_sha256": artifacts,
         "runtime_versions": versions,
         "apparatus_fingerprint": apparatus_fingerprint(artifacts, versions),
+        "live_hook_smoke": smoke,
         "draws": draws,
     }
     if schedule_path.exists():
@@ -336,6 +461,48 @@ def make_schedule(tasks_path: Path, schedule_path: Path) -> dict[str, Any]:
         return existing
     atomic_json(schedule_path, schedule)
     return schedule
+
+
+def verify_live_smoke(
+    tasks_path: Path,
+    tasks: dict[str, Any],
+    artifacts: dict[str, str] | None = None,
+    versions: dict[str, str] | None = None,
+) -> dict[str, Any]:
+    if not DEFAULT_SMOKE_SUMMARY.is_file():
+        raise RuntimeError("live Codex hook-contract smoke has not been run")
+    summary = load_json(DEFAULT_SMOKE_SUMMARY)
+    current_artifacts = artifacts if artifacts is not None else pinned_artifacts(tasks_path, tasks)
+    current_versions = versions if versions is not None else runtime_versions(tasks)
+    fingerprint = apparatus_fingerprint(current_artifacts, current_versions)
+    if summary.get("apparatus_fingerprint") != fingerprint:
+        raise RuntimeError("live hook smoke is stale relative to the current apparatus")
+    if summary.get("tasks_sha256") != sha256_file(tasks_path):
+        raise RuntimeError("live hook smoke used a different task manifest")
+    contract = summary.get("contract", {})
+    required = (
+        "session_start",
+        "allowed_read",
+        "allowed_claim",
+        "denied_direct_shell",
+        "changed_apply_patch",
+        "successful_file_change_mapping",
+        "marker_present_in_final_tree",
+        "claim_release",
+        "finished_model",
+        "apparatus_unchanged_during_smoke",
+        "zero_apparatus_invalid",
+    )
+    if set(contract) != set(required) or not all(
+        contract.get(key) is True for key in required
+    ):
+        raise RuntimeError(f"live hook smoke contract is incomplete: {contract}")
+    return {
+        "path": relative(DEFAULT_SMOKE_SUMMARY),
+        "sha256": sha256_file(DEFAULT_SMOKE_SUMMARY),
+        "apparatus_fingerprint": fingerprint,
+        "contract": contract,
+    }
 
 
 def create_worktree(repository: Path, path: Path, commit: str, *, branch: str | None = None) -> None:
@@ -508,6 +675,40 @@ class AgentProcess:
     released: bool = False
 
 
+def codex_exec_command(
+    codex: str,
+    worktree: Path,
+    coordination_dir: Path,
+    output_root: Path,
+) -> list[str]:
+    return [
+        codex,
+        "exec",
+        "-m",
+        "gpt-5.6-sol",
+        "-c",
+        'model_reasoning_effort="ultra"',
+        "-s",
+        "workspace-write",
+        "--dangerously-bypass-hook-trust",
+        "--enable",
+        "hooks",
+        "--ignore-user-config",
+        "--ignore-rules",
+        "--ephemeral",
+        "--json",
+        "--color",
+        "never",
+        "-o",
+        str(output_root / "final.txt"),
+        "-C",
+        str(worktree),
+        "--add-dir",
+        str(coordination_dir),
+        "-",
+    ]
+
+
 def terminate_process_tree(process: subprocess.Popen[bytes]) -> dict[str, Any]:
     """Terminate the Codex process and all helpers it spawned."""
 
@@ -567,32 +768,12 @@ def launch_agents(
             output_root.mkdir(parents=True, exist_ok=True)
             stdout_handle = (output_root / "events.jsonl").open("wb")
             stderr_handle = (output_root / "stderr.txt").open("wb")
-            command = [
+            command = codex_exec_command(
                 codex,
-                "exec",
-                "-m",
-                "gpt-5.6-sol",
-                "-c",
-                'model_reasoning_effort="ultra"',
-                "-s",
-                "workspace-write",
-                "--dangerously-bypass-hook-trust",
-                "--enable",
-                "hooks",
-                "--ignore-user-config",
-                "--ignore-rules",
-                "--ephemeral",
-                "--json",
-                "--color",
-                "never",
-                "-o",
-                str(output_root / "final.txt"),
-                "-C",
-                str(worktrees[task_id]),
-                "--add-dir",
-                str(coordination_dir),
-                "-",
-            ]
+                worktrees[task_id],
+                coordination_dir,
+                output_root,
+            )
             started = time.monotonic()
             popen_options: dict[str, Any] = {}
             if os.name == "nt":
@@ -748,6 +929,10 @@ def jsonl_has_turn_completed(path: Path) -> bool:
     return False
 
 
+def model_finished_response(*, timed_out: bool, turn_completed: bool, final_present: bool) -> bool:
+    return not timed_out and (turn_completed or final_present)
+
+
 def model_record(state: AgentProcess, attempt_root: Path) -> dict[str, Any]:
     task_id = state.task["task_id"]
     root = attempt_root / "agents" / task_id
@@ -755,7 +940,13 @@ def model_record(state: AgentProcess, attempt_root: Path) -> dict[str, Any]:
     final_path = root / "final.txt"
     turn_completed = jsonl_has_turn_completed(event_path)
     final_exists = final_path.is_file() and bool(final_path.read_text(encoding="utf-8", errors="replace").strip())
-    finished = state.return_code == 0 and (turn_completed or final_exists) and not state.timed_out
+    # Fairness is response-based, not process-exit-based: a completed final
+    # response is data even if the CLI subsequently exits nonzero.
+    finished = model_finished_response(
+        timed_out=state.timed_out,
+        turn_completed=turn_completed,
+        final_present=final_exists,
+    )
     measurement_start = state.prompt_released_monotonic or state.started_monotonic
     elapsed = (state.completed_monotonic or time.monotonic()) - measurement_start
     return {
@@ -767,6 +958,7 @@ def model_record(state: AgentProcess, attempt_root: Path) -> dict[str, Any]:
         "elapsed_seconds": elapsed,
         "agent_minutes": elapsed / 60.0,
         "return_code": state.return_code,
+        "process_exit_success": state.return_code == 0,
         "timed_out": state.timed_out,
         "turn_completed_event": turn_completed,
         "final_message_present": final_exists,
@@ -775,6 +967,221 @@ def model_record(state: AgentProcess, attempt_root: Path) -> dict[str, Any]:
         "stderr_path": relative(root / "stderr.txt"),
         "final_path": relative(final_path),
     }
+
+
+def run_live_smoke(tasks_path: Path, smoke_root: Path) -> dict[str, Any]:
+    """Exercise the live Codex hook contract without producing task outcome data."""
+
+    if smoke_root.exists():
+        raise FileExistsError(f"refusing to replace retained live smoke evidence: {smoke_root}")
+    tasks = load_json(tasks_path)
+    artifacts = pinned_artifacts(tasks_path, tasks)
+    versions = runtime_versions(tasks)
+    fingerprint = apparatus_fingerprint(artifacts, versions)
+    bundle = next(
+        bundle for bundle in tasks["bundles"] if bundle["collision_condition"] == "overlapping"
+    )
+    repository_config = tasks["repository"]
+    repository = project_path(repository_config["clone"])
+    test_python = project_path(repository_config["test_python"])
+    python_compat = project_path(repository_config["python_compat"])
+    worktree = smoke_root / "worktree"
+    create_worktree(repository, worktree, bundle["base_commit"])
+    base_verification = verify_base(worktree, bundle["base_commit"], bundle["base_tree"])
+    prepare_agent_surface(worktree, test_python)
+    coordination = smoke_root / "coordination"
+    coordination.mkdir(parents=True, exist_ok=False)
+    database = coordination / "events.sqlite3"
+    shim.initialize_database(database)
+    test_temp = coordination / "test-temp"
+    test_temp.mkdir()
+    draw = {"draw_id": "live-hook-contract-smoke", "arm": "advisory"}
+    environment = agent_environment(
+        base=os.environ,
+        database=database,
+        draw=draw,
+        agent_id="smoke-agent",
+        worktree=worktree,
+        workspace_key="smoke",
+        radius_path=PROJECT_ROOT / bundle["radius"]["path"],
+        test_python=test_python,
+        test_timeout=float(repository_config["test_timeout_seconds"]),
+        test_temp_root=test_temp,
+        python_compat=python_compat,
+    )
+    output_root = smoke_root / "agent"
+    output_root.mkdir()
+    codex = shutil.which("codex")
+    if not codex:
+        raise RuntimeError("codex CLI is unavailable")
+    command = codex_exec_command(codex, worktree, coordination, output_root)
+    wrapper = f'"{test_python}" .posture/agent_tool.py'
+    prompt = f"""This is a live apparatus contract smoke, not an experimental task or outcome. Follow every numbered step exactly, even the intentionally denied step.
+
+1. Run `{wrapper} read CHANGES.rst --start 1 --end 8`.
+2. Run `{wrapper} claim CHANGES.rst:*` and wait for it to finish.
+3. Attempt the direct shell command `git status`. It is expected to be denied; do not work around the denial.
+4. Use the apply_patch tool to add one plain line `POSTURE LIVE HOOK SMOKE MARKER` at the very end of CHANGES.rst.
+5. Finish with a short message. Do not run tests, inspect history, use the network, or edit any other file.
+"""
+    events_path = output_root / "events.jsonl"
+    stderr_path = output_root / "stderr.txt"
+    stdout_handle = events_path.open("wb")
+    stderr_handle = stderr_path.open("wb")
+    popen_options: dict[str, Any] = {}
+    if os.name == "nt":
+        popen_options["creationflags"] = subprocess.CREATE_NEW_PROCESS_GROUP
+    else:
+        popen_options["start_new_session"] = True
+    started = time.monotonic()
+    process = subprocess.Popen(
+        command,
+        cwd=worktree,
+        env=environment,
+        stdin=subprocess.PIPE,
+        stdout=stdout_handle,
+        stderr=stderr_handle,
+        shell=False,
+        **popen_options,
+    )
+    timed_out = False
+    termination = None
+    try:
+        assert process.stdin is not None
+        process.stdin.write(prompt.encode("utf-8"))
+        process.stdin.close()
+        try:
+            return_code = process.wait(timeout=float(tasks["pilot"]["model_timeout_seconds"]))
+        except subprocess.TimeoutExpired:
+            timed_out = True
+            termination = terminate_process_tree(process)
+            return_code = process.returncode
+    finally:
+        stdout_handle.close()
+        stderr_handle.close()
+        release_agent(database, draw["draw_id"], draw["arm"], "smoke-agent", "smoke_exit")
+    elapsed = time.monotonic() - started
+    turn_completed = jsonl_has_turn_completed(events_path)
+    final_path = output_root / "final.txt"
+    final_present = final_path.is_file() and bool(
+        final_path.read_text(encoding="utf-8", errors="replace").strip()
+    )
+    finished = model_finished_response(
+        timed_out=timed_out,
+        turn_completed=turn_completed,
+        final_present=final_present,
+    )
+    post_snapshot = verify_snapshot_unchanged(
+        tasks_path, tasks, artifacts, versions
+    )
+    if not post_snapshot.get("verified"):
+        apparatus_event(
+            database,
+            draw["draw_id"],
+            draw["arm"],
+            "apparatus_invalid",
+            {"stage": "post_smoke_hash_verification", **post_snapshot},
+        )
+    rows = event_rows(database, draw["draw_id"])
+    types = [row["event_type"] for row in rows]
+    changed_writes = [
+        row
+        for row in rows
+        if row["event_type"] == "write"
+        and row["agent_id"] == "smoke-agent"
+        and row["details"].get("changed")
+    ]
+    expected_claim = {"path": "CHANGES.rst", "start": 0, "end": shim.MAX_BYTE}
+    exact_read = any(
+        row["event_type"] == "read"
+        and row["agent_id"] == "smoke-agent"
+        and row["details"].get("kind") == "file"
+        and row["details"].get("path") == "CHANGES.rst"
+        and row["details"].get("start") == 1
+        and row["details"].get("end") == 8
+        for row in rows
+    )
+    exact_claim = any(
+        row["event_type"] == "claim"
+        and row["agent_id"] == "smoke-agent"
+        and row["details"].get("claims") == [expected_claim]
+        for row in rows
+    )
+    exact_denial = any(
+        row["event_type"] == "shell_denied"
+        and row["agent_id"] == "smoke-agent"
+        and str(row["details"].get("command", "")).strip().lower() == "git status"
+        for row in rows
+    )
+    exact_write = any(
+        row["details"].get("path") == "CHANGES.rst"
+        and "POSTURE LIVE HOOK SMOKE MARKER" in str(row["details"].get("patch", ""))
+        for row in changed_writes
+    )
+    marker_present = worktree.joinpath("CHANGES.rst").read_text(
+        encoding="utf-8", errors="replace"
+    ).rstrip().endswith("POSTURE LIVE HOOK SMOKE MARKER")
+    file_change_evidence = successful_file_change_evidence(rows, events_path)
+    exact_file_change_mapping = any(
+        item.get("path") == "CHANGES.rst"
+        for item in file_change_evidence["mapped_changed_files"]
+    )
+    contract = {
+        "session_start": any(
+            row["event_type"] == "session_start" and row["agent_id"] == "smoke-agent"
+            for row in rows
+        ),
+        "allowed_read": exact_read,
+        "allowed_claim": exact_claim,
+        "denied_direct_shell": exact_denial,
+        "changed_apply_patch": exact_write,
+        "successful_file_change_mapping": exact_file_change_mapping,
+        "marker_present_in_final_tree": marker_present,
+        "claim_release": any(
+            row["event_type"] == "release"
+            and row["agent_id"] == "smoke-agent"
+            and row["details"].get("kind") == "claim"
+            and row["details"].get("claims") == [expected_claim]
+            for row in rows
+        ),
+        "finished_model": finished,
+        "apparatus_unchanged_during_smoke": bool(post_snapshot.get("verified")),
+        "zero_apparatus_invalid": "apparatus_invalid" not in types,
+    }
+    model = {
+        "events_path": relative(events_path),
+        "model_finished": finished,
+    }
+    summary = {
+        "schema_version": 1,
+        "measurement": "posture-live-hook-contract-smoke-no-task-outcome",
+        "completed_at_utc": dt.datetime.now(dt.timezone.utc).isoformat(timespec="milliseconds"),
+        "tasks_path": relative(tasks_path),
+        "tasks_sha256": sha256_file(tasks_path),
+        "apparatus_fingerprint": fingerprint,
+        "artifact_sha256": artifacts,
+        "runtime_versions": versions,
+        "post_smoke_hash_verification": post_snapshot,
+        "base_verification": base_verification,
+        "command": command,
+        "return_code": return_code,
+        "timed_out": timed_out,
+        "termination": termination,
+        "elapsed_seconds": elapsed,
+        "contract": contract,
+        "hook_audit": hook_audit(rows, {"smoke-agent": model}),
+        "successful_file_change_evidence": file_change_evidence,
+        "changed_write_events": [row["details"] for row in changed_writes],
+        "event_types": types,
+        "database": relative(database),
+        "events": relative(smoke_root / "events.jsonl"),
+        "worktree": relative(worktree),
+    }
+    export_events(database, draw["draw_id"], smoke_root / "events.jsonl")
+    atomic_json(smoke_root / "summary.json", summary)
+    if not all(contract.values()):
+        raise RuntimeError(f"live hook contract smoke failed: {contract}")
+    return summary
 
 
 def save_worktree_patch(worktree: Path, destination: Path) -> dict[str, Any]:
@@ -985,6 +1392,101 @@ def all_ground_truth_reference_cases(bundle: dict[str, Any]) -> list[dict[str, A
     return normalized["cases"]
 
 
+def synthetic_base_reference_cases(bundle: dict[str, Any]) -> list[dict[str, Any]]:
+    runs = bundle["construction"]["baseline_determinism"]["runs"]
+    normalized = runs[0].get("normalized") if runs else None
+    if not normalized or not isinstance(normalized.get("cases"), list):
+        raise RuntimeError("TASKS.json lacks synthetic-base JUnit case identities")
+    return normalized["cases"]
+
+
+def classify_visible_regression(
+    bundle: dict[str, Any],
+    suite: dict[str, Any],
+) -> dict[str, Any]:
+    normalized = suite.get("normalized")
+    if not normalized or not isinstance(normalized.get("cases"), list):
+        return {
+            "verified": False,
+            "correct": False,
+            "wrong_verified": False,
+            "reason": "visible_evaluator_junit_missing_or_unparseable",
+        }
+    reference_cases = synthetic_base_reference_cases(bundle)
+    reference_index = {testcase_key(case): case for case in reference_cases}
+    observed_cases = normalized["cases"]
+    observed_index = {testcase_key(case): case for case in observed_cases}
+    if len(reference_index) != len(reference_cases) or len(observed_index) != len(observed_cases):
+        return {
+            "verified": False,
+            "correct": False,
+            "wrong_verified": False,
+            "reason": "duplicate_visible_testcase_identity",
+        }
+    missing_reference = sorted(set(reference_index) - set(observed_index))
+    passed_to_nonfailure_drift = [
+        {
+            "classname": key[0],
+            "name": key[1],
+            "reference_outcome": "passed",
+            "observed_outcome": observed_index[key].get("outcome"),
+        }
+        for key, reference in reference_index.items()
+        if key in observed_index
+        and reference.get("outcome") == "passed"
+        and observed_index[key].get("outcome") not in {"passed", "failure", "error"}
+    ]
+    failures = [
+        case for case in observed_cases if case.get("outcome") in {"failure", "error"}
+    ]
+    failures_green_before_run = [
+        case
+        for case in failures
+        if reference_index.get(testcase_key(case), {}).get("outcome") == "passed"
+    ]
+    failures_without_green_evidence = [
+        case for case in failures if case not in failures_green_before_run
+    ]
+    correct = (
+        suite.get("exit_code") == 0
+        and not suite.get("timed_out")
+        and not missing_reference
+        and not passed_to_nonfailure_drift
+    )
+    wrong_verified = (
+        suite.get("exit_code") not in {0, None}
+        and bool(failures)
+        and not failures_without_green_evidence
+        and not missing_reference
+        and not passed_to_nonfailure_drift
+        and not suite.get("timed_out")
+    )
+    verified = correct or wrong_verified
+    return {
+        "verified": verified,
+        "correct": correct,
+        "wrong_verified": wrong_verified,
+        "reason": (
+            "visible_suite_green_with_pre_run_collection_preserved"
+            if correct
+            else "every_visible_failure_was_passed_on_the_synthetic_pre_run_base"
+            if wrong_verified
+            else "visible_outcome_lacks_complete_pre_run_green_evidence"
+        ),
+        "reference": "first of five identical synthetic-base JUnit runs",
+        "reference_case_count": len(reference_cases),
+        "observed_case_count": len(observed_cases),
+        "missing_reference_cases": [
+            {"classname": classname, "name": name}
+            for classname, name in missing_reference
+        ],
+        "failures": failures,
+        "failures_green_before_run": failures_green_before_run,
+        "failures_without_green_evidence": failures_without_green_evidence,
+        "reference_passed_to_nonfailure_outcome_drift": passed_to_nonfailure_drift,
+    }
+
+
 def classify_hidden_suite(
     bundle: dict[str, Any],
     suite: dict[str, Any],
@@ -1013,6 +1515,18 @@ def classify_hidden_suite(
             "tasks": {},
         }
     missing_reference = sorted(set(reference_index) - set(observed_index))
+    passed_to_nonfailure_drift = [
+        {
+            "classname": key[0],
+            "name": key[1],
+            "reference_outcome": "passed",
+            "observed_outcome": observed_index[key].get("outcome"),
+        }
+        for key, reference in reference_index.items()
+        if key in observed_index
+        and reference.get("outcome") == "passed"
+        and observed_index[key].get("outcome") not in {"passed", "failure", "error"}
+    ]
     failures = [
         case for case in observed_cases if case.get("outcome") in {"failure", "error"}
     ]
@@ -1024,6 +1538,12 @@ def classify_hidden_suite(
     failures_without_green_evidence = [
         case for case in failures if case not in failures_green_in_reference
     ]
+    case_integrity = (
+        not suite.get("timed_out")
+        and not missing_reference
+        and not failures_without_green_evidence
+        and not passed_to_nonfailure_drift
+    )
     task_results: dict[str, Any] = {}
     for task in bundle["tasks"]:
         expected = task.get("expected_focal_cases", [])
@@ -1047,12 +1567,15 @@ def classify_hidden_suite(
             if item["observed_outcome"] in {"failure", "error"}
         ]
         task_results[task["task_id"]] = {
-            "verified": bool(outcomes) and present,
-            "correct": passed,
-            "wrong_verified": bool(failed),
+            "verified": bool(outcomes) and present and case_integrity,
+            "correct": passed and case_integrity,
+            "wrong_verified": bool(failed) and case_integrity,
             "expected_case_count": len(outcomes),
             "cases": outcomes,
             "reason": (
+                "integrated_suite_has_missing_cases_or_failure_without_green_evidence"
+                if not case_integrity
+                else
                 "all_preregistered_focal_cases_collected_and_passed"
                 if passed
                 else "preregistered_ground_truth_green_focal_case_failed"
@@ -1073,9 +1596,10 @@ def classify_hidden_suite(
         suite.get("exit_code") not in {0, None}
         and bool(failures)
         and not failures_without_green_evidence
+        and not missing_reference
     )
     return {
-        "verified": not suite.get("timed_out"),
+        "verified": case_integrity,
         "correct": correct,
         "wrong_verified": wrong_verified,
         "reason": (
@@ -1094,6 +1618,7 @@ def classify_hidden_suite(
         "failures": failures,
         "failures_green_in_reference": failures_green_in_reference,
         "failures_without_green_evidence": failures_without_green_evidence,
+        "reference_passed_to_nonfailure_outcome_drift": passed_to_nonfailure_drift,
         "tasks": task_results,
     }
 
@@ -1108,38 +1633,35 @@ def evaluate_integrated_hidden(
     worktree = root / "integrated-hidden-oracle" / "worktree"
     create_worktree(repository, worktree, final_commit)
     applications: list[dict[str, Any]] = []
-    for task in sorted(bundle["tasks"], key=lambda item: item["stream_index"]):
-        patch_path = PROJECT_ROOT / task["ground_truth_test_patch"]
-        patch = patch_path.read_bytes()
-        forward = apply_git_patch(worktree, patch, check_only=True)
-        reverse = None
-        if forward["exit_code"] == 0:
-            application = apply_git_patch(worktree, patch)
-            state = "overlaid_by_apparatus"
-            applied = application["exit_code"] == 0
-        else:
-            reverse = apply_git_patch(worktree, patch, reverse=True, check_only=True)
-            application = None
-            state = "already_present_exactly" if reverse["exit_code"] == 0 else "conflict"
-            applied = reverse["exit_code"] == 0
-        record = {
-            "task_id": task["task_id"],
-            "patch": task["ground_truth_test_patch"],
-            "patch_sha256": task["ground_truth_test_patch_sha256"],
-            "state": state,
-            "forward_check": forward,
-            "reverse_check": reverse,
-            "application": application,
-            "verified": applied,
-        }
-        applications.append(record)
-        if not applied:
+    test_path_tasks: dict[str, list[str]] = {}
+    for task in bundle["tasks"]:
+        for path in task["ground_truth_test_paths"]:
+            test_path_tasks.setdefault(path, []).append(task["task_id"])
+    for path in sorted(test_path_tasks):
+        anchor_blob = git(repository, "show", f"{bundle['anchor_sha']}:{path}", check=False)
+        if anchor_blob.returncode != 0:
             return {
                 "verified": False,
-                "reason": "hidden_test_patch_conflicts_with_actual_integrated_tree",
+                "reason": "preregistered_hidden_test_path_absent_from_anchor",
+                "path": path,
                 "applications": applications,
                 "worktree": relative(worktree),
             }
+        destination = worktree / Path(path)
+        before = destination.read_bytes() if destination.is_file() else None
+        destination.parent.mkdir(parents=True, exist_ok=True)
+        destination.write_bytes(anchor_blob.stdout)
+        applications.append(
+            {
+                "path": path,
+                "task_ids": sorted(test_path_tasks[path]),
+                "state": "restored_exact_anchor_hidden_test_file",
+                "before_sha256": hashlib.sha256(before).hexdigest() if before is not None else None,
+                "anchor_blob_sha256": hashlib.sha256(anchor_blob.stdout).hexdigest(),
+                "changed": before != anchor_blob.stdout,
+                "verified": True,
+            }
+        )
     suite = run_suite(
         repository_config,
         worktree,
@@ -1643,6 +2165,62 @@ def codex_tool_items(path: Path) -> dict[str, Any]:
     return {"available": parse_errors == 0, "parse_errors": parse_errors, "items": items}
 
 
+def successful_file_change_evidence(
+    events: list[dict[str, Any]], codex_events_path: Path
+) -> dict[str, Any]:
+    """Map agent-attributable completed file changes to their Pre/Post hook records."""
+
+    tool_items = codex_tool_items(codex_events_path)
+    completed_ids = {
+        str(item["id"])
+        for item in tool_items["items"]
+        if item.get("type") == "file_change"
+        and item.get("status") == "completed"
+        and item.get("id") is not None
+    }
+    attempts = {
+        str(row["details"].get("tool_use_id")): row
+        for row in events
+        if row["event_type"] == "write_attempt"
+        and row["details"].get("tool_use_id") is not None
+    }
+    mapped: list[dict[str, Any]] = []
+    for row in events:
+        if row["event_type"] != "write":
+            continue
+        tool_use_id = str(row["details"].get("tool_use_id"))
+        response_present = row["details"].get("tool_response") is not None
+        if (
+            tool_use_id in completed_ids
+            and tool_use_id in attempts
+            and response_present
+            and row["details"].get("changed") is True
+        ):
+            mapped.append(
+                {
+                    "tool_use_id": tool_use_id,
+                    "path": row["details"].get("path"),
+                    "before_sha256": row["details"].get("before_sha256"),
+                    "after_sha256": row["details"].get("after_sha256"),
+                    "posttool_response_present": True,
+                    "codex_file_change_status": "completed",
+                }
+            )
+    mapped_ids = sorted({item["tool_use_id"] for item in mapped})
+    return {
+        "verified": bool(tool_items["available"]),
+        "codex_items": tool_items,
+        "completed_file_change_tool_ids": sorted(completed_ids),
+        "mapped_successful_tool_ids": mapped_ids,
+        "mapped_changed_files": mapped,
+        "has_successful_file_change": bool(mapped_ids),
+        "definition": (
+            "same tool_use_id has Codex file_change status completed, an allowed "
+            "write_attempt, and a changed PostToolUse write with a response"
+        ),
+    }
+
+
 def hook_audit(events: list[dict[str, Any]], models: dict[str, dict[str, Any]]) -> dict[str, Any]:
     by_agent: dict[str, Any] = {}
     heartbeat_names = {"hook_heartbeat", "session_start", "hook_session"}
@@ -1663,6 +2241,9 @@ def hook_audit(events: list[dict[str, Any]], models: dict[str, dict[str, Any]]) 
             in {"claim", "read", "test", "shell_denied", "tool_denied", "command_denied"}
         )
         heartbeat_ok = bool(heartbeats)
+        file_change_evidence = successful_file_change_evidence(
+            agent_events, PROJECT_ROOT / model["events_path"]
+        )
         all_heartbeats = all_heartbeats and heartbeat_ok
         by_agent[agent_id] = {
             "heartbeat_verified": heartbeat_ok,
@@ -1672,6 +2253,7 @@ def hook_audit(events: list[dict[str, Any]], models: dict[str, dict[str, Any]]) 
             "write_hook_events": hook_writes,
             "command_execution_items": command_items,
             "semantic_command_events": semantic_commands,
+            "successful_file_change_evidence": file_change_evidence,
             "reconciliation_interpretation": (
                 "counts_are_diagnostic_only_because_one_wrapper_command_can_emit_multiple_semantic_events"
             ),
@@ -1693,6 +2275,7 @@ def summarize_task(
     presence: dict[str, Any],
     oracle: dict[str, Any] | None,
     observed_task: dict[str, Any] | None = None,
+    visible_bundle: dict[str, Any] | None = None,
 ) -> dict[str, Any]:
     blocks = [row for row in events if row["event_type"] == "block"]
     releases = [
@@ -1705,20 +2288,53 @@ def summarize_task(
     write_attempts = [row for row in events if row["event_type"] == "write_attempt"]
     merged = True if merge is None else bool(merge.get("merged"))
     if observed_task is not None:
-        landing_verified = bool(observed_task.get("verified"))
-        landed = landing_verified and bool(write_attempts or writes) and merged
-        if not (write_attempts or writes) or not merged:
+        isolated = merge is not None
+        model_events_value = model.get("events_path")
+        file_change_evidence = (
+            successful_file_change_evidence(
+                events, PROJECT_ROOT / str(model_events_value)
+            )
+            if isinstance(model_events_value, str) and model_events_value
+            else {
+                "verified": False,
+                "has_successful_file_change": False,
+                "reason": "model_events_path_missing",
+            }
+        )
+        direct_presence_verified = bool(presence.get("verified")) if isolated else True
+        direct_presence = bool(presence.get("present")) if isolated else True
+        landing_verified = (
+            bool(file_change_evidence.get("verified"))
+            and bool(file_change_evidence.get("has_successful_file_change"))
+            and direct_presence_verified
+        )
+        landed = landing_verified and merged and direct_presence
+        edit_activity = bool(write_attempts) or bool(
+            file_change_evidence.get("completed_file_change_tool_ids")
+        )
+        if not edit_activity or not merged or (
+            isolated and direct_presence_verified and not direct_presence
+        ):
             outcome = "abandoned"
         elif not landing_verified:
             outcome = "unverified"
-        elif observed_task.get("correct"):
+        elif visible_bundle is None or not visible_bundle.get("verified"):
+            outcome = "unverified"
+        elif visible_bundle.get("wrong_verified"):
+            outcome = "landed_and_wrong"
+        elif observed_task.get("correct") and visible_bundle.get("correct"):
             outcome = "landed_and_correct"
         elif observed_task.get("wrong_verified"):
-            outcome = "landed_and_wrong"
+            outcome = "landed_but_task_incomplete"
         else:
             outcome = "unverified"
-        attribution = "actual_integrated_tree_task_oracle_collective_for_shared_arms"
+        attribution = (
+            "completed_file_change_plus_direct_isolate_merge_presence_and_integrated_oracles"
+            if isolated
+            else "completed_file_change_collective_shared_landing_plus_integrated_oracles_no_byte_authorship"
+        )
     else:
+        file_change_evidence = None
         landing_verified = bool(presence.get("verified"))
         landed = landing_verified and bool(writes) and merged and bool(presence.get("present"))
         if not landing_verified:
@@ -1736,7 +2352,28 @@ def summarize_task(
         attribution = "counterfactual_agent_delta_oracle"
     wait_seconds = sum(float(row["details"].get("wait_seconds", 0.0)) for row in releases)
     collision_claims = sum(1 for row in claims if row["details"].get("collision_exposed"))
-    rework = causal_rework(all_events, task["task_id"])
+    arm_value = events[0].get("arm") if events else None
+    arm = str(arm_value) if arm_value is not None else None
+    if arm in {"advisory", "blocking"}:
+        rework = {
+            "measurement_available": False,
+            "verified_rework_operations": None,
+            "verified_rework_seconds": None,
+            "reason": "shared Pre/Post write events cannot race-safely attribute the intervening delta to an agent without adding a forbidden write mutex",
+            "scope_limitation": "reads and writes remain fully logged for qualitative inspection",
+            "evidence": [],
+        }
+    elif arm == "isolate":
+        rework = {
+            "measurement_available": True,
+            "verified_rework_operations": 0,
+            "verified_rework_seconds": 0.0,
+            "reason": "isolated agents cannot observe another agent's writes before the end-of-run merge",
+            "scope_limitation": "merge conflicts are recorded separately and occur after agent completion",
+            "evidence": [],
+        }
+    else:
+        rework = causal_rework(all_events, task["task_id"])
     return {
         "task_id": task["task_id"],
         "model": model,
@@ -1744,7 +2381,9 @@ def summarize_task(
         "landed": landed,
         "landing_verified": landing_verified,
         "outcome_attribution": attribution,
+        "successful_file_change_evidence": file_change_evidence,
         "observed_integrated_task_oracle": observed_task,
+        "observed_visible_bundle_oracle": visible_bundle,
         "blocked_then_completed": bool(blocks) and bool(releases) and model["model_finished"],
         "blocked_then_correct": bool(blocks) and bool(releases) and outcome == "landed_and_correct",
         "blocked_then_finished_response": bool(blocks) and model["model_finished"],
@@ -1754,6 +2393,7 @@ def summarize_task(
         "collision_exposed": collision_claims > 0,
         "collision_rate": collision_claims / len(claims) if claims else None,
         "changed_write_events": len(writes),
+        "write_attempt_events": len(write_attempts),
         "rework": rework,
         "rework_operations": rework["verified_rework_operations"],
         "rework_seconds": rework.get("verified_rework_seconds"),
@@ -1897,18 +2537,44 @@ def run_draw(
     model_records = {state.task["task_id"]: model_record(state, attempt_root) for state in states}
     all_finished = all(record["model_finished"] for record in model_records.values())
     if not all_finished:
+        post_snapshot = verify_snapshot_unchanged(
+            (PROJECT_ROOT / schedule["tasks_path"]).resolve(strict=True),
+            tasks_manifest,
+            apparatus_verification["artifact_sha256"],
+            apparatus_verification["runtime_versions"],
+        )
+        schedule_hash_matches = sha256_file(Path(schedule["schedule_path"])) == schedule.get(
+            "schedule_file_sha256_at_run_start"
+        )
+        post_snapshot["schedule_hash_matches"] = schedule_hash_matches
+        post_snapshot["verified"] = bool(post_snapshot.get("verified")) and schedule_hash_matches
+        if not post_snapshot["verified"]:
+            apparatus_event(
+                database,
+                draw["draw_id"],
+                draw["arm"],
+                "apparatus_invalid",
+                {"stage": "post_unfinished_draw_hash_verification", **post_snapshot},
+            )
         excluded_events = event_rows(database, draw["draw_id"])
+        exclusion_reason = (
+            "at_least_one_model_never_finished"
+            if post_snapshot["verified"]
+            else "apparatus_invalid"
+        )
         summary = {
             "schema_version": 1,
             "draw": draw,
             "attempt": attempt,
             "excluded": True,
-            "exclusion_reason": "at_least_one_model_never_finished",
+            "exclusion_reason": exclusion_reason,
             "models": model_records,
             "base_verification": base_verification,
             "apparatus": {
+                "valid": bool(post_snapshot["verified"]),
                 "fingerprint": apparatus_verification["fingerprint"],
                 "hook_audit": hook_audit(excluded_events, model_records),
+                "post_draw_hash_verification": post_snapshot,
             },
             "database": relative(database),
         }
@@ -1944,6 +2610,7 @@ def run_draw(
 
     final_tree = output_text(git(integration, "rev-parse", f"{final_commit}^{{tree}}"))
     integrated_suite = run_suite(repository_config, integration, attempt_root / "integrated-full-suite.txt")
+    visible_classification = classify_visible_regression(bundle, integrated_suite)
     apparatus_event(
         database,
         draw["draw_id"],
@@ -1951,7 +2618,6 @@ def run_draw(
         "test_outcome",
         {"kind": "integrated_full_suite", **integrated_suite},
     )
-    integrated_completed_monotonic = time.monotonic()
     integrated_hidden = evaluate_integrated_hidden(
         repository,
         repository_config,
@@ -1959,6 +2625,7 @@ def run_draw(
         final_commit,
         attempt_root,
     )
+    integrated_completed_monotonic = time.monotonic()
     if integrated_hidden.get("suite"):
         apparatus_event(
             database,
@@ -2019,10 +2686,38 @@ def run_draw(
                 merge,
                 presence,
                 oracle,
-                observed_task_results.get(task_id),
+                observed_task_results.get(
+                    task_id,
+                    {
+                        "verified": False,
+                        "correct": False,
+                        "wrong_verified": False,
+                        "reason": "integrated_hidden_task_oracle_unavailable",
+                    },
+                ),
+                visible_classification,
             )
         )
 
+    post_snapshot = verify_snapshot_unchanged(
+        (PROJECT_ROOT / schedule["tasks_path"]).resolve(strict=True),
+        tasks_manifest,
+        apparatus_verification["artifact_sha256"],
+        apparatus_verification["runtime_versions"],
+    )
+    schedule_hash_matches = sha256_file(Path(schedule["schedule_path"])) == schedule.get(
+        "schedule_file_sha256_at_run_start"
+    )
+    post_snapshot["schedule_hash_matches"] = schedule_hash_matches
+    post_snapshot["verified"] = bool(post_snapshot.get("verified")) and schedule_hash_matches
+    if not post_snapshot["verified"]:
+        apparatus_event(
+            database,
+            draw["draw_id"],
+            draw["arm"],
+            "apparatus_invalid",
+            {"stage": "post_draw_hash_verification", **post_snapshot},
+        )
     final_events = event_rows(database, draw["draw_id"])
     hooks = hook_audit(final_events, model_records)
     if draw["arm"] == "isolate":
@@ -2063,6 +2758,7 @@ def run_draw(
     apparatus_valid = (
         bool(hooks["heartbeat_verified_for_every_agent"])
         and bool(write_audit["verified"])
+        and bool(post_snapshot["verified"])
         and not apparatus_invalid_events
     )
     if not apparatus_valid:
@@ -2133,7 +2829,7 @@ def run_draw(
         "collision_definition": "claim acquisitions marked collision_exposed / all claim acquisitions",
         "collisions": realised_collisions,
         "bundle_wall_seconds": bundle_wall_seconds,
-        "bundle_wall_definition": "first synchronized prompt release through integrated full-suite outcome",
+        "bundle_wall_definition": "first synchronized prompt release through actual integrated hidden-test outcome",
         "evaluation_wall_seconds": evaluation_wall_seconds,
         "evaluation_wall_definition": "first synchronized prompt release through completion of hidden focal evaluation",
         "agent_execution_wall_seconds": agent_execution_wall,
@@ -2162,6 +2858,7 @@ def run_draw(
             "hash_verification": apparatus_verification,
             "hook_audit": hooks,
             "write_replay_audit": write_audit,
+            "post_draw_hash_verification": post_snapshot,
             "apparatus_invalid_events": apparatus_invalid_events,
         },
         "base_verification": base_verification,
@@ -2172,15 +2869,20 @@ def run_draw(
             "commit": final_commit,
             "tree": final_tree,
             "suite": integrated_suite,
+            "visible_pre_run_green_classification": visible_classification,
             "hidden_oracle": integrated_hidden,
             "observed_bundle_outcome": (
                 "abandoned"
                 if final_tree == bundle["base_tree"]
                 else
-                "landed_and_correct"
+                "landed_and_wrong"
+                if visible_classification.get("wrong_verified")
+                else "unverified"
+                if not visible_classification.get("verified")
+                else "landed_and_correct"
                 if integrated_hidden.get("classification", {}).get("correct")
-                else "landed_and_wrong"
-                if integrated_hidden.get("classification", {}).get("wrong_verified")
+                else "landed_but_task_incomplete"
+                if integrated_hidden.get("classification", {}).get("verified")
                 else "unverified"
             ),
             "merge": merge_summary,
@@ -2238,6 +2940,7 @@ def attempt_ledger(schedule: dict[str, Any], run_root: Path) -> dict[str, Any]:
                 "draw_id": draw["draw_id"],
                 "arm": draw["arm"],
                 "summary": relative(summary_path),
+                "summary_sha256": sha256_file(summary_path),
                 "excluded": excluded,
                 "exclusion_reason": reason,
                 "model_agent_minutes": model_minutes,
@@ -2264,6 +2967,7 @@ def run_pilot(tasks_path: Path, schedule_path: Path, run_root: Path) -> dict[str
         raise RuntimeError("schedule task-manifest path does not match requested manifest")
     verified_apparatus = verify_schedule_apparatus(tasks_path, tasks, schedule)
     schedule["schedule_path"] = str(schedule_path.resolve())
+    schedule["schedule_file_sha256_at_run_start"] = sha256_file(schedule_path)
     completed: list[dict[str, Any]] = []
     for draw in schedule["draws"]:
         # Re-hash before every draw, including draws loaded from disk.
@@ -2283,6 +2987,9 @@ def run_pilot(tasks_path: Path, schedule_path: Path, run_root: Path) -> dict[str
                 raise RuntimeError(
                     f"apparatus failure retained at {draw['draw_id']} attempt {attempt}; pilot stopped"
                 )
+    final_apparatus = verify_schedule_apparatus(tasks_path, tasks, schedule)
+    if sha256_file(schedule_path) != schedule["schedule_file_sha256_at_run_start"]:
+        raise RuntimeError("pilot schedule changed while the pilot was running")
     result = {
         "schema_version": 1,
         "measurement": "posture-pilot-raw-summary",
@@ -2291,7 +2998,7 @@ def run_pilot(tasks_path: Path, schedule_path: Path, run_root: Path) -> dict[str
         "tasks_sha256": sha256_file(tasks_path),
         "schedule_path": relative(schedule_path),
         "schedule_sha256": sha256_file(schedule_path),
-        "apparatus_fingerprint": verified_apparatus["fingerprint"],
+        "apparatus_fingerprint": final_apparatus["fingerprint"],
         "completed_draws": len(completed),
         "draws": completed,
         "attempt_ledger": attempt_ledger(schedule, run_root),
@@ -2310,10 +3017,20 @@ def main() -> int:
     execute.add_argument("--tasks", type=Path, default=DEFAULT_TASKS)
     execute.add_argument("--schedule", type=Path, default=DEFAULT_SCHEDULE)
     execute.add_argument("--run-root", type=Path, default=DEFAULT_RUN_ROOT)
+    smoke = subparsers.add_parser("smoke")
+    smoke.add_argument("--tasks", type=Path, default=DEFAULT_TASKS)
+    smoke.add_argument("--output-root", type=Path, default=DEFAULT_SMOKE_ROOT)
     args = parser.parse_args()
     if args.command == "schedule":
         result = make_schedule(args.tasks.resolve(strict=True), args.output.resolve())
         print(json.dumps({"draw_count": result["draw_count"], "output": str(args.output)}, indent=2))
+        return 0
+    if args.command == "smoke":
+        result = run_live_smoke(
+            args.tasks.resolve(strict=True),
+            args.output_root.resolve(),
+        )
+        print(json.dumps({"contract": result["contract"], "output": str(args.output_root)}, indent=2))
         return 0
     result = run_pilot(
         args.tasks.resolve(strict=True),

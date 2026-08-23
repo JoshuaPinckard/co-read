@@ -31,7 +31,7 @@ import index
 
 ROOT = Path(__file__).resolve().parents[2]
 DEFAULT_EVAL_DIR = ROOT / "exploratory" / "retrieval"
-DEFAULT_REPO = Path(r"C:/Users/USER/Desktop/toolsenabled-current")
+DEFAULT_REPO = Path(r"C:/Users/joshp/Desktop/toolsenabled-current")
 WINDOWS = (60, 300, 900)  # authoritative SPEC.md values
 KS = (1, 5, 10, 20)
 PRIMARY_ARMS = ("ripgrep", "bm25", "ident_first", "bm25_pathboost")

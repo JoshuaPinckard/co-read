@@ -231,7 +231,7 @@ def test_physical_control_path_is_not_measured():
     physical = b"C:\\Temp\\retrieval-head\\repo\\src\\x.js:1:match\n"
     visible = arms._logicalise_ripgrep_payload(physical, scope)
     assert b"retrieval-head" not in visible
-    assert visible.startswith(b"C:\\Users\\joshp\\Desktop\\toolsenabled-current")
+    assert visible.startswith(b"C:\\Users\\USER\\Desktop\\toolsenabled-current")
 
 
 def test_error_response_bytes_match_payload(tmp_path):
