@@ -1,0 +1,18 @@
+diff --git a/tests/test_options.py b/tests/test_options.py
+index 1e7826d82a452283781f985a05d8274007f89d55..c5f2d49c7c00f9ac122c6b4cc2f3d1fac9ab800b 100644
+--- a/tests/test_options.py
++++ b/tests/test_options.py
+@@ -677,6 +677,13 @@ def test_missing_envvar(runner):
+     assert result.exit_code == 2
+     assert "Error: Missing option '--foo' (env var: 'bar')." in result.output
+ 
++    cli = click.Command(
++        "cli", params=[click.Option(["--foo"], show_envvar=True, required=True)]
++    )
++    result = runner.invoke(cli)
++    assert result.exit_code == 2
++    assert "Error: Missing option '--foo'." in result.output
++
+ 
+ def test_case_insensitive_choice(runner):
+     @click.command()

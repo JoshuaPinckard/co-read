@@ -1,0 +1,256 @@
+diff --git a/CHANGES.rst b/CHANGES.rst
+index adb645e948390a046021ffe9069d75dd7e1b2dc0..d84c0ae70363153e4ab91bd78889a70b2fac8490 100644
+--- a/CHANGES.rst
++++ b/CHANGES.rst
+@@ -21,6 +21,11 @@ Unreleased
+     ``pytest-xdist`` to detect test pollution and race conditions. :pr:`3151`
+ -   Add contributor documentation for running stress tests, randomized
+     parallel tests, and Flask smoke tests. :pr:`3151` :pr:`3177`
++-   Fix ``default=True`` with boolean ``flag_value`` always returning the
++    ``flag_value`` instead of ``True``. The ``default=True`` to ``flag_value``
++    substitution now only applies to non-boolean flags, where ``True`` acts as a
++    sentinel meaning "activate this flag by default". For boolean flags,
++    ``default=True`` is returned as a literal value. :issue:`3111` :pr:`3239`
+ -   Mark ``make_default_short_help`` as private API. :issue:`3189` :pr:`3250`
+ -   ``CliRunner``'s redirected streams now expose the original file descriptor
+     via ``fileno()``, so that ``faulthandler``, ``subprocess``, and other
+diff --git a/docs/options.md b/docs/options.md
+index 9aeab3bec26c5d2f1015155d8746c7d870255f6e..45651abacee4860be5d4b21403092d5f0bebebd1 100644
+--- a/docs/options.md
++++ b/docs/options.md
+@@ -341,12 +341,19 @@ To have a flag pass a value to the decorated function set `flag_value`. This aut
+     invoke(info)
+ ```
+ 
+-````{note}
+-The `default` value is given to the decorated function as-is. So if you set `default=None`, the value passed to the function is the `None` Python value. Same for any other type.
++### How `default` and `flag_value` interact
+ 
+-But there is a special case for flags. If a flag has a `flag_value`, then setting `default=True` is interpreted as *the flag should be activated by default*. So instead of the decorated function receiving the `True` Python value, it will receive the `flag_value`.
++The `default` value is given to the underlying function
++as-is. So if you set `default=None`, the function receives
++`None`. Same for any other type.
+ 
+-Which means, in example above, this option:
++But there is a special case for **non-boolean** flags: if a
++flag has a non-boolean `flag_value` (like a string or a
++class), then `default=True` is interpreted as *the flag
++should be activated by default*. The function receives the
++`flag_value`, not the Python `True`.
++
++Which means, in the example above, this option:
+ 
+ ```python
+ @click.option('--upper', 'transformation', flag_value='upper', default=True)
+@@ -358,9 +365,89 @@ is equivalent to:
+ @click.option('--upper', 'transformation', flag_value='upper', default='upper')
+ ```
+ 
+-Because the two are equivalent, it is recommended to always set `default` to the actual value you want to pass and avoid using the special `True` case. This makes the code more explicit and predictable.
++Because the two are equivalent, it is recommended to always
++use the second form and set `default` to the actual value
++you want. This makes code more explicit and predictable.
++
++This special case does **not** apply to boolean flags (where
++`flag_value` is `True` or `False`). For boolean flags,
++`default=True` is the literal Python value `True`.
++
++The tables below show the value received by the function for
++each combination of `default`, `flag_value`, and whether
++the flag was passed on the command line.
++
++#### Boolean flags (`is_flag=True`, boolean `flag_value`)
++
++These are flags where `flag_value` is `True` or `False`.
++The `default` value is always passed through literally
++without any special substitution.
++
++| `default` | `flag_value` | Not passed | `--flag` passed |
++|-----------|--------------|------------|-----------------|
++| *(unset)* | *(unset)*    | `False`    | `True`          |
++| `True`    | *(unset)*    | `True`     | `True`          |
++| `False`   | *(unset)*    | `False`    | `True`          |
++| `None`    | *(unset)*    | `None`     | `True`          |
++| `True`    | `True`       | `True`     | `True`          |
++| `True`    | `False`      | `True`     | `False`         |
++| `False`   | `True`       | `False`    | `True`          |
++| `False`   | `False`      | `False`    | `False`         |
++| `None`    | `True`       | `None`     | `True`          |
++| `None`    | `False`      | `None`     | `False`         |
++
++````{tip}
++For a negative flag that defaults to off, prefer the
++explicit pair form `--with-xyz/--without-xyz` over the
++single-flag `flag_value=False, default=True`:
++
++```python
++@click.option('--with-xyz/--without-xyz', 'enable_xyz', default=True)
++```
+ ````
+ 
++#### Boolean flag pairs (`--flag/--no-flag`)
++
++These use secondary option names to provide both an on and
++off switch. The `default` value is always literal.
++
++| `default` | Not passed | `--flag` | `--no-flag` |
++|-----------|------------|----------|-------------|
++| *(unset)* | `False`    | `True`   | `False`     |
++| `True`    | `True`     | `True`   | `False`     |
++| `False`   | `False`    | `True`   | `False`     |
++| `None`    | `None`     | `True`   | `False`     |
++
++#### Non-boolean feature switches (`flag_value` is a string, class, etc.)
++
++For these flags, `default=True` is a **special case**: it
++means "activate this flag by default" and resolves to the
++`flag_value`. All other `default` values are passed through
++literally.
++
++| `default`  | `flag_value` | Not passed  | `--flag` passed |
++|------------|--------------|-------------|-----------------|
++| *(unset)*  | `"upper"`    | `None`      | `"upper"`       |
++| `True`     | `"upper"`    | `"upper"`¹  | `"upper"`       |
++| `"lower"`  | `"upper"`    | `"lower"`   | `"upper"`       |
++| `None`     | `"upper"`    | `None`      | `"upper"`       |
++
++```{hint}
++¹: `default=True` is substituted with `flag_value`.
++```
++
++#### Feature switch groups (multiple flags sharing one variable)
++
++When multiple `flag_value` options target the same parameter
++name, `default=True` on one of them marks it as the default
++choice.
++
++| Definition                                             | Not passed | `--upper` | `--lower` |
++|--------------------------------------------------------|------------|-----------|-----------|
++| `--upper` with `flag_value='upper'`, `default=True`    | `"upper"`  | `"upper"` | `"lower"` |
++| `--upper` with `flag_value='upper'`, `default='upper'` | `"upper"`  | `"upper"` | `"lower"` |
++| Both without `default`                                 | `None`     | `"upper"` | `"lower"` |
++
+ ## Values from Environment Variables
+ 
+ To pass in a value from a specific environment variable use `envvar`.
+diff --git a/src/click/core.py b/src/click/core.py
+index 6dc44f399bafbbe499c66c9416aea145ec5f0a71..7af83da9c3d4a69df8e03acb2a9ed16e006ac034 100644
+--- a/src/click/core.py
++++ b/src/click/core.py
+@@ -2891,13 +2891,32 @@ class Option(Parameter):
+     def get_default(
+         self, ctx: Context, call: bool = True
+     ) -> t.Any | t.Callable[[], t.Any] | None:
++        """For non-boolean flag options, ``default=True`` is treated as a
++        sentinel meaning "activate this flag by default" and is resolved to
++        :attr:`flag_value`. This resolution is performed lazily here (rather
++        than eagerly in :meth:`__init__`) to prevent callable ``flag_value``
++        values (like classes) from being instantiated prematurely.
++
++        For example, with ``--upper/--lower`` feature switches where
++        ``flag_value="upper"`` and ``default=True``, the default resolves
++        to ``"upper"``.
++
++        .. caution::
++            This substitution only applies to **non-boolean** flags
++            (:attr:`is_bool_flag` is ``False``). For boolean flags, ``True`` is
++            not a sentinel but a legitimate Python value, so ``default=True`` is
++            returned as-is. Without this distinction, ``flag_value=False,
++            default=True`` would silently always return ``False``, regardless of
++            whether the flag was passed or not.
++
++        .. versionchanged:: 8.3.3
++            ``default=True`` is no longer substituted with ``flag_value`` for
++            boolean flags, fixing negative boolean flags like ``flag_value=False,
++            default=True``.
++        """
+         value = super().get_default(ctx, call=False)
+ 
+-        # Lazily resolve default=True to flag_value. Doing this here
+-        # (instead of eagerly in __init__) prevents callable flag_values
+-        # (like classes) from being instantiated by the callable check below.
+-        # https://github.com/pallets/click/issues/3121
+-        if value is True and self.is_flag:
++        if value is True and self.is_flag and not self.is_bool_flag:
+             value = self.flag_value
+         elif call and callable(value):
+             value = value()
+diff --git a/tests/test_options.py b/tests/test_options.py
+index 85f6224596f4aff25495c08fbb9bf128474e0eb3..c2bf1e961fc2292aec4039ca601d5020eec542ac 100644
+--- a/tests/test_options.py
++++ b/tests/test_options.py
+@@ -1457,9 +1457,12 @@ def test_type_from_flag_value():
+         ({"type": str, "flag_value": None}, [], None),
+         ({"type": str, "flag_value": None}, ["--foo"], None),
+         # Not passing --foo returns the default value as-is, in its Python type, then
+-        # converted by the option type.
++        # converted by the option type. For boolean flags, default=True is a literal
++        # value, not a sentinel meaning "activate flag". So it is NOT substituted with
++        # flag_value. See: https://github.com/pallets/click/issues/3111
++        # https://github.com/pallets/click/pull/3239
+         ({"type": bool, "default": True, "flag_value": True}, [], True),
+-        ({"type": bool, "default": True, "flag_value": False}, [], False),
++        ({"type": bool, "default": True, "flag_value": False}, [], True),
+         ({"type": bool, "default": False, "flag_value": True}, [], False),
+         ({"type": bool, "default": False, "flag_value": False}, [], False),
+         ({"type": bool, "default": None, "flag_value": True}, [], None),
+@@ -2484,6 +2487,38 @@ def test_custom_type_frozenset_flag_value(runner):
+     assert result.exit_code == 0
+ 
+ 
++@pytest.mark.parametrize(
++    ("default", "args", "expected"),
++    [
++        # default=None: 3-state pattern (e.g. Flask --reload/--no-reload).
++        # https://github.com/pallets/click/issues/3024
++        (None, [], None),
++        (None, ["--flag"], True),
++        (None, ["--no-flag"], False),
++        # default=True: literal value, not substituted with flag_value.
++        # https://github.com/pallets/click/issues/3111
++        (True, [], True),
++        (True, ["--flag"], True),
++        (True, ["--no-flag"], False),
++    ],
++)
++def test_bool_flag_pair_default(runner, default, args, expected):
++    """Boolean flag pairs pass ``default`` through literally.
++
++    Ensures ``default=True`` is not replaced by ``flag_value`` for boolean
++    flags, and that ``default=None`` enables 3-state logic.
++    """
++
++    @click.command()
++    @click.option("--flag/--no-flag", default=default)
++    def cli(flag):
++        click.echo(repr(flag), nl=False)
++
++    result = runner.invoke(cli, args)
++    assert result.exit_code == 0
++    assert result.output == repr(expected)
++
++
+ @pytest.mark.parametrize(
+     ("flag_type", "args", "expect_output"),
+     [
+diff --git a/tests/test_termui.py b/tests/test_termui.py
+index be0c2df6999e187a808f591b263bd651bdb24cd6..026e8fce3367367f713cc692013aec63aee0da8d 100644
+--- a/tests/test_termui.py
++++ b/tests/test_termui.py
+@@ -825,9 +825,13 @@ FLAG_VALUE_PROMPT_CASES = [
+     ({"prompt": True, "default": True, "flag_value": True}, [], "[Y/n]", "", True),
+     ({"prompt": True, "default": True, "flag_value": True}, [], "[Y/n]", "y", True),
+     ({"prompt": True, "default": True, "flag_value": True}, [], "[Y/n]", "n", False),
+-    ({"prompt": True, "default": True, "flag_value": False}, [], "[y/N]", "", False),
+-    ({"prompt": True, "default": True, "flag_value": False}, [], "[y/N]", "y", True),
+-    ({"prompt": True, "default": True, "flag_value": False}, [], "[y/N]", "n", False),
++    # For boolean flags, default=True is a literal value, not a sentinel meaning
++    # "activate flag", so the prompt shows [Y/n] with default=True. See:
++    # https://github.com/pallets/click/issues/3111
++    # https://github.com/pallets/click/pull/3239
++    ({"prompt": True, "default": True, "flag_value": False}, [], "[Y/n]", "", True),
++    ({"prompt": True, "default": True, "flag_value": False}, [], "[Y/n]", "y", True),
++    ({"prompt": True, "default": True, "flag_value": False}, [], "[Y/n]", "n", False),
+     # default=False
+     ({"prompt": True, "default": False, "flag_value": True}, [], "[y/N]", "", False),
+     ({"prompt": True, "default": False, "flag_value": True}, [], "[y/N]", "y", True),

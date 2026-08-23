@@ -1,0 +1,24 @@
+diff --git a/tests/test_testing.py b/tests/test_testing.py
+index 0fd6973ae8ce575dab39473fef9d991da61fd190..11fe29dc5d9bd1213b4dff98565ea495e8317e6f 100644
+--- a/tests/test_testing.py
++++ b/tests/test_testing.py
+@@ -448,8 +448,7 @@ def test_isolation_stderr_errors():
+ 
+     with runner.isolation() as (_, err, _):
+         click.echo("\udce2", err=True, nl=False)
+-
+-    assert err.getvalue() == b"\\udce2"
++        assert err.getvalue() == b"\\udce2"
+ 
+ 
+ def test_isolation_flushes_unflushed_stderr():
+@@ -460,8 +459,7 @@ def test_isolation_flushes_unflushed_stderr():
+ 
+     with runner.isolation() as (_, err, _):
+         click.echo("\udce2", err=True, nl=False)
+-
+-    assert err.getvalue() == b"\\udce2"
++        assert err.getvalue() == b"\\udce2"
+ 
+     @click.command()
+     def cli():

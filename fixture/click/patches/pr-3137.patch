@@ -1,0 +1,177 @@
+diff --git a/CHANGES.rst b/CHANGES.rst
+index 493cf2d880d25e8e12d9c902cb79865511d4ee7e..04d604d612927fb4271c877acc8d0ef2dffcf69f 100644
+--- a/CHANGES.rst
++++ b/CHANGES.rst
+@@ -11,6 +11,8 @@ Unreleased
+     the ``Context.invoke()`` method. :issue:`3066` :issue:`3065` :pr:`3068`
+ -   Fix conversion of ``Sentinel.UNSET`` happening too early, which caused incorrect
+     behavior for multiple parameters using the same name. :issue:`3071` :pr:`3079`
++-   Hide ``Sentinel.UNSET`` values as ``None`` when looking up for other parameters
++    through the context inside parameter callbacks. :issue:`3136` :pr:`3137`
+ -   Fix rendering when ``prompt`` and ``confirm`` parameter ``prompt_suffix`` is
+     empty. :issue:`3019` :pr:`3021`
+ -   When ``Sentinel.UNSET`` is found during parsing, it will skip calls to
+diff --git a/src/click/core.py b/src/click/core.py
+index 437599da9da8b6477d3fa61e61cd7b5ef0382225..57f549c7936beb8111d40bc90edd2ac74cacdd8d 100644
+--- a/src/click/core.py
++++ b/src/click/core.py
+@@ -2440,7 +2440,37 @@ class Parameter:
+             # to None.
+             if value is UNSET:
+                 value = None
+-            value = self.callback(ctx, self, value)
++
++            # Search for parameters with UNSET values in the context.
++            unset_keys = {k: None for k, v in ctx.params.items() if v is UNSET}
++            # No UNSET values, call the callback as usual.
++            if not unset_keys:
++                value = self.callback(ctx, self, value)
++
++            # Legacy case: provide a temporarily manipulated context to the callback
++            # to hide UNSET values as None.
++            #
++            # Refs:
++            # https://github.com/pallets/click/issues/3136
++            # https://github.com/pallets/click/pull/3137
++            else:
++                # Add another layer to the context stack to clearly hint that the
++                # context is temporarily modified.
++                with ctx:
++                    # Update the context parameters to replace UNSET with None.
++                    ctx.params.update(unset_keys)
++                    # Feed these fake context parameters to the callback.
++                    value = self.callback(ctx, self, value)
++                    # Restore the UNSET values in the context parameters.
++                    ctx.params.update(
++                        {
++                            k: UNSET
++                            for k in unset_keys
++                            # Only restore keys that are present and still None, in case
++                            # the callback modified other parameters.
++                            if k in ctx.params and ctx.params[k] is None
++                        }
++                    )
+ 
+         return value
+ 
+diff --git a/tests/test_context.py b/tests/test_context.py
+index 816154dcd8abece2fcc0f15e3d256a26d1b23068..e35c5325162a3d20ac8e44b8919685fa69c7f6a5 100644
+--- a/tests/test_context.py
++++ b/tests/test_context.py
+@@ -181,6 +181,116 @@ def test_make_pass_meta_decorator_doc():
+     assert "passes the test value" in pass_value.__doc__
+ 
+ 
++def test_hiding_of_unset_sentinel_in_callbacks():
++    """Fix: https://github.com/pallets/click/issues/3136"""
++
++    def inspect_other_params(ctx, param, value):
++        """A callback that inspects other parameters' values via the context."""
++        assert click.get_current_context() is ctx
++        click.echo(f"callback.my_arg: {ctx.params.get('my_arg')!r}")
++        click.echo(f"callback.my_opt: {ctx.params.get('my_opt')!r}")
++        click.echo(f"callback.my_callback: {ctx.params.get('my_callback')!r}")
++
++        click.echo(f"callback.param: {param!r}")
++        click.echo(f"callback.value: {value!r}")
++
++        return "hard-coded"
++
++    class ParameterInternalCheck(Option):
++        """An option that checks internal state during processing."""
++
++        def process_value(self, ctx, value):
++            """Check that UNSET values are hidden as None in ctx.params within the
++            callback, and then properly restored afterwards.
++            """
++            assert click.get_current_context() is ctx
++            click.echo(f"before_process.my_arg: {ctx.params.get('my_arg')!r}")
++            click.echo(f"before_process.my_opt: {ctx.params.get('my_opt')!r}")
++            click.echo(f"before_process.my_callback: {ctx.params.get('my_callback')!r}")
++
++            value = super().process_value(ctx, value)
++
++            assert click.get_current_context() is ctx
++            click.echo(f"after_process.my_arg: {ctx.params.get('my_arg')!r}")
++            click.echo(f"after_process.my_opt: {ctx.params.get('my_opt')!r}")
++            click.echo(f"after_process.my_callback: {ctx.params.get('my_callback')!r}")
++
++            return value
++
++    def change_other_params(ctx, param, value):
++        """A callback that modifies other parameters' values via the context."""
++        assert click.get_current_context() is ctx
++        click.echo(f"before_change.my_arg: {ctx.params.get('my_arg')!r}")
++        click.echo(f"before_change.my_opt: {ctx.params.get('my_opt')!r}")
++        click.echo(f"before_change.my_callback: {ctx.params.get('my_callback')!r}")
++
++        click.echo(f"before_change.param: {param!r}")
++        click.echo(f"before_change.value: {value!r}")
++
++        ctx.params["my_arg"] = "changed"
++        # Reset to None parameters that where not UNSET to see they are not forced back
++        # to UNSET.
++        ctx.params["my_callback"] = None
++
++        return value
++
++    @click.command
++    @click.argument("my-arg", required=False)
++    @click.option("--my-opt")
++    @click.option("--my-callback", callback=inspect_other_params)
++    @click.option("--check-internal", cls=ParameterInternalCheck)
++    @click.option(
++        "--modifying-callback", cls=ParameterInternalCheck, callback=change_other_params
++    )
++    @click.pass_context
++    def cli(ctx, my_arg, my_opt, my_callback, check_internal, modifying_callback):
++        click.echo(f"cli.my_arg: {my_arg!r}")
++        click.echo(f"cli.my_opt: {my_opt!r}")
++        click.echo(f"cli.my_callback: {my_callback!r}")
++        click.echo(f"cli.check_internal: {check_internal!r}")
++        click.echo(f"cli.modifying_callback: {modifying_callback!r}")
++
++    runner = click.testing.CliRunner()
++    result = runner.invoke(cli)
++
++    assert result.stdout.splitlines() == [
++        # Values of other parameters within the callback are None, not UNSET.
++        "callback.my_arg: None",
++        "callback.my_opt: None",
++        "callback.my_callback: None",
++        "callback.param: <Option my_callback>",
++        "callback.value: None",
++        # Previous UNSET values were not altered by the callback.
++        "before_process.my_arg: Sentinel.UNSET",
++        "before_process.my_opt: Sentinel.UNSET",
++        "before_process.my_callback: 'hard-coded'",
++        "after_process.my_arg: Sentinel.UNSET",
++        "after_process.my_opt: Sentinel.UNSET",
++        "after_process.my_callback: 'hard-coded'",
++        # Changes on other parameters within the callback are restored afterwards.
++        "before_process.my_arg: Sentinel.UNSET",
++        "before_process.my_opt: Sentinel.UNSET",
++        "before_process.my_callback: 'hard-coded'",
++        "before_change.my_arg: None",
++        "before_change.my_opt: None",
++        "before_change.my_callback: 'hard-coded'",
++        "before_change.param: <ParameterInternalCheck modifying_callback>",
++        "before_change.value: None",
++        "after_process.my_arg: 'changed'",
++        "after_process.my_opt: Sentinel.UNSET",
++        "after_process.my_callback: None",
++        # Unset values within the main command are UNSET, but hidden as None.
++        "cli.my_arg: 'changed'",
++        "cli.my_opt: None",
++        "cli.my_callback: None",
++        "cli.check_internal: None",
++        "cli.modifying_callback: None",
++    ]
++    assert not result.stderr
++    assert not result.exception
++    assert result.exit_code == 0
++
++
+ def test_context_pushing():
+     rv = []
+ 

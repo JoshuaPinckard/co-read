@@ -1,0 +1,57 @@
+diff --git a/click/core.py b/click/core.py
+index 30aec62e693669b13ee9fce170b4ba853a020bb1..d81950abb82c7e95442185a2e7a32e33b1acf82b 100644
+--- a/click/core.py
++++ b/click/core.py
+@@ -1351,7 +1351,7 @@ class Parameter(object):
+         self.is_eager = is_eager
+         self.metavar = metavar
+         self.envvar = envvar
+-        self.autocompletion =  autocompletion
++        self.autocompletion = autocompletion
+ 
+     @property
+     def human_readable_name(self):
+@@ -1382,7 +1382,6 @@ class Parameter(object):
+     def add_to_parser(self, parser, ctx):
+         pass
+ 
+-
+     def consume_value(self, ctx, opts):
+         value = opts.get(self.name)
+         if value is None:
+@@ -1832,11 +1831,9 @@ class Argument(Parameter):
+         if len(decls) == 1:
+             name = arg = decls[0]
+             name = name.replace('-', '_').lower()
+-        elif len(decls) == 2:
+-            name, arg = decls
+         else:
+-            raise TypeError('Arguments take exactly one or two '
+-                            'parameter declarations, got %d' % len(decls))
++            raise TypeError('Arguments take exactly one '
++                            'parameter declaration, got %d' % len(decls))
+         return name, [arg], []
+ 
+     def get_usage_pieces(self, ctx):
+diff --git a/tests/test_arguments.py b/tests/test_arguments.py
+index a6a325878063323c3286d63a74cc07a110fa2b5e..ca48fed0d56484e41dd3474404345b352a54872a 100644
+--- a/tests/test_arguments.py
++++ b/tests/test_arguments.py
+@@ -1,4 +1,5 @@
+ # -*- coding: utf-8 -*-
++import pytest
+ import click
+ from click._compat import PY2
+ 
+@@ -287,3 +288,11 @@ def test_defaults_for_nargs(runner):
+     result = runner.invoke(cmd, ['3'])
+     assert result.exception is not None
+     assert 'argument a takes 2 values' in result.output
++
++
++def test_multiple_param_decls_not_allowed(runner):
++    with pytest.raises(TypeError):
++        @click.command()
++        @click.argument('x', click.Choice(['a', 'b']))
++        def copy(x):
++            click.echo(x)

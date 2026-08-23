@@ -1,0 +1,141 @@
+diff --git a/CHANGES.rst b/CHANGES.rst
+index 3f6cccb50b55ab3e130f1e724e532ee99316dd70..0dc7644793b65c7e4752c34b8fcc31875cfad584 100644
+--- a/CHANGES.rst
++++ b/CHANGES.rst
+@@ -84,6 +84,7 @@ Unreleased
+ -   Use Python sorting order for ZSH completions. (`#1047`_, `#1059`_)
+ -   Document that parameter names are lowercased by default. (`#1055`_)
+ -   Subcommands that are named by the function now automatically have the underscore replaced with a dash. If you register a function named ``my_command`` it becomes ``my-command`` in the command line interface.
++-   Hide hidden commands and options from completion. (`#1058`_, `#1061`_)
+ 
+ .. _#202: https://github.com/pallets/click/issues/202
+ .. _#323: https://github.com/pallets/click/issues/323
+@@ -193,7 +194,9 @@ Unreleased
+ .. _#1027: https://github.com/pallets/click/pull/1027
+ .. _#1047: https://github.com/pallets/click/pull/1047
+ .. _#1055: https://github.com/pallets/click/pull/1055
++.. _#1058: https://github.com/pallets/click/pull/1058
+ .. _#1059: https://github.com/pallets/click/pull/1059
++.. _#1061: https://github.com/pallets/click/pull/1061
+ 
+ 
+ Version 6.7
+diff --git a/click/_bashcomplete.py b/click/_bashcomplete.py
+index 6576cfdc854f63b83f979e1c8539b260b07d811b..fba6e9924ee794ba8915a9a38f6e92d463a7e803 100644
+--- a/click/_bashcomplete.py
++++ b/click/_bashcomplete.py
+@@ -23,7 +23,8 @@ COMPLETION_SCRIPT_BASH = '''
+ %(complete_func)setup() {
+     local COMPLETION_OPTIONS=""
+     local BASH_VERSION_ARR=(${BASH_VERSION//./ })
+-    if [ ${BASH_VERSION_ARR[0]} -ge 4 ] && [ ${BASH_VERSION_ARR[1]} -ge 4 ];then
++    # Only BASH version 4.4 and later have the nosort option.
++    if [ ${BASH_VERSION_ARR[0]} -gt 4 ] || ([ ${BASH_VERSION_ARR[0]} -eq 4 ] && [ ${BASH_VERSION_ARR[1]} -ge 4 ]); then
+         COMPLETION_OPTIONS="-o nosort"
+     fi
+ 
+@@ -176,7 +177,7 @@ def get_user_autocompletions(ctx, args, incomplete, cmd_param):
+     if isinstance(cmd_param.type, Choice):
+         # Choices don't support descriptions.
+         results = [(c, None)
+-                   for c in cmd_param.type.choices if c.startswith(incomplete)]
++                   for c in cmd_param.type.choices if str(c).startswith(incomplete)]
+     elif cmd_param.autocompletion is not None:
+         dynamic_completions = cmd_param.autocompletion(ctx=ctx,
+                                                        args=args,
+@@ -186,20 +187,32 @@ def get_user_autocompletions(ctx, args, incomplete, cmd_param):
+     return results
+ 
+ 
++def get_visible_commands_starting_with(ctx, starts_with):
++    """
++    :param ctx: context associated with the parsed command
++    :starts_with: string that visible commands must start with.
++    :return: all visible (not hidden) commands that start with starts_with.
++    """
++    for c in ctx.command.list_commands(ctx):
++        if c.startswith(starts_with):
++            command = ctx.command.get_command(ctx, c)
++            if not command.hidden:
++                yield command
++
++
+ def add_subcommand_completions(ctx, incomplete, completions_out):
+     # Add subcommand completions.
+     if isinstance(ctx.command, MultiCommand):
+         completions_out.extend(
+-            [(c, ctx.command.get_command(ctx, c).get_short_help_str()) for c in ctx.command.list_commands(ctx) if c.startswith(incomplete)])
++            [(c.name, c.get_short_help_str()) for c in get_visible_commands_starting_with(ctx, incomplete)])
+ 
+     # Walk up the context list and add any other completion possibilities from chained commands
+     while ctx.parent is not None:
+         ctx = ctx.parent
+         if isinstance(ctx.command, MultiCommand) and ctx.command.chain:
+-            remaining_commands = sorted(
+-                set(ctx.command.list_commands(ctx)) - set(ctx.protected_args))
+-            completions_out.extend(
+-                [(c, ctx.command.get_command(ctx, c).get_short_help_str()) for c in remaining_commands if c.startswith(incomplete)])
++            remaining_commands = [c for c in get_visible_commands_starting_with(ctx, incomplete)
++                                  if c.name not in ctx.protected_args]
++            completions_out.extend([(c.name, c.get_short_help_str()) for c in remaining_commands])
+ 
+ 
+ def get_choices(cli, prog_name, args, incomplete):
+@@ -229,11 +242,10 @@ def get_choices(cli, prog_name, args, incomplete):
+     if start_of_option(incomplete):
+         # completions for partial options
+         for param in ctx.command.params:
+-            if isinstance(param, Option):
++            if isinstance(param, Option) and not param.hidden:
+                 param_opts = [param_opt for param_opt in param.opts +
+                               param.secondary_opts if param_opt not in all_args or param.multiple]
+-                completions.extend(
+-                    [(o, param.help) for o in param_opts if o.startswith(incomplete)])
++                completions.extend([(o, param.help) for o in param_opts if o.startswith(incomplete)])
+         return completions
+     # completion for option values from user supplied values
+     for param in ctx.command.params:
+diff --git a/tests/test_bashcomplete.py b/tests/test_bashcomplete.py
+index 6818893fe29f6f91b6c0880a4fac95a489a923b9..7214d1a9193166a32e1cc56d6b1f1a17cf652582 100644
+--- a/tests/test_bashcomplete.py
++++ b/tests/test_bashcomplete.py
+@@ -371,3 +371,39 @@ def test_chained_multi():
+     assert choices_without_help(cli, ['sub'], 'c') == ['csub']
+     assert choices_without_help(cli, ['sub', 'csub'], '') == ['dsub', 'esub']
+     assert choices_without_help(cli, ['sub', 'csub', 'dsub'], '') == ['esub']
++
++
++def test_hidden():
++    @click.group()
++    @click.option('--name', hidden=True)
++    @click.option('--choices', type=click.Choice([1, 2]), hidden=True)
++    def cli(name):
++        pass
++
++    @cli.group(hidden=True)
++    def hgroup():
++        pass
++
++    @hgroup.group()
++    def hgroupsub():
++        pass
++
++    @cli.command()
++    def asub():
++        pass
++
++    @cli.command(hidden=True)
++    @click.option('--hname')
++    def hsub():
++        pass
++
++    assert choices_without_help(cli, [], '--n') == []
++    assert choices_without_help(cli, [], '--c') == []
++    # If the user exactly types out the hidden param, complete its options.
++    assert choices_without_help(cli, ['--choices'], '') == [1, 2]
++    assert choices_without_help(cli, [], '') == ['asub']
++    assert choices_without_help(cli, [], '') == ['asub']
++    assert choices_without_help(cli, [], 'h') == []
++    # If the user exactly types out the hidden command, complete its subcommands.
++    assert choices_without_help(cli, ['hgroup'], '') == ['hgroupsub']
++    assert choices_without_help(cli, ['hsub'], '--h') == ['--hname']

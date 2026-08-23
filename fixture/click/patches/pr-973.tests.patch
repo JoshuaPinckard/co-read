@@ -1,0 +1,13 @@
+diff --git a/tests/test_basic.py b/tests/test_basic.py
+index 94e0aaea0259b69177e78cbfcb30e5ed907c2b46..8ba251fa1a889c9854bad6859cbd0f33bc18c5da 100644
+--- a/tests/test_basic.py
++++ b/tests/test_basic.py
+@@ -187,7 +187,7 @@ def test_boolean_conversion(runner):
+         def cli(flag):
+             click.echo(flag)
+ 
+-        for value in 'true', 't,' '1', 'yes', 'y':
++        for value in 'true', 't', '1', 'yes', 'y':
+             result = runner.invoke(cli, ['--flag', value])
+             assert not result.exception
+             assert result.output == 'True\n'

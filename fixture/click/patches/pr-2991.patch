@@ -1,0 +1,47 @@
+diff --git a/src/click/testing.py b/src/click/testing.py
+index 7c0e8741e2d07f54294a82792c776d08c639add4..04d263eeac9f0e38ec1c3922e88b15b38ced58c4 100644
+--- a/src/click/testing.py
++++ b/src/click/testing.py
+@@ -99,6 +99,18 @@ class StreamMixer:
+         self.stdout: io.BytesIO = BytesIOCopy(copy_to=self.output)
+         self.stderr: io.BytesIO = BytesIOCopy(copy_to=self.output)
+ 
++    def __del__(self) -> None:
++        """
++        Guarantee that embedded file-like objects are closed in a
++        predictable order, protecting against races between
++        self.output being closed and other streams being flushed on close
++
++        .. versionadded:: 8.2.2
++        """
++        self.stderr.close()
++        self.stdout.close()
++        self.output.close()
++
+ 
+ class _NamedTextIOWrapper(io.TextIOWrapper):
+     def __init__(
+diff --git a/tests/test_testing.py b/tests/test_testing.py
+index 0fd6973ae8ce575dab39473fef9d991da61fd190..11fe29dc5d9bd1213b4dff98565ea495e8317e6f 100644
+--- a/tests/test_testing.py
++++ b/tests/test_testing.py
+@@ -448,8 +448,7 @@ def test_isolation_stderr_errors():
+ 
+     with runner.isolation() as (_, err, _):
+         click.echo("\udce2", err=True, nl=False)
+-
+-    assert err.getvalue() == b"\\udce2"
++        assert err.getvalue() == b"\\udce2"
+ 
+ 
+ def test_isolation_flushes_unflushed_stderr():
+@@ -460,8 +459,7 @@ def test_isolation_flushes_unflushed_stderr():
+ 
+     with runner.isolation() as (_, err, _):
+         click.echo("\udce2", err=True, nl=False)
+-
+-    assert err.getvalue() == b"\\udce2"
++        assert err.getvalue() == b"\\udce2"
+ 
+     @click.command()
+     def cli():

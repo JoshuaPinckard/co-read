@@ -1,0 +1,19 @@
+diff --git a/tests/test_testing.py b/tests/test_testing.py
+index a74c5de8ff87b990049c80ec34ecfc0f4c2c1e1c..12f57de3926b5ee7cf7d91b2b0cdfe30b1560641 100644
+--- a/tests/test_testing.py
++++ b/tests/test_testing.py
+@@ -246,3 +246,14 @@ def test_args(args, expected_output):
+     result = runner.invoke(cli_args, args=args)
+     assert result.exit_code == 0
+     assert result.output == expected_output
++
++
++def test_setting_prog_name_in_extra():
++    @click.command()
++    def cli():
++        click.echo("ok")
++
++    runner = CliRunner()
++    result = runner.invoke(cli, prog_name="foobar")
++    assert not result.exception
++    assert result.output == 'ok\n'

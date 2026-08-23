@@ -1,0 +1,25 @@
+diff --git a/src/click/shell_completion.py b/src/click/shell_completion.py
+index 5bebb5a9c75c231829dc445f9d87f3b297a68250..8f1564c49be8e138014841d8f7cb35a34265674f 100644
+--- a/src/click/shell_completion.py
++++ b/src/click/shell_completion.py
+@@ -405,6 +405,8 @@ class FishComplete(ShellComplete):
+     def get_completion_args(self) -> tuple[list[str], str]:
+         cwords = split_arg_string(os.environ["COMP_WORDS"])
+         incomplete = os.environ["COMP_CWORD"]
++        if incomplete:
++            incomplete = split_arg_string(incomplete)[0]
+         args = cwords[1:]
+ 
+         # Fish stores the partial word in both COMP_WORDS and
+diff --git a/tests/test_shell_completion.py b/tests/test_shell_completion.py
+index 06c6645def8bfe2cb65f84340d81295817d0c391..20cff238f7c72d4999b20205c1fa0244f9934d70 100644
+--- a/tests/test_shell_completion.py
++++ b/tests/test_shell_completion.py
+@@ -359,6 +359,7 @@ def test_full_source(runner, shell):
+         ("zsh", {"COMP_WORDS": "a b", "COMP_CWORD": "1"}, "plain\nb\nbee\n"),
+         ("fish", {"COMP_WORDS": "", "COMP_CWORD": ""}, "plain,a\nplain,b\tbee\n"),
+         ("fish", {"COMP_WORDS": "a b", "COMP_CWORD": "b"}, "plain,b\tbee\n"),
++        ("fish", {"COMP_WORDS": 'a "b', "COMP_CWORD": '"b'}, "plain,b\tbee\n"),
+     ],
+ )
+ @pytest.mark.usefixtures("_patch_for_completion")

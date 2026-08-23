@@ -1,0 +1,57 @@
+diff --git a/click/decorators.py b/click/decorators.py
+index bfc7a058a5a435c781a6fb68c31b6a92a893c035..c57c5308613ec4798155e68088cc4644a42d2d52 100644
+--- a/click/decorators.py
++++ b/click/decorators.py
+@@ -61,7 +61,7 @@ def make_pass_decorator(object_type, ensure=False):
+                 raise RuntimeError('Managed to invoke callback without a '
+                                    'context object of type %r existing'
+                                    % object_type.__name__)
+-            return ctx.invoke(f, obj, *args[1:], **kwargs)
++            return ctx.invoke(f, obj, *args, **kwargs)
+         return update_wrapper(new_func, f)
+     return decorator
+ 
+diff --git a/tests/test_context.py b/tests/test_context.py
+index cbf9b98e97776ba87bbe88023c14d94e0dad6203..3b07cc80bac3b6243e3f356755e1d9afa50e8ae5 100644
+--- a/tests/test_context.py
++++ b/tests/test_context.py
+@@ -203,3 +203,39 @@ def test_close_before_pop(runner):
+     assert not result.exception
+     assert result.output == 'aha!\n'
+     assert called == [True]
++
++
++def test_make_pass_decorator_args(runner):
++    """
++    Test to check that make_pass_decorator doesn't consume arguments based on
++    invocation order.
++    """
++    class Foo(object):
++        title = 'foocmd'
++
++    pass_foo = click.make_pass_decorator(Foo)
++
++    @click.group()
++    @click.pass_context
++    def cli(ctx):
++        ctx.obj = Foo()
++
++    @cli.command()
++    @click.pass_context
++    @pass_foo
++    def test1(foo, ctx):
++        click.echo(foo.title)
++
++    @cli.command()
++    @pass_foo
++    @click.pass_context
++    def test2(ctx, foo):
++        click.echo(foo.title)
++
++    result = runner.invoke(cli, ['test1'])
++    assert not result.exception
++    assert result.output == 'foocmd\n'
++
++    result = runner.invoke(cli, ['test2'])
++    assert not result.exception
++    assert result.output == 'foocmd\n'
