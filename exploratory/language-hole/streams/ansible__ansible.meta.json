@@ -1,0 +1,50 @@
+{
+  "cap_reason": "reachable history 55522 > 20000; left-truncated replay of the most recent 5000; learned indexes started empty",
+  "capped": true,
+  "commit_count": 5000,
+  "completed_at_utc": "2026-08-23T11:05:37+00:00",
+  "first_parent_commit_count": 47143,
+  "git_log_stderr_tail": "Auto packing the repository in background for optimum performance.\nSee \"git help gc\" for manual housekeeping.\nAuto packing the repository in background for optimum performance.\nSee \"git help gc\" for manual housekeeping.\nExpanding reachable commits in commit graph: 54548\rExpanding reachable commits in commit graph: 68525, done.\nAuto packing the repository in background for optimum performance.\nSee \"git help gc\" for manual housekeeping.\nExpanding reachable commits in commit graph: 64077\rExpanding reachable commits in commit graph: 68525, done.\n",
+  "merge_commit_count": 0,
+  "object_storage_after_git_log": {
+    "count": 0,
+    "garbage": 0,
+    "in-pack": 485692,
+    "packs": 12,
+    "prune-packable": 0,
+    "size": 0,
+    "size-garbage": 0,
+    "size-pack": 109946
+  },
+  "object_storage_before_git_log": {
+    "count": 0,
+    "garbage": 0,
+    "in-pack": 482793,
+    "packs": 1,
+    "prune-packable": 0,
+    "size": 0,
+    "size-garbage": 0,
+    "size-pack": 99747
+  },
+  "reachable_commit_count": 55522,
+  "rename_count": 460,
+  "repository": {
+    "axis": "Python + very large YAML surface",
+    "expected_stress": "Config-heavy; huge file count",
+    "name": "ansible/ansible",
+    "slug": "ansible__ansible",
+    "url": "https://github.com/ansible/ansible.git"
+  },
+  "schema_version": 1,
+  "source_head_sha": "b85437b7f6e39476252b271778b8c7dcebbd931a",
+  "started_at_utc": "2026-08-23T10:57:06+00:00",
+  "status": "ok",
+  "status_histogram": {
+    "A": 5403,
+    "D": 4384,
+    "M": 19337,
+    "R": 460
+  },
+  "stream_path": "exploratory/language-hole/streams/ansible__ansible.jsonl.gz",
+  "stream_sha256": "72377e195348e88a67af55de7f64c2d7b26454a6005396303fa25b54570498ad"
+}

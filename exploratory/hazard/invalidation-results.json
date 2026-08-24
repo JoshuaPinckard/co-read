@@ -1,0 +1,456 @@
+{
+  "definitions": {
+    "actor": "(sessionId, agentId), with MAIN for records lacking agentId",
+    "central_outcome_eligibility": "verified region-overlap opening plus a localized reader index edit that touches B's propagated changed footprint",
+    "clean": "qualifying localized reader edit, intact structured-write follow-up chain, >=5 minutes observed follow-up, quiescent session, and no structural rework",
+    "contingency_eligibility": "broader requested table: a localized reader index edit touches any propagated part of the prior read footprint; reported separately from the central rate",
+    "downstream_unit": "one reader/path response episode opened by the first definite foreign write; a later foreign write is a competing exposure that censors follow-up rather than being merged",
+    "opening_overlap_unit": "one deduplicated same-session ordered Read/foreign-Write pair from the historical one-hour call-to-call population, additionally requiring the Read result to precede the write call",
+    "ordering": "Read successful result completes before foreign write invocation",
+    "region_verification": "opening Read lines must match B's non-null originalFile at the reported offsets before exact patch contact is called verified; offset-only rows are retained as a tagged sensitivity",
+    "rework": "later exact revert, same-reader re-edit, or foreign supersession touching the propagated index-edit footprint",
+    "scope": "same session and canonical code path",
+    "window_seconds": 3600.0
+  },
+  "episode_diagnostics": {
+    "read_write_interval_order_ambiguous": 4,
+    "response_episodes": 1568
+  },
+  "episode_results": {
+    "confirmed_invalidation_proxy": {
+      "clean_followed": 0,
+      "eligible_read_region_overlap_outcomes": 0,
+      "eligible_region_overlap_outcomes": 0,
+      "fraction": null,
+      "paths": 0,
+      "rate_withheld_reason": "requires >=100 observable edits touching B's changed footprint across >=20 sessions and >=20 paths, both outcome counts >=5, and a 95% interval no wider than 20 percentage points",
+      "rework_followed": 0,
+      "sample_sufficient": false,
+      "sessions": 0,
+      "wilson_95": null
+    },
+    "contingency": {
+      "file_only": {
+        "clean_followed": 0,
+        "rework_followed": 0
+      },
+      "region_overlapping": {
+        "clean_followed": 0,
+        "rework_followed": 0
+      }
+    },
+    "flow_by_region_class": {
+      "file_only": {
+        "competing_foreign_write": 1
+      },
+      "region_overlapping": {
+        "competing_foreign_write": 77,
+        "no_relevant_response": 22,
+        "reread_first": 1
+      },
+      "unknown": {
+        "ambiguous_concurrent_foreign_write": 5,
+        "competing_foreign_write": 1254,
+        "edit_unlocalized": 21,
+        "no_relevant_response": 187
+      }
+    },
+    "opening_write_overlap_measurement": {
+      "actor_topology": {
+        "explicit_sidechain_reader__explicit_sidechain_writer": 1036,
+        "explicit_sidechain_reader__main_writer": 512,
+        "main_reader__explicit_sidechain_writer": 20
+      },
+      "boundary_only_contacts": 2,
+      "classifiable_episodes": 512,
+      "descriptive_fraction": 0.75390625,
+      "file_only": 126,
+      "fraction": null,
+      "naive_wilson_95": [
+        0.7147968094985838,
+        0.7892340231421399
+      ],
+      "path_cluster_bootstrap_95": [
+        0.6629709698612137,
+        0.8443994928538496
+      ],
+      "preimage_validation": {
+        "intervening_reader_write": 156,
+        "matched": 101,
+        "preimage_unavailable": 1311
+      },
+      "region_class_counts": {
+        "file_only": 126,
+        "region_overlapping": 386,
+        "unknown": 1056
+      },
+      "region_overlap_paths": 148,
+      "region_overlap_sessions": 20,
+      "region_overlapping": 386,
+      "sample_sufficient": false,
+      "session_cluster_bootstrap_95": [
+        0.6467376757285168,
+        0.8544225618402395
+      ]
+    },
+    "overlap_measurement": {
+      "classifiable_episodes": 101,
+      "descriptive_fraction": 0.9900990099009901,
+      "file_only": 1,
+      "fraction": null,
+      "naive_wilson_95": [
+        0.9460328420055449,
+        0.9982500887510318
+      ],
+      "path_cluster_bootstrap_95": [
+        0.9659090909090909,
+        1.0
+      ],
+      "primary_overlap_rule": "deleted/replaced read line or insertion strictly inside the read window; edge insertions are sensitivity-only",
+      "region_overlap_paths": 50,
+      "region_overlap_sessions": 14,
+      "region_overlapping": 100,
+      "sample_sufficient": false,
+      "session_cluster_bootstrap_95": [
+        0.9629629629629629,
+        1.0
+      ]
+    },
+    "region_class_counts": {
+      "file_only": 1,
+      "region_overlapping": 100,
+      "unknown": 1467
+    },
+    "rework_subtypes": {
+      "exact_revert": 0,
+      "foreign_supersession": 0,
+      "reader_reedit": 0
+    },
+    "total_response_episodes": 1568
+  },
+  "hazard_pair_results": {
+    "actor_topology": {
+      "all_strict_pairs": {
+        "explicit_sidechain_reader__explicit_sidechain_writer": 9934,
+        "explicit_sidechain_reader__main_writer": 2261,
+        "main_reader__explicit_sidechain_writer": 151
+      },
+      "offset_classifiable_pairs": {
+        "explicit_sidechain_reader__main_writer": 2258
+      },
+      "preimage_verified_pairs": {
+        "explicit_sidechain_reader__main_writer": 103
+      }
+    },
+    "confirmed_invalidation_proxy": {
+      "clean_followed": 0,
+      "eligible_read_region_overlap_outcomes": 0,
+      "eligible_region_overlap_outcomes": 0,
+      "fraction": null,
+      "path_cluster_bootstrap_95": null,
+      "paths": 0,
+      "rate_withheld_reason": "requires >=100 observable verified-overlap edits touching B's changed footprint across >=20 sessions and paths, both outcome counts >=5, and session/path clustered 95% intervals no wider than 20 percentage points",
+      "rework_followed": 0,
+      "sample_sufficient": false,
+      "session_cluster_bootstrap_95": null,
+      "sessions": 0
+    },
+    "contingency": {
+      "file_only": {
+        "clean_followed": 0,
+        "rework_followed": 0
+      },
+      "region_overlapping": {
+        "clean_followed": 0,
+        "rework_followed": 0
+      }
+    },
+    "flow_by_offset_region_class": {
+      "file_only": {
+        "ambiguous_with_opening_write": 6,
+        "competing_foreign_write": 1094,
+        "observed_end_no_reader_action": 145,
+        "reread_elsewhere_first": 21
+      },
+      "region_overlapping": {
+        "ambiguous_with_opening_write": 4,
+        "competing_foreign_write": 844,
+        "observed_end_no_reader_action": 142,
+        "reread_changed_region_first": 1,
+        "reread_elsewhere_first": 1
+      },
+      "unknown": {
+        "opening_region_unlocalized": 10088
+      }
+    },
+    "flow_by_verified_region_class": {
+      "file_only": {
+        "competing_foreign_write": 2
+      },
+      "region_overlapping": {
+        "competing_foreign_write": 78,
+        "observed_end_no_reader_action": 22,
+        "reread_changed_region_first": 1
+      },
+      "unknown": {
+        "ambiguous_with_opening_write": 10,
+        "competing_foreign_write": 1858,
+        "observed_end_no_reader_action": 265,
+        "opening_region_unlocalized": 10088,
+        "reread_elsewhere_first": 22
+      }
+    },
+    "identity_conflict_sensitivity": {
+      "offset_classifiable_without_conflicted_endpoints": 2038,
+      "pairs_without_conflicted_endpoints": 12097,
+      "verified_classifiable_without_conflicted_endpoints": 72
+    },
+    "offset_attrition": {
+      "both_read_and_write_unlocalized": 6,
+      "canonical_path_mismatch": 0,
+      "read_unlocalized": 9,
+      "read_unlocalized_after_localized_write": 3,
+      "write_patch_unlocalized_after_localized_read": 10079,
+      "write_patch_unlocalized_independent": 10085
+    },
+    "offset_classifiable_preimage_validation": {
+      "matched": 103,
+      "preimage_mismatch": 47,
+      "preimage_unavailable": 2108
+    },
+    "offset_only_overlap_measurement": {
+      "boundary_only_contacts": 5,
+      "classifiable_pairs": 2258,
+      "classifiable_paths": 169,
+      "classifiable_sessions": 20,
+      "descriptive_fraction": 0.43932683790965454,
+      "file_only": 1266,
+      "fraction": null,
+      "naive_wilson_95": [
+        0.41897621242518934,
+        0.45988355516309176
+      ],
+      "opening_writes": 594,
+      "path_cluster_bootstrap_95": [
+        0.31159791619350447,
+        0.5979561386343755
+      ],
+      "rate_withheld_reason": "requires exact Read-content/B-preimage agreement, >=100 classifiable pairs, >=20 overlap sessions and paths, and session/path clustered 95% intervals no wider than 20 percentage points",
+      "region_overlap_paths": 156,
+      "region_overlap_sessions": 20,
+      "region_overlapping": 992,
+      "sample_sufficient": false,
+      "session_cluster_bootstrap_95": [
+        0.27485268514798444,
+        0.6402872027768642
+      ],
+      "version_verified": false
+    },
+    "preimage_verified_overlap_measurement": {
+      "boundary_only_contacts": 0,
+      "classifiable_pairs": 103,
+      "classifiable_paths": 51,
+      "classifiable_sessions": 14,
+      "descriptive_fraction": 0.9805825242718447,
+      "file_only": 2,
+      "fraction": null,
+      "naive_wilson_95": [
+        0.9319478168796526,
+        0.9946587747258216
+      ],
+      "opening_writes": 59,
+      "path_cluster_bootstrap_95": [
+        0.95,
+        1.0
+      ],
+      "rate_withheld_reason": "requires exact Read-content/B-preimage agreement, >=100 classifiable pairs, >=20 overlap sessions and paths, and session/path clustered 95% intervals no wider than 20 percentage points",
+      "region_overlap_paths": 51,
+      "region_overlap_sessions": 14,
+      "region_overlapping": 101,
+      "sample_sufficient": false,
+      "session_cluster_bootstrap_95": [
+        0.9310344827586207,
+        1.0
+      ],
+      "version_verified": true
+    },
+    "reader_write_exposure_groups": {
+      "all_file_only": 408,
+      "all_region_overlapping": 797,
+      "groups": 1390,
+      "mixed_read_pairs": 185
+    },
+    "rework_subtypes": {
+      "exact_revert": 0,
+      "foreign_supersession": 0,
+      "reader_reedit": 0
+    },
+    "strict_ordered_pairs": 12346,
+    "subsequent_behavior": {
+      "all_strict_pairs": {
+        "any_reader_write_after_opening_ignoring_censor": 66,
+        "exact_reader_write_after_opening_ignoring_censor": 0,
+        "localized_edit_touching_propagated_read_region_first": 0,
+        "localized_reread_after_opening_ignoring_censor": 67,
+        "pairs": 12346,
+        "reread_of_changed_region_first": 1,
+        "unlocalized_reader_edit_first": 0
+      },
+      "offset_classifiable_pairs": {
+        "any_reader_write_after_opening_ignoring_censor": 66,
+        "exact_reader_write_after_opening_ignoring_censor": 0,
+        "localized_edit_touching_propagated_read_region_first": 0,
+        "localized_reread_after_opening_ignoring_censor": 67,
+        "pairs": 2258,
+        "reread_of_changed_region_first": 1,
+        "unlocalized_reader_edit_first": 0
+      },
+      "preimage_verified_pairs": {
+        "any_reader_write_after_opening_ignoring_censor": 0,
+        "exact_reader_write_after_opening_ignoring_censor": 0,
+        "localized_edit_touching_propagated_read_region_first": 0,
+        "localized_reread_after_opening_ignoring_censor": 1,
+        "pairs": 103,
+        "reread_of_changed_region_first": 1,
+        "unlocalized_reader_edit_first": 0
+      },
+      "verified_overlap_no_reread_then_relevant_edit": 0
+    }
+  },
+  "historical_recount_forensic_replication": {
+    "all_files": {
+      "hazard_paths": 755,
+      "ordered_pairs": 37591,
+      "path_bearing_occurrences": 65194,
+      "paths_considered": 16110,
+      "readers": 1074,
+      "writers": 437
+    },
+    "code_only": {
+      "hazard_paths": 553,
+      "ordered_pairs": 24138,
+      "path_bearing_occurrences": 44685,
+      "paths_considered": 10066,
+      "readers": 854,
+      "writers": 392
+    },
+    "duplication": {
+      "copied_or_repeated_occurrences": 8305,
+      "occurrences": 65194,
+      "repeated_ids_with_actor_or_session_disagreement": 2196,
+      "repeated_tool_use_ids": 2257,
+      "unique_tool_use_ids": 56889
+    }
+  },
+  "measurement": "read-foreign-write-pairs-and-response-episodes",
+  "metadata": {
+    "cohort_cutoff_provenance": "post-hoc last-call cutoff that reproduces the committed 5,547-file hazard recount; the historical scan saved no byte manifest",
+    "cohort_cutoff_utc": "2026-08-23T11:15:09.101000+00:00",
+    "corpus_bytes": 3945204612,
+    "corpus_file_count": 5867,
+    "corpus_root": "<redacted-local-claude-projects>",
+    "corpus_snapshot_sha256": "e03a33bdf511474c17a9852de1746dbfe0723621b8884152a6926f8802b0da91",
+    "diagnostics": {
+      "Edit_error_results": 270,
+      "Read_error_results": 255,
+      "Write_error_results": 116,
+      "candidate_occurrences": 67273,
+      "deduplicated_operations": 57637,
+      "duplicate_candidate_occurrences": 9636,
+      "duplicate_ids_with_identity_conflict": 2203,
+      "duplicated_tool_ids": 2288,
+      "files_read_successfully": 5867,
+      "jsonl_lines": 1022232,
+      "legacy_cohort_occurrences": 65194,
+      "paired_result_occurrences": 67273,
+      "raw_Edit_calls": 24239,
+      "raw_Read_calls": 31201,
+      "raw_Write_calls": 11884,
+      "session_count": 759,
+      "source_local_results_without_call": 237975,
+      "structured_patches_preimage_mismatch": 37,
+      "visible_read_windows_unparseable": 398
+    },
+    "snapshot_epoch": 1787550174.120719,
+    "snapshot_utc": "2026-08-24T05:42:54.120719+00:00"
+  },
+  "pair_diagnostics": {
+    "strict_ordered_hazard_pairs": 12346,
+    "strict_pairs_excluded_for_overlapping_calls": 1
+  },
+  "schema_coverage_in_deduplicated_cohort": {
+    "Edit": {
+      "actor_breakdown": {
+        "explicit_sidechain": {
+          "patch_missing": 14424,
+          "successful": 14424
+        },
+        "main": {
+          "patch_exact": 4827,
+          "successful": 4827
+        }
+      },
+      "calls_with_linked_result": 19460,
+      "errors": 209,
+      "original_file_nonempty": 1433,
+      "original_file_null": 3394,
+      "patch_empty": 0,
+      "patch_exact_nonempty": 4827,
+      "patch_missing_or_invalid": 14424,
+      "successful": 19251
+    },
+    "Read": {
+      "actor_breakdown": {
+        "explicit_sidechain": {
+          "patch_missing": 0,
+          "read_visible_result_fallback": 22974,
+          "successful": 25153
+        },
+        "main": {
+          "patch_missing": 0,
+          "read_structured_result": 2941,
+          "successful": 3258
+        }
+      },
+      "calls_with_linked_result": 28630,
+      "errors": 219,
+      "localized_structured": 2941,
+      "localized_total": 25915,
+      "localized_visible_fallback": 22974,
+      "successful": 28411
+    },
+    "Write": {
+      "actor_breakdown": {
+        "explicit_sidechain": {
+          "patch_missing": 6068,
+          "successful": 6068
+        },
+        "main": {
+          "patch_empty": 2276,
+          "patch_exact": 364,
+          "successful": 2640
+        }
+      },
+      "calls_with_linked_result": 8796,
+      "errors": 88,
+      "original_file_nonempty": 264,
+      "original_file_null": 2376,
+      "patch_empty": 2276,
+      "patch_exact_nonempty": 364,
+      "patch_missing_or_invalid": 6068,
+      "successful": 8708
+    }
+  },
+  "schema_version": 2,
+  "successful_deduplicated_pair_sensitivity": {
+    "cross_session_pairs": 183,
+    "cross_session_paths": 32,
+    "hazard_paths": 522,
+    "ordered_pairs": 12530,
+    "paths_in_both_scopes": 22,
+    "readers": 833,
+    "same_session_pairs": 12347,
+    "same_session_paths": 512,
+    "writers": 375
+  }
+}

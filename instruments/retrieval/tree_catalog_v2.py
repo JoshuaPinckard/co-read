@@ -373,26 +373,66 @@ def _locate_marker(path: str) -> str | None:
     return None
 
 
+def _marker_target(root: str) -> str | None:
+    """Resolve the Git directory named by ``root/.git`` without Git ascent."""
+
+    marker = Path(_join(root, ".git"))
+    try:
+        if marker.is_dir():
+            return _norm(marker.resolve(strict=False))
+        if marker.is_file():
+            first_line = marker.read_text(encoding="utf-8", errors="replace").splitlines()[0]
+            if not first_line.casefold().startswith("gitdir:"):
+                return None
+            target = first_line.split(":", 1)[1].strip()
+            resolved = Path(target)
+            if not resolved.is_absolute():
+                resolved = marker.parent / resolved
+            return _norm(resolved.resolve(strict=False))
+    except (OSError, IndexError):
+        return None
+    return None
+
+
 def _inspect_marker(
     root: str,
     *,
     git_executable: str,
     timeout: float,
 ) -> _Marker:
+    expected_git_dir = _marker_target(root)
+    if expected_git_dir is None:
+        return _Marker(root=root, valid=False, detail=".git marker is unreadable or malformed")
     completed = _git(
         root,
-        ("rev-parse", "--path-format=absolute", "--show-toplevel", "--git-common-dir"),
+        (
+            "rev-parse",
+            "--path-format=absolute",
+            "--show-toplevel",
+            "--git-common-dir",
+            "--absolute-git-dir",
+        ),
         git_executable=git_executable,
         timeout=timeout,
     )
     lines = [line.strip() for line in completed.stdout.splitlines() if line.strip()]
-    if completed.returncode or len(lines) < 2:
+    if completed.returncode or len(lines) < 3:
         detail = completed.stderr.strip() or completed.stdout.strip() or "git rev-parse failed"
         return _Marker(root=root, valid=False, detail=detail)
-    top_level = _norm(lines[-2])
-    common_dir = _norm(lines[-1], root)
-    if top_level is None or common_dir is None:
+    top_level = _norm(lines[-3])
+    common_dir = _norm(lines[-2], root)
+    actual_git_dir = _norm(Path(lines[-1]).resolve(strict=False))
+    if top_level is None or common_dir is None or actual_git_dir is None:
         return _Marker(root=root, valid=False, detail="git returned non-absolute metadata")
+    if _key(actual_git_dir) != _key(expected_git_dir):
+        return _Marker(
+            root=root,
+            valid=False,
+            detail=(
+                "git ignored the local .git marker and ascended to another repository: "
+                f"marker={expected_git_dir}; discovered={actual_git_dir}"
+            ),
+        )
     return _Marker(
         root=root,
         valid=True,
@@ -436,10 +476,14 @@ def _discover_environment(
     ordered_paths = sorted({_key(item) for item in paths}, key=str.casefold)
     logical_toolsenabled_roots: set[str] = set()
     for path in ordered_paths:
-        marker = _locate_marker(path)
-        path_markers[_key(path)] = marker
-        if marker is not None:
-            marker_roots.add(marker)
+        discovered_markers = [
+            _norm(ancestor)
+            for ancestor in _iter_ancestors(path)
+            if os.path.lexists(_join(ancestor, ".git"))
+        ]
+        discovered_markers = [item for item in discovered_markers if item is not None]
+        path_markers[_key(path)] = discovered_markers[0] if discovered_markers else None
+        marker_roots.update(discovered_markers)
         if _windows_path(path):
             token = "\\desktop\\toolsenabled"
             index = path.casefold().find(token)
@@ -732,7 +776,7 @@ def _classify(path: str | None, environment: _Environment) -> _Draft | None:
         return _Draft(
             logical_root=marker.root,
             mapping_kind="broken_git_marker",
-            reason="nearest .git marker is not a valid checkout",
+            reason="nearest .git marker is not a valid checkout; use current-tree control only",
             evidence=(f"git_marker={_join(marker.root, '.git')}", f"detail={marker.detail}"),
             current_root=marker.root if _path_exists(marker.root) else None,
             available=_path_exists(marker.root),
@@ -798,17 +842,20 @@ def _classify(path: str | None, environment: _Environment) -> _Draft | None:
         return _Draft(
             logical_root=logical_root,
             mapping_kind="desktop_repository_subtree",
-            reason="query path is within one top-level subtree of the broad Desktop repository",
+            reason=(
+                "query path is within one top-level subtree of the broad Desktop repository; "
+                "historical reconstruction remains available when the current subtree is absent"
+            ),
             evidence=(
                 f"desktop_repository_identity={desktop_repository.identity}",
                 f"subtree={component}",
                 f"current_subtree_exists={str(exists).lower()}",
             ),
-            repository_root=(desktop_repository.representative_root if exists else None),
-            repository_identity=(desktop_repository.identity if exists else None),
-            repository_relative_root=component if exists else "",
+            repository_root=desktop_repository.representative_root,
+            repository_identity=desktop_repository.identity,
+            repository_relative_root=component,
             current_root=logical_root if exists else None,
-            available=exists,
+            available=True,
         )
 
     if marker is not None and marker.valid:
@@ -1121,8 +1168,7 @@ def build_catalog(
             target_entry
             and target_entry.tree.available
             and (
-                target_entry.tree.current_root
-                or target_entry.tree.repository_root
+                target_entry.tree.repository_root
                 or target_entry.epoch_candidates
             )
         )

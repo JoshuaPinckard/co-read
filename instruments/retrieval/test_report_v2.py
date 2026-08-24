@@ -227,7 +227,8 @@ def test_report_has_required_order_population_and_caveat(tmp_path):
     assert "restricts each replay to its recorded" in rendered
     assert "previous 20-query collapse" in rendered
     assert "+100.00 percentage points" in rendered
-    assert "98.6% of records come from a single tree" in rendered
+    assert "98.6% of transcript records come from a single transcript-source tree" in rendered
+    assert "not the empirical query-target distribution" in rendered
     assert "within-repository generalisation and nothing more" in rendered
     assert "ripgrep replays each recorded `output_mode` and `head_limit`" in rendered
     assert "index arm returns at most 20 fixed snippets" in rendered
@@ -280,7 +281,10 @@ def test_refuses_hash_mismatch_and_incomplete_pairing(tmp_path):
     summary["artifacts"]["runs"]["sha256"] = _hash(paths["runs"])
     summary["artifacts"]["runs"]["rows"] = len(run_rows)
     _write_json(paths["summary"], summary)
-    with pytest.raises(report_v2.ReportInputError, match="complete_five_arm_row_queries|paired_scored_queries"):
+    with pytest.raises(
+        report_v2.ReportInputError,
+        match="independent recomputation|complete_five_arm_row_queries|paired_scored_queries",
+    ):
         _load(paths)
 
 
@@ -321,6 +325,19 @@ def test_rejects_mixed_fingerprints_and_reconstruction_count_tamper(tmp_path):
     summary["reconstruction"]["fallback_queries_by_window"]["300"] = 1
     _write_json(paths["summary"], summary)
     with pytest.raises(report_v2.ReportInputError, match="class counts disagree|do not sum"):
+        _load(paths)
+
+
+def test_rejects_numerical_metric_tamper_even_with_updated_hash(tmp_path):
+    paths = _fixture(tmp_path)
+    metrics = json.loads(paths["metrics"].read_text(encoding="utf-8"))
+    metrics["windows"]["300"]["arms"]["ripgrep"]["response_bytes_mean"] = 1
+    _write_json(paths["metrics"], metrics)
+    summary = paths["summary_value"]
+    summary["artifacts"]["metrics"]["sha256"] = _hash(paths["metrics"])
+    _write_json(paths["summary"], summary)
+
+    with pytest.raises(report_v2.ReportInputError, match="independent recomputation"):
         _load(paths)
 
 

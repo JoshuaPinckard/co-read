@@ -488,8 +488,10 @@ def closest_commit_at_or_before(
 ) -> CommitSelection | None:
     """Select the closest committer-time commit at or before ``query_ts``.
 
-    The entire selected-ref ancestry is considered.  Ties in committer time use
-    the first commit in deterministic ``git rev-list --topo-order`` output.
+    The selected ref's first-parent line is considered.  This prevents a
+    side-branch commit merged after the query from masquerading as branch state
+    at query time.  Ties in committer time use the first commit in deterministic
+    ``git rev-list --topo-order`` output.
     """
 
     try:
@@ -498,7 +500,7 @@ def closest_commit_at_or_before(
         raise ValueError(f"query_ts must be numeric, not {query_ts!r}") from None
     completed = _git(
         repository,
-        ("rev-list", "--timestamp", "--topo-order", ref),
+        ("rev-list", "--first-parent", "--timestamp", "--topo-order", ref),
         git_executable=git_executable,
         timeout=timeout,
     )

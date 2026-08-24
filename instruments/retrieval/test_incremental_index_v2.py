@@ -291,3 +291,345 @@ def test_refresh_rejects_symlink_source_even_when_database_is_compatible(tmp_pat
         pytest.skip(f"directory symlinks unavailable on this host: {error}")
     with pytest.raises(ValueError, match="symlink or reparse point"):
         incremental.refresh_index(database_path, linked, logical_root=r"C:\logical\repo")
+
+
+def test_force_full_replaces_an_existing_unrelated_repository_index(tmp_path: Path):
+    first = init_repo(tmp_path / "first")
+    (first / "first.txt").write_text("firstNeedle\n", encoding="utf-8")
+    commit_all(first, "first", 1_700_000_000)
+    second = init_repo(tmp_path / "second")
+    (second / "second.txt").write_text("secondNeedle\n", encoding="utf-8")
+    commit_all(second, "second", 1_700_000_100)
+    database_path = tmp_path / "active.sqlite"
+
+    incremental.refresh_index(database_path, first, logical_root=r"C:\logical\first")
+    rebuilt = incremental.refresh_index(
+        database_path,
+        second,
+        logical_root=r"C:\logical\second",
+        force_full=True,
+    )
+
+    assert rebuilt["mode"] == "full"
+    database = canonical.connect_index(database_path)
+    try:
+        assert [row[0] for row in database.execute("SELECT path FROM files ORDER BY path")] == [
+            "second.txt"
+        ]
+    finally:
+        database.close()
+
+
+def test_incomplete_database_is_discarded_before_full_rebuild(tmp_path: Path):
+    repo = init_repo(tmp_path / "repo")
+    (repo / "state.txt").write_text("needle\n", encoding="utf-8")
+    commit_all(repo, "state", 1_700_000_000)
+    database_path = tmp_path / "active.sqlite"
+    incremental.refresh_index(database_path, repo, logical_root=r"C:\logical\repo")
+    database = sqlite3.connect(database_path)
+    try:
+        database.execute("UPDATE metadata SET value = '0' WHERE key = 'build_complete'")
+        database.commit()
+    finally:
+        database.close()
+
+    rebuilt = incremental.refresh_index(
+        database_path, repo, logical_root=r"C:\logical\repo"
+    )
+    assert rebuilt["mode"] == "full"
+    completed = canonical.connect_index(database_path)
+    completed.close()
+
+
+def test_git_delta_reads_only_changed_files_and_skips_per_state_fts_optimize(
+    tmp_path: Path, monkeypatch
+):
+    repo = init_repo(tmp_path / "repo")
+    (repo / "stable.txt").write_text(
+        "stableNeedle alphaShared\nsecond line\nthird line\n", encoding="utf-8"
+    )
+    changing = repo / "changing.txt"
+    changing.write_text(
+        "oldNeedle alphaShared\nsecond line\nthird line\n", encoding="utf-8"
+    )
+    first = commit_all(repo, "first", 1_700_000_000)
+    database_path = tmp_path / "incremental.sqlite"
+    logical_root = r"C:\logical\repo"
+    initial = incremental.refresh_index(
+        database_path,
+        repo,
+        logical_root=logical_root,
+        expected_commit=first,
+        stream_identity="fixture-stream",
+        repository_relative_root="",
+    )
+    assert initial["mode"] == "full"
+
+    changing.write_text(
+        "newNeedle alphaShared\nsecond line changed\nthird line\n", encoding="utf-8"
+    )
+    second = commit_all(repo, "second", 1_700_000_100)
+
+    def forbid_full_snapshot(*_args, **_kwargs):
+        raise AssertionError("ordinary commit unexpectedly audited the full snapshot")
+
+    monkeypatch.setattr(incremental, "_eligible_files", forbid_full_snapshot)
+    statements: list[str] = []
+    original_connect = canonical.connect_index
+
+    def traced_connect(path):
+        connection = original_connect(path)
+        connection.set_trace_callback(statements.append)
+        return connection
+
+    monkeypatch.setattr(canonical, "connect_index", traced_connect)
+    updated = incremental.refresh_index(
+        database_path,
+        repo,
+        logical_root=logical_root,
+        expected_commit=second,
+        stream_identity="fixture-stream",
+        repository_relative_root="",
+    )
+    assert updated["mode"] == "incremental"
+    assert updated["audit_mode"] == "git_delta"
+    assert updated["changed_git_paths"] == 1
+    assert updated["files_changed"] == 1
+    assert updated["canonical_stats"]["delta_files_read"] == 1
+    assert updated["fts_maintenance_policy"] == incremental.FTS_MAINTENANCE_POLICY
+    assert not any(
+        "insert into chunk_fts(chunk_fts) values ('optimize')" in sql.casefold()
+        or "insert into chunk_fts_legacy(chunk_fts_legacy) values ('optimize')"
+        in sql.casefold()
+        for sql in statements
+    )
+
+    # Restore the protected connection helper before building the independent
+    # fresh oracle; the wrapper itself remains the only implementation changed.
+    monkeypatch.setattr(canonical, "connect_index", original_connect)
+    assert_matches_fresh(repo, database_path, tmp_path / "fresh.sqlite", logical_root)
+
+
+def test_git_delta_is_exact_between_non_ancestor_commits(tmp_path: Path):
+    repo = init_repo(tmp_path / "repo")
+    (repo / "base.txt").write_text(
+        "baseNeedle alphaShared\nsecond line\nthird line\n", encoding="utf-8"
+    )
+    base = commit_all(repo, "base", 1_700_000_000)
+    git(repo, "checkout", "-b", "left")
+    (repo / "left.txt").write_text(
+        "oldNeedle alphaShared\nsecond line\nthird line\n", encoding="utf-8"
+    )
+    left = commit_all(repo, "left", 1_700_000_100)
+    database_path = tmp_path / "incremental.sqlite"
+    logical_root = r"C:\logical\repo"
+    incremental.refresh_index(
+        database_path,
+        repo,
+        logical_root=logical_root,
+        expected_commit=left,
+        stream_identity="divergent-stream",
+        repository_relative_root="",
+    )
+
+    git(repo, "checkout", "-b", "right", base)
+    (repo / "right.txt").write_text(
+        "newNeedle alphaShared\nsecond line\nthird line\n", encoding="utf-8"
+    )
+    right = commit_all(repo, "right", 1_700_000_200)
+    updated = incremental.refresh_index(
+        database_path,
+        repo,
+        logical_root=logical_root,
+        expected_commit=right,
+        stream_identity="divergent-stream",
+        repository_relative_root="",
+    )
+    assert updated["audit_mode"] == "git_delta"
+    assert updated["from_commit"] == left
+    assert updated["to_commit"] == right
+    assert updated["files_added"] == 1
+    assert updated["files_removed"] == 1
+    assert_matches_fresh(repo, database_path, tmp_path / "fresh.sqlite", logical_root)
+
+
+@pytest.mark.parametrize("control_name", [".gitignore", ".gitattributes"])
+def test_ancestor_control_change_forces_exact_full_snapshot_audit(
+    tmp_path: Path, control_name: str
+):
+    repo = init_repo(tmp_path / "repo")
+    source = repo / "src"
+    source.mkdir()
+    (source / "keep.txt").write_text(
+        "stableNeedle alphaShared\nsecond line\nthird line\n", encoding="utf-8"
+    )
+    (source / "hidden.txt").write_text(
+        "ignoredSymbol alphaShared\nsecond line\nthird line\n", encoding="utf-8"
+    )
+    first = commit_all(repo, "first", 1_700_000_000)
+    database_path = tmp_path / "incremental.sqlite"
+    logical_root = r"C:\logical\repo\src"
+    incremental.refresh_index(
+        database_path,
+        source,
+        logical_root=logical_root,
+        expected_commit=first,
+        stream_identity="subtree-stream",
+        repository_relative_root="src",
+    )
+
+    if control_name == ".gitignore":
+        (repo / control_name).write_text("src/hidden.txt\n", encoding="utf-8")
+    else:
+        (repo / control_name).write_text("src/*.txt text eol=lf\n", encoding="utf-8")
+    second = commit_all(repo, "control", 1_700_000_100)
+    updated = incremental.refresh_index(
+        database_path,
+        source,
+        logical_root=logical_root,
+        expected_commit=second,
+        stream_identity="subtree-stream",
+        repository_relative_root="src",
+    )
+    assert updated["mode"] == "incremental"
+    assert updated["audit_mode"] == "full_snapshot"
+    assert updated["fallback_reason"] == f"applicable_control_changed:{control_name}"
+    if control_name == ".gitignore":
+        assert updated["files_removed"] == 1
+    assert_matches_fresh(source, database_path, tmp_path / "fresh.sqlite", logical_root)
+
+
+def test_expected_commit_mismatch_fails_before_mutating_completed_index(tmp_path: Path):
+    repo = init_repo(tmp_path / "repo")
+    target = repo / "state.txt"
+    target.write_text("oldNeedle\nsecond line\nthird line\n", encoding="utf-8")
+    first = commit_all(repo, "first", 1_700_000_000)
+    database_path = tmp_path / "incremental.sqlite"
+    incremental.refresh_index(
+        database_path,
+        repo,
+        logical_root=r"C:\logical\repo",
+        expected_commit=first,
+        stream_identity="expected-stream",
+        repository_relative_root="",
+    )
+    before = stable_database_state(database_path)
+    target.write_text("newNeedle\nsecond line\nthird line\n", encoding="utf-8")
+    commit_all(repo, "second", 1_700_000_100)
+
+    with pytest.raises(RuntimeError, match="expected historical commit"):
+        incremental.refresh_index(
+            database_path,
+            repo,
+            logical_root=r"C:\logical\repo",
+            expected_commit=first,
+            stream_identity="expected-stream",
+            repository_relative_root="",
+        )
+    assert stable_database_state(database_path) == before
+
+
+def test_dirty_historical_worktree_is_rejected_before_indexing(tmp_path: Path):
+    repo = init_repo(tmp_path / "repo")
+    target = repo / "state.txt"
+    target.write_text("committedNeedle\nsecond line\nthird line\n", encoding="utf-8")
+    commit = commit_all(repo, "state", 1_700_000_000)
+    target.write_text("dirtyNeedle\nsecond line\nthird line\n", encoding="utf-8")
+
+    with pytest.raises(RuntimeError, match="dirty historical worktree"):
+        incremental.refresh_index(
+            tmp_path / "dirty.sqlite",
+            repo,
+            logical_root=r"C:\logical\repo",
+            expected_commit=commit,
+            stream_identity="dirty-stream",
+            repository_relative_root="",
+        )
+    assert not (tmp_path / "dirty.sqlite").exists()
+
+
+def test_stream_identity_mismatch_forces_canonical_rebuild(tmp_path: Path):
+    repo = init_repo(tmp_path / "repo")
+    (repo / "state.txt").write_text(
+        "stableNeedle\nsecond line\nthird line\n", encoding="utf-8"
+    )
+    commit = commit_all(repo, "state", 1_700_000_000)
+    database_path = tmp_path / "incremental.sqlite"
+    incremental.refresh_index(
+        database_path,
+        repo,
+        logical_root=r"C:\logical\repo",
+        expected_commit=commit,
+        stream_identity="first-stream",
+        repository_relative_root="",
+    )
+    rebuilt = incremental.refresh_index(
+        database_path,
+        repo,
+        logical_root=r"C:\logical\repo",
+        expected_commit=commit,
+        stream_identity="second-stream",
+        repository_relative_root="",
+    )
+    assert rebuilt["mode"] == "full"
+    assert rebuilt["fallback_reason"] == "stream_metadata_mismatch"
+
+
+def test_policy_change_forces_full_snapshot_audit(tmp_path: Path):
+    repo = init_repo(tmp_path / "repo")
+    (repo / "state.txt").write_text(
+        "stableNeedle\nsecond line\nthird line\n", encoding="utf-8"
+    )
+    commit = commit_all(repo, "state", 1_700_000_000)
+    database_path = tmp_path / "incremental.sqlite"
+    incremental.refresh_index(
+        database_path,
+        repo,
+        logical_root=r"C:\logical\repo",
+        expected_commit=commit,
+        stream_identity="policy-stream",
+        repository_relative_root="",
+    )
+    git(repo, "config", "benchmark.synthetic-policy", "changed")
+    updated = incremental.refresh_index(
+        database_path,
+        repo,
+        logical_root=r"C:\logical\repo",
+        expected_commit=commit,
+        stream_identity="policy-stream",
+        repository_relative_root="",
+    )
+    assert updated["mode"] == "incremental"
+    assert updated["audit_mode"] == "full_snapshot"
+    assert updated["fallback_reason"] == "ignore_or_checkout_policy_changed"
+def test_git_queries_enable_longpaths_and_honor_timeout(monkeypatch, tmp_path):
+    observed = {}
+
+    def fake_run(argv, **kwargs):
+        observed["argv"] = argv
+        observed["timeout"] = kwargs["timeout"]
+        return subprocess.CompletedProcess(argv, 0, stdout="ok\n", stderr="")
+
+    monkeypatch.setattr(incremental.subprocess, "run", fake_run)
+    assert incremental._git(tmp_path, ("status", "--short"), timeout=17) == "ok\n"
+    assert observed["argv"][:5] == [
+        "git",
+        "-c",
+        "core.longpaths=true",
+        "-C",
+        str(tmp_path),
+    ]
+    assert observed["timeout"] == 17
+
+
+def test_longpath_environment_is_scoped(monkeypatch):
+    monkeypatch.delenv("GIT_CONFIG_COUNT", raising=False)
+    monkeypatch.delenv("GIT_CONFIG_KEY_0", raising=False)
+    monkeypatch.delenv("GIT_CONFIG_VALUE_0", raising=False)
+    with incremental._longpath_git_environment():
+        assert os.environ["GIT_CONFIG_COUNT"] == "1"
+        assert os.environ["GIT_CONFIG_KEY_0"] == "core.longpaths"
+        assert os.environ["GIT_CONFIG_VALUE_0"] == "true"
+    assert "GIT_CONFIG_COUNT" not in os.environ
+    assert "GIT_CONFIG_KEY_0" not in os.environ
+    assert "GIT_CONFIG_VALUE_0" not in os.environ

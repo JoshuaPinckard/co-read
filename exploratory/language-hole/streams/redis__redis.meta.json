@@ -1,0 +1,50 @@
+{
+  "cap_reason": null,
+  "capped": false,
+  "commit_count": 9920,
+  "completed_at_utc": "2026-08-23T10:38:05+00:00",
+  "first_parent_commit_count": 9920,
+  "git_log_stderr_tail": "Auto packing the repository in background for optimum performance.\nSee \"git help gc\" for manual housekeeping.\n",
+  "merge_commit_count": 1048,
+  "object_storage_after_git_log": {
+    "count": 0,
+    "garbage": 0,
+    "in-pack": 143368,
+    "packs": 53,
+    "prune-packable": 0,
+    "size": 0,
+    "size-garbage": 0,
+    "size-pack": 51790
+  },
+  "object_storage_before_git_log": {
+    "count": 0,
+    "garbage": 0,
+    "in-pack": 70723,
+    "packs": 11,
+    "prune-packable": 0,
+    "size": 0,
+    "size-garbage": 0,
+    "size-pack": 24086
+  },
+  "reachable_commit_count": 13258,
+  "rename_count": 130,
+  "repository": {
+    "axis": "C; no standard test convention",
+    "expected_stress": "Language with no import statement in the scraped sense",
+    "name": "redis/redis",
+    "slug": "redis__redis",
+    "url": "https://github.com/redis/redis.git"
+  },
+  "schema_version": 1,
+  "source_head_sha": "78432ed8e48aba009721a15a88ea8f5c9597b8e5",
+  "started_at_utc": "2026-08-23T10:36:01+00:00",
+  "status": "ok",
+  "status_histogram": {
+    "A": 2564,
+    "D": 706,
+    "M": 25058,
+    "R": 130
+  },
+  "stream_path": "exploratory/language-hole/streams/redis__redis.jsonl.gz",
+  "stream_sha256": "f8239d7f4981b79cd8562d4557ea00b5086bcc9dcade4ca26d121691384ed9f7"
+}

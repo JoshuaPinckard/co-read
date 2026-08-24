@@ -1,0 +1,50 @@
+{
+  "cap_reason": "reachable history 35847 > 20000; left-truncated replay of the most recent 5000; learned indexes started empty",
+  "capped": true,
+  "commit_count": 5000,
+  "completed_at_utc": "2026-08-23T10:57:06+00:00",
+  "first_parent_commit_count": 18651,
+  "git_log_stderr_tail": "Auto packing the repository in background for optimum performance.\nSee \"git help gc\" for manual housekeeping.\nAuto packing the repository in background for optimum performance.\nSee \"git help gc\" for manual housekeeping.\nAuto packing the repository in background for optimum performance.\nSee \"git help gc\" for manual housekeeping.\n",
+  "merge_commit_count": 1602,
+  "object_storage_after_git_log": {
+    "count": 0,
+    "garbage": 0,
+    "in-pack": 224433,
+    "packs": 22,
+    "prune-packable": 0,
+    "size": 0,
+    "size-garbage": 0,
+    "size-pack": 54582
+  },
+  "object_storage_before_git_log": {
+    "count": 0,
+    "garbage": 0,
+    "in-pack": 221044,
+    "packs": 1,
+    "prune-packable": 0,
+    "size": 0,
+    "size-garbage": 0,
+    "size-pack": 49784
+  },
+  "reachable_commit_count": 35847,
+  "rename_count": 3769,
+  "repository": {
+    "axis": "Go + HCL, large",
+    "expected_stress": "Scale",
+    "name": "hashicorp/terraform",
+    "slug": "hashicorp__terraform",
+    "url": "https://github.com/hashicorp/terraform.git"
+  },
+  "schema_version": 1,
+  "source_head_sha": "883c7221ee2e0bc2fad6912fd4b3cc4b53a598a7",
+  "started_at_utc": "2026-08-23T10:49:42+00:00",
+  "status": "ok",
+  "status_histogram": {
+    "A": 4244,
+    "D": 6038,
+    "M": 28845,
+    "R": 3769
+  },
+  "stream_path": "exploratory/language-hole/streams/hashicorp__terraform.jsonl.gz",
+  "stream_sha256": "f523d92863d84498b6a7b8492f9ce5cb904c9f1eb6b5cddc00353d1be15e1d18"
+}

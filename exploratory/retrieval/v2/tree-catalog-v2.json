@@ -1,0 +1,4748 @@
+{
+  "counts": {
+    "outside_any_indexed_tree_by_window": {
+      "300": 480,
+      "60": 415,
+      "900": 487
+    },
+    "records_by_window": {
+      "300": 11931,
+      "60": 10857,
+      "900": 12151
+    },
+    "target_assignments_by_window": {
+      "300": 11931,
+      "60": 10857,
+      "900": 12151
+    }
+  },
+  "schema_version": "tree-catalog-v2/1",
+  "trees": [
+    {
+      "available": false,
+      "current_root": null,
+      "cwd_counts": {
+        "300": 0,
+        "60": 0,
+        "900": 0
+      },
+      "epoch_candidates": [],
+      "evidence": [
+        "current_root_exists=false",
+        "empirical_anchor=c:\\users\\joshp\\appdata\\local\\temp\\claude\\c--users-joshp-desktop-toolsenabled\\09a86b5c-5b96-48f3-8800-fd5e0496753d"
+      ],
+      "logical_root": "c:\\users\\joshp\\appdata\\local\\temp\\claude\\c--users-joshp-desktop-toolsenabled\\09a86b5c-5b96-48f3-8800-fd5e0496753d",
+      "mapping_kind": "unavailable_empirical_tree",
+      "note": "no valid Git boundary and empirical tree root is absent",
+      "repository_identity": null,
+      "repository_relative_root": "",
+      "repository_root": null,
+      "target_counts": {
+        "300": 1,
+        "60": 1,
+        "900": 1
+      },
+      "tree_id": "09a86b5c-5b96-48f3-8800-fd5e0496-e47bf5063fb5"
+    },
+    {
+      "available": true,
+      "current_root": "c:\\users\\joshp\\appdata\\local\\temp\\claude\\c--users-joshp-desktop-toolsenabled-current\\12623d0b-16ac-4d01-8b1a-5f16b4417614",
+      "cwd_counts": {
+        "300": 0,
+        "60": 0,
+        "900": 0
+      },
+      "epoch_candidates": [],
+      "evidence": [
+        "current_root_exists=true",
+        "empirical_anchor=c:\\users\\joshp\\appdata\\local\\temp\\claude\\c--users-joshp-desktop-toolsenabled-current\\12623d0b-16ac-4d01-8b1a-5f16b4417614"
+      ],
+      "logical_root": "c:\\users\\joshp\\appdata\\local\\temp\\claude\\c--users-joshp-desktop-toolsenabled-current\\12623d0b-16ac-4d01-8b1a-5f16b4417614",
+      "mapping_kind": "non_git_current_tree",
+      "note": "no valid Git boundary; current filesystem fallback",
+      "repository_identity": null,
+      "repository_relative_root": "",
+      "repository_root": null,
+      "target_counts": {
+        "300": 7,
+        "60": 5,
+        "900": 7
+      },
+      "tree_id": "12623d0b-16ac-4d01-8b1a-5f16b441-d5229788ef2f"
+    },
+    {
+      "available": true,
+      "current_root": "c:\\users\\joshp\\appdata\\local\\temp\\claude\\c--users-joshp-desktop-toolsenabled-current\\134cc5d6-8208-4505-88ec-e73ed97b2aae",
+      "cwd_counts": {
+        "300": 0,
+        "60": 0,
+        "900": 0
+      },
+      "epoch_candidates": [],
+      "evidence": [
+        "current_root_exists=true",
+        "empirical_anchor=c:\\users\\joshp\\appdata\\local\\temp\\claude\\c--users-joshp-desktop-toolsenabled-current\\134cc5d6-8208-4505-88ec-e73ed97b2aae"
+      ],
+      "logical_root": "c:\\users\\joshp\\appdata\\local\\temp\\claude\\c--users-joshp-desktop-toolsenabled-current\\134cc5d6-8208-4505-88ec-e73ed97b2aae",
+      "mapping_kind": "non_git_current_tree",
+      "note": "no valid Git boundary; current filesystem fallback",
+      "repository_identity": null,
+      "repository_relative_root": "",
+      "repository_root": null,
+      "target_counts": {
+        "300": 6,
+        "60": 3,
+        "900": 6
+      },
+      "tree_id": "134cc5d6-8208-4505-88ec-e73ed97b-eaa846e36917"
+    },
+    {
+      "available": true,
+      "current_root": "c:\\users\\joshp\\appdata\\local\\temp\\claude\\c--users-joshp-desktop-toolsenabled-current\\16571eda-cc20-47ba-9099-eae8f61118d6",
+      "cwd_counts": {
+        "300": 0,
+        "60": 0,
+        "900": 0
+      },
+      "epoch_candidates": [],
+      "evidence": [
+        "current_root_exists=true",
+        "empirical_anchor=c:\\users\\joshp\\appdata\\local\\temp\\claude\\c--users-joshp-desktop-toolsenabled-current\\16571eda-cc20-47ba-9099-eae8f61118d6"
+      ],
+      "logical_root": "c:\\users\\joshp\\appdata\\local\\temp\\claude\\c--users-joshp-desktop-toolsenabled-current\\16571eda-cc20-47ba-9099-eae8f61118d6",
+      "mapping_kind": "non_git_current_tree",
+      "note": "no valid Git boundary; current filesystem fallback",
+      "repository_identity": null,
+      "repository_relative_root": "",
+      "repository_root": null,
+      "target_counts": {
+        "300": 1,
+        "60": 1,
+        "900": 1
+      },
+      "tree_id": "16571eda-cc20-47ba-9099-eae8f611-0f52b7313169"
+    },
+    {
+      "available": false,
+      "current_root": null,
+      "cwd_counts": {
+        "300": 0,
+        "60": 0,
+        "900": 0
+      },
+      "epoch_candidates": [],
+      "evidence": [
+        "current_root_exists=false",
+        "empirical_anchor=c:\\users\\joshp\\appdata\\local\\temp\\claude\\c--users-joshp-desktop-toolsenabled\\1f77c7bb-a78e-4f94-a8e5-3b4000bf503e"
+      ],
+      "logical_root": "c:\\users\\joshp\\appdata\\local\\temp\\claude\\c--users-joshp-desktop-toolsenabled\\1f77c7bb-a78e-4f94-a8e5-3b4000bf503e",
+      "mapping_kind": "unavailable_empirical_tree",
+      "note": "no valid Git boundary and empirical tree root is absent",
+      "repository_identity": null,
+      "repository_relative_root": "",
+      "repository_root": null,
+      "target_counts": {
+        "300": 38,
+        "60": 37,
+        "900": 38
+      },
+      "tree_id": "1f77c7bb-a78e-4f94-a8e5-3b4000bf-7a522bf917eb"
+    },
+    {
+      "available": true,
+      "current_root": "c:\\users\\joshp\\appdata\\local\\temp\\claude\\c--users-joshp-desktop-toolsenabled-current\\34df6152-99f0-46ad-a162-678c324c64ec",
+      "cwd_counts": {
+        "300": 0,
+        "60": 0,
+        "900": 0
+      },
+      "epoch_candidates": [],
+      "evidence": [
+        "current_root_exists=true",
+        "empirical_anchor=c:\\users\\joshp\\appdata\\local\\temp\\claude\\c--users-joshp-desktop-toolsenabled-current\\34df6152-99f0-46ad-a162-678c324c64ec"
+      ],
+      "logical_root": "c:\\users\\joshp\\appdata\\local\\temp\\claude\\c--users-joshp-desktop-toolsenabled-current\\34df6152-99f0-46ad-a162-678c324c64ec",
+      "mapping_kind": "non_git_current_tree",
+      "note": "no valid Git boundary; current filesystem fallback",
+      "repository_identity": null,
+      "repository_relative_root": "",
+      "repository_root": null,
+      "target_counts": {
+        "300": 31,
+        "60": 19,
+        "900": 31
+      },
+      "tree_id": "34df6152-99f0-46ad-a162-678c324c-de89681dd8db"
+    },
+    {
+      "available": false,
+      "current_root": null,
+      "cwd_counts": {
+        "300": 0,
+        "60": 0,
+        "900": 0
+      },
+      "epoch_candidates": [],
+      "evidence": [
+        "current_root_exists=false",
+        "empirical_anchor=c:\\users\\joshp\\appdata\\local\\temp\\claude\\c--users-joshp-desktop-toolsenabled\\376d232b-8945-4514-a7f8-75929f1e296d"
+      ],
+      "logical_root": "c:\\users\\joshp\\appdata\\local\\temp\\claude\\c--users-joshp-desktop-toolsenabled\\376d232b-8945-4514-a7f8-75929f1e296d",
+      "mapping_kind": "unavailable_empirical_tree",
+      "note": "no valid Git boundary and empirical tree root is absent",
+      "repository_identity": null,
+      "repository_relative_root": "",
+      "repository_root": null,
+      "target_counts": {
+        "300": 1,
+        "60": 1,
+        "900": 1
+      },
+      "tree_id": "376d232b-8945-4514-a7f8-75929f1e-df9e0ae42ee1"
+    },
+    {
+      "available": false,
+      "current_root": null,
+      "cwd_counts": {
+        "300": 0,
+        "60": 0,
+        "900": 0
+      },
+      "epoch_candidates": [],
+      "evidence": [
+        "current_root_exists=false",
+        "empirical_anchor=c:\\users\\joshp\\appdata\\local\\temp\\claude\\c--users-joshp-desktop-toolsenabled\\4d31c982-3bbf-4edb-85f1-e86b9fb503bb"
+      ],
+      "logical_root": "c:\\users\\joshp\\appdata\\local\\temp\\claude\\c--users-joshp-desktop-toolsenabled\\4d31c982-3bbf-4edb-85f1-e86b9fb503bb",
+      "mapping_kind": "unavailable_empirical_tree",
+      "note": "no valid Git boundary and empirical tree root is absent",
+      "repository_identity": null,
+      "repository_relative_root": "",
+      "repository_root": null,
+      "target_counts": {
+        "300": 1,
+        "60": 1,
+        "900": 1
+      },
+      "tree_id": "4d31c982-3bbf-4edb-85f1-e86b9fb5-b3106f406815"
+    },
+    {
+      "available": false,
+      "current_root": null,
+      "cwd_counts": {
+        "300": 0,
+        "60": 0,
+        "900": 0
+      },
+      "epoch_candidates": [],
+      "evidence": [
+        "current_root_exists=false",
+        "empirical_anchor=c:\\users\\joshp\\appdata\\local\\temp\\claude\\c--users-joshp-desktop-toolsenabled\\525fb411-010f-4e8b-8299-242994686061"
+      ],
+      "logical_root": "c:\\users\\joshp\\appdata\\local\\temp\\claude\\c--users-joshp-desktop-toolsenabled\\525fb411-010f-4e8b-8299-242994686061",
+      "mapping_kind": "unavailable_empirical_tree",
+      "note": "no valid Git boundary and empirical tree root is absent",
+      "repository_identity": null,
+      "repository_relative_root": "",
+      "repository_root": null,
+      "target_counts": {
+        "300": 1,
+        "60": 1,
+        "900": 1
+      },
+      "tree_id": "525fb411-010f-4e8b-8299-24299468-fd1a6b573157"
+    },
+    {
+      "available": false,
+      "current_root": null,
+      "cwd_counts": {
+        "300": 0,
+        "60": 0,
+        "900": 0
+      },
+      "epoch_candidates": [],
+      "evidence": [
+        "current_root_exists=false",
+        "empirical_anchor=c:\\users\\joshp\\appdata\\local\\temp\\claude\\5fac0f9-namestatus.txt"
+      ],
+      "logical_root": "c:\\users\\joshp\\appdata\\local\\temp\\claude\\5fac0f9-namestatus.txt",
+      "mapping_kind": "unavailable_empirical_tree",
+      "note": "no valid Git boundary and empirical tree root is absent",
+      "repository_identity": null,
+      "repository_relative_root": "",
+      "repository_root": null,
+      "target_counts": {
+        "300": 1,
+        "60": 1,
+        "900": 1
+      },
+      "tree_id": "5fac0f9-namestatus-txt-657b3fedb698"
+    },
+    {
+      "available": false,
+      "current_root": null,
+      "cwd_counts": {
+        "300": 0,
+        "60": 0,
+        "900": 0
+      },
+      "epoch_candidates": [],
+      "evidence": [
+        "current_root_exists=false",
+        "empirical_anchor=c:\\users\\joshp\\appdata\\local\\temp\\claude\\c--users-joshp-desktop-toolsenabled\\6e870ec4-19e5-4915-989f-6840d96cf3c5"
+      ],
+      "logical_root": "c:\\users\\joshp\\appdata\\local\\temp\\claude\\c--users-joshp-desktop-toolsenabled\\6e870ec4-19e5-4915-989f-6840d96cf3c5",
+      "mapping_kind": "unavailable_empirical_tree",
+      "note": "no valid Git boundary and empirical tree root is absent",
+      "repository_identity": null,
+      "repository_relative_root": "",
+      "repository_root": null,
+      "target_counts": {
+        "300": 2,
+        "60": 1,
+        "900": 2
+      },
+      "tree_id": "6e870ec4-19e5-4915-989f-6840d96c-ac88e7a62e7f"
+    },
+    {
+      "available": false,
+      "current_root": null,
+      "cwd_counts": {
+        "300": 0,
+        "60": 0,
+        "900": 0
+      },
+      "epoch_candidates": [],
+      "evidence": [
+        "current_root_exists=false",
+        "empirical_anchor=c:\\users\\joshp\\appdata\\local\\temp\\claude\\c--users-joshp-desktop-toolsenabled\\6f84bf9b-ca7e-43b4-ab1e-5b1db9914a32"
+      ],
+      "logical_root": "c:\\users\\joshp\\appdata\\local\\temp\\claude\\c--users-joshp-desktop-toolsenabled\\6f84bf9b-ca7e-43b4-ab1e-5b1db9914a32",
+      "mapping_kind": "unavailable_empirical_tree",
+      "note": "no valid Git boundary and empirical tree root is absent",
+      "repository_identity": null,
+      "repository_relative_root": "",
+      "repository_root": null,
+      "target_counts": {
+        "300": 37,
+        "60": 29,
+        "900": 38
+      },
+      "tree_id": "6f84bf9b-ca7e-43b4-ab1e-5b1db991-cc33f530c485"
+    },
+    {
+      "available": true,
+      "current_root": null,
+      "cwd_counts": {
+        "300": 5,
+        "60": 5,
+        "900": 5
+      },
+      "epoch_candidates": [],
+      "evidence": [
+        "current_subtree_exists=false",
+        "desktop_repository_identity=c:\\users\\joshp\\desktop\\.git",
+        "subtree=7.1"
+      ],
+      "logical_root": "c:\\users\\joshp\\desktop\\7.1",
+      "mapping_kind": "desktop_repository_subtree",
+      "note": "query path is within one top-level subtree of the broad Desktop repository; historical reconstruction remains available when the current subtree is absent",
+      "repository_identity": "c:\\users\\joshp\\desktop\\.git",
+      "repository_relative_root": "7.1",
+      "repository_root": "c:\\users\\joshp\\desktop",
+      "target_counts": {
+        "300": 20,
+        "60": 20,
+        "900": 20
+      },
+      "tree_id": "7-1-d5c4f08da288"
+    },
+    {
+      "available": true,
+      "current_root": "c:\\users\\joshp\\desktop\\7.1 research",
+      "cwd_counts": {
+        "300": 0,
+        "60": 0,
+        "900": 0
+      },
+      "epoch_candidates": [],
+      "evidence": [
+        "current_subtree_exists=true",
+        "desktop_repository_identity=c:\\users\\joshp\\desktop\\.git",
+        "subtree=7.1 research"
+      ],
+      "logical_root": "c:\\users\\joshp\\desktop\\7.1 research",
+      "mapping_kind": "desktop_repository_subtree",
+      "note": "query path is within one top-level subtree of the broad Desktop repository; historical reconstruction remains available when the current subtree is absent",
+      "repository_identity": "c:\\users\\joshp\\desktop\\.git",
+      "repository_relative_root": "7.1 research",
+      "repository_root": "c:\\users\\joshp\\desktop",
+      "target_counts": {
+        "300": 46,
+        "60": 31,
+        "900": 46
+      },
+      "tree_id": "7-1-research-0145443eac10"
+    },
+    {
+      "available": false,
+      "current_root": null,
+      "cwd_counts": {
+        "300": 0,
+        "60": 0,
+        "900": 0
+      },
+      "epoch_candidates": [],
+      "evidence": [
+        "current_root_exists=false",
+        "empirical_anchor=c:\\users\\joshp\\appdata\\local\\temp\\claude\\c--users-joshp-desktop-toolsenabled\\7f927500-b87f-4302-a53f-c9206a956824"
+      ],
+      "logical_root": "c:\\users\\joshp\\appdata\\local\\temp\\claude\\c--users-joshp-desktop-toolsenabled\\7f927500-b87f-4302-a53f-c9206a956824",
+      "mapping_kind": "unavailable_empirical_tree",
+      "note": "no valid Git boundary and empirical tree root is absent",
+      "repository_identity": null,
+      "repository_relative_root": "",
+      "repository_root": null,
+      "target_counts": {
+        "300": 8,
+        "60": 5,
+        "900": 8
+      },
+      "tree_id": "7f927500-b87f-4302-a53f-c9206a95-a35cbbd56d73"
+    },
+    {
+      "available": true,
+      "current_root": "c:\\users\\joshp\\desktop\\8.14",
+      "cwd_counts": {
+        "300": 0,
+        "60": 0,
+        "900": 0
+      },
+      "epoch_candidates": [],
+      "evidence": [
+        "current_subtree_exists=true",
+        "desktop_repository_identity=c:\\users\\joshp\\desktop\\.git",
+        "subtree=8.14"
+      ],
+      "logical_root": "c:\\users\\joshp\\desktop\\8.14",
+      "mapping_kind": "desktop_repository_subtree",
+      "note": "query path is within one top-level subtree of the broad Desktop repository; historical reconstruction remains available when the current subtree is absent",
+      "repository_identity": "c:\\users\\joshp\\desktop\\.git",
+      "repository_relative_root": "8.14",
+      "repository_root": "c:\\users\\joshp\\desktop",
+      "target_counts": {
+        "300": 3,
+        "60": 2,
+        "900": 3
+      },
+      "tree_id": "8-14-1c2959bdc40c"
+    },
+    {
+      "available": false,
+      "current_root": null,
+      "cwd_counts": {
+        "300": 0,
+        "60": 0,
+        "900": 0
+      },
+      "epoch_candidates": [],
+      "evidence": [
+        "current_root_exists=false",
+        "empirical_anchor=c:\\users\\joshp\\appdata\\local\\temp\\claude\\c--users-joshp-desktop-toolsenabled\\828b2a3f-6215-4a1a-acac-18b720518227"
+      ],
+      "logical_root": "c:\\users\\joshp\\appdata\\local\\temp\\claude\\c--users-joshp-desktop-toolsenabled\\828b2a3f-6215-4a1a-acac-18b720518227",
+      "mapping_kind": "unavailable_empirical_tree",
+      "note": "no valid Git boundary and empirical tree root is absent",
+      "repository_identity": null,
+      "repository_relative_root": "",
+      "repository_root": null,
+      "target_counts": {
+        "300": 2,
+        "60": 2,
+        "900": 2
+      },
+      "tree_id": "828b2a3f-6215-4a1a-acac-18b72051-ef4677e6d22f"
+    },
+    {
+      "available": false,
+      "current_root": null,
+      "cwd_counts": {
+        "300": 0,
+        "60": 0,
+        "900": 0
+      },
+      "epoch_candidates": [],
+      "evidence": [
+        "current_root_exists=false",
+        "empirical_anchor=c:\\users\\joshp\\appdata\\local\\temp\\claude\\c--users-joshp-desktop-toolsenabled\\88ec848a-675e-445a-8ae2-35b66f68dfcf"
+      ],
+      "logical_root": "c:\\users\\joshp\\appdata\\local\\temp\\claude\\c--users-joshp-desktop-toolsenabled\\88ec848a-675e-445a-8ae2-35b66f68dfcf",
+      "mapping_kind": "unavailable_empirical_tree",
+      "note": "no valid Git boundary and empirical tree root is absent",
+      "repository_identity": null,
+      "repository_relative_root": "",
+      "repository_root": null,
+      "target_counts": {
+        "300": 2,
+        "60": 2,
+        "900": 2
+      },
+      "tree_id": "88ec848a-675e-445a-8ae2-35b66f68-76da108856ee"
+    },
+    {
+      "available": false,
+      "current_root": null,
+      "cwd_counts": {
+        "300": 0,
+        "60": 0,
+        "900": 0
+      },
+      "epoch_candidates": [],
+      "evidence": [
+        "current_root_exists=false",
+        "empirical_anchor=c:\\users\\joshp\\appdata\\local\\temp\\claude\\c--users-joshp-desktop-toolsenabled-current\\a33c7c66-505f-4756-ba66-96db0e1aa573"
+      ],
+      "logical_root": "c:\\users\\joshp\\appdata\\local\\temp\\claude\\c--users-joshp-desktop-toolsenabled-current\\a33c7c66-505f-4756-ba66-96db0e1aa573",
+      "mapping_kind": "unavailable_empirical_tree",
+      "note": "no valid Git boundary and empirical tree root is absent",
+      "repository_identity": null,
+      "repository_relative_root": "",
+      "repository_root": null,
+      "target_counts": {
+        "300": 2,
+        "60": 2,
+        "900": 2
+      },
+      "tree_id": "a33c7c66-505f-4756-ba66-96db0e1a-2c40fca6966f"
+    },
+    {
+      "available": true,
+      "current_root": "c:\\users\\joshp\\appdata\\local\\temp\\claude\\c--users-joshp-desktop-toolsenabled-current\\a80279fb-5587-4f2b-98a3-9be7fd5d2d67",
+      "cwd_counts": {
+        "300": 0,
+        "60": 0,
+        "900": 0
+      },
+      "epoch_candidates": [],
+      "evidence": [
+        "current_root_exists=true",
+        "empirical_anchor=c:\\users\\joshp\\appdata\\local\\temp\\claude\\c--users-joshp-desktop-toolsenabled-current\\a80279fb-5587-4f2b-98a3-9be7fd5d2d67"
+      ],
+      "logical_root": "c:\\users\\joshp\\appdata\\local\\temp\\claude\\c--users-joshp-desktop-toolsenabled-current\\a80279fb-5587-4f2b-98a3-9be7fd5d2d67",
+      "mapping_kind": "non_git_current_tree",
+      "note": "no valid Git boundary; current filesystem fallback",
+      "repository_identity": null,
+      "repository_relative_root": "",
+      "repository_root": null,
+      "target_counts": {
+        "300": 34,
+        "60": 34,
+        "900": 34
+      },
+      "tree_id": "a80279fb-5587-4f2b-98a3-9be7fd5d-c3daa5b519ba"
+    },
+    {
+      "available": true,
+      "current_root": "c:\\users\\joshp\\appdata\\local\\temp\\claude\\c--users-joshp-desktop-toolsenabled-current\\34df6152-99f0-46ad-a162-678c324c64ec\\scratchpad\\abstentionbench",
+      "cwd_counts": {
+        "300": 0,
+        "60": 0,
+        "900": 0
+      },
+      "epoch_candidates": [],
+      "evidence": [
+        "git_common_dir=c:\\users\\joshp\\appdata\\local\\temp\\claude\\c--users-joshp-desktop-toolsenabled-current\\34df6152-99f0-46ad-a162-678c324c64ec\\scratchpad\\abstentionbench\\.git",
+        "git_top_level=c:\\users\\joshp\\appdata\\local\\temp\\claude\\c--users-joshp-desktop-toolsenabled-current\\34df6152-99f0-46ad-a162-678c324c64ec\\scratchpad\\abstentionbench"
+      ],
+      "logical_root": "c:\\users\\joshp\\appdata\\local\\temp\\claude\\c--users-joshp-desktop-toolsenabled-current\\34df6152-99f0-46ad-a162-678c324c64ec\\scratchpad\\abstentionbench",
+      "mapping_kind": "current_git_boundary",
+      "note": "nearest valid .git boundary",
+      "repository_identity": "c:\\users\\joshp\\appdata\\local\\temp\\claude\\c--users-joshp-desktop-toolsenabled-current\\34df6152-99f0-46ad-a162-678c324c64ec\\scratchpad\\abstentionbench\\.git",
+      "repository_relative_root": "",
+      "repository_root": "c:\\users\\joshp\\appdata\\local\\temp\\claude\\c--users-joshp-desktop-toolsenabled-current\\34df6152-99f0-46ad-a162-678c324c64ec\\scratchpad\\abstentionbench",
+      "target_counts": {
+        "300": 2,
+        "60": 2,
+        "900": 2
+      },
+      "tree_id": "abstentionbench-ead9071ad2d9"
+    },
+    {
+      "available": true,
+      "current_root": "c:\\users\\joshp\\desktop\\toolsenabled\\historical\\adv1-engine",
+      "cwd_counts": {
+        "300": 0,
+        "60": 0,
+        "900": 0
+      },
+      "epoch_candidates": [],
+      "evidence": [
+        "git_common_dir=c:\\users\\joshp\\desktop\\toolsenabled-current\\.git",
+        "git_top_level=c:\\users\\joshp\\desktop\\toolsenabled\\historical\\adv1-engine"
+      ],
+      "logical_root": "c:\\users\\joshp\\desktop\\toolsenabled\\historical\\adv1-engine",
+      "mapping_kind": "current_git_boundary",
+      "note": "nearest valid .git boundary",
+      "repository_identity": "c:\\users\\joshp\\desktop\\toolsenabled-current\\.git",
+      "repository_relative_root": "",
+      "repository_root": "c:\\users\\joshp\\desktop\\toolsenabled\\historical\\adv1-engine",
+      "target_counts": {
+        "300": 1,
+        "60": 1,
+        "900": 1
+      },
+      "tree_id": "adv1-engine-b294552d099f"
+    },
+    {
+      "available": true,
+      "current_root": "c:\\users\\joshp\\desktop\\toolsenabled-current\\.claude\\worktrees\\agent-aa8f5dfec06cdbcc0",
+      "cwd_counts": {
+        "300": 1,
+        "60": 1,
+        "900": 1
+      },
+      "epoch_candidates": [],
+      "evidence": [
+        "git_common_dir=c:\\users\\joshp\\desktop\\toolsenabled-current\\.git",
+        "git_top_level=c:\\users\\joshp\\desktop\\toolsenabled-current\\.claude\\worktrees\\agent-aa8f5dfec06cdbcc0"
+      ],
+      "logical_root": "c:\\users\\joshp\\desktop\\toolsenabled-current\\.claude\\worktrees\\agent-aa8f5dfec06cdbcc0",
+      "mapping_kind": "current_git_boundary",
+      "note": "nearest valid .git boundary",
+      "repository_identity": "c:\\users\\joshp\\desktop\\toolsenabled-current\\.git",
+      "repository_relative_root": "",
+      "repository_root": "c:\\users\\joshp\\desktop\\toolsenabled-current\\.claude\\worktrees\\agent-aa8f5dfec06cdbcc0",
+      "target_counts": {
+        "300": 1,
+        "60": 1,
+        "900": 1
+      },
+      "tree_id": "agent-aa8f5dfec06cdbcc0-7a5ab044cef7"
+    },
+    {
+      "available": true,
+      "current_root": "c:\\users\\joshp\\desktop\\toolsenabled-current\\.claude\\worktrees\\agent-ac79f13d2cd04f70b",
+      "cwd_counts": {
+        "300": 3,
+        "60": 3,
+        "900": 3
+      },
+      "epoch_candidates": [],
+      "evidence": [
+        "git_common_dir=c:\\users\\joshp\\desktop\\toolsenabled-current\\.git",
+        "git_top_level=c:\\users\\joshp\\desktop\\toolsenabled-current\\.claude\\worktrees\\agent-ac79f13d2cd04f70b"
+      ],
+      "logical_root": "c:\\users\\joshp\\desktop\\toolsenabled-current\\.claude\\worktrees\\agent-ac79f13d2cd04f70b",
+      "mapping_kind": "current_git_boundary",
+      "note": "nearest valid .git boundary",
+      "repository_identity": "c:\\users\\joshp\\desktop\\toolsenabled-current\\.git",
+      "repository_relative_root": "",
+      "repository_root": "c:\\users\\joshp\\desktop\\toolsenabled-current\\.claude\\worktrees\\agent-ac79f13d2cd04f70b",
+      "target_counts": {
+        "300": 3,
+        "60": 3,
+        "900": 3
+      },
+      "tree_id": "agent-ac79f13d2cd04f70b-1a57f528ffed"
+    },
+    {
+      "available": true,
+      "current_root": null,
+      "cwd_counts": {
+        "300": 0,
+        "60": 0,
+        "900": 0
+      },
+      "epoch_candidates": [],
+      "evidence": [
+        "current_subtree_exists=false",
+        "desktop_repository_identity=c:\\users\\joshp\\desktop\\.git",
+        "subtree=agentactivityvisualizer"
+      ],
+      "logical_root": "c:\\users\\joshp\\desktop\\agentactivityvisualizer",
+      "mapping_kind": "desktop_repository_subtree",
+      "note": "query path is within one top-level subtree of the broad Desktop repository; historical reconstruction remains available when the current subtree is absent",
+      "repository_identity": "c:\\users\\joshp\\desktop\\.git",
+      "repository_relative_root": "agentactivityvisualizer",
+      "repository_root": "c:\\users\\joshp\\desktop",
+      "target_counts": {
+        "300": 61,
+        "60": 53,
+        "900": 61
+      },
+      "tree_id": "agentactivityvisualizer-0bdcd632d165"
+    },
+    {
+      "available": true,
+      "current_root": "c:\\users\\joshp\\appdata\\local\\temp\\aicalendar-release-review-cvgvkv",
+      "cwd_counts": {
+        "300": 0,
+        "60": 0,
+        "900": 0
+      },
+      "epoch_candidates": [],
+      "evidence": [
+        "detail=fatal: not a git repository (or any of the parent directories): .git",
+        "git_marker=c:\\users\\joshp\\appdata\\local\\temp\\aicalendar-release-review-cvgvkv\\.git"
+      ],
+      "logical_root": "c:\\users\\joshp\\appdata\\local\\temp\\aicalendar-release-review-cvgvkv",
+      "mapping_kind": "broken_git_marker",
+      "note": "nearest .git marker is not a valid checkout; use current-tree control only",
+      "repository_identity": null,
+      "repository_relative_root": "",
+      "repository_root": null,
+      "target_counts": {
+        "300": 1,
+        "60": 0,
+        "900": 1
+      },
+      "tree_id": "aicalendar-release-review-cvgvkv-6b41cd980c85"
+    },
+    {
+      "available": true,
+      "current_root": "c:\\users\\joshp\\appdata\\local\\temp\\aicalendar-release-review-iny3ku",
+      "cwd_counts": {
+        "300": 0,
+        "60": 0,
+        "900": 0
+      },
+      "epoch_candidates": [],
+      "evidence": [
+        "detail=fatal: not a git repository (or any of the parent directories): .git",
+        "git_marker=c:\\users\\joshp\\appdata\\local\\temp\\aicalendar-release-review-iny3ku\\.git"
+      ],
+      "logical_root": "c:\\users\\joshp\\appdata\\local\\temp\\aicalendar-release-review-iny3ku",
+      "mapping_kind": "broken_git_marker",
+      "note": "nearest .git marker is not a valid checkout; use current-tree control only",
+      "repository_identity": null,
+      "repository_relative_root": "",
+      "repository_root": null,
+      "target_counts": {
+        "300": 1,
+        "60": 1,
+        "900": 1
+      },
+      "tree_id": "aicalendar-release-review-iny3ku-d648472cdf94"
+    },
+    {
+      "available": true,
+      "current_root": "c:\\users\\joshp\\appdata\\local\\temp\\claude\\c--users-joshp-desktop-toolsenabled-current\\34df6152-99f0-46ad-a162-678c324c64ec\\scratchpad\\aider-repo",
+      "cwd_counts": {
+        "300": 0,
+        "60": 0,
+        "900": 0
+      },
+      "epoch_candidates": [],
+      "evidence": [
+        "git_common_dir=c:\\users\\joshp\\appdata\\local\\temp\\claude\\c--users-joshp-desktop-toolsenabled-current\\34df6152-99f0-46ad-a162-678c324c64ec\\scratchpad\\aider-repo\\.git",
+        "git_top_level=c:\\users\\joshp\\appdata\\local\\temp\\claude\\c--users-joshp-desktop-toolsenabled-current\\34df6152-99f0-46ad-a162-678c324c64ec\\scratchpad\\aider-repo"
+      ],
+      "logical_root": "c:\\users\\joshp\\appdata\\local\\temp\\claude\\c--users-joshp-desktop-toolsenabled-current\\34df6152-99f0-46ad-a162-678c324c64ec\\scratchpad\\aider-repo",
+      "mapping_kind": "current_git_boundary",
+      "note": "nearest valid .git boundary",
+      "repository_identity": "c:\\users\\joshp\\appdata\\local\\temp\\claude\\c--users-joshp-desktop-toolsenabled-current\\34df6152-99f0-46ad-a162-678c324c64ec\\scratchpad\\aider-repo\\.git",
+      "repository_relative_root": "",
+      "repository_root": "c:\\users\\joshp\\appdata\\local\\temp\\claude\\c--users-joshp-desktop-toolsenabled-current\\34df6152-99f0-46ad-a162-678c324c64ec\\scratchpad\\aider-repo",
+      "target_counts": {
+        "300": 2,
+        "60": 2,
+        "900": 2
+      },
+      "tree_id": "aider-repo-7c3a599a4f5a"
+    },
+    {
+      "available": true,
+      "current_root": "c:\\users\\joshp\\desktop\\blast-radius",
+      "cwd_counts": {
+        "300": 0,
+        "60": 0,
+        "900": 0
+      },
+      "epoch_candidates": [],
+      "evidence": [
+        "git_common_dir=c:\\users\\joshp\\desktop\\blast-radius\\.git",
+        "git_top_level=c:\\users\\joshp\\desktop\\blast-radius"
+      ],
+      "logical_root": "c:\\users\\joshp\\desktop\\blast-radius",
+      "mapping_kind": "current_git_boundary",
+      "note": "nearest valid .git boundary",
+      "repository_identity": "c:\\users\\joshp\\desktop\\blast-radius\\.git",
+      "repository_relative_root": "",
+      "repository_root": "c:\\users\\joshp\\desktop\\blast-radius",
+      "target_counts": {
+        "300": 1,
+        "60": 1,
+        "900": 1
+      },
+      "tree_id": "blast-radius-bbabbf341cf0"
+    },
+    {
+      "available": true,
+      "current_root": "c:\\users\\joshp\\desktop\\toolsenabled\\business-accounting-marketing",
+      "cwd_counts": {
+        "300": 32,
+        "60": 28,
+        "900": 32
+      },
+      "epoch_candidates": [],
+      "evidence": [
+        "git_common_dir=c:\\users\\joshp\\desktop\\toolsenabled\\business-accounting-marketing\\.git",
+        "git_top_level=c:\\users\\joshp\\desktop\\toolsenabled\\business-accounting-marketing"
+      ],
+      "logical_root": "c:\\users\\joshp\\desktop\\toolsenabled\\business-accounting-marketing",
+      "mapping_kind": "current_git_boundary",
+      "note": "nearest valid .git boundary",
+      "repository_identity": "c:\\users\\joshp\\desktop\\toolsenabled\\business-accounting-marketing\\.git",
+      "repository_relative_root": "",
+      "repository_root": "c:\\users\\joshp\\desktop\\toolsenabled\\business-accounting-marketing",
+      "target_counts": {
+        "300": 24,
+        "60": 24,
+        "900": 24
+      },
+      "tree_id": "business-accounting-marketing-8e7fb00f5edc"
+    },
+    {
+      "available": true,
+      "current_root": null,
+      "cwd_counts": {
+        "300": 0,
+        "60": 0,
+        "900": 0
+      },
+      "epoch_candidates": [],
+      "evidence": [
+        "current_subtree_exists=false",
+        "desktop_repository_identity=c:\\users\\joshp\\desktop\\.git",
+        "subtree=business-formation-prep.md"
+      ],
+      "logical_root": "c:\\users\\joshp\\desktop\\business-formation-prep.md",
+      "mapping_kind": "desktop_repository_subtree",
+      "note": "query path is within one top-level subtree of the broad Desktop repository; historical reconstruction remains available when the current subtree is absent",
+      "repository_identity": "c:\\users\\joshp\\desktop\\.git",
+      "repository_relative_root": "business-formation-prep.md",
+      "repository_root": "c:\\users\\joshp\\desktop",
+      "target_counts": {
+        "300": 1,
+        "60": 1,
+        "900": 1
+      },
+      "tree_id": "business-formation-prep-md-c5750f70251b"
+    },
+    {
+      "available": false,
+      "current_root": null,
+      "cwd_counts": {
+        "300": 0,
+        "60": 0,
+        "900": 0
+      },
+      "epoch_candidates": [],
+      "evidence": [
+        "current_root_exists=false",
+        "empirical_anchor=c:\\users\\joshp\\appdata\\local\\temp\\claude\\c--users-joshp-desktop-toolsenabled"
+      ],
+      "logical_root": "c:\\users\\joshp\\appdata\\local\\temp\\claude\\c--users-joshp-desktop-toolsenabled",
+      "mapping_kind": "unavailable_empirical_tree",
+      "note": "no valid Git boundary and empirical tree root is absent",
+      "repository_identity": null,
+      "repository_relative_root": "",
+      "repository_root": null,
+      "target_counts": {
+        "300": 2,
+        "60": 2,
+        "900": 2
+      },
+      "tree_id": "c-users-joshp-desktop-toolsenabl-2d584ad6737a"
+    },
+    {
+      "available": true,
+      "current_root": "c:\\users\\joshp\\appdata\\local\\programs\\toolsenabled\\resources\\capability",
+      "cwd_counts": {
+        "300": 0,
+        "60": 0,
+        "900": 0
+      },
+      "epoch_candidates": [],
+      "evidence": [
+        "current_root_exists=true",
+        "empirical_anchor=c:\\users\\joshp\\appdata\\local\\programs\\toolsenabled\\resources\\capability"
+      ],
+      "logical_root": "c:\\users\\joshp\\appdata\\local\\programs\\toolsenabled\\resources\\capability",
+      "mapping_kind": "non_git_current_tree",
+      "note": "no valid Git boundary; current filesystem fallback",
+      "repository_identity": null,
+      "repository_relative_root": "",
+      "repository_root": null,
+      "target_counts": {
+        "300": 16,
+        "60": 16,
+        "900": 17
+      },
+      "tree_id": "capability-bf1ec3c1df35"
+    },
+    {
+      "available": true,
+      "current_root": null,
+      "cwd_counts": {
+        "300": 0,
+        "60": 0,
+        "900": 0
+      },
+      "epoch_candidates": [],
+      "evidence": [
+        "current_subtree_exists=false",
+        "desktop_repository_identity=c:\\users\\joshp\\desktop\\.git",
+        "subtree=cerberus"
+      ],
+      "logical_root": "c:\\users\\joshp\\desktop\\cerberus",
+      "mapping_kind": "desktop_repository_subtree",
+      "note": "query path is within one top-level subtree of the broad Desktop repository; historical reconstruction remains available when the current subtree is absent",
+      "repository_identity": "c:\\users\\joshp\\desktop\\.git",
+      "repository_relative_root": "cerberus",
+      "repository_root": "c:\\users\\joshp\\desktop",
+      "target_counts": {
+        "300": 8,
+        "60": 8,
+        "900": 9
+      },
+      "tree_id": "cerberus-04087aec1f67"
+    },
+    {
+      "available": true,
+      "current_root": null,
+      "cwd_counts": {
+        "300": 0,
+        "60": 0,
+        "900": 0
+      },
+      "epoch_candidates": [],
+      "evidence": [
+        "current_subtree_exists=false",
+        "desktop_repository_identity=c:\\users\\joshp\\desktop\\.git",
+        "subtree=cerberus-from-scratch-adversarial-reviewer-plan.md"
+      ],
+      "logical_root": "c:\\users\\joshp\\desktop\\cerberus-from-scratch-adversarial-reviewer-plan.md",
+      "mapping_kind": "desktop_repository_subtree",
+      "note": "query path is within one top-level subtree of the broad Desktop repository; historical reconstruction remains available when the current subtree is absent",
+      "repository_identity": "c:\\users\\joshp\\desktop\\.git",
+      "repository_relative_root": "cerberus-from-scratch-adversarial-reviewer-plan.md",
+      "repository_root": "c:\\users\\joshp\\desktop",
+      "target_counts": {
+        "300": 2,
+        "60": 2,
+        "900": 2
+      },
+      "tree_id": "cerberus-from-scratch-adversaria-e9ff96b21f47"
+    },
+    {
+      "available": true,
+      "current_root": null,
+      "cwd_counts": {
+        "300": 0,
+        "60": 0,
+        "900": 0
+      },
+      "epoch_candidates": [],
+      "evidence": [
+        "current_subtree_exists=false",
+        "desktop_repository_identity=c:\\users\\joshp\\desktop\\.git",
+        "subtree=cerberus-standalone-export-v2"
+      ],
+      "logical_root": "c:\\users\\joshp\\desktop\\cerberus-standalone-export-v2",
+      "mapping_kind": "desktop_repository_subtree",
+      "note": "query path is within one top-level subtree of the broad Desktop repository; historical reconstruction remains available when the current subtree is absent",
+      "repository_identity": "c:\\users\\joshp\\desktop\\.git",
+      "repository_relative_root": "cerberus-standalone-export-v2",
+      "repository_root": "c:\\users\\joshp\\desktop",
+      "target_counts": {
+        "300": 2,
+        "60": 2,
+        "900": 2
+      },
+      "tree_id": "cerberus-standalone-export-v2-cd0abca57527"
+    },
+    {
+      "available": true,
+      "current_root": null,
+      "cwd_counts": {
+        "300": 0,
+        "60": 0,
+        "900": 0
+      },
+      "epoch_candidates": [],
+      "evidence": [
+        "current_subtree_exists=false",
+        "desktop_repository_identity=c:\\users\\joshp\\desktop\\.git",
+        "subtree=cerberus-v2-from-scratch-autonomous-falsifier-plan.md"
+      ],
+      "logical_root": "c:\\users\\joshp\\desktop\\cerberus-v2-from-scratch-autonomous-falsifier-plan.md",
+      "mapping_kind": "desktop_repository_subtree",
+      "note": "query path is within one top-level subtree of the broad Desktop repository; historical reconstruction remains available when the current subtree is absent",
+      "repository_identity": "c:\\users\\joshp\\desktop\\.git",
+      "repository_relative_root": "cerberus-v2-from-scratch-autonomous-falsifier-plan.md",
+      "repository_root": "c:\\users\\joshp\\desktop",
+      "target_counts": {
+        "300": 1,
+        "60": 1,
+        "900": 1
+      },
+      "tree_id": "cerberus-v2-from-scratch-autonom-9fa2cb39aace"
+    },
+    {
+      "available": true,
+      "current_root": "c:\\users\\joshp\\desktop\\toolsenabled\\historical\\certify-app",
+      "cwd_counts": {
+        "300": 0,
+        "60": 0,
+        "900": 0
+      },
+      "epoch_candidates": [],
+      "evidence": [
+        "basename=certify-app",
+        "current_equivalent=c:\\users\\joshp\\desktop\\toolsenabled\\historical\\certify-app",
+        "unique_repository_identity=c:\\users\\joshp\\desktop\\toolsenabled\\opensource\\mission-control\\.git"
+      ],
+      "logical_root": "c:\\users\\joshp\\desktop\\certify-app",
+      "mapping_kind": "worktree_registry_basename_alias",
+      "note": "Desktop child basename uniquely identifies a registered worktree repository",
+      "repository_identity": "c:\\users\\joshp\\desktop\\toolsenabled\\opensource\\mission-control\\.git",
+      "repository_relative_root": "",
+      "repository_root": "c:\\users\\joshp\\desktop\\toolsenabled\\opensource\\mission-control",
+      "target_counts": {
+        "300": 2,
+        "60": 2,
+        "900": 2
+      },
+      "tree_id": "certify-app-f3489f4a032c"
+    },
+    {
+      "available": true,
+      "current_root": "c:\\users\\joshp\\.claude",
+      "cwd_counts": {
+        "300": 0,
+        "60": 0,
+        "900": 0
+      },
+      "epoch_candidates": [],
+      "evidence": [
+        "current_root_exists=true",
+        "empirical_anchor=c:\\users\\joshp\\.claude"
+      ],
+      "logical_root": "c:\\users\\joshp\\.claude",
+      "mapping_kind": "non_git_current_tree",
+      "note": "no valid Git boundary; current filesystem fallback",
+      "repository_identity": null,
+      "repository_relative_root": "",
+      "repository_root": null,
+      "target_counts": {
+        "300": 114,
+        "60": 104,
+        "900": 117
+      },
+      "tree_id": "claude-b2a0d1ab76b9"
+    },
+    {
+      "available": true,
+      "current_root": "c:\\users\\joshp\\appdata\\local\\temp\\claude",
+      "cwd_counts": {
+        "300": 0,
+        "60": 0,
+        "900": 0
+      },
+      "epoch_candidates": [],
+      "evidence": [
+        "current_root_exists=true",
+        "empirical_anchor=c:\\users\\joshp\\appdata\\local\\temp\\claude"
+      ],
+      "logical_root": "c:\\users\\joshp\\appdata\\local\\temp\\claude",
+      "mapping_kind": "non_git_current_tree",
+      "note": "no valid Git boundary; current filesystem fallback",
+      "repository_identity": null,
+      "repository_relative_root": "",
+      "repository_root": null,
+      "target_counts": {
+        "300": 1,
+        "60": 1,
+        "900": 1
+      },
+      "tree_id": "claude-edb48277cc5b"
+    },
+    {
+      "available": true,
+      "current_root": "c:\\users\\joshp\\.claude.json",
+      "cwd_counts": {
+        "300": 0,
+        "60": 0,
+        "900": 0
+      },
+      "epoch_candidates": [],
+      "evidence": [
+        "current_root_exists=true",
+        "empirical_anchor=c:\\users\\joshp\\.claude.json"
+      ],
+      "logical_root": "c:\\users\\joshp\\.claude.json",
+      "mapping_kind": "non_git_current_tree",
+      "note": "no valid Git boundary; current filesystem fallback",
+      "repository_identity": null,
+      "repository_relative_root": "",
+      "repository_root": null,
+      "target_counts": {
+        "300": 3,
+        "60": 3,
+        "900": 3
+      },
+      "tree_id": "claude-json-0ceb06c51fff"
+    },
+    {
+      "available": true,
+      "current_root": "c:\\users\\joshp\\.codex",
+      "cwd_counts": {
+        "300": 0,
+        "60": 0,
+        "900": 0
+      },
+      "epoch_candidates": [],
+      "evidence": [
+        "current_root_exists=true",
+        "empirical_anchor=c:\\users\\joshp\\.codex"
+      ],
+      "logical_root": "c:\\users\\joshp\\.codex",
+      "mapping_kind": "non_git_current_tree",
+      "note": "no valid Git boundary; current filesystem fallback",
+      "repository_identity": null,
+      "repository_relative_root": "",
+      "repository_root": null,
+      "target_counts": {
+        "300": 2,
+        "60": 2,
+        "900": 2
+      },
+      "tree_id": "codex-1001f0b2b6a6"
+    },
+    {
+      "available": true,
+      "current_root": null,
+      "cwd_counts": {
+        "300": 0,
+        "60": 0,
+        "900": 0
+      },
+      "epoch_candidates": [],
+      "evidence": [
+        "current_subtree_exists=false",
+        "desktop_repository_identity=c:\\users\\joshp\\desktop\\.git",
+        "subtree=coordinator-handoff-2.md"
+      ],
+      "logical_root": "c:\\users\\joshp\\desktop\\coordinator-handoff-2.md",
+      "mapping_kind": "desktop_repository_subtree",
+      "note": "query path is within one top-level subtree of the broad Desktop repository; historical reconstruction remains available when the current subtree is absent",
+      "repository_identity": "c:\\users\\joshp\\desktop\\.git",
+      "repository_relative_root": "coordinator-handoff-2.md",
+      "repository_root": "c:\\users\\joshp\\desktop",
+      "target_counts": {
+        "300": 1,
+        "60": 1,
+        "900": 1
+      },
+      "tree_id": "coordinator-handoff-2-md-c7d16bc02c1f"
+    },
+    {
+      "available": true,
+      "current_root": null,
+      "cwd_counts": {
+        "300": 0,
+        "60": 0,
+        "900": 0
+      },
+      "epoch_candidates": [],
+      "evidence": [
+        "current_subtree_exists=false",
+        "desktop_repository_identity=c:\\users\\joshp\\desktop\\.git",
+        "subtree=currentwork86"
+      ],
+      "logical_root": "c:\\users\\joshp\\desktop\\currentwork86",
+      "mapping_kind": "desktop_repository_subtree",
+      "note": "query path is within one top-level subtree of the broad Desktop repository; historical reconstruction remains available when the current subtree is absent",
+      "repository_identity": "c:\\users\\joshp\\desktop\\.git",
+      "repository_relative_root": "currentwork86",
+      "repository_root": "c:\\users\\joshp\\desktop",
+      "target_counts": {
+        "300": 12,
+        "60": 11,
+        "900": 12
+      },
+      "tree_id": "currentwork86-799faecf77a1"
+    },
+    {
+      "available": true,
+      "current_root": "c:\\users\\joshp\\desktop\\toolsenabled\\fra-bridge-tunnel\\cut-app-public-v2",
+      "cwd_counts": {
+        "300": 0,
+        "60": 0,
+        "900": 0
+      },
+      "epoch_candidates": [],
+      "evidence": [
+        "git_common_dir=c:\\users\\joshp\\desktop\\toolsenabled\\fra-bridge-tunnel\\cut-app-public-v2\\.git",
+        "git_top_level=c:\\users\\joshp\\desktop\\toolsenabled\\fra-bridge-tunnel\\cut-app-public-v2"
+      ],
+      "logical_root": "c:\\users\\joshp\\desktop\\toolsenabled\\fra-bridge-tunnel\\cut-app-public-v2",
+      "mapping_kind": "current_git_boundary",
+      "note": "nearest valid .git boundary",
+      "repository_identity": "c:\\users\\joshp\\desktop\\toolsenabled\\fra-bridge-tunnel\\cut-app-public-v2\\.git",
+      "repository_relative_root": "",
+      "repository_root": "c:\\users\\joshp\\desktop\\toolsenabled\\fra-bridge-tunnel\\cut-app-public-v2",
+      "target_counts": {
+        "300": 3,
+        "60": 2,
+        "900": 3
+      },
+      "tree_id": "cut-app-public-v2-193bcad44774"
+    },
+    {
+      "available": true,
+      "current_root": "c:\\users\\joshp\\desktop\\toolsenabled\\fra-bridge-tunnel\\cut-relay-public-v2",
+      "cwd_counts": {
+        "300": 0,
+        "60": 0,
+        "900": 0
+      },
+      "epoch_candidates": [],
+      "evidence": [
+        "git_common_dir=c:\\users\\joshp\\desktop\\toolsenabled\\fra-bridge-tunnel\\cut-relay-public-v2\\.git",
+        "git_top_level=c:\\users\\joshp\\desktop\\toolsenabled\\fra-bridge-tunnel\\cut-relay-public-v2"
+      ],
+      "logical_root": "c:\\users\\joshp\\desktop\\toolsenabled\\fra-bridge-tunnel\\cut-relay-public-v2",
+      "mapping_kind": "current_git_boundary",
+      "note": "nearest valid .git boundary",
+      "repository_identity": "c:\\users\\joshp\\desktop\\toolsenabled\\fra-bridge-tunnel\\cut-relay-public-v2\\.git",
+      "repository_relative_root": "",
+      "repository_root": "c:\\users\\joshp\\desktop\\toolsenabled\\fra-bridge-tunnel\\cut-relay-public-v2",
+      "target_counts": {
+        "300": 4,
+        "60": 4,
+        "900": 4
+      },
+      "tree_id": "cut-relay-public-v2-5f4a59b9d903"
+    },
+    {
+      "available": false,
+      "current_root": null,
+      "cwd_counts": {
+        "300": 0,
+        "60": 0,
+        "900": 0
+      },
+      "epoch_candidates": [],
+      "evidence": [
+        "current_root_exists=false",
+        "empirical_anchor=c:\\users\\joshp\\appdata\\local\\temp\\claude\\c--\\d221f1df-0e73-4ca6-aede-492fbf19c7a6"
+      ],
+      "logical_root": "c:\\users\\joshp\\appdata\\local\\temp\\claude\\c--\\d221f1df-0e73-4ca6-aede-492fbf19c7a6",
+      "mapping_kind": "unavailable_empirical_tree",
+      "note": "no valid Git boundary and empirical tree root is absent",
+      "repository_identity": null,
+      "repository_relative_root": "",
+      "repository_root": null,
+      "target_counts": {
+        "300": 1,
+        "60": 1,
+        "900": 2
+      },
+      "tree_id": "d221f1df-0e73-4ca6-aede-492fbf19-f1e29a88a868"
+    },
+    {
+      "available": false,
+      "current_root": null,
+      "cwd_counts": {
+        "300": 0,
+        "60": 0,
+        "900": 0
+      },
+      "epoch_candidates": [],
+      "evidence": [
+        "current_root_exists=false",
+        "empirical_anchor=c:\\users\\joshp\\appdata\\local\\temp\\claude\\c--users-joshp-desktop-toolsenabled\\d4ca9820-9678-4fd2-aefc-909d5b96228a"
+      ],
+      "logical_root": "c:\\users\\joshp\\appdata\\local\\temp\\claude\\c--users-joshp-desktop-toolsenabled\\d4ca9820-9678-4fd2-aefc-909d5b96228a",
+      "mapping_kind": "unavailable_empirical_tree",
+      "note": "no valid Git boundary and empirical tree root is absent",
+      "repository_identity": null,
+      "repository_relative_root": "",
+      "repository_root": null,
+      "target_counts": {
+        "300": 1,
+        "60": 1,
+        "900": 1
+      },
+      "tree_id": "d4ca9820-9678-4fd2-aefc-909d5b96-28f0a876ff7f"
+    },
+    {
+      "available": false,
+      "current_root": null,
+      "cwd_counts": {
+        "300": 0,
+        "60": 0,
+        "900": 0
+      },
+      "epoch_candidates": [],
+      "evidence": [
+        "current_root_exists=false",
+        "empirical_anchor=c:\\users\\joshp\\appdata\\local\\temp\\claude\\c--users-joshp-desktop-toolsenabled\\d5adae9b-d787-4be4-843c-36c88f8ac24c"
+      ],
+      "logical_root": "c:\\users\\joshp\\appdata\\local\\temp\\claude\\c--users-joshp-desktop-toolsenabled\\d5adae9b-d787-4be4-843c-36c88f8ac24c",
+      "mapping_kind": "unavailable_empirical_tree",
+      "note": "no valid Git boundary and empirical tree root is absent",
+      "repository_identity": null,
+      "repository_relative_root": "",
+      "repository_root": null,
+      "target_counts": {
+        "300": 6,
+        "60": 6,
+        "900": 6
+      },
+      "tree_id": "d5adae9b-d787-4be4-843c-36c88f8a-2af6c3fcf794"
+    },
+    {
+      "available": true,
+      "current_root": "c:\\users\\joshp\\appdata\\local\\temp\\claude\\c--users-joshp-desktop-toolsenabled-fra-bridge-tunnel\\d751553f-2f52-429b-a235-d73ed449a4c6",
+      "cwd_counts": {
+        "300": 0,
+        "60": 0,
+        "900": 0
+      },
+      "epoch_candidates": [],
+      "evidence": [
+        "current_root_exists=true",
+        "empirical_anchor=c:\\users\\joshp\\appdata\\local\\temp\\claude\\c--users-joshp-desktop-toolsenabled-fra-bridge-tunnel\\d751553f-2f52-429b-a235-d73ed449a4c6"
+      ],
+      "logical_root": "c:\\users\\joshp\\appdata\\local\\temp\\claude\\c--users-joshp-desktop-toolsenabled-fra-bridge-tunnel\\d751553f-2f52-429b-a235-d73ed449a4c6",
+      "mapping_kind": "non_git_current_tree",
+      "note": "no valid Git boundary; current filesystem fallback",
+      "repository_identity": null,
+      "repository_relative_root": "",
+      "repository_root": null,
+      "target_counts": {
+        "300": 1,
+        "60": 0,
+        "900": 1
+      },
+      "tree_id": "d751553f-2f52-429b-a235-d73ed449-95b8d7704747"
+    },
+    {
+      "available": true,
+      "current_root": "c:\\users\\joshp\\appdata\\local\\temp\\claude\\c--users-joshp-desktop-toolsenabled-legal\\ddef9e2d-f612-4047-bb07-81d8495b7bfe",
+      "cwd_counts": {
+        "300": 0,
+        "60": 0,
+        "900": 0
+      },
+      "epoch_candidates": [],
+      "evidence": [
+        "empirical_anchor=c:\\users\\joshp\\appdata\\local\\temp\\claude\\c--users-joshp-desktop-toolsenabled-legal\\ddef9e2d-f612-4047-bb07-81d8495b7bfe",
+        "current_root_exists=true"
+      ],
+      "logical_root": "c:\\users\\joshp\\appdata\\local\\temp\\claude\\c--users-joshp-desktop-toolsenabled-legal\\ddef9e2d-f612-4047-bb07-81d8495b7bfe",
+      "mapping_kind": "non_git_current_tree",
+      "note": "no valid Git boundary; current filesystem fallback",
+      "repository_identity": null,
+      "repository_relative_root": "",
+      "repository_root": null,
+      "target_counts": {
+        "300": 0,
+        "60": 0,
+        "900": 1
+      },
+      "tree_id": "ddef9e2d-f612-4047-bb07-81d8495b-d99d9cf15ed8"
+    },
+    {
+      "available": true,
+      "current_root": "c:\\users\\joshp\\appdata\\local\\temp\\claude\\c--users-joshp-desktop-toolsenabled-current\\dee38cca-5b24-471e-b6c6-7cf5668071fb",
+      "cwd_counts": {
+        "300": 0,
+        "60": 0,
+        "900": 0
+      },
+      "epoch_candidates": [],
+      "evidence": [
+        "current_root_exists=true",
+        "empirical_anchor=c:\\users\\joshp\\appdata\\local\\temp\\claude\\c--users-joshp-desktop-toolsenabled-current\\dee38cca-5b24-471e-b6c6-7cf5668071fb"
+      ],
+      "logical_root": "c:\\users\\joshp\\appdata\\local\\temp\\claude\\c--users-joshp-desktop-toolsenabled-current\\dee38cca-5b24-471e-b6c6-7cf5668071fb",
+      "mapping_kind": "non_git_current_tree",
+      "note": "no valid Git boundary; current filesystem fallback",
+      "repository_identity": null,
+      "repository_relative_root": "",
+      "repository_root": null,
+      "target_counts": {
+        "300": 10,
+        "60": 7,
+        "900": 10
+      },
+      "tree_id": "dee38cca-5b24-471e-b6c6-7cf56680-645dc34c287b"
+    },
+    {
+      "available": true,
+      "current_root": "c:\\users\\joshp\\desktop",
+      "cwd_counts": {
+        "300": 0,
+        "60": 0,
+        "900": 0
+      },
+      "epoch_candidates": [],
+      "evidence": [
+        "git_common_dir=c:\\users\\joshp\\desktop\\.git",
+        "git_top_level=c:\\users\\joshp\\desktop"
+      ],
+      "logical_root": "c:\\users\\joshp\\desktop",
+      "mapping_kind": "current_git_boundary",
+      "note": "nearest valid .git boundary",
+      "repository_identity": "c:\\users\\joshp\\desktop\\.git",
+      "repository_relative_root": "",
+      "repository_root": "c:\\users\\joshp\\desktop",
+      "target_counts": {
+        "300": 22,
+        "60": 21,
+        "900": 23
+      },
+      "tree_id": "desktop-6fc9562fffdd"
+    },
+    {
+      "available": false,
+      "current_root": null,
+      "cwd_counts": {
+        "300": 0,
+        "60": 0,
+        "900": 0
+      },
+      "epoch_candidates": [],
+      "evidence": [
+        "current_root_exists=false",
+        "empirical_anchor=c:\\users\\joshp\\appdata\\local\\temp\\claude\\c--users-joshp-desktop-toolsenabled-current\\eed3b788-5eb9-4880-927f-9c7e85e32e0b"
+      ],
+      "logical_root": "c:\\users\\joshp\\appdata\\local\\temp\\claude\\c--users-joshp-desktop-toolsenabled-current\\eed3b788-5eb9-4880-927f-9c7e85e32e0b",
+      "mapping_kind": "unavailable_empirical_tree",
+      "note": "no valid Git boundary and empirical tree root is absent",
+      "repository_identity": null,
+      "repository_relative_root": "",
+      "repository_root": null,
+      "target_counts": {
+        "300": 11,
+        "60": 9,
+        "900": 11
+      },
+      "tree_id": "eed3b788-5eb9-4880-927f-9c7e85e3-9ade9162c954"
+    },
+    {
+      "available": true,
+      "current_root": "c:\\users\\joshp\\desktop\\toolsenabled\\engine",
+      "cwd_counts": {
+        "300": 0,
+        "60": 0,
+        "900": 0
+      },
+      "epoch_candidates": [],
+      "evidence": [
+        "git_common_dir=c:\\users\\joshp\\desktop\\toolsenabled\\engine\\.git",
+        "git_top_level=c:\\users\\joshp\\desktop\\toolsenabled\\engine"
+      ],
+      "logical_root": "c:\\users\\joshp\\desktop\\toolsenabled\\engine",
+      "mapping_kind": "current_git_boundary",
+      "note": "nearest valid .git boundary",
+      "repository_identity": "c:\\users\\joshp\\desktop\\toolsenabled\\engine\\.git",
+      "repository_relative_root": "",
+      "repository_root": "c:\\users\\joshp\\desktop\\toolsenabled\\engine",
+      "target_counts": {
+        "300": 272,
+        "60": 220,
+        "900": 276
+      },
+      "tree_id": "engine-37cdfbe08d02"
+    },
+    {
+      "available": true,
+      "current_root": "c:\\lanes\\free-cut-engine-src",
+      "cwd_counts": {
+        "300": 0,
+        "60": 0,
+        "900": 0
+      },
+      "epoch_candidates": [],
+      "evidence": [
+        "git_common_dir=c:\\users\\joshp\\desktop\\toolsenabled-current\\.git",
+        "git_top_level=c:\\lanes\\free-cut-engine-src"
+      ],
+      "logical_root": "c:\\lanes\\free-cut-engine-src",
+      "mapping_kind": "current_git_boundary",
+      "note": "nearest valid .git boundary",
+      "repository_identity": "c:\\users\\joshp\\desktop\\toolsenabled-current\\.git",
+      "repository_relative_root": "",
+      "repository_root": "c:\\lanes\\free-cut-engine-src",
+      "target_counts": {
+        "300": 124,
+        "60": 109,
+        "900": 125
+      },
+      "tree_id": "free-cut-engine-src-ec4f2e081a2a"
+    },
+    {
+      "available": true,
+      "current_root": "c:\\users\\joshp\\.gemini",
+      "cwd_counts": {
+        "300": 0,
+        "60": 0,
+        "900": 0
+      },
+      "epoch_candidates": [],
+      "evidence": [
+        "current_root_exists=true",
+        "empirical_anchor=c:\\users\\joshp\\.gemini"
+      ],
+      "logical_root": "c:\\users\\joshp\\.gemini",
+      "mapping_kind": "non_git_current_tree",
+      "note": "no valid Git boundary; current filesystem fallback",
+      "repository_identity": null,
+      "repository_relative_root": "",
+      "repository_root": null,
+      "target_counts": {
+        "300": 1,
+        "60": 1,
+        "900": 1
+      },
+      "tree_id": "gemini-cee31f7e8441"
+    },
+    {
+      "available": true,
+      "current_root": "c:\\users\\joshp\\appdata\\roaming\\npm\\node_modules\\@google\\gemini-cli",
+      "cwd_counts": {
+        "300": 0,
+        "60": 0,
+        "900": 0
+      },
+      "epoch_candidates": [],
+      "evidence": [
+        "current_root_exists=true",
+        "empirical_anchor=c:\\users\\joshp\\appdata\\roaming\\npm\\node_modules\\@google\\gemini-cli"
+      ],
+      "logical_root": "c:\\users\\joshp\\appdata\\roaming\\npm\\node_modules\\@google\\gemini-cli",
+      "mapping_kind": "non_git_current_tree",
+      "note": "no valid Git boundary; current filesystem fallback",
+      "repository_identity": null,
+      "repository_relative_root": "",
+      "repository_root": null,
+      "target_counts": {
+        "300": 19,
+        "60": 14,
+        "900": 19
+      },
+      "tree_id": "gemini-cli-097faa2a9ad9"
+    },
+    {
+      "available": false,
+      "current_root": null,
+      "cwd_counts": {
+        "300": 0,
+        "60": 0,
+        "900": 0
+      },
+      "epoch_candidates": [],
+      "evidence": [
+        "current_root_exists=false",
+        "empirical_anchor=c:\\lanes\\hp3-wt"
+      ],
+      "logical_root": "c:\\lanes\\hp3-wt",
+      "mapping_kind": "unavailable_empirical_tree",
+      "note": "no valid Git boundary and empirical tree root is absent",
+      "repository_identity": null,
+      "repository_relative_root": "",
+      "repository_root": null,
+      "target_counts": {
+        "300": 1,
+        "60": 0,
+        "900": 1
+      },
+      "tree_id": "hp3-wt-5dfe773b6a43"
+    },
+    {
+      "available": true,
+      "current_root": "c:\\users\\joshp\\appdata\\local\\temp\\claude\\c--users-joshp-desktop-toolsenabled-current\\34df6152-99f0-46ad-a162-678c324c64ec\\scratchpad\\human-eval-comm",
+      "cwd_counts": {
+        "300": 0,
+        "60": 0,
+        "900": 0
+      },
+      "epoch_candidates": [],
+      "evidence": [
+        "git_common_dir=c:\\users\\joshp\\appdata\\local\\temp\\claude\\c--users-joshp-desktop-toolsenabled-current\\34df6152-99f0-46ad-a162-678c324c64ec\\scratchpad\\human-eval-comm\\.git",
+        "git_top_level=c:\\users\\joshp\\appdata\\local\\temp\\claude\\c--users-joshp-desktop-toolsenabled-current\\34df6152-99f0-46ad-a162-678c324c64ec\\scratchpad\\human-eval-comm"
+      ],
+      "logical_root": "c:\\users\\joshp\\appdata\\local\\temp\\claude\\c--users-joshp-desktop-toolsenabled-current\\34df6152-99f0-46ad-a162-678c324c64ec\\scratchpad\\human-eval-comm",
+      "mapping_kind": "current_git_boundary",
+      "note": "nearest valid .git boundary",
+      "repository_identity": "c:\\users\\joshp\\appdata\\local\\temp\\claude\\c--users-joshp-desktop-toolsenabled-current\\34df6152-99f0-46ad-a162-678c324c64ec\\scratchpad\\human-eval-comm\\.git",
+      "repository_relative_root": "",
+      "repository_root": "c:\\users\\joshp\\appdata\\local\\temp\\claude\\c--users-joshp-desktop-toolsenabled-current\\34df6152-99f0-46ad-a162-678c324c64ec\\scratchpad\\human-eval-comm",
+      "target_counts": {
+        "300": 2,
+        "60": 2,
+        "900": 2
+      },
+      "tree_id": "human-eval-comm-c476caf38856"
+    },
+    {
+      "available": true,
+      "current_root": "c:\\users\\joshp\\desktop\\lean-bench",
+      "cwd_counts": {
+        "300": 0,
+        "60": 0,
+        "900": 0
+      },
+      "epoch_candidates": [],
+      "evidence": [
+        "git_common_dir=c:\\users\\joshp\\desktop\\lean-bench\\.git",
+        "git_top_level=c:\\users\\joshp\\desktop\\lean-bench"
+      ],
+      "logical_root": "c:\\users\\joshp\\desktop\\lean-bench",
+      "mapping_kind": "current_git_boundary",
+      "note": "nearest valid .git boundary",
+      "repository_identity": "c:\\users\\joshp\\desktop\\lean-bench\\.git",
+      "repository_relative_root": "",
+      "repository_root": "c:\\users\\joshp\\desktop\\lean-bench",
+      "target_counts": {
+        "300": 12,
+        "60": 11,
+        "900": 12
+      },
+      "tree_id": "lean-bench-603c1e35c31e"
+    },
+    {
+      "available": true,
+      "current_root": "c:\\users\\joshp\\desktop\\llmbenchmarking\\lean-bench",
+      "cwd_counts": {
+        "300": 0,
+        "60": 0,
+        "900": 0
+      },
+      "epoch_candidates": [],
+      "evidence": [
+        "git_common_dir=c:\\users\\joshp\\desktop\\llmbenchmarking\\lean-bench\\.git",
+        "git_top_level=c:\\users\\joshp\\desktop\\llmbenchmarking\\lean-bench"
+      ],
+      "logical_root": "c:\\users\\joshp\\desktop\\llmbenchmarking\\lean-bench",
+      "mapping_kind": "current_git_boundary",
+      "note": "nearest valid .git boundary",
+      "repository_identity": "c:\\users\\joshp\\desktop\\llmbenchmarking\\lean-bench\\.git",
+      "repository_relative_root": "",
+      "repository_root": "c:\\users\\joshp\\desktop\\llmbenchmarking\\lean-bench",
+      "target_counts": {
+        "300": 9,
+        "60": 2,
+        "900": 9
+      },
+      "tree_id": "lean-bench-d8df209d2644"
+    },
+    {
+      "available": true,
+      "current_root": "c:\\users\\joshp\\desktop\\lean-bench-research",
+      "cwd_counts": {
+        "300": 0,
+        "60": 0,
+        "900": 0
+      },
+      "epoch_candidates": [],
+      "evidence": [
+        "detail=git ignored the local .git marker and ascended to another repository: marker=c:\\users\\joshp\\desktop\\lean-bench-research\\.git; discovered=c:\\users\\joshp\\desktop\\.git",
+        "git_marker=c:\\users\\joshp\\desktop\\lean-bench-research\\.git"
+      ],
+      "logical_root": "c:\\users\\joshp\\desktop\\lean-bench-research",
+      "mapping_kind": "broken_git_marker",
+      "note": "nearest .git marker is not a valid checkout; use current-tree control only",
+      "repository_identity": null,
+      "repository_relative_root": "",
+      "repository_root": null,
+      "target_counts": {
+        "300": 69,
+        "60": 61,
+        "900": 69
+      },
+      "tree_id": "lean-bench-research-55cbd6d61cb8"
+    },
+    {
+      "available": true,
+      "current_root": "c:\\users\\joshp\\appdata\\local\\temp\\claude\\c--users-joshp-desktop-toolsenabled-current\\34df6152-99f0-46ad-a162-678c324c64ec\\scratchpad\\learning_to_ask",
+      "cwd_counts": {
+        "300": 0,
+        "60": 0,
+        "900": 0
+      },
+      "epoch_candidates": [],
+      "evidence": [
+        "git_common_dir=c:\\users\\joshp\\appdata\\local\\temp\\claude\\c--users-joshp-desktop-toolsenabled-current\\34df6152-99f0-46ad-a162-678c324c64ec\\scratchpad\\learning_to_ask\\.git",
+        "git_top_level=c:\\users\\joshp\\appdata\\local\\temp\\claude\\c--users-joshp-desktop-toolsenabled-current\\34df6152-99f0-46ad-a162-678c324c64ec\\scratchpad\\learning_to_ask"
+      ],
+      "logical_root": "c:\\users\\joshp\\appdata\\local\\temp\\claude\\c--users-joshp-desktop-toolsenabled-current\\34df6152-99f0-46ad-a162-678c324c64ec\\scratchpad\\learning_to_ask",
+      "mapping_kind": "current_git_boundary",
+      "note": "nearest valid .git boundary",
+      "repository_identity": "c:\\users\\joshp\\appdata\\local\\temp\\claude\\c--users-joshp-desktop-toolsenabled-current\\34df6152-99f0-46ad-a162-678c324c64ec\\scratchpad\\learning_to_ask\\.git",
+      "repository_relative_root": "",
+      "repository_root": "c:\\users\\joshp\\appdata\\local\\temp\\claude\\c--users-joshp-desktop-toolsenabled-current\\34df6152-99f0-46ad-a162-678c324c64ec\\scratchpad\\learning_to_ask",
+      "target_counts": {
+        "300": 1,
+        "60": 1,
+        "900": 1
+      },
+      "tree_id": "learning-to-ask-f74792255ea9"
+    },
+    {
+      "available": true,
+      "current_root": "c:\\users\\joshp\\desktop\\toolsenabled\\legacy",
+      "cwd_counts": {
+        "300": 0,
+        "60": 0,
+        "900": 0
+      },
+      "epoch_candidates": [],
+      "evidence": [
+        "git_common_dir=c:\\users\\joshp\\desktop\\toolsenabled\\legacy\\.git",
+        "git_top_level=c:\\users\\joshp\\desktop\\toolsenabled\\legacy"
+      ],
+      "logical_root": "c:\\users\\joshp\\desktop\\toolsenabled\\legacy",
+      "mapping_kind": "current_git_boundary",
+      "note": "nearest valid .git boundary",
+      "repository_identity": "c:\\users\\joshp\\desktop\\toolsenabled\\legacy\\.git",
+      "repository_relative_root": "",
+      "repository_root": "c:\\users\\joshp\\desktop\\toolsenabled\\legacy",
+      "target_counts": {
+        "300": 1,
+        "60": 1,
+        "900": 1
+      },
+      "tree_id": "legacy-d81169e54b63"
+    },
+    {
+      "available": true,
+      "current_root": "c:\\users\\joshp\\desktop\\8.14\\school\\7.1 research\\llmdataacquisition",
+      "cwd_counts": {
+        "300": 0,
+        "60": 0,
+        "900": 0
+      },
+      "epoch_candidates": [],
+      "evidence": [
+        "git_common_dir=c:\\users\\joshp\\desktop\\8.14\\school\\7.1 research\\llmdataacquisition\\.git",
+        "git_top_level=c:\\users\\joshp\\desktop\\8.14\\school\\7.1 research\\llmdataacquisition"
+      ],
+      "logical_root": "c:\\users\\joshp\\desktop\\8.14\\school\\7.1 research\\llmdataacquisition",
+      "mapping_kind": "current_git_boundary",
+      "note": "nearest valid .git boundary",
+      "repository_identity": "c:\\users\\joshp\\desktop\\8.14\\school\\7.1 research\\llmdataacquisition\\.git",
+      "repository_relative_root": "",
+      "repository_root": "c:\\users\\joshp\\desktop\\8.14\\school\\7.1 research\\llmdataacquisition",
+      "target_counts": {
+        "300": 7,
+        "60": 6,
+        "900": 7
+      },
+      "tree_id": "llmdataacquisition-0d10f70f57a6"
+    },
+    {
+      "available": true,
+      "current_root": "c:\\users\\joshp\\desktop\\7.1 research\\llmdataacquisition",
+      "cwd_counts": {
+        "300": 0,
+        "60": 0,
+        "900": 0
+      },
+      "epoch_candidates": [],
+      "evidence": [
+        "git_common_dir=c:\\users\\joshp\\desktop\\8.14\\school\\7.1 research\\llmdataacquisition\\.git",
+        "git_top_level=c:\\users\\joshp\\desktop\\8.14\\school\\7.1 research\\llmdataacquisition"
+      ],
+      "logical_root": "c:\\users\\joshp\\desktop\\7.1 research\\llmdataacquisition",
+      "mapping_kind": "current_git_boundary",
+      "note": "nearest valid .git boundary",
+      "repository_identity": "c:\\users\\joshp\\desktop\\8.14\\school\\7.1 research\\llmdataacquisition\\.git",
+      "repository_relative_root": "",
+      "repository_root": "c:\\users\\joshp\\desktop\\8.14\\school\\7.1 research\\llmdataacquisition",
+      "target_counts": {
+        "300": 197,
+        "60": 150,
+        "900": 212
+      },
+      "tree_id": "llmdataacquisition-a8f5814acddf"
+    },
+    {
+      "available": true,
+      "current_root": "c:\\users\\joshp\\desktop\\toolsenabled\\opensource\\mission-control",
+      "cwd_counts": {
+        "300": 0,
+        "60": 0,
+        "900": 0
+      },
+      "epoch_candidates": [],
+      "evidence": [
+        "git_common_dir=c:\\users\\joshp\\desktop\\toolsenabled\\opensource\\mission-control\\.git",
+        "git_top_level=c:\\users\\joshp\\desktop\\toolsenabled\\opensource\\mission-control"
+      ],
+      "logical_root": "c:\\users\\joshp\\desktop\\toolsenabled\\opensource\\mission-control",
+      "mapping_kind": "current_git_boundary",
+      "note": "nearest valid .git boundary",
+      "repository_identity": "c:\\users\\joshp\\desktop\\toolsenabled\\opensource\\mission-control\\.git",
+      "repository_relative_root": "",
+      "repository_root": "c:\\users\\joshp\\desktop\\toolsenabled\\opensource\\mission-control",
+      "target_counts": {
+        "300": 16,
+        "60": 13,
+        "900": 16
+      },
+      "tree_id": "mission-control-2a92aa208ebe"
+    },
+    {
+      "available": true,
+      "current_root": "c:\\users\\joshp\\desktop\\toolsenabled\\opensource\\mission-control",
+      "cwd_counts": {
+        "300": 0,
+        "60": 0,
+        "900": 0
+      },
+      "epoch_candidates": [],
+      "evidence": [
+        "basename=mission-control",
+        "current_equivalent=c:\\users\\joshp\\desktop\\toolsenabled\\opensource\\mission-control",
+        "unique_repository_identity=c:\\users\\joshp\\desktop\\toolsenabled\\opensource\\mission-control\\.git"
+      ],
+      "logical_root": "c:\\users\\joshp\\desktop\\mission-control",
+      "mapping_kind": "worktree_registry_basename_alias",
+      "note": "Desktop child basename uniquely identifies a registered worktree repository",
+      "repository_identity": "c:\\users\\joshp\\desktop\\toolsenabled\\opensource\\mission-control\\.git",
+      "repository_relative_root": "",
+      "repository_root": "c:\\users\\joshp\\desktop\\toolsenabled\\opensource\\mission-control",
+      "target_counts": {
+        "300": 378,
+        "60": 333,
+        "900": 398
+      },
+      "tree_id": "mission-control-d7a012668c85"
+    },
+    {
+      "available": true,
+      "current_root": "c:\\users\\joshp\\.vscode\\extensions\\openai.chatgpt-26.803.61601-win32-x64",
+      "cwd_counts": {
+        "300": 0,
+        "60": 0,
+        "900": 0
+      },
+      "epoch_candidates": [],
+      "evidence": [
+        "current_root_exists=true",
+        "empirical_anchor=c:\\users\\joshp\\.vscode\\extensions\\openai.chatgpt-26.803.61601-win32-x64"
+      ],
+      "logical_root": "c:\\users\\joshp\\.vscode\\extensions\\openai.chatgpt-26.803.61601-win32-x64",
+      "mapping_kind": "non_git_current_tree",
+      "note": "no valid Git boundary; current filesystem fallback",
+      "repository_identity": null,
+      "repository_relative_root": "",
+      "repository_root": null,
+      "target_counts": {
+        "300": 5,
+        "60": 3,
+        "900": 5
+      },
+      "tree_id": "openai-chatgpt-26-803-61601-win3-7e86f4d21ea1"
+    },
+    {
+      "available": true,
+      "current_root": "c:\\users\\joshp\\appdata\\local\\temp\\packaged-qa-logs",
+      "cwd_counts": {
+        "300": 0,
+        "60": 0,
+        "900": 0
+      },
+      "epoch_candidates": [],
+      "evidence": [
+        "current_root_exists=true",
+        "empirical_anchor=c:\\users\\joshp\\appdata\\local\\temp\\packaged-qa-logs"
+      ],
+      "logical_root": "c:\\users\\joshp\\appdata\\local\\temp\\packaged-qa-logs",
+      "mapping_kind": "non_git_current_tree",
+      "note": "no valid Git boundary; current filesystem fallback",
+      "repository_identity": null,
+      "repository_relative_root": "",
+      "repository_root": null,
+      "target_counts": {
+        "300": 1,
+        "60": 1,
+        "900": 1
+      },
+      "tree_id": "packaged-qa-logs-4bf2856066ce"
+    },
+    {
+      "available": true,
+      "current_root": "c:\\users\\joshp\\appdata\\local\\temp\\claude\\prof\\packet-roundtrip",
+      "cwd_counts": {
+        "300": 0,
+        "60": 0,
+        "900": 0
+      },
+      "epoch_candidates": [],
+      "evidence": [
+        "current_root_exists=true",
+        "empirical_anchor=c:\\users\\joshp\\appdata\\local\\temp\\claude\\prof\\packet-roundtrip"
+      ],
+      "logical_root": "c:\\users\\joshp\\appdata\\local\\temp\\claude\\prof\\packet-roundtrip",
+      "mapping_kind": "non_git_current_tree",
+      "note": "no valid Git boundary; current filesystem fallback",
+      "repository_identity": null,
+      "repository_relative_root": "",
+      "repository_root": null,
+      "target_counts": {
+        "300": 4,
+        "60": 4,
+        "900": 4
+      },
+      "tree_id": "packet-roundtrip-f27cd2515dd0"
+    },
+    {
+      "available": true,
+      "current_root": "c:\\users\\joshp\\appdata\\local\\temp\\claude\\c--users-joshp-desktop-toolsenabled-current\\34df6152-99f0-46ad-a162-678c324c64ec\\scratchpad\\polyglot-repo",
+      "cwd_counts": {
+        "300": 0,
+        "60": 0,
+        "900": 0
+      },
+      "epoch_candidates": [],
+      "evidence": [
+        "git_common_dir=c:\\users\\joshp\\appdata\\local\\temp\\claude\\c--users-joshp-desktop-toolsenabled-current\\34df6152-99f0-46ad-a162-678c324c64ec\\scratchpad\\polyglot-repo\\.git",
+        "git_top_level=c:\\users\\joshp\\appdata\\local\\temp\\claude\\c--users-joshp-desktop-toolsenabled-current\\34df6152-99f0-46ad-a162-678c324c64ec\\scratchpad\\polyglot-repo"
+      ],
+      "logical_root": "c:\\users\\joshp\\appdata\\local\\temp\\claude\\c--users-joshp-desktop-toolsenabled-current\\34df6152-99f0-46ad-a162-678c324c64ec\\scratchpad\\polyglot-repo",
+      "mapping_kind": "current_git_boundary",
+      "note": "nearest valid .git boundary",
+      "repository_identity": "c:\\users\\joshp\\appdata\\local\\temp\\claude\\c--users-joshp-desktop-toolsenabled-current\\34df6152-99f0-46ad-a162-678c324c64ec\\scratchpad\\polyglot-repo\\.git",
+      "repository_relative_root": "",
+      "repository_root": "c:\\users\\joshp\\appdata\\local\\temp\\claude\\c--users-joshp-desktop-toolsenabled-current\\34df6152-99f0-46ad-a162-678c324c64ec\\scratchpad\\polyglot-repo",
+      "target_counts": {
+        "300": 1,
+        "60": 1,
+        "900": 1
+      },
+      "tree_id": "polyglot-repo-cdff95a37c6c"
+    },
+    {
+      "available": true,
+      "current_root": null,
+      "cwd_counts": {
+        "300": 0,
+        "60": 0,
+        "900": 0
+      },
+      "epoch_candidates": [],
+      "evidence": [
+        "current_subtree_exists=false",
+        "desktop_repository_identity=c:\\users\\joshp\\desktop\\.git",
+        "subtree=portfolio dashboard"
+      ],
+      "logical_root": "c:\\users\\joshp\\desktop\\portfolio dashboard",
+      "mapping_kind": "desktop_repository_subtree",
+      "note": "query path is within one top-level subtree of the broad Desktop repository; historical reconstruction remains available when the current subtree is absent",
+      "repository_identity": "c:\\users\\joshp\\desktop\\.git",
+      "repository_relative_root": "portfolio dashboard",
+      "repository_root": "c:\\users\\joshp\\desktop",
+      "target_counts": {
+        "300": 17,
+        "60": 17,
+        "900": 17
+      },
+      "tree_id": "portfolio-dashboard-f141b5b51da1"
+    },
+    {
+      "available": true,
+      "current_root": null,
+      "cwd_counts": {
+        "300": 0,
+        "60": 0,
+        "900": 0
+      },
+      "epoch_candidates": [],
+      "evidence": [
+        "current_subtree_exists=false",
+        "desktop_repository_identity=c:\\users\\joshp\\desktop\\.git",
+        "subtree=production-completion-plan.md"
+      ],
+      "logical_root": "c:\\users\\joshp\\desktop\\production-completion-plan.md",
+      "mapping_kind": "desktop_repository_subtree",
+      "note": "query path is within one top-level subtree of the broad Desktop repository; historical reconstruction remains available when the current subtree is absent",
+      "repository_identity": "c:\\users\\joshp\\desktop\\.git",
+      "repository_relative_root": "production-completion-plan.md",
+      "repository_root": "c:\\users\\joshp\\desktop",
+      "target_counts": {
+        "300": 1,
+        "60": 1,
+        "900": 1
+      },
+      "tree_id": "production-completion-plan-md-d719f40a8ad7"
+    },
+    {
+      "available": true,
+      "current_root": null,
+      "cwd_counts": {
+        "300": 0,
+        "60": 0,
+        "900": 0
+      },
+      "epoch_candidates": [],
+      "evidence": [
+        "current_subtree_exists=false",
+        "desktop_repository_identity=c:\\users\\joshp\\desktop\\.git",
+        "subtree=purchase-list.md"
+      ],
+      "logical_root": "c:\\users\\joshp\\desktop\\purchase-list.md",
+      "mapping_kind": "desktop_repository_subtree",
+      "note": "query path is within one top-level subtree of the broad Desktop repository; historical reconstruction remains available when the current subtree is absent",
+      "repository_identity": "c:\\users\\joshp\\desktop\\.git",
+      "repository_relative_root": "purchase-list.md",
+      "repository_root": "c:\\users\\joshp\\desktop",
+      "target_counts": {
+        "300": 2,
+        "60": 2,
+        "900": 2
+      },
+      "tree_id": "purchase-list-md-ecdbaa8b8eef"
+    },
+    {
+      "available": true,
+      "current_root": "c:\\users\\joshp\\desktop\\toolsenabled-current\\tmp\\queue-integrity-r1239-product",
+      "cwd_counts": {
+        "300": 0,
+        "60": 0,
+        "900": 0
+      },
+      "epoch_candidates": [],
+      "evidence": [
+        "detail=fatal: not a git repository: C:/Users/joshp/AppData/Local/Temp/queue-integrity-r1239-product-repo/.git/worktrees/queue-integrity-r1239-product1",
+        "git_marker=c:\\users\\joshp\\desktop\\toolsenabled-current\\tmp\\queue-integrity-r1239-product\\.git"
+      ],
+      "logical_root": "c:\\users\\joshp\\desktop\\toolsenabled-current\\tmp\\queue-integrity-r1239-product",
+      "mapping_kind": "broken_git_marker",
+      "note": "nearest .git marker is not a valid checkout; use current-tree control only",
+      "repository_identity": null,
+      "repository_relative_root": "",
+      "repository_root": null,
+      "target_counts": {
+        "300": 22,
+        "60": 20,
+        "900": 22
+      },
+      "tree_id": "queue-integrity-r1239-product-621c21dad208"
+    },
+    {
+      "available": true,
+      "current_root": "c:\\users\\joshp\\desktop\\toolsenabled\\historical\\r-cutfix-app",
+      "cwd_counts": {
+        "300": 0,
+        "60": 0,
+        "900": 0
+      },
+      "epoch_candidates": [],
+      "evidence": [
+        "basename=r-cutfix-app",
+        "current_equivalent=c:\\users\\joshp\\desktop\\toolsenabled\\historical\\r-cutfix-app",
+        "unique_repository_identity=c:\\users\\joshp\\desktop\\toolsenabled\\opensource\\mission-control\\.git"
+      ],
+      "logical_root": "c:\\users\\joshp\\desktop\\r-cutfix-app",
+      "mapping_kind": "worktree_registry_basename_alias",
+      "note": "Desktop child basename uniquely identifies a registered worktree repository",
+      "repository_identity": "c:\\users\\joshp\\desktop\\toolsenabled\\opensource\\mission-control\\.git",
+      "repository_relative_root": "",
+      "repository_root": "c:\\users\\joshp\\desktop\\toolsenabled\\opensource\\mission-control",
+      "target_counts": {
+        "300": 12,
+        "60": 12,
+        "900": 12
+      },
+      "tree_id": "r-cutfix-app-0712082d70d1"
+    },
+    {
+      "available": true,
+      "current_root": "c:\\users\\joshp\\desktop\\toolsenabled\\historical\\r1260-t1a-app",
+      "cwd_counts": {
+        "300": 0,
+        "60": 0,
+        "900": 0
+      },
+      "epoch_candidates": [],
+      "evidence": [
+        "basename=r1260-t1a-app",
+        "current_equivalent=c:\\users\\joshp\\desktop\\toolsenabled\\historical\\r1260-t1a-app",
+        "unique_repository_identity=c:\\users\\joshp\\desktop\\toolsenabled\\opensource\\mission-control\\.git"
+      ],
+      "logical_root": "c:\\users\\joshp\\desktop\\r1260-t1a-app",
+      "mapping_kind": "worktree_registry_basename_alias",
+      "note": "Desktop child basename uniquely identifies a registered worktree repository",
+      "repository_identity": "c:\\users\\joshp\\desktop\\toolsenabled\\opensource\\mission-control\\.git",
+      "repository_relative_root": "",
+      "repository_root": "c:\\users\\joshp\\desktop\\toolsenabled\\opensource\\mission-control",
+      "target_counts": {
+        "300": 12,
+        "60": 9,
+        "900": 12
+      },
+      "tree_id": "r1260-t1a-app-4eeee70135bd"
+    },
+    {
+      "available": true,
+      "current_root": "c:\\users\\joshp\\desktop\\toolsenabled\\historical\\r1260-t1a-engine",
+      "cwd_counts": {
+        "300": 0,
+        "60": 0,
+        "900": 0
+      },
+      "epoch_candidates": [],
+      "evidence": [
+        "basename=r1260-t1a-engine",
+        "current_equivalent=c:\\users\\joshp\\desktop\\toolsenabled\\historical\\r1260-t1a-engine",
+        "unique_repository_identity=c:\\users\\joshp\\desktop\\toolsenabled-current\\.git"
+      ],
+      "logical_root": "c:\\users\\joshp\\desktop\\r1260-t1a-engine",
+      "mapping_kind": "worktree_registry_basename_alias",
+      "note": "Desktop child basename uniquely identifies a registered worktree repository",
+      "repository_identity": "c:\\users\\joshp\\desktop\\toolsenabled-current\\.git",
+      "repository_relative_root": "",
+      "repository_root": "c:\\users\\joshp\\desktop\\toolsenabled-current",
+      "target_counts": {
+        "300": 2,
+        "60": 1,
+        "900": 2
+      },
+      "tree_id": "r1260-t1a-engine-9b5558455e8b"
+    },
+    {
+      "available": true,
+      "current_root": "c:\\users\\joshp\\desktop\\toolsenabled\\historical\\r1260-t1b-app",
+      "cwd_counts": {
+        "300": 0,
+        "60": 0,
+        "900": 0
+      },
+      "epoch_candidates": [],
+      "evidence": [
+        "basename=r1260-t1b-app",
+        "current_equivalent=c:\\users\\joshp\\desktop\\toolsenabled\\historical\\r1260-t1b-app",
+        "unique_repository_identity=c:\\users\\joshp\\desktop\\toolsenabled\\opensource\\mission-control\\.git"
+      ],
+      "logical_root": "c:\\users\\joshp\\desktop\\r1260-t1b-app",
+      "mapping_kind": "worktree_registry_basename_alias",
+      "note": "Desktop child basename uniquely identifies a registered worktree repository",
+      "repository_identity": "c:\\users\\joshp\\desktop\\toolsenabled\\opensource\\mission-control\\.git",
+      "repository_relative_root": "",
+      "repository_root": "c:\\users\\joshp\\desktop\\toolsenabled\\opensource\\mission-control",
+      "target_counts": {
+        "300": 7,
+        "60": 5,
+        "900": 8
+      },
+      "tree_id": "r1260-t1b-app-0d6b654f885a"
+    },
+    {
+      "available": true,
+      "current_root": "c:\\users\\joshp\\desktop\\toolsenabled\\historical\\r1260-t2a-engine",
+      "cwd_counts": {
+        "300": 0,
+        "60": 0,
+        "900": 0
+      },
+      "epoch_candidates": [],
+      "evidence": [
+        "basename=r1260-t2a-engine",
+        "current_equivalent=c:\\users\\joshp\\desktop\\toolsenabled\\historical\\r1260-t2a-engine",
+        "unique_repository_identity=c:\\users\\joshp\\desktop\\toolsenabled-current\\.git"
+      ],
+      "logical_root": "c:\\users\\joshp\\desktop\\r1260-t2a-engine",
+      "mapping_kind": "worktree_registry_basename_alias",
+      "note": "Desktop child basename uniquely identifies a registered worktree repository",
+      "repository_identity": "c:\\users\\joshp\\desktop\\toolsenabled-current\\.git",
+      "repository_relative_root": "",
+      "repository_root": "c:\\users\\joshp\\desktop\\toolsenabled-current",
+      "target_counts": {
+        "300": 1,
+        "60": 1,
+        "900": 1
+      },
+      "tree_id": "r1260-t2a-engine-74f3904816a3"
+    },
+    {
+      "available": true,
+      "current_root": "c:\\users\\joshp\\desktop\\toolsenabled\\historical\\r1260-t2b-xverify-engine",
+      "cwd_counts": {
+        "300": 0,
+        "60": 0,
+        "900": 0
+      },
+      "epoch_candidates": [],
+      "evidence": [
+        "basename=r1260-t2b-xverify-engine",
+        "current_equivalent=c:\\users\\joshp\\desktop\\toolsenabled\\historical\\r1260-t2b-xverify-engine",
+        "unique_repository_identity=c:\\users\\joshp\\desktop\\toolsenabled-current\\.git"
+      ],
+      "logical_root": "c:\\users\\joshp\\desktop\\r1260-t2b-xverify-engine",
+      "mapping_kind": "worktree_registry_basename_alias",
+      "note": "Desktop child basename uniquely identifies a registered worktree repository",
+      "repository_identity": "c:\\users\\joshp\\desktop\\toolsenabled-current\\.git",
+      "repository_relative_root": "",
+      "repository_root": "c:\\users\\joshp\\desktop\\toolsenabled-current",
+      "target_counts": {
+        "300": 1,
+        "60": 1,
+        "900": 1
+      },
+      "tree_id": "r1260-t2b-xverify-engine-42377a57e616"
+    },
+    {
+      "available": true,
+      "current_root": "c:\\users\\joshp\\desktop\\toolsenabled\\historical\\r1260-t2b-xverify-pristine",
+      "cwd_counts": {
+        "300": 0,
+        "60": 0,
+        "900": 0
+      },
+      "epoch_candidates": [],
+      "evidence": [
+        "basename=r1260-t2b-xverify-pristine",
+        "current_equivalent=c:\\users\\joshp\\desktop\\toolsenabled\\historical\\r1260-t2b-xverify-pristine",
+        "unique_repository_identity=c:\\users\\joshp\\desktop\\toolsenabled-current\\.git"
+      ],
+      "logical_root": "c:\\users\\joshp\\desktop\\r1260-t2b-xverify-pristine",
+      "mapping_kind": "worktree_registry_basename_alias",
+      "note": "Desktop child basename uniquely identifies a registered worktree repository",
+      "repository_identity": "c:\\users\\joshp\\desktop\\toolsenabled-current\\.git",
+      "repository_relative_root": "",
+      "repository_root": "c:\\users\\joshp\\desktop\\toolsenabled-current",
+      "target_counts": {
+        "300": 2,
+        "60": 2,
+        "900": 2
+      },
+      "tree_id": "r1260-t2b-xverify-pristine-fcb96ba585d7"
+    },
+    {
+      "available": true,
+      "current_root": "c:\\users\\joshp\\desktop\\toolsenabled\\historical\\r1260-t4b-engine",
+      "cwd_counts": {
+        "300": 0,
+        "60": 0,
+        "900": 0
+      },
+      "epoch_candidates": [],
+      "evidence": [
+        "basename=r1260-t4b-engine",
+        "current_equivalent=c:\\users\\joshp\\desktop\\toolsenabled\\historical\\r1260-t4b-engine",
+        "unique_repository_identity=c:\\users\\joshp\\desktop\\toolsenabled-current\\.git"
+      ],
+      "logical_root": "c:\\users\\joshp\\desktop\\r1260-t4b-engine",
+      "mapping_kind": "worktree_registry_basename_alias",
+      "note": "Desktop child basename uniquely identifies a registered worktree repository",
+      "repository_identity": "c:\\users\\joshp\\desktop\\toolsenabled-current\\.git",
+      "repository_relative_root": "",
+      "repository_root": "c:\\users\\joshp\\desktop\\toolsenabled-current",
+      "target_counts": {
+        "300": 1,
+        "60": 1,
+        "900": 1
+      },
+      "tree_id": "r1260-t4b-engine-6b85da96228d"
+    },
+    {
+      "available": true,
+      "current_root": "c:\\users\\joshp\\desktop\\toolsenabled\\historical\\r1260-t5a-app",
+      "cwd_counts": {
+        "300": 0,
+        "60": 0,
+        "900": 0
+      },
+      "epoch_candidates": [],
+      "evidence": [
+        "basename=r1260-t5a-app",
+        "current_equivalent=c:\\users\\joshp\\desktop\\toolsenabled\\historical\\r1260-t5a-app",
+        "unique_repository_identity=c:\\users\\joshp\\desktop\\toolsenabled\\opensource\\mission-control\\.git"
+      ],
+      "logical_root": "c:\\users\\joshp\\desktop\\r1260-t5a-app",
+      "mapping_kind": "worktree_registry_basename_alias",
+      "note": "Desktop child basename uniquely identifies a registered worktree repository",
+      "repository_identity": "c:\\users\\joshp\\desktop\\toolsenabled\\opensource\\mission-control\\.git",
+      "repository_relative_root": "",
+      "repository_root": "c:\\users\\joshp\\desktop\\toolsenabled\\opensource\\mission-control",
+      "target_counts": {
+        "300": 1,
+        "60": 1,
+        "900": 1
+      },
+      "tree_id": "r1260-t5a-app-1ebf9c65a181"
+    },
+    {
+      "available": true,
+      "current_root": "c:\\users\\joshp\\desktop\\toolsenabled\\historical\\r1260-t5b-app",
+      "cwd_counts": {
+        "300": 0,
+        "60": 0,
+        "900": 0
+      },
+      "epoch_candidates": [],
+      "evidence": [
+        "basename=r1260-t5b-app",
+        "current_equivalent=c:\\users\\joshp\\desktop\\toolsenabled\\historical\\r1260-t5b-app",
+        "unique_repository_identity=c:\\users\\joshp\\desktop\\toolsenabled\\opensource\\mission-control\\.git"
+      ],
+      "logical_root": "c:\\users\\joshp\\desktop\\r1260-t5b-app",
+      "mapping_kind": "worktree_registry_basename_alias",
+      "note": "Desktop child basename uniquely identifies a registered worktree repository",
+      "repository_identity": "c:\\users\\joshp\\desktop\\toolsenabled\\opensource\\mission-control\\.git",
+      "repository_relative_root": "",
+      "repository_root": "c:\\users\\joshp\\desktop\\toolsenabled\\opensource\\mission-control",
+      "target_counts": {
+        "300": 2,
+        "60": 2,
+        "900": 2
+      },
+      "tree_id": "r1260-t5b-app-9f91c10c8741"
+    },
+    {
+      "available": true,
+      "current_root": "c:\\users\\joshp\\desktop\\toolsenabled\\historical\\r1260-t5b-xverify-app",
+      "cwd_counts": {
+        "300": 0,
+        "60": 0,
+        "900": 0
+      },
+      "epoch_candidates": [],
+      "evidence": [
+        "basename=r1260-t5b-xverify-app",
+        "current_equivalent=c:\\users\\joshp\\desktop\\toolsenabled\\historical\\r1260-t5b-xverify-app",
+        "unique_repository_identity=c:\\users\\joshp\\desktop\\toolsenabled\\opensource\\mission-control\\.git"
+      ],
+      "logical_root": "c:\\users\\joshp\\desktop\\r1260-t5b-xverify-app",
+      "mapping_kind": "worktree_registry_basename_alias",
+      "note": "Desktop child basename uniquely identifies a registered worktree repository",
+      "repository_identity": "c:\\users\\joshp\\desktop\\toolsenabled\\opensource\\mission-control\\.git",
+      "repository_relative_root": "",
+      "repository_root": "c:\\users\\joshp\\desktop\\toolsenabled\\opensource\\mission-control",
+      "target_counts": {
+        "300": 1,
+        "60": 1,
+        "900": 1
+      },
+      "tree_id": "r1260-t5b-xverify-app-5eb44ff60ead"
+    },
+    {
+      "available": true,
+      "current_root": "c:\\users\\joshp\\desktop\\toolsenabled\\historical\\r1262-s1-engine",
+      "cwd_counts": {
+        "300": 0,
+        "60": 0,
+        "900": 0
+      },
+      "epoch_candidates": [],
+      "evidence": [
+        "basename=r1262-s1-engine",
+        "current_equivalent=c:\\users\\joshp\\desktop\\toolsenabled\\historical\\r1262-s1-engine",
+        "unique_repository_identity=c:\\users\\joshp\\desktop\\toolsenabled-current\\.git"
+      ],
+      "logical_root": "c:\\users\\joshp\\desktop\\r1262-s1-engine",
+      "mapping_kind": "worktree_registry_basename_alias",
+      "note": "Desktop child basename uniquely identifies a registered worktree repository",
+      "repository_identity": "c:\\users\\joshp\\desktop\\toolsenabled-current\\.git",
+      "repository_relative_root": "",
+      "repository_root": "c:\\users\\joshp\\desktop\\toolsenabled-current",
+      "target_counts": {
+        "300": 1,
+        "60": 1,
+        "900": 1
+      },
+      "tree_id": "r1262-s1-engine-5a0e21912f62"
+    },
+    {
+      "available": true,
+      "current_root": "c:\\users\\joshp\\desktop\\toolsenabled\\historical\\r1262-s3-engine",
+      "cwd_counts": {
+        "300": 0,
+        "60": 0,
+        "900": 0
+      },
+      "epoch_candidates": [],
+      "evidence": [
+        "basename=r1262-s3-engine",
+        "current_equivalent=c:\\users\\joshp\\desktop\\toolsenabled\\historical\\r1262-s3-engine",
+        "unique_repository_identity=c:\\users\\joshp\\desktop\\toolsenabled-current\\.git"
+      ],
+      "logical_root": "c:\\users\\joshp\\desktop\\r1262-s3-engine",
+      "mapping_kind": "worktree_registry_basename_alias",
+      "note": "Desktop child basename uniquely identifies a registered worktree repository",
+      "repository_identity": "c:\\users\\joshp\\desktop\\toolsenabled-current\\.git",
+      "repository_relative_root": "",
+      "repository_root": "c:\\users\\joshp\\desktop\\toolsenabled-current",
+      "target_counts": {
+        "300": 1,
+        "60": 1,
+        "900": 1
+      },
+      "tree_id": "r1262-s3-engine-f1eb41873068"
+    },
+    {
+      "available": true,
+      "current_root": null,
+      "cwd_counts": {
+        "300": 0,
+        "60": 0,
+        "900": 0
+      },
+      "epoch_candidates": [],
+      "evidence": [
+        "desktop_repository_identity=c:\\users\\joshp\\desktop\\.git",
+        "subtree=r1262-swarm-output",
+        "current_subtree_exists=false"
+      ],
+      "logical_root": "c:\\users\\joshp\\desktop\\r1262-swarm-output",
+      "mapping_kind": "desktop_repository_subtree",
+      "note": "query path is within one top-level subtree of the broad Desktop repository; historical reconstruction remains available when the current subtree is absent",
+      "repository_identity": "c:\\users\\joshp\\desktop\\.git",
+      "repository_relative_root": "r1262-swarm-output",
+      "repository_root": "c:\\users\\joshp\\desktop",
+      "target_counts": {
+        "300": 0,
+        "60": 0,
+        "900": 1
+      },
+      "tree_id": "r1262-swarm-output-54a09afee028"
+    },
+    {
+      "available": true,
+      "current_root": "c:\\users\\joshp\\desktop\\toolsenabled\\historical\\r1264-p4-app",
+      "cwd_counts": {
+        "300": 0,
+        "60": 0,
+        "900": 0
+      },
+      "epoch_candidates": [],
+      "evidence": [
+        "basename=r1264-p4-app",
+        "current_equivalent=c:\\users\\joshp\\desktop\\toolsenabled\\historical\\r1264-p4-app",
+        "unique_repository_identity=c:\\users\\joshp\\desktop\\toolsenabled\\opensource\\mission-control\\.git"
+      ],
+      "logical_root": "c:\\users\\joshp\\desktop\\r1264-p4-app",
+      "mapping_kind": "worktree_registry_basename_alias",
+      "note": "Desktop child basename uniquely identifies a registered worktree repository",
+      "repository_identity": "c:\\users\\joshp\\desktop\\toolsenabled\\opensource\\mission-control\\.git",
+      "repository_relative_root": "",
+      "repository_root": "c:\\users\\joshp\\desktop\\toolsenabled\\opensource\\mission-control",
+      "target_counts": {
+        "300": 1,
+        "60": 1,
+        "900": 1
+      },
+      "tree_id": "r1264-p4-app-0d3220dca3eb"
+    },
+    {
+      "available": true,
+      "current_root": "c:\\users\\joshp\\desktop\\toolsenabled\\historical\\r1268-w3-app",
+      "cwd_counts": {
+        "300": 0,
+        "60": 0,
+        "900": 0
+      },
+      "epoch_candidates": [],
+      "evidence": [
+        "basename=r1268-w3-app",
+        "current_equivalent=c:\\users\\joshp\\desktop\\toolsenabled\\historical\\r1268-w3-app",
+        "unique_repository_identity=c:\\users\\joshp\\desktop\\toolsenabled\\opensource\\mission-control\\.git"
+      ],
+      "logical_root": "c:\\users\\joshp\\desktop\\r1268-w3-app",
+      "mapping_kind": "worktree_registry_basename_alias",
+      "note": "Desktop child basename uniquely identifies a registered worktree repository",
+      "repository_identity": "c:\\users\\joshp\\desktop\\toolsenabled\\opensource\\mission-control\\.git",
+      "repository_relative_root": "",
+      "repository_root": "c:\\users\\joshp\\desktop\\toolsenabled\\opensource\\mission-control",
+      "target_counts": {
+        "300": 4,
+        "60": 4,
+        "900": 4
+      },
+      "tree_id": "r1268-w3-app-5e2bb581bf62"
+    },
+    {
+      "available": true,
+      "current_root": "c:\\users\\joshp\\desktop\\toolsenabled\\historical\\r1268-w4-verify-engine",
+      "cwd_counts": {
+        "300": 0,
+        "60": 0,
+        "900": 0
+      },
+      "epoch_candidates": [],
+      "evidence": [
+        "basename=r1268-w4-verify-engine",
+        "current_equivalent=c:\\users\\joshp\\desktop\\toolsenabled\\historical\\r1268-w4-verify-engine",
+        "unique_repository_identity=c:\\users\\joshp\\desktop\\toolsenabled-current\\.git"
+      ],
+      "logical_root": "c:\\users\\joshp\\desktop\\r1268-w4-verify-engine",
+      "mapping_kind": "worktree_registry_basename_alias",
+      "note": "Desktop child basename uniquely identifies a registered worktree repository",
+      "repository_identity": "c:\\users\\joshp\\desktop\\toolsenabled-current\\.git",
+      "repository_relative_root": "",
+      "repository_root": "c:\\users\\joshp\\desktop\\toolsenabled-current",
+      "target_counts": {
+        "300": 2,
+        "60": 2,
+        "900": 2
+      },
+      "tree_id": "r1268-w4-verify-engine-aa6bb6c2287a"
+    },
+    {
+      "available": true,
+      "current_root": null,
+      "cwd_counts": {
+        "300": 0,
+        "60": 0,
+        "900": 0
+      },
+      "epoch_candidates": [],
+      "evidence": [
+        "current_subtree_exists=false",
+        "desktop_repository_identity=c:\\users\\joshp\\desktop\\.git",
+        "subtree=r1268-website-paid-output"
+      ],
+      "logical_root": "c:\\users\\joshp\\desktop\\r1268-website-paid-output",
+      "mapping_kind": "desktop_repository_subtree",
+      "note": "query path is within one top-level subtree of the broad Desktop repository; historical reconstruction remains available when the current subtree is absent",
+      "repository_identity": "c:\\users\\joshp\\desktop\\.git",
+      "repository_relative_root": "r1268-website-paid-output",
+      "repository_root": "c:\\users\\joshp\\desktop",
+      "target_counts": {
+        "300": 3,
+        "60": 1,
+        "900": 3
+      },
+      "tree_id": "r1268-website-paid-output-32f9a0bf47c2"
+    },
+    {
+      "available": true,
+      "current_root": "c:\\users\\joshp\\desktop\\toolsenabled\\historical\\r1520-settings-ui-app",
+      "cwd_counts": {
+        "300": 0,
+        "60": 0,
+        "900": 0
+      },
+      "epoch_candidates": [],
+      "evidence": [
+        "basename=r1520-settings-ui-app",
+        "current_equivalent=c:\\users\\joshp\\desktop\\toolsenabled\\historical\\r1520-settings-ui-app",
+        "unique_repository_identity=c:\\users\\joshp\\desktop\\toolsenabled\\opensource\\mission-control\\.git"
+      ],
+      "logical_root": "c:\\users\\joshp\\desktop\\r1520-settings-ui-app",
+      "mapping_kind": "worktree_registry_basename_alias",
+      "note": "Desktop child basename uniquely identifies a registered worktree repository",
+      "repository_identity": "c:\\users\\joshp\\desktop\\toolsenabled\\opensource\\mission-control\\.git",
+      "repository_relative_root": "",
+      "repository_root": "c:\\users\\joshp\\desktop\\toolsenabled\\opensource\\mission-control",
+      "target_counts": {
+        "300": 20,
+        "60": 15,
+        "900": 20
+      },
+      "tree_id": "r1520-settings-ui-app-f7fbab75a091"
+    },
+    {
+      "available": true,
+      "current_root": "c:\\users\\joshp\\desktop\\toolsenabled\\historical\\r1522-language-app",
+      "cwd_counts": {
+        "300": 0,
+        "60": 0,
+        "900": 0
+      },
+      "epoch_candidates": [],
+      "evidence": [
+        "basename=r1522-language-app",
+        "current_equivalent=c:\\users\\joshp\\desktop\\toolsenabled\\historical\\r1522-language-app",
+        "unique_repository_identity=c:\\users\\joshp\\desktop\\toolsenabled\\opensource\\mission-control\\.git"
+      ],
+      "logical_root": "c:\\users\\joshp\\desktop\\r1522-language-app",
+      "mapping_kind": "worktree_registry_basename_alias",
+      "note": "Desktop child basename uniquely identifies a registered worktree repository",
+      "repository_identity": "c:\\users\\joshp\\desktop\\toolsenabled\\opensource\\mission-control\\.git",
+      "repository_relative_root": "",
+      "repository_root": "c:\\users\\joshp\\desktop\\toolsenabled\\opensource\\mission-control",
+      "target_counts": {
+        "300": 24,
+        "60": 20,
+        "900": 24
+      },
+      "tree_id": "r1522-language-app-27f135b1f217"
+    },
+    {
+      "available": true,
+      "current_root": "c:\\users\\joshp\\desktop\\toolsenabled\\historical\\r1525-t1-engine",
+      "cwd_counts": {
+        "300": 0,
+        "60": 0,
+        "900": 0
+      },
+      "epoch_candidates": [],
+      "evidence": [
+        "basename=r1525-t1-engine",
+        "current_equivalent=c:\\users\\joshp\\desktop\\toolsenabled\\historical\\r1525-t1-engine",
+        "unique_repository_identity=c:\\users\\joshp\\desktop\\toolsenabled-current\\.git"
+      ],
+      "logical_root": "c:\\users\\joshp\\desktop\\r1525-t1-engine",
+      "mapping_kind": "worktree_registry_basename_alias",
+      "note": "Desktop child basename uniquely identifies a registered worktree repository",
+      "repository_identity": "c:\\users\\joshp\\desktop\\toolsenabled-current\\.git",
+      "repository_relative_root": "",
+      "repository_root": "c:\\users\\joshp\\desktop\\toolsenabled-current",
+      "target_counts": {
+        "300": 16,
+        "60": 12,
+        "900": 18
+      },
+      "tree_id": "r1525-t1-engine-d9ef99cab1c5"
+    },
+    {
+      "available": true,
+      "current_root": "c:\\users\\joshp\\desktop\\toolsenabled\\historical\\r1525-t1-xv-engine",
+      "cwd_counts": {
+        "300": 0,
+        "60": 0,
+        "900": 0
+      },
+      "epoch_candidates": [],
+      "evidence": [
+        "basename=r1525-t1-xv-engine",
+        "current_equivalent=c:\\users\\joshp\\desktop\\toolsenabled\\historical\\r1525-t1-xv-engine",
+        "unique_repository_identity=c:\\users\\joshp\\desktop\\toolsenabled-current\\.git"
+      ],
+      "logical_root": "c:\\users\\joshp\\desktop\\r1525-t1-xv-engine",
+      "mapping_kind": "worktree_registry_basename_alias",
+      "note": "Desktop child basename uniquely identifies a registered worktree repository",
+      "repository_identity": "c:\\users\\joshp\\desktop\\toolsenabled-current\\.git",
+      "repository_relative_root": "",
+      "repository_root": "c:\\users\\joshp\\desktop\\toolsenabled-current",
+      "target_counts": {
+        "300": 1,
+        "60": 1,
+        "900": 1
+      },
+      "tree_id": "r1525-t1-xv-engine-25d080445d89"
+    },
+    {
+      "available": true,
+      "current_root": "c:\\users\\joshp\\desktop\\toolsenabled\\historical\\r1525-t2-app-verify",
+      "cwd_counts": {
+        "300": 0,
+        "60": 0,
+        "900": 0
+      },
+      "epoch_candidates": [],
+      "evidence": [
+        "basename=r1525-t2-app-verify",
+        "current_equivalent=c:\\users\\joshp\\desktop\\toolsenabled\\historical\\r1525-t2-app-verify",
+        "unique_repository_identity=c:\\users\\joshp\\desktop\\toolsenabled\\opensource\\mission-control\\.git"
+      ],
+      "logical_root": "c:\\users\\joshp\\desktop\\r1525-t2-app-verify",
+      "mapping_kind": "worktree_registry_basename_alias",
+      "note": "Desktop child basename uniquely identifies a registered worktree repository",
+      "repository_identity": "c:\\users\\joshp\\desktop\\toolsenabled\\opensource\\mission-control\\.git",
+      "repository_relative_root": "",
+      "repository_root": "c:\\users\\joshp\\desktop\\toolsenabled\\opensource\\mission-control",
+      "target_counts": {
+        "300": 1,
+        "60": 1,
+        "900": 1
+      },
+      "tree_id": "r1525-t2-app-verify-064f0aea911b"
+    },
+    {
+      "available": true,
+      "current_root": "c:\\users\\joshp\\desktop\\toolsenabled\\historical\\r1525-t2-engine",
+      "cwd_counts": {
+        "300": 0,
+        "60": 0,
+        "900": 0
+      },
+      "epoch_candidates": [],
+      "evidence": [
+        "basename=r1525-t2-engine",
+        "current_equivalent=c:\\users\\joshp\\desktop\\toolsenabled\\historical\\r1525-t2-engine",
+        "unique_repository_identity=c:\\users\\joshp\\desktop\\toolsenabled-current\\.git"
+      ],
+      "logical_root": "c:\\users\\joshp\\desktop\\r1525-t2-engine",
+      "mapping_kind": "worktree_registry_basename_alias",
+      "note": "Desktop child basename uniquely identifies a registered worktree repository",
+      "repository_identity": "c:\\users\\joshp\\desktop\\toolsenabled-current\\.git",
+      "repository_relative_root": "",
+      "repository_root": "c:\\users\\joshp\\desktop\\toolsenabled-current",
+      "target_counts": {
+        "300": 7,
+        "60": 7,
+        "900": 8
+      },
+      "tree_id": "r1525-t2-engine-932f68e54f22"
+    },
+    {
+      "available": true,
+      "current_root": "c:\\users\\joshp\\desktop\\toolsenabled\\historical\\r1525-t2-xv-engine",
+      "cwd_counts": {
+        "300": 0,
+        "60": 0,
+        "900": 0
+      },
+      "epoch_candidates": [],
+      "evidence": [
+        "basename=r1525-t2-xv-engine",
+        "current_equivalent=c:\\users\\joshp\\desktop\\toolsenabled\\historical\\r1525-t2-xv-engine",
+        "unique_repository_identity=c:\\users\\joshp\\desktop\\toolsenabled-current\\.git"
+      ],
+      "logical_root": "c:\\users\\joshp\\desktop\\r1525-t2-xv-engine",
+      "mapping_kind": "worktree_registry_basename_alias",
+      "note": "Desktop child basename uniquely identifies a registered worktree repository",
+      "repository_identity": "c:\\users\\joshp\\desktop\\toolsenabled-current\\.git",
+      "repository_relative_root": "",
+      "repository_root": "c:\\users\\joshp\\desktop\\toolsenabled-current",
+      "target_counts": {
+        "300": 1,
+        "60": 1,
+        "900": 2
+      },
+      "tree_id": "r1525-t2-xv-engine-b65ba4f03e65"
+    },
+    {
+      "available": true,
+      "current_root": "c:\\users\\joshp\\desktop\\toolsenabled\\historical\\r1525-t3-engine",
+      "cwd_counts": {
+        "300": 0,
+        "60": 0,
+        "900": 0
+      },
+      "epoch_candidates": [],
+      "evidence": [
+        "basename=r1525-t3-engine",
+        "current_equivalent=c:\\users\\joshp\\desktop\\toolsenabled\\historical\\r1525-t3-engine",
+        "unique_repository_identity=c:\\users\\joshp\\desktop\\toolsenabled-current\\.git"
+      ],
+      "logical_root": "c:\\users\\joshp\\desktop\\r1525-t3-engine",
+      "mapping_kind": "worktree_registry_basename_alias",
+      "note": "Desktop child basename uniquely identifies a registered worktree repository",
+      "repository_identity": "c:\\users\\joshp\\desktop\\toolsenabled-current\\.git",
+      "repository_relative_root": "",
+      "repository_root": "c:\\users\\joshp\\desktop\\toolsenabled-current",
+      "target_counts": {
+        "300": 20,
+        "60": 14,
+        "900": 20
+      },
+      "tree_id": "r1525-t3-engine-d838f8dbb306"
+    },
+    {
+      "available": true,
+      "current_root": "c:\\users\\joshp\\desktop\\toolsenabled\\historical\\r1525-t3-xv-engine",
+      "cwd_counts": {
+        "300": 0,
+        "60": 0,
+        "900": 0
+      },
+      "epoch_candidates": [],
+      "evidence": [
+        "basename=r1525-t3-xv-engine",
+        "current_equivalent=c:\\users\\joshp\\desktop\\toolsenabled\\historical\\r1525-t3-xv-engine",
+        "unique_repository_identity=c:\\users\\joshp\\desktop\\toolsenabled-current\\.git"
+      ],
+      "logical_root": "c:\\users\\joshp\\desktop\\r1525-t3-xv-engine",
+      "mapping_kind": "worktree_registry_basename_alias",
+      "note": "Desktop child basename uniquely identifies a registered worktree repository",
+      "repository_identity": "c:\\users\\joshp\\desktop\\toolsenabled-current\\.git",
+      "repository_relative_root": "",
+      "repository_root": "c:\\users\\joshp\\desktop\\toolsenabled-current",
+      "target_counts": {
+        "300": 1,
+        "60": 1,
+        "900": 1
+      },
+      "tree_id": "r1525-t3-xv-engine-972edda3b794"
+    },
+    {
+      "available": true,
+      "current_root": "c:\\users\\joshp\\desktop\\toolsenabled\\historical\\r1525-t4-app",
+      "cwd_counts": {
+        "300": 0,
+        "60": 0,
+        "900": 0
+      },
+      "epoch_candidates": [],
+      "evidence": [
+        "basename=r1525-t4-app",
+        "current_equivalent=c:\\users\\joshp\\desktop\\toolsenabled\\historical\\r1525-t4-app",
+        "unique_repository_identity=c:\\users\\joshp\\desktop\\toolsenabled\\opensource\\mission-control\\.git"
+      ],
+      "logical_root": "c:\\users\\joshp\\desktop\\r1525-t4-app",
+      "mapping_kind": "worktree_registry_basename_alias",
+      "note": "Desktop child basename uniquely identifies a registered worktree repository",
+      "repository_identity": "c:\\users\\joshp\\desktop\\toolsenabled\\opensource\\mission-control\\.git",
+      "repository_relative_root": "",
+      "repository_root": "c:\\users\\joshp\\desktop\\toolsenabled\\opensource\\mission-control",
+      "target_counts": {
+        "300": 13,
+        "60": 11,
+        "900": 16
+      },
+      "tree_id": "r1525-t4-app-e80104ad7dce"
+    },
+    {
+      "available": true,
+      "current_root": "c:\\users\\joshp\\desktop\\toolsenabled\\historical\\r1525-t5-engine",
+      "cwd_counts": {
+        "300": 0,
+        "60": 0,
+        "900": 0
+      },
+      "epoch_candidates": [],
+      "evidence": [
+        "basename=r1525-t5-engine",
+        "current_equivalent=c:\\users\\joshp\\desktop\\toolsenabled\\historical\\r1525-t5-engine",
+        "unique_repository_identity=c:\\users\\joshp\\desktop\\toolsenabled-current\\.git"
+      ],
+      "logical_root": "c:\\users\\joshp\\desktop\\r1525-t5-engine",
+      "mapping_kind": "worktree_registry_basename_alias",
+      "note": "Desktop child basename uniquely identifies a registered worktree repository",
+      "repository_identity": "c:\\users\\joshp\\desktop\\toolsenabled-current\\.git",
+      "repository_relative_root": "",
+      "repository_root": "c:\\users\\joshp\\desktop\\toolsenabled-current",
+      "target_counts": {
+        "300": 9,
+        "60": 8,
+        "900": 10
+      },
+      "tree_id": "r1525-t5-engine-300e135a3819"
+    },
+    {
+      "available": true,
+      "current_root": null,
+      "cwd_counts": {
+        "300": 0,
+        "60": 0,
+        "900": 0
+      },
+      "epoch_candidates": [],
+      "evidence": [
+        "current_subtree_exists=false",
+        "desktop_repository_identity=c:\\users\\joshp\\desktop\\.git",
+        "subtree=r1525-team-output"
+      ],
+      "logical_root": "c:\\users\\joshp\\desktop\\r1525-team-output",
+      "mapping_kind": "desktop_repository_subtree",
+      "note": "query path is within one top-level subtree of the broad Desktop repository; historical reconstruction remains available when the current subtree is absent",
+      "repository_identity": "c:\\users\\joshp\\desktop\\.git",
+      "repository_relative_root": "r1525-team-output",
+      "repository_root": "c:\\users\\joshp\\desktop",
+      "target_counts": {
+        "300": 1,
+        "60": 0,
+        "900": 1
+      },
+      "tree_id": "r1525-team-output-b2c672b36c85"
+    },
+    {
+      "available": true,
+      "current_root": "c:\\users\\joshp\\desktop\\toolsenabled\\historical\\r1529-guided-app",
+      "cwd_counts": {
+        "300": 0,
+        "60": 0,
+        "900": 0
+      },
+      "epoch_candidates": [],
+      "evidence": [
+        "basename=r1529-guided-app",
+        "current_equivalent=c:\\users\\joshp\\desktop\\toolsenabled\\historical\\r1529-guided-app",
+        "unique_repository_identity=c:\\users\\joshp\\desktop\\toolsenabled\\opensource\\mission-control\\.git"
+      ],
+      "logical_root": "c:\\users\\joshp\\desktop\\r1529-guided-app",
+      "mapping_kind": "worktree_registry_basename_alias",
+      "note": "Desktop child basename uniquely identifies a registered worktree repository",
+      "repository_identity": "c:\\users\\joshp\\desktop\\toolsenabled\\opensource\\mission-control\\.git",
+      "repository_relative_root": "",
+      "repository_root": "c:\\users\\joshp\\desktop\\toolsenabled\\opensource\\mission-control",
+      "target_counts": {
+        "300": 24,
+        "60": 24,
+        "900": 24
+      },
+      "tree_id": "r1529-guided-app-9bb795e390a8"
+    },
+    {
+      "available": true,
+      "current_root": "c:\\users\\joshp\\desktop\\toolsenabled\\historical\\r1530-g1-perf-app",
+      "cwd_counts": {
+        "300": 0,
+        "60": 0,
+        "900": 0
+      },
+      "epoch_candidates": [],
+      "evidence": [
+        "basename=r1530-g1-perf-app",
+        "current_equivalent=c:\\users\\joshp\\desktop\\toolsenabled\\historical\\r1530-g1-perf-app",
+        "unique_repository_identity=c:\\users\\joshp\\desktop\\toolsenabled\\opensource\\mission-control\\.git"
+      ],
+      "logical_root": "c:\\users\\joshp\\desktop\\r1530-g1-perf-app",
+      "mapping_kind": "worktree_registry_basename_alias",
+      "note": "Desktop child basename uniquely identifies a registered worktree repository",
+      "repository_identity": "c:\\users\\joshp\\desktop\\toolsenabled\\opensource\\mission-control\\.git",
+      "repository_relative_root": "",
+      "repository_root": "c:\\users\\joshp\\desktop\\toolsenabled\\opensource\\mission-control",
+      "target_counts": {
+        "300": 6,
+        "60": 6,
+        "900": 8
+      },
+      "tree_id": "r1530-g1-perf-app-cfab9c848813"
+    },
+    {
+      "available": true,
+      "current_root": "c:\\users\\joshp\\desktop\\toolsenabled\\historical\\r1530-g2-perf-adv-app",
+      "cwd_counts": {
+        "300": 0,
+        "60": 0,
+        "900": 0
+      },
+      "epoch_candidates": [],
+      "evidence": [
+        "basename=r1530-g2-perf-adv-app",
+        "current_equivalent=c:\\users\\joshp\\desktop\\toolsenabled\\historical\\r1530-g2-perf-adv-app",
+        "unique_repository_identity=c:\\users\\joshp\\desktop\\toolsenabled\\opensource\\mission-control\\.git"
+      ],
+      "logical_root": "c:\\users\\joshp\\desktop\\r1530-g2-perf-adv-app",
+      "mapping_kind": "worktree_registry_basename_alias",
+      "note": "Desktop child basename uniquely identifies a registered worktree repository",
+      "repository_identity": "c:\\users\\joshp\\desktop\\toolsenabled\\opensource\\mission-control\\.git",
+      "repository_relative_root": "",
+      "repository_root": "c:\\users\\joshp\\desktop\\toolsenabled\\opensource\\mission-control",
+      "target_counts": {
+        "300": 2,
+        "60": 2,
+        "900": 2
+      },
+      "tree_id": "r1530-g2-perf-adv-app-57fbad5743e5"
+    },
+    {
+      "available": true,
+      "current_root": null,
+      "cwd_counts": {
+        "300": 0,
+        "60": 0,
+        "900": 0
+      },
+      "epoch_candidates": [],
+      "evidence": [
+        "current_subtree_exists=false",
+        "desktop_repository_identity=c:\\users\\joshp\\desktop\\.git",
+        "subtree=r1530-wt"
+      ],
+      "logical_root": "c:\\users\\joshp\\desktop\\r1530-wt",
+      "mapping_kind": "desktop_repository_subtree",
+      "note": "query path is within one top-level subtree of the broad Desktop repository; historical reconstruction remains available when the current subtree is absent",
+      "repository_identity": "c:\\users\\joshp\\desktop\\.git",
+      "repository_relative_root": "r1530-wt",
+      "repository_root": "c:\\users\\joshp\\desktop",
+      "target_counts": {
+        "300": 5,
+        "60": 4,
+        "900": 5
+      },
+      "tree_id": "r1530-wt-45bd0349fef5"
+    },
+    {
+      "available": true,
+      "current_root": "c:\\users\\joshp\\desktop\\toolsenabled\\historical\\r1531-w1-app",
+      "cwd_counts": {
+        "300": 0,
+        "60": 0,
+        "900": 0
+      },
+      "epoch_candidates": [],
+      "evidence": [
+        "basename=r1531-w1-app",
+        "unique_repository_identity=c:\\users\\joshp\\desktop\\toolsenabled\\opensource\\mission-control\\.git",
+        "current_equivalent=c:\\users\\joshp\\desktop\\toolsenabled\\historical\\r1531-w1-app"
+      ],
+      "logical_root": "c:\\users\\joshp\\desktop\\r1531-w1-app",
+      "mapping_kind": "worktree_registry_basename_alias",
+      "note": "Desktop child basename uniquely identifies a registered worktree repository",
+      "repository_identity": "c:\\users\\joshp\\desktop\\toolsenabled\\opensource\\mission-control\\.git",
+      "repository_relative_root": "",
+      "repository_root": "c:\\users\\joshp\\desktop\\toolsenabled\\opensource\\mission-control",
+      "target_counts": {
+        "300": 0,
+        "60": 0,
+        "900": 1
+      },
+      "tree_id": "r1531-w1-app-19b4448f5d34"
+    },
+    {
+      "available": true,
+      "current_root": "c:\\users\\joshp\\desktop\\toolsenabled\\historical\\r1534-elev-engine",
+      "cwd_counts": {
+        "300": 0,
+        "60": 0,
+        "900": 0
+      },
+      "epoch_candidates": [],
+      "evidence": [
+        "basename=r1534-elev-engine",
+        "current_equivalent=c:\\users\\joshp\\desktop\\toolsenabled\\historical\\r1534-elev-engine",
+        "unique_repository_identity=c:\\users\\joshp\\desktop\\toolsenabled-current\\.git"
+      ],
+      "logical_root": "c:\\users\\joshp\\desktop\\r1534-elev-engine",
+      "mapping_kind": "worktree_registry_basename_alias",
+      "note": "Desktop child basename uniquely identifies a registered worktree repository",
+      "repository_identity": "c:\\users\\joshp\\desktop\\toolsenabled-current\\.git",
+      "repository_relative_root": "",
+      "repository_root": "c:\\users\\joshp\\desktop\\toolsenabled-current",
+      "target_counts": {
+        "300": 70,
+        "60": 70,
+        "900": 70
+      },
+      "tree_id": "r1534-elev-engine-293335a0d268"
+    },
+    {
+      "available": true,
+      "current_root": "c:\\users\\joshp\\desktop\\toolsenabled\\historical\\r1537-s11-app",
+      "cwd_counts": {
+        "300": 0,
+        "60": 0,
+        "900": 0
+      },
+      "epoch_candidates": [],
+      "evidence": [
+        "basename=r1537-s11-app",
+        "current_equivalent=c:\\users\\joshp\\desktop\\toolsenabled\\historical\\r1537-s11-app",
+        "unique_repository_identity=c:\\users\\joshp\\desktop\\toolsenabled\\opensource\\mission-control\\.git"
+      ],
+      "logical_root": "c:\\users\\joshp\\desktop\\r1537-s11-app",
+      "mapping_kind": "worktree_registry_basename_alias",
+      "note": "Desktop child basename uniquely identifies a registered worktree repository",
+      "repository_identity": "c:\\users\\joshp\\desktop\\toolsenabled\\opensource\\mission-control\\.git",
+      "repository_relative_root": "",
+      "repository_root": "c:\\users\\joshp\\desktop\\toolsenabled\\opensource\\mission-control",
+      "target_counts": {
+        "300": 4,
+        "60": 2,
+        "900": 4
+      },
+      "tree_id": "r1537-s11-app-1f00d8accc9b"
+    },
+    {
+      "available": true,
+      "current_root": "c:\\users\\joshp\\desktop\\toolsenabled\\historical\\r1537-s11-engine",
+      "cwd_counts": {
+        "300": 0,
+        "60": 0,
+        "900": 0
+      },
+      "epoch_candidates": [],
+      "evidence": [
+        "basename=r1537-s11-engine",
+        "current_equivalent=c:\\users\\joshp\\desktop\\toolsenabled\\historical\\r1537-s11-engine",
+        "unique_repository_identity=c:\\users\\joshp\\desktop\\toolsenabled-current\\.git"
+      ],
+      "logical_root": "c:\\users\\joshp\\desktop\\r1537-s11-engine",
+      "mapping_kind": "worktree_registry_basename_alias",
+      "note": "Desktop child basename uniquely identifies a registered worktree repository",
+      "repository_identity": "c:\\users\\joshp\\desktop\\toolsenabled-current\\.git",
+      "repository_relative_root": "",
+      "repository_root": "c:\\users\\joshp\\desktop\\toolsenabled-current",
+      "target_counts": {
+        "300": 1,
+        "60": 1,
+        "900": 1
+      },
+      "tree_id": "r1537-s11-engine-5d30de0e190a"
+    },
+    {
+      "available": true,
+      "current_root": "c:\\users\\joshp\\desktop\\toolsenabled\\historical\\r1537-s12-app",
+      "cwd_counts": {
+        "300": 0,
+        "60": 0,
+        "900": 0
+      },
+      "epoch_candidates": [],
+      "evidence": [
+        "basename=r1537-s12-app",
+        "current_equivalent=c:\\users\\joshp\\desktop\\toolsenabled\\historical\\r1537-s12-app",
+        "unique_repository_identity=c:\\users\\joshp\\desktop\\toolsenabled\\opensource\\mission-control\\.git"
+      ],
+      "logical_root": "c:\\users\\joshp\\desktop\\r1537-s12-app",
+      "mapping_kind": "worktree_registry_basename_alias",
+      "note": "Desktop child basename uniquely identifies a registered worktree repository",
+      "repository_identity": "c:\\users\\joshp\\desktop\\toolsenabled\\opensource\\mission-control\\.git",
+      "repository_relative_root": "",
+      "repository_root": "c:\\users\\joshp\\desktop\\toolsenabled\\opensource\\mission-control",
+      "target_counts": {
+        "300": 1,
+        "60": 1,
+        "900": 1
+      },
+      "tree_id": "r1537-s12-app-cb85cde67c64"
+    },
+    {
+      "available": true,
+      "current_root": "c:\\users\\joshp\\desktop\\toolsenabled\\historical\\r1537-s3-docs-app",
+      "cwd_counts": {
+        "300": 0,
+        "60": 0,
+        "900": 0
+      },
+      "epoch_candidates": [],
+      "evidence": [
+        "basename=r1537-s3-docs-app",
+        "current_equivalent=c:\\users\\joshp\\desktop\\toolsenabled\\historical\\r1537-s3-docs-app",
+        "unique_repository_identity=c:\\users\\joshp\\desktop\\toolsenabled\\opensource\\mission-control\\.git"
+      ],
+      "logical_root": "c:\\users\\joshp\\desktop\\r1537-s3-docs-app",
+      "mapping_kind": "worktree_registry_basename_alias",
+      "note": "Desktop child basename uniquely identifies a registered worktree repository",
+      "repository_identity": "c:\\users\\joshp\\desktop\\toolsenabled\\opensource\\mission-control\\.git",
+      "repository_relative_root": "",
+      "repository_root": "c:\\users\\joshp\\desktop\\toolsenabled\\opensource\\mission-control",
+      "target_counts": {
+        "300": 4,
+        "60": 2,
+        "900": 4
+      },
+      "tree_id": "r1537-s3-docs-app-48427514c4eb"
+    },
+    {
+      "available": true,
+      "current_root": "c:\\users\\joshp\\desktop\\toolsenabled\\historical\\r1537-s8-app",
+      "cwd_counts": {
+        "300": 0,
+        "60": 0,
+        "900": 0
+      },
+      "epoch_candidates": [],
+      "evidence": [
+        "basename=r1537-s8-app",
+        "current_equivalent=c:\\users\\joshp\\desktop\\toolsenabled\\historical\\r1537-s8-app",
+        "unique_repository_identity=c:\\users\\joshp\\desktop\\toolsenabled\\opensource\\mission-control\\.git"
+      ],
+      "logical_root": "c:\\users\\joshp\\desktop\\r1537-s8-app",
+      "mapping_kind": "worktree_registry_basename_alias",
+      "note": "Desktop child basename uniquely identifies a registered worktree repository",
+      "repository_identity": "c:\\users\\joshp\\desktop\\toolsenabled\\opensource\\mission-control\\.git",
+      "repository_relative_root": "",
+      "repository_root": "c:\\users\\joshp\\desktop\\toolsenabled\\opensource\\mission-control",
+      "target_counts": {
+        "300": 4,
+        "60": 3,
+        "900": 4
+      },
+      "tree_id": "r1537-s8-app-ba8e414d3c2b"
+    },
+    {
+      "available": true,
+      "current_root": "c:\\users\\joshp\\desktop\\toolsenabled\\historical\\r1537-s8-engine",
+      "cwd_counts": {
+        "300": 0,
+        "60": 0,
+        "900": 0
+      },
+      "epoch_candidates": [],
+      "evidence": [
+        "basename=r1537-s8-engine",
+        "current_equivalent=c:\\users\\joshp\\desktop\\toolsenabled\\historical\\r1537-s8-engine",
+        "unique_repository_identity=c:\\users\\joshp\\desktop\\toolsenabled-current\\.git"
+      ],
+      "logical_root": "c:\\users\\joshp\\desktop\\r1537-s8-engine",
+      "mapping_kind": "worktree_registry_basename_alias",
+      "note": "Desktop child basename uniquely identifies a registered worktree repository",
+      "repository_identity": "c:\\users\\joshp\\desktop\\toolsenabled-current\\.git",
+      "repository_relative_root": "",
+      "repository_root": "c:\\users\\joshp\\desktop\\toolsenabled-current",
+      "target_counts": {
+        "300": 6,
+        "60": 6,
+        "900": 6
+      },
+      "tree_id": "r1537-s8-engine-c2133456ccf5"
+    },
+    {
+      "available": true,
+      "current_root": "c:\\users\\joshp\\desktop\\toolsenabled\\historical\\r1538-p4-idle-app",
+      "cwd_counts": {
+        "300": 0,
+        "60": 0,
+        "900": 0
+      },
+      "epoch_candidates": [],
+      "evidence": [
+        "basename=r1538-p4-idle-app",
+        "current_equivalent=c:\\users\\joshp\\desktop\\toolsenabled\\historical\\r1538-p4-idle-app",
+        "unique_repository_identity=c:\\users\\joshp\\desktop\\toolsenabled\\opensource\\mission-control\\.git"
+      ],
+      "logical_root": "c:\\users\\joshp\\desktop\\r1538-p4-idle-app",
+      "mapping_kind": "worktree_registry_basename_alias",
+      "note": "Desktop child basename uniquely identifies a registered worktree repository",
+      "repository_identity": "c:\\users\\joshp\\desktop\\toolsenabled\\opensource\\mission-control\\.git",
+      "repository_relative_root": "",
+      "repository_root": "c:\\users\\joshp\\desktop\\toolsenabled\\opensource\\mission-control",
+      "target_counts": {
+        "300": 1,
+        "60": 1,
+        "900": 1
+      },
+      "tree_id": "r1538-p4-idle-app-6d24c7b6990c"
+    },
+    {
+      "available": true,
+      "current_root": "c:\\users\\joshp\\desktop\\toolsenabled\\historical\\r1538-p7-app",
+      "cwd_counts": {
+        "300": 0,
+        "60": 0,
+        "900": 0
+      },
+      "epoch_candidates": [],
+      "evidence": [
+        "basename=r1538-p7-app",
+        "current_equivalent=c:\\users\\joshp\\desktop\\toolsenabled\\historical\\r1538-p7-app",
+        "unique_repository_identity=c:\\users\\joshp\\desktop\\toolsenabled\\opensource\\mission-control\\.git"
+      ],
+      "logical_root": "c:\\users\\joshp\\desktop\\r1538-p7-app",
+      "mapping_kind": "worktree_registry_basename_alias",
+      "note": "Desktop child basename uniquely identifies a registered worktree repository",
+      "repository_identity": "c:\\users\\joshp\\desktop\\toolsenabled\\opensource\\mission-control\\.git",
+      "repository_relative_root": "",
+      "repository_root": "c:\\users\\joshp\\desktop\\toolsenabled\\opensource\\mission-control",
+      "target_counts": {
+        "300": 1,
+        "60": 1,
+        "900": 1
+      },
+      "tree_id": "r1538-p7-app-04bed00d6dcc"
+    },
+    {
+      "available": true,
+      "current_root": null,
+      "cwd_counts": {
+        "300": 0,
+        "60": 0,
+        "900": 0
+      },
+      "epoch_candidates": [],
+      "evidence": [
+        "current_subtree_exists=false",
+        "desktop_repository_identity=c:\\users\\joshp\\desktop\\.git",
+        "subtree=r1544-closeout"
+      ],
+      "logical_root": "c:\\users\\joshp\\desktop\\r1544-closeout",
+      "mapping_kind": "desktop_repository_subtree",
+      "note": "query path is within one top-level subtree of the broad Desktop repository; historical reconstruction remains available when the current subtree is absent",
+      "repository_identity": "c:\\users\\joshp\\desktop\\.git",
+      "repository_relative_root": "r1544-closeout",
+      "repository_root": "c:\\users\\joshp\\desktop",
+      "target_counts": {
+        "300": 2,
+        "60": 2,
+        "900": 2
+      },
+      "tree_id": "r1544-closeout-1bd0267a09dc"
+    },
+    {
+      "available": true,
+      "current_root": "c:\\users\\joshp\\desktop\\toolsenabled\\opensource\\wt-capability\\artifacts\\rcut2-engine-06d8c9e",
+      "cwd_counts": {
+        "300": 0,
+        "60": 0,
+        "900": 0
+      },
+      "epoch_candidates": [],
+      "evidence": [
+        "detail=fatal: not a git repository: C:/Users/joshp/Desktop/wt-capability/artifacts/rcut2-engine-bare.git/worktrees/rcut2-engine-06d8c9e",
+        "git_marker=c:\\users\\joshp\\desktop\\toolsenabled\\opensource\\wt-capability\\artifacts\\rcut2-engine-06d8c9e\\.git"
+      ],
+      "logical_root": "c:\\users\\joshp\\desktop\\toolsenabled\\opensource\\wt-capability\\artifacts\\rcut2-engine-06d8c9e",
+      "mapping_kind": "broken_git_marker",
+      "note": "nearest .git marker is not a valid checkout; use current-tree control only",
+      "repository_identity": null,
+      "repository_relative_root": "",
+      "repository_root": null,
+      "target_counts": {
+        "300": 1,
+        "60": 1,
+        "900": 1
+      },
+      "tree_id": "rcut2-engine-06d8c9e-3f77556d1ecf"
+    },
+    {
+      "available": true,
+      "current_root": "d:\\reflect_install.log",
+      "cwd_counts": {
+        "300": 0,
+        "60": 0,
+        "900": 0
+      },
+      "epoch_candidates": [],
+      "evidence": [
+        "current_root_exists=true",
+        "empirical_anchor=d:\\reflect_install.log"
+      ],
+      "logical_root": "d:\\reflect_install.log",
+      "mapping_kind": "non_git_current_tree",
+      "note": "no valid Git boundary; current filesystem fallback",
+      "repository_identity": null,
+      "repository_relative_root": "",
+      "repository_root": null,
+      "target_counts": {
+        "300": 1,
+        "60": 1,
+        "900": 1
+      },
+      "tree_id": "reflect-install-log-eea0273df7dc"
+    },
+    {
+      "available": true,
+      "current_root": null,
+      "cwd_counts": {
+        "300": 0,
+        "60": 0,
+        "900": 0
+      },
+      "epoch_candidates": [],
+      "evidence": [
+        "current_subtree_exists=false",
+        "desktop_repository_identity=c:\\users\\joshp\\desktop\\.git",
+        "subtree=reply-to-machine-b.md"
+      ],
+      "logical_root": "c:\\users\\joshp\\desktop\\reply-to-machine-b.md",
+      "mapping_kind": "desktop_repository_subtree",
+      "note": "query path is within one top-level subtree of the broad Desktop repository; historical reconstruction remains available when the current subtree is absent",
+      "repository_identity": "c:\\users\\joshp\\desktop\\.git",
+      "repository_relative_root": "reply-to-machine-b.md",
+      "repository_root": "c:\\users\\joshp\\desktop",
+      "target_counts": {
+        "300": 1,
+        "60": 1,
+        "900": 1
+      },
+      "tree_id": "reply-to-machine-b-md-7d82a6325573"
+    },
+    {
+      "available": true,
+      "current_root": "c:\\users\\joshp\\desktop\\reports",
+      "cwd_counts": {
+        "300": 0,
+        "60": 0,
+        "900": 0
+      },
+      "epoch_candidates": [],
+      "evidence": [
+        "current_subtree_exists=true",
+        "desktop_repository_identity=c:\\users\\joshp\\desktop\\.git",
+        "subtree=reports"
+      ],
+      "logical_root": "c:\\users\\joshp\\desktop\\reports",
+      "mapping_kind": "desktop_repository_subtree",
+      "note": "query path is within one top-level subtree of the broad Desktop repository; historical reconstruction remains available when the current subtree is absent",
+      "repository_identity": "c:\\users\\joshp\\desktop\\.git",
+      "repository_relative_root": "reports",
+      "repository_root": "c:\\users\\joshp\\desktop",
+      "target_counts": {
+        "300": 5,
+        "60": 2,
+        "900": 5
+      },
+      "tree_id": "reports-f4e90d79307f"
+    },
+    {
+      "available": true,
+      "current_root": "c:\\lanes\\research-app",
+      "cwd_counts": {
+        "300": 0,
+        "60": 0,
+        "900": 0
+      },
+      "epoch_candidates": [],
+      "evidence": [
+        "git_common_dir=c:\\users\\joshp\\desktop\\toolsenabled\\opensource\\mission-control\\.git",
+        "git_top_level=c:\\lanes\\research-app"
+      ],
+      "logical_root": "c:\\lanes\\research-app",
+      "mapping_kind": "current_git_boundary",
+      "note": "nearest valid .git boundary",
+      "repository_identity": "c:\\users\\joshp\\desktop\\toolsenabled\\opensource\\mission-control\\.git",
+      "repository_relative_root": "",
+      "repository_root": "c:\\lanes\\research-app",
+      "target_counts": {
+        "300": 569,
+        "60": 537,
+        "900": 571
+      },
+      "tree_id": "research-app-d394b3c395b7"
+    },
+    {
+      "available": true,
+      "current_root": "c:\\lanes\\research-queue",
+      "cwd_counts": {
+        "300": 0,
+        "60": 0,
+        "900": 0
+      },
+      "epoch_candidates": [],
+      "evidence": [
+        "git_common_dir=c:\\users\\joshp\\desktop\\toolsenabled\\opensource\\mission-control\\.git",
+        "git_top_level=c:\\lanes\\research-queue"
+      ],
+      "logical_root": "c:\\lanes\\research-queue",
+      "mapping_kind": "current_git_boundary",
+      "note": "nearest valid .git boundary",
+      "repository_identity": "c:\\users\\joshp\\desktop\\toolsenabled\\opensource\\mission-control\\.git",
+      "repository_relative_root": "",
+      "repository_root": "c:\\lanes\\research-queue",
+      "target_counts": {
+        "300": 1,
+        "60": 1,
+        "900": 1
+      },
+      "tree_id": "research-queue-4f67f8c9bb5b"
+    },
+    {
+      "available": true,
+      "current_root": "c:\\lanes\\research-subsystem",
+      "cwd_counts": {
+        "300": 0,
+        "60": 0,
+        "900": 0
+      },
+      "epoch_candidates": [],
+      "evidence": [
+        "git_common_dir=c:\\users\\joshp\\desktop\\toolsenabled-current\\.git",
+        "git_top_level=c:\\lanes\\research-subsystem"
+      ],
+      "logical_root": "c:\\lanes\\research-subsystem",
+      "mapping_kind": "current_git_boundary",
+      "note": "nearest valid .git boundary",
+      "repository_identity": "c:\\users\\joshp\\desktop\\toolsenabled-current\\.git",
+      "repository_relative_root": "",
+      "repository_root": "c:\\lanes\\research-subsystem",
+      "target_counts": {
+        "300": 210,
+        "60": 202,
+        "900": 214
+      },
+      "tree_id": "research-subsystem-fcd27b78110f"
+    },
+    {
+      "available": true,
+      "current_root": "c:\\",
+      "cwd_counts": {
+        "300": 74,
+        "60": 72,
+        "900": 75
+      },
+      "epoch_candidates": [],
+      "evidence": [
+        "current_root_exists=true",
+        "empirical_anchor=c:\\"
+      ],
+      "logical_root": "c:\\",
+      "mapping_kind": "non_git_current_tree",
+      "note": "no valid Git boundary; current filesystem fallback",
+      "repository_identity": null,
+      "repository_relative_root": "",
+      "repository_root": null,
+      "target_counts": {
+        "300": 0,
+        "60": 0,
+        "900": 0
+      },
+      "tree_id": "root-3dc8472eaebe"
+    },
+    {
+      "available": true,
+      "current_root": null,
+      "cwd_counts": {
+        "300": 0,
+        "60": 0,
+        "900": 0
+      },
+      "epoch_candidates": [],
+      "evidence": [
+        "current_subtree_exists=false",
+        "desktop_repository_identity=c:\\users\\joshp\\desktop\\.git",
+        "subtree=secureagentchannel"
+      ],
+      "logical_root": "c:\\users\\joshp\\desktop\\secureagentchannel",
+      "mapping_kind": "desktop_repository_subtree",
+      "note": "query path is within one top-level subtree of the broad Desktop repository; historical reconstruction remains available when the current subtree is absent",
+      "repository_identity": "c:\\users\\joshp\\desktop\\.git",
+      "repository_relative_root": "secureagentchannel",
+      "repository_root": "c:\\users\\joshp\\desktop",
+      "target_counts": {
+        "300": 1,
+        "60": 1,
+        "900": 1
+      },
+      "tree_id": "secureagentchannel-456239e17d24"
+    },
+    {
+      "available": true,
+      "current_root": "c:\\users\\joshp\\desktop\\servercontrol",
+      "cwd_counts": {
+        "300": 0,
+        "60": 0,
+        "900": 0
+      },
+      "epoch_candidates": [],
+      "evidence": [
+        "current_subtree_exists=true",
+        "desktop_repository_identity=c:\\users\\joshp\\desktop\\.git",
+        "subtree=servercontrol"
+      ],
+      "logical_root": "c:\\users\\joshp\\desktop\\servercontrol",
+      "mapping_kind": "desktop_repository_subtree",
+      "note": "query path is within one top-level subtree of the broad Desktop repository; historical reconstruction remains available when the current subtree is absent",
+      "repository_identity": "c:\\users\\joshp\\desktop\\.git",
+      "repository_relative_root": "servercontrol",
+      "repository_root": "c:\\users\\joshp\\desktop",
+      "target_counts": {
+        "300": 16,
+        "60": 14,
+        "900": 16
+      },
+      "tree_id": "servercontrol-5a1b8fea4510"
+    },
+    {
+      "available": true,
+      "current_root": "c:\\programdata\\microsoft\\windows\\start menu\\programs\\startup",
+      "cwd_counts": {
+        "300": 0,
+        "60": 0,
+        "900": 0
+      },
+      "epoch_candidates": [],
+      "evidence": [
+        "current_root_exists=true",
+        "empirical_anchor=c:\\programdata\\microsoft\\windows\\start menu\\programs\\startup"
+      ],
+      "logical_root": "c:\\programdata\\microsoft\\windows\\start menu\\programs\\startup",
+      "mapping_kind": "non_git_current_tree",
+      "note": "no valid Git boundary; current filesystem fallback",
+      "repository_identity": null,
+      "repository_relative_root": "",
+      "repository_root": null,
+      "target_counts": {
+        "300": 2,
+        "60": 2,
+        "900": 2
+      },
+      "tree_id": "startup-2cd7fbd04e9c"
+    },
+    {
+      "available": true,
+      "current_root": "c:\\users\\joshp\\appdata\\roaming\\microsoft\\windows\\start menu\\programs\\startup",
+      "cwd_counts": {
+        "300": 0,
+        "60": 0,
+        "900": 0
+      },
+      "epoch_candidates": [],
+      "evidence": [
+        "current_root_exists=true",
+        "empirical_anchor=c:\\users\\joshp\\appdata\\roaming\\microsoft\\windows\\start menu\\programs\\startup"
+      ],
+      "logical_root": "c:\\users\\joshp\\appdata\\roaming\\microsoft\\windows\\start menu\\programs\\startup",
+      "mapping_kind": "non_git_current_tree",
+      "note": "no valid Git boundary; current filesystem fallback",
+      "repository_identity": null,
+      "repository_relative_root": "",
+      "repository_root": null,
+      "target_counts": {
+        "300": 4,
+        "60": 4,
+        "900": 4
+      },
+      "tree_id": "startup-9ad828cc3060"
+    },
+    {
+      "available": true,
+      "current_root": "c:\\lanes\\swarm-facts.md",
+      "cwd_counts": {
+        "300": 0,
+        "60": 0,
+        "900": 0
+      },
+      "epoch_candidates": [],
+      "evidence": [
+        "current_root_exists=true",
+        "empirical_anchor=c:\\lanes\\swarm-facts.md"
+      ],
+      "logical_root": "c:\\lanes\\swarm-facts.md",
+      "mapping_kind": "non_git_current_tree",
+      "note": "no valid Git boundary; current filesystem fallback",
+      "repository_identity": null,
+      "repository_relative_root": "",
+      "repository_root": null,
+      "target_counts": {
+        "300": 1,
+        "60": 1,
+        "900": 1
+      },
+      "tree_id": "swarm-facts-md-323f53383a74"
+    },
+    {
+      "available": true,
+      "current_root": "c:\\programdata\\systemguard",
+      "cwd_counts": {
+        "300": 0,
+        "60": 0,
+        "900": 0
+      },
+      "epoch_candidates": [],
+      "evidence": [
+        "current_root_exists=true",
+        "empirical_anchor=c:\\programdata\\systemguard"
+      ],
+      "logical_root": "c:\\programdata\\systemguard",
+      "mapping_kind": "non_git_current_tree",
+      "note": "no valid Git boundary; current filesystem fallback",
+      "repository_identity": null,
+      "repository_relative_root": "",
+      "repository_root": null,
+      "target_counts": {
+        "300": 1,
+        "60": 1,
+        "900": 1
+      },
+      "tree_id": "systemguard-37d473771801"
+    },
+    {
+      "available": true,
+      "current_root": "c:\\users\\joshp\\appdata\\local\\temp",
+      "cwd_counts": {
+        "300": 0,
+        "60": 0,
+        "900": 0
+      },
+      "epoch_candidates": [],
+      "evidence": [
+        "current_root_exists=true",
+        "empirical_anchor=c:\\users\\joshp\\appdata\\local\\temp"
+      ],
+      "logical_root": "c:\\users\\joshp\\appdata\\local\\temp",
+      "mapping_kind": "non_git_current_tree",
+      "note": "no valid Git boundary; current filesystem fallback",
+      "repository_identity": null,
+      "repository_relative_root": "",
+      "repository_root": null,
+      "target_counts": {
+        "300": 2,
+        "60": 2,
+        "900": 2
+      },
+      "tree_id": "temp-32b5d4950da4"
+    },
+    {
+      "available": true,
+      "current_root": null,
+      "cwd_counts": {
+        "300": 0,
+        "60": 0,
+        "900": 0
+      },
+      "epoch_candidates": [],
+      "evidence": [
+        "current_subtree_exists=false",
+        "desktop_repository_identity=c:\\users\\joshp\\desktop\\.git",
+        "subtree=toolsen"
+      ],
+      "logical_root": "c:\\users\\joshp\\desktop\\toolsen",
+      "mapping_kind": "desktop_repository_subtree",
+      "note": "query path is within one top-level subtree of the broad Desktop repository; historical reconstruction remains available when the current subtree is absent",
+      "repository_identity": "c:\\users\\joshp\\desktop\\.git",
+      "repository_relative_root": "toolsen",
+      "repository_root": "c:\\users\\joshp\\desktop",
+      "target_counts": {
+        "300": 1,
+        "60": 1,
+        "900": 1
+      },
+      "tree_id": "toolsen-9d1a502dcda0"
+    },
+    {
+      "available": true,
+      "current_root": "c:\\users\\joshp\\appdata\\roaming\\toolsenabled",
+      "cwd_counts": {
+        "300": 0,
+        "60": 0,
+        "900": 0
+      },
+      "epoch_candidates": [],
+      "evidence": [
+        "current_root_exists=true",
+        "empirical_anchor=c:\\users\\joshp\\appdata\\roaming\\toolsenabled"
+      ],
+      "logical_root": "c:\\users\\joshp\\appdata\\roaming\\toolsenabled",
+      "mapping_kind": "non_git_current_tree",
+      "note": "no valid Git boundary; current filesystem fallback",
+      "repository_identity": null,
+      "repository_relative_root": "",
+      "repository_root": null,
+      "target_counts": {
+        "300": 1,
+        "60": 1,
+        "900": 1
+      },
+      "tree_id": "toolsenabled-57dae8a979de"
+    },
+    {
+      "available": true,
+      "current_root": "c:\\users\\joshp\\desktop\\toolsenabled-current",
+      "cwd_counts": {
+        "300": 3924,
+        "60": 3594,
+        "900": 4025
+      },
+      "epoch_candidates": [],
+      "evidence": [
+        "git_common_dir=c:\\users\\joshp\\desktop\\toolsenabled-current\\.git",
+        "git_top_level=c:\\users\\joshp\\desktop\\toolsenabled-current"
+      ],
+      "logical_root": "c:\\users\\joshp\\desktop\\toolsenabled-current",
+      "mapping_kind": "current_git_boundary",
+      "note": "nearest valid .git boundary",
+      "repository_identity": "c:\\users\\joshp\\desktop\\toolsenabled-current\\.git",
+      "repository_relative_root": "",
+      "repository_root": "c:\\users\\joshp\\desktop\\toolsenabled-current",
+      "target_counts": {
+        "300": 4413,
+        "60": 4108,
+        "900": 4504
+      },
+      "tree_id": "toolsenabled-current-12cbe4aa8dad"
+    },
+    {
+      "available": true,
+      "current_root": "c:\\users\\joshp\\desktop\\toolsenabled",
+      "cwd_counts": {
+        "300": 7869,
+        "60": 7132,
+        "900": 7987
+      },
+      "epoch_candidates": [
+        {
+          "candidate_id": "archived-legacy-root",
+          "evidence": [
+            "Desktop/toolsenabled/legacy is a distinct valid Git checkout",
+            "its main/rescue history is a candidate for the former plain checkout",
+            "observed branches present=main,rescue/machine-a-worktree"
+          ],
+          "matching_observed_branches": [
+            "main",
+            "rescue/machine-a-worktree"
+          ],
+          "repository_identity": "c:\\users\\joshp\\desktop\\toolsenabled\\legacy\\.git",
+          "repository_relative_root": "",
+          "repository_root": "c:\\users\\joshp\\desktop\\toolsenabled\\legacy",
+          "source_kind": "archived_legacy_checkout_root"
+        },
+        {
+          "candidate_id": "desktop-subtree",
+          "evidence": [
+            "current plain toolsenabled is a top-level Desktop repository subtree",
+            "observed branches present=main"
+          ],
+          "matching_observed_branches": [
+            "main"
+          ],
+          "repository_identity": "c:\\users\\joshp\\desktop\\.git",
+          "repository_relative_root": "toolsenabled",
+          "repository_root": "c:\\users\\joshp\\desktop",
+          "source_kind": "desktop_repository_subtree"
+        },
+        {
+          "candidate_id": "legacy-engine-root",
+          "evidence": [
+            "toolsenabled-current worktree registry identifies the private engine history",
+            "legacy main/rescue branches may represent the former plain toolsenabled checkout",
+            "observed branches present=coordinator/r1161-interactive-bridge-run9,main,rescue/machine-a-worktree"
+          ],
+          "matching_observed_branches": [
+            "coordinator/r1161-interactive-bridge-run9",
+            "main",
+            "rescue/machine-a-worktree"
+          ],
+          "repository_identity": "c:\\users\\joshp\\desktop\\toolsenabled-current\\.git",
+          "repository_relative_root": "",
+          "repository_root": "c:\\users\\joshp\\desktop\\toolsenabled-current",
+          "source_kind": "legacy_checkout_root"
+        }
+      ],
+      "evidence": [
+        "desktop_umbrella=c:\\users\\joshp\\desktop",
+        "source selection deferred to epoch_candidates"
+      ],
+      "logical_root": "c:\\users\\joshp\\desktop\\toolsenabled",
+      "mapping_kind": "logical_toolsenabled_epoch",
+      "note": "repository epoch is ambiguous; inspect epoch_candidates",
+      "repository_identity": null,
+      "repository_relative_root": "",
+      "repository_root": null,
+      "target_counts": {
+        "300": 2270,
+        "60": 2054,
+        "900": 2300
+      },
+      "tree_id": "toolsenabled-dd1f33f98918"
+    },
+    {
+      "available": true,
+      "current_root": null,
+      "cwd_counts": {
+        "300": 0,
+        "60": 0,
+        "900": 0
+      },
+      "epoch_candidates": [],
+      "evidence": [
+        "current_subtree_exists=false",
+        "desktop_repository_identity=c:\\users\\joshp\\desktop\\.git",
+        "subtree=toolsenabled-full-audit-2026-08-03.md"
+      ],
+      "logical_root": "c:\\users\\joshp\\desktop\\toolsenabled-full-audit-2026-08-03.md",
+      "mapping_kind": "desktop_repository_subtree",
+      "note": "query path is within one top-level subtree of the broad Desktop repository; historical reconstruction remains available when the current subtree is absent",
+      "repository_identity": "c:\\users\\joshp\\desktop\\.git",
+      "repository_relative_root": "toolsenabled-full-audit-2026-08-03.md",
+      "repository_root": "c:\\users\\joshp\\desktop",
+      "target_counts": {
+        "300": 2,
+        "60": 2,
+        "900": 2
+      },
+      "tree_id": "toolsenabled-full-audit-2026-08--15e274f0a78a"
+    },
+    {
+      "available": true,
+      "current_root": null,
+      "cwd_counts": {
+        "300": 18,
+        "60": 17,
+        "900": 18
+      },
+      "epoch_candidates": [],
+      "evidence": [
+        "current_subtree_exists=false",
+        "desktop_repository_identity=c:\\users\\joshp\\desktop\\.git",
+        "subtree=toolsenabled-paid"
+      ],
+      "logical_root": "c:\\users\\joshp\\desktop\\toolsenabled-paid",
+      "mapping_kind": "desktop_repository_subtree",
+      "note": "query path is within one top-level subtree of the broad Desktop repository; historical reconstruction remains available when the current subtree is absent",
+      "repository_identity": "c:\\users\\joshp\\desktop\\.git",
+      "repository_relative_root": "toolsenabled-paid",
+      "repository_root": "c:\\users\\joshp\\desktop",
+      "target_counts": {
+        "300": 2,
+        "60": 2,
+        "900": 2
+      },
+      "tree_id": "toolsenabled-paid-072bc1bd0fac"
+    },
+    {
+      "available": true,
+      "current_root": "c:\\users\\joshp\\desktop\\toolsenabled\\toolsenabled-paid\\toolsenabled-relay-private",
+      "cwd_counts": {
+        "300": 0,
+        "60": 0,
+        "900": 0
+      },
+      "epoch_candidates": [],
+      "evidence": [
+        "git_common_dir=c:\\users\\joshp\\desktop\\toolsenabled\\toolsenabled-paid\\toolsenabled-relay-private\\.git",
+        "git_top_level=c:\\users\\joshp\\desktop\\toolsenabled\\toolsenabled-paid\\toolsenabled-relay-private"
+      ],
+      "logical_root": "c:\\users\\joshp\\desktop\\toolsenabled\\toolsenabled-paid\\toolsenabled-relay-private",
+      "mapping_kind": "current_git_boundary",
+      "note": "nearest valid .git boundary",
+      "repository_identity": "c:\\users\\joshp\\desktop\\toolsenabled\\toolsenabled-paid\\toolsenabled-relay-private\\.git",
+      "repository_relative_root": "",
+      "repository_root": "c:\\users\\joshp\\desktop\\toolsenabled\\toolsenabled-paid\\toolsenabled-relay-private",
+      "target_counts": {
+        "300": 37,
+        "60": 33,
+        "900": 38
+      },
+      "tree_id": "toolsenabled-relay-private-52b3d2db2666"
+    },
+    {
+      "available": true,
+      "current_root": "c:\\lanes\\ultra-engine",
+      "cwd_counts": {
+        "300": 0,
+        "60": 0,
+        "900": 0
+      },
+      "epoch_candidates": [],
+      "evidence": [
+        "git_common_dir=c:\\users\\joshp\\desktop\\toolsenabled-current\\.git",
+        "git_top_level=c:\\lanes\\ultra-engine"
+      ],
+      "logical_root": "c:\\lanes\\ultra-engine",
+      "mapping_kind": "current_git_boundary",
+      "note": "nearest valid .git boundary",
+      "repository_identity": "c:\\users\\joshp\\desktop\\toolsenabled-current\\.git",
+      "repository_relative_root": "",
+      "repository_root": "c:\\lanes\\ultra-engine",
+      "target_counts": {
+        "300": 1,
+        "60": 1,
+        "900": 1
+      },
+      "tree_id": "ultra-engine-cfa3e310a0be"
+    },
+    {
+      "available": true,
+      "current_root": "c:\\users\\joshp\\desktop\\toolsenabled\\historical\\wt-agentcomms-buildout",
+      "cwd_counts": {
+        "300": 0,
+        "60": 0,
+        "900": 0
+      },
+      "epoch_candidates": [],
+      "evidence": [
+        "basename=wt-agentcomms-buildout",
+        "current_equivalent=c:\\users\\joshp\\desktop\\toolsenabled\\historical\\wt-agentcomms-buildout",
+        "unique_repository_identity=c:\\users\\joshp\\desktop\\toolsenabled-current\\.git"
+      ],
+      "logical_root": "c:\\users\\joshp\\desktop\\wt-agentcomms-buildout",
+      "mapping_kind": "worktree_registry_basename_alias",
+      "note": "Desktop child basename uniquely identifies a registered worktree repository",
+      "repository_identity": "c:\\users\\joshp\\desktop\\toolsenabled-current\\.git",
+      "repository_relative_root": "",
+      "repository_root": "c:\\users\\joshp\\desktop\\toolsenabled-current",
+      "target_counts": {
+        "300": 2,
+        "60": 2,
+        "900": 2
+      },
+      "tree_id": "wt-agentcomms-buildout-031eb2c2d0d4"
+    },
+    {
+      "available": true,
+      "current_root": "c:\\users\\joshp\\desktop\\toolsenabled\\historical\\wt-agentcomms-design",
+      "cwd_counts": {
+        "300": 0,
+        "60": 0,
+        "900": 0
+      },
+      "epoch_candidates": [],
+      "evidence": [
+        "basename=wt-agentcomms-design",
+        "current_equivalent=c:\\users\\joshp\\desktop\\toolsenabled\\historical\\wt-agentcomms-design",
+        "unique_repository_identity=c:\\users\\joshp\\desktop\\toolsenabled-current\\.git"
+      ],
+      "logical_root": "c:\\users\\joshp\\desktop\\wt-agentcomms-design",
+      "mapping_kind": "worktree_registry_basename_alias",
+      "note": "Desktop child basename uniquely identifies a registered worktree repository",
+      "repository_identity": "c:\\users\\joshp\\desktop\\toolsenabled-current\\.git",
+      "repository_relative_root": "",
+      "repository_root": "c:\\users\\joshp\\desktop\\toolsenabled-current",
+      "target_counts": {
+        "300": 1,
+        "60": 1,
+        "900": 1
+      },
+      "tree_id": "wt-agentcomms-design-6ed9d85d9018"
+    },
+    {
+      "available": true,
+      "current_root": "c:\\users\\joshp\\desktop\\toolsenabled\\historical\\wt-agentcomms-provisioning",
+      "cwd_counts": {
+        "300": 0,
+        "60": 0,
+        "900": 0
+      },
+      "epoch_candidates": [],
+      "evidence": [
+        "basename=wt-agentcomms-provisioning",
+        "current_equivalent=c:\\users\\joshp\\desktop\\toolsenabled\\historical\\wt-agentcomms-provisioning",
+        "unique_repository_identity=c:\\users\\joshp\\desktop\\toolsenabled-current\\.git"
+      ],
+      "logical_root": "c:\\users\\joshp\\desktop\\wt-agentcomms-provisioning",
+      "mapping_kind": "worktree_registry_basename_alias",
+      "note": "Desktop child basename uniquely identifies a registered worktree repository",
+      "repository_identity": "c:\\users\\joshp\\desktop\\toolsenabled-current\\.git",
+      "repository_relative_root": "",
+      "repository_root": "c:\\users\\joshp\\desktop\\toolsenabled-current",
+      "target_counts": {
+        "300": 2,
+        "60": 2,
+        "900": 2
+      },
+      "tree_id": "wt-agentcomms-provisioning-c4be7a413c3f"
+    },
+    {
+      "available": true,
+      "current_root": "c:\\users\\joshp\\desktop\\toolsenabled\\historical\\wt-agentcomms-research-signal",
+      "cwd_counts": {
+        "300": 0,
+        "60": 0,
+        "900": 0
+      },
+      "epoch_candidates": [],
+      "evidence": [
+        "basename=wt-agentcomms-research-signal",
+        "current_equivalent=c:\\users\\joshp\\desktop\\toolsenabled\\historical\\wt-agentcomms-research-signal",
+        "unique_repository_identity=c:\\users\\joshp\\desktop\\toolsenabled-current\\.git"
+      ],
+      "logical_root": "c:\\users\\joshp\\desktop\\wt-agentcomms-research-signal",
+      "mapping_kind": "worktree_registry_basename_alias",
+      "note": "Desktop child basename uniquely identifies a registered worktree repository",
+      "repository_identity": "c:\\users\\joshp\\desktop\\toolsenabled-current\\.git",
+      "repository_relative_root": "",
+      "repository_root": "c:\\users\\joshp\\desktop\\toolsenabled-current",
+      "target_counts": {
+        "300": 1,
+        "60": 1,
+        "900": 1
+      },
+      "tree_id": "wt-agentcomms-research-signal-b0edf3e41c2a"
+    },
+    {
+      "available": true,
+      "current_root": "c:\\users\\joshp\\desktop\\toolsenabled\\historical\\wt-app-round2",
+      "cwd_counts": {
+        "300": 0,
+        "60": 0,
+        "900": 0
+      },
+      "epoch_candidates": [],
+      "evidence": [
+        "basename=wt-app-round2",
+        "current_equivalent=c:\\users\\joshp\\desktop\\toolsenabled\\historical\\wt-app-round2",
+        "unique_repository_identity=c:\\users\\joshp\\desktop\\toolsenabled\\opensource\\mission-control\\.git"
+      ],
+      "logical_root": "c:\\users\\joshp\\desktop\\wt-app-round2",
+      "mapping_kind": "worktree_registry_basename_alias",
+      "note": "Desktop child basename uniquely identifies a registered worktree repository",
+      "repository_identity": "c:\\users\\joshp\\desktop\\toolsenabled\\opensource\\mission-control\\.git",
+      "repository_relative_root": "",
+      "repository_root": "c:\\users\\joshp\\desktop\\toolsenabled\\opensource\\mission-control",
+      "target_counts": {
+        "300": 3,
+        "60": 2,
+        "900": 3
+      },
+      "tree_id": "wt-app-round2-2c509e976ca6"
+    },
+    {
+      "available": true,
+      "current_root": "c:\\users\\joshp\\desktop\\toolsenabled\\opensource\\wt-capability",
+      "cwd_counts": {
+        "300": 0,
+        "60": 0,
+        "900": 0
+      },
+      "epoch_candidates": [],
+      "evidence": [
+        "basename=wt-capability",
+        "current_equivalent=c:\\users\\joshp\\desktop\\toolsenabled\\opensource\\wt-capability",
+        "unique_repository_identity=c:\\users\\joshp\\desktop\\toolsenabled\\opensource\\mission-control\\.git"
+      ],
+      "logical_root": "c:\\users\\joshp\\desktop\\wt-capability",
+      "mapping_kind": "worktree_registry_basename_alias",
+      "note": "Desktop child basename uniquely identifies a registered worktree repository",
+      "repository_identity": "c:\\users\\joshp\\desktop\\toolsenabled\\opensource\\mission-control\\.git",
+      "repository_relative_root": "",
+      "repository_root": "c:\\users\\joshp\\desktop\\toolsenabled\\opensource\\mission-control",
+      "target_counts": {
+        "300": 723,
+        "60": 696,
+        "900": 731
+      },
+      "tree_id": "wt-capability-006cc4bad3fb"
+    },
+    {
+      "available": true,
+      "current_root": "c:\\users\\joshp\\desktop\\toolsenabled\\opensource\\wt-capability",
+      "cwd_counts": {
+        "300": 0,
+        "60": 0,
+        "900": 0
+      },
+      "epoch_candidates": [],
+      "evidence": [
+        "git_common_dir=c:\\users\\joshp\\desktop\\toolsenabled\\opensource\\mission-control\\.git",
+        "git_top_level=c:\\users\\joshp\\desktop\\toolsenabled\\opensource\\wt-capability"
+      ],
+      "logical_root": "c:\\users\\joshp\\desktop\\toolsenabled\\opensource\\wt-capability",
+      "mapping_kind": "current_git_boundary",
+      "note": "nearest valid .git boundary",
+      "repository_identity": "c:\\users\\joshp\\desktop\\toolsenabled\\opensource\\mission-control\\.git",
+      "repository_relative_root": "",
+      "repository_root": "c:\\users\\joshp\\desktop\\toolsenabled\\opensource\\wt-capability",
+      "target_counts": {
+        "300": 1310,
+        "60": 1164,
+        "900": 1330
+      },
+      "tree_id": "wt-capability-5a04bb4f7428"
+    },
+    {
+      "available": true,
+      "current_root": "c:\\users\\joshp\\desktop\\toolsenabled\\historical\\wt-cut-app",
+      "cwd_counts": {
+        "300": 0,
+        "60": 0,
+        "900": 0
+      },
+      "epoch_candidates": [],
+      "evidence": [
+        "basename=wt-cut-app",
+        "current_equivalent=c:\\users\\joshp\\desktop\\toolsenabled\\historical\\wt-cut-app",
+        "unique_repository_identity=c:\\users\\joshp\\desktop\\toolsenabled\\opensource\\mission-control\\.git"
+      ],
+      "logical_root": "c:\\users\\joshp\\desktop\\wt-cut-app",
+      "mapping_kind": "worktree_registry_basename_alias",
+      "note": "Desktop child basename uniquely identifies a registered worktree repository",
+      "repository_identity": "c:\\users\\joshp\\desktop\\toolsenabled\\opensource\\mission-control\\.git",
+      "repository_relative_root": "",
+      "repository_root": "c:\\users\\joshp\\desktop\\toolsenabled\\opensource\\mission-control",
+      "target_counts": {
+        "300": 8,
+        "60": 6,
+        "900": 8
+      },
+      "tree_id": "wt-cut-app-1870e4f5c235"
+    },
+    {
+      "available": true,
+      "current_root": "c:\\users\\joshp\\desktop\\toolsenabled\\historical\\wt-cut-engine",
+      "cwd_counts": {
+        "300": 0,
+        "60": 0,
+        "900": 0
+      },
+      "epoch_candidates": [],
+      "evidence": [
+        "basename=wt-cut-engine",
+        "current_equivalent=c:\\users\\joshp\\desktop\\toolsenabled\\historical\\wt-cut-engine",
+        "unique_repository_identity=c:\\users\\joshp\\desktop\\toolsenabled-current\\.git"
+      ],
+      "logical_root": "c:\\users\\joshp\\desktop\\wt-cut-engine",
+      "mapping_kind": "worktree_registry_basename_alias",
+      "note": "Desktop child basename uniquely identifies a registered worktree repository",
+      "repository_identity": "c:\\users\\joshp\\desktop\\toolsenabled-current\\.git",
+      "repository_relative_root": "",
+      "repository_root": "c:\\users\\joshp\\desktop\\toolsenabled-current",
+      "target_counts": {
+        "300": 1,
+        "60": 1,
+        "900": 1
+      },
+      "tree_id": "wt-cut-engine-da8d5b2353cd"
+    },
+    {
+      "available": true,
+      "current_root": "c:\\users\\joshp\\desktop\\toolsenabled\\historical\\wt-filekeeper-worktree-lease",
+      "cwd_counts": {
+        "300": 0,
+        "60": 0,
+        "900": 0
+      },
+      "epoch_candidates": [],
+      "evidence": [
+        "basename=wt-filekeeper-worktree-lease",
+        "current_equivalent=c:\\users\\joshp\\desktop\\toolsenabled\\historical\\wt-filekeeper-worktree-lease",
+        "unique_repository_identity=c:\\users\\joshp\\desktop\\toolsenabled-current\\.git"
+      ],
+      "logical_root": "c:\\users\\joshp\\desktop\\wt-filekeeper-worktree-lease",
+      "mapping_kind": "worktree_registry_basename_alias",
+      "note": "Desktop child basename uniquely identifies a registered worktree repository",
+      "repository_identity": "c:\\users\\joshp\\desktop\\toolsenabled-current\\.git",
+      "repository_relative_root": "",
+      "repository_root": "c:\\users\\joshp\\desktop\\toolsenabled-current",
+      "target_counts": {
+        "300": 5,
+        "60": 5,
+        "900": 5
+      },
+      "tree_id": "wt-filekeeper-worktree-lease-46a91fc78491"
+    },
+    {
+      "available": true,
+      "current_root": null,
+      "cwd_counts": {
+        "300": 0,
+        "60": 0,
+        "900": 0
+      },
+      "epoch_candidates": [],
+      "evidence": [
+        "current_subtree_exists=false",
+        "desktop_repository_identity=c:\\users\\joshp\\desktop\\.git",
+        "subtree=wt-gate12-correction"
+      ],
+      "logical_root": "c:\\users\\joshp\\desktop\\wt-gate12-correction",
+      "mapping_kind": "desktop_repository_subtree",
+      "note": "query path is within one top-level subtree of the broad Desktop repository; historical reconstruction remains available when the current subtree is absent",
+      "repository_identity": "c:\\users\\joshp\\desktop\\.git",
+      "repository_relative_root": "wt-gate12-correction",
+      "repository_root": "c:\\users\\joshp\\desktop",
+      "target_counts": {
+        "300": 1,
+        "60": 1,
+        "900": 1
+      },
+      "tree_id": "wt-gate12-correction-13a2c7d5d412"
+    },
+    {
+      "available": true,
+      "current_root": "c:\\users\\joshp\\desktop\\toolsenabled\\historical\\wt-installer",
+      "cwd_counts": {
+        "300": 0,
+        "60": 0,
+        "900": 0
+      },
+      "epoch_candidates": [],
+      "evidence": [
+        "basename=wt-installer",
+        "current_equivalent=c:\\users\\joshp\\desktop\\toolsenabled\\historical\\wt-installer",
+        "unique_repository_identity=c:\\users\\joshp\\desktop\\toolsenabled\\opensource\\mission-control\\.git"
+      ],
+      "logical_root": "c:\\users\\joshp\\desktop\\wt-installer",
+      "mapping_kind": "worktree_registry_basename_alias",
+      "note": "Desktop child basename uniquely identifies a registered worktree repository",
+      "repository_identity": "c:\\users\\joshp\\desktop\\toolsenabled\\opensource\\mission-control\\.git",
+      "repository_relative_root": "",
+      "repository_root": "c:\\users\\joshp\\desktop\\toolsenabled\\opensource\\mission-control",
+      "target_counts": {
+        "300": 57,
+        "60": 48,
+        "900": 57
+      },
+      "tree_id": "wt-installer-d2de714a7f7a"
+    },
+    {
+      "available": true,
+      "current_root": "c:\\users\\joshp\\desktop\\toolsenabled\\historical\\wt-mc-agent-chat-design",
+      "cwd_counts": {
+        "300": 0,
+        "60": 0,
+        "900": 0
+      },
+      "epoch_candidates": [],
+      "evidence": [
+        "basename=wt-mc-agent-chat-design",
+        "current_equivalent=c:\\users\\joshp\\desktop\\toolsenabled\\historical\\wt-mc-agent-chat-design",
+        "unique_repository_identity=c:\\users\\joshp\\desktop\\toolsenabled\\opensource\\mission-control\\.git"
+      ],
+      "logical_root": "c:\\users\\joshp\\desktop\\wt-mc-agent-chat-design",
+      "mapping_kind": "worktree_registry_basename_alias",
+      "note": "Desktop child basename uniquely identifies a registered worktree repository",
+      "repository_identity": "c:\\users\\joshp\\desktop\\toolsenabled\\opensource\\mission-control\\.git",
+      "repository_relative_root": "",
+      "repository_root": "c:\\users\\joshp\\desktop\\toolsenabled\\opensource\\mission-control",
+      "target_counts": {
+        "300": 4,
+        "60": 4,
+        "900": 4
+      },
+      "tree_id": "wt-mc-agent-chat-design-e2ccebe25b2f"
+    },
+    {
+      "available": true,
+      "current_root": "c:\\users\\joshp\\desktop\\toolsenabled\\historical\\wt-mc-sankey-research",
+      "cwd_counts": {
+        "300": 0,
+        "60": 0,
+        "900": 0
+      },
+      "epoch_candidates": [],
+      "evidence": [
+        "basename=wt-mc-sankey-research",
+        "current_equivalent=c:\\users\\joshp\\desktop\\toolsenabled\\historical\\wt-mc-sankey-research",
+        "unique_repository_identity=c:\\users\\joshp\\desktop\\toolsenabled\\opensource\\mission-control\\.git"
+      ],
+      "logical_root": "c:\\users\\joshp\\desktop\\wt-mc-sankey-research",
+      "mapping_kind": "worktree_registry_basename_alias",
+      "note": "Desktop child basename uniquely identifies a registered worktree repository",
+      "repository_identity": "c:\\users\\joshp\\desktop\\toolsenabled\\opensource\\mission-control\\.git",
+      "repository_relative_root": "",
+      "repository_root": "c:\\users\\joshp\\desktop\\toolsenabled\\opensource\\mission-control",
+      "target_counts": {
+        "300": 1,
+        "60": 1,
+        "900": 1
+      },
+      "tree_id": "wt-mc-sankey-research-5809c2a5119f"
+    },
+    {
+      "available": true,
+      "current_root": null,
+      "cwd_counts": {
+        "300": 0,
+        "60": 0,
+        "900": 0
+      },
+      "epoch_candidates": [],
+      "evidence": [
+        "current_subtree_exists=false",
+        "desktop_repository_identity=c:\\users\\joshp\\desktop\\.git",
+        "subtree=wt-q102-b-confirm"
+      ],
+      "logical_root": "c:\\users\\joshp\\desktop\\wt-q102-b-confirm",
+      "mapping_kind": "desktop_repository_subtree",
+      "note": "query path is within one top-level subtree of the broad Desktop repository; historical reconstruction remains available when the current subtree is absent",
+      "repository_identity": "c:\\users\\joshp\\desktop\\.git",
+      "repository_relative_root": "wt-q102-b-confirm",
+      "repository_root": "c:\\users\\joshp\\desktop",
+      "target_counts": {
+        "300": 1,
+        "60": 1,
+        "900": 1
+      },
+      "tree_id": "wt-q102-b-confirm-89f371ec8ae8"
+    },
+    {
+      "available": true,
+      "current_root": "c:\\users\\joshp\\desktop\\toolsenabled\\historical\\wt-r1162-integration",
+      "cwd_counts": {
+        "300": 5,
+        "60": 5,
+        "900": 5
+      },
+      "epoch_candidates": [],
+      "evidence": [
+        "basename=wt-r1162-integration",
+        "current_equivalent=c:\\users\\joshp\\desktop\\toolsenabled\\historical\\wt-r1162-integration",
+        "unique_repository_identity=c:\\users\\joshp\\desktop\\toolsenabled-current\\.git"
+      ],
+      "logical_root": "c:\\users\\joshp\\desktop\\wt-r1162-integration",
+      "mapping_kind": "worktree_registry_basename_alias",
+      "note": "Desktop child basename uniquely identifies a registered worktree repository",
+      "repository_identity": "c:\\users\\joshp\\desktop\\toolsenabled-current\\.git",
+      "repository_relative_root": "",
+      "repository_root": "c:\\users\\joshp\\desktop\\toolsenabled-current",
+      "target_counts": {
+        "300": 129,
+        "60": 118,
+        "900": 130
+      },
+      "tree_id": "wt-r1162-integration-63bea707270f"
+    },
+    {
+      "available": true,
+      "current_root": "c:\\users\\joshp\\desktop\\toolsenabled\\historical\\wt-r1162-research",
+      "cwd_counts": {
+        "300": 0,
+        "60": 0,
+        "900": 0
+      },
+      "epoch_candidates": [],
+      "evidence": [
+        "basename=wt-r1162-research",
+        "current_equivalent=c:\\users\\joshp\\desktop\\toolsenabled\\historical\\wt-r1162-research",
+        "unique_repository_identity=c:\\users\\joshp\\desktop\\toolsenabled\\opensource\\mission-control\\.git"
+      ],
+      "logical_root": "c:\\users\\joshp\\desktop\\wt-r1162-research",
+      "mapping_kind": "worktree_registry_basename_alias",
+      "note": "Desktop child basename uniquely identifies a registered worktree repository",
+      "repository_identity": "c:\\users\\joshp\\desktop\\toolsenabled\\opensource\\mission-control\\.git",
+      "repository_relative_root": "",
+      "repository_root": "c:\\users\\joshp\\desktop\\toolsenabled\\opensource\\mission-control",
+      "target_counts": {
+        "300": 1,
+        "60": 1,
+        "900": 1
+      },
+      "tree_id": "wt-r1162-research-3553878a6bd0"
+    },
+    {
+      "available": true,
+      "current_root": "c:\\users\\joshp\\desktop\\toolsenabled\\historical\\wt-r1162-stage1a",
+      "cwd_counts": {
+        "300": 0,
+        "60": 0,
+        "900": 0
+      },
+      "epoch_candidates": [],
+      "evidence": [
+        "basename=wt-r1162-stage1a",
+        "current_equivalent=c:\\users\\joshp\\desktop\\toolsenabled\\historical\\wt-r1162-stage1a",
+        "unique_repository_identity=c:\\users\\joshp\\desktop\\toolsenabled-current\\.git"
+      ],
+      "logical_root": "c:\\users\\joshp\\desktop\\wt-r1162-stage1a",
+      "mapping_kind": "worktree_registry_basename_alias",
+      "note": "Desktop child basename uniquely identifies a registered worktree repository",
+      "repository_identity": "c:\\users\\joshp\\desktop\\toolsenabled-current\\.git",
+      "repository_relative_root": "",
+      "repository_root": "c:\\users\\joshp\\desktop\\toolsenabled-current",
+      "target_counts": {
+        "300": 2,
+        "60": 2,
+        "900": 2
+      },
+      "tree_id": "wt-r1162-stage1a-ff6994c5aa66"
+    },
+    {
+      "available": true,
+      "current_root": "c:\\users\\joshp\\desktop\\toolsenabled\\historical\\wt-r1177-integration",
+      "cwd_counts": {
+        "300": 0,
+        "60": 0,
+        "900": 0
+      },
+      "epoch_candidates": [],
+      "evidence": [
+        "basename=wt-r1177-integration",
+        "current_equivalent=c:\\users\\joshp\\desktop\\toolsenabled\\historical\\wt-r1177-integration",
+        "unique_repository_identity=c:\\users\\joshp\\desktop\\toolsenabled-current\\.git"
+      ],
+      "logical_root": "c:\\users\\joshp\\desktop\\wt-r1177-integration",
+      "mapping_kind": "worktree_registry_basename_alias",
+      "note": "Desktop child basename uniquely identifies a registered worktree repository",
+      "repository_identity": "c:\\users\\joshp\\desktop\\toolsenabled-current\\.git",
+      "repository_relative_root": "",
+      "repository_root": "c:\\users\\joshp\\desktop\\toolsenabled-current",
+      "target_counts": {
+        "300": 34,
+        "60": 34,
+        "900": 34
+      },
+      "tree_id": "wt-r1177-integration-e23d76416877"
+    },
+    {
+      "available": true,
+      "current_root": "c:\\users\\joshp\\desktop\\toolsenabled\\historical\\wt-r1177-s2-filekeeper-custody",
+      "cwd_counts": {
+        "300": 0,
+        "60": 0,
+        "900": 0
+      },
+      "epoch_candidates": [],
+      "evidence": [
+        "basename=wt-r1177-s2-filekeeper-custody",
+        "current_equivalent=c:\\users\\joshp\\desktop\\toolsenabled\\historical\\wt-r1177-s2-filekeeper-custody",
+        "unique_repository_identity=c:\\users\\joshp\\desktop\\toolsenabled-current\\.git"
+      ],
+      "logical_root": "c:\\users\\joshp\\desktop\\wt-r1177-s2-filekeeper-custody",
+      "mapping_kind": "worktree_registry_basename_alias",
+      "note": "Desktop child basename uniquely identifies a registered worktree repository",
+      "repository_identity": "c:\\users\\joshp\\desktop\\toolsenabled-current\\.git",
+      "repository_relative_root": "",
+      "repository_root": "c:\\users\\joshp\\desktop\\toolsenabled-current",
+      "target_counts": {
+        "300": 3,
+        "60": 3,
+        "900": 3
+      },
+      "tree_id": "wt-r1177-s2-filekeeper-custody-4a0932307f2a"
+    },
+    {
+      "available": true,
+      "current_root": "c:\\users\\joshp\\desktop\\toolsenabled\\historical\\wt-r1177-s3-receipt-dedup",
+      "cwd_counts": {
+        "300": 0,
+        "60": 0,
+        "900": 0
+      },
+      "epoch_candidates": [],
+      "evidence": [
+        "basename=wt-r1177-s3-receipt-dedup",
+        "current_equivalent=c:\\users\\joshp\\desktop\\toolsenabled\\historical\\wt-r1177-s3-receipt-dedup",
+        "unique_repository_identity=c:\\users\\joshp\\desktop\\toolsenabled-current\\.git"
+      ],
+      "logical_root": "c:\\users\\joshp\\desktop\\wt-r1177-s3-receipt-dedup",
+      "mapping_kind": "worktree_registry_basename_alias",
+      "note": "Desktop child basename uniquely identifies a registered worktree repository",
+      "repository_identity": "c:\\users\\joshp\\desktop\\toolsenabled-current\\.git",
+      "repository_relative_root": "",
+      "repository_root": "c:\\users\\joshp\\desktop\\toolsenabled-current",
+      "target_counts": {
+        "300": 3,
+        "60": 3,
+        "900": 3
+      },
+      "tree_id": "wt-r1177-s3-receipt-dedup-09607bc1ba61"
+    },
+    {
+      "available": true,
+      "current_root": "c:\\users\\joshp\\desktop\\toolsenabled\\historical\\wt-r1177-s4-shadow-cadence",
+      "cwd_counts": {
+        "300": 0,
+        "60": 0,
+        "900": 0
+      },
+      "epoch_candidates": [],
+      "evidence": [
+        "basename=wt-r1177-s4-shadow-cadence",
+        "current_equivalent=c:\\users\\joshp\\desktop\\toolsenabled\\historical\\wt-r1177-s4-shadow-cadence",
+        "unique_repository_identity=c:\\users\\joshp\\desktop\\toolsenabled-current\\.git"
+      ],
+      "logical_root": "c:\\users\\joshp\\desktop\\wt-r1177-s4-shadow-cadence",
+      "mapping_kind": "worktree_registry_basename_alias",
+      "note": "Desktop child basename uniquely identifies a registered worktree repository",
+      "repository_identity": "c:\\users\\joshp\\desktop\\toolsenabled-current\\.git",
+      "repository_relative_root": "",
+      "repository_root": "c:\\users\\joshp\\desktop\\toolsenabled-current",
+      "target_counts": {
+        "300": 2,
+        "60": 2,
+        "900": 2
+      },
+      "tree_id": "wt-r1177-s4-shadow-cadence-da6c1c203d17"
+    },
+    {
+      "available": true,
+      "current_root": "c:\\users\\joshp\\desktop\\toolsenabled\\historical\\wt-r1531-w2-bughunt",
+      "cwd_counts": {
+        "300": 0,
+        "60": 0,
+        "900": 0
+      },
+      "epoch_candidates": [],
+      "evidence": [
+        "basename=wt-r1531-w2-bughunt",
+        "current_equivalent=c:\\users\\joshp\\desktop\\toolsenabled\\historical\\wt-r1531-w2-bughunt",
+        "unique_repository_identity=c:\\users\\joshp\\desktop\\toolsenabled\\opensource\\mission-control\\.git"
+      ],
+      "logical_root": "c:\\users\\joshp\\desktop\\wt-r1531-w2-bughunt",
+      "mapping_kind": "worktree_registry_basename_alias",
+      "note": "Desktop child basename uniquely identifies a registered worktree repository",
+      "repository_identity": "c:\\users\\joshp\\desktop\\toolsenabled\\opensource\\mission-control\\.git",
+      "repository_relative_root": "",
+      "repository_root": "c:\\users\\joshp\\desktop\\toolsenabled\\opensource\\mission-control",
+      "target_counts": {
+        "300": 5,
+        "60": 2,
+        "900": 6
+      },
+      "tree_id": "wt-r1531-w2-bughunt-c8f40c08ca92"
+    },
+    {
+      "available": true,
+      "current_root": "c:\\lanes\\wt-release-build-1.0.16",
+      "cwd_counts": {
+        "300": 0,
+        "60": 0,
+        "900": 0
+      },
+      "epoch_candidates": [],
+      "evidence": [
+        "git_common_dir=c:\\users\\joshp\\desktop\\toolsenabled\\opensource\\mission-control\\.git",
+        "git_top_level=c:\\lanes\\wt-release-build-1.0.16"
+      ],
+      "logical_root": "c:\\lanes\\wt-release-build-1.0.16",
+      "mapping_kind": "current_git_boundary",
+      "note": "nearest valid .git boundary",
+      "repository_identity": "c:\\users\\joshp\\desktop\\toolsenabled\\opensource\\mission-control\\.git",
+      "repository_relative_root": "",
+      "repository_root": "c:\\lanes\\wt-release-build-1.0.16",
+      "target_counts": {
+        "300": 7,
+        "60": 6,
+        "900": 7
+      },
+      "tree_id": "wt-release-build-1-0-16-3bb284cc07e0"
+    },
+    {
+      "available": true,
+      "current_root": "c:\\users\\joshp\\desktop\\toolsenabled\\historical\\wt-swarm-mc-ledger-page-live-data-fixes",
+      "cwd_counts": {
+        "300": 0,
+        "60": 0,
+        "900": 0
+      },
+      "epoch_candidates": [],
+      "evidence": [
+        "basename=wt-swarm-mc-ledger-page-live-data-fixes",
+        "current_equivalent=c:\\users\\joshp\\desktop\\toolsenabled\\historical\\wt-swarm-mc-ledger-page-live-data-fixes",
+        "unique_repository_identity=c:\\users\\joshp\\desktop\\toolsenabled\\opensource\\mission-control\\.git"
+      ],
+      "logical_root": "c:\\users\\joshp\\desktop\\wt-swarm-mc-ledger-page-live-data-fixes",
+      "mapping_kind": "worktree_registry_basename_alias",
+      "note": "Desktop child basename uniquely identifies a registered worktree repository",
+      "repository_identity": "c:\\users\\joshp\\desktop\\toolsenabled\\opensource\\mission-control\\.git",
+      "repository_relative_root": "",
+      "repository_root": "c:\\users\\joshp\\desktop\\toolsenabled\\opensource\\mission-control",
+      "target_counts": {
+        "300": 16,
+        "60": 14,
+        "900": 16
+      },
+      "tree_id": "wt-swarm-mc-ledger-page-live-dat-2c905cc1ff9e"
+    },
+    {
+      "available": true,
+      "current_root": "c:\\users\\joshp\\desktop\\toolsenabled\\historical\\wt-swarm-q96-uac-tray-controller",
+      "cwd_counts": {
+        "300": 0,
+        "60": 0,
+        "900": 0
+      },
+      "epoch_candidates": [],
+      "evidence": [
+        "basename=wt-swarm-q96-uac-tray-controller",
+        "current_equivalent=c:\\users\\joshp\\desktop\\toolsenabled\\historical\\wt-swarm-q96-uac-tray-controller",
+        "unique_repository_identity=c:\\users\\joshp\\desktop\\toolsenabled-current\\.git"
+      ],
+      "logical_root": "c:\\users\\joshp\\desktop\\wt-swarm-q96-uac-tray-controller",
+      "mapping_kind": "worktree_registry_basename_alias",
+      "note": "Desktop child basename uniquely identifies a registered worktree repository",
+      "repository_identity": "c:\\users\\joshp\\desktop\\toolsenabled-current\\.git",
+      "repository_relative_root": "",
+      "repository_root": "c:\\users\\joshp\\desktop\\toolsenabled-current",
+      "target_counts": {
+        "300": 2,
+        "60": 2,
+        "900": 2
+      },
+      "tree_id": "wt-swarm-q96-uac-tray-controller-43d1152d2598"
+    },
+    {
+      "available": true,
+      "current_root": "c:\\users\\joshp\\desktop\\toolsenabled\\historical\\wt-swarm-stage0-audit-spool-hardening",
+      "cwd_counts": {
+        "300": 0,
+        "60": 0,
+        "900": 0
+      },
+      "epoch_candidates": [],
+      "evidence": [
+        "basename=wt-swarm-stage0-audit-spool-hardening",
+        "current_equivalent=c:\\users\\joshp\\desktop\\toolsenabled\\historical\\wt-swarm-stage0-audit-spool-hardening",
+        "unique_repository_identity=c:\\users\\joshp\\desktop\\toolsenabled-current\\.git"
+      ],
+      "logical_root": "c:\\users\\joshp\\desktop\\wt-swarm-stage0-audit-spool-hardening",
+      "mapping_kind": "worktree_registry_basename_alias",
+      "note": "Desktop child basename uniquely identifies a registered worktree repository",
+      "repository_identity": "c:\\users\\joshp\\desktop\\toolsenabled-current\\.git",
+      "repository_relative_root": "",
+      "repository_root": "c:\\users\\joshp\\desktop\\toolsenabled-current",
+      "target_counts": {
+        "300": 13,
+        "60": 12,
+        "900": 13
+      },
+      "tree_id": "wt-swarm-stage0-audit-spool-hard-a6a026eb808a"
+    },
+    {
+      "available": true,
+      "current_root": "c:\\users\\joshp\\desktop\\toolsenabled\\historical\\wt-swarm-stage0-bridge-bootstrap-auth",
+      "cwd_counts": {
+        "300": 0,
+        "60": 0,
+        "900": 0
+      },
+      "epoch_candidates": [],
+      "evidence": [
+        "basename=wt-swarm-stage0-bridge-bootstrap-auth",
+        "current_equivalent=c:\\users\\joshp\\desktop\\toolsenabled\\historical\\wt-swarm-stage0-bridge-bootstrap-auth",
+        "unique_repository_identity=c:\\users\\joshp\\desktop\\toolsenabled-current\\.git"
+      ],
+      "logical_root": "c:\\users\\joshp\\desktop\\wt-swarm-stage0-bridge-bootstrap-auth",
+      "mapping_kind": "worktree_registry_basename_alias",
+      "note": "Desktop child basename uniquely identifies a registered worktree repository",
+      "repository_identity": "c:\\users\\joshp\\desktop\\toolsenabled-current\\.git",
+      "repository_relative_root": "",
+      "repository_root": "c:\\users\\joshp\\desktop\\toolsenabled-current",
+      "target_counts": {
+        "300": 3,
+        "60": 3,
+        "900": 3
+      },
+      "tree_id": "wt-swarm-stage0-bridge-bootstrap-6313d4ebf766"
+    },
+    {
+      "available": true,
+      "current_root": "c:\\users\\joshp\\desktop\\toolsenabled\\historical\\wt-swarm-stage0-effect-classification-fail-closed",
+      "cwd_counts": {
+        "300": 0,
+        "60": 0,
+        "900": 0
+      },
+      "epoch_candidates": [],
+      "evidence": [
+        "basename=wt-swarm-stage0-effect-classification-fail-closed",
+        "current_equivalent=c:\\users\\joshp\\desktop\\toolsenabled\\historical\\wt-swarm-stage0-effect-classification-fail-closed",
+        "unique_repository_identity=c:\\users\\joshp\\desktop\\toolsenabled-current\\.git"
+      ],
+      "logical_root": "c:\\users\\joshp\\desktop\\wt-swarm-stage0-effect-classification-fail-closed",
+      "mapping_kind": "worktree_registry_basename_alias",
+      "note": "Desktop child basename uniquely identifies a registered worktree repository",
+      "repository_identity": "c:\\users\\joshp\\desktop\\toolsenabled-current\\.git",
+      "repository_relative_root": "",
+      "repository_root": "c:\\users\\joshp\\desktop\\toolsenabled-current",
+      "target_counts": {
+        "300": 13,
+        "60": 13,
+        "900": 13
+      },
+      "tree_id": "wt-swarm-stage0-effect-classific-e43ca4ca3f63"
+    },
+    {
+      "available": true,
+      "current_root": "c:\\users\\joshp\\desktop\\toolsenabled\\historical\\wt-swarm-stage0-fra-tunnel-secret-rotation",
+      "cwd_counts": {
+        "300": 0,
+        "60": 0,
+        "900": 0
+      },
+      "epoch_candidates": [],
+      "evidence": [
+        "basename=wt-swarm-stage0-fra-tunnel-secret-rotation",
+        "current_equivalent=c:\\users\\joshp\\desktop\\toolsenabled\\historical\\wt-swarm-stage0-fra-tunnel-secret-rotation",
+        "unique_repository_identity=c:\\users\\joshp\\desktop\\toolsenabled-current\\.git"
+      ],
+      "logical_root": "c:\\users\\joshp\\desktop\\wt-swarm-stage0-fra-tunnel-secret-rotation",
+      "mapping_kind": "worktree_registry_basename_alias",
+      "note": "Desktop child basename uniquely identifies a registered worktree repository",
+      "repository_identity": "c:\\users\\joshp\\desktop\\toolsenabled-current\\.git",
+      "repository_relative_root": "",
+      "repository_root": "c:\\users\\joshp\\desktop\\toolsenabled-current",
+      "target_counts": {
+        "300": 3,
+        "60": 2,
+        "900": 3
+      },
+      "tree_id": "wt-swarm-stage0-fra-tunnel-secre-f4982a36ed7b"
+    },
+    {
+      "available": true,
+      "current_root": "c:\\users\\joshp\\desktop\\toolsenabled\\historical\\wt-swarm-stage0-secrets-oracle-removal",
+      "cwd_counts": {
+        "300": 0,
+        "60": 0,
+        "900": 0
+      },
+      "epoch_candidates": [],
+      "evidence": [
+        "basename=wt-swarm-stage0-secrets-oracle-removal",
+        "current_equivalent=c:\\users\\joshp\\desktop\\toolsenabled\\historical\\wt-swarm-stage0-secrets-oracle-removal",
+        "unique_repository_identity=c:\\users\\joshp\\desktop\\toolsenabled-current\\.git"
+      ],
+      "logical_root": "c:\\users\\joshp\\desktop\\wt-swarm-stage0-secrets-oracle-removal",
+      "mapping_kind": "worktree_registry_basename_alias",
+      "note": "Desktop child basename uniquely identifies a registered worktree repository",
+      "repository_identity": "c:\\users\\joshp\\desktop\\toolsenabled-current\\.git",
+      "repository_relative_root": "",
+      "repository_root": "c:\\users\\joshp\\desktop\\toolsenabled-current",
+      "target_counts": {
+        "300": 5,
+        "60": 5,
+        "900": 5
+      },
+      "tree_id": "wt-swarm-stage0-secrets-oracle-r-becc6aba7261"
+    }
+  ],
+  "windows_seconds": [
+    60,
+    300,
+    900
+  ]
+}

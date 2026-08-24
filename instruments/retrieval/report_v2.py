@@ -1,10 +1,10 @@
 """Render the corrected, multi-tree retrieval benchmark report.
 
-This module deliberately does not execute queries or aggregate retrieval
-metrics.  It consumes the auditable artifacts produced by ``run_v2.py`` and
-refuses to publish a final report when the run was capped, marked as debug,
-incomplete, internally inconsistent, or no longer matches its recorded
-artifact hashes.
+This module deliberately does not execute queries.  It consumes the auditable
+artifacts produced by ``run_v2.py``, independently recomputes the retrieval
+metrics from eval, provenance, and run rows, and refuses to publish a final
+report when the run was capped, marked as debug, incomplete, internally
+inconsistent, or no longer matches its recorded artifact hashes.
 
 Required runner summary schema (``retrieval-run-v2/1``)::
 
@@ -57,6 +57,11 @@ import os
 from pathlib import Path
 import statistics
 from typing import Any, Iterable, Mapping, Sequence
+
+try:  # package import
+    from .metrics_v2 import aggregate_metrics_v2
+except ImportError:  # direct script execution
+    from metrics_v2 import aggregate_metrics_v2
 
 
 WINDOWS = (60, 300, 900)
@@ -223,8 +228,8 @@ def _validate_summary(summary: Mapping[str, Any]) -> None:
             _require_int(values.get(window), f"reconstruction.{field}.{window}")
 
 
-def _load_eval_ids(eval_dir: Path) -> dict[str, set[str]]:
-    result: dict[str, set[str]] = {}
+def _load_eval_records(eval_dir: Path) -> dict[str, list[dict[str, Any]]]:
+    result: dict[str, list[dict[str, Any]]] = {}
     for window, filename in EVAL_FILES.items():
         path = eval_dir / filename
         rows = _read_jsonl(path, f"eval set {window}s")
@@ -236,8 +241,15 @@ def _load_eval_ids(eval_dir: Path) -> dict[str, set[str]]:
             if record_id in ids:
                 raise ReportInputError(f"duplicate eval ID in {filename}: {record_id}")
             ids.add(record_id)
-        result[window] = ids
+        result[window] = rows
     return result
+
+
+def _load_eval_ids(eval_dir: Path) -> dict[str, set[str]]:
+    return {
+        window: {str(row["id"]) for row in rows}
+        for window, rows in _load_eval_records(eval_dir).items()
+    }
 
 
 def _index_provenance(rows: Sequence[Mapping[str, Any]]) -> dict[str, dict[str, Any]]:
@@ -290,6 +302,30 @@ def _complete_run_ids(rows: Sequence[Mapping[str, Any]]) -> set[str]:
         arms_by_id.setdefault(record_id, set()).add(arm)
     required = set(ALL_ARMS)
     return {record_id for record_id, arms in arms_by_id.items() if arms == required}
+
+
+def _unavailable_run_ids(rows: Sequence[Mapping[str, Any]]) -> set[str]:
+    result: set[str] = set()
+    for sequence, row in enumerate(rows, 1):
+        if row.get("unavailable") is not True:
+            continue
+        reason = row.get("unavailable_reason")
+        if not isinstance(reason, str) or not reason.strip():
+            raise ReportInputError(
+                f"unavailable run row {sequence} lacks an explicit reason"
+            )
+        for field in ("response_bytes", "response_sha256", "latency_ms"):
+            if row.get(field) is not None:
+                raise ReportInputError(
+                    f"unavailable run row {sequence} fabricates {field}"
+                )
+        if row.get("error") is not None:
+            raise ReportInputError(
+                f"unavailable run row {sequence} must not be a timed error row"
+            )
+        result.add(str(row.get("record_id") or ""))
+    result.discard("")
+    return result
 
 
 def _numeric_gaps(rows: Iterable[Mapping[str, Any]]) -> list[float]:
@@ -416,6 +452,8 @@ def _validate_partial_arm_rows(
         str(window): defaultdict(Counter) for window in WINDOWS
     }
     for row in run_rows:
+        if row.get("unavailable") is True:
+            continue
         record_id = str(row.get("record_id") or "")
         item = provenance.get(record_id, {})
         if item.get("target_tree_id") not in (None, "") or not item.get("partial_arms"):
@@ -462,6 +500,7 @@ def _validate_metrics(
     eval_ids: Mapping[str, set[str]],
     provenance: Mapping[str, Mapping[str, Any]],
     complete_run_ids: set[str],
+    unavailable_run_ids: set[str],
 ) -> None:
     if metrics.get("schema_version") != 2:
         raise ReportInputError("metrics schema_version must be 2")
@@ -529,7 +568,13 @@ def _validate_metrics(
             for record_id in ids
             if provenance[record_id].get("target_tree_id") not in (None, "")
         }
-        paired_ids = mapped_ids & complete_run_ids
+        unavailable_tree_ids = set(population.get("unavailable_tree_arms") or {})
+        paired_ids = {
+            record_id
+            for record_id in mapped_ids & complete_run_ids
+            if str(provenance[record_id].get("target_tree_id")) not in unavailable_tree_ids
+            and record_id not in unavailable_run_ids
+        }
         expected = {
             "retained_queries": retained,
             "mapped_queries": len(mapped_ids),
@@ -561,6 +606,8 @@ def _validate_metrics(
             expected_paired = sum(
                 provenance[record_id].get("target_tree_id") == tree_id
                 and record_id in complete_run_ids
+                and tree_id not in unavailable_tree_ids
+                and record_id not in unavailable_run_ids
                 for record_id in ids
             )
             tree_population = tree_block["population"]
@@ -634,7 +681,11 @@ def load_report_bundle(
     metrics = _load_json(metrics_path, "metrics")
     retention = _load_json(retention_path, "retention")
     catalog = _load_json(catalog_path, "tree catalog")
-    eval_ids = _load_eval_ids(eval_dir)
+    eval_records = _load_eval_records(eval_dir)
+    eval_ids = {
+        window: {str(row["id"]) for row in rows}
+        for window, rows in eval_records.items()
+    }
     union_ids = set().union(*eval_ids.values())
     provenance_rows = _read_jsonl(artifact_paths["provenance"], "provenance")
     run_rows = _read_jsonl(artifact_paths["runs"], "runs")
@@ -659,7 +710,24 @@ def load_report_bundle(
             f"missing={len(missing)}, extra={len(extra)}"
         )
     complete_run_ids = _complete_run_ids(run_rows)
+    unavailable_run_ids = _unavailable_run_ids(run_rows)
     _validate_partial_arm_rows(summary, catalog, provenance, run_rows)
+    recomputed_metrics = aggregate_metrics_v2(
+        eval_records,
+        run_rows,
+        provenance,
+        arms=ALL_ARMS,
+    )
+    stored_metrics_core = {
+        key: value
+        for key, value in metrics.items()
+        if key not in {"run_fingerprint", "generated_utc"}
+    }
+    if stored_metrics_core != recomputed_metrics:
+        raise ReportInputError(
+            "metrics artifact disagrees with independent recomputation from "
+            "eval, provenance, and run rows"
+        )
     _validate_metrics(
         metrics,
         retention,
@@ -667,6 +735,7 @@ def load_report_bundle(
         eval_ids,
         provenance,
         complete_run_ids,
+        unavailable_run_ids,
     )
     audit = {"provenance_by_window": _provenance_audit(eval_ids, provenance)}
     reconstruction_summary = summary["reconstruction"]
@@ -1095,6 +1164,13 @@ def _population_and_reconstruction_section(bundle: ReportBundle) -> list[str]:
     retained = population["retained_queries"]
     mapped = population["mapped_queries"]
     outside = population["outside_any_indexed_tree"]
+    catalog_outside = int(
+        ((bundle.catalog.get("counts") or {}).get("outside_any_indexed_tree_by_window") or {}).get(
+            PRIMARY_WINDOW, 0
+        )
+        or 0
+    )
+    snapshot_unavailable = max(0, outside - catalog_outside)
     table, unavailable_rows = _tree_population_table(bundle)
     audit = bundle.audit["provenance_by_window"][PRIMARY_WINDOW]
     mapped_reconstruction = block["reconstruction"]["all_mapped_queries"]
@@ -1112,10 +1188,12 @@ def _population_and_reconstruction_section(bundle: ReportBundle) -> list[str]:
         "",
         f"**At 300 seconds, {scored:,} of {retained:,} retained queries ({_pct(scored / retained if retained else None)}) "
         "entered the common paired five-arm score population.** "
-        f"{mapped:,} mapped to an indexable target tree; {outside:,} fell outside every indexed tree, and "
+        f"{mapped:,} had a validated Git snapshot for the indexed arms. Empirical scope derivation put "
+        f"{catalog_outside:,} queries outside every protected indexed tree; another {snapshot_unavailable:,} "
+        "targeted a catalogued tree but lacked a reconstructable/available snapshot. "
         f"{population['paired_excluded_queries']:,} mapped queries lacked a complete five-arm row set. "
         "All arms use the same paired IDs, so an unavailable arm cannot silently improve another arm's denominator.",
-        "The outside-index count includes available non-Git current trees because the protected index requires a Git worktree. "
+        "The empirically outside-index count includes available non-Git current trees because the protected index requires a Git worktree. "
         "Their ripgrep-only current-tree controls are shown in the per-tree `rg n` column but remain outside the global paired head-to-head denominator.",
         "",
         table,
@@ -1125,7 +1203,11 @@ def _population_and_reconstruction_section(bundle: ReportBundle) -> list[str]:
         "An index is built for the assigned checkout/tree, while `scope_for_record` restricts each replay to its recorded "
         "subdirectory or file. A target-tree row therefore does not imply that every query searched the tree root.",
         "",
-        f"Outside-index reasons: {_reason_list(population.get('outside_reason_counts', {}))}.",
+        f"Non-paired snapshot/unavailability reasons (including the {catalog_outside:,} empirically outside-index queries): "
+        f"{_reason_list(population.get('outside_reason_counts', {}))}.",
+        "Unpaired run-row reasons: "
+        + _reason_list(population.get("unpaired_reason_counts", {}))
+        + ".",
         "",
         "### Arm/tree availability",
         "",
@@ -1137,8 +1219,9 @@ def _population_and_reconstruction_section(bundle: ReportBundle) -> list[str]:
         "### Repository-state reconstruction",
         "",
         "The per-query provenance artifact records an `exact` boolean, reconstruction mode, selected commit when one exists, "
-        "and query-minus-commit time gap. Exact-time means the recorded branch had a commit at or before the query and that "
-        "commit's tree was used; it does not recover contemporaneous dirty or untracked files.",
+        "and query-minus-commit time gap. Exact-time means the surviving recorded branch's first-parent line had a commit "
+        "at or before the query and that clean commit tree was used; it does not prove the historical ref tip or recover "
+        "contemporaneous dirty or untracked files.",
         "Branch resolution is necessarily an inference over refs that survive in the repositories today: a matching local branch "
         "is preferred before matching remote refs. Deleted or rewritten refs cannot be reconstructed from the surviving history.",
         "",
@@ -1382,7 +1465,7 @@ def _claims_sections(bundle: ReportBundle) -> list[str]:
     ]
     confidence = [
         f"- **Retention — high.** Counts come from a completed frozen-size streaming pass over {bundle.retention.get('files_total', 0):,} files, with a corpus hash and every exclusion class counted.",
-        f"- **Scored-population accounting — high.** The report independently matched eval IDs, per-query provenance, all five run-row arms, per-tree counts, and artifact hashes; {population['paired_scored_queries']:,} queries survive those checks.",
+        f"- **Scored-population accounting and arithmetic — high.** The report independently matched eval IDs, per-query provenance, all five run-row arms, per-tree counts, and artifact hashes, then recomputed every metric, verdict, and ablation from those rows; {population['paired_scored_queries']:,} queries survive those checks.",
         "- **Tree assignment — moderate.** Absolute query scope is authoritative and assignments are empirical, but vanished worktrees and basename/epoch aliases require documented reconstruction judgments.",
         f"- **Historical state — moderate for the {audit['exact_queries']:,} timestamp-selected commits; low for the {audit['fallback_queries']:,} actual fallbacks; unavailable for {audit['unscored_or_unavailable_queries']:,} unscored rows.** Exact rows use local-first branch resolution over refs surviving today and choose a commit at or before the query, but rewritten/deleted refs and dirty state are unrecoverable.",
         f"- **Head-to-head — moderate within these repositories.** The arms are paired on {population['scorable_positive_queries']:,} scorable positives under prespecified arm-specific response contracts, but those contracts are asymmetric and relevance is implicit and exposure-biased.",
@@ -1396,7 +1479,8 @@ def _claims_sections(bundle: ReportBundle) -> list[str]:
         "",
         *claims,
         "",
-        "The eval set is one organisation's transcripts, and **98.6% of records come from a single tree**. "
+        "The eval set is one organisation's transcripts, and **98.6% of transcript records come from a single transcript-source tree** "
+        "(this is source concentration, not the empirical query-target distribution). "
         "Any session-level split would license within-repository generalisation and nothing more; the wider physical query-target distribution does not turn this into an independent multi-organisation sample.",
         "",
         f"At 300 seconds, the retained IDs span {len(session_counts):,} session prefixes; the largest supplies "

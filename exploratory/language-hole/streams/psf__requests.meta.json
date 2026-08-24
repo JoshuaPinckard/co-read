@@ -1,0 +1,50 @@
+{
+  "cap_reason": null,
+  "capped": false,
+  "commit_count": 2665,
+  "completed_at_utc": "2026-08-23T10:18:26+00:00",
+  "first_parent_commit_count": 2665,
+  "git_log_stderr_tail": "",
+  "merge_commit_count": 1104,
+  "object_storage_after_git_log": {
+    "count": 0,
+    "garbage": 0,
+    "in-pack": 18787,
+    "packs": 30,
+    "prune-packable": 0,
+    "size": 0,
+    "size-garbage": 0,
+    "size-pack": 4817
+  },
+  "object_storage_before_git_log": {
+    "count": 0,
+    "garbage": 0,
+    "in-pack": 18787,
+    "packs": 30,
+    "prune-packable": 0,
+    "size": 0,
+    "size-garbage": 0,
+    "size-pack": 4817
+  },
+  "reachable_commit_count": 6491,
+  "rename_count": 68,
+  "repository": {
+    "axis": "Python; tests/ directory",
+    "expected_stress": "Different test convention again",
+    "name": "psf/requests",
+    "slug": "psf__requests",
+    "url": "https://github.com/psf/requests.git"
+  },
+  "schema_version": 1,
+  "source_head_sha": "8f8b212de8c2129d7954c6cd373762880375620a",
+  "started_at_utc": "2026-08-23T10:18:14+00:00",
+  "status": "ok",
+  "status_histogram": {
+    "A": 455,
+    "D": 325,
+    "M": 5120,
+    "R": 68
+  },
+  "stream_path": "exploratory/language-hole/streams/psf__requests.jsonl.gz",
+  "stream_sha256": "f71982e322721860fb6e942f1843175526c48ff554d5c8bb057aca4bb6ecb288"
+}

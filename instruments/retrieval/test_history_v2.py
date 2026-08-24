@@ -135,13 +135,93 @@ def test_candidate_epoch_is_ineligible_until_its_subtree_exists(tmp_path: Path):
     assert before_arrival.commit == old_commit
     assert resolutions["engine-new"].resolved_ref == "refs/heads/main"
     new_before_arrival, _ = cache.select(new, "main", BASE_TS + 200)
-    assert new_before_arrival is None
+    assert new_before_arrival is not None
+    assert new_before_arrival.commit_ts == BASE_TS + 50
+    assert not cache.subtree_exists(new, new_before_arrival.commit)
 
     after_arrival, _ = cache.choose_at_or_before([old, new], "main", BASE_TS + 300)
     assert after_arrival is not None
     assert after_arrival.tree_id == "engine-new"
     assert after_arrival.commit == new_commit
     assert after_arrival.gap_seconds == 50
+
+
+def test_closest_commit_is_not_replaced_by_older_subtree_after_deletion(tmp_path: Path):
+    repo = init_repo(tmp_path / "repo")
+    (repo / "packages" / "engine").mkdir(parents=True)
+    (repo / "packages" / "engine" / "state.txt").write_text("present\n", encoding="utf-8")
+    present = commit_state(repo, "subtree-present", BASE_TS)
+    (repo / "packages" / "engine" / "state.txt").unlink()
+    (repo / "packages" / "engine").rmdir()
+    (repo / "packages").rmdir()
+    deleted = commit_state(repo, "subtree-deleted", BASE_TS + 100)
+    source = tree("engine", repo, subtree="packages/engine")
+    cache = history.GitHistoryCache()
+
+    selected, resolution = cache.select(source, "main", BASE_TS + 150)
+    assert resolution.resolved_ref == "refs/heads/main"
+    assert selected is not None
+    assert selected.commit == deleted
+    assert selected.commit != present
+    assert selected.gap_seconds == 50
+    assert not cache.subtree_exists(source, selected.commit)
+
+    # Candidate choice may use tree existence to identify a repository epoch,
+    # but it must not step backward within this candidate's branch.
+    chosen, _ = cache.choose_at_or_before([source], "main", BASE_TS + 150)
+    assert chosen is None
+
+
+def test_merge_after_query_does_not_leak_side_branch_commit(tmp_path: Path):
+    repo = init_repo(tmp_path / "repo")
+    commit_state(repo, "base", BASE_TS)
+    git(repo, "branch", "feature")
+
+    git(repo, "checkout", "feature")
+    (repo / "feature.txt").write_text("feature\n", encoding="utf-8")
+    git(repo, "add", "feature.txt")
+    feature_date = f"{BASE_TS + 140} +0000"
+    git(
+        repo,
+        "commit",
+        "-m",
+        "feature",
+        env={"GIT_AUTHOR_DATE": feature_date, "GIT_COMMITTER_DATE": feature_date},
+    )
+    feature_commit = git(repo, "rev-parse", "HEAD")
+
+    git(repo, "checkout", "main")
+    (repo / "main.txt").write_text("main\n", encoding="utf-8")
+    git(repo, "add", "main.txt")
+    main_date = f"{BASE_TS + 130} +0000"
+    git(
+        repo,
+        "commit",
+        "-m",
+        "main-before-query",
+        env={"GIT_AUTHOR_DATE": main_date, "GIT_COMMITTER_DATE": main_date},
+    )
+    main_at_query = git(repo, "rev-parse", "HEAD")
+
+    merge_date = f"{BASE_TS + 200} +0000"
+    git(
+        repo,
+        "merge",
+        "--no-ff",
+        "-m",
+        "merge-after-query",
+        "feature",
+        env={"GIT_AUTHOR_DATE": merge_date, "GIT_COMMITTER_DATE": merge_date},
+    )
+
+    selected, resolution = history.GitHistoryCache().select(
+        tree("source", repo), "main", BASE_TS + 150
+    )
+    assert resolution.resolved_ref == "refs/heads/main"
+    assert selected is not None
+    assert selected.commit == main_at_query
+    assert selected.commit != feature_commit
+    assert selected.commit_ts == BASE_TS + 130
 
 
 def test_branch_resolution_prefers_local_and_deduplicates_same_tip_remotes(tmp_path: Path):

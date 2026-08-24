@@ -1,0 +1,50 @@
+{
+  "cap_reason": null,
+  "capped": false,
+  "commit_count": 9537,
+  "completed_at_utc": "2026-08-23T10:36:01+00:00",
+  "first_parent_commit_count": 9537,
+  "git_log_stderr_tail": "Auto packing the repository in background for optimum performance.\nSee \"git help gc\" for manual housekeeping.\nAuto packing the repository in background for optimum performance.\nSee \"git help gc\" for manual housekeeping.\nAuto packing the repository in background for optimum performance.\nSee \"git help gc\" for manual housekeeping.\nAuto packing the repository in background for optimum performance.\nSee \"git help gc\" for manual housekeeping.\nAuto packing the repository in background for optimum performance.\nSee \"git help gc\" for manual housekeeping.\nAuto packing the repository in background for optimum performance.\nSee \"git help gc\" for manual housekeeping.\n",
+  "merge_commit_count": 223,
+  "object_storage_after_git_log": {
+    "count": 0,
+    "garbage": 0,
+    "in-pack": 54505,
+    "packs": 13,
+    "prune-packable": 0,
+    "size": 0,
+    "size-garbage": 0,
+    "size-pack": 88847
+  },
+  "object_storage_before_git_log": {
+    "count": 0,
+    "garbage": 0,
+    "in-pack": 49277,
+    "packs": 2,
+    "prune-packable": 0,
+    "size": 0,
+    "size-garbage": 0,
+    "size-pack": 10677
+  },
+  "reachable_commit_count": 9893,
+  "rename_count": 1634,
+  "repository": {
+    "axis": "Go; _test.go adjacent to source",
+    "expected_stress": "Test file in the same directory",
+    "name": "gohugoio/hugo",
+    "slug": "gohugoio__hugo",
+    "url": "https://github.com/gohugoio/hugo.git"
+  },
+  "schema_version": 1,
+  "source_head_sha": "7b5199fdeff7d7682e9f979f468d55bc7b67b934",
+  "started_at_utc": "2026-08-23T10:20:47+00:00",
+  "status": "ok",
+  "status_histogram": {
+    "A": 8857,
+    "D": 6309,
+    "M": 37574,
+    "R": 1634
+  },
+  "stream_path": "exploratory/language-hole/streams/gohugoio__hugo.jsonl.gz",
+  "stream_sha256": "a5bb51690b78cd93a76e137de6ece457d975da6a0fbbba240e6498aff43e864a"
+}

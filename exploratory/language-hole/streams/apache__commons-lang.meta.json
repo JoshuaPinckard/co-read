@@ -1,0 +1,50 @@
+{
+  "cap_reason": null,
+  "capped": false,
+  "commit_count": 9089,
+  "completed_at_utc": "2026-08-23T10:18:38+00:00",
+  "first_parent_commit_count": 9089,
+  "git_log_stderr_tail": "",
+  "merge_commit_count": 219,
+  "object_storage_after_git_log": {
+    "count": 0,
+    "garbage": 0,
+    "in-pack": 89992,
+    "packs": 44,
+    "prune-packable": 0,
+    "size": 0,
+    "size-garbage": 0,
+    "size-pack": 11718
+  },
+  "object_storage_before_git_log": {
+    "count": 0,
+    "garbage": 0,
+    "in-pack": 89992,
+    "packs": 44,
+    "prune-packable": 0,
+    "size": 0,
+    "size-garbage": 0,
+    "size-pack": 11718
+  },
+  "reachable_commit_count": 9740,
+  "rename_count": 466,
+  "repository": {
+    "axis": "Java; parallel src/test/java tree",
+    "expected_stress": "Deep mirrored hierarchy; path similarity should do unusually well",
+    "name": "apache/commons-lang",
+    "slug": "apache__commons-lang",
+    "url": "https://github.com/apache/commons-lang.git"
+  },
+  "schema_version": 1,
+  "source_head_sha": "4d91b28fce7317132360aa9f3bbf31cc6e479f00",
+  "started_at_utc": "2026-08-23T10:18:31+00:00",
+  "status": "ok",
+  "status_histogram": {
+    "A": 1302,
+    "D": 589,
+    "M": 23775,
+    "R": 466
+  },
+  "stream_path": "exploratory/language-hole/streams/apache__commons-lang.jsonl.gz",
+  "stream_sha256": "96a3abbbfa6f2cd525e080e10a955eb867eaa713ca897f7bda8a26ecc04e7dc9"
+}

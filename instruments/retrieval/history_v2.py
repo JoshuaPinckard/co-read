@@ -124,8 +124,8 @@ class GitHistoryCache:
         self.timeout = timeout
         self._branch_cache: dict[tuple[str, str], BranchResolution] = {}
         self._history_cache: dict[tuple[str, str], tuple[tuple[int, int, str], ...]] = {}
-        self._eligible_history_cache: dict[
-            tuple[str, str, str], tuple[tuple[tuple[int, int], int, int, str], ...]
+        self._ordered_history_cache: dict[
+            tuple[str, str], tuple[tuple[tuple[int, int], int, int, str], ...]
         ] = {}
         self._subtree_cache: dict[tuple[str, str, str], bool] = {}
         self._head_cache: dict[tuple[str, str], tuple[str, int] | None] = {}
@@ -217,7 +217,13 @@ class GitHistoryCache:
             return self._history_cache[key]
         completed = _run_git(
             tree.repository_root,
-            ("rev-list", "--timestamp", "--topo-order", resolved_ref),
+            (
+                "rev-list",
+                "--first-parent",
+                "--timestamp",
+                "--topo-order",
+                resolved_ref,
+            ),
             timeout=self.timeout,
         )
         rows: list[tuple[int, int, str]] = []
@@ -253,21 +259,28 @@ class GitHistoryCache:
         self._subtree_cache[key] = exists
         return exists
 
-    def _eligible_history(
+    def _ordered_history(
         self, tree: TreeSpec, resolved_ref: str
     ) -> tuple[tuple[tuple[int, int], int, int, str], ...]:
-        subtree = _safe_subtree(tree.repository_relative_root)
-        cache_key = (self.repository_key(tree), resolved_ref, subtree)
-        if cache_key in self._eligible_history_cache:
-            return self._eligible_history_cache[cache_key]
+        """Return all branch commits ordered by committer time.
+
+        Commit selection must happen before scope validation.  Filtering this
+        sequence to commits where ``repository_relative_root`` exists can
+        silently replace the closest pre-query commit with an older tree after
+        a subtree was deleted.  The runner validates the selected tree object
+        separately and records a fallback or exclusion when it is absent.
+        """
+
+        cache_key = (self.repository_key(tree), resolved_ref)
+        if cache_key in self._ordered_history_cache:
+            return self._ordered_history_cache[cache_key]
         rows = [
             ((commit_ts, -order), commit_ts, order, commit)
             for commit_ts, order, commit in self.history(tree, resolved_ref)
-            if self.subtree_exists(tree, commit)
         ]
         rows.sort(key=lambda row: row[0])
         result = tuple(rows)
-        self._eligible_history_cache[cache_key] = result
+        self._ordered_history_cache[cache_key] = result
         return result
 
     def select(self, tree: TreeSpec, branch: str, query_ts: float) -> tuple[HistoricalSelection | None, BranchResolution]:
@@ -276,7 +289,7 @@ class GitHistoryCache:
         resolution = self.resolve_branch(tree, branch)
         if not resolution.resolved_ref or not resolution.ref_kind or not tree.repository_root:
             return None, resolution
-        rows = self._eligible_history(tree, resolution.resolved_ref)
+        rows = self._ordered_history(tree, resolution.resolved_ref)
         keys = [row[0] for row in rows]
         position = bisect_right(keys, (math.floor(float(query_ts)), math.inf)) - 1
         if position < 0:
@@ -311,7 +324,7 @@ class GitHistoryCache:
         for tree in candidates:
             selected, resolution = self.select(tree, branch, query_ts)
             resolutions[tree.tree_id] = resolution
-            if selected is not None:
+            if selected is not None and self.subtree_exists(tree, selected.commit):
                 selections.append(selected)
         if not selections:
             return None, resolutions

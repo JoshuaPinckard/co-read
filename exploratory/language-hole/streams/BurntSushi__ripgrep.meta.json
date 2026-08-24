@@ -1,0 +1,50 @@
+{
+  "cap_reason": null,
+  "capped": false,
+  "commit_count": 2215,
+  "completed_at_utc": "2026-08-23T10:18:31+00:00",
+  "first_parent_commit_count": 2215,
+  "git_log_stderr_tail": "",
+  "merge_commit_count": 62,
+  "object_storage_after_git_log": {
+    "count": 0,
+    "garbage": 0,
+    "in-pack": 9104,
+    "packs": 28,
+    "prune-packable": 0,
+    "size": 0,
+    "size-garbage": 0,
+    "size-pack": 2293
+  },
+  "object_storage_before_git_log": {
+    "count": 0,
+    "garbage": 0,
+    "in-pack": 9104,
+    "packs": 28,
+    "prune-packable": 0,
+    "size": 0,
+    "size-garbage": 0,
+    "size-pack": 2293
+  },
+  "reachable_commit_count": 2287,
+  "rename_count": 139,
+  "repository": {
+    "axis": "Rust; tests inline in source files",
+    "expected_stress": "Test-to-source path affinity should collapse",
+    "name": "BurntSushi/ripgrep",
+    "slug": "BurntSushi__ripgrep",
+    "url": "https://github.com/BurntSushi/ripgrep.git"
+  },
+  "schema_version": 1,
+  "source_head_sha": "3fce3b5bb0236da2df6d99672afb8a719642eca7",
+  "started_at_utc": "2026-08-23T10:18:26+00:00",
+  "status": "ok",
+  "status_histogram": {
+    "A": 330,
+    "D": 93,
+    "M": 4696,
+    "R": 139
+  },
+  "stream_path": "exploratory/language-hole/streams/BurntSushi__ripgrep.jsonl.gz",
+  "stream_sha256": "d2f6dee9c0e53e974cf6717ceb158850b668e56966e55cb6ae919e20b16fbabf"
+}

@@ -1,0 +1,727 @@
+{
+  "arms": [
+    "ripgrep",
+    "bm25",
+    "ident_first",
+    "bm25_pathboost",
+    "bm25_legacy"
+  ],
+  "artifacts": {
+    "catalog": {
+      "path": "C:\\Users\\joshp\\Desktop\\Blast-Radius\\exploratory\\retrieval\\v2\\tree-catalog-v2.json",
+      "sha256": "f5dd75d90400c3fae285112580efbd3963f934ec7ac3c31bdaa6ef3e19a4071b"
+    },
+    "evalsets": {
+      "300": {
+        "path": "C:\\Users\\joshp\\Desktop\\Blast-Radius\\exploratory\\retrieval\\v2\\evalset.jsonl",
+        "sha256": "5453211765c01d7a6cff2e69dc0490ed83ad6298e529023670cb13b26d368ffb"
+      },
+      "60": {
+        "path": "C:\\Users\\joshp\\Desktop\\Blast-Radius\\exploratory\\retrieval\\v2\\evalset_60.jsonl",
+        "sha256": "a24f8518b0e50ca446586ac9c3495f78c31d7f21745a3faf2a29bd26d62d31f0"
+      },
+      "900": {
+        "path": "C:\\Users\\joshp\\Desktop\\Blast-Radius\\exploratory\\retrieval\\v2\\evalset_900.jsonl",
+        "sha256": "951003bfa42c815c3aac9f531f97f9c4679a13891acd22a53035978b67c43bde"
+      }
+    },
+    "exclusions": {
+      "path": "C:\\Users\\joshp\\Desktop\\Blast-Radius\\exploratory\\retrieval\\v2\\exclusions-v2.jsonl",
+      "rows": 1838,
+      "sha256": "79b2e6bc5318ae30afb524aa8e9f000e240f4bea404965f719b343967ad72dcf"
+    },
+    "provenance": {
+      "path": "C:\\Users\\joshp\\Desktop\\Blast-Radius\\exploratory\\retrieval\\v2\\reconstruction-v2.jsonl",
+      "rows": 12151,
+      "sha256": "9304038a66d7310c991540804d2d0bcf03601e9cc61e324354a735ae2c77c49a"
+    },
+    "retention": {
+      "path": "C:\\Users\\joshp\\Desktop\\Blast-Radius\\exploratory\\retrieval\\v2\\retention.json",
+      "sha256": "1500536957c1a362ff838de6e3d72f924b594bfff0adaee0cdedcd1410024504"
+    }
+  },
+  "execution_resignatures": [
+    {
+      "generated_utc": "2026-08-24T05:51:50.790461+00:00",
+      "implementation_sha256": {
+        "arms.py": "9d7749621619e4e1913940545b877a880ebd036242fd3589c3bb99ebd9749fbe",
+        "history_v2.py": "f074d01796a888f239a1df92ca1745c67b16d17cd77867259967cfa29c0e0b0c",
+        "incremental_index_v2.py": "497055de4962fa98f87e2211eb9173ba199a62cead2c753cb1285967b1fde360",
+        "index.py": "96c63a6e7e6bd52e70feee4c0c328e917e28fe24fe26ec1f0c9cff2e55bf0b72",
+        "metrics_v2.py": "c04177fbf9c89e0923105667e222917f3c5a93a0d94e7793a7776b00a1b8970d",
+        "provenance_v2.py": "2264c44887d17886e96d894b516ae1d49f5287451bdccd233cda3e88578a164f",
+        "run_v2.py": "7078d02b9b757e73fb11853d37085a5e2e7c435009c0026adf357a5f51910a8a",
+        "tree_catalog_v2.py": "c2266ed1ee06eca3b7ba9d865dab2771738394883ce90858011cf48679e57c5f"
+      },
+      "new_fingerprint": "d0aecc2e6589faa6dfb9c9e078f1ccd91e54385ac0185b95a473092b5005451b",
+      "old_fingerprint": "f84faa13a890270d4a855858daaec925f4b7721f27b48a70244131edc9b05034",
+      "reason": "Reviewed scoring-execution and metric-verification changes after preparation; prepared evalsets, catalog, provenance, exclusions, and Git anchors are unchanged.",
+      "verified_empirical_catalog": true,
+      "verified_mutable_git_state": true,
+      "verified_prepared_artifacts": true
+    },
+    {
+      "generated_utc": "2026-08-24T06:03:25.709804+00:00",
+      "implementation_sha256": {
+        "arms.py": "9d7749621619e4e1913940545b877a880ebd036242fd3589c3bb99ebd9749fbe",
+        "history_v2.py": "f074d01796a888f239a1df92ca1745c67b16d17cd77867259967cfa29c0e0b0c",
+        "incremental_index_v2.py": "721706108899127e6daa1dcb84feda2f11f03e029800deae6b609717ae8183be",
+        "index.py": "96c63a6e7e6bd52e70feee4c0c328e917e28fe24fe26ec1f0c9cff2e55bf0b72",
+        "metrics_v2.py": "b54894bf6c9db7de993998dbff85d303bd5cfa7ceba859331377bfab462b73b1",
+        "provenance_v2.py": "2264c44887d17886e96d894b516ae1d49f5287451bdccd233cda3e88578a164f",
+        "run_v2.py": "19fb33a4265edf721d935cad3e633b938ea231120ab5d6ac377ec56386cc4335",
+        "tree_catalog_v2.py": "c2266ed1ee06eca3b7ba9d865dab2771738394883ce90858011cf48679e57c5f"
+      },
+      "new_fingerprint": "80fcc29c66f667e8c3256b919bffa1854e4202377f42c03ea945d368a9397018",
+      "old_fingerprint": "d0aecc2e6589faa6dfb9c9e078f1ccd91e54385ac0185b95a473092b5005451b",
+      "reason": "Added audited fail-soft infrastructure availability rows and Windows long-path Git execution; prepared evalsets, catalog, provenance, exclusions, and Git anchors remain unchanged.",
+      "verified_empirical_catalog": true,
+      "verified_mutable_git_state": true,
+      "verified_prepared_artifacts": true
+    }
+  ],
+  "fingerprint": "80fcc29c66f667e8c3256b919bffa1854e4202377f42c03ea945d368a9397018",
+  "generated_utc": "2026-08-24T06:03:25.709804+00:00",
+  "index_preflight": {
+    "failed_states": null,
+    "performed": false,
+    "reason": "index states are built once in the resumable scoring pass",
+    "state_count": 140
+  },
+  "mutable_git_state": [
+    {
+      "expected": "f7180f7c0f94ec7122459ab5aa34d0e4e52c0b57",
+      "kind": "head",
+      "name": "HEAD",
+      "repository_root": "c:\\lanes\\free-cut-engine-src"
+    },
+    {
+      "expected": "8e4d0d767253b0fb412cb2bab7d64b5f391205ac",
+      "kind": "head",
+      "name": "HEAD",
+      "repository_root": "c:\\lanes\\research-app"
+    },
+    {
+      "expected": "c80b42c57bdd6179fbd99cdff0a407bf637157ce",
+      "kind": "head",
+      "name": "HEAD",
+      "repository_root": "c:\\lanes\\research-queue"
+    },
+    {
+      "expected": "c7cbaa013a30c339079d9f55fb9d59236e9d7f2c",
+      "kind": "head",
+      "name": "HEAD",
+      "repository_root": "c:\\lanes\\research-subsystem"
+    },
+    {
+      "expected": "bc7e35ce25ae706a88a3aa63d7bd4c4c26ccf0d7",
+      "kind": "head",
+      "name": "HEAD",
+      "repository_root": "c:\\lanes\\ultra-engine"
+    },
+    {
+      "expected": "736aee1a2f67b869c78fbfd6e36e83b6c80859ea",
+      "kind": "head",
+      "name": "HEAD",
+      "repository_root": "c:\\lanes\\wt-release-build-1.0.16"
+    },
+    {
+      "expected": "e29184174c69bc95139b8c33dcca09aacab9442a",
+      "kind": "head",
+      "name": "HEAD",
+      "repository_root": "c:\\users\\joshp\\appdata\\local\\temp\\claude\\c--users-joshp-desktop-toolsenabled-current\\34df6152-99f0-46ad-a162-678c324c64ec\\scratchpad\\abstentionbench"
+    },
+    {
+      "expected": "5dc9490bb35f9729ef2c95d00a19ccd30c26339c",
+      "kind": "head",
+      "name": "HEAD",
+      "repository_root": "c:\\users\\joshp\\appdata\\local\\temp\\claude\\c--users-joshp-desktop-toolsenabled-current\\34df6152-99f0-46ad-a162-678c324c64ec\\scratchpad\\aider-repo"
+    },
+    {
+      "expected": "794a91f3c520e3939b8361e9f4ae927c25756a6e",
+      "kind": "head",
+      "name": "HEAD",
+      "repository_root": "c:\\users\\joshp\\appdata\\local\\temp\\claude\\c--users-joshp-desktop-toolsenabled-current\\34df6152-99f0-46ad-a162-678c324c64ec\\scratchpad\\human-eval-comm"
+    },
+    {
+      "expected": "2d192154762636ae6a44fc1b223518d7ba7b1053",
+      "kind": "head",
+      "name": "HEAD",
+      "repository_root": "c:\\users\\joshp\\appdata\\local\\temp\\claude\\c--users-joshp-desktop-toolsenabled-current\\34df6152-99f0-46ad-a162-678c324c64ec\\scratchpad\\learning_to_ask"
+    },
+    {
+      "expected": "7e0611e77b54e2dea774cdc0aa00cf9f7ed6144f",
+      "kind": "head",
+      "name": "HEAD",
+      "repository_root": "c:\\users\\joshp\\appdata\\local\\temp\\claude\\c--users-joshp-desktop-toolsenabled-current\\34df6152-99f0-46ad-a162-678c324c64ec\\scratchpad\\polyglot-repo"
+    },
+    {
+      "expected": "b08afde528a5e3d2f77973e8b8e8c883b3479989",
+      "kind": "head",
+      "name": "HEAD",
+      "repository_root": "c:\\users\\joshp\\desktop"
+    },
+    {
+      "expected": "b08afde528a5e3d2f77973e8b8e8c883b3479989",
+      "kind": "epoch_candidate_ref",
+      "name": "refs/heads/main",
+      "repository_root": "c:\\users\\joshp\\desktop"
+    },
+    {
+      "expected": "db6c1708adb98bbaae88f04fc1a7d9f03c6a75cd",
+      "kind": "head",
+      "name": "HEAD",
+      "repository_root": "c:\\users\\joshp\\desktop\\7.1 research\\llmdataacquisition"
+    },
+    {
+      "expected": "db6c1708adb98bbaae88f04fc1a7d9f03c6a75cd",
+      "kind": "head",
+      "name": "HEAD",
+      "repository_root": "c:\\users\\joshp\\desktop\\8.14\\school\\7.1 research\\llmdataacquisition"
+    },
+    {
+      "expected": "5a13c0cc063a3321269bb1a1f635e092bfca4d71",
+      "kind": "head",
+      "name": "HEAD",
+      "repository_root": "c:\\users\\joshp\\desktop\\lean-bench"
+    },
+    {
+      "expected": "2ca637f45bfdfbefcdcceee94ab59b8be5d268be",
+      "kind": "head",
+      "name": "HEAD",
+      "repository_root": "c:\\users\\joshp\\desktop\\llmbenchmarking\\lean-bench"
+    },
+    {
+      "expected": "b08afde528a5e3d2f77973e8b8e8c883b3479989",
+      "kind": "head",
+      "name": "HEAD",
+      "repository_root": "c:\\users\\joshp\\desktop\\toolsenabled"
+    },
+    {
+      "expected": "1cf47ea2cfcf83f403822a08dab82955b48d1f8b",
+      "kind": "head",
+      "name": "HEAD",
+      "repository_root": "c:\\users\\joshp\\desktop\\toolsenabled-current"
+    },
+    {
+      "expected": "1cf47ea2cfcf83f403822a08dab82955b48d1f8b",
+      "kind": "epoch_candidate_ref",
+      "name": "refs/heads/coordinator/r1161-interactive-bridge-run9",
+      "repository_root": "c:\\users\\joshp\\desktop\\toolsenabled-current"
+    },
+    {
+      "expected": "0cd01cffb66db450cf9c611739a65c2f1b84b67c",
+      "kind": "epoch_candidate_ref",
+      "name": "refs/heads/main",
+      "repository_root": "c:\\users\\joshp\\desktop\\toolsenabled-current"
+    },
+    {
+      "expected": "61c0e9d6849c89d183178bcd7b3086b368fb4293",
+      "kind": "epoch_candidate_ref",
+      "name": "refs/heads/worktree-agent-ac46310f4fe73b311",
+      "repository_root": "c:\\users\\joshp\\desktop\\toolsenabled-current"
+    },
+    {
+      "expected": "c67321da85a6e6a9ce78e576b1b2fb28c35107ff",
+      "kind": "epoch_candidate_ref",
+      "name": "refs/remotes/bk/archived-origin/rescue/machine-a-worktree",
+      "repository_root": "c:\\users\\joshp\\desktop\\toolsenabled-current"
+    },
+    {
+      "expected": "1cf47ea2cfcf83f403822a08dab82955b48d1f8b",
+      "kind": "epoch_candidate_ref",
+      "name": "refs/heads/coordinator/r1161-interactive-bridge-run9",
+      "repository_root": "c:\\users\\joshp\\desktop\\toolsenabled-current\\.claude\\worktrees\\agent-aa8f5dfec06cdbcc0"
+    },
+    {
+      "expected": "1cf47ea2cfcf83f403822a08dab82955b48d1f8b",
+      "kind": "epoch_candidate_ref",
+      "name": "refs/heads/coordinator/r1161-interactive-bridge-run9",
+      "repository_root": "c:\\users\\joshp\\desktop\\toolsenabled-current\\.claude\\worktrees\\agent-ac79f13d2cd04f70b"
+    },
+    {
+      "expected": "0563aa469d5610a633328dd4fe42fb2db78ba7d3",
+      "kind": "head",
+      "name": "HEAD",
+      "repository_root": "c:\\users\\joshp\\desktop\\toolsenabled\\business-accounting-marketing"
+    },
+    {
+      "expected": "0563aa469d5610a633328dd4fe42fb2db78ba7d3",
+      "kind": "epoch_candidate_ref",
+      "name": "refs/heads/main",
+      "repository_root": "c:\\users\\joshp\\desktop\\toolsenabled\\business-accounting-marketing"
+    },
+    {
+      "expected": "ef9996f646d0aa55b8721db013b7f60ff4b7e29e",
+      "kind": "head",
+      "name": "HEAD",
+      "repository_root": "c:\\users\\joshp\\desktop\\toolsenabled\\engine"
+    },
+    {
+      "expected": "2098453bb6df553f67cae812068422b404e96c1e",
+      "kind": "head",
+      "name": "HEAD",
+      "repository_root": "c:\\users\\joshp\\desktop\\toolsenabled\\fra-bridge-tunnel\\cut-app-public-v2"
+    },
+    {
+      "expected": "b7791b360f4dd38da006f80080488e75ee4401cd",
+      "kind": "head",
+      "name": "HEAD",
+      "repository_root": "c:\\users\\joshp\\desktop\\toolsenabled\\fra-bridge-tunnel\\cut-relay-public-v2"
+    },
+    {
+      "expected": "df676ac10ac6a1856e87b2f6d4f3f77fc96853bd",
+      "kind": "head",
+      "name": "HEAD",
+      "repository_root": "c:\\users\\joshp\\desktop\\toolsenabled\\historical\\adv1-engine"
+    },
+    {
+      "expected": "5dc26e35edd2cdae338402b85bd309cd29e627a3",
+      "kind": "head",
+      "name": "HEAD",
+      "repository_root": "c:\\users\\joshp\\desktop\\toolsenabled\\historical\\certify-app"
+    },
+    {
+      "expected": "50585d560a5564033310c6b26ddd75d24b71f149",
+      "kind": "head",
+      "name": "HEAD",
+      "repository_root": "c:\\users\\joshp\\desktop\\toolsenabled\\historical\\r-cutfix-app"
+    },
+    {
+      "expected": "9723d2e9fe2f62e651e2a66c917cb6b386853b72",
+      "kind": "head",
+      "name": "HEAD",
+      "repository_root": "c:\\users\\joshp\\desktop\\toolsenabled\\historical\\r1260-t1a-app"
+    },
+    {
+      "expected": "ceae7e7f851969a024528bcd184e99a18a1caa22",
+      "kind": "head",
+      "name": "HEAD",
+      "repository_root": "c:\\users\\joshp\\desktop\\toolsenabled\\historical\\r1260-t1a-engine"
+    },
+    {
+      "expected": "9723d2e9fe2f62e651e2a66c917cb6b386853b72",
+      "kind": "head",
+      "name": "HEAD",
+      "repository_root": "c:\\users\\joshp\\desktop\\toolsenabled\\historical\\r1260-t1b-app"
+    },
+    {
+      "expected": "ceae7e7f851969a024528bcd184e99a18a1caa22",
+      "kind": "head",
+      "name": "HEAD",
+      "repository_root": "c:\\users\\joshp\\desktop\\toolsenabled\\historical\\r1260-t2b-xverify-engine"
+    },
+    {
+      "expected": "ceae7e7f851969a024528bcd184e99a18a1caa22",
+      "kind": "head",
+      "name": "HEAD",
+      "repository_root": "c:\\users\\joshp\\desktop\\toolsenabled\\historical\\r1260-t2b-xverify-pristine"
+    },
+    {
+      "expected": "ceae7e7f851969a024528bcd184e99a18a1caa22",
+      "kind": "head",
+      "name": "HEAD",
+      "repository_root": "c:\\users\\joshp\\desktop\\toolsenabled\\historical\\r1260-t4b-engine"
+    },
+    {
+      "expected": "9723d2e9fe2f62e651e2a66c917cb6b386853b72",
+      "kind": "head",
+      "name": "HEAD",
+      "repository_root": "c:\\users\\joshp\\desktop\\toolsenabled\\historical\\r1260-t5b-app"
+    },
+    {
+      "expected": "9723d2e9fe2f62e651e2a66c917cb6b386853b72",
+      "kind": "head",
+      "name": "HEAD",
+      "repository_root": "c:\\users\\joshp\\desktop\\toolsenabled\\historical\\r1260-t5b-xverify-app"
+    },
+    {
+      "expected": "ceae7e7f851969a024528bcd184e99a18a1caa22",
+      "kind": "head",
+      "name": "HEAD",
+      "repository_root": "c:\\users\\joshp\\desktop\\toolsenabled\\historical\\r1262-s1-engine"
+    },
+    {
+      "expected": "aaa8aa61e1004e8e3494a4349ea9899455d757c8",
+      "kind": "head",
+      "name": "HEAD",
+      "repository_root": "c:\\users\\joshp\\desktop\\toolsenabled\\historical\\r1262-s3-engine"
+    },
+    {
+      "expected": "9723d2e9fe2f62e651e2a66c917cb6b386853b72",
+      "kind": "head",
+      "name": "HEAD",
+      "repository_root": "c:\\users\\joshp\\desktop\\toolsenabled\\historical\\r1264-p4-app"
+    },
+    {
+      "expected": "9723d2e9fe2f62e651e2a66c917cb6b386853b72",
+      "kind": "head",
+      "name": "HEAD",
+      "repository_root": "c:\\users\\joshp\\desktop\\toolsenabled\\historical\\r1268-w3-app"
+    },
+    {
+      "expected": "02f7fbc3cdbb9f92c2152bf04dc8b44a459fe9ce",
+      "kind": "head",
+      "name": "HEAD",
+      "repository_root": "c:\\users\\joshp\\desktop\\toolsenabled\\historical\\r1268-w4-verify-engine"
+    },
+    {
+      "expected": "93994f37cd2e6c2c99cf22367ba3306e4d986257",
+      "kind": "head",
+      "name": "HEAD",
+      "repository_root": "c:\\users\\joshp\\desktop\\toolsenabled\\historical\\r1520-settings-ui-app"
+    },
+    {
+      "expected": "93994f37cd2e6c2c99cf22367ba3306e4d986257",
+      "kind": "head",
+      "name": "HEAD",
+      "repository_root": "c:\\users\\joshp\\desktop\\toolsenabled\\historical\\r1522-language-app"
+    },
+    {
+      "expected": "4d6eab41d3ba8286856b80c765bd522db3e675b4",
+      "kind": "head",
+      "name": "HEAD",
+      "repository_root": "c:\\users\\joshp\\desktop\\toolsenabled\\historical\\r1525-t1-engine"
+    },
+    {
+      "expected": "4d6eab41d3ba8286856b80c765bd522db3e675b4",
+      "kind": "head",
+      "name": "HEAD",
+      "repository_root": "c:\\users\\joshp\\desktop\\toolsenabled\\historical\\r1525-t1-xv-engine"
+    },
+    {
+      "expected": "f8be6ed720ab14746ea539eb366cda310074d68b",
+      "kind": "head",
+      "name": "HEAD",
+      "repository_root": "c:\\users\\joshp\\desktop\\toolsenabled\\historical\\r1525-t2-app-verify"
+    },
+    {
+      "expected": "4d6eab41d3ba8286856b80c765bd522db3e675b4",
+      "kind": "head",
+      "name": "HEAD",
+      "repository_root": "c:\\users\\joshp\\desktop\\toolsenabled\\historical\\r1525-t2-engine"
+    },
+    {
+      "expected": "4d6eab41d3ba8286856b80c765bd522db3e675b4",
+      "kind": "head",
+      "name": "HEAD",
+      "repository_root": "c:\\users\\joshp\\desktop\\toolsenabled\\historical\\r1525-t2-xv-engine"
+    },
+    {
+      "expected": "4d6eab41d3ba8286856b80c765bd522db3e675b4",
+      "kind": "head",
+      "name": "HEAD",
+      "repository_root": "c:\\users\\joshp\\desktop\\toolsenabled\\historical\\r1525-t3-engine"
+    },
+    {
+      "expected": "4d6eab41d3ba8286856b80c765bd522db3e675b4",
+      "kind": "head",
+      "name": "HEAD",
+      "repository_root": "c:\\users\\joshp\\desktop\\toolsenabled\\historical\\r1525-t3-xv-engine"
+    },
+    {
+      "expected": "f8be6ed720ab14746ea539eb366cda310074d68b",
+      "kind": "head",
+      "name": "HEAD",
+      "repository_root": "c:\\users\\joshp\\desktop\\toolsenabled\\historical\\r1525-t4-app"
+    },
+    {
+      "expected": "4d6eab41d3ba8286856b80c765bd522db3e675b4",
+      "kind": "head",
+      "name": "HEAD",
+      "repository_root": "c:\\users\\joshp\\desktop\\toolsenabled\\historical\\r1525-t5-engine"
+    },
+    {
+      "expected": "f8be6ed720ab14746ea539eb366cda310074d68b",
+      "kind": "head",
+      "name": "HEAD",
+      "repository_root": "c:\\users\\joshp\\desktop\\toolsenabled\\historical\\r1529-guided-app"
+    },
+    {
+      "expected": "f8be6ed720ab14746ea539eb366cda310074d68b",
+      "kind": "head",
+      "name": "HEAD",
+      "repository_root": "c:\\users\\joshp\\desktop\\toolsenabled\\historical\\r1530-g1-perf-app"
+    },
+    {
+      "expected": "f8be6ed720ab14746ea539eb366cda310074d68b",
+      "kind": "head",
+      "name": "HEAD",
+      "repository_root": "c:\\users\\joshp\\desktop\\toolsenabled\\historical\\r1530-g2-perf-adv-app"
+    },
+    {
+      "expected": "f8be6ed720ab14746ea539eb366cda310074d68b",
+      "kind": "head",
+      "name": "HEAD",
+      "repository_root": "c:\\users\\joshp\\desktop\\toolsenabled\\historical\\r1531-w1-app"
+    },
+    {
+      "expected": "e26a9ed3de4211662f6c843c3c01f1816f5b01d9",
+      "kind": "head",
+      "name": "HEAD",
+      "repository_root": "c:\\users\\joshp\\desktop\\toolsenabled\\historical\\r1534-elev-engine"
+    },
+    {
+      "expected": "fe88d9b150eaad709cc18d98eb0ffb82aaf22060",
+      "kind": "head",
+      "name": "HEAD",
+      "repository_root": "c:\\users\\joshp\\desktop\\toolsenabled\\historical\\r1537-s11-app"
+    },
+    {
+      "expected": "e26a9ed3de4211662f6c843c3c01f1816f5b01d9",
+      "kind": "head",
+      "name": "HEAD",
+      "repository_root": "c:\\users\\joshp\\desktop\\toolsenabled\\historical\\r1537-s11-engine"
+    },
+    {
+      "expected": "fe88d9b150eaad709cc18d98eb0ffb82aaf22060",
+      "kind": "head",
+      "name": "HEAD",
+      "repository_root": "c:\\users\\joshp\\desktop\\toolsenabled\\historical\\r1537-s12-app"
+    },
+    {
+      "expected": "fe88d9b150eaad709cc18d98eb0ffb82aaf22060",
+      "kind": "head",
+      "name": "HEAD",
+      "repository_root": "c:\\users\\joshp\\desktop\\toolsenabled\\historical\\r1537-s3-docs-app"
+    },
+    {
+      "expected": "fe88d9b150eaad709cc18d98eb0ffb82aaf22060",
+      "kind": "head",
+      "name": "HEAD",
+      "repository_root": "c:\\users\\joshp\\desktop\\toolsenabled\\historical\\r1537-s8-app"
+    },
+    {
+      "expected": "e26a9ed3de4211662f6c843c3c01f1816f5b01d9",
+      "kind": "head",
+      "name": "HEAD",
+      "repository_root": "c:\\users\\joshp\\desktop\\toolsenabled\\historical\\r1537-s8-engine"
+    },
+    {
+      "expected": "b1a8da75b387f4f56fb8c0813117469cc5493140",
+      "kind": "head",
+      "name": "HEAD",
+      "repository_root": "c:\\users\\joshp\\desktop\\toolsenabled\\historical\\r1538-p4-idle-app"
+    },
+    {
+      "expected": "b0539236cebec396648fab06d201e1af383aafc5",
+      "kind": "head",
+      "name": "HEAD",
+      "repository_root": "c:\\users\\joshp\\desktop\\toolsenabled\\historical\\wt-agentcomms-buildout"
+    },
+    {
+      "expected": "59fe73deec0c4e477cebd7ce75190c684158390d",
+      "kind": "head",
+      "name": "HEAD",
+      "repository_root": "c:\\users\\joshp\\desktop\\toolsenabled\\historical\\wt-agentcomms-design"
+    },
+    {
+      "expected": "29e288df80c2f52ddee23cfee2d36895d5d12e9f",
+      "kind": "head",
+      "name": "HEAD",
+      "repository_root": "c:\\users\\joshp\\desktop\\toolsenabled\\historical\\wt-agentcomms-provisioning"
+    },
+    {
+      "expected": "06277864b56015b91b6e23447d0b8c631f9f9b64",
+      "kind": "head",
+      "name": "HEAD",
+      "repository_root": "c:\\users\\joshp\\desktop\\toolsenabled\\historical\\wt-agentcomms-research-signal"
+    },
+    {
+      "expected": "50585d560a5564033310c6b26ddd75d24b71f149",
+      "kind": "head",
+      "name": "HEAD",
+      "repository_root": "c:\\users\\joshp\\desktop\\toolsenabled\\historical\\wt-app-round2"
+    },
+    {
+      "expected": "50585d560a5564033310c6b26ddd75d24b71f149",
+      "kind": "head",
+      "name": "HEAD",
+      "repository_root": "c:\\users\\joshp\\desktop\\toolsenabled\\historical\\wt-cut-app"
+    },
+    {
+      "expected": "45195bae165afad0f4d5ca7929b9b11f95d1cd3a",
+      "kind": "head",
+      "name": "HEAD",
+      "repository_root": "c:\\users\\joshp\\desktop\\toolsenabled\\historical\\wt-cut-engine"
+    },
+    {
+      "expected": "309e7f0956b825789ebe8ba9489f4709786f9cb5",
+      "kind": "head",
+      "name": "HEAD",
+      "repository_root": "c:\\users\\joshp\\desktop\\toolsenabled\\historical\\wt-filekeeper-worktree-lease"
+    },
+    {
+      "expected": "1e124cc8fada18a19e747857df5487621813505a",
+      "kind": "head",
+      "name": "HEAD",
+      "repository_root": "c:\\users\\joshp\\desktop\\toolsenabled\\historical\\wt-installer"
+    },
+    {
+      "expected": "f4d2e0f2da5f1eff5de6cedea4d195aff76e90e8",
+      "kind": "head",
+      "name": "HEAD",
+      "repository_root": "c:\\users\\joshp\\desktop\\toolsenabled\\historical\\wt-mc-agent-chat-design"
+    },
+    {
+      "expected": "bee91fa1b998f69cf2b3fa4a635fbcafee86ef85",
+      "kind": "head",
+      "name": "HEAD",
+      "repository_root": "c:\\users\\joshp\\desktop\\toolsenabled\\historical\\wt-mc-sankey-research"
+    },
+    {
+      "expected": "0d1a2c3f31c40dff79b36eecfd6094b49f6d4ba1",
+      "kind": "head",
+      "name": "HEAD",
+      "repository_root": "c:\\users\\joshp\\desktop\\toolsenabled\\historical\\wt-r1162-integration"
+    },
+    {
+      "expected": "10675e9aaaeef09cefb23aeadabfbb245c1b50dd",
+      "kind": "head",
+      "name": "HEAD",
+      "repository_root": "c:\\users\\joshp\\desktop\\toolsenabled\\historical\\wt-r1162-research"
+    },
+    {
+      "expected": "b8af444599361235f89d8a9972b72fe5e0ff24b6",
+      "kind": "head",
+      "name": "HEAD",
+      "repository_root": "c:\\users\\joshp\\desktop\\toolsenabled\\historical\\wt-r1162-stage1a"
+    },
+    {
+      "expected": "c7c0d9a1896d5682c90368dc9dc4a5cadf85c5f1",
+      "kind": "head",
+      "name": "HEAD",
+      "repository_root": "c:\\users\\joshp\\desktop\\toolsenabled\\historical\\wt-r1177-integration"
+    },
+    {
+      "expected": "deb3ee47d4bedc511bcc681e9def51239ff3fd2a",
+      "kind": "head",
+      "name": "HEAD",
+      "repository_root": "c:\\users\\joshp\\desktop\\toolsenabled\\historical\\wt-r1177-s2-filekeeper-custody"
+    },
+    {
+      "expected": "c9d880d602b9024f3ad05c9f83d51aed004c7051",
+      "kind": "head",
+      "name": "HEAD",
+      "repository_root": "c:\\users\\joshp\\desktop\\toolsenabled\\historical\\wt-r1177-s3-receipt-dedup"
+    },
+    {
+      "expected": "d187353093a561d689f2f54dca0a1645934345eb",
+      "kind": "head",
+      "name": "HEAD",
+      "repository_root": "c:\\users\\joshp\\desktop\\toolsenabled\\historical\\wt-r1177-s4-shadow-cadence"
+    },
+    {
+      "expected": "d74119fee47c99e35fc7deff3762c70343d29472",
+      "kind": "head",
+      "name": "HEAD",
+      "repository_root": "c:\\users\\joshp\\desktop\\toolsenabled\\historical\\wt-r1531-w2-bughunt"
+    },
+    {
+      "expected": "9884e358c4ba43cd71983fb9692db22314af6d4a",
+      "kind": "head",
+      "name": "HEAD",
+      "repository_root": "c:\\users\\joshp\\desktop\\toolsenabled\\historical\\wt-swarm-mc-ledger-page-live-data-fixes"
+    },
+    {
+      "expected": "12f078d65e2e60aecb00c7882fbcf10d9c020c2d",
+      "kind": "head",
+      "name": "HEAD",
+      "repository_root": "c:\\users\\joshp\\desktop\\toolsenabled\\historical\\wt-swarm-q96-uac-tray-controller"
+    },
+    {
+      "expected": "976c2cb6a27303091c9c8fffac4020915bc17636",
+      "kind": "head",
+      "name": "HEAD",
+      "repository_root": "c:\\users\\joshp\\desktop\\toolsenabled\\historical\\wt-swarm-stage0-audit-spool-hardening"
+    },
+    {
+      "expected": "a771451662d8e08bb0eb4ef3ec00ef9bd05358cc",
+      "kind": "head",
+      "name": "HEAD",
+      "repository_root": "c:\\users\\joshp\\desktop\\toolsenabled\\historical\\wt-swarm-stage0-bridge-bootstrap-auth"
+    },
+    {
+      "expected": "85b7506d37b54d6d6236f415081d2abe77f9a2a6",
+      "kind": "head",
+      "name": "HEAD",
+      "repository_root": "c:\\users\\joshp\\desktop\\toolsenabled\\historical\\wt-swarm-stage0-effect-classification-fail-closed"
+    },
+    {
+      "expected": "c7796ff7c1542b5b618eb15732b5209473b35e47",
+      "kind": "head",
+      "name": "HEAD",
+      "repository_root": "c:\\users\\joshp\\desktop\\toolsenabled\\historical\\wt-swarm-stage0-fra-tunnel-secret-rotation"
+    },
+    {
+      "expected": "90e20113d97a09eb3059b0b0c752d29db0f47923",
+      "kind": "head",
+      "name": "HEAD",
+      "repository_root": "c:\\users\\joshp\\desktop\\toolsenabled\\historical\\wt-swarm-stage0-secrets-oracle-removal"
+    },
+    {
+      "expected": "3287a0052e4c5762210a29503ce9fa9f17db15f4",
+      "kind": "head",
+      "name": "HEAD",
+      "repository_root": "c:\\users\\joshp\\desktop\\toolsenabled\\legacy"
+    },
+    {
+      "expected": "72064ff676ee6c180bab0817dd744210918c0684",
+      "kind": "epoch_candidate_ref",
+      "name": "refs/heads/main",
+      "repository_root": "c:\\users\\joshp\\desktop\\toolsenabled\\legacy"
+    },
+    {
+      "expected": "3287a0052e4c5762210a29503ce9fa9f17db15f4",
+      "kind": "epoch_candidate_ref",
+      "name": "refs/heads/rescue/machine-a-worktree",
+      "repository_root": "c:\\users\\joshp\\desktop\\toolsenabled\\legacy"
+    },
+    {
+      "expected": "603e164722e2e294772e3a92dfcc1aa1cd7a38ed",
+      "kind": "head",
+      "name": "HEAD",
+      "repository_root": "c:\\users\\joshp\\desktop\\toolsenabled\\opensource\\mission-control"
+    },
+    {
+      "expected": "5ca364e619ed95c367660d33ddd86185ea3c9f3c",
+      "kind": "head",
+      "name": "HEAD",
+      "repository_root": "c:\\users\\joshp\\desktop\\toolsenabled\\opensource\\wt-capability"
+    },
+    {
+      "expected": "937d6a8d7314c4a8ee0df5c352b0d511a6dddba0",
+      "kind": "head",
+      "name": "HEAD",
+      "repository_root": "c:\\users\\joshp\\desktop\\toolsenabled\\toolsenabled-paid\\toolsenabled-relay-private"
+    }
+  ],
+  "notes": [
+    "Branch resolution is local-first and otherwise accepts only an unambiguous remote suffix.",
+    "Historical selection is limited to ancestry still reachable from surviving local/remote refs.",
+    "Clean commits cannot reconstruct dirty or untracked contemporaneous state."
+  ],
+  "query_cap": null,
+  "repairs": [
+    {
+      "candidate_rows": 1883,
+      "generated_utc": "2026-08-24T05:36:50.726155+00:00",
+      "kind": "retry_snapshot_stream_materialization_failures",
+      "new_fingerprint": "39e500526e82a8868402c8e62d01087f7c790a048cea24650a8643dcc33673db",
+      "old_fingerprint": "9ac26c551ea27fae975e4f8c29f1743e0127b842d3bd4a91558d0b7a371081d4"
+    },
+    {
+      "candidate_rows": 12,
+      "generated_utc": "2026-08-24T05:37:37.468877+00:00",
+      "kind": "retry_snapshot_stream_materialization_failures",
+      "new_fingerprint": "f84faa13a890270d4a855858daaec925f4b7721f27b48a70244131edc9b05034",
+      "old_fingerprint": "39e500526e82a8868402c8e62d01087f7c790a048cea24650a8643dcc33673db"
+    }
+  ],
+  "schema_version": "retrieval-run-v2/1",
+  "windows_seconds": [
+    60,
+    300,
+    900
+  ]
+}

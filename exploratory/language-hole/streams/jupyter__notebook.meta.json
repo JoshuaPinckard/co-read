@@ -1,0 +1,50 @@
+{
+  "cap_reason": null,
+  "capped": false,
+  "commit_count": 4021,
+  "completed_at_utc": "2026-08-23T10:20:47+00:00",
+  "first_parent_commit_count": 4021,
+  "git_log_stderr_tail": "",
+  "merge_commit_count": 3018,
+  "object_storage_after_git_log": {
+    "count": 0,
+    "garbage": 0,
+    "in-pack": 80216,
+    "packs": 49,
+    "prune-packable": 0,
+    "size": 0,
+    "size-garbage": 0,
+    "size-pack": 20889
+  },
+  "object_storage_before_git_log": {
+    "count": 0,
+    "garbage": 0,
+    "in-pack": 79604,
+    "packs": 17,
+    "prune-packable": 0,
+    "size": 0,
+    "size-garbage": 0,
+    "size-pack": 14783
+  },
+  "reachable_commit_count": 13821,
+  "rename_count": 1013,
+  "repository": {
+    "axis": "Notebooks + JavaScript",
+    "expected_stress": "JSON-enveloped code",
+    "name": "jupyter/notebook",
+    "slug": "jupyter__notebook",
+    "url": "https://github.com/jupyter/notebook.git"
+  },
+  "schema_version": 1,
+  "source_head_sha": "062a2e41d3d2170ee144deff7b8e0fd252de96e2",
+  "started_at_utc": "2026-08-23T10:18:38+00:00",
+  "status": "ok",
+  "status_histogram": {
+    "A": 1075,
+    "D": 700,
+    "M": 13042,
+    "R": 1013
+  },
+  "stream_path": "exploratory/language-hole/streams/jupyter__notebook.jsonl.gz",
+  "stream_sha256": "638811b1204c08adb2777133b0e04ed528b34914b46eabf262fecd3957ccbc0c"
+}

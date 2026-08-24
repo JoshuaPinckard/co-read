@@ -1,0 +1,50 @@
+{
+  "cap_reason": null,
+  "capped": false,
+  "commit_count": 638,
+  "completed_at_utc": "2026-08-23T10:18:13+00:00",
+  "first_parent_commit_count": 638,
+  "git_log_stderr_tail": "",
+  "merge_commit_count": 125,
+  "object_storage_after_git_log": {
+    "count": 0,
+    "garbage": 0,
+    "in-pack": 10005,
+    "packs": 44,
+    "prune-packable": 0,
+    "size": 0,
+    "size-garbage": 0,
+    "size-pack": 10346
+  },
+  "object_storage_before_git_log": {
+    "count": 0,
+    "garbage": 0,
+    "in-pack": 10005,
+    "packs": 44,
+    "prune-packable": 0,
+    "size": 0,
+    "size-garbage": 0,
+    "size-pack": 10346
+  },
+  "reachable_commit_count": 1068,
+  "rename_count": 891,
+  "repository": {
+    "axis": "Go + HCL + YAML, small",
+    "expected_stress": "Baseline non-JavaScript control",
+    "name": "hashicorp/terraform-provider-random",
+    "slug": "hashicorp__terraform-provider-random",
+    "url": "https://github.com/hashicorp/terraform-provider-random.git"
+  },
+  "schema_version": 1,
+  "source_head_sha": "f4c97d75848f22c53667b308a7dd89d3e1f06ce5",
+  "started_at_utc": "2026-08-23T10:18:00+00:00",
+  "status": "ok",
+  "status_histogram": {
+    "A": 4046,
+    "D": 3893,
+    "M": 4346,
+    "R": 891
+  },
+  "stream_path": "exploratory/language-hole/streams/hashicorp__terraform-provider-random.jsonl.gz",
+  "stream_sha256": "2fbde89894c9a16371df4feec261284e62ae38e6fae94499d621370e4bc93263"
+}

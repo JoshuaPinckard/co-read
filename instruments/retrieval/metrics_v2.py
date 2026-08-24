@@ -407,7 +407,11 @@ def aggregate_metrics_v2(
 ) -> dict[str, Any]:
     """Aggregate all V2 windows over one common five-arm population.
 
-    An ID is scored only when all requested arms have exactly one run row.
+    An ID is scored only when all requested arms have exactly one attempted
+    run row.  Explicit infrastructure-unavailability placeholders exclude that
+    ID from every arm, while an arm that fails every attempted row excludes its
+    whole target tree.  This prevents missing/error payloads from looking like
+    small, successful responses in the simultaneous recall/size verdict.
     Window membership is recomputed independently from ``records_by_window``.
     """
 
@@ -417,6 +421,7 @@ def aggregate_metrics_v2(
 
     provenance = _index_provenance(provenance_by_id)
     rows_by_arm: dict[str, dict[str, Mapping[str, Any]]] = {arm: {} for arm in arm_names}
+    rows_by_tree_arm: dict[tuple[str, str], list[Mapping[str, Any]]] = {}
     known_tree_ids: set[str] = {
         str(item["target_tree_id"])
         for item in provenance.values()
@@ -435,14 +440,39 @@ def aggregate_metrics_v2(
             raise ValueError(f"duplicate run row for {record_id}/{arm}")
         rows_by_arm[arm][record_id] = row
         if row.get("tree_id") not in (None, ""):
-            known_tree_ids.add(str(row["tree_id"]))
+            tree_id = str(row["tree_id"])
+            known_tree_ids.add(tree_id)
+            rows_by_tree_arm.setdefault((tree_id, arm), []).append(row)
 
     complete_ids = set.intersection(*(set(rows_by_arm[arm]) for arm in arm_names))
+    explicitly_unavailable_ids = {
+        record_id
+        for arm in arm_names
+        for record_id, row in rows_by_arm[arm].items()
+        if row.get("unavailable") is True
+    }
+    unavailable_tree_arms: dict[str, tuple[str, ...]] = {}
+    for tree_id in sorted(known_tree_ids):
+        unavailable = tuple(
+            arm
+            for arm in arm_names
+            if rows_by_tree_arm.get((tree_id, arm))
+            and all(
+                row.get("unavailable") is True or bool(row.get("error"))
+                for row in rows_by_tree_arm[(tree_id, arm)]
+            )
+        )
+        if unavailable:
+            unavailable_tree_arms[tree_id] = unavailable
     result: dict[str, Any] = {
         "schema_version": 2,
         "arms": list(arm_names),
         "ks": list(KS),
-        "pairing_rule": "record id must have one row for every requested arm",
+        "pairing_rule": (
+            "record id must have one attempted row for every requested arm; explicit "
+            "infrastructure-unavailability excludes that id from all arms, and if every "
+            "attempted row for an arm fails on a tree, that tree is excluded from all arms"
+        ),
         "ignored_run_rows_for_other_arms": ignored_run_rows,
         "windows": {},
     }
@@ -471,7 +501,16 @@ def aggregate_metrics_v2(
         }
         mapped_ids = set(target_tree_by_id)
         outside_ids = record_ids - mapped_ids
-        paired_ids = mapped_ids & complete_ids
+        tree_unavailable_ids = {
+            record_id
+            for record_id, tree_id in target_tree_by_id.items()
+            if tree_id in unavailable_tree_arms
+        }
+        paired_ids = (
+            (mapped_ids & complete_ids)
+            - tree_unavailable_ids
+            - explicitly_unavailable_ids
+        )
 
         # A complete row set that disagrees on tree identity or logical root is
         # a benchmark bug, not a population to score plausibly.
@@ -487,12 +526,33 @@ def aggregate_metrics_v2(
                 raise ValueError(f"run rows for {record_id} have inconsistent or empty logical roots")
 
         missing_arm_counts = Counter()
+        unavailable_arm_counts = Counter()
         unpaired_reason_counts = Counter()
         for record_id in mapped_ids - paired_ids:
             missing = [arm for arm in arm_names if record_id not in rows_by_arm[arm]]
             for arm in missing:
                 missing_arm_counts[arm] += 1
-            unpaired_reason_counts["missing:" + ",".join(missing)] += 1
+            if missing:
+                unpaired_reason_counts["missing:" + ",".join(missing)] += 1
+            unavailable = [
+                arm
+                for arm in arm_names
+                if record_id in rows_by_arm[arm]
+                and rows_by_arm[arm][record_id].get("unavailable") is True
+            ]
+            for arm in unavailable:
+                unavailable_arm_counts[arm] += 1
+            if unavailable:
+                unpaired_reason_counts[
+                    "query_arm_unavailable:" + ",".join(unavailable)
+                ] += 1
+            tree_unavailable = unavailable_tree_arms.get(
+                target_tree_by_id[record_id], ()
+            )
+            if tree_unavailable:
+                unpaired_reason_counts[
+                    "tree_arm_unavailable:" + ",".join(tree_unavailable)
+                ] += 1
 
         outside_reason_counts = Counter(
             str(provenance.get(record_id, {}).get("reason") or "missing_provenance")
@@ -547,7 +607,16 @@ def aggregate_metrics_v2(
                 "paired_scored_queries": len(paired_ids),
                 "paired_excluded_queries": len(mapped_ids - paired_ids),
                 "missing_arm_counts": dict(sorted(missing_arm_counts.items())),
+                "unavailable_arm_counts": dict(
+                    sorted(unavailable_arm_counts.items())
+                ),
                 "unpaired_reason_counts": dict(sorted(unpaired_reason_counts.items())),
+                "unavailable_tree_arms": {
+                    tree_id: list(unavailable_tree_arms[tree_id])
+                    for tree_id in sorted(
+                        set(target_tree_by_id.values()) & set(unavailable_tree_arms)
+                    )
+                },
                 **population_quality,
             },
             "reconstruction": {

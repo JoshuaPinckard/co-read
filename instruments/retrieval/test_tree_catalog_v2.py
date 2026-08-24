@@ -179,3 +179,66 @@ def test_counts_cover_each_independently_generated_window_and_outputs_are_determ
     assert [item["window_seconds"] for item in manifest] == sorted(
         item["window_seconds"] for item in manifest
     )
+
+
+def test_deleted_desktop_subtree_keeps_historical_repository_mapping(tmp_path: Path):
+    desktop = init_repo(tmp_path / "Desktop", "desktop.txt")
+    vanished = desktop / "vanished-project"
+    vanished.mkdir()
+    (vanished / "state.txt").write_text("historical\n", encoding="utf-8")
+    git(desktop, "add", "vanished-project/state.txt")
+    git(desktop, "commit", "-m", "add vanished project")
+    (vanished / "state.txt").unlink()
+    vanished.rmdir()
+    git(desktop, "add", "-A")
+    git(desktop, "commit", "-m", "remove vanished project")
+
+    built = catalog.build_catalog(
+        {60: [], 300: [record("vanished", desktop, vanished)], 900: []}
+    )
+    entry = entry_at(built, vanished)
+    assert entry.mapping_kind == "desktop_repository_subtree"
+    assert entry.tree.available is True
+    assert entry.tree.current_root is None
+    assert entry.tree.repository_root == provenance.normalise_absolute_path(desktop)
+    assert entry.tree.repository_relative_root == "vanished-project"
+
+
+def test_invalid_nested_git_marker_does_not_masquerade_as_repository_root(tmp_path: Path):
+    desktop = init_repo(tmp_path / "Desktop", "desktop.txt")
+    child = desktop / "child-project"
+    child.mkdir()
+    (child / ".git").mkdir()
+    (child / "state.txt").write_text("current\n", encoding="utf-8")
+
+    built = catalog.build_catalog(
+        {60: [], 300: [record("child", desktop, child)], 900: []}
+    )
+    entry = entry_at(built, child)
+    assert entry.mapping_kind == "broken_git_marker"
+    assert entry.tree.repository_root is None
+    assert entry.tree.current_root == provenance.normalise_absolute_path(child)
+    assignment = next(item for item in built.assignments if item.record_id == "child")
+    assert assignment.outside_any_indexed_tree is True
+
+
+def test_broken_child_checkout_stays_separate_from_valid_parent_repo(tmp_path: Path):
+    desktop = init_repo(tmp_path / "Desktop", "desktop.txt")
+    engine = init_repo(desktop / "toolsenabled-current", "engine.txt")
+    child = engine / "tmp" / "broken-worktree"
+    child.mkdir(parents=True)
+    (child / ".git").mkdir()
+    (child / "state.txt").write_text("current only\n", encoding="utf-8")
+
+    built = catalog.build_catalog(
+        {60: [], 300: [record("broken", engine, child)], 900: []}
+    )
+    child_entry = entry_at(built, child)
+    engine_entry = entry_at(built, engine)
+    assert child_entry.mapping_kind == "broken_git_marker"
+    assert child_entry.tree.tree_id != engine_entry.tree.tree_id
+    assert child_entry.tree.repository_root is None
+    assignment = next(item for item in built.assignments if item.record_id == "broken")
+    assert assignment.target_tree_id == child_entry.tree.tree_id
+    assert assignment.cwd_tree_id == engine_entry.tree.tree_id
+    assert assignment.outside_any_indexed_tree is True

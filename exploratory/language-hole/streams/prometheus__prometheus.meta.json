@@ -1,0 +1,50 @@
+{
+  "cap_reason": null,
+  "capped": false,
+  "commit_count": 8328,
+  "completed_at_utc": "2026-08-23T10:49:42+00:00",
+  "first_parent_commit_count": 8328,
+  "git_log_stderr_tail": "Auto packing the repository in background for optimum performance.\nSee \"git help gc\" for manual housekeeping.\nAuto packing the repository in background for optimum performance.\nSee \"git help gc\" for manual housekeeping.\nAuto packing the repository in background for optimum performance.\nSee \"git help gc\" for manual housekeeping.\nAuto packing the repository in background for optimum performance.\nSee \"git help gc\" for manual housekeeping.\nAuto packing the repository in background for optimum performance.\nSee \"git help gc\" for manual housekeeping.\n",
+  "merge_commit_count": 3916,
+  "object_storage_after_git_log": {
+    "count": 0,
+    "garbage": 0,
+    "in-pack": 97238,
+    "packs": 23,
+    "prune-packable": 0,
+    "size": 0,
+    "size-garbage": 0,
+    "size-pack": 50044
+  },
+  "object_storage_before_git_log": {
+    "count": 0,
+    "garbage": 0,
+    "in-pack": 90083,
+    "packs": 1,
+    "prune-packable": 0,
+    "size": 0,
+    "size-garbage": 0,
+    "size-pack": 22380
+  },
+  "reachable_commit_count": 18400,
+  "rename_count": 1720,
+  "repository": {
+    "axis": "Go with vendored tree history",
+    "expected_stress": "Vendored blobs; near-duplicate content",
+    "name": "prometheus/prometheus",
+    "slug": "prometheus__prometheus",
+    "url": "https://github.com/prometheus/prometheus.git"
+  },
+  "schema_version": 1,
+  "source_head_sha": "d15adb9ad7e5d9fbde3a9a8f30200593a5a14d86",
+  "started_at_utc": "2026-08-23T10:38:05+00:00",
+  "status": "ok",
+  "status_histogram": {
+    "A": 9024,
+    "D": 7356,
+    "M": 38815,
+    "R": 1720
+  },
+  "stream_path": "exploratory/language-hole/streams/prometheus__prometheus.jsonl.gz",
+  "stream_sha256": "16aa5f9dd4f9830cdd3bd0f249251e62d40f6e9e7fb34ececae4ab019732a87a"
+}

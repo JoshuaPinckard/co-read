@@ -435,7 +435,7 @@ def reconstruct_record(
         "attempted_reconstruction_exact": False,
         "original_mode": None,
     }
-    if target_entry is None or assignment.outside_any_indexed_tree or not target_entry.tree.available:
+    if target_entry is None or not target_entry.tree.available:
         return base
 
     target_candidates = _candidate_specs(target_entry)
@@ -485,9 +485,12 @@ def reconstruct_record(
                             selected_candidate.resolved_ref,
                         ),
                         "target_tree_object": tree_object,
+                        "target_tree_available_at_selected_commit": bool(tree_object),
                     }
                 )
-                eligible.append(selected_candidate)
+                evidence["eligible"] = bool(tree_object)
+                if tree_object:
+                    eligible.append(selected_candidate)
             candidate_evidence.append(evidence)
     base["epoch_candidate_evidence"] = candidate_evidence
     base["cwd_repository_identities_with_branch"] = sorted(
@@ -544,7 +547,14 @@ def reconstruct_record(
         fallback_reason = "cwd_repository_unavailable_or_non_git"
     else:
         target_reasons = Counter(
-            str(item.get("resolution_reason") or "no_commit_at_or_before_query")
+            str(
+                item.get("resolution_reason")
+                or (
+                    "target_tree_absent_at_closest_commit"
+                    if item.get("commit") and not item.get("target_tree_available_at_selected_commit")
+                    else "no_commit_at_or_before_query"
+                )
+            )
             for item in candidate_evidence
         )
         fallback_reason = "no_commit_at_or_before_query"
@@ -634,7 +644,15 @@ def detached_worktree(
         worktree = container / "repo"
         _run_git(
             repository_path,
-            ("worktree", "add", "--detach", str(worktree), str(commit)),
+            (
+                "-c",
+                "core.longpaths=true",
+                "worktree",
+                "add",
+                "--detach",
+                str(worktree),
+                str(commit),
+            ),
             timeout=timeout,
         )
         try:
@@ -642,7 +660,14 @@ def detached_worktree(
         finally:
             removed = _run_git(
                 repository_path,
-                ("worktree", "remove", "--force", str(worktree)),
+                (
+                    "-c",
+                    "core.longpaths=true",
+                    "worktree",
+                    "remove",
+                    "--force",
+                    str(worktree),
+                ),
                 timeout=timeout,
                 check=False,
             )
@@ -1061,6 +1086,7 @@ def preflight_index_states(
     stats: list[dict[str, Any]] = []
     for stream_key, states in _ordered_streams(list(by_id.values())):
         exemplar = states[0][1][0]
+        stream_index_ready = False
         try:
             with owned_stream_worktree(exemplar, worktrees, timeout=git_timeout) as checkout:
                 for key, state_rows in states:
@@ -1078,7 +1104,12 @@ def preflight_index_states(
                             database,
                             source_root,
                             logical_root=str(state_exemplar["logical_root"]),
+                            force_full=not stream_index_ready,
+                            expected_commit=key[2],
+                            stream_identity=key[0],
+                            repository_relative_root=key[1],
                         )
+                        stream_index_ready = True
                         state_stat["index"] = built
                     except Exception as error:
                         reason = f"index_state_unavailable: {type(error).__name__}: {error}"
@@ -1196,6 +1227,38 @@ def _error_result(message: str) -> dict[str, Any]:
         "payload": payload,
         "error": message,
         "metadata": {},
+    }
+
+
+def serialise_unavailable_result(
+    record_id: str,
+    arm_name: str,
+    reason: str,
+    fingerprint: str,
+    provenance: Mapping[str, Any],
+) -> dict[str, Any]:
+    """Represent an arm that could not be attempted without inventing metrics."""
+
+    return {
+        "schema_version": RUN_SCHEMA,
+        "record_id": record_id,
+        "arm": arm_name,
+        "fingerprint": fingerprint,
+        "tree_id": provenance.get("target_tree_id")
+        or provenance.get("assigned_target_tree_id"),
+        "logical_root": provenance.get("logical_root"),
+        "state_id": _state_id(_state_key(provenance)),
+        "reconstruction_mode": provenance.get("mode"),
+        "commit": provenance.get("commit"),
+        "ranked_paths": [],
+        "returned_paths": None,
+        "response_bytes": None,
+        "response_sha256": None,
+        "latency_ms": None,
+        "error": None,
+        "diagnostic": None,
+        "unavailable": True,
+        "unavailable_reason": reason,
     }
 
 
@@ -1337,7 +1400,15 @@ def owned_stream_worktree(
         checkout = container / "repo"
         _run_git(
             repository,
-            ("worktree", "add", "--detach", str(checkout), initial_commit),
+            (
+                "-c",
+                "core.longpaths=true",
+                "worktree",
+                "add",
+                "--detach",
+                str(checkout),
+                initial_commit,
+            ),
             timeout=timeout,
         )
         try:
@@ -1345,7 +1416,14 @@ def owned_stream_worktree(
         finally:
             removed = _run_git(
                 repository,
-                ("worktree", "remove", "--force", str(checkout)),
+                (
+                    "-c",
+                    "core.longpaths=true",
+                    "worktree",
+                    "remove",
+                    "--force",
+                    str(checkout),
+                ),
                 timeout=timeout,
                 check=False,
             )
@@ -1372,8 +1450,16 @@ def checkout_owned_stream_state(
         raise RuntimeError("refusing reset outside --scratch-dir")
     if not (resolved / ".git").exists():
         raise RuntimeError("owned stream path is no longer a Git worktree")
-    _run_git(resolved, ("reset", "--hard", str(commit)), timeout=timeout)
-    _run_git(resolved, ("clean", "-ffdx"), timeout=timeout)
+    _run_git(
+        resolved,
+        ("-c", "core.longpaths=true", "reset", "--hard", str(commit)),
+        timeout=timeout,
+    )
+    _run_git(
+        resolved,
+        ("-c", "core.longpaths=true", "clean", "-ffdx"),
+        timeout=timeout,
+    )
     actual = _run_git(resolved, ("rev-parse", "HEAD"), timeout=timeout).stdout.strip()
     if actual != str(commit):
         raise RuntimeError(f"owned stream reset selected {actual}, expected {commit}")
@@ -1385,6 +1471,10 @@ def checkout_owned_stream_state(
     if os.path.commonpath((str(source), str(resolved))) != str(resolved):
         raise RuntimeError("stream subtree escaped owned worktree")
     return source
+
+
+class _RunPersistenceError(RuntimeError):
+    """A benchmark artifact could not be written or serialized safely."""
 
 
 def execute_runs(
@@ -1438,6 +1528,66 @@ def execute_runs(
     )
 
     with partial_path.open("a", encoding="utf-8", newline="\n") as output:
+        def append_unavailable(
+            rows: Sequence[Mapping[str, Any]],
+            arm_names: Sequence[str],
+            reason: str,
+        ) -> int:
+            """Durably fill missing pairs with non-metric availability rows."""
+
+            nonlocal done_queries
+            added = 0
+            try:
+                for row in rows:
+                    record_id = str(row["record_id"])
+                    required = (
+                        tuple(ALL_ARMS)
+                        if row.get("target_tree_id")
+                        else tuple(str(arm) for arm in (row.get("partial_arms") or []))
+                    )
+                    was_complete = all((record_id, arm) in completed for arm in required)
+                    for arm_name in arm_names:
+                        pair = (record_id, arm_name)
+                        if pair in completed:
+                            continue
+                        run_row = serialise_unavailable_result(
+                            record_id,
+                            arm_name,
+                            reason,
+                            fingerprint,
+                            row,
+                        )
+                        completed[pair] = run_row
+                        output.write(
+                            json.dumps(
+                                run_row,
+                                sort_keys=True,
+                                ensure_ascii=False,
+                                separators=(",", ":"),
+                            )
+                            + "\n"
+                        )
+                        added += 1
+                    if not was_complete and all(
+                        (record_id, arm) in completed for arm in required
+                    ):
+                        done_queries += 1
+                output.flush()
+            except Exception as error:
+                raise _RunPersistenceError(
+                    f"could not persist unavailable run rows: {type(error).__name__}: {error}"
+                ) from error
+            if added and (
+                done_queries % progress_every == 0 or done_queries == total_queries
+            ):
+                print(
+                    f"scored {done_queries}/{total_queries} union queries; "
+                    f"{len(completed)}/{len(expected)} arm rows",
+                    file=sys.stderr,
+                    flush=True,
+                )
+            return added
+
         for stream_key, states in _ordered_streams(selected):
             pending_states = [
                 (state, rows)
@@ -1465,6 +1615,7 @@ def execute_runs(
                 with owned_stream_worktree(
                     stream_exemplar, worktrees, timeout=git_timeout
                 ) as checkout:
+                    stream_index_ready = False
                     for state_key, state_rows in states:
                         state_expected = {
                             (str(row["record_id"]), arm) for row in state_rows for arm in ALL_ARMS
@@ -1486,6 +1637,7 @@ def execute_runs(
                             "resumed_pairs": len(state_expected & completed.keys()),
                         }
                         connection = None
+                        state_ready = False
                         try:
                             source_root = checkout_owned_stream_state(
                                 checkout,
@@ -1498,7 +1650,13 @@ def execute_runs(
                                 db_path,
                                 source_root,
                                 logical_root=str(exemplar["logical_root"]),
+                                force_full=not stream_index_ready,
+                                expected_commit=state_key[2],
+                                stream_identity=state_key[0],
+                                repository_relative_root=state_key[1],
+                                git_timeout=git_timeout,
                             )
+                            stream_index_ready = True
                             state_stat["index"] = built
                             if built.get("mode") == "full":
                                 full_builds += 1
@@ -1511,6 +1669,7 @@ def execute_runs(
                                 "included_in_query_latency": False,
                             }
                             state_stat["warmup"] = warmup
+                            state_ready = True
 
                             for row in state_rows:
                                 record_id = str(row["record_id"])
@@ -1556,18 +1715,51 @@ def execute_runs(
                                     )
                         except Exception as error:
                             state_stat["state_error"] = f"{type(error).__name__}: {error}"
-                            state_stats.append(state_stat)
-                            # A state failure is not an answer row.  Preserve
-                            # earlier durable pairs and refuse finalization.
-                            raise
+                            if state_ready:
+                                # Arm exceptions are converted to timed error
+                                # rows above.  Anything else after readiness is
+                                # an artifact/integrity failure, not arm
+                                # unavailability that may be papered over.
+                                raise _RunPersistenceError(
+                                    f"state {_state_id(state_key)} failed after setup: "
+                                    f"{type(error).__name__}: {error}"
+                                ) from error
+                            reason = (
+                                f"state infrastructure unavailable: "
+                                f"{type(error).__name__}: {error}"
+                            )
+                            state_stat["unavailable_arm_rows"] = append_unavailable(
+                                state_rows, ALL_ARMS, reason
+                            )
+                            # A failed full build or interrupted delta cannot
+                            # be the base for the next state.
+                            stream_index_ready = False
                         finally:
                             if connection is not None:
                                 connection.close()
                         state_stats.append(state_stat)
+            except _RunPersistenceError:
+                raise
             except Exception as error:
-                raise RuntimeError(
-                    f"stream execution failed for {stream_key}: {type(error).__name__}: {error}"
-                ) from error
+                reason = (
+                    f"stream worktree unavailable: {type(error).__name__}: {error}"
+                )
+                unavailable_rows = 0
+                for _, state_rows in states:
+                    unavailable_rows += append_unavailable(
+                        state_rows, ALL_ARMS, reason
+                    )
+                state_stats.append(
+                    {
+                        "stream_id": hashlib.sha256(
+                            "\0".join(stream_key).encode()
+                        ).hexdigest()[:16],
+                        "repository_identity": stream_key[0],
+                        "repository_relative_root": stream_key[1],
+                        "stream_error": reason,
+                        "unavailable_arm_rows": unavailable_rows,
+                    }
+                )
 
         partial_groups: dict[tuple[str, str], list[Mapping[str, Any]]] = defaultdict(list)
         for row in partial_selected:
@@ -1593,7 +1785,6 @@ def execute_runs(
                     }
                 )
                 continue
-            source_root = Path(source_text).resolve(strict=True)
             group_stat: dict[str, Any] = {
                 "state_id": "current-non-git-" + hashlib.sha256(
                     (source_text + "\0" + logical_root).encode()
@@ -1602,11 +1793,14 @@ def execute_runs(
                 "queries": len(rows),
                 "partial_arms": ["ripgrep"],
             }
+            partial_ready = False
             try:
+                source_root = Path(source_text).resolve(strict=True)
                 group_stat["warmup"] = {
                     "ripgrep_traversal": _warm_ripgrep(source_root),
                     "included_in_query_latency": False,
                 }
+                partial_ready = True
                 for row in sorted(pending_rows, key=lambda item: str(item["record_id"])):
                     record_id = str(row["record_id"])
                     pair = (record_id, "ripgrep")
@@ -1646,10 +1840,18 @@ def execute_runs(
                         )
             except Exception as error:
                 group_stat["state_error"] = f"{type(error).__name__}: {error}"
-                state_stats.append(group_stat)
-                raise RuntimeError(
-                    f"non-Git current fallback execution failed for {source_root}: {error}"
-                ) from error
+                if partial_ready:
+                    raise _RunPersistenceError(
+                        "non-Git current fallback failed after setup: "
+                        f"{type(error).__name__}: {error}"
+                    ) from error
+                reason = (
+                    "non-Git current ripgrep unavailable: "
+                    f"{type(error).__name__}: {error}"
+                )
+                group_stat["unavailable_arm_rows"] = append_unavailable(
+                    rows, ("ripgrep",), reason
+                )
             state_stats.append(group_stat)
 
     missing = expected - completed.keys()
@@ -1770,9 +1972,19 @@ def prepare_run(
         worktree_parent=scratch_dir / "worktrees",
         git_timeout=git_timeout,
     )
-    provenance, index_preflight = preflight_index_states(
-        scoped, scratch_dir=scratch_dir, git_timeout=git_timeout
-    )
+    # Index construction is an execution concern, not provenance.  The former
+    # implementation built every historical state here and then built every
+    # state again during scoring; an interruption before the prepare plan was
+    # written lost all of that work.  Scope/materialisation is already checked
+    # above.  Scoring owns the durable, resumable index pass and records any
+    # state-level arm unavailability explicitly.
+    provenance = scoped
+    index_preflight = {
+        "performed": False,
+        "reason": "index states are built once in the resumable scoring pass",
+        "state_count": len(_group_rows_by_state(provenance)),
+        "failed_states": None,
+    }
     provenance = preflight_partial_current_scopes(records, provenance)
     provenance_path = output_dir / "reconstruction-v2.jsonl"
     exclusions_path = output_dir / "exclusions-v2.jsonl"
@@ -1867,7 +2079,17 @@ def _arm_unavailability_by_tree(
     for row in run_rows:
         grouped[(str(row.get("tree_id") or ""), str(row.get("arm") or ""))].append(row)
     for (tree_id, arm), rows in grouped.items():
-        if tree_id and arm and rows and all(row.get("error") for row in rows):
+        explicit = [row for row in rows if row.get("unavailable") is True]
+        if tree_id and arm and explicit:
+            reasons = Counter(
+                str(row.get("unavailable_reason") or "unspecified infrastructure failure")
+                for row in explicit
+            )
+            reason, count = reasons.most_common(1)[0]
+            suffix = "" if len(reasons) == 1 else f"; {len(reasons)} distinct reasons"
+            scope = "all" if len(explicit) == len(rows) else f"{len(explicit)} of {len(rows)}"
+            result[tree_id][arm] = f"{scope} rows unavailable: {reason}{suffix}"
+        elif tree_id and arm and rows and all(row.get("error") for row in rows):
             reasons = Counter(str(row.get("error")) for row in rows)
             reason, count = reasons.most_common(1)[0]
             suffix = "" if len(reasons) == 1 else f"; {len(reasons)} distinct errors"
@@ -1914,6 +2136,8 @@ def _partial_arm_rows_by_tree(
         lambda: defaultdict(Counter)
     )
     for row in run_rows:
+        if row.get("unavailable") is True:
+            continue
         record_id = str(row.get("record_id"))
         if record_id not in partial_windows:
             continue

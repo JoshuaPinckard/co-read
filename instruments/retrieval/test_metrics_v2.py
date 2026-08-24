@@ -124,6 +124,64 @@ def test_missing_one_arm_excludes_id_from_every_arm():
     assert measured["arms"]["ripgrep"]["recall@1"] == 1.0
 
 
+def test_tree_wide_arm_failure_excludes_tree_from_every_arm():
+    records = {
+        "300": [
+            record("good", [r"C:\good\hit.js"]),
+            record("broken", [r"C:\broken\hit.js"]),
+        ]
+    }
+    run_rows = rows_for(
+        "good",
+        "good-tree",
+        r"C:\good",
+        {arm: [r"C:\good\hit.js"] for arm in ARMS},
+    )
+    run_rows += rows_for(
+        "broken",
+        "broken-tree",
+        r"C:\broken",
+        {arm: [r"C:\broken\hit.js"] for arm in ARMS},
+        errors=("bm25",),
+    )
+    provenances = {
+        "good": provenance("good", "good-tree"),
+        "broken": provenance("broken", "broken-tree"),
+    }
+
+    measured = metrics_v2.aggregate_metrics_v2(records, run_rows, provenances)["windows"]["300"]
+
+    assert measured["population"]["complete_five_arm_row_queries"] == 2
+    assert measured["population"]["paired_scored_queries"] == 1
+    assert measured["population"]["paired_excluded_queries"] == 1
+    assert measured["population"]["unavailable_tree_arms"] == {"broken-tree": ["bm25"]}
+    assert measured["population"]["unpaired_reason_counts"] == {
+        "tree_arm_unavailable:bm25": 1
+    }
+    assert all(item["queries"] == 1 for item in measured["arms"].values())
+    assert measured["trees"]["broken-tree"]["population"]["paired_scored_queries"] == 0
+
+
+def test_single_query_error_on_otherwise_runnable_tree_remains_measured():
+    records = {
+        "300": [
+            record("success", [r"C:\repo\a.js"]),
+            record("error", [r"C:\repo\b.js"]),
+        ]
+    }
+    rankings = {arm: [r"C:\repo\a.js"] for arm in ARMS}
+    run_rows = rows_for("success", "repo", r"C:\repo", rankings)
+    run_rows += rows_for("error", "repo", r"C:\repo", errors=("bm25",))
+    provenances = {key: provenance(key, "repo") for key in ("success", "error")}
+
+    measured = metrics_v2.aggregate_metrics_v2(records, run_rows, provenances)["windows"]["300"]
+
+    assert measured["population"]["paired_scored_queries"] == 2
+    assert measured["population"]["unavailable_tree_arms"] == {}
+    assert measured["arms"]["bm25"]["queries"] == 2
+    assert measured["arms"]["bm25"]["execution_error_rate"] == 0.5
+
+
 def test_windows_regenerate_population_independently():
     records = {
         "60": [record("early", [r"C:\repo\a.js"])],

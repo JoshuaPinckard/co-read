@@ -176,6 +176,80 @@ def test_equivalent_epoch_tree_objects_are_exact(monkeypatch):
     assert row["commit"] == "b-commit"
 
 
+def test_closest_commit_with_missing_target_tree_falls_back_instead_of_stepping_back(
+    monkeypatch,
+):
+    logical = _tree("target", "C:/target", "C:/repo")
+    selected = _historical(logical, "closest-deleted-tree", 295)
+    history = FakeHistory({logical.tree_id: selected})
+    monkeypatch.setattr(run_v2, "_selection_tree_object", lambda selection: None)
+    monkeypatch.setattr(run_v2, "_ref_tip", lambda repository, ref: "tip")
+
+    row = run_v2.reconstruct_record(
+        {
+            "id": "q",
+            "ts": 300,
+            "cwd": "C:/target",
+            "git_branch": "main",
+            "query": {"pattern": "x", "path": "C:/target"},
+        },
+        _assignment("target", "target"),
+        {"target": TreeCatalogEntry(logical, "git")},
+        [300],
+        history,
+    )
+
+    assert row["exact"] is False
+    assert row["mode"] == "head_fallback"
+    assert "target_tree_absent_at_closest_commit" in row["reason"]
+    assert row["epoch_candidate_evidence"][0]["commit"] == "closest-deleted-tree"
+    assert row["epoch_candidate_evidence"][0]["eligible"] is False
+
+
+def test_outside_index_non_git_tree_still_gets_current_ripgrep_control(tmp_path):
+    current = tmp_path / "non-git-tree"
+    current.mkdir()
+    tree = TreeSpec(
+        tree_id="non-git",
+        logical_root=str(current),
+        current_root=str(current),
+    )
+    assignment = ScopeAssignment(
+        window_seconds=300,
+        sequence=0,
+        record_id="q",
+        effective_scope=str(current),
+        cwd=str(current),
+        target_tree_id="non-git",
+        cwd_tree_id="non-git",
+        target_mapping_kind="non_git_existing_tree",
+        cwd_mapping_kind="non_git_existing_tree",
+        target_reason="current directory without Git history",
+        cwd_reason="current directory without Git history",
+        target_available=True,
+        cwd_available=True,
+        outside_any_indexed_tree=True,
+    )
+
+    row = run_v2.reconstruct_record(
+        {
+            "id": "q",
+            "ts": 300,
+            "cwd": str(current),
+            "git_branch": "main",
+            "query": {"pattern": "x", "path": str(current)},
+        },
+        assignment,
+        {"non-git": TreeCatalogEntry(tree, "non_git_existing_tree")},
+        [300],
+        FakeHistory(),
+    )
+
+    assert row["target_tree_id"] is None
+    assert row["mode"] == "non_git_current_fallback"
+    assert row["partial_arms"] == ["ripgrep"]
+
+
 def test_exact_missing_scope_retries_head_before_unscoring(monkeypatch, tmp_path):
     tree = _tree("target", "C:/target", "C:/repo")
     entry = TreeCatalogEntry(tree, "git")
@@ -315,6 +389,63 @@ def test_unscore_mode_is_not_contradictory():
     assert row["exclusion_detail"]["original_mode"] == "historical_exact"
     assert row["commit"] is None
     assert row["exclusion_detail"]["original_selection"]["commit"] == "abc"
+
+
+def test_stream_infrastructure_failure_emits_unavailable_rows_and_keeps_metrics_empty(
+    monkeypatch, tmp_path
+):
+    record = {
+        "id": "q",
+        "query": {"pattern": "needle", "output_mode": "files_with_matches"},
+        "followed_by_read": ["C:/repo/answer.txt"],
+        "followed_by_grep": False,
+    }
+    provenance = [
+        {
+            "record_id": "q",
+            "target_tree_id": "tree",
+            "assigned_target_tree_id": "tree",
+            "logical_root": "C:/repo",
+            "mode": "historical_exact",
+            "exact": True,
+            "repository_root": "C:/repo",
+            "repository_identity": "C:/repo/.git",
+            "repository_relative_root": "",
+            "commit": "commit",
+            "commit_ts": 1,
+            "gap_seconds": 1,
+        }
+    ]
+
+    @contextlib.contextmanager
+    def broken_stream(*args, **kwargs):
+        raise OSError("worktree unavailable")
+        yield tmp_path  # pragma: no cover
+
+    monkeypatch.setattr(run_v2, "owned_stream_worktree", broken_stream)
+    rows, stats = run_v2.execute_runs(
+        {"q": record},
+        provenance,
+        runs_path=tmp_path / "runs-v2.jsonl",
+        fingerprint="b" * 64,
+        scratch_dir=tmp_path / "scratch",
+        git_timeout=30,
+        progress_every=1,
+    )
+
+    assert len(rows) == len(run_v2.ALL_ARMS)
+    assert all(row["unavailable"] is True for row in rows)
+    assert all(row["response_bytes"] is None for row in rows)
+    assert all("worktree unavailable" in row["unavailable_reason"] for row in rows)
+    assert stats["states"][-1]["unavailable_arm_rows"] == len(run_v2.ALL_ARMS)
+    measured = metrics_v2.aggregate_metrics_v2(
+        {300: [record]}, rows, provenance, arms=run_v2.ALL_ARMS
+    )["windows"]["300"]
+    assert measured["population"]["paired_scored_queries"] == 0
+    assert measured["population"]["unavailable_arm_counts"] == {
+        arm: 1 for arm in sorted(run_v2.ALL_ARMS)
+    }
+    assert all(item["queries"] == 0 for item in measured["arms"].values())
 
 
 def test_tiny_real_git_prepare_execute_resume_and_report_bundle(tmp_path):
