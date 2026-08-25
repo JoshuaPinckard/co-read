@@ -42,41 +42,53 @@ P2. **Isolation plus deliberate integration ("harvesting") beats mid-flight
     coordination.** The PI rejected the abort-and-retry frame as archaic and
     identified the replacement as the harvest model his production system
     already operates: agents work isolated copies; results integrate
-    deliberately, under tests, with complete information. Prediction: in the
-    arms ladder, the harvest arm exceeds shared-tree arms on task completion
-    at equal correctness, and mid-flight invalidation work (redone or
-    discarded effort) is lower under isolation. The measured
-    divergence-conflict curve (12/12 repositories monotone) supplies the
-    staleness bound that makes lazy integration safe rather than sloppy.
+    deliberately, under tests, with complete information. Primary metric,
+    fixed here so the comparison cannot deadlock: **correct completions**
+    (tasks passing their oracle) per agent-minute and per wall-clock hour;
+    correctness violations are reported beside the rate, never traded off
+    inside a composite score. Prediction: the harvest arm exceeds
+    shared-tree arms on the primary metric, and redone-or-discarded effort
+    is lower under isolation. The measured divergence-conflict curve (12/12
+    repositories monotone) supplies the staleness bound that makes lazy
+    integration safe rather than sloppy.
 
 P3. **A single-source contract layer with a coordinator and bounded retry
     prevents livelock.** The PI's design: agents do not own their tools — an
     API layer mediates; subagents receive contracts from a single source; a
     task failing after three attempts is failed and reassigned, not looped.
-    Prediction: in the full-system arm, zero unbounded cross-agent
-    write cycles; every livelock candidate becomes a visible bounded failure.
-    Sharpened by the wild contradictory case: mined sites whose two sides
-    have mutually unsatisfiable tests must surface as escalations at contract
-    issuance or bounded failures — never as silent oscillation. The
-    professor's adversarial-agents question is the origin of this test.
+    Operational definition, since "unbounded" is unobservable in a finite
+    run: a **livelock candidate** is any region whose cross-agent
+    alternation count trips the escalation budget. Prediction: in the
+    full-system arm, every livelock candidate terminates in a visible
+    bounded escalation or failure — none reaches the run's wall-clock cap
+    still cycling and unescalated. Sharpened by the wild contradictory case:
+    mined sites whose two sides have mutually unsatisfiable tests must
+    surface as escalations at contract issuance or bounded failures — never
+    as silent oscillation. The professor's adversarial-agents question is
+    the origin of this test.
 
 P4. **Claims are mechanical, never agent-declared.** The PI's observation
     ("the agents aren't the ones claiming — it's mechanical") — the claim
     record derives from mediated calls, so it is a record, not a promise.
-    Prediction: under the full system, ownership of every contested write is
-    attributable from the event log alone, against the measured 69.2%
-    attributability (9/13; sensitivity 66.7–70.0%) when ownership rests on
-    agent self-report. The one production disappearance that was
-    contemporaneously undecidable (revert versus clobber) must be
-    structurally impossible to reproduce under mechanical claims.
+    Measurable form: under the full system, attribution of contested writes
+    from the event log alone is **100%** — every contested write resolves to
+    a unique actor with no recourse to reports — against the measured 69.2%
+    (9/13; sensitivity 66.7–70.0%) when ownership rests on agent
+    self-report. Any contested write the log cannot attribute falsifies P4
+    outright; the design property ("structurally impossible") is claimed
+    only as far as this observable reaches.
 
 P5. **Stateless one-shot dispatch removes adaptive adversarial behavior.**
     The PI's proposition: each task goes to a brand-new agent with no
     memory, so nothing can learn to over-claim, game the mediator, or hold a
     grudge. By-construction claim with one measurable consequence and one
-    accepted limit. Consequence: agent behavior across successive draws in a
-    cell is exchangeable — no position-in-sequence drift (test: order
-    statistics across draw index). Accepted limit, stated by the study:
+    accepted limit. Consequence — **a weak check, not a test**: agent
+    behavior across successive draws in a cell is exchangeable, no
+    position-in-sequence drift (order statistics across draw index). Small
+    cells can only detect gross drift, and provider-side effects could break
+    exchangeability benignly, so a pass is consistent with the claim rather
+    than proof of it, and a fail triggers diagnosis before it counts against
+    P5. Accepted limit, stated by the study:
     contradictory *contracts* reproduce conflict through fresh agents
     indefinitely — persistence lives in the contracts, so P3's issuance
     screen, not statelessness, carries that case.
@@ -89,22 +101,29 @@ P6. **Human repository history understates agent contention; the curve
     rate at matched divergence; the PI's own production burst (11 adjudicated
     collisions in ~28 concurrent tasks, one week, one tree) is the
     exploratory anchor; (b) a bridge model — the human-measured
-    divergence-conflict curve plus agent tempo and fleet size — predicts each
-    arm's realized collision rate within a stated tolerance fixed at approval
-    time. If (b) fails, the transfer question is answered negatively and
-    that is the finding.
+    divergence-conflict curve plus agent tempo and fleet size — predicts
+    each arm's realized collision rate. Tolerance, fixed now rather than
+    deferred: the prediction must fall inside the arm's 95%
+    cluster-bootstrap interval, or within a factor of two of the point rate
+    where the interval is degenerate (zero or near-zero counts). If (b)
+    fails, the transfer question is answered negatively and that is the
+    finding.
 
 ---
 
 ## B. Derived instrument hypotheses (mined history; no agents)
 
 H2. **Clean textual merges are usually semantically sound, but not always.**
-    Prediction: 0 < silent-breakage rate < 0.10 on evaluated clean merges,
-    per gated repository. **Timing disclosure:** the Click result (0/44)
-    landed on disk before this hypothesis was first drafted and was unread at
-    drafting; by timestamps it is not pre-stated for Click. It remains
-    pre-stated for Pygments, the 354 older Click clean merges, and any
-    further repository. Test: exact binomial per repo.
+    Prediction, interval-based so a zero count is scoreable: the exact 95%
+    binomial **upper bound** on the silent-breakage rate is below 0.10 per
+    gated repository. The "but not always" half is a program-level claim —
+    at least one stable breakage observed somewhere across all evaluated
+    repositories and windows; if none is ever observed, that half is
+    reported unsupported at the achieved upper bounds, not quietly dropped.
+    **Timing disclosure:** the Click result (0/44) landed on disk before
+    this hypothesis was first drafted and was unread at drafting; by
+    timestamps it is not pre-stated for Click. It remains pre-stated for
+    Pygments, the 354 older Click clean merges, and any further repository.
 
 H3. **Conflict probability rises with divergence from the merge base.**
     Pre-stated properly: drafted and committed (`34e8b64`) before
@@ -135,7 +154,14 @@ ceiling and proves concurrency bought anything; file locks are the field's
 current answer and must be run to be beaten. Population: the 107 mined
 candidate sites with tests on both sides (Click 24, commons-lang 19,
 terraform 12, ansible 10, others per `MINING.md`), narrowed to sites where
-the fixture gate holds. Sites with mutually unsatisfiable tests are the
+the fixture gate holds. **Realism note, recorded before sizing:** the
+runner machinery (AST perturbation, pytest oracles, determinism gates) is
+Python-only today, so the immediately runnable population is roughly
+Click's 24 plus Pygments' 3 — not 107. Ansible's suite is unlikely to pass
+a determinism gate at all. The choice at sizing time is explicit: run the
+arms on the Python subset and keep the cross-language claim mined-only, or
+build per-language runners (Go, Java) first as their own gated
+instruments. Sites with mutually unsatisfiable tests are the
 contradictory-task subset for P3.
 
 Cell sizes, metrics, and the exclusion rule are **fixed with the PI at
@@ -147,7 +173,10 @@ Preconditions for any arms run, non-negotiable:
 2. Agent-subject runs meet the LEAN-Bench clean-room bar: environment
    manifest, same-day calibrated planted-marker canary, certificates beside
    the data. Analysis workers are instruments and carry the lighter
-   disclosure in `prompts/README.md`; subjects carry the full bar.
+   disclosure in `prompts/README.md`; subjects carry the full bar. Noted
+   cost, accepted at approval: the canary instrument for the arms harness
+   does not exist yet and must be built and calibrated before the first
+   draw.
 3. Prompts frozen in `prompts/` with hashes before launch.
 4. The fairness rule: an agent that never finished is excluded and its slot
    redrawn; a finished-but-bad result is data. Everything stays on disk.
