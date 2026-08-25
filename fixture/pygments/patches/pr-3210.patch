@@ -1,0 +1,57 @@
+diff --git a/pygments/lexers/css.py b/pygments/lexers/css.py
+index ed54d93c367719b869e64179c8039b974c8aec4f..af251a1838d090cc791b7ab6c44195db20f72b1a 100644
+--- a/pygments/lexers/css.py
++++ b/pygments/lexers/css.py
+@@ -362,6 +362,7 @@ common_sass_tokens = {
+         (r'\.', Name.Class, 'class'),
+         (r'\#', Name.Namespace, 'id'),
+         (r'[\w-]+', Name.Tag),
++        (r'\$[\w-]+', Name.Variable),
+         (r'#\{', String.Interpol, 'interpolation'),
+         (r'&', Keyword),
+         (r'[~^*!&\[\]()<>|+=@:;,./?-]', Operator),
+diff --git a/tests/snippets/scss/2818.txt b/tests/snippets/scss/2818.txt
+new file mode 100644
+index 0000000000000000000000000000000000000000..037e68f7ce5952f0913f09a10b4646b343d597fe
+--- /dev/null
++++ b/tests/snippets/scss/2818.txt
+@@ -0,0 +1,39 @@
++---input---
++$border-radius:               1rem;
++.searchButton.btn.btn-secondary {
++    border-radius: 0 $border-radius $border-radius 0;
++}
++
++---tokens---
++'$border-radius' Name.Variable
++':'           Operator
++'               ' Text.Whitespace
++'1'           Literal.Number.Integer
++'rem'         Keyword.Type
++';'           Punctuation
++'\n'          Text.Whitespace
++
++'.'           Name.Class
++'searchButton' Name.Class
++'.'           Name.Class
++'btn'         Name.Class
++'.'           Name.Class
++'btn-secondary' Name.Class
++' '           Text.Whitespace
++'{'           Punctuation
++'\n    '      Text.Whitespace
++'border-radius' Name.Tag
++':'           Name.Decorator
++' '           Text.Whitespace
++'0'           Name.Tag
++' '           Text.Whitespace
++'$border-radius' Name.Variable
++' '           Text.Whitespace
++'$border-radius' Name.Variable
++' '           Text.Whitespace
++'0'           Name.Tag
++';'           Operator
++'\n'          Text.Whitespace
++
++'}'           Punctuation
++'\n'          Text.Whitespace

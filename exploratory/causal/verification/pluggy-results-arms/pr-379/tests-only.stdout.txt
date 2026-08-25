@@ -1,0 +1,60 @@
+============================= test session starts =============================
+platform win32 -- Python 3.11.9, pytest-7.4.4, pluggy-unknown
+benchmark: 4.0.0 (defaults: timer=time.perf_counter disable_gc=False min_rounds=5 min_time=0.000005 max_time=1.0 calibration_precision=10 warmup=False warmup_iterations=100000)
+rootdir: C:\Users\joshp\AppData\Local\Temp\blast-radius-pluggy-causal\a379-xu0wyphk\t
+configfile: tox.ini
+testpaths: testing
+plugins: benchmark-4.0.0
+collected 104 items
+
+testing\test_details.py .....                                            [  4%]
+testing\test_helpers.py ......                                           [ 10%]
+testing\test_hookcaller.py ....................F                         [ 30%]
+testing\test_invocations.py ...........                                  [ 41%]
+testing\test_multicall.py ......................                         [ 62%]
+testing\test_pluginmanager.py ...................................        [ 96%]
+testing\test_tracer.py ....                                              [100%]
+
+================================== FAILURES ===================================
+_____________________________ test_hook_conflict ______________________________
+
+pm = <pluggy._manager.PluginManager object at 0x0000026C7FE7CD90>
+
+    def test_hook_conflict(pm: PluginManager) -> None:
+        class Api1:
+            @hookspec
+            def conflict(self) -> None:
+                """Api1 hook"""
+    
+        class Api2:
+            @hookspec
+            def conflict(self) -> None:
+                """Api2 hook"""
+    
+        pm.add_hookspecs(Api1)
+        with pytest.raises(ValueError) as exc:
+>           pm.add_hookspecs(Api2)
+
+testing\test_hookcaller.py:446: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+src\pluggy\_manager.py:230: in add_hookspecs
+    hc.set_specification(module_or_class, spec_opts)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+self = <_HookCaller 'conflict'>
+specmodule_or_class = <class 'test_hookcaller.test_hook_conflict.<locals>.Api2'>
+spec_opts = {'firstresult': False, 'historic': False, 'warn_on_impl': None}
+
+    def set_specification(
+        self,
+        specmodule_or_class: _Namespace,
+        spec_opts: _HookSpecOpts,
+    ) -> None:
+>       assert not self.has_spec()
+E       AssertionError
+
+src\pluggy\_hooks.py:360: AssertionError
+- generated xml file: C:\Users\joshp\Desktop\Blast-Radius\exploratory\causal\verification\pluggy-results-arms\pr-379\tests-only.xml -
+=========================== short test summary info ===========================
+FAILED testing/test_hookcaller.py::test_hook_conflict - AssertionError
+======================== 1 failed, 103 passed in 0.54s ========================

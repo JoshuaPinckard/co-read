@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?><testsuites name="pytest tests"><testsuite name="pytest" errors="0" failures="1" skipped="0" tests="1" time="0.095" timestamp="2026-08-24T08:26:32.694456-07:00" hostname="JoshP"><testcase classname="tests.snippets.haskell.test_char_escape_literals.txt" name="" time="0.015"><failure message="The tokens produced by the &quot;haskell&quot; lexer differ from the expected ones in the file &quot;tests\snippets\haskell\test_char_escape_literals.txt&quot;.&#10;Run `tox -- tests\snippets --update-goldens` to update it.&#10;&#10;  &#10;  - &quot;'\\n'&quot;       Literal.String.Char&#10;  + &quot;'\\&quot;         Keyword.Type&#10;  + &quot;n'&quot;          Name&#10;    '\n'          Text.Whitespace&#10;    &#10;  - &quot;'\\t'&quot;       Literal.String.Char...&#10;  &#10;  ...Full output truncated (14 lines hidden), use '-vv' to show">The tokens produced by the "haskell" lexer differ from the expected ones in the file "tests\snippets\haskell\test_char_escape_literals.txt".
+Run `tox -- tests\snippets --update-goldens` to update it.
+
+  
+  - "'\\n'"       Literal.String.Char
+  + "'\\"         Keyword.Type
+  + "n'"          Name
+    '\n'          Text.Whitespace
+    
+  - "'\\t'"       Literal.String.Char...
+  
+  ...Full output truncated (14 lines hidden), use '-vv' to show</failure></testcase></testsuite></testsuites>

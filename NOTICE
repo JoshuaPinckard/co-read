@@ -1,0 +1,25 @@
+co-read
+
+Copyright 2026 Joshua Pinckard
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+
+---
+
+THIRD-PARTY CONTENT
+
+fixture/click/ vendors source from pallets/click at commit
+2c8cd3ac958a7eb316d67f2d316c27086c4c0369, which is licensed under
+BSD-3-Clause. Its own licence text travels with the vendored tree and
+governs that content. It is included as an immutable test fixture, not
+as a derivative work.

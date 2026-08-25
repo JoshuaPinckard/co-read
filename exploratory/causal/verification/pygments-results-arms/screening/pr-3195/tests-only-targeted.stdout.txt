@@ -1,0 +1,25 @@
+============================= test session starts =============================
+platform win32 -- Python 3.11.9, pytest-8.4.2, pluggy-1.6.0
+rootdir: C:\Users\joshp\AppData\Local\Temp\blast-radius-pygments-causal-opbff12g\screen-pr-3195-0bfxp3fe\tests-only
+configfile: pyproject.toml
+collected 1 item
+
+tests\snippets\ruby\test_shift_operator.txt F                            [100%]
+
+================================== FAILURES ===================================
+_________________ tests\snippets\ruby\test_shift_operator.txt _________________
+The tokens produced by the "ruby" lexer differ from the expected ones in the file "tests\snippets\ruby\test_shift_operator.txt".
+Run `tox -- tests\snippets --update-goldens` to update it.
+
+  
+  Skipping 60 identical leading characters in diff, use -v to show
+    Operator
+  - 'a'           Name
+  + ''            Literal.String.Heredoc
+  + 'a'           Literal.String.Delimiter
+  + ''            Literal.String.Heredoc
+    '\n'          Text.Whitespace
+- generated xml file: C:\Users\joshp\Desktop\Blast-Radius\exploratory\causal\verification\pygments-results-arms\screening\pr-3195\tests-only-targeted.xml -
+=========================== short test summary info ===========================
+FAILED tests/snippets/ruby/test_shift_operator.txt::
+============================== 1 failed in 0.17s ==============================

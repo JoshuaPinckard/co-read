@@ -1,0 +1,98 @@
+{% extends "layout.html" %}
+{% set sidebars = sidebars + ["demo_sidebar.html"] %}
+
+{% block extrahead %}
+{{ super() }}
+<link rel="stylesheet" type="text/css" href="{{ pathto("_static/demo.css", 1) }}">
+{% endblock %}
+
+{% block htmltitle %}<title>Demo{{ titlesuffix }}</title>{% endblock %}
+
+{% block body %}
+{{ body }}
+
+<h1>Try out Pygments!</h1>
+
+<noscript>
+    <h2>This website requires JavaScript (and WebAssembly)</h2>
+
+    You can also try out pygments locally by running <code>pip install pygments</code>.
+    Then you can use <a href="{{pathto('docs/cmdline')}}">the command-line interface</a>.
+</noscript>
+
+<div id="try">
+    <p>
+        <label>Language
+            <select id="lang" autofocus>
+                <option value="">guess the language</option>
+                {% for name, info, _, _ in lexers %}
+                    <option value="{{info.0}}">{{name}}</option>
+                {% endfor %}
+            </select>
+        </label>
+        <span id=guessed-lexer></span>
+    </p>
+    <p>
+        <label>
+            Enter some code:
+            <textarea id="code" rows="1" cols="60" spellcheck="false"></textarea>
+        </label>
+    </p>
+    <p>
+        <label>
+            Alternatively you can upload a file:
+            <input type="file" id="file">
+        </label>
+        <button id="reset-file">Reset</button>
+    </p>
+	<div id="format-settings">
+        <label>
+            Formatter
+            <select id=formatter>
+                <option value=html>HTML</option>
+                <option value=tokens>tokens</option>
+            </select>
+        </label>
+        <label>Style
+            <select id="style">
+                <optgroup label="Good contrast">
+                {% for style in styles_aa %}
+                    <option data-wcag=aa>{{style.name}}</option>
+                {% endfor %}
+                </optgroup>
+                <optgroup label="Suboptimal contrast">
+                {% for style in styles_sub_aa %}
+                    <option>{{style.name}}</option>
+                {% endfor %}
+                </optgroup>
+            </select>
+        </label>
+        <span id=contrast-warning hidden>style may have poor contrast</span>
+    </div>
+    </form>
+</div>
+
+<div id="loading" hidden>
+    <img src="{{ pathto("_static/spinner.gif", 1) }}" width="20">
+    <span id="loading-text">loading Python...</span>
+</div>
+
+<style id=css-style></style>
+
+<div id="hlcode"></div>
+
+<div id="code-header" hidden>
+    <div class=flex-grow-1></div>
+    <button onclick="download_code()">Download</button>
+    <a id="copylink" role="button">Copy link</a>
+    <span hidden id="uri-too-long">(Copy link unavailable because code too long)</span>
+</div>
+
+<p>The highlighting here is performed in-browser using
+    the latest Pygments master branch, running through a WASM Python interpreter, courtesy of
+    <a href="https://pyodide.org/">Pyodide</a>.</p>
+<p>Your content is neither sent over the web nor stored anywhere.</p>
+
+<script>const pygmentsWheelName = "{{ wheel_filename }}";</script>
+<script type="text/javascript" src="{{ pathto("_static/demo.js", 1) }}"></script>
+{% endblock %}

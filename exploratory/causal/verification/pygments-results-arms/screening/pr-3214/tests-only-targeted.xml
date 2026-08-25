@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?><testsuites name="pytest tests"><testsuite name="pytest" errors="0" failures="1" skipped="0" tests="1" time="0.213" timestamp="2026-08-24T08:15:16.912694-07:00" hostname="JoshP"><testcase classname="tests.snippets.jsx.test_apostrophe_text.txt" name="" time="0.040"><failure message="The tokens produced by the &quot;jsx&quot; lexer differ from the expected ones in the file &quot;tests\snippets\jsx\test_apostrophe_text.txt&quot;.&#10;Run `tox -- tests\snippets --update-goldens` to update it.&#10;&#10;  &#10;  Skipping 414 identical leading characters in diff, use -v to show&#10;  -           Text&#10;  +           Error&#10;    'm'           Name.Other&#10;    ' '           Text.Whitespace&#10;    'the'         Name.Other...&#10;  &#10;  ...Full output truncated (12 lines hidden), use '-vv' to show">The tokens produced by the "jsx" lexer differ from the expected ones in the file "tests\snippets\jsx\test_apostrophe_text.txt".
+Run `tox -- tests\snippets --update-goldens` to update it.
+
+  
+  Skipping 414 identical leading characters in diff, use -v to show
+  -           Text
+  +           Error
+    'm'           Name.Other
+    ' '           Text.Whitespace
+    'the'         Name.Other...
+  
+  ...Full output truncated (12 lines hidden), use '-vv' to show</failure></testcase></testsuite></testsuites>

@@ -1,0 +1,4163 @@
+{
+  "candidates": [
+    {
+      "commit_tree": "c078cc64795b11e9154f10dd23008dd79f5012b5",
+      "committed_at": "2026-08-02T13:46:58+02:00",
+      "full_patch_bytes": 1676,
+      "full_patch_sha256": "0eb8448fc16bab9815c06f55f7afc00bbb5e89fca7e804a3651e7ce7e45e5b69",
+      "history_position": 15,
+      "order": 1,
+      "parent": "f38b8a3f1625060aa4245930822c34c11c252f83",
+      "parent_tree": "9f8fd3773241a3e6d4d24124fa8bf5e13bc5cc5b",
+      "paths": [
+        "changelog.d/1606.change.md",
+        "src/attr/_make.py",
+        "tests/test_functional.py"
+      ],
+      "pr": 1606,
+      "pr_identity_provenance": "1-parent PR-title subject suffix; remote PR page not queried",
+      "pr_url": "https://github.com/python-attrs/attrs/pull/1606",
+      "python_test_paths": [
+        "tests/test_functional.py"
+      ],
+      "sha": "f53fc5440d7f86aac4328aec7a563eb48634177f",
+      "source_python_paths": [
+        "src/attr/_make.py"
+      ],
+      "subject": "Stop evolve dunders from being modified (#1606)",
+      "task_id": "pr-1606",
+      "test_patch_bytes": 705,
+      "test_patch_sha256": "bdaf0c1e208dc4317c3ffed9899a9c80df0ab87ee211c40dd981ac4db0277fe9",
+      "test_paths": [
+        "tests/test_functional.py"
+      ],
+      "timestamp": 1785671218
+    },
+    {
+      "commit_tree": "246b801996a7b9ea1c2e603f38a87550e188d103",
+      "committed_at": "2026-08-01T12:40:48Z",
+      "full_patch_bytes": 6363,
+      "full_patch_sha256": "77557235a775f6f1850a5c68b212974ab921a45021bc6ef8291c8a28d3f6f705",
+      "history_position": 23,
+      "order": 2,
+      "parent": "f616f732c6c5f87a8f7a762176422baed250a6be",
+      "parent_tree": "010739097df4dd74dfe1dd2bb51973daa3cf9b7e",
+      "paths": [
+        "changelog.d/1571.change.md",
+        "docs/api.rst",
+        "src/attr/validators.py",
+        "src/attr/validators.pyi",
+        "tests/test_validators.py"
+      ],
+      "pr": 1571,
+      "pr_identity_provenance": "1-parent PR-title subject suffix; remote PR page not queried",
+      "pr_url": "https://github.com/python-attrs/attrs/pull/1571",
+      "python_test_paths": [
+        "tests/test_validators.py"
+      ],
+      "sha": "5aa76a4450c311d87eda43946ec0ecd743572649",
+      "source_python_paths": [
+        "src/attr/validators.py"
+      ],
+      "subject": "Add `ne` validator (#1571)",
+      "task_id": "pr-1571",
+      "test_patch_bytes": 1978,
+      "test_patch_sha256": "a1faf558f636a154d026196eabce16f6e87569f73fa57fe5094fe51d065dd638",
+      "test_paths": [
+        "tests/test_validators.py"
+      ],
+      "timestamp": 1785588048
+    },
+    {
+      "commit_tree": "41a9fbec24967c1fffde9fa31f717c78524ac320",
+      "committed_at": "2026-07-31T13:28:06Z",
+      "full_patch_bytes": 2015,
+      "full_patch_sha256": "f25258a5eccf39a25ff90bc59c60d926d08cda471f39e0e501988e48f25a0bc7",
+      "history_position": 34,
+      "order": 3,
+      "parent": "6851ab593cd25f3c14393e9355d57d22bec2a074",
+      "parent_tree": "8c314ef00e921fac02d8d4194b2685efe48dbc5a",
+      "paths": [
+        "changelog.d/1593.change.md",
+        "src/attr/_make.py",
+        "tests/test_annotations.py"
+      ],
+      "pr": 1593,
+      "pr_identity_provenance": "1-parent PR-title subject suffix; remote PR page not queried",
+      "pr_url": "https://github.com/python-attrs/attrs/pull/1593",
+      "python_test_paths": [
+        "tests/test_annotations.py"
+      ],
+      "sha": "97f8d175656bc03c373a1c9038048a4d312c307c",
+      "source_python_paths": [
+        "src/attr/_make.py"
+      ],
+      "subject": "Fix ClassVar forward reference detection (#1593)",
+      "task_id": "pr-1593",
+      "test_patch_bytes": 1184,
+      "test_patch_sha256": "020e7d4fd4271c5d19b3b55da7a2d0fd51b28ffab22a4ed06ccbe5a795ed91d0",
+      "test_paths": [
+        "tests/test_annotations.py"
+      ],
+      "timestamp": 1785504486
+    },
+    {
+      "commit_tree": "8c314ef00e921fac02d8d4194b2685efe48dbc5a",
+      "committed_at": "2026-07-31T09:41:48Z",
+      "full_patch_bytes": 7639,
+      "full_patch_sha256": "1e79fd3f749bfd293983c92de0127c0a2350aae189417ca4fdf8cac8c01f59cc",
+      "history_position": 35,
+      "order": 4,
+      "parent": "ca0f04585d3fb132c6e2f6baa9d7d966d8036760",
+      "parent_tree": "455cfb7b69b152c502f9e4c738a9e38f7da099c6",
+      "paths": [
+        "changelog.d/1547.change.md",
+        "src/attr/__init__.py",
+        "src/attr/_compat.py",
+        "src/attr/_funcs.py",
+        "src/attr/_make.py",
+        "src/attrs/__init__.py",
+        "tests/test_import.py"
+      ],
+      "pr": 1600,
+      "pr_identity_provenance": "1-parent PR-title subject suffix; remote PR page not queried",
+      "pr_url": "https://github.com/python-attrs/attrs/pull/1600",
+      "python_test_paths": [
+        "tests/test_import.py"
+      ],
+      "sha": "6851ab593cd25f3c14393e9355d57d22bec2a074",
+      "source_python_paths": [
+        "src/attr/__init__.py",
+        "src/attr/_compat.py",
+        "src/attr/_funcs.py",
+        "src/attr/_make.py",
+        "src/attrs/__init__.py"
+      ],
+      "subject": "Defer imports on the cold import path (#1600)",
+      "task_id": "pr-1600",
+      "test_patch_bytes": 1244,
+      "test_patch_sha256": "e2e83265a6bfe84ed0b5b3bb1401585fdff5d5cbdfe9895160a30f9e8e19bf13",
+      "test_paths": [
+        "tests/test_import.py"
+      ],
+      "timestamp": 1785490908
+    },
+    {
+      "commit_tree": "65a7bd51c0cd75dff4743b163710868facf7ccd5",
+      "committed_at": "2026-04-16T20:20:58Z",
+      "full_patch_bytes": 5721,
+      "full_patch_sha256": "618e3fe0711d93257d2157d50c1d78f8f97bba67a455999f43440859f4d37044",
+      "history_position": 61,
+      "order": 5,
+      "parent": "57b314c0dc8e0b80c0ed8f61c0be81965137ea41",
+      "parent_tree": "dd95d51d876800d318386898e673511aa1567917",
+      "paths": [
+        "changelog.d/240.change.md",
+        "docs/init.md",
+        "src/attr/_make.py",
+        "tests/test_make.py",
+        "tests/test_mypy.yml"
+      ],
+      "pr": 1541,
+      "pr_identity_provenance": "1-parent PR-title subject suffix; remote PR page not queried",
+      "pr_url": "https://github.com/python-attrs/attrs/pull/1541",
+      "python_test_paths": [
+        "tests/test_make.py"
+      ],
+      "sha": "0f758fe54a8742110f730ebbaf146e79f3937c8d",
+      "source_python_paths": [
+        "src/attr/_make.py"
+      ],
+      "subject": "Expose converter as a decorator (#1541)",
+      "task_id": "pr-1541",
+      "test_patch_bytes": 2789,
+      "test_patch_sha256": "295c536d6dd2cf21d04e2b1c1d8627e79c260b9f838c27ec60d0852232932bf8",
+      "test_paths": [
+        "tests/test_make.py",
+        "tests/test_mypy.yml"
+      ],
+      "timestamp": 1776370858
+    },
+    {
+      "commit_tree": "c0b4e0b321bc8ca48ce60d993aea211bbfcc2be1",
+      "committed_at": "2026-03-14T17:51:51Z",
+      "full_patch_bytes": 5636,
+      "full_patch_sha256": "6239192608851255d58732990e829183129d5165e91f06392627a572fdf99170",
+      "history_position": 74,
+      "order": 6,
+      "parent": "3a68d4913221abc6f8ad3be50937f7ae49300a98",
+      "parent_tree": "144284c38ef374563cec0b322319518f48795f26",
+      "paths": [
+        "changelog.d/1529.change.md",
+        "docs/api.rst",
+        "src/attr/__init__.pyi",
+        "src/attr/_make.py",
+        "tests/test_make.py",
+        "tests/test_mypy.yml"
+      ],
+      "pr": 1529,
+      "pr_identity_provenance": "1-parent PR-title subject suffix; remote PR page not queried",
+      "pr_url": "https://github.com/python-attrs/attrs/pull/1529",
+      "python_test_paths": [
+        "tests/test_make.py"
+      ],
+      "sha": "48b8611c27779811d161200e17de8da24aae7feb",
+      "source_python_paths": [
+        "src/attr/_make.py"
+      ],
+      "subject": "Add instance support to attrs.fields() (#1529)",
+      "task_id": "pr-1529",
+      "test_patch_bytes": 1946,
+      "test_patch_sha256": "92197227c4c9b22e93be1f622764eef51fa0561fc5b2810d3d0d4b198323b190",
+      "test_paths": [
+        "tests/test_make.py",
+        "tests/test_mypy.yml"
+      ],
+      "timestamp": 1773510711
+    },
+    {
+      "commit_tree": "cfba3915721207fe51a2debd9078d243b89f555d",
+      "committed_at": "2026-03-14T14:23:53Z",
+      "full_patch_bytes": 1778,
+      "full_patch_sha256": "7e7f40e96004d520bbabcc8887e8874c3202359bb2a97af767d0afce46591ac4",
+      "history_position": 77,
+      "order": 7,
+      "parent": "ab7f8b2f4c0f747d5b1575247ce35e5adaad182e",
+      "parent_tree": "92d3bb9ff395948eca3ef4b4e30084ff084e814e",
+      "paths": [
+        "changelog.d/1513.change.md",
+        "src/attr/validators.py",
+        "tests/test_validators.py"
+      ],
+      "pr": 1513,
+      "pr_identity_provenance": "1-parent PR-title subject suffix; remote PR page not queried",
+      "pr_url": "https://github.com/python-attrs/attrs/pull/1513",
+      "python_test_paths": [
+        "tests/test_validators.py"
+      ],
+      "sha": "af9c510912ce604a94896cc35c27368d5baf6ae6",
+      "source_python_paths": [
+        "src/attr/validators.py"
+      ],
+      "subject": "Fix validators.disabled() to save/restore state on nesting (#1513)",
+      "task_id": "pr-1513",
+      "test_patch_bytes": 838,
+      "test_patch_sha256": "5593aa134417b7cec8e325e7dee22f506d90cd602dea19b4b86dcf032cb12703",
+      "test_paths": [
+        "tests/test_validators.py"
+      ],
+      "timestamp": 1773498233
+    },
+    {
+      "commit_tree": "90a02e10eecf2038fb8340c7f7fa63685a2047bf",
+      "committed_at": "2026-03-07T09:20:01Z",
+      "full_patch_bytes": 17746,
+      "full_patch_sha256": "20572ca1b95891a6d0b292fa7adc1150b4a78dc8933da995566c65ad653cb3f1",
+      "history_position": 86,
+      "order": 8,
+      "parent": "f3bcc37c3d2dc3199715f825a86b748c3b3805f9",
+      "parent_tree": "37a5c702fd158c4d65f1341c54a14e37162a7229",
+      "paths": [
+        "changelog.d/1509.breaking.md",
+        "docs/extending.md",
+        "src/attr/_make.py",
+        "tests/test_functional.py",
+        "tests/test_hooks.py",
+        "tests/test_make.py",
+        "tests/utils.py"
+      ],
+      "pr": 1509,
+      "pr_identity_provenance": "1-parent PR-title subject suffix; remote PR page not queried",
+      "pr_url": "https://github.com/python-attrs/attrs/pull/1509",
+      "python_test_paths": [
+        "tests/test_functional.py",
+        "tests/test_hooks.py",
+        "tests/test_make.py",
+        "tests/utils.py"
+      ],
+      "sha": "862696afb52fb7c0d47d45e05ec4feb844c11001",
+      "source_python_paths": [
+        "src/attr/_make.py"
+      ],
+      "subject": "Resolve field aliases before calling field_transformer (#1509)",
+      "task_id": "pr-1509",
+      "test_patch_bytes": 10783,
+      "test_patch_sha256": "a4efe5bd9064b432cfdaae5151271a5c3b0aeeef3ee7073ab0fd8ba1fa2efd5a",
+      "test_paths": [
+        "tests/test_functional.py",
+        "tests/test_hooks.py",
+        "tests/test_make.py",
+        "tests/utils.py"
+      ],
+      "timestamp": 1772875201
+    },
+    {
+      "commit_tree": "d356a13243dffea965aca9b7fb6859021ac245f3",
+      "committed_at": "2025-09-08T15:47:27Z",
+      "full_patch_bytes": 2710,
+      "full_patch_sha256": "ebf72a35262080cecb17682e084bb39e5b22316f5b1d829271369a2f5b561e4e",
+      "history_position": 146,
+      "order": 9,
+      "parent": "6ef8d73dd728cdebf939b3a2cd694af57d1f6b5d",
+      "parent_tree": "db67ef1af43b084713583cce5c6f7fef890ca0eb",
+      "paths": [
+        "changelog.d/1469.change.md",
+        "src/attr/_funcs.py",
+        "tests/test_funcs.py"
+      ],
+      "pr": 1469,
+      "pr_identity_provenance": "1-parent PR-title subject suffix; remote PR page not queried",
+      "pr_url": "https://github.com/python-attrs/attrs/pull/1469",
+      "python_test_paths": [
+        "tests/test_funcs.py"
+      ],
+      "sha": "1315e42fe51743fe1c3529da6792dcda2ef6cc1f",
+      "source_python_paths": [
+        "src/attr/_funcs.py"
+      ],
+      "subject": "Improve performance of attr.astuple (#1469)",
+      "task_id": "pr-1469",
+      "test_patch_bytes": 863,
+      "test_patch_sha256": "e7943d4b7c9bfb2c8faeb7b7fed49b361ebc9862eb8187b20ff96c87c0ea550a",
+      "test_paths": [
+        "tests/test_funcs.py"
+      ],
+      "timestamp": 1757346447
+    },
+    {
+      "commit_tree": "54959ada17e3b647b774614db80c9e4810129981",
+      "committed_at": "2025-09-08T13:42:31Z",
+      "full_patch_bytes": 4238,
+      "full_patch_sha256": "24d7c3c70d17f71983d4eb01a7b8076ed1e0071c272f58bc9fa2ef565b62e482",
+      "history_position": 148,
+      "order": 10,
+      "parent": "57f0d5441c9deaac44aebbbf45e38e477651e4f2",
+      "parent_tree": "420dde7a2133873b6cdab85580afd0dd2d737103",
+      "paths": [
+        "changelog.d/1463.change.md",
+        "src/attr/_funcs.py",
+        "tests/test_funcs.py"
+      ],
+      "pr": 1463,
+      "pr_identity_provenance": "1-parent PR-title subject suffix; remote PR page not queried",
+      "pr_url": "https://github.com/python-attrs/attrs/pull/1463",
+      "python_test_paths": [
+        "tests/test_funcs.py"
+      ],
+      "sha": "7369ad9f4b273e400478c8e65399d826ab3f3b32",
+      "source_python_paths": [
+        "src/attr/_funcs.py"
+      ],
+      "subject": "Improve performance of asdict in the common case (#1463)",
+      "task_id": "pr-1463",
+      "test_patch_bytes": 853,
+      "test_patch_sha256": "c04430079d0410f70d062855a35fe2ae063656987ccb6a6bf0013fb48ac5a4ee",
+      "test_paths": [
+        "tests/test_funcs.py"
+      ],
+      "timestamp": 1757338951
+    },
+    {
+      "commit_tree": "81c1e9a9847c29eebbf608caf815115af9414ebf",
+      "committed_at": "2025-08-04T06:46:47Z",
+      "full_patch_bytes": 22139,
+      "full_patch_sha256": "ba10be257bbb7f239733405e6786e0eb70eb66ae9df6008c7bd9e6d4f8680d33",
+      "history_position": 161,
+      "order": 11,
+      "parent": "af349876f4fb5df2b71a3f4878239b775bc89230",
+      "parent_tree": "9bbd9920d9354435edb1b357f04dd616d1127764",
+      "paths": [
+        "changelog.d/1457.breaking.md",
+        "src/attr/__init__.pyi",
+        "src/attr/_make.py",
+        "src/attr/_next_gen.py",
+        "src/attrs/__init__.pyi",
+        "tests/test_make.py"
+      ],
+      "pr": 1457,
+      "pr_identity_provenance": "1-parent PR-title subject suffix; remote PR page not queried",
+      "pr_url": "https://github.com/python-attrs/attrs/pull/1457",
+      "python_test_paths": [
+        "tests/test_make.py"
+      ],
+      "sha": "6e3786c599279f24e91b0d57ef448f7a85d7a69f",
+      "source_python_paths": [
+        "src/attr/_make.py",
+        "src/attr/_next_gen.py"
+      ],
+      "subject": "Make `kw_only=True` behavior consistent with dataclasses (#1457)",
+      "task_id": "pr-1457",
+      "test_patch_bytes": 10044,
+      "test_patch_sha256": "44e3a899f84e3fcf2aa989de9c1b6fd474f924fca82c68a96546c27d9458c19f",
+      "test_paths": [
+        "tests/test_make.py"
+      ],
+      "timestamp": 1754290007
+    },
+    {
+      "commit_tree": "87132a75c89c14ba44df871ce039de760c1e1d2c",
+      "committed_at": "2025-07-29T10:34:14+02:00",
+      "full_patch_bytes": 7132,
+      "full_patch_sha256": "6edc9a39b8df40fbb88113ca9894c1b7b3ca30c97e3d5e8c7b99e3cb7b75e664",
+      "history_position": 169,
+      "order": 12,
+      "parent": "000c563473400aa086f6486a9c38ace0e77ea219",
+      "parent_tree": "4b14bb8a77ad955db6ad0c9a52f63bba2bb9f9b4",
+      "paths": [
+        "src/attr/validators.py",
+        "src/attr/validators.pyi",
+        "tests/test_validators.py",
+        "tests/typing_example.py"
+      ],
+      "pr": 1449,
+      "pr_identity_provenance": "1-parent PR-title subject suffix; remote PR page not queried",
+      "pr_url": "https://github.com/python-attrs/attrs/pull/1449",
+      "python_test_paths": [
+        "tests/test_validators.py",
+        "tests/typing_example.py"
+      ],
+      "sha": "5bab46deb916520b153892d73400978ccb08ef96",
+      "source_python_paths": [
+        "src/attr/validators.py"
+      ],
+      "subject": "Allow deep_iterable and deep_mapping take lists/tuples (#1449)",
+      "task_id": "pr-1449",
+      "test_patch_bytes": 3173,
+      "test_patch_sha256": "b6c6d2ec01483549d61ae81225bcb654e7338cbbaf7dba1885d24b7047e69e8e",
+      "test_paths": [
+        "tests/test_validators.py",
+        "tests/typing_example.py"
+      ],
+      "timestamp": 1753778054
+    },
+    {
+      "commit_tree": "4b14bb8a77ad955db6ad0c9a52f63bba2bb9f9b4",
+      "committed_at": "2025-07-28T15:30:10Z",
+      "full_patch_bytes": 2958,
+      "full_patch_sha256": "a8a61610064a174963238bd0281115a657e4e9247d1d96cbd9e31d58f355d434",
+      "history_position": 170,
+      "order": 13,
+      "parent": "cbaef3f8f5ec3d6049b42c8c27f542c1571bb4c8",
+      "parent_tree": "6a6a05796e4a84285a1eb982c7845b6375b7b88d",
+      "paths": [
+        "changelog.d/1446.change.md",
+        "src/attr/_make.py",
+        "tests/test_make.py"
+      ],
+      "pr": 1446,
+      "pr_identity_provenance": "1-parent PR-title subject suffix; remote PR page not queried",
+      "pr_url": "https://github.com/python-attrs/attrs/pull/1446",
+      "python_test_paths": [
+        "tests/test_make.py"
+      ],
+      "sha": "000c563473400aa086f6486a9c38ace0e77ea219",
+      "source_python_paths": [
+        "src/attr/_make.py"
+      ],
+      "subject": "Fix slotted reference cycles on 3.14 (#1446)",
+      "task_id": "pr-1446",
+      "test_patch_bytes": 822,
+      "test_patch_sha256": "16aeb90aa847e2ac0eb1a9ae2fec7c9a01325213ead5559aa3153ca5ee808a6f",
+      "test_paths": [
+        "tests/test_make.py"
+      ],
+      "timestamp": 1753716610
+    },
+    {
+      "commit_tree": "6a6a05796e4a84285a1eb982c7845b6375b7b88d",
+      "committed_at": "2025-07-28T09:55:22+02:00",
+      "full_patch_bytes": 6519,
+      "full_patch_sha256": "6daac7ac8015a15b3aed3a858e09a2625760074b846ed57ca6f9f68eda567ccf",
+      "history_position": 171,
+      "order": 14,
+      "parent": "6879ffd11d9c382782008a515e78765e46c178d6",
+      "parent_tree": "a9326c02f9e1d60d9fe1947f8a7cbe871391aced",
+      "paths": [
+        "changelog.d/1448.change.md",
+        "src/attr/validators.py",
+        "src/attr/validators.pyi",
+        "tests/test_validators.py",
+        "tests/typing_example.py"
+      ],
+      "pr": 1448,
+      "pr_identity_provenance": "1-parent PR-title subject suffix; remote PR page not queried",
+      "pr_url": "https://github.com/python-attrs/attrs/pull/1448",
+      "python_test_paths": [
+        "tests/test_validators.py",
+        "tests/typing_example.py"
+      ],
+      "sha": "cbaef3f8f5ec3d6049b42c8c27f542c1571bb4c8",
+      "source_python_paths": [
+        "src/attr/validators.py"
+      ],
+      "subject": "Make validators optional in deep_mapping (#1448)",
+      "task_id": "pr-1448",
+      "test_patch_bytes": 2466,
+      "test_patch_sha256": "ff6dfcda5dbb51722d6eda8cd3dbb8a7ad0e280ea8cd1cce49d7aabef3adf212",
+      "test_paths": [
+        "tests/test_validators.py",
+        "tests/typing_example.py"
+      ],
+      "timestamp": 1753689322
+    },
+    {
+      "commit_tree": "42460a9d80c4bef88992d270b1bc995ec77f0978",
+      "committed_at": "2025-07-27T06:06:52Z",
+      "full_patch_bytes": 4635,
+      "full_patch_sha256": "39ea5f03d69944c9d425a2b11d19e2cb8b9b2e20e78e0ef3cc68e86f1e6cbf17",
+      "history_position": 173,
+      "order": 15,
+      "parent": "94caa57142c057ce52504cdf239ae0ed3168f9b5",
+      "parent_tree": "f1e6face62a1d790ebb3f2e56be8e8bd082098be",
+      "paths": [
+        "changelog.d/1427.change.md",
+        "src/attr/_make.py",
+        "tests/test_make.py"
+      ],
+      "pr": 1428,
+      "pr_identity_provenance": "1-parent PR-title subject suffix; remote PR page not queried",
+      "pr_url": "https://github.com/python-attrs/attrs/pull/1428",
+      "python_test_paths": [
+        "tests/test_make.py"
+      ],
+      "sha": "937b1e232803cc4ec9b9375ef525fc57c24ec498",
+      "source_python_paths": [
+        "src/attr/_make.py"
+      ],
+      "subject": "Fixes issue #1427 (#1428)",
+      "task_id": "pr-1428",
+      "test_patch_bytes": 1942,
+      "test_patch_sha256": "816b55a3b815d0fef7b46f7a5a8fd34245f96130e301a77b35b0088bd196ab21",
+      "test_paths": [
+        "tests/test_make.py"
+      ],
+      "timestamp": 1753596412
+    },
+    {
+      "commit_tree": "2c49983c018d95a5ea41eceefc484a13fb929cde",
+      "committed_at": "2025-03-13T06:01:18Z",
+      "full_patch_bytes": 1396,
+      "full_patch_sha256": "1da8cfe51ab63cbd3470f161e3a3e244d8ba09afeadfc2c4deb701a07e2ddbec",
+      "history_position": 201,
+      "order": 16,
+      "parent": "19943b775d40c018e844f2cb1728442f58112a3b",
+      "parent_tree": "5f9691e65b70612e702dc01e38ae260271c80be2",
+      "paths": [
+        "src/attr/_make.py",
+        "tests/test_hooks.py"
+      ],
+      "pr": 1417,
+      "pr_identity_provenance": "1-parent PR-title subject suffix; remote PR page not queried",
+      "pr_url": "https://github.com/python-attrs/attrs/pull/1417",
+      "python_test_paths": [
+        "tests/test_hooks.py"
+      ],
+      "sha": "3b0378dd66d33ebddb52be85b8c4aac6a914b1a2",
+      "source_python_paths": [
+        "src/attr/_make.py"
+      ],
+      "subject": "Cope with `field_transformer` being a generator (#1417)",
+      "task_id": "pr-1417",
+      "test_patch_bytes": 836,
+      "test_patch_sha256": "75b064486611c4a281e72ed3428ae75b001b21b10346b21a5dbba04affc6a650",
+      "test_paths": [
+        "tests/test_hooks.py"
+      ],
+      "timestamp": 1741845678
+    },
+    {
+      "commit_tree": "5939945b84514235db5c5e32dbfe4a038f4161ce",
+      "committed_at": "2025-03-08T11:53:37Z",
+      "full_patch_bytes": 1503,
+      "full_patch_sha256": "fa20af18415c9eaeaa4c13c67d50c2b6cc30b3223b8fe8bcb5589040c8ab7456",
+      "history_position": 205,
+      "order": 17,
+      "parent": "6bde3618237cdae312e4e7fb006690be2a3ee0f6",
+      "parent_tree": "5fafc38dafeae94fcb045b8b9ce09646a6218398",
+      "paths": [
+        "changelog.d/1410.change.md",
+        "src/attr/_make.py",
+        "tests/test_annotations.py"
+      ],
+      "pr": 1410,
+      "pr_identity_provenance": "1-parent PR-title subject suffix; remote PR page not queried",
+      "pr_url": "https://github.com/python-attrs/attrs/pull/1410",
+      "python_test_paths": [
+        "tests/test_annotations.py"
+      ],
+      "sha": "1c962d15a743a3c18401f0c788f0fd0cb3d9acf8",
+      "source_python_paths": [
+        "src/attr/_make.py"
+      ],
+      "subject": "Mention what argument has both annotation and type argument (#1410)",
+      "task_id": "pr-1410",
+      "test_patch_bytes": 556,
+      "test_patch_sha256": "71b350ca8b4c631c0de90c77548382673273b796a5b6dd2b8424fe917602efb7",
+      "test_paths": [
+        "tests/test_annotations.py"
+      ],
+      "timestamp": 1741434817
+    },
+    {
+      "commit_tree": "9a2db041262ed774149a97490074d21bcfa39756",
+      "committed_at": "2025-02-15T11:58:33Z",
+      "full_patch_bytes": 31732,
+      "full_patch_sha256": "2d9ec9868ad5374b8e6b6e3d79098a7a551900969668f77f410406e7aae76470",
+      "history_position": 212,
+      "order": 18,
+      "parent": "e048efcb395443608d184a149c0adbca166cb833",
+      "parent_tree": "be308c33d05decaecf506868f148de3278e8cf69",
+      "paths": [
+        "changelog.d/1407.change.md",
+        "src/attr/_cmp.py",
+        "src/attr/_make.py",
+        "tests/test_cmp.py",
+        "tests/test_dunders.py",
+        "tests/test_make.py"
+      ],
+      "pr": 1407,
+      "pr_identity_provenance": "1-parent PR-title subject suffix; remote PR page not queried",
+      "pr_url": "https://github.com/python-attrs/attrs/pull/1407",
+      "python_test_paths": [
+        "tests/test_cmp.py",
+        "tests/test_dunders.py",
+        "tests/test_make.py"
+      ],
+      "sha": "74007f67d203f902e88bdecba169786bf44a8aa2",
+      "source_python_paths": [
+        "src/attr/_cmp.py",
+        "src/attr/_make.py"
+      ],
+      "subject": "ClassBuilder: eval only once (#1407)",
+      "task_id": "pr-1407",
+      "test_patch_bytes": 6582,
+      "test_patch_sha256": "8274c605a66172b6a215f84c96ac923293f29b1f837e7a7f639bf75ad710bfd5",
+      "test_paths": [
+        "tests/test_cmp.py",
+        "tests/test_dunders.py",
+        "tests/test_make.py"
+      ],
+      "timestamp": 1739620713
+    },
+    {
+      "commit_tree": "be308c33d05decaecf506868f148de3278e8cf69",
+      "committed_at": "2025-02-09T07:28:11Z",
+      "full_patch_bytes": 7267,
+      "full_patch_sha256": "1cce94d4eb7e4c7a0c441f04cd5d83217e664e106a1f2e0a3fd328cdf62890a5",
+      "history_position": 213,
+      "order": 19,
+      "parent": "75723b7720952ac0a4c7d3e277b6714ba55ded18",
+      "parent_tree": "f41b4d64cc439b33fdcb518f1a698821029d0e03",
+      "paths": [
+        "changelog.d/1147.change.md",
+        "src/attr/_make.py",
+        "tests/test_hooks.py"
+      ],
+      "pr": 1401,
+      "pr_identity_provenance": "1-parent PR-title subject suffix; remote PR page not queried",
+      "pr_url": "https://github.com/python-attrs/attrs/pull/1401",
+      "python_test_paths": [
+        "tests/test_hooks.py"
+      ],
+      "sha": "e048efcb395443608d184a149c0adbca166cb833",
+      "source_python_paths": [
+        "src/attr/_make.py"
+      ],
+      "subject": "Perform attr order checks after field transformer. (#1401)",
+      "task_id": "pr-1401",
+      "test_patch_bytes": 5765,
+      "test_patch_sha256": "9b045cde610232db6dfd266d2106649f7ca6f0b4b3ba81ac4d8d021721b9afbc",
+      "test_paths": [
+        "tests/test_hooks.py"
+      ],
+      "timestamp": 1739086091
+    },
+    {
+      "commit_tree": "f41b4d64cc439b33fdcb518f1a698821029d0e03",
+      "committed_at": "2025-02-09T07:09:28Z",
+      "full_patch_bytes": 2871,
+      "full_patch_sha256": "ad2d76ccba4efde9e28d920ebb737e5c1e557290c20c373d8061f32caa2e945e",
+      "history_position": 214,
+      "order": 20,
+      "parent": "5820ce717ed3f6047409845004a3ec004ec1574d",
+      "parent_tree": "80655be67e6d28e09ebe0ac1a50c713b50dac2a8",
+      "paths": [
+        "changelog.d/1406.change.md",
+        "src/attr/_make.py",
+        "tests/test_make.py"
+      ],
+      "pr": 1406,
+      "pr_identity_provenance": "1-parent PR-title subject suffix; remote PR page not queried",
+      "pr_url": "https://github.com/python-attrs/attrs/pull/1406",
+      "python_test_paths": [
+        "tests/test_make.py"
+      ],
+      "sha": "75723b7720952ac0a4c7d3e277b6714ba55ded18",
+      "source_python_paths": [
+        "src/attr/_make.py"
+      ],
+      "subject": "Accept valid unicode identifiers as class parameter to make_class (#1406)",
+      "task_id": "pr-1406",
+      "test_patch_bytes": 1740,
+      "test_patch_sha256": "031c78436dfdd90be78f8b5cdfa5a3e25a54cf6e861e0f95fd19cb9d80cffce1",
+      "test_paths": [
+        "tests/test_make.py"
+      ],
+      "timestamp": 1739084968
+    },
+    {
+      "commit_tree": "6a828ca4659139bdaf3d769081fe1a51671843bf",
+      "committed_at": "2024-12-10T06:05:32Z",
+      "full_patch_bytes": 6563,
+      "full_patch_sha256": "444f40c7b9e84be19b2b105af47d180b1933d4cdc6601515c3f3010e2037d706",
+      "history_position": 236,
+      "order": 21,
+      "parent": "2a76643e36aa7e07d13f9438857a7cff48b4a1d6",
+      "parent_tree": "25243016b6828722ed64ec8b852d5efe0af91b12",
+      "paths": [
+        "src/attr/_make.py",
+        "src/attr/converters.pyi",
+        "src/attrs/__init__.pyi",
+        "tests/test_annotations.py",
+        "tests/test_converters.py"
+      ],
+      "pr": 1380,
+      "pr_identity_provenance": "1-parent PR-title subject suffix; remote PR page not queried",
+      "pr_url": "https://github.com/python-attrs/attrs/pull/1380",
+      "python_test_paths": [
+        "tests/test_annotations.py",
+        "tests/test_converters.py"
+      ],
+      "sha": "1e07f46897488350bb44ed88f1c70d4d7461dde0",
+      "source_python_paths": [
+        "src/attr/_make.py"
+      ],
+      "subject": "Make attrs.converters.pipe only return a Converter instance if one is passed (#1380)",
+      "task_id": "pr-1380",
+      "test_patch_bytes": 3407,
+      "test_patch_sha256": "e45a9ae785966bc748cdbe932b48ff09905f51abfc026dcbfd2beb3b9229db51",
+      "test_paths": [
+        "tests/test_annotations.py",
+        "tests/test_converters.py"
+      ],
+      "timestamp": 1733810732
+    },
+    {
+      "commit_tree": "c92852e3f9746140556cada9344864efec970fe3",
+      "committed_at": "2024-11-25T07:54:00Z",
+      "full_patch_bytes": 1480,
+      "full_patch_sha256": "dd5cd8cb9554cbbba645d6dea63088861c99109bbca2f1ff45bcb78a4fcecc8c",
+      "history_position": 244,
+      "order": 22,
+      "parent": "e21793e90a25c7ea47a9c0369150067cc8322de0",
+      "parent_tree": "4596ce1dcdf8b4324963fd48750fd0bbea49e07a",
+      "paths": [
+        "src/attr/_make.py",
+        "tests/test_converters.py"
+      ],
+      "pr": 1374,
+      "pr_identity_provenance": "1-parent PR-title subject suffix; remote PR page not queried",
+      "pr_url": "https://github.com/python-attrs/attrs/pull/1374",
+      "python_test_paths": [
+        "tests/test_converters.py"
+      ],
+      "sha": "13105a64f2de2e257a537ad20c06ffdd1c9d7f94",
+      "source_python_paths": [
+        "src/attr/_make.py"
+      ],
+      "subject": "Use an explicit comparison to None for the converter of a field (#1374)",
+      "task_id": "pr-1374",
+      "test_patch_bytes": 855,
+      "test_patch_sha256": "76a84ccd85956eb1ead9eb638be07fa67e56e717df012aea032458f639af6cc9",
+      "test_paths": [
+        "tests/test_converters.py"
+      ],
+      "timestamp": 1732521240
+    },
+    {
+      "commit_tree": "4596ce1dcdf8b4324963fd48750fd0bbea49e07a",
+      "committed_at": "2024-11-17T11:15:26Z",
+      "full_patch_bytes": 3363,
+      "full_patch_sha256": "129b46433fed92ad139a9337c2bcf4ad73ed94e22bcdd10bb91774e4f83e1cc8",
+      "history_position": 245,
+      "order": 23,
+      "parent": "ee0f19b696c60064c58cdc08b3265aef56d49ff8",
+      "parent_tree": "02db34456cc093a65f83156ee19167eeeb631f99",
+      "paths": [
+        "changelog.d/1372.change.md",
+        "src/attr/converters.py",
+        "tests/test_converters.py"
+      ],
+      "pr": 1372,
+      "pr_identity_provenance": "1-parent PR-title subject suffix; remote PR page not queried",
+      "pr_url": "https://github.com/python-attrs/attrs/pull/1372",
+      "python_test_paths": [
+        "tests/test_converters.py"
+      ],
+      "sha": "e21793e90a25c7ea47a9c0369150067cc8322de0",
+      "source_python_paths": [
+        "src/attr/converters.py"
+      ],
+      "subject": "Allow converter.optional to take a Converter such as converter.pipe as its argument (#1372)",
+      "task_id": "pr-1372",
+      "test_patch_bytes": 1683,
+      "test_patch_sha256": "feb8764d800adb634c8cb95323c4b2cfb127a55d831f0494963e3c718f0be77f",
+      "test_paths": [
+        "tests/test_converters.py"
+      ],
+      "timestamp": 1731842126
+    },
+    {
+      "commit_tree": "a03c49773ae56623a8c96e511445ce37f038b519",
+      "committed_at": "2024-10-26T11:20:44Z",
+      "full_patch_bytes": 2344,
+      "full_patch_sha256": "c55845536315f268f14e116f4eb9f6a2bee858f95c5e81cc07d51b5fece69c66",
+      "history_position": 251,
+      "order": 24,
+      "parent": "58cd3ae112abf36fcd8c1cdf2a55e21b3a5734d3",
+      "parent_tree": "acfaf80a5d5281c0138181a970f34222212e6baf",
+      "paths": [
+        "changelog.d/1365.change.md",
+        "src/attr/_make.py",
+        "tests/test_next_gen.py"
+      ],
+      "pr": 1365,
+      "pr_identity_provenance": "1-parent PR-title subject suffix; remote PR page not queried",
+      "pr_url": "https://github.com/python-attrs/attrs/pull/1365",
+      "python_test_paths": [
+        "tests/test_next_gen.py"
+      ],
+      "sha": "1921da6eac6231b7bc058b076c0648b2d1b5c042",
+      "source_python_paths": [
+        "src/attr/_make.py"
+      ],
+      "subject": "allow __suppress_context__ and __notes__ to be mutated on frozen exceptions (#1365)",
+      "task_id": "pr-1365",
+      "test_patch_bytes": 1277,
+      "test_patch_sha256": "8fe1c9fe850d55cc108e2724289653267df281f557264d4ed1059a78e7d06b0f",
+      "test_paths": [
+        "tests/test_next_gen.py"
+      ],
+      "timestamp": 1729941644
+    },
+    {
+      "commit_tree": "300c2efae5c5b686b861db9b316b9fddb99cbf12",
+      "committed_at": "2024-08-06T14:01:28Z",
+      "full_patch_bytes": 5191,
+      "full_patch_sha256": "ae8d2b03487617d82696dcf14402e1de55682af82dadf7e70240e70fbe45a9e7",
+      "history_position": 285,
+      "order": 25,
+      "parent": "876528893a10dc7cd866e5fa0e1165cb2ac5b83b",
+      "parent_tree": "4b3c01659cf12b7ba04ca7722880c9103029fdd7",
+      "paths": [
+        "src/attr/_compat.py",
+        "src/attr/_make.py",
+        "tests/test_converters.py"
+      ],
+      "pr": 1331,
+      "pr_identity_provenance": "1-parent PR-title subject suffix; remote PR page not queried",
+      "pr_url": "https://github.com/python-attrs/attrs/pull/1331",
+      "python_test_paths": [
+        "tests/test_converters.py"
+      ],
+      "sha": "5d6d21aa5e598c600a3610a4721a63e58d89dc5e",
+      "source_python_paths": [
+        "src/attr/_compat.py",
+        "src/attr/_make.py"
+      ],
+      "subject": "Make Converter (including pipe) correctly infer the return type (#1331)",
+      "task_id": "pr-1331",
+      "test_patch_bytes": 1846,
+      "test_patch_sha256": "b88852f43cde9c5bcc423583afe862c62fa546679a6f87bbde170ad2e9586c78",
+      "test_paths": [
+        "tests/test_converters.py"
+      ],
+      "timestamp": 1722952888
+    },
+    {
+      "commit_tree": "3bbc828ba160b98a7906d81e98369a212642f7b6",
+      "committed_at": "2024-08-06T13:49:43+02:00",
+      "full_patch_bytes": 6569,
+      "full_patch_sha256": "ad08533e90247a8b7da2221d5b16988da599c5a00e6945155162bda4c3d4565b",
+      "history_position": 288,
+      "order": 26,
+      "parent": "53e632c5218b729da6ac37a35b4b68379dc18999",
+      "parent_tree": "1b80fd4317ab9771381e9cd525c1a9286850a298",
+      "paths": [
+        "changelog.d/1328.change.md",
+        "src/attr/_make.py",
+        "src/attr/setters.py",
+        "tests/test_converters.py",
+        "tests/test_setattr.py"
+      ],
+      "pr": 1328,
+      "pr_identity_provenance": "1-parent PR-title subject suffix; remote PR page not queried",
+      "pr_url": "https://github.com/python-attrs/attrs/pull/1328",
+      "python_test_paths": [
+        "tests/test_converters.py",
+        "tests/test_setattr.py"
+      ],
+      "sha": "6fda0a4e086b56d7058855e4c15112c8f58de74c",
+      "source_python_paths": [
+        "src/attr/_make.py",
+        "src/attr/setters.py"
+      ],
+      "subject": "Make Converter a kind of adapter, fix converters.pipe (#1328)",
+      "task_id": "pr-1328",
+      "test_patch_bytes": 3327,
+      "test_patch_sha256": "902c94ac3b1dff33883f904d4e791cf738c5d0055a32f23626c3d14ee84bf810",
+      "test_paths": [
+        "tests/test_converters.py",
+        "tests/test_setattr.py"
+      ],
+      "timestamp": 1722944983
+    },
+    {
+      "commit_tree": "d0dc85f57edfde4da388aa986c6991e21d03a210",
+      "committed_at": "2024-08-06T13:37:35+02:00",
+      "full_patch_bytes": 5711,
+      "full_patch_sha256": "4309937d94aad917a7ab7bb5baf4fcbbcce3c13e04361953d8cb3b63d2fe7f41",
+      "history_position": 290,
+      "order": 27,
+      "parent": "f520d9a89f1fde6fdc5310ffe6c5d4c7467fb10b",
+      "parent_tree": "9ebcca4789fcd286a60a2ee44f13607762ac92fa",
+      "paths": [
+        "changelog.d/1329.change.md",
+        "src/attr/_compat.py",
+        "src/attr/_make.py",
+        "tests/test_3rd_party.py",
+        "tests/test_annotations.py",
+        "tests/test_make.py",
+        "tests/test_slots.py"
+      ],
+      "pr": 1329,
+      "pr_identity_provenance": "1-parent PR-title subject suffix; remote PR page not queried",
+      "pr_url": "https://github.com/python-attrs/attrs/pull/1329",
+      "python_test_paths": [
+        "tests/test_3rd_party.py",
+        "tests/test_annotations.py",
+        "tests/test_make.py",
+        "tests/test_slots.py"
+      ],
+      "sha": "7373d88f9bef8a2ff70972f81e8d8b9dfb7c5653",
+      "source_python_paths": [
+        "src/attr/_compat.py",
+        "src/attr/_make.py"
+      ],
+      "subject": "Restore basic functionality on 3.14[sic] (#1329)",
+      "task_id": "pr-1329",
+      "test_patch_bytes": 3644,
+      "test_patch_sha256": "912fd037f76ac3e645a29be25b3d1ddcb3d7331dc0bc159d25e28d8af98c7ef9",
+      "test_paths": [
+        "tests/test_3rd_party.py",
+        "tests/test_annotations.py",
+        "tests/test_make.py",
+        "tests/test_slots.py"
+      ],
+      "timestamp": 1722944255
+    },
+    {
+      "commit_tree": "9ebcca4789fcd286a60a2ee44f13607762ac92fa",
+      "committed_at": "2024-08-06T13:30:30+02:00",
+      "full_patch_bytes": 2996,
+      "full_patch_sha256": "a398afdb0ba8240b46cfc8fd8fa868c344989cdd1ab27a3ac5a722dfaca9bbb1",
+      "history_position": 291,
+      "order": 28,
+      "parent": "69d6fd1c6af7fc25a90c31158fdf513240cab634",
+      "parent_tree": "b46fd2fffaeb0dc56a28690be10dc3e1e2eedd2f",
+      "paths": [
+        "changelog.d/1330.deprecation.md",
+        "src/attr/_make.py",
+        "tests/test_make.py"
+      ],
+      "pr": 1330,
+      "pr_identity_provenance": "1-parent PR-title subject suffix; remote PR page not queried",
+      "pr_url": "https://github.com/python-attrs/attrs/pull/1330",
+      "python_test_paths": [
+        "tests/test_make.py"
+      ],
+      "sha": "f520d9a89f1fde6fdc5310ffe6c5d4c7467fb10b",
+      "source_python_paths": [
+        "src/attr/_make.py"
+      ],
+      "subject": "Only soft-deprecate hash (#1330)",
+      "task_id": "pr-1330",
+      "test_patch_bytes": 1117,
+      "test_patch_sha256": "47b09f882c96b8b8a661461516fecf47a78356e0e19698a9b93de916932b6f85",
+      "test_paths": [
+        "tests/test_make.py"
+      ],
+      "timestamp": 1722943830
+    },
+    {
+      "commit_tree": "90c18c08433369942ce6ccfb1701a488ff2ac6e6",
+      "committed_at": "2024-08-03T15:19:21+02:00",
+      "full_patch_bytes": 18914,
+      "full_patch_sha256": "e5a31676f22f944b9de3b09b3c87b47278a8223189a5a0640f58e956302a7033",
+      "history_position": 300,
+      "order": 29,
+      "parent": "dbb25ce34787a30e2ffa65685f6c689a269c3521",
+      "parent_tree": "df8f1606e8d2c0cb7d2caf9571fd0efb198e37a4",
+      "paths": [
+        "changelog.d/1323.deprecation.md",
+        "src/attr/_make.py",
+        "src/attr/_next_gen.py",
+        "src/attr/validators.py",
+        "tests/test_dunders.py",
+        "tests/test_functional.py",
+        "tests/test_make.py",
+        "tests/test_slots.py",
+        "tests/utils.py"
+      ],
+      "pr": 1323,
+      "pr_identity_provenance": "1-parent PR-title subject suffix; remote PR page not queried",
+      "pr_url": "https://github.com/python-attrs/attrs/pull/1323",
+      "python_test_paths": [
+        "tests/test_dunders.py",
+        "tests/test_functional.py",
+        "tests/test_make.py",
+        "tests/test_slots.py",
+        "tests/utils.py"
+      ],
+      "sha": "bde3f58cfe7bfe29e8dbf3fa8b86e819fe7a93e4",
+      "source_python_paths": [
+        "src/attr/_make.py",
+        "src/attr/_next_gen.py",
+        "src/attr/validators.py"
+      ],
+      "subject": "Deprecate hash for unsafe_hash (#1323)",
+      "task_id": "pr-1323",
+      "test_patch_bytes": 12742,
+      "test_patch_sha256": "de4fc27ec20c32c0710e0882d799c4f7afa580843b76181efba611533c05c391",
+      "test_paths": [
+        "tests/test_dunders.py",
+        "tests/test_functional.py",
+        "tests/test_make.py",
+        "tests/test_slots.py",
+        "tests/utils.py"
+      ],
+      "timestamp": 1722691161
+    },
+    {
+      "commit_tree": "df8f1606e8d2c0cb7d2caf9571fd0efb198e37a4",
+      "committed_at": "2024-08-03T13:38:12+02:00",
+      "full_patch_bytes": 10337,
+      "full_patch_sha256": "b6b1ca21f89eccd3c1fa24897bf482b90239b4814a0140d485f8b5b3d4be1309",
+      "history_position": 301,
+      "order": 30,
+      "parent": "fd7538f0e23a49ec34b636484de2d1b4b690c7fb",
+      "parent_tree": "7862251cecf47a3c606f9788280eafc98c58dd55",
+      "paths": [
+        "README.md",
+        "changelog.d/1321.change.md",
+        "docs/examples.md",
+        "docs/init.md",
+        "docs/why.md",
+        "src/attr/_make.py",
+        "src/attr/_next_gen.py",
+        "tests/test_functional.py"
+      ],
+      "pr": 1321,
+      "pr_identity_provenance": "1-parent PR-title subject suffix; remote PR page not queried",
+      "pr_url": "https://github.com/python-attrs/attrs/pull/1321",
+      "python_test_paths": [
+        "tests/test_functional.py"
+      ],
+      "sha": "dbb25ce34787a30e2ffa65685f6c689a269c3521",
+      "source_python_paths": [
+        "src/attr/_make.py",
+        "src/attr/_next_gen.py"
+      ],
+      "subject": "Add support for __attrs_init_subclass__ (#1321)",
+      "task_id": "pr-1321",
+      "test_patch_bytes": 837,
+      "test_patch_sha256": "57ded8deee9db10dfa34c9a88f63164abac21b8e274d0f27ab728942b3e8f2ef",
+      "test_paths": [
+        "tests/test_functional.py"
+      ],
+      "timestamp": 1722685092
+    },
+    {
+      "commit_tree": "7862251cecf47a3c606f9788280eafc98c58dd55",
+      "committed_at": "2024-08-03T13:35:21+02:00",
+      "full_patch_bytes": 3768,
+      "full_patch_sha256": "25b765898270004f48ca97baf97e81aa2812ed66f0e6c07454db5bc15578469b",
+      "history_position": 302,
+      "order": 31,
+      "parent": "09161fc9181bf94aa3bbc5509c663d736a9553dc",
+      "parent_tree": "f9ebe58ec185432bdd54988222de20ec44929cd6",
+      "paths": [
+        "changelog.d/1320.change.md",
+        "src/attr/validators.py",
+        "tests/test_validators.py"
+      ],
+      "pr": 1320,
+      "pr_identity_provenance": "1-parent PR-title subject suffix; remote PR page not queried",
+      "pr_url": "https://github.com/python-attrs/attrs/pull/1320",
+      "python_test_paths": [
+        "tests/test_validators.py"
+      ],
+      "sha": "fd7538f0e23a49ec34b636484de2d1b4b690c7fb",
+      "source_python_paths": [
+        "src/attr/validators.py"
+      ],
+      "subject": "validators.in_ now transforms certain unhashable options to tuples (#1320)",
+      "task_id": "pr-1320",
+      "test_patch_bytes": 1005,
+      "test_patch_sha256": "e76f87cdedb385895e0a0187118331d3afff11f9bd00705816a179c86445641b",
+      "test_paths": [
+        "tests/test_validators.py"
+      ],
+      "timestamp": 1722684921
+    },
+    {
+      "commit_tree": "f9ebe58ec185432bdd54988222de20ec44929cd6",
+      "committed_at": "2024-08-03T13:31:53+02:00",
+      "full_patch_bytes": 2625,
+      "full_patch_sha256": "87d5e5967296bcb758ac2e7dfcd70ea042c0d01108d4af7a6cd02e9eb3d8f4b9",
+      "history_position": 303,
+      "order": 32,
+      "parent": "689a0e64012d1e576ebd99e786a254bc537582c6",
+      "parent_tree": "c546704677a21d31b2a988e39b665b9b6860b2c8",
+      "paths": [
+        "changelog.d/1319.change.md",
+        "src/attr/_make.py",
+        "tests/test_make.py"
+      ],
+      "pr": 1319,
+      "pr_identity_provenance": "1-parent PR-title subject suffix; remote PR page not queried",
+      "pr_url": "https://github.com/python-attrs/attrs/pull/1319",
+      "python_test_paths": [
+        "tests/test_make.py"
+      ],
+      "sha": "09161fc9181bf94aa3bbc5509c663d736a9553dc",
+      "source_python_paths": [
+        "src/attr/_make.py"
+      ],
+      "subject": "Fix crash when __pre_init__, kw_only, and defaults come together (#1319)",
+      "task_id": "pr-1319",
+      "test_patch_bytes": 987,
+      "test_patch_sha256": "74dd18a36a59c10d402ee248b602ea12fa1d25dbbcd216d86da2d66581c98fb1",
+      "test_paths": [
+        "tests/test_make.py"
+      ],
+      "timestamp": 1722684713
+    },
+    {
+      "commit_tree": "51282ca640d17a5caa0ec011e507a9ed9219551a",
+      "committed_at": "2024-07-28T13:55:24Z",
+      "full_patch_bytes": 43417,
+      "full_patch_sha256": "f51772f88e2e09cf15a1acb3810afe088801f1b03612bcdc412dd424efc83bd4",
+      "history_position": 320,
+      "order": 33,
+      "parent": "0f045cd231f01716c9c81ac78fa2c237c0dd1933",
+      "parent_tree": "69b44741905cd67d34c9a80fd2f6fce4ab38cf6b",
+      "paths": [
+        "changelog.d/1267.change.md",
+        "docs/api.rst",
+        "docs/init.md",
+        "src/attr/__init__.py",
+        "src/attr/__init__.pyi",
+        "src/attr/_make.py",
+        "src/attrs/__init__.py",
+        "src/attrs/__init__.pyi",
+        "tests/test_annotations.py",
+        "tests/test_converters.py",
+        "tests/test_make.py",
+        "tests/test_mypy.yml"
+      ],
+      "pr": 1267,
+      "pr_identity_provenance": "1-parent PR-title subject suffix; remote PR page not queried",
+      "pr_url": "https://github.com/python-attrs/attrs/pull/1267",
+      "python_test_paths": [
+        "tests/test_annotations.py",
+        "tests/test_converters.py",
+        "tests/test_make.py"
+      ],
+      "sha": "f5683b852b1e7ec1f26aabbb55aad332de79066d",
+      "source_python_paths": [
+        "src/attr/__init__.py",
+        "src/attr/_make.py",
+        "src/attrs/__init__.py"
+      ],
+      "subject": "converters: allow wrapping and passing self and fields (#1267)",
+      "task_id": "pr-1267",
+      "test_patch_bytes": 15632,
+      "test_patch_sha256": "239629cc32423bd856271b97ae95ff59ca93deeb166526fd2bf3a5bcd6330476",
+      "test_paths": [
+        "tests/test_annotations.py",
+        "tests/test_converters.py",
+        "tests/test_make.py",
+        "tests/test_mypy.yml"
+      ],
+      "timestamp": 1722174924
+    },
+    {
+      "commit_tree": "f1cb002dc0d312eccbc2b0d17120deb0c809cb60",
+      "committed_at": "2024-07-21T09:53:35Z",
+      "full_patch_bytes": 3317,
+      "full_patch_sha256": "5430adde0fb41a64b34f2693a35083312074d3b528156d994be84589bceee38c",
+      "history_position": 330,
+      "order": 34,
+      "parent": "feb7a4d892ebcb443736aa431c273fd1cd8ec1d8",
+      "parent_tree": "39c96e5df18c636b2576a27593ca81e235f6eddd",
+      "paths": [
+        "changelog.d/1310.breaking.md",
+        "docs/comparison.md",
+        "src/attr/_make.py",
+        "tests/strategies.py"
+      ],
+      "pr": 1310,
+      "pr_identity_provenance": "1-parent PR-title subject suffix; remote PR page not queried",
+      "pr_url": "https://github.com/python-attrs/attrs/pull/1310",
+      "python_test_paths": [
+        "tests/strategies.py"
+      ],
+      "sha": "a8808a2b3ed2fd1b7c129908fd28ee7b7106a730",
+      "source_python_paths": [
+        "src/attr/_make.py"
+      ],
+      "subject": "Speed up __eq__ (#1310)",
+      "task_id": "pr-1310",
+      "test_patch_bytes": 700,
+      "test_patch_sha256": "83b523c4bef2323e0527e14e0136bacf77dabb141d0ea4d5c8b24fb56e02c3f2",
+      "test_paths": [
+        "tests/strategies.py"
+      ],
+      "timestamp": 1721555615
+    },
+    {
+      "commit_tree": "99b826e2b879d2bebf1c13be50d3de75092c2781",
+      "committed_at": "2024-07-17T12:01:41Z",
+      "full_patch_bytes": 5235,
+      "full_patch_sha256": "3a3b725de4efba984718501f60bafa783c3e5ed521a0837ec37d1af00028bd4a",
+      "history_position": 344,
+      "order": 35,
+      "parent": "37ac3ef0888bbd9235d17cbc6d284856f5276b44",
+      "parent_tree": "c6d6f7e8375c95a9cfd622bdaf71e9def15d2599",
+      "paths": [
+        "changelog.d/1303.change.md",
+        "docs/api.rst",
+        "src/attr/validators.py",
+        "src/attr/validators.pyi",
+        "tests/test_validators.py"
+      ],
+      "pr": 1303,
+      "pr_identity_provenance": "1-parent PR-title subject suffix; remote PR page not queried",
+      "pr_url": "https://github.com/python-attrs/attrs/pull/1303",
+      "python_test_paths": [
+        "tests/test_validators.py"
+      ],
+      "sha": "7c9b31ea7b5565f2ef4a582999dfa6afd7e0f16b",
+      "source_python_paths": [
+        "src/attr/validators.py"
+      ],
+      "subject": "Add `attrs.validators.or_` validator (#1303)",
+      "task_id": "pr-1303",
+      "test_patch_bytes": 1522,
+      "test_patch_sha256": "9cfc5bb28568a99f290c131b3eae1f5c037cb46445b5101aca12856399435744",
+      "test_paths": [
+        "tests/test_validators.py"
+      ],
+      "timestamp": 1721217701
+    },
+    {
+      "commit_tree": "b272b63d7cb31821923cbf8a7c7a46fc873dc9a0",
+      "committed_at": "2024-07-13T10:52:46Z",
+      "full_patch_bytes": 2214,
+      "full_patch_sha256": "24d810078706b8f9d2aede61fcb3496b26f6193a9a154c2ddf8cc46673df55af",
+      "history_position": 352,
+      "order": 36,
+      "parent": "c83de6ae90d43280df63baa729d50d06826b3462",
+      "parent_tree": "5de41a68f7fb9903fc3572261ec820332f7a69be",
+      "paths": [
+        "changelog.d/1285.change.md",
+        "src/attr/_make.py",
+        "tests/test_make.py"
+      ],
+      "pr": 1285,
+      "pr_identity_provenance": "1-parent PR-title subject suffix; remote PR page not queried",
+      "pr_url": "https://github.com/python-attrs/attrs/pull/1285",
+      "python_test_paths": [
+        "tests/test_make.py"
+      ],
+      "sha": "edcaf04a4d6b1b92996de668af9f6fea266efba2",
+      "source_python_paths": [
+        "src/attr/_make.py"
+      ],
+      "subject": "make_class(): Add \"__annotations_\" to generated class (#1285)",
+      "task_id": "pr-1285",
+      "test_patch_bytes": 1178,
+      "test_patch_sha256": "b80268e579369c9ccfd19ab9b237778a8bba356667fcf44a78405e2d516f1a74",
+      "test_paths": [
+        "tests/test_make.py"
+      ],
+      "timestamp": 1720867966
+    },
+    {
+      "commit_tree": "b067b4ff045a0ca481f29f458482327969f1f8b9",
+      "committed_at": "2024-04-02T04:57:25Z",
+      "full_patch_bytes": 2795,
+      "full_patch_sha256": "9db1a67d4cccf52c82defeb32adaaa6d4cd2bb8ee5584b7962582cabadb04f03",
+      "history_position": 374,
+      "order": 37,
+      "parent": "82a14627fddbd0b2d802fbc574fa3b1ef010a801",
+      "parent_tree": "6814545ff5cd32c7dcbc8ff3b5c612ed05063763",
+      "paths": [
+        "changelog.d/1253.change.md",
+        "src/attr/_make.py",
+        "tests/test_slots.py"
+      ],
+      "pr": 1253,
+      "pr_identity_provenance": "1-parent PR-title subject suffix; remote PR page not queried",
+      "pr_url": "https://github.com/python-attrs/attrs/pull/1253",
+      "python_test_paths": [
+        "tests/test_slots.py"
+      ],
+      "sha": "88e2896ca9351cd48711bd320571a832ae122cd5",
+      "source_python_paths": [
+        "src/attr/_make.py"
+      ],
+      "subject": "Preserve AttributeError in slotted classes with cached_property (#1253)",
+      "task_id": "pr-1253",
+      "test_patch_bytes": 1446,
+      "test_patch_sha256": "be4363a55711e855aed57e92000b99d6a35fda3628bb7de455b06a33fe9c1efe",
+      "test_paths": [
+        "tests/test_slots.py"
+      ],
+      "timestamp": 1712033845
+    },
+    {
+      "commit_tree": "0a1874e5010043991a2162daf297851f1050caba",
+      "committed_at": "2024-03-18T15:19:38+01:00",
+      "full_patch_bytes": 6068,
+      "full_patch_sha256": "52c8849607e90b0845e5ba979df232aee2c8ae39157ac523c10afac95e6c3132",
+      "history_position": 377,
+      "order": 38,
+      "parent": "1b3898a4b8f61e959a337bb38ea1ab9c21eefcef",
+      "parent_tree": "8bfd9d5d6296bc8def3f68c93205355afa1d5053",
+      "paths": [
+        "changelog.d/1268.breaking.md",
+        "src/attr/__init__.py",
+        "tests/test_packaging.py"
+      ],
+      "pr": 1268,
+      "pr_identity_provenance": "1-parent PR-title subject suffix; remote PR page not queried",
+      "pr_url": "https://github.com/python-attrs/attrs/pull/1268",
+      "python_test_paths": [
+        "tests/test_packaging.py"
+      ],
+      "sha": "2446e640caaef37c0aa14a39308a1b826466c1d9",
+      "source_python_paths": [
+        "src/attr/__init__.py"
+      ],
+      "subject": "Remove non-version metadata hack (#1268)",
+      "task_id": "pr-1268",
+      "test_patch_bytes": 3160,
+      "test_patch_sha256": "5eed103eb14273950f96a98246d15d1c09e3493e0cee903724d1a5dcb6897752",
+      "test_paths": [
+        "tests/test_packaging.py"
+      ],
+      "timestamp": 1710771578
+    },
+    {
+      "commit_tree": "2d99babe0247a91c326cc2ddbee41633b8c072ff",
+      "committed_at": "2024-03-16T18:23:17Z",
+      "full_patch_bytes": 3394,
+      "full_patch_sha256": "c825d92861b2485ff4436a7bb6b1de9ddbfe7ef9cabc2e1fbea995539f26248a",
+      "history_position": 391,
+      "order": 39,
+      "parent": "09e35d448ef99f55b516f1440b4548c64fb2e6cf",
+      "parent_tree": "e35bcd0fcc660d169b9a9cbe0fb1eac5ba9e6563",
+      "paths": [
+        "changelog.d/1264.breaking.md",
+        "src/attr/_funcs.py",
+        "tests/test_funcs.py"
+      ],
+      "pr": 1264,
+      "pr_identity_provenance": "1-parent PR-title subject suffix; remote PR page not queried",
+      "pr_url": "https://github.com/python-attrs/attrs/pull/1264",
+      "python_test_paths": [
+        "tests/test_funcs.py"
+      ],
+      "sha": "278d3a5bc6b271baccd0244b20b8a4016a6e35c4",
+      "source_python_paths": [
+        "src/attr/_funcs.py"
+      ],
+      "subject": "evolve: remove support for passing instances per kw (#1264)",
+      "task_id": "pr-1264",
+      "test_patch_bytes": 997,
+      "test_patch_sha256": "fe08c1bfd93aafa3c207cb522139ba42104fbd35873c95db0ee8e4cbd1830954",
+      "test_paths": [
+        "tests/test_funcs.py"
+      ],
+      "timestamp": 1710613397
+    },
+    {
+      "commit_tree": "2ebc3305b554159270cffaa896bd9cc940a8d9a5",
+      "committed_at": "2024-03-16T15:55:37Z",
+      "full_patch_bytes": 2568,
+      "full_patch_sha256": "ebaa025130aacc689f8d89fd1c6e9135c739c7e82cf0d59a7c37ef5d944797f9",
+      "history_position": 394,
+      "order": 40,
+      "parent": "f590f44cfd43fbba0eb3c6747fa0f635f8f7affa",
+      "parent_tree": "87b9cbd26f20cefec863803634870d83e1afa67c",
+      "paths": [
+        "changelog.d/1263.deprecation.md",
+        "src/attr/_make.py",
+        "tests/test_make.py"
+      ],
+      "pr": 1263,
+      "pr_identity_provenance": "1-parent PR-title subject suffix; remote PR page not queried",
+      "pr_url": "https://github.com/python-attrs/attrs/pull/1263",
+      "python_test_paths": [
+        "tests/test_make.py"
+      ],
+      "sha": "d9ed5937fe0c2621c53e53e8c7a5ff4bd559de65",
+      "source_python_paths": [
+        "src/attr/_make.py"
+      ],
+      "subject": "Deprecate attr.s's repr_ns (#1263)",
+      "task_id": "pr-1263",
+      "test_patch_bytes": 763,
+      "test_patch_sha256": "513a1325607dda69f1ad8316e4da2c7b3871d3311b0f49a9848ba05f4537e6b3",
+      "test_paths": [
+        "tests/test_make.py"
+      ],
+      "timestamp": 1710604537
+    },
+    {
+      "commit_tree": "98514c1e40e1dcddc36d7500ccfac89c01283d3a",
+      "committed_at": "2024-03-07T09:23:46Z",
+      "full_patch_bytes": 2200,
+      "full_patch_sha256": "28b48eddb5acaa6e6579d549e9859d868e7b58ea4d7ef3f543366f2c004d6a6d",
+      "history_position": 405,
+      "order": 41,
+      "parent": "b9084fab02c009a593b604562a69f36a5915c8e5",
+      "parent_tree": "3204e270096c5298533fd99b3cd4d9eb29a5107a",
+      "paths": [
+        "src/attr/_compat.py",
+        "tests/test_cmp.py"
+      ],
+      "pr": 1255,
+      "pr_identity_provenance": "1-parent PR-title subject suffix; remote PR page not queried",
+      "pr_url": "https://github.com/python-attrs/attrs/pull/1255",
+      "python_test_paths": [
+        "tests/test_cmp.py"
+      ],
+      "sha": "f9ff9135b472c78a7333d6272c62b92217897464",
+      "source_python_paths": [
+        "src/attr/_compat.py"
+      ],
+      "subject": "Fix test_ne in test_cmp.py for Python 3.13 (#1255)",
+      "task_id": "pr-1255",
+      "test_patch_bytes": 1716,
+      "test_patch_sha256": "cc895fffd9e618354991aa9afae7cc02ee24073c5ccb51d828f5d717dd9b2000",
+      "test_paths": [
+        "tests/test_cmp.py"
+      ],
+      "timestamp": 1709803426
+    },
+    {
+      "commit_tree": "7edb79e2edf8ddf46a184b8ca047061f4762b463",
+      "committed_at": "2024-01-04T10:52:49Z",
+      "full_patch_bytes": 5072,
+      "full_patch_sha256": "0b6a8c8f163b1678c218204d18570c843b15643ed8dcce12e6be2631a8be1f6d",
+      "history_position": 432,
+      "order": 42,
+      "parent": "5b0a4e6ab80db0f28b2866a3376e87be04b84bcc",
+      "parent_tree": "ea8ae36c6b3dd9ccefee0e24d30fccef890396a3",
+      "paths": [
+        "changelog.d/1221.change.md",
+        "src/attr/_make.py",
+        "tests/test_make.py",
+        "tests/test_slots.py"
+      ],
+      "pr": 1221,
+      "pr_identity_provenance": "1-parent PR-title subject suffix; remote PR page not queried",
+      "pr_url": "https://github.com/python-attrs/attrs/pull/1221",
+      "python_test_paths": [
+        "tests/test_make.py",
+        "tests/test_slots.py"
+      ],
+      "sha": "26d8dd79570c8ca8cd92427a8b5074721f27995d",
+      "source_python_paths": [
+        "src/attr/_make.py"
+      ],
+      "subject": "Slotted cached property reference (#1221)",
+      "task_id": "pr-1221",
+      "test_patch_bytes": 2364,
+      "test_patch_sha256": "c24ea5a73af6261b2d16aeb5dcb9245b48a0e4d59a901ea8ff9076b3ac1b0925",
+      "test_paths": [
+        "tests/test_make.py",
+        "tests/test_slots.py"
+      ],
+      "timestamp": 1704365569
+    },
+    {
+      "commit_tree": "03719d6504353e2a8c7cdcbb54b6ff6eb6ef1fd5",
+      "committed_at": "2023-12-08T18:24:25Z",
+      "full_patch_bytes": 19576,
+      "full_patch_sha256": "76e4bd386db76f03ddc4755b540ccff8046ff2ec6e8ecbf4a881efe3a05ec43c",
+      "history_position": 455,
+      "order": 43,
+      "parent": "01413df3db8e64437547f7fa6439a646fa116a98",
+      "parent_tree": "2fbfe8301b82520062871a99c5679dd40e5b772b",
+      "paths": [
+        "changelog.d/1200.change.md",
+        "docs/how-does-it-work.md",
+        "src/attr/_compat.py",
+        "src/attr/_make.py",
+        "tests/strategies.py",
+        "tests/test_3rd_party.py",
+        "tests/test_slots.py"
+      ],
+      "pr": 1200,
+      "pr_identity_provenance": "1-parent PR-title subject suffix; remote PR page not queried",
+      "pr_url": "https://github.com/python-attrs/attrs/pull/1200",
+      "python_test_paths": [
+        "tests/strategies.py",
+        "tests/test_3rd_party.py",
+        "tests/test_slots.py"
+      ],
+      "sha": "597c3a8adb5abeda66e0f6e9aed7fcaec26ee1a0",
+      "source_python_paths": [
+        "src/attr/_compat.py",
+        "src/attr/_make.py"
+      ],
+      "subject": "Add support for cached_properties to slotted attrs classes. (#1200)",
+      "task_id": "pr-1200",
+      "test_patch_bytes": 11654,
+      "test_patch_sha256": "0e67e53530451bbfc795ecf7837f0f53058a67bcbe5684b6ddf8826c07b8ce8f",
+      "test_paths": [
+        "tests/strategies.py",
+        "tests/test_3rd_party.py",
+        "tests/test_slots.py"
+      ],
+      "timestamp": 1702059865
+    },
+    {
+      "commit_tree": "b909c47d5a0cf006ef1b6ba49cb6d1bb86b98034",
+      "committed_at": "2023-11-28T12:05:46Z",
+      "full_patch_bytes": 3250,
+      "full_patch_sha256": "aac530d1289df275f33a4ce255168c264f327ef697389a3d01d044a2d0498354",
+      "history_position": 458,
+      "order": 44,
+      "parent": "d40d9f3c97302f3d9bfe7c72e4d5b542e041f3d8",
+      "parent_tree": "f9a0d668c364d0db5173adc3cb91c140574520f8",
+      "paths": [
+        "changelog.d/1203.change.md",
+        "src/attr/__init__.pyi",
+        "src/attr/_make.py",
+        "tests/test_make.py"
+      ],
+      "pr": 1203,
+      "pr_identity_provenance": "1-parent PR-title subject suffix; remote PR page not queried",
+      "pr_url": "https://github.com/python-attrs/attrs/pull/1203",
+      "python_test_paths": [
+        "tests/test_make.py"
+      ],
+      "sha": "1fcd29f8641efbff7e1b2130a38a4404a899bd50",
+      "source_python_paths": [
+        "src/attr/_make.py"
+      ],
+      "subject": "Add optional namespace arguments for `make_class` (#1203)",
+      "task_id": "pr-1203",
+      "test_patch_bytes": 763,
+      "test_patch_sha256": "9554ec86a542da67e09f6f815b6b8aea84fce75500678d5ab5da3cabdc3dc90a",
+      "test_paths": [
+        "tests/test_make.py"
+      ],
+      "timestamp": 1701173146
+    },
+    {
+      "commit_tree": "7d36b170b47fd1329b3507c50551515275a8f429",
+      "committed_at": "2023-11-11T10:54:24Z",
+      "full_patch_bytes": 7014,
+      "full_patch_sha256": "86b5a0d06d21599cf455bc0a65340d970fcb3f3a700e4fafd9bcc50319b93b39",
+      "history_position": 464,
+      "order": 45,
+      "parent": "ea1037cc144aaf41a4256e6eb391fc76c775d82c",
+      "parent_tree": "bc602a19ac097466b799115afe4d9c8a65c7f262",
+      "paths": [
+        "src/attr/_compat.py",
+        "src/attr/_make.py",
+        "tests/test_slots.py"
+      ],
+      "pr": 1201,
+      "pr_identity_provenance": "1-parent PR-title subject suffix; remote PR page not queried",
+      "pr_url": "https://github.com/python-attrs/attrs/pull/1201",
+      "python_test_paths": [
+        "tests/test_slots.py"
+      ],
+      "sha": "079954ef405919968fb020921232509df3b0bcc9",
+      "source_python_paths": [
+        "src/attr/_compat.py",
+        "src/attr/_make.py"
+      ],
+      "subject": "Remove work-arounds for setting cell_contents (#1201)",
+      "task_id": "pr-1201",
+      "test_patch_bytes": 1867,
+      "test_patch_sha256": "e6c1ac685e579f24952e133c3cfd744058eb14ef3c149921f414dca043bb86ff",
+      "test_paths": [
+        "tests/test_slots.py"
+      ],
+      "timestamp": 1699700064
+    },
+    {
+      "commit_tree": "bf56f0ec8fcc05b3f82ad7abf5995d78c51d94af",
+      "committed_at": "2023-09-29T08:47:51+02:00",
+      "full_patch_bytes": 8662,
+      "full_patch_sha256": "69a286143c4095be896a689dd6562ffaa493c76f9d1f4126b00b13f5dfb19924",
+      "history_position": 480,
+      "order": 46,
+      "parent": "46a03dcef6d2698aa5934a1ee00d9523564dcd8c",
+      "parent_tree": "5cdc0329e7ef0a0b88962836fd31821c5298b7b8",
+      "paths": [
+        "changelog.d/1187.change.md",
+        "docs/init.md",
+        "src/attr/_make.py",
+        "tests/test_dunders.py",
+        "tests/test_make.py"
+      ],
+      "pr": 1187,
+      "pr_identity_provenance": "1-parent PR-title subject suffix; remote PR page not queried",
+      "pr_url": "https://github.com/python-attrs/attrs/pull/1187",
+      "python_test_paths": [
+        "tests/test_dunders.py",
+        "tests/test_make.py"
+      ],
+      "sha": "c2824ac30f315bfbc7398960c6831d68ecc9edb4",
+      "source_python_paths": [
+        "src/attr/_make.py"
+      ],
+      "subject": "Pass args from `__init__` to `__attrs_pre_init__` if requested (#1187)",
+      "task_id": "pr-1187",
+      "test_patch_bytes": 3967,
+      "test_patch_sha256": "4c0a79679fd716abe40deefd9ccff4d9c161f5afc04669818b1471fc3f1bc173",
+      "test_paths": [
+        "tests/test_dunders.py",
+        "tests/test_make.py"
+      ],
+      "timestamp": 1695970071
+    },
+    {
+      "commit_tree": "4291c31a6fc63122784671dce568be3dfd609871",
+      "committed_at": "2023-07-29T21:31:36+02:00",
+      "full_patch_bytes": 7172,
+      "full_patch_sha256": "271ec80cde77c0831ea2ebff83aef246fa01e1a5bc9d7fe68d8b65a0c0ac5ac7",
+      "history_position": 503,
+      "order": 47,
+      "parent": "a37b556f7d762b7a6229b1fbf985965539571cd2",
+      "parent_tree": "c71caf2644103a29d44aa1af238d71d2b4069139",
+      "paths": [
+        "changelog.d/1165.change.md",
+        "src/attr/_funcs.py",
+        "tests/test_funcs.py"
+      ],
+      "pr": 1165,
+      "pr_identity_provenance": "1-parent PR-title subject suffix; remote PR page not queried",
+      "pr_url": "https://github.com/python-attrs/attrs/pull/1165",
+      "python_test_paths": [
+        "tests/test_funcs.py"
+      ],
+      "sha": "0bf0678a224dc89f150eb55861700864bec85cf6",
+      "source_python_paths": [
+        "src/attr/_funcs.py"
+      ],
+      "subject": "Fix TypeError for `asdict(<class with namedtuple>, retain_collection_types=True)` (#1165)",
+      "task_id": "pr-1165",
+      "test_patch_bytes": 3293,
+      "test_patch_sha256": "d7e58a54fa936192fbef16684b813346263e56f051a8c40e8eead518c89034f0",
+      "test_paths": [
+        "tests/test_funcs.py"
+      ],
+      "timestamp": 1690659096
+    },
+    {
+      "commit_tree": "7c57c2666e138f1a03df66c3bcdca6ac385bf3cd",
+      "committed_at": "2023-04-10T15:34:38+02:00",
+      "full_patch_bytes": 2609,
+      "full_patch_sha256": "c7ff48df9370e4287a0ce31b5c680812db14ca9323dd4b2399cb39433d2cb081",
+      "history_position": 557,
+      "order": 48,
+      "parent": "d1aaeeed78c164ac87c0cff521bb7529baaf0eba",
+      "parent_tree": "1045804577e3c187eb7489960ede1a9464465745",
+      "paths": [
+        "changelog.d/1120.deprecation.md",
+        "src/attr/validators.py",
+        "tests/test_validators.py"
+      ],
+      "pr": 1120,
+      "pr_identity_provenance": "1-parent PR-title subject suffix; remote PR page not queried",
+      "pr_url": "https://github.com/python-attrs/attrs/pull/1120",
+      "python_test_paths": [
+        "tests/test_validators.py"
+      ],
+      "sha": "c8b342d34fecee40e5d2cb20b527c3f526f87bad",
+      "source_python_paths": [
+        "src/attr/validators.py"
+      ],
+      "subject": "Deprecate zope-interface support (#1120)",
+      "task_id": "pr-1120",
+      "test_patch_bytes": 1253,
+      "test_patch_sha256": "e7dd907963758f10ac0a802fb203b68704ac9b4684f0d64abd88d39030a73d37",
+      "test_paths": [
+        "tests/test_validators.py"
+      ],
+      "timestamp": 1681133678
+    },
+    {
+      "commit_tree": "578d95d9bb4e252b75331c31e30b8d7549a22d40",
+      "committed_at": "2023-04-10T09:49:51+02:00",
+      "full_patch_bytes": 4033,
+      "full_patch_sha256": "c13984cdf7e0e20d20d5650e1806c0b287725dfc27cf6ac9e02dada02eca06b8",
+      "history_position": 559,
+      "order": 49,
+      "parent": "5a7d978d8a7050961f62159c63fd2b7ad7b1c7d2",
+      "parent_tree": "db4bc749141a28a0abe20e1c7122b873534b6846",
+      "paths": [
+        "changelog.d/1122.change.md",
+        "src/attr/validators.py",
+        "src/attr/validators.pyi",
+        "tests/test_validators.py",
+        "tests/typing_example.py"
+      ],
+      "pr": 1122,
+      "pr_identity_provenance": "1-parent PR-title subject suffix; remote PR page not queried",
+      "pr_url": "https://github.com/python-attrs/attrs/pull/1122",
+      "python_test_paths": [
+        "tests/test_validators.py",
+        "tests/typing_example.py"
+      ],
+      "sha": "7d55876ed34bf74a9c402164c11bb1f28804fd12",
+      "source_python_paths": [
+        "src/attr/validators.py"
+      ],
+      "subject": "Accept tuples in attrs.validators.optional (#1122)",
+      "task_id": "pr-1122",
+      "test_patch_bytes": 1882,
+      "test_patch_sha256": "738a1f2aa35833f42a7ab9bce5bf7148d9e845eb08e35fa406c84d667748c28c",
+      "test_paths": [
+        "tests/test_validators.py",
+        "tests/typing_example.py"
+      ],
+      "timestamp": 1681112991
+    },
+    {
+      "commit_tree": "b83ff4356c481d12c4f63efeb050f5ac4a0e401a",
+      "committed_at": "2023-04-05T08:33:02+02:00",
+      "full_patch_bytes": 4039,
+      "full_patch_sha256": "752be479282769fcb3fa9df032d1f969694e143fc21fd41ebf485915c891374c",
+      "history_position": 561,
+      "order": 50,
+      "parent": "22ae8473fb88d6e585b05c709e81e1a46398a649",
+      "parent_tree": "bc3ad7b55ebbb258825fb03d00e08c63c9a26ea0",
+      "paths": [
+        "changelog.d/1117.change.md",
+        "src/attr/_funcs.py",
+        "tests/test_funcs.py"
+      ],
+      "pr": 1117,
+      "pr_identity_provenance": "1-parent PR-title subject suffix; remote PR page not queried",
+      "pr_url": "https://github.com/python-attrs/attrs/pull/1117",
+      "python_test_paths": [
+        "tests/test_funcs.py"
+      ],
+      "sha": "a14e1859b820b4e090ccc7c2bc73e61fbdbaefb2",
+      "source_python_paths": [
+        "src/attr/_funcs.py"
+      ],
+      "subject": "Raise a deprecation warning when evolve receives insta as a kw arg (#1117)",
+      "task_id": "pr-1117",
+      "test_patch_bytes": 1510,
+      "test_patch_sha256": "14a4198af586a54a021373e4efc5b8f16043de7a6784731a9220dc66c292b3c3",
+      "test_paths": [
+        "tests/test_funcs.py"
+      ],
+      "timestamp": 1680676382
+    },
+    {
+      "commit_tree": "bc3ad7b55ebbb258825fb03d00e08c63c9a26ea0",
+      "committed_at": "2023-04-04T08:50:55+02:00",
+      "full_patch_bytes": 2898,
+      "full_patch_sha256": "adf252ee68ad2cb03e8557f95597dac6dfd672485115e2da7e0af0707cf12a5c",
+      "history_position": 562,
+      "order": 51,
+      "parent": "5596c4f11d7b8758feda3513177a28fe7d725de9",
+      "parent_tree": "808877dff90292fc38216d59f900d0561650a7a1",
+      "paths": [
+        "src/attr/_funcs.py",
+        "tests/test_funcs.py"
+      ],
+      "pr": 1119,
+      "pr_identity_provenance": "1-parent PR-title subject suffix; remote PR page not queried",
+      "pr_url": "https://github.com/python-attrs/attrs/pull/1119",
+      "python_test_paths": [
+        "tests/test_funcs.py"
+      ],
+      "sha": "22ae8473fb88d6e585b05c709e81e1a46398a649",
+      "source_python_paths": [
+        "src/attr/_funcs.py"
+      ],
+      "subject": "Stop raising a deprecation warning on assoc (#1119)",
+      "task_id": "pr-1119",
+      "test_patch_bytes": 1694,
+      "test_patch_sha256": "d1b592dee087b795cdaac5b87e0552d86e9ae9a75058abaf47ee1f28ccc94987",
+      "test_paths": [
+        "tests/test_funcs.py"
+      ],
+      "timestamp": 1680591055
+    },
+    {
+      "commit_tree": "21148adc5ee89f96ff54a1bb947f05ae8b277ff2",
+      "committed_at": "2023-04-03T14:40:45Z",
+      "full_patch_bytes": 4564,
+      "full_patch_sha256": "94d087e8a63f9dcd0c116418a0b421513c15e992fe41dd5b40358def18b742d0",
+      "history_position": 565,
+      "order": 52,
+      "parent": "359c2db460f4410e86782a99eef06dabbfd96d34",
+      "parent_tree": "fb40eca9af7b117cc693aa9aed48e3612cf56849",
+      "paths": [
+        "changelog.d/1107.change.md",
+        "docs/examples.md",
+        "src/attr/__init__.pyi",
+        "src/attr/_next_gen.py",
+        "tests/test_next_gen.py"
+      ],
+      "pr": 1107,
+      "pr_identity_provenance": "1-parent PR-title subject suffix; remote PR page not queried",
+      "pr_url": "https://github.com/python-attrs/attrs/pull/1107",
+      "python_test_paths": [
+        "tests/test_next_gen.py"
+      ],
+      "sha": "65ee286d6a98dbe88aba73b993532af86bffa143",
+      "source_python_paths": [
+        "src/attr/_next_gen.py"
+      ],
+      "subject": "Added `type` parameter to `attrs.field()` function (#1107)",
+      "task_id": "pr-1107",
+      "test_patch_bytes": 644,
+      "test_patch_sha256": "ee12892b8239d9e1db78b13841bd4a5be9b0c66b40f18c15f9c27fb7ea39eb16",
+      "test_paths": [
+        "tests/test_next_gen.py"
+      ],
+      "timestamp": 1680532845
+    },
+    {
+      "commit_tree": "aed164e8f1da1368353e4db0aa2815d797403951",
+      "committed_at": "2023-03-18T19:31:15+01:00",
+      "full_patch_bytes": 5428,
+      "full_patch_sha256": "5c92f1bdcd0e655b9f2d9d769ba1dfeb3f7a6c7534c185679230fb34eb61250f",
+      "history_position": 568,
+      "order": 53,
+      "parent": "5d9753a3b11228c72e8068f5e5daeeb728c6fc83",
+      "parent_tree": "a5ddd8442f72358dbdc909fa55a38b24b6bd8d34",
+      "paths": [
+        "changelog.d/1099.change.md",
+        "src/attr/__init__.pyi",
+        "src/attr/_compat.py",
+        "src/attr/_funcs.py",
+        "tests/test_annotations.py"
+      ],
+      "pr": 1099,
+      "pr_identity_provenance": "1-parent PR-title subject suffix; remote PR page not queried",
+      "pr_url": "https://github.com/python-attrs/attrs/pull/1099",
+      "python_test_paths": [
+        "tests/test_annotations.py"
+      ],
+      "sha": "c7308a66ef1f4e60f7dbfa75177634666817d861",
+      "source_python_paths": [
+        "src/attr/_compat.py",
+        "src/attr/_funcs.py"
+      ],
+      "subject": "Flesh out resolve_types (#1099)",
+      "task_id": "pr-1099",
+      "test_patch_bytes": 1217,
+      "test_patch_sha256": "a5f4d2bfd32b72eea98f4a9f2c0581b74cac31bdda94dc01d28561456cd7d8b9",
+      "test_paths": [
+        "tests/test_annotations.py"
+      ],
+      "timestamp": 1679164275
+    },
+    {
+      "commit_tree": "8ba7a159793a9e0956520864fa861377f6ec1000",
+      "committed_at": "2023-02-05T13:56:45+01:00",
+      "full_patch_bytes": 6292,
+      "full_patch_sha256": "9e075de6ec785791909b5def2b3421d0abcd9793fc7bc1e91303501b1a87d966",
+      "history_position": 581,
+      "order": 54,
+      "parent": "9cf2ed5a6b1c6977a7f545f84d87b3dd63befe0a",
+      "parent_tree": "03ef67228d0be373141b2237f6145abe5799b689",
+      "paths": [
+        "src/attr/_compat.py",
+        "src/attr/_funcs.py",
+        "src/attr/_make.py",
+        "tests/test_funcs.py",
+        "tests/test_make.py"
+      ],
+      "pr": 1079,
+      "pr_identity_provenance": "1-parent PR-title subject suffix; remote PR page not queried",
+      "pr_url": "https://github.com/python-attrs/attrs/pull/1079",
+      "python_test_paths": [
+        "tests/test_funcs.py",
+        "tests/test_make.py"
+      ],
+      "sha": "4fcd15bddbc96fd23d3218493c831a0e38b1cd86",
+      "source_python_paths": [
+        "src/attr/_compat.py",
+        "src/attr/_funcs.py",
+        "src/attr/_make.py"
+      ],
+      "subject": "First pass over generics (#1079)",
+      "task_id": "pr-1079",
+      "test_patch_bytes": 2761,
+      "test_patch_sha256": "a5d1b7337c3d3a5e54f1e9825d18adcc196c59e59d1e5357b42604e4856183d4",
+      "test_paths": [
+        "tests/test_funcs.py",
+        "tests/test_make.py"
+      ],
+      "timestamp": 1675601805
+    },
+    {
+      "commit_tree": "e661b43150cd1dfff9b668b31391a2ee3698e814",
+      "committed_at": "2023-01-25T06:58:31Z",
+      "full_patch_bytes": 3146,
+      "full_patch_sha256": "caefca6a62078a1cd6b0249198b82280496ffb59b88dedbdaebcd9873653f120",
+      "history_position": 592,
+      "order": 55,
+      "parent": "882805e173ba970f381ed8f162b650eb7fbc1160",
+      "parent_tree": "b012f87e52ac1138aaab2c0c296a24dfca870f92",
+      "paths": [
+        "changelog.d/1085.change.md",
+        "src/attr/_make.py",
+        "tests/test_slots.py"
+      ],
+      "pr": 1085,
+      "pr_identity_provenance": "1-parent PR-title subject suffix; remote PR page not queried",
+      "pr_url": "https://github.com/python-attrs/attrs/pull/1085",
+      "python_test_paths": [
+        "tests/test_slots.py"
+      ],
+      "sha": "c9150d278ced32056d73c239ff64034e5056bcb6",
+      "source_python_paths": [
+        "src/attr/_make.py"
+      ],
+      "subject": "Fix backward compatibility with pickles before v22.2.0 (#1085)",
+      "task_id": "pr-1085",
+      "test_patch_bytes": 1736,
+      "test_patch_sha256": "070e7559adea051405f0f5cd8c00535d5b1bc17176b6e0633dc15c64d30e20af",
+      "test_paths": [
+        "tests/test_slots.py"
+      ],
+      "timestamp": 1674629911
+    },
+    {
+      "commit_tree": "7f9d27bb5400dea478aceb224298056c57c5a767",
+      "committed_at": "2023-01-10T17:53:28+01:00",
+      "full_patch_bytes": 56151,
+      "full_patch_sha256": "2d99b4b35c0fa48e8072b4587674be1c2f5f8148c5da72c9ed24c1514b7fadac",
+      "history_position": 597,
+      "order": 56,
+      "parent": "0de967d6ece1606234ac56d5fe58a800d1b0434f",
+      "parent_tree": "a144c51e0483c4904a850716719799b4a9ef6d56",
+      "paths": [
+        "docs/api-attr.rst",
+        "docs/api.rst",
+        "docs/index.md",
+        "src/attr/_cmp.py",
+        "src/attr/_funcs.py",
+        "src/attr/_make.py",
+        "src/attr/_next_gen.py",
+        "src/attr/exceptions.py",
+        "src/attr/validators.py",
+        "tests/test_make.py"
+      ],
+      "pr": 1080,
+      "pr_identity_provenance": "1-parent PR-title subject suffix; remote PR page not queried",
+      "pr_url": "https://github.com/python-attrs/attrs/pull/1080",
+      "python_test_paths": [
+        "tests/test_make.py"
+      ],
+      "sha": "c02d993f9dc8643714fdad43e8adbc0f4a33b474",
+      "source_python_paths": [
+        "src/attr/_cmp.py",
+        "src/attr/_funcs.py",
+        "src/attr/_make.py",
+        "src/attr/_next_gen.py",
+        "src/attr/exceptions.py",
+        "src/attr/validators.py"
+      ],
+      "subject": "Fix object index in API docs by splitting API docs in two (#1080)",
+      "task_id": "pr-1080",
+      "test_patch_bytes": 858,
+      "test_patch_sha256": "ee99a47da66d3d71e12ea01ac857edcf42cda4b5472d8712c43b56b99f89c282",
+      "test_paths": [
+        "tests/test_make.py"
+      ],
+      "timestamp": 1673369608
+    },
+    {
+      "commit_tree": "48500682feb971eebc38ef5ddd1ce1aab4724bd2",
+      "committed_at": "2023-01-08T18:34:28+01:00",
+      "full_patch_bytes": 3581,
+      "full_patch_sha256": "5d252f170792a850e16e03af2b91df07168792e35068d81d9bdf7ea68999b20d",
+      "history_position": 599,
+      "order": 57,
+      "parent": "c6668fa419d096d4ba52047f8d10d510da4d1712",
+      "parent_tree": "66d1cc4c67a83264c72a82168b863663cf32331f",
+      "paths": [
+        "changelog.d/1081.change.md",
+        "src/attr/_make.py",
+        "tests/test_next_gen.py"
+      ],
+      "pr": 1081,
+      "pr_identity_provenance": "1-parent PR-title subject suffix; remote PR page not queried",
+      "pr_url": "https://github.com/python-attrs/attrs/pull/1081",
+      "python_test_paths": [
+        "tests/test_next_gen.py"
+      ],
+      "sha": "a71fbbad8950e127ebe4509b4ff0d730fb02a8b2",
+      "source_python_paths": [
+        "src/attr/_make.py"
+      ],
+      "subject": "Fix @frozen exceptions to allow __traceback__ to be set. (#1081)",
+      "task_id": "pr-1081",
+      "test_patch_bytes": 1519,
+      "test_patch_sha256": "c4b3d2781518c6dff5e877079be41ddc9bbda277f92a86d55991eb8618cc9024",
+      "test_paths": [
+        "tests/test_next_gen.py"
+      ],
+      "timestamp": 1673199268
+    },
+    {
+      "commit_tree": "3eea56227bf7bcdb39881dbc3c7fd32d9cf9528c",
+      "committed_at": "2022-11-30T14:39:57Z",
+      "full_patch_bytes": 26687,
+      "full_patch_sha256": "8961f6ec6aa6f6952559d220c5ea925011aa347d00f90a2f1a18cff652fee290",
+      "history_position": 647,
+      "order": 58,
+      "parent": "69aca6c130d98dacc31888607fa62fd28004cc2b",
+      "parent_tree": "32fae05652957afeeb933ec565e4ef42ca36475b",
+      "paths": [
+        "changelog.d/950.change.rst",
+        "docs/api.rst",
+        "docs/examples.rst",
+        "docs/extending.rst",
+        "docs/init.rst",
+        "src/attr/__init__.pyi",
+        "src/attr/_funcs.py",
+        "src/attr/_make.py",
+        "src/attr/_next_gen.py",
+        "tests/test_functional.py",
+        "tests/test_hooks.py",
+        "tests/test_make.py",
+        "tests/typing_example.py",
+        "tests/utils.py"
+      ],
+      "pr": 950,
+      "pr_identity_provenance": "1-parent PR-title subject suffix; remote PR page not queried",
+      "pr_url": "https://github.com/python-attrs/attrs/pull/950",
+      "python_test_paths": [
+        "tests/test_functional.py",
+        "tests/test_hooks.py",
+        "tests/test_make.py",
+        "tests/typing_example.py",
+        "tests/utils.py"
+      ],
+      "sha": "ee3ecb112f6af7f131a518058b2d0a7793edaa06",
+      "source_python_paths": [
+        "src/attr/_funcs.py",
+        "src/attr/_make.py",
+        "src/attr/_next_gen.py"
+      ],
+      "subject": "Add Attribute.alias (#950)",
+      "task_id": "pr-950",
+      "test_patch_bytes": 7458,
+      "test_patch_sha256": "19b3a9aac728b76b82263ee2cebb7a509ec5d934b49b580d2e4973f6d80df0aa",
+      "test_paths": [
+        "tests/test_functional.py",
+        "tests/test_hooks.py",
+        "tests/test_make.py",
+        "tests/typing_example.py",
+        "tests/utils.py"
+      ],
+      "timestamp": 1669819197
+    },
+    {
+      "commit_tree": "0a660073b17339ed1b02af7a0d022c9d13125d7b",
+      "committed_at": "2022-09-04T13:55:02+02:00",
+      "full_patch_bytes": 16488,
+      "full_patch_sha256": "7096714843ef4a909061367410b62dfb1b6a235e20ed74bf7a7e0966f1d60118",
+      "history_position": 687,
+      "order": 59,
+      "parent": "f7fa5a810c4c6919b6ce56228226c68bf4859e45",
+      "parent_tree": "1bc0defebb3f6b5927e2dc4ff86a9aa784fd466c",
+      "paths": [
+        "changelog.d/1010.change.rst",
+        "docs/api.rst",
+        "src/attr/validators.py",
+        "src/attr/validators.pyi",
+        "tests/test_validators.py",
+        "tests/typing_example.py"
+      ],
+      "pr": 1010,
+      "pr_identity_provenance": "1-parent PR-title subject suffix; remote PR page not queried",
+      "pr_url": "https://github.com/python-attrs/attrs/pull/1010",
+      "python_test_paths": [
+        "tests/test_validators.py",
+        "tests/typing_example.py"
+      ],
+      "sha": "f870beb84a56daaf6b638301f8afb530ed903727",
+      "source_python_paths": [
+        "src/attr/validators.py"
+      ],
+      "subject": "Add a not_ validator (#1010)",
+      "task_id": "pr-1010",
+      "test_patch_bytes": 9103,
+      "test_patch_sha256": "2d8bd982cc7f780d79ce7f66b8b6389a8db16068eb37171bd2c42b4f564fec9e",
+      "test_paths": [
+        "tests/test_validators.py",
+        "tests/typing_example.py"
+      ],
+      "timestamp": 1662292502
+    },
+    {
+      "commit_tree": "40bd0826cb9a9bdfa44b77dfe79f928bb4b733b8",
+      "committed_at": "2022-08-27T17:41:56+02:00",
+      "full_patch_bytes": 3961,
+      "full_patch_sha256": "30b96bb3f0ee02f50aecbfbafacd79d40f628539b0066ea80f71e3d6dc065e13",
+      "history_position": 690,
+      "order": 60,
+      "parent": "20453b1a61b514b13d1023edb7d42ba6950076e0",
+      "parent_tree": "b8fa17f2f92cff06a84a31c472f99f73bbcedcd5",
+      "paths": [
+        "changelog.d/983.change.rst",
+        "docs/api.rst",
+        "src/attr/__init__.pyi",
+        "src/attr/_make.py",
+        "tests/test_dunders.py"
+      ],
+      "pr": 983,
+      "pr_identity_provenance": "1-parent PR-title subject suffix; remote PR page not queried",
+      "pr_url": "https://github.com/python-attrs/attrs/pull/983",
+      "python_test_paths": [
+        "tests/test_dunders.py"
+      ],
+      "sha": "c860e9dd2548e634c83f8e425ced3aede15d316a",
+      "source_python_paths": [
+        "src/attr/_make.py"
+      ],
+      "subject": "Use enum for typing NOTHING (#983)",
+      "task_id": "pr-983",
+      "test_patch_bytes": 1227,
+      "test_patch_sha256": "cc305f68ebf146dbd42738e55d978ce411250379bb052ec54c27c8acd1dd9ca8",
+      "test_paths": [
+        "tests/test_dunders.py"
+      ],
+      "timestamp": 1661614916
+    },
+    {
+      "commit_tree": "61d50ff0bbebeb73c34b832185cd4f8329a9d861",
+      "committed_at": "2022-08-18T08:59:50+02:00",
+      "full_patch_bytes": 2879,
+      "full_patch_sha256": "b08db0a761e679c9c684f07085977e6ed4e43640f157e5850acacfd87fc03e60",
+      "history_position": 711,
+      "order": 61,
+      "parent": "5ecc39749a98c7ec3fc63b8cbaa82de5eb17c173",
+      "parent_tree": "44ea59cab3bf69e87373b15fd5ff670694d54275",
+      "paths": [
+        "src/attr/_make.py",
+        "tests/test_slots.py"
+      ],
+      "pr": 1009,
+      "pr_identity_provenance": "1-parent PR-title subject suffix; remote PR page not queried",
+      "pr_url": "https://github.com/python-attrs/attrs/pull/1009",
+      "python_test_paths": [
+        "tests/test_slots.py"
+      ],
+      "sha": "89a890a3262273514619d1881c6a8b0fe26c66ac",
+      "source_python_paths": [
+        "src/attr/_make.py"
+      ],
+      "subject": "Change __getstate__ and __setstate__ to use a dict (#1004) (#1009)",
+      "task_id": "pr-1009",
+      "test_patch_bytes": 1808,
+      "test_patch_sha256": "5548b386211eeaaf5e5d0ea842fc33b0750a8bc977d6d7e07817f2f7f799ad32",
+      "test_paths": [
+        "tests/test_slots.py"
+      ],
+      "timestamp": 1660805990
+    },
+    {
+      "commit_tree": "7d8e63c270f798d6dec34c29e253434195e56752",
+      "committed_at": "2022-08-11T11:33:34Z",
+      "full_patch_bytes": 3541,
+      "full_patch_sha256": "12c174748d2c05b2153862471d36cc8e23a465c4951b48385ade6c9192872a70",
+      "history_position": 718,
+      "order": 62,
+      "parent": "536ddc57e25228655e78634db91d6ebd23dbb5d1",
+      "parent_tree": "b8f779485a53b14ce28cd3fcefd3ad4102703cc2",
+      "paths": [
+        "changelog.d/1001.change.rst",
+        "src/attr/_make.py",
+        "tests/test_abc.py"
+      ],
+      "pr": 1001,
+      "pr_identity_provenance": "1-parent PR-title subject suffix; remote PR page not queried",
+      "pr_url": "https://github.com/python-attrs/attrs/pull/1001",
+      "python_test_paths": [
+        "tests/test_abc.py"
+      ],
+      "sha": "c58ffd4e4cba5d5e58356722b985fc362358c48e",
+      "source_python_paths": [
+        "src/attr/_make.py"
+      ],
+      "subject": "Call abc.update_abstractmethods on 3.10+ (#1001)",
+      "task_id": "pr-1001",
+      "test_patch_bytes": 1647,
+      "test_patch_sha256": "db91579d56ad72b9530788f138d191a29abd5f70b56f9f5415656563491bd852",
+      "test_paths": [
+        "tests/test_abc.py"
+      ],
+      "timestamp": 1660217614
+    },
+    {
+      "commit_tree": "73d7791c4dec5866c47759d2c61ff210612d78a1",
+      "committed_at": "2022-08-10T12:41:46+02:00",
+      "full_patch_bytes": 14084,
+      "full_patch_sha256": "79fe58df84fb8fdfcaf3bc2695fa09cc152f7c6e55741849553d897483096409",
+      "history_position": 729,
+      "order": 63,
+      "parent": "a8191556c0aad84125d2c3435c5a2352b2f8a9ba",
+      "parent_tree": "1a45dd64ea018a599d172d2352aecd1e6c24dc5b",
+      "paths": [
+        "changelog.d/995.change.rst",
+        "docs/why.rst",
+        "src/attr/_cmp.py",
+        "src/attr/_funcs.py",
+        "src/attr/_make.py",
+        "tests/test_make.py"
+      ],
+      "pr": 995,
+      "pr_identity_provenance": "1-parent PR-title subject suffix; remote PR page not queried",
+      "pr_url": "https://github.com/python-attrs/attrs/pull/995",
+      "python_test_paths": [
+        "tests/test_make.py"
+      ],
+      "sha": "61516832448ea9ba9cf47281caec840a09e32a40",
+      "source_python_paths": [
+        "src/attr/_cmp.py",
+        "src/attr/_funcs.py",
+        "src/attr/_make.py"
+      ],
+      "subject": "Eliminate most str.format() and %-formatting (#995)",
+      "task_id": "pr-995",
+      "test_patch_bytes": 576,
+      "test_patch_sha256": "0b81ea05777f39bd137ccf1e9bdddd4e9b5b8bf82e289183df76d2c6343744b6",
+      "test_paths": [
+        "tests/test_make.py"
+      ],
+      "timestamp": 1660128106
+    },
+    {
+      "commit_tree": "1a45dd64ea018a599d172d2352aecd1e6c24dc5b",
+      "committed_at": "2022-08-07T07:52:28Z",
+      "full_patch_bytes": 5458,
+      "full_patch_sha256": "0603455e3c19ce42dc3fdd5b7406ba8a15b48bc75ced11d8f9e9ac787016bb64",
+      "history_position": 730,
+      "order": 64,
+      "parent": "983c2c42935ccfc2fce77d6f20dac7821bc720e8",
+      "parent_tree": "ed578320d33e4dd564ce3839ad51c576248e8fc3",
+      "paths": [
+        "changelog.d/991.change.rst",
+        "docs/how-does-it-work.rst",
+        "src/attr/_make.py",
+        "tests/test_functional.py"
+      ],
+      "pr": 991,
+      "pr_identity_provenance": "1-parent PR-title subject suffix; remote PR page not queried",
+      "pr_url": "https://github.com/python-attrs/attrs/pull/991",
+      "python_test_paths": [
+        "tests/test_functional.py"
+      ],
+      "sha": "a8191556c0aad84125d2c3435c5a2352b2f8a9ba",
+      "source_python_paths": [
+        "src/attr/_make.py"
+      ],
+      "subject": "Speedup `_setattr` usage and fix slight performance regressions (#991)",
+      "task_id": "pr-991",
+      "test_patch_bytes": 608,
+      "test_patch_sha256": "ac93faed03b86d23fdd6ba866b657536ebaa06977de7f5b37ba207fbae6bbe1f",
+      "test_paths": [
+        "tests/test_functional.py"
+      ],
+      "timestamp": 1659858748
+    },
+    {
+      "commit_tree": "1d531f3c98149ea56b512f87f27a21ad55764abc",
+      "committed_at": "2022-06-13T07:57:47+02:00",
+      "full_patch_bytes": 2048,
+      "full_patch_sha256": "fb2266dc071719fb53db47374776d6f78103690109e6d2e3cdbe5f0d9f3f09c4",
+      "history_position": 768,
+      "order": 65,
+      "parent": "985e8ef76716fe340520deab473ee65d2da70980",
+      "parent_tree": "dd18c1bc3bd2e7bbb459193656872ad3326649f0",
+      "paths": [
+        "changelog.d/951.change.rst",
+        "src/attr/validators.py",
+        "tests/test_validators.py"
+      ],
+      "pr": 951,
+      "pr_identity_provenance": "1-parent PR-title subject suffix; remote PR page not queried",
+      "pr_url": "https://github.com/python-attrs/attrs/pull/951",
+      "python_test_paths": [
+        "tests/test_validators.py"
+      ],
+      "sha": "2257a0c60cba6a3cff0841c884981b5b7b99aef8",
+      "source_python_paths": [
+        "src/attr/validators.py"
+      ],
+      "subject": "Complete error signature of _InValidator (#951)",
+      "task_id": "pr-951",
+      "test_patch_bytes": 1065,
+      "test_patch_sha256": "07533e8f4194d4e4345bed3b4210573ee2378a4e8ba10ed64510b8131a675ded",
+      "test_paths": [
+        "tests/test_validators.py"
+      ],
+      "timestamp": 1655099867
+    },
+    {
+      "commit_tree": "f384df24ab4a44871219bbb628b0ae5ff91a5e41",
+      "committed_at": "2022-03-21T15:45:05+01:00",
+      "full_patch_bytes": 4369,
+      "full_patch_sha256": "d43d7a06f7975e82b5cb87dce6e5611e345746902a87694520af669366765b27",
+      "history_position": 782,
+      "order": 66,
+      "parent": "e18b5f340a793432312a5f7e709b99439520d98e",
+      "parent_tree": "197defd1cd60fb35df946b7c83dce0074ec599c4",
+      "paths": [
+        "docs/glossary.rst",
+        "docs/hashing.rst",
+        "src/attr/_compat.py",
+        "src/attr/validators.py",
+        "tests/test_slots.py"
+      ],
+      "pr": 942,
+      "pr_identity_provenance": "1-parent PR-title subject suffix; remote PR page not queried",
+      "pr_url": "https://github.com/python-attrs/attrs/pull/942",
+      "python_test_paths": [
+        "tests/test_slots.py"
+      ],
+      "sha": "d785c656e5d742a74bf2dc1edfeb4ada789991c8",
+      "source_python_paths": [
+        "src/attr/_compat.py",
+        "src/attr/validators.py"
+      ],
+      "subject": "Clean up some more Python 2-isms (#942)",
+      "task_id": "pr-942",
+      "test_patch_bytes": 850,
+      "test_patch_sha256": "86369b9e94eb64322d8df08fd88195f95abbd771586cc7609a13a0239df47147",
+      "test_paths": [
+        "tests/test_slots.py"
+      ],
+      "timestamp": 1647873905
+    },
+    {
+      "commit_tree": "197defd1cd60fb35df946b7c83dce0074ec599c4",
+      "committed_at": "2022-03-21T14:03:22+01:00",
+      "full_patch_bytes": 15015,
+      "full_patch_sha256": "d04ba5ebbb577c8e9cd1df2deaf90e0e3705ce78b729577f57baaf2836e80213",
+      "history_position": 783,
+      "order": 67,
+      "parent": "a22e98c6cb57f7b9c1b84214ed59509264861475",
+      "parent_tree": "7ec0616841334bb1034b693784e7dd7db7eff55c",
+      "paths": [
+        "src/attr/_cmp.py",
+        "src/attr/_compat.py",
+        "src/attr/_funcs.py",
+        "src/attr/_make.py",
+        "src/attr/filters.py",
+        "tests/test_compat.py",
+        "tests/test_funcs.py",
+        "tests/test_functional.py",
+        "tests/test_validators.py"
+      ],
+      "pr": 941,
+      "pr_identity_provenance": "1-parent PR-title subject suffix; remote PR page not queried",
+      "pr_url": "https://github.com/python-attrs/attrs/pull/941",
+      "python_test_paths": [
+        "tests/test_compat.py",
+        "tests/test_funcs.py",
+        "tests/test_functional.py",
+        "tests/test_validators.py"
+      ],
+      "sha": "e18b5f340a793432312a5f7e709b99439520d98e",
+      "source_python_paths": [
+        "src/attr/_cmp.py",
+        "src/attr/_compat.py",
+        "src/attr/_funcs.py",
+        "src/attr/_make.py",
+        "src/attr/filters.py"
+      ],
+      "subject": "Remove various obsolete _compat helpers (#941)",
+      "task_id": "pr-941",
+      "test_patch_bytes": 7979,
+      "test_patch_sha256": "345d00e76645bd67f4b19cedfe3bb8a9adf002f29618a4fde17b976fdac78f7e",
+      "test_paths": [
+        "tests/test_compat.py",
+        "tests/test_funcs.py",
+        "tests/test_functional.py",
+        "tests/test_validators.py"
+      ],
+      "timestamp": 1647867802
+    },
+    {
+      "commit_tree": "5d198efdc288ae4910c14706d7dd30397164b2cf",
+      "committed_at": "2022-03-21T10:29:58+01:00",
+      "full_patch_bytes": 4202,
+      "full_patch_sha256": "8fbec46051f004d909ae7ec475d163ac2e3db5736ced99008ecd2dc0ca7a0d5c",
+      "history_position": 785,
+      "order": 68,
+      "parent": "980c8b04f59d93c429fc66d901d2a24c70a8d777",
+      "parent_tree": "98ecc864bb8076c2ee19ab2043c1ad8527f8a002",
+      "paths": [
+        "changelog.d/939.breaking.rst",
+        "src/attr/_make.py",
+        "tests/test_functional.py"
+      ],
+      "pr": 939,
+      "pr_identity_provenance": "1-parent PR-title subject suffix; remote PR page not queried",
+      "pr_url": "https://github.com/python-attrs/attrs/pull/939",
+      "python_test_paths": [
+        "tests/test_functional.py"
+      ],
+      "sha": "c422bf8041ed51d0df5e1485d1892f821e959cba",
+      "source_python_paths": [
+        "src/attr/_make.py"
+      ],
+      "subject": "Drop the deprecated Attribute.cmp (#939)",
+      "task_id": "pr-939",
+      "test_patch_bytes": 2582,
+      "test_patch_sha256": "e3e3041fc627635edc0ef4aabc5cee94e0eb10e70ce2adb12e1aa116e7aaf886",
+      "test_paths": [
+        "tests/test_functional.py"
+      ],
+      "timestamp": 1647854998
+    },
+    {
+      "commit_tree": "dcc4df86801ab269c4819a11ae9b78fa3d095d12",
+      "committed_at": "2022-03-20T09:48:55+01:00",
+      "full_patch_bytes": 7688,
+      "full_patch_sha256": "ef4a39b2da1d63c3eca5faadc97ab9db8180ecba0c5d6917a214c2ec584de129",
+      "history_position": 787,
+      "order": 69,
+      "parent": "b75436630fafde95ba2954052c5c4d7d4f506b28",
+      "parent_tree": "18aa59529dbbdad441406ad53e92dfa831b0e57c",
+      "paths": [
+        "changelog.d/925.change.rst",
+        "src/attr/validators.py",
+        "src/attr/validators.pyi",
+        "tests/test_validators.py"
+      ],
+      "pr": 925,
+      "pr_identity_provenance": "1-parent PR-title subject suffix; remote PR page not queried",
+      "pr_url": "https://github.com/python-attrs/attrs/pull/925",
+      "python_test_paths": [
+        "tests/test_validators.py"
+      ],
+      "sha": "d0c73d8faa184cdff8d6a0378ed5b85ca57cde7d",
+      "source_python_paths": [
+        "src/attr/validators.py"
+      ],
+      "subject": "Allow `deep_iterable` member validator to accept a list of validators (#925)",
+      "task_id": "pr-925",
+      "test_patch_bytes": 5700,
+      "test_patch_sha256": "12a61ab3097a8000d078c6d73a0c5cba267ca4a100ee84f3ee7162981ec3c347",
+      "test_paths": [
+        "tests/test_validators.py"
+      ],
+      "timestamp": 1647766135
+    },
+    {
+      "commit_tree": "ee0bfefde84f3f13fba09a16bb0da3cc7a785a25",
+      "committed_at": "2022-03-14T15:26:42+01:00",
+      "full_patch_bytes": 7831,
+      "full_patch_sha256": "b9ac0c95ff967c962715f9c7645bb7aebbb373a23356cabffbcc8bc336918eda",
+      "history_position": 790,
+      "order": 70,
+      "parent": "9f096146782a6bc3a823ebe701678739dbb07504",
+      "parent_tree": "5120ce54377f3e4cb1aeacbb0efc408ed9696a3a",
+      "paths": [
+        "src/attr/_compat.py",
+        "src/attr/_make.py",
+        "src/attr/converters.py",
+        "tests/test_converters.py"
+      ],
+      "pr": 912,
+      "pr_identity_provenance": "1-parent PR-title subject suffix; remote PR page not queried",
+      "pr_url": "https://github.com/python-attrs/attrs/pull/912",
+      "python_test_paths": [
+        "tests/test_converters.py"
+      ],
+      "sha": "656ce11bc2e495419146f2f196c16769890908ba",
+      "source_python_paths": [
+        "src/attr/_compat.py",
+        "src/attr/_make.py",
+        "src/attr/converters.py"
+      ],
+      "subject": "Deduplicate annotation extraction (#912)",
+      "task_id": "pr-912",
+      "test_patch_bytes": 535,
+      "test_patch_sha256": "51becda0e2f59a2ef72acf2a50e36e5a8b9df5be34cb118226f446b92f644180",
+      "test_paths": [
+        "tests/test_converters.py"
+      ],
+      "timestamp": 1647268002
+    },
+    {
+      "commit_tree": "d815275a3109c3a98f74e74042e6c6c4f2b8cca0",
+      "committed_at": "2022-02-02T09:10:33Z",
+      "full_patch_bytes": 5139,
+      "full_patch_sha256": "24e3aee396dfa757dc65e1578298e579cb747d1723e3d87060d40f4769c3a369",
+      "history_position": 799,
+      "order": 71,
+      "parent": "a080e54e025d4554e87a23058172406b81b09706",
+      "parent_tree": "c7008d65994b43087b4f666dddd4b0ddd148794e",
+      "paths": [
+        "changelog.d/916.change.rst",
+        "docs/api.rst",
+        "src/attr/validators.py",
+        "src/attr/validators.pyi",
+        "tests/test_validators.py"
+      ],
+      "pr": 916,
+      "pr_identity_provenance": "1-parent PR-title subject suffix; remote PR page not queried",
+      "pr_url": "https://github.com/python-attrs/attrs/pull/916",
+      "python_test_paths": [
+        "tests/test_validators.py"
+      ],
+      "sha": "7804a68ee3dd2c2a0302d482237c51ce975ef17f",
+      "source_python_paths": [
+        "src/attr/validators.py"
+      ],
+      "subject": "Added attrs.validators.min_len() (#916)",
+      "task_id": "pr-916",
+      "test_patch_bytes": 2196,
+      "test_patch_sha256": "5704a3a2914513a49129e961b5c0d28c77f5aaf6f79de0ffb4b19694e59bf3c2",
+      "test_paths": [
+        "tests/test_validators.py"
+      ],
+      "timestamp": 1643793033
+    },
+    {
+      "commit_tree": "f21babd35a8df65afa82abe2a53bca8cb41031fb",
+      "committed_at": "2022-01-31T05:57:33+01:00",
+      "full_patch_bytes": 3404,
+      "full_patch_sha256": "bd77d21fab832d449788c12e936ac53b5ad3739ca7b3888206b447efd5cb4205",
+      "history_position": 806,
+      "order": 72,
+      "parent": "976b8287703d781590d457dffc8b581a244b09d5",
+      "parent_tree": "e2890890ceff9e6f94f6e1b24fce453e5ac35aa8",
+      "paths": [
+        "changelog.d/909.change.rst",
+        "src/attr/_make.py",
+        "tests/test_make.py"
+      ],
+      "pr": 909,
+      "pr_identity_provenance": "1-parent PR-title subject suffix; remote PR page not queried",
+      "pr_url": "https://github.com/python-attrs/attrs/pull/909",
+      "python_test_paths": [
+        "tests/test_make.py"
+      ],
+      "sha": "947bfb542104209a587280701d8cb389c813459d",
+      "source_python_paths": [
+        "src/attr/_make.py"
+      ],
+      "subject": "Fix hashing for custom `eq` objects (#909)",
+      "task_id": "pr-909",
+      "test_patch_bytes": 1156,
+      "test_patch_sha256": "c7a6505997199157e9f05e4f22377cb2b4d890bdcf06ad02f001302756569892",
+      "test_paths": [
+        "tests/test_make.py"
+      ],
+      "timestamp": 1643605053
+    },
+    {
+      "commit_tree": "5469b304ebb3b732a8773865918c9a21f8f32941",
+      "committed_at": "2022-01-03T13:39:41Z",
+      "full_patch_bytes": 5936,
+      "full_patch_sha256": "4661d4348ea7cba7fa9e4b05223d2693b106fc1dcac98264486436b747eb4348",
+      "history_position": 815,
+      "order": 73,
+      "parent": "c162c783dceffa2aec15acb945d23b7e0b730a0b",
+      "parent_tree": "4d26f30f2dee5f1722fc855ce22bbd1c3070f14c",
+      "paths": [
+        "changelog.d/898.change.rst",
+        "docs/how-does-it-work.rst",
+        "src/attr/_make.py",
+        "tests/test_functional.py"
+      ],
+      "pr": 898,
+      "pr_identity_provenance": "1-parent PR-title subject suffix; remote PR page not queried",
+      "pr_url": "https://github.com/python-attrs/attrs/pull/898",
+      "python_test_paths": [
+        "tests/test_functional.py"
+      ],
+      "sha": "3df7bbe089658ecf1dcc21308926bfd9133b12e1",
+      "source_python_paths": [
+        "src/attr/_make.py"
+      ],
+      "subject": "Speedup uses of `object.__setattr__` (#898)",
+      "task_id": "pr-898",
+      "test_patch_bytes": 606,
+      "test_patch_sha256": "df107c207e226561260d4cc553b2a5f3a6b972f6fd4a64af7e32e7b56ecded98",
+      "test_paths": [
+        "tests/test_functional.py"
+      ],
+      "timestamp": 1641217181
+    },
+    {
+      "commit_tree": "9cd213f08b7d456989df67f87de23ca6a24afd90",
+      "committed_at": "2021-12-16T09:01:51+01:00",
+      "full_patch_bytes": 8408,
+      "full_patch_sha256": "f6a9dda70fa5e18b380a9a94bfb22bb4c653edd03524d03390964d8756a2364c",
+      "history_position": 860,
+      "order": 74,
+      "parent": "17067930128e78a9c3c7c5280b5417b7bce82657",
+      "parent_tree": "590a532d2063eb040d2c08b790df54ad285a937c",
+      "paths": [
+        "changelog.d/646.change.rst",
+        "changelog.d/888.change.rst",
+        "src/attr/__init__.pyi",
+        "src/attr/_funcs.py",
+        "tests/test_funcs.py",
+        "tests/typing_example.py"
+      ],
+      "pr": 888,
+      "pr_identity_provenance": "1-parent PR-title subject suffix; remote PR page not queried",
+      "pr_url": "https://github.com/python-attrs/attrs/pull/888",
+      "python_test_paths": [
+        "tests/test_funcs.py",
+        "tests/typing_example.py"
+      ],
+      "sha": "7b02220bd337754e38f8c64abfe10e073fd028de",
+      "source_python_paths": [
+        "src/attr/_funcs.py"
+      ],
+      "subject": "Serialize keys as tuples in asdict (#888)",
+      "task_id": "pr-888",
+      "test_patch_bytes": 1714,
+      "test_patch_sha256": "0bb4f9919c17d9607cd8b81e872dd2ec30407f4c178175b20c720ff8c1b9c0d8",
+      "test_paths": [
+        "tests/test_funcs.py",
+        "tests/typing_example.py"
+      ],
+      "timestamp": 1639641711
+    },
+    {
+      "commit_tree": "b46e387b0d91df51648de594f0719fbf07d37da7",
+      "committed_at": "2021-12-14T15:50:37+01:00",
+      "full_patch_bytes": 10514,
+      "full_patch_sha256": "25523a735dd71155261a19c03df034561c02e6e6d4cc0feb69c2c5459e45ba55",
+      "history_position": 870,
+      "order": 75,
+      "parent": "8ae0bd904d6147ce37750fa7ec336f951c14495c",
+      "parent_tree": "eb49227b2f5f3608a2829c4f016bf097a2a40d26",
+      "paths": [
+        "changelog.d/835.breaking.rst",
+        "changelog.d/886.breaking.rst",
+        "docs/api.rst",
+        "src/attr/_make.py",
+        "src/attr/_next_gen.py",
+        "tests/test_functional.py",
+        "tests/test_next_gen.py"
+      ],
+      "pr": 886,
+      "pr_identity_provenance": "1-parent PR-title subject suffix; remote PR page not queried",
+      "pr_url": "https://github.com/python-attrs/attrs/pull/886",
+      "python_test_paths": [
+        "tests/test_functional.py",
+        "tests/test_next_gen.py"
+      ],
+      "sha": "679e4b443d5558d5e64133ec9047e7a4e737426b",
+      "source_python_paths": [
+        "src/attr/_make.py",
+        "src/attr/_next_gen.py"
+      ],
+      "subject": "NG: convert on setattr by default (#886)",
+      "task_id": "pr-886",
+      "test_patch_bytes": 3877,
+      "test_patch_sha256": "269de11e80cc2fc8b827ac154c940de320ef1958ffaa21486e9b0c193cf10398",
+      "test_paths": [
+        "tests/test_functional.py",
+        "tests/test_next_gen.py"
+      ],
+      "timestamp": 1639493437
+    },
+    {
+      "commit_tree": "aea26a7d013eede5aed178f6aecf12a18f2662ac",
+      "committed_at": "2021-11-30T06:32:24+01:00",
+      "full_patch_bytes": 7142,
+      "full_patch_sha256": "7a7a3c1a39cc125bf977e5a7ffed67053617e06c85bd6a9f359c361329c9c04a",
+      "history_position": 876,
+      "order": 76,
+      "parent": "fe19f4b341dbba5cda14b11d6a184105891c67e5",
+      "parent_tree": "45ee568b2782af2eefab87c8be974c41cfedf324",
+      "paths": [
+        "changelog.d/877.change.rst",
+        "src/attr/validators.py",
+        "src/attr/validators.pyi",
+        "tests/test_validators.py",
+        "tests/typing_example.py"
+      ],
+      "pr": 877,
+      "pr_identity_provenance": "1-parent PR-title subject suffix; remote PR page not queried",
+      "pr_url": "https://github.com/python-attrs/attrs/pull/877",
+      "python_test_paths": [
+        "tests/test_validators.py",
+        "tests/typing_example.py"
+      ],
+      "sha": "1759260aa0bb0ef62fdfcab8636af9d4cfa91c14",
+      "source_python_paths": [
+        "src/attr/validators.py"
+      ],
+      "subject": "Add support for re.Pattern to validators.matches_re() (#877)",
+      "task_id": "pr-877",
+      "test_patch_bytes": 2133,
+      "test_patch_sha256": "42d83d017b108a5ccc62329ed9026af4934e95bb798c69134ba21249e71dc055",
+      "test_paths": [
+        "tests/test_validators.py",
+        "tests/typing_example.py"
+      ],
+      "timestamp": 1638250344
+    },
+    {
+      "commit_tree": "45ee568b2782af2eefab87c8be974c41cfedf324",
+      "committed_at": "2021-11-29T20:35:59+01:00",
+      "full_patch_bytes": 2239,
+      "full_patch_sha256": "e8a21489cf9d956ef16766059bdd176453c887228872b6de167d8693e91ee21f",
+      "history_position": 877,
+      "order": 77,
+      "parent": "34c55613d2b26f45b2d3b7cf010e57188bc7bea5",
+      "parent_tree": "cfdced2f46a87228ad5c69753d83eb1d43707a7c",
+      "paths": [
+        "src/attr/filters.py",
+        "tests/test_filters.py"
+      ],
+      "pr": 878,
+      "pr_identity_provenance": "1-parent PR-title subject suffix; remote PR page not queried",
+      "pr_url": "https://github.com/python-attrs/attrs/pull/878",
+      "python_test_paths": [
+        "tests/test_filters.py"
+      ],
+      "sha": "fe19f4b341dbba5cda14b11d6a184105891c67e5",
+      "source_python_paths": [
+        "src/attr/filters.py"
+      ],
+      "subject": "Avoid whitelist/blacklist terminology (#878)",
+      "task_id": "pr-878",
+      "test_patch_bytes": 1487,
+      "test_patch_sha256": "bb0925eb867d09c911115885785fcea4d511c2cb57a3ed71423fc80a741d2d9d",
+      "test_paths": [
+        "tests/test_filters.py"
+      ],
+      "timestamp": 1638214559
+    },
+    {
+      "commit_tree": "cae81dd014c47359efbce5509828cbb9b2493e55",
+      "committed_at": "2021-11-17T07:05:01+01:00",
+      "full_patch_bytes": 9088,
+      "full_patch_sha256": "22e6018163649b3fb2d5431b02fef81c4a8278e1d49e6c4f1c23d70399249337",
+      "history_position": 908,
+      "order": 78,
+      "parent": "c4587c07935eea8bd7b520da52fd30e082d63a30",
+      "parent_tree": "b23dc5107f13cc87cc25315ab982f3bf1fbe5b53",
+      "paths": [
+        "changelog.d/859.change.rst",
+        "docs/api.rst",
+        "docs/init.rst",
+        "src/attr/_config.py",
+        "src/attr/validators.py",
+        "src/attr/validators.pyi",
+        "tests/test_validators.py",
+        "tests/typing_example.py"
+      ],
+      "pr": 859,
+      "pr_identity_provenance": "1-parent PR-title subject suffix; remote PR page not queried",
+      "pr_url": "https://github.com/python-attrs/attrs/pull/859",
+      "python_test_paths": [
+        "tests/test_validators.py",
+        "tests/typing_example.py"
+      ],
+      "sha": "c6143d518bb4dd41d231e272d799b9a5b458d942",
+      "source_python_paths": [
+        "src/attr/_config.py",
+        "src/attr/validators.py"
+      ],
+      "subject": "Add \"no_run_validators()\" context manager (#859)",
+      "task_id": "pr-859",
+      "test_patch_bytes": 2987,
+      "test_patch_sha256": "2f5608f316032165995ce975f2639e196edca9c5c0b8548f519b99b3b4e7fddc",
+      "test_paths": [
+        "tests/test_validators.py",
+        "tests/typing_example.py"
+      ],
+      "timestamp": 1637129101
+    },
+    {
+      "commit_tree": "b9cd5216a71e07ed5468d5918fe98b6de44be6f9",
+      "committed_at": "2021-10-04T16:23:50+02:00",
+      "full_patch_bytes": 1590,
+      "full_patch_sha256": "9c2bfd1e03ca0eab43073811fdbc281d939bb3d7b684530094ed5d22847102f1",
+      "history_position": 932,
+      "order": 79,
+      "parent": "407c5e3d9e87246497ebe17da6bac72bacfb3af6",
+      "parent_tree": "9ac7fc089d33f3e71d20c27d80472259cf45973b",
+      "paths": [
+        "src/attr/__init__.py",
+        "tests/attr_import_star.py",
+        "tests/test_import.py"
+      ],
+      "pr": 848,
+      "pr_identity_provenance": "1-parent PR-title subject suffix; remote PR page not queried",
+      "pr_url": "https://github.com/python-attrs/attrs/pull/848",
+      "python_test_paths": [
+        "tests/attr_import_star.py",
+        "tests/test_import.py"
+      ],
+      "sha": "44ea327ab7f3a9c33578b1895f65314a81858dae",
+      "source_python_paths": [
+        "src/attr/__init__.py"
+      ],
+      "subject": "Make `from attr import *` work again on recent python versions. (#848)",
+      "task_id": "pr-848",
+      "test_patch_bytes": 1062,
+      "test_patch_sha256": "77f0af071dd06c63065adbb981b575e6bfb67f5509d6e13f461a77d1041147e5",
+      "test_paths": [
+        "tests/attr_import_star.py",
+        "tests/test_import.py"
+      ],
+      "timestamp": 1633357430
+    },
+    {
+      "commit_tree": "78f45c145512f52aff4f7b6d7bde53d5d7404eab",
+      "committed_at": "2021-09-24T12:47:19+02:00",
+      "full_patch_bytes": 11217,
+      "full_patch_sha256": "f75eb7eaaaade4d8c94bbd7d94c3313b0187c5a9d1af57e33003a8da2ca794a6",
+      "history_position": 934,
+      "order": 80,
+      "parent": "f57b6a6759827a0ec56729da27ec39e9e3b006f3",
+      "parent_tree": "c503594a9eba71e947e7f16f996b55bf01fdd22c",
+      "paths": [
+        "changelog.d/845.change.rst",
+        "docs/api.rst",
+        "src/attr/validators.py",
+        "src/attr/validators.pyi",
+        "tests/test_validators.py"
+      ],
+      "pr": 845,
+      "pr_identity_provenance": "1-parent PR-title subject suffix; remote PR page not queried",
+      "pr_url": "https://github.com/python-attrs/attrs/pull/845",
+      "python_test_paths": [
+        "tests/test_validators.py"
+      ],
+      "sha": "52fcad29bbb148606b13f6ef00e91bf45b90f75c",
+      "source_python_paths": [
+        "src/attr/validators.py"
+      ],
+      "subject": "Add additonal validators (#845)",
+      "task_id": "pr-845",
+      "test_patch_bytes": 4415,
+      "test_patch_sha256": "f20d6e719ae87c086581330d641e178b48579147fa78fcab64e42ce9c6a2a15a",
+      "test_paths": [
+        "tests/test_validators.py"
+      ],
+      "timestamp": 1632480439
+    },
+    {
+      "commit_tree": "c503594a9eba71e947e7f16f996b55bf01fdd22c",
+      "committed_at": "2021-09-22T21:58:32+02:00",
+      "full_patch_bytes": 2479,
+      "full_patch_sha256": "0c947cce4ab2a4a16b649b7435516f909b329e9ddfc39d93f7e9464b8758b54b",
+      "history_position": 935,
+      "order": 81,
+      "parent": "f31bb2850a520993396ebdae598056fb3e3af6f8",
+      "parent_tree": "bdd32455e2fa108322bab05266e876a246fbd57d",
+      "paths": [
+        "changelog.d/824.changes.rst",
+        "src/attr/_make.py",
+        "tests/test_hooks.py"
+      ],
+      "pr": 824,
+      "pr_identity_provenance": "1-parent PR-title subject suffix; remote PR page not queried",
+      "pr_url": "https://github.com/python-attrs/attrs/pull/824",
+      "python_test_paths": [
+        "tests/test_hooks.py"
+      ],
+      "sha": "f57b6a6759827a0ec56729da27ec39e9e3b006f3",
+      "source_python_paths": [
+        "src/attr/_make.py"
+      ],
+      "subject": "Convert transformed attrs to AttrsClass (#824)",
+      "task_id": "pr-824",
+      "test_patch_bytes": 823,
+      "test_patch_sha256": "7e20af1498fc9a8aed0367ffd8384da125dd3b1811e96316c9f7e2172c5046c7",
+      "test_paths": [
+        "tests/test_hooks.py"
+      ],
+      "timestamp": 1632340712
+    },
+    {
+      "commit_tree": "bdd32455e2fa108322bab05266e876a246fbd57d",
+      "committed_at": "2021-09-19T21:04:55+02:00",
+      "full_patch_bytes": 2922,
+      "full_patch_sha256": "57642577bcf1eeecc291cadb4c0228a78dc380962ba654b6f21b5266bdea644e",
+      "history_position": 936,
+      "order": 82,
+      "parent": "7c99a4953085186790a28dd441a93dc665f61269",
+      "parent_tree": "41c231a3e16a08e6e9222cb616979b49e8ace4ac",
+      "paths": [
+        "changelog.d/843.change.rst",
+        "src/attr/_funcs.py",
+        "tests/test_annotations.py"
+      ],
+      "pr": 843,
+      "pr_identity_provenance": "1-parent PR-title subject suffix; remote PR page not queried",
+      "pr_url": "https://github.com/python-attrs/attrs/pull/843",
+      "python_test_paths": [
+        "tests/test_annotations.py"
+      ],
+      "sha": "f31bb2850a520993396ebdae598056fb3e3af6f8",
+      "source_python_paths": [
+        "src/attr/_funcs.py"
+      ],
+      "subject": "Fix bug in resolve_types with subclasses (#843)",
+      "task_id": "pr-843",
+      "test_patch_bytes": 1211,
+      "test_patch_sha256": "0fc562423093ec92fe05ae02e3d2f38fb0396eb4e3dc175f9fbd973bf97e78ad",
+      "test_paths": [
+        "tests/test_annotations.py"
+      ],
+      "timestamp": 1632078295
+    },
+    {
+      "commit_tree": "4a0e4c72605283a0d8f051f6f1211a3d718cefdf",
+      "committed_at": "2021-08-10T07:45:28+02:00",
+      "full_patch_bytes": 5360,
+      "full_patch_sha256": "ed3645e4e1d016b5282af1f9c91d7d8a2ec765ec8b24e21252c227790f32b91e",
+      "history_position": 940,
+      "order": 83,
+      "parent": "2ca7aada707167cda9b3c8bbc2fd195e4f1aa422",
+      "parent_tree": "f68766c9f0389173e59695638078021ad07386f2",
+      "paths": [
+        "docs/api.rst",
+        "src/attr/converters.py",
+        "src/attr/converters.pyi",
+        "tests/test_converters.py",
+        "tests/typing_example.py"
+      ],
+      "pr": 830,
+      "pr_identity_provenance": "1-parent PR-title subject suffix; remote PR page not queried",
+      "pr_url": "https://github.com/python-attrs/attrs/pull/830",
+      "python_test_paths": [
+        "tests/test_converters.py",
+        "tests/typing_example.py"
+      ],
+      "sha": "e84b57ea687942e5344badfe41a2728e24037431",
+      "source_python_paths": [
+        "src/attr/converters.py"
+      ],
+      "subject": "Inline distutils.util.strtobool in tests (closes #813) (#830)",
+      "task_id": "pr-830",
+      "test_patch_bytes": 2774,
+      "test_patch_sha256": "02ddb0f56a67c72dec083f4e1b3a44ddd11a7ad5bc4b801551ec3bd39baeba13",
+      "test_paths": [
+        "tests/test_converters.py",
+        "tests/typing_example.py"
+      ],
+      "timestamp": 1628574328
+    },
+    {
+      "commit_tree": "fb04f72f1c22e004aec3b12cd9457e0020dfb5a4",
+      "committed_at": "2021-06-30T08:28:56+02:00",
+      "full_patch_bytes": 4497,
+      "full_patch_sha256": "d2e4763c19d4e744c6712f7caf69d1d626988124e482f727d5033b458b2971e9",
+      "history_position": 942,
+      "order": 84,
+      "parent": "fb154878ebd2758d2a3b4dc518d21fd4f73e12d2",
+      "parent_tree": "819009229325d2b9ed247b40070d8228d4ccd12a",
+      "paths": [
+        "changelog.d/828.changes.rst",
+        "src/attr/_make.py",
+        "tests/test_dunders.py"
+      ],
+      "pr": 828,
+      "pr_identity_provenance": "1-parent PR-title subject suffix; remote PR page not queried",
+      "pr_url": "https://github.com/python-attrs/attrs/pull/828",
+      "python_test_paths": [
+        "tests/test_dunders.py"
+      ],
+      "sha": "38580632ceac1cd6e477db71e1d190a4130beed4",
+      "source_python_paths": [
+        "src/attr/_make.py"
+      ],
+      "subject": "Rework linecache handling (#828)",
+      "task_id": "pr-828",
+      "test_patch_bytes": 1681,
+      "test_patch_sha256": "ac60adb324cc327394daafe827553d749075ed2611d5e166590497086dd1243f",
+      "test_paths": [
+        "tests/test_dunders.py"
+      ],
+      "timestamp": 1625034536
+    },
+    {
+      "commit_tree": "dd670d14f0f2ee7b7a41d004af78423c5eabdd00",
+      "committed_at": "2021-05-17T09:24:46+02:00",
+      "full_patch_bytes": 7551,
+      "full_patch_sha256": "8cbc4c38812aa31b7e09e463a5a0b5fc4c2bf612ac0edcce9e330fca194ca5e0",
+      "history_position": 956,
+      "order": 85,
+      "parent": "8ae2d6f1c3c067c941fd9d212e52972c7d3382cc",
+      "parent_tree": "a29253bf84ccaaa78226dcfee0e57a5b75bc2180",
+      "paths": [
+        "changelog.d/817.change.rst",
+        "src/attr/_make.py",
+        "tests/test_dunders.py",
+        "tests/test_functional.py"
+      ],
+      "pr": 817,
+      "pr_identity_provenance": "1-parent PR-title subject suffix; remote PR page not queried",
+      "pr_url": "https://github.com/python-attrs/attrs/pull/817",
+      "python_test_paths": [
+        "tests/test_dunders.py",
+        "tests/test_functional.py"
+      ],
+      "sha": "20c2d4fc0c72a844e12899d5d5e0adbc4741ce2c",
+      "source_python_paths": [
+        "src/attr/_make.py"
+      ],
+      "subject": "Optimize the case of on_setattr=validate & no validators (#817)",
+      "task_id": "pr-817",
+      "test_patch_bytes": 2402,
+      "test_patch_sha256": "8c8f52d7f1eb4d223261c4d9dc9d5e02eac8e0652c9589426496fef9049d5731",
+      "test_paths": [
+        "tests/test_dunders.py",
+        "tests/test_functional.py"
+      ],
+      "timestamp": 1621236286
+    },
+    {
+      "commit_tree": "c783f1b92219a5f65a7e73381844a57ca74e2fc1",
+      "committed_at": "2021-05-05T10:02:31+02:00",
+      "full_patch_bytes": 1932,
+      "full_patch_sha256": "3d2995e2a6d527c6a1eaa125cffa56b9d60a1f53bc7ce5a652a69b43c7e2a9ca",
+      "history_position": 977,
+      "order": 86,
+      "parent": "743f9738897a4abdd1133391f7cdca3d0117d22b",
+      "parent_tree": "119eba289dcc750657b876bf362e9d9d29ac688a",
+      "paths": [
+        "src/attr/_make.py",
+        "tests/test_make.py"
+      ],
+      "pr": 800,
+      "pr_identity_provenance": "1-parent PR-title subject suffix; remote PR page not queried",
+      "pr_url": "https://github.com/python-attrs/attrs/pull/800",
+      "python_test_paths": [
+        "tests/test_make.py"
+      ],
+      "sha": "01aa33300574d4a70bd352aac923db3c2aad3b3c",
+      "source_python_paths": [
+        "src/attr/_make.py"
+      ],
+      "subject": "Remove warning if eq is customized & order is not (#800)",
+      "task_id": "pr-800",
+      "test_patch_bytes": 1038,
+      "test_patch_sha256": "0e377c080f8c5da52286d355675ab3917705e14e6ef237558fb936d5d95ba993",
+      "test_paths": [
+        "tests/test_make.py"
+      ],
+      "timestamp": 1620201751
+    },
+    {
+      "commit_tree": "7e7fecd20b896ad27cb6d5e6f4a1d22c30f71b01",
+      "committed_at": "2021-05-01T14:21:37+02:00",
+      "full_patch_bytes": 22012,
+      "full_patch_sha256": "7ba5de3bddf59ec2d5fce4d883628692bfcdd687c5da33ed56c0466d8bc3b0c1",
+      "history_position": 982,
+      "order": 87,
+      "parent": "253f2292e06ae726bdc65314697d0e58b22547b4",
+      "parent_tree": "45592f0e9e72e1c736387370049d29409856a8b1",
+      "paths": [
+        "src/attr/__init__.py",
+        "src/attr/_cmp.py",
+        "src/attr/_cmp.pyi",
+        "tests/test_cmp.py"
+      ],
+      "pr": 787,
+      "pr_identity_provenance": "1-parent PR-title subject suffix; remote PR page not queried",
+      "pr_url": "https://github.com/python-attrs/attrs/pull/787",
+      "python_test_paths": [
+        "tests/test_cmp.py"
+      ],
+      "sha": "71b4638b3221cc965978d6619ac7032f4d7f750e",
+      "source_python_paths": [
+        "src/attr/__init__.py",
+        "src/attr/_cmp.py"
+      ],
+      "subject": "New attr.cmp_using helper function (#787)",
+      "task_id": "pr-787",
+      "test_patch_bytes": 16377,
+      "test_patch_sha256": "379ad7d54062d8cb089377e9bc10ba17bb3bddd9de60b417610db00bf5d72078",
+      "test_paths": [
+        "tests/test_cmp.py"
+      ],
+      "timestamp": 1619871697
+    },
+    {
+      "commit_tree": "deb0b3abcf4c01a1fd626481f1b78af0ba2e1812",
+      "committed_at": "2021-03-20T18:02:59+01:00",
+      "full_patch_bytes": 1899,
+      "full_patch_sha256": "33a17289ed23fd854c13d461914887f9cb48ae3ff6a32802b9d24056c905c513",
+      "history_position": 996,
+      "order": 88,
+      "parent": "0a6f8075eb8d9d52d9316e9d6e5ec2d12ff2e1a7",
+      "parent_tree": "7e43892702caf73c1d035b6fabd39722e6ea1d7c",
+      "paths": [
+        "changelog.d/782.change.rst",
+        "src/attr/_make.py",
+        "tests/test_annotations.py"
+      ],
+      "pr": 782,
+      "pr_identity_provenance": "1-parent PR-title subject suffix; remote PR page not queried",
+      "pr_url": "https://github.com/python-attrs/attrs/pull/782",
+      "python_test_paths": [
+        "tests/test_annotations.py"
+      ],
+      "sha": "e01ddbe3075f323613ce614d63df30ba285026f9",
+      "source_python_paths": [
+        "src/attr/_make.py"
+      ],
+      "subject": "Detect ClassVars coming from typing_extensions (#782)",
+      "task_id": "pr-782",
+      "test_patch_bytes": 847,
+      "test_patch_sha256": "295ca0c1f82473c10a1730e3f16fb66bef2032e213cc148618ab1e5d837893cc",
+      "test_paths": [
+        "tests/test_annotations.py"
+      ],
+      "timestamp": 1616259779
+    },
+    {
+      "commit_tree": "cd35112448ad778004f90d5a476dc6e8910ce125",
+      "committed_at": "2021-02-28T13:20:40+01:00",
+      "full_patch_bytes": 7292,
+      "full_patch_sha256": "3df22e32905edcfa0f71237e77828c290ece1563c95eb6b2c791f816a57f9226",
+      "history_position": 1003,
+      "order": 89,
+      "parent": "fc26dcace17b62f741550fc57c50e54b129ce8fa",
+      "parent_tree": "9fdfc0cafa04d2743237c6d1df6987c085215afe",
+      "paths": [
+        "changelog.d/773.deprecation.rst",
+        "docs/api.rst",
+        "src/attr/_make.py",
+        "tests/test_functional.py",
+        "tests/test_make.py"
+      ],
+      "pr": 773,
+      "pr_identity_provenance": "1-parent PR-title subject suffix; remote PR page not queried",
+      "pr_url": "https://github.com/python-attrs/attrs/pull/773",
+      "python_test_paths": [
+        "tests/test_functional.py",
+        "tests/test_make.py"
+      ],
+      "sha": "f580185cc4b84f12f90238d761ccb80bd5ccb07f",
+      "source_python_paths": [
+        "src/attr/_make.py"
+      ],
+      "subject": "Undeprecate cmp (#773)",
+      "task_id": "pr-773",
+      "test_patch_bytes": 3495,
+      "test_patch_sha256": "a069b1cf70beba87e860db0a5f3e8c3fe1985b4007b6098d0edf8ba6f3da742c",
+      "test_paths": [
+        "tests/test_functional.py",
+        "tests/test_make.py"
+      ],
+      "timestamp": 1614514840
+    },
+    {
+      "commit_tree": "9fdfc0cafa04d2743237c6d1df6987c085215afe",
+      "committed_at": "2021-02-26T15:48:52+01:00",
+      "full_patch_bytes": 2609,
+      "full_patch_sha256": "4dde51d58630a27f42c72683104f72007509b46a3c058e2850b6e896f606ddb2",
+      "history_position": 1004,
+      "order": 90,
+      "parent": "58d2adce57f2c4e447eb12b892ebbb09cccbdcc3",
+      "parent_tree": "c078b1ed3bf5f2bf40e0b956dcb452bc60cb610a",
+      "paths": [
+        "src/attr/_compat.py",
+        "src/attr/_make.py",
+        "tests/test_make.py"
+      ],
+      "pr": 770,
+      "pr_identity_provenance": "1-parent PR-title subject suffix; remote PR page not queried",
+      "pr_url": "https://github.com/python-attrs/attrs/pull/770",
+      "python_test_paths": [
+        "tests/test_make.py"
+      ],
+      "sha": "fc26dcace17b62f741550fc57c50e54b129ce8fa",
+      "source_python_paths": [
+        "src/attr/_compat.py",
+        "src/attr/_make.py"
+      ],
+      "subject": "Fix make_class for dynamic generic classes (#770)",
+      "task_id": "pr-770",
+      "test_patch_bytes": 896,
+      "test_patch_sha256": "f2a62f007a1626cdc7839c19abb3dac9745fc5d238b4e98ffedcf29bfec7fd66",
+      "test_paths": [
+        "tests/test_make.py"
+      ],
+      "timestamp": 1614350932
+    },
+    {
+      "commit_tree": "9edf1ed48055624bf40819dba3b6f8c1e1d70bd5",
+      "committed_at": "2021-02-22T08:48:34+01:00",
+      "full_patch_bytes": 35784,
+      "full_patch_sha256": "fa1241dceca88ac5a83b8fa9368e3a0157eb75edbe46492c1c14b493ea4b915e",
+      "history_position": 1011,
+      "order": 91,
+      "parent": "baa8f8c5b2b3698b40d4c72809e9757e4f75062f",
+      "parent_tree": "903f7c007ac2985726cb1ac90411fb04a6be7d40",
+      "paths": [
+        "changelog.d/435.change.rst",
+        "docs/api.rst",
+        "docs/extending.rst",
+        "src/attr/__init__.pyi",
+        "src/attr/_make.py",
+        "tests/test_dunders.py",
+        "tests/test_make.py"
+      ],
+      "pr": 627,
+      "pr_identity_provenance": "1-parent PR-title subject suffix; remote PR page not queried",
+      "pr_url": "https://github.com/python-attrs/attrs/pull/627",
+      "python_test_paths": [
+        "tests/test_dunders.py",
+        "tests/test_make.py"
+      ],
+      "sha": "aefdb117facde35327d4dbd64564197a5a15277b",
+      "source_python_paths": [
+        "src/attr/_make.py"
+      ],
+      "subject": "Allow user to customize how an attribute is compared (#435) (#627)",
+      "task_id": "pr-627",
+      "test_patch_bytes": 12539,
+      "test_patch_sha256": "3f4ce6d9390d45c4339e5e4f23b992a62f9cf1d85e3d48c6a105304ad65cba7d",
+      "test_paths": [
+        "tests/test_dunders.py",
+        "tests/test_make.py"
+      ],
+      "timestamp": 1613980114
+    },
+    {
+      "commit_tree": "c1e671e0035055f617ef23799ac4e85e1462ce1c",
+      "committed_at": "2021-02-19T07:01:09+01:00",
+      "full_patch_bytes": 3432,
+      "full_patch_sha256": "8bfe89b9603fadc05eb74023c3e538d87a3e308143b109afa8b8ad5b9e4ed40b",
+      "history_position": 1013,
+      "order": 92,
+      "parent": "1499c77e79315ef8c5c98c088dc3ef99bdba72b4",
+      "parent_tree": "5d93313283435d13fbb3ac14a78b4d22f01786b4",
+      "paths": [
+        "changelog.d/759.change.rst",
+        "docs/examples.rst",
+        "src/attr/_funcs.py",
+        "tests/test_funcs.py"
+      ],
+      "pr": 759,
+      "pr_identity_provenance": "1-parent PR-title subject suffix; remote PR page not queried",
+      "pr_url": "https://github.com/python-attrs/attrs/pull/759",
+      "python_test_paths": [
+        "tests/test_funcs.py"
+      ],
+      "sha": "fe6eb3120013833d1927374eb5e826b72815a775",
+      "source_python_paths": [
+        "src/attr/_funcs.py"
+      ],
+      "subject": "Recursively evolve nested attrs classes (#759)",
+      "task_id": "pr-759",
+      "test_patch_bytes": 949,
+      "test_patch_sha256": "1b7da63a8fa59a0dc3b04bfa2fef8ff86e716027beaa99b956c6d6c19b7f5234",
+      "test_paths": [
+        "tests/test_funcs.py"
+      ],
+      "timestamp": 1613714469
+    },
+    {
+      "commit_tree": "5d93313283435d13fbb3ac14a78b4d22f01786b4",
+      "committed_at": "2021-02-19T06:50:41+01:00",
+      "full_patch_bytes": 5093,
+      "full_patch_sha256": "20aae4b6e0d0a6e1b3359bf8e27374d7ce8dc23578b8fc08341d4e93892cb6a4",
+      "history_position": 1014,
+      "order": 93,
+      "parent": "78335e9b49eff2eaf2dc31d0bcc3caa0169cfc60",
+      "parent_tree": "7c5c4645fab7a1e9ac9d8a0935c3241e7468e9f1",
+      "paths": [
+        "src/attr/_make.py",
+        "tests/test_annotations.py"
+      ],
+      "pr": 760,
+      "pr_identity_provenance": "1-parent PR-title subject suffix; remote PR page not queried",
+      "pr_url": "https://github.com/python-attrs/attrs/pull/760",
+      "python_test_paths": [
+        "tests/test_annotations.py"
+      ],
+      "sha": "1499c77e79315ef8c5c98c088dc3ef99bdba72b4",
+      "source_python_paths": [
+        "src/attr/_make.py"
+      ],
+      "subject": "Fix issue with get_type_hints(cls.__init__) and refactor (#760)",
+      "task_id": "pr-760",
+      "test_patch_bytes": 1151,
+      "test_patch_sha256": "3534cf23cf2c4737f7bc9d7d048eab58e6af85ad828274a801d7f9e1913508f7",
+      "test_paths": [
+        "tests/test_annotations.py"
+      ],
+      "timestamp": 1613713841
+    },
+    {
+      "commit_tree": "406f197fbb31128140e0062ac519876c0953263a",
+      "committed_at": "2021-01-25T07:31:37+01:00",
+      "full_patch_bytes": 7186,
+      "full_patch_sha256": "7366d54af46f40c06fef75a7b36dd0014cc6fb270e7b2309a0115b7f0754d6bc",
+      "history_position": 1019,
+      "order": 94,
+      "parent": "654aa924750d374bac7f5252d9899cddecc50dd9",
+      "parent_tree": "077eabff0a89985fb1d6acc033a7fa11009a8076",
+      "paths": [
+        "changelog.d/750.change.rst",
+        "src/attr/_make.py",
+        "tests/strategies.py",
+        "tests/test_dunders.py",
+        "tests/test_make.py"
+      ],
+      "pr": 750,
+      "pr_identity_provenance": "1-parent PR-title subject suffix; remote PR page not queried",
+      "pr_url": "https://github.com/python-attrs/attrs/pull/750",
+      "python_test_paths": [
+        "tests/strategies.py",
+        "tests/test_dunders.py",
+        "tests/test_make.py"
+      ],
+      "sha": "efcbae51cd8053c193055618cc8a6ac7880ef062",
+      "source_python_paths": [
+        "src/attr/_make.py"
+      ],
+      "subject": "__attrs_pre_init__ (#750)",
+      "task_id": "pr-750",
+      "test_patch_bytes": 2877,
+      "test_patch_sha256": "0a573b52dec0d0c24ed76d51838ebb8f61e5ba598bf5b3009cf2b4576076ff46",
+      "test_paths": [
+        "tests/strategies.py",
+        "tests/test_dunders.py",
+        "tests/test_make.py"
+      ],
+      "timestamp": 1611556297
+    },
+    {
+      "commit_tree": "077eabff0a89985fb1d6acc033a7fa11009a8076",
+      "committed_at": "2021-01-23T13:03:04+01:00",
+      "full_patch_bytes": 10022,
+      "full_patch_sha256": "d7ea617f18e543f1fe0e7ca14ddddc7b9f2743d47de757725ecc241904f529fb",
+      "history_position": 1020,
+      "order": 95,
+      "parent": "467e28b268d566701d2523c2b1681375188dbcb0",
+      "parent_tree": "32e60614ea97fd35da80e19f9c0871c71559cb47",
+      "paths": [
+        "changelog.d/731.change.rst",
+        "src/attr/_make.py",
+        "tests/strategies.py",
+        "tests/test_dunders.py",
+        "tests/test_funcs.py",
+        "tests/test_make.py"
+      ],
+      "pr": 731,
+      "pr_identity_provenance": "1-parent PR-title subject suffix; remote PR page not queried",
+      "pr_url": "https://github.com/python-attrs/attrs/pull/731",
+      "python_test_paths": [
+        "tests/strategies.py",
+        "tests/test_dunders.py",
+        "tests/test_funcs.py",
+        "tests/test_make.py"
+      ],
+      "sha": "654aa924750d374bac7f5252d9899cddecc50dd9",
+      "source_python_paths": [
+        "src/attr/_make.py"
+      ],
+      "subject": "__attrs_init__() (#731)",
+      "task_id": "pr-731",
+      "test_patch_bytes": 3288,
+      "test_patch_sha256": "70e623bc056a0035fc3f04606cf7180a76b8903a6ec8aa8e9df5b72228726272",
+      "test_paths": [
+        "tests/strategies.py",
+        "tests/test_dunders.py",
+        "tests/test_funcs.py",
+        "tests/test_make.py"
+      ],
+      "timestamp": 1611403384
+    },
+    {
+      "commit_tree": "2bceb299c238c0ded055801ebc96f7f0b16ed040",
+      "committed_at": "2021-01-11T07:44:16+01:00",
+      "full_patch_bytes": 2458,
+      "full_patch_sha256": "588a9318507451035f413d068d0c319d17461339bfc6b3b9731942081a87a81f",
+      "history_position": 1023,
+      "order": 96,
+      "parent": "72f94a3b03d5c2f8211f499c1c3fc72413d3fd4e",
+      "parent_tree": "05c6fe1973aee81474f960a0b5056f1d89657f4e",
+      "paths": [
+        "changelog.d/747.change.rst",
+        "src/attr/_make.py",
+        "tests/test_slots.py"
+      ],
+      "pr": 747,
+      "pr_identity_provenance": "1-parent PR-title subject suffix; remote PR page not queried",
+      "pr_url": "https://github.com/python-attrs/attrs/pull/747",
+      "python_test_paths": [
+        "tests/test_slots.py"
+      ],
+      "sha": "9de675f4b4289b218913bd642c1c59ac376df34f",
+      "source_python_paths": [
+        "src/attr/_make.py"
+      ],
+      "subject": "Fix: TypeError when using properties, super(), and slots=True (#652) (#747)",
+      "task_id": "pr-747",
+      "test_patch_bytes": 1335,
+      "test_patch_sha256": "64c36601676a9f3cf818c321d00fbed5927a199e027a5c49530d164f6466a5e2",
+      "test_paths": [
+        "tests/test_slots.py"
+      ],
+      "timestamp": 1610347456
+    },
+    {
+      "commit_tree": "b36da48f189136678b0513e8f1127c2f7bceef71",
+      "committed_at": "2020-12-30T12:53:43+01:00",
+      "full_patch_bytes": 2418,
+      "full_patch_sha256": "815aa0dfd8c3989342b97e059edf8a1d675da2766044f1abd65b7b9783bffdfb",
+      "history_position": 1027,
+      "order": 97,
+      "parent": "345fb0bcac11ca2a5523e6ec07168e956eb34766",
+      "parent_tree": "3b37a410bfdc0102cc07a55da9bd38b5f310c48f",
+      "paths": [
+        "src/attr/_next_gen.py",
+        "tests/test_next_gen.py"
+      ],
+      "pr": 742,
+      "pr_identity_provenance": "1-parent PR-title subject suffix; remote PR page not queried",
+      "pr_url": "https://github.com/python-attrs/attrs/pull/742",
+      "python_test_paths": [
+        "tests/test_next_gen.py"
+      ],
+      "sha": "2fdf92997c9870463113ef36abce345e55f9711b",
+      "source_python_paths": [
+        "src/attr/_next_gen.py"
+      ],
+      "subject": "Clarify next-gen auto_attribs inference rules (#742)",
+      "task_id": "pr-742",
+      "test_patch_bytes": 1676,
+      "test_patch_sha256": "678c31cb3ff8435e1e12bd39fb3869397b71923777479b5495f43120e064f956",
+      "test_paths": [
+        "tests/test_next_gen.py"
+      ],
+      "timestamp": 1609329223
+    },
+    {
+      "commit_tree": "336d4f286ecef7e05b45fddc17f09aaf4b2ab400",
+      "committed_at": "2020-12-21T06:39:58+01:00",
+      "full_patch_bytes": 1272,
+      "full_patch_sha256": "84c2645d08337d894ffd582fb47ca0f84dcb3f450554b5f92cfe8e60fd6e90fd",
+      "history_position": 1032,
+      "order": 98,
+      "parent": "3d274d0bfab142bc45504533f2c2b5f5ce519fd7",
+      "parent_tree": "a754b439a4956dd517313267cce337a4d31ad8f2",
+      "paths": [
+        "changelog.d/732.change.rst",
+        "src/attr/_make.py",
+        "tests/test_dunders.py"
+      ],
+      "pr": 732,
+      "pr_identity_provenance": "1-parent PR-title subject suffix; remote PR page not queried",
+      "pr_url": "https://github.com/python-attrs/attrs/pull/732",
+      "python_test_paths": [
+        "tests/test_dunders.py"
+      ],
+      "sha": "f132c07e556dde35d5f7ef30b736800eb08e9f3b",
+      "source_python_paths": [
+        "src/attr/_make.py"
+      ],
+      "subject": "Make NOTHING falsey (#732)",
+      "task_id": "pr-732",
+      "test_patch_bytes": 552,
+      "test_patch_sha256": "0b260abe6d05766f5642f25c97d048e641f8a2d86ec45500076f5c894a3a8c0f",
+      "test_paths": [
+        "tests/test_dunders.py"
+      ],
+      "timestamp": 1608529198
+    },
+    {
+      "commit_tree": "8e1f6764dc518802d4f7bd83c888ee0b26f2680f",
+      "committed_at": "2020-12-13T17:22:34+01:00",
+      "full_patch_bytes": 4534,
+      "full_patch_sha256": "b08e4d80b2b9cc59ef1210ec436871fd977e24d8f23863874dfcabd669c50692",
+      "history_position": 1035,
+      "order": 99,
+      "parent": "e09b1d642339d7d94ba58d7855da40e65ed1a88f",
+      "parent_tree": "844dcea25bc176b3293862cf1364eb9a0d59fd80",
+      "paths": [
+        "changelog.d/718.change.rst",
+        "src/attr/_make.py",
+        "tests/test_slots.py"
+      ],
+      "pr": 718,
+      "pr_identity_provenance": "1-parent PR-title subject suffix; remote PR page not queried",
+      "pr_url": "https://github.com/python-attrs/attrs/pull/718",
+      "python_test_paths": [
+        "tests/test_slots.py"
+      ],
+      "sha": "1f627dd3d53e04be96a2f26d7f9f1cdde34953c4",
+      "source_python_paths": [
+        "src/attr/_make.py"
+      ],
+      "subject": "Fixed slots inheritance (#718)",
+      "task_id": "pr-718",
+      "test_patch_bytes": 1946,
+      "test_patch_sha256": "e08f34c68a1e89289bc0a193566796c808084224ea68bccd1f5a7f364826e505",
+      "test_paths": [
+        "tests/test_slots.py"
+      ],
+      "timestamp": 1607876554
+    },
+    {
+      "commit_tree": "844dcea25bc176b3293862cf1364eb9a0d59fd80",
+      "committed_at": "2020-12-13T16:30:06+01:00",
+      "full_patch_bytes": 12160,
+      "full_patch_sha256": "6b6a009cb262afaec4d9841684e1182ea82ba1c9d8eb3278b653e4772ef4e3f2",
+      "history_position": 1036,
+      "order": 100,
+      "parent": "612700c3eac7d51eebdf73b99a3a9c2facef91af",
+      "parent_tree": "3c4db2288436385309898fa601257d283f70abfe",
+      "paths": [
+        "changelog.d/787.change.rst",
+        "docs/init.rst",
+        "src/attr/_make.py",
+        "src/attr/converters.py",
+        "tests/test_annotations.py"
+      ],
+      "pr": 710,
+      "pr_identity_provenance": "1-parent PR-title subject suffix; remote PR page not queried",
+      "pr_url": "https://github.com/python-attrs/attrs/pull/710",
+      "python_test_paths": [
+        "tests/test_annotations.py"
+      ],
+      "sha": "e09b1d642339d7d94ba58d7855da40e65ed1a88f",
+      "source_python_paths": [
+        "src/attr/_make.py",
+        "src/attr/converters.py"
+      ],
+      "subject": "Infer type annotations from converters (#710)",
+      "task_id": "pr-710",
+      "test_patch_bytes": 5757,
+      "test_patch_sha256": "48794b492588dba01ef941d97ec429484804953766fbf2d4690ad2f27083deed",
+      "test_paths": [
+        "tests/test_annotations.py"
+      ],
+      "timestamp": 1607873406
+    },
+    {
+      "commit_tree": "55f289a248e76baf5912952bea301aab65226ab1",
+      "committed_at": "2020-10-19T11:00:00+02:00",
+      "full_patch_bytes": 8200,
+      "full_patch_sha256": "1c119bc405ccef4c7e698b8f80e76c65db75879cf898d0b9ce8e761adfd6c2a7",
+      "history_position": 1058,
+      "order": 101,
+      "parent": "0e6c74ac1704443d64b63231093b3bc522ca22b5",
+      "parent_tree": "6f397e7f9c65eb1df974694f9323d9f641849cac",
+      "paths": [
+        "changelog.d/700.change.rst",
+        "docs/examples.rst",
+        "src/attr/_make.py",
+        "tests/test_make.py"
+      ],
+      "pr": 700,
+      "pr_identity_provenance": "1-parent PR-title subject suffix; remote PR page not queried",
+      "pr_url": "https://github.com/python-attrs/attrs/pull/700",
+      "python_test_paths": [
+        "tests/test_make.py"
+      ],
+      "sha": "bc527b9f299cf418ee293e03657d37b4cf840eb3",
+      "source_python_paths": [
+        "src/attr/_make.py"
+      ],
+      "subject": "[RFC] kw_only python 2 backport (#700)",
+      "task_id": "pr-700",
+      "test_patch_bytes": 4202,
+      "test_patch_sha256": "97c4497efcd2bb2ca6698612aeb4e9836def39fd65089390de3c96825f7633fd",
+      "test_paths": [
+        "tests/test_make.py"
+      ],
+      "timestamp": 1603098000
+    },
+    {
+      "commit_tree": "6f397e7f9c65eb1df974694f9323d9f641849cac",
+      "committed_at": "2020-10-19T10:17:25+02:00",
+      "full_patch_bytes": 3928,
+      "full_patch_sha256": "a86e0de42869bdfe16febd692d90e88ad42c769677dae032b5c6c0bc8c9c65d1",
+      "history_position": 1059,
+      "order": 102,
+      "parent": "577691c40544b284cfbe3d7b381a5942c92d6d91",
+      "parent_tree": "31f2c3b45f06c1ef4c75da179ac92ba0d9fd0a82",
+      "paths": [
+        "changelog.d/704.change.rst",
+        "src/attr/_funcs.py",
+        "tests/test_funcs.py"
+      ],
+      "pr": 704,
+      "pr_identity_provenance": "1-parent PR-title subject suffix; remote PR page not queried",
+      "pr_url": "https://github.com/python-attrs/attrs/pull/704",
+      "python_test_paths": [
+        "tests/test_funcs.py"
+      ],
+      "sha": "0e6c74ac1704443d64b63231093b3bc522ca22b5",
+      "source_python_paths": [
+        "src/attr/_funcs.py"
+      ],
+      "subject": "Treat frozensets like sets in asdict/astuple (#704)",
+      "task_id": "pr-704",
+      "test_patch_bytes": 1583,
+      "test_patch_sha256": "1262f9544dba0bfe51d64c8541ab61ac3bb1b354a1bdb088108632e84e0d5f88",
+      "test_paths": [
+        "tests/test_funcs.py"
+      ],
+      "timestamp": 1603095445
+    },
+    {
+      "commit_tree": "f46d88b6e60931d729ea620ce4772a32f9b4e46a",
+      "committed_at": "2020-09-05T11:14:54+02:00",
+      "full_patch_bytes": 5047,
+      "full_patch_sha256": "f66a520ff65a52e9753900a049bf5463dcb12b6f2a388f50205d52c0ccc1c9e4",
+      "history_position": 1082,
+      "order": 103,
+      "parent": "48755905ee8088da927a6dc583d4962f7ca16b9b",
+      "parent_tree": "a4b304c3a1198e03b5e5583df5389059d89d4e18",
+      "paths": [
+        "changelog.d/687.change.rst",
+        "src/attr/_next_gen.py",
+        "tests/test_next_gen.py"
+      ],
+      "pr": 687,
+      "pr_identity_provenance": "1-parent PR-title subject suffix; remote PR page not queried",
+      "pr_url": "https://github.com/python-attrs/attrs/pull/687",
+      "python_test_paths": [
+        "tests/test_next_gen.py"
+      ],
+      "sha": "504eefe91fc49c761572b0a855479775fb6498a8",
+      "source_python_paths": [
+        "src/attr/_next_gen.py"
+      ],
+      "subject": "NG: make frozen classes comfortably subclassable (#687)",
+      "task_id": "pr-687",
+      "test_patch_bytes": 2122,
+      "test_patch_sha256": "8db7ba67fa877241b1ae19ddeca37cc09b1a349e7be735dd4a73ea751542329f",
+      "test_paths": [
+        "tests/test_next_gen.py"
+      ],
+      "timestamp": 1599297294
+    },
+    {
+      "commit_tree": "51f7f04ed58bae88bbe62732333086845ff4b988",
+      "committed_at": "2020-09-03T07:16:58+02:00",
+      "full_patch_bytes": 2197,
+      "full_patch_sha256": "a1f1f6382715f1840003b044558d0053df1c375e35d1278da1ff8483d66af0e8",
+      "history_position": 1084,
+      "order": 104,
+      "parent": "dfb2ee284d6229d8bffe6cba6be66a747116cd27",
+      "parent_tree": "1df7f4ba9f123093ab700f0e446a11bde97554e2",
+      "paths": [
+        "changelog.d/684.change.rst",
+        "src/attr/_make.py",
+        "tests/test_make.py"
+      ],
+      "pr": 684,
+      "pr_identity_provenance": "1-parent PR-title subject suffix; remote PR page not queried",
+      "pr_url": "https://github.com/python-attrs/attrs/pull/684",
+      "python_test_paths": [
+        "tests/test_make.py"
+      ],
+      "sha": "bfd7bb49b467e7ab586deb475c23974a91df4dab",
+      "source_python_paths": [
+        "src/attr/_make.py"
+      ],
+      "subject": "Ignore inherited field when comparing Attributes (#684)",
+      "task_id": "pr-684",
+      "test_patch_bytes": 955,
+      "test_patch_sha256": "33ed10793ee736456b89af03a2e3508a21b52b47986d11dbbf1750e0ce05aa30",
+      "test_paths": [
+        "tests/test_make.py"
+      ],
+      "timestamp": 1599110218
+    },
+    {
+      "commit_tree": "35fb8bc05917f505b13c544f46915ac6bf1b456d",
+      "committed_at": "2020-08-23T07:58:04+02:00",
+      "full_patch_bytes": 2268,
+      "full_patch_sha256": "986ffe57ef927e523c92a22a178c299459fb5f297fb23bc2e5df0822ce45164e",
+      "history_position": 1095,
+      "order": 105,
+      "parent": "d02b76de16fbb011004e16106e63ac1896018e6c",
+      "parent_tree": "bf1c2e7b0b58f64f18bf9130d9b7adc53c25f89b",
+      "paths": [
+        "src/attr/_next_gen.py",
+        "tests/test_next_gen.py"
+      ],
+      "pr": 675,
+      "pr_identity_provenance": "1-parent PR-title subject suffix; remote PR page not queried",
+      "pr_url": "https://github.com/python-attrs/attrs/pull/675",
+      "python_test_paths": [
+        "tests/test_next_gen.py"
+      ],
+      "sha": "4cfd52db5141cb82b218ab9d881bbb631fa10b4e",
+      "source_python_paths": [
+        "src/attr/_next_gen.py"
+      ],
+      "subject": "Fix auto_attrib=None behavior when maybe_cls=None (#675)",
+      "task_id": "pr-675",
+      "test_patch_bytes": 999,
+      "test_patch_sha256": "9295c82b414564d33feff8f247b5fa4dce6b16cbf0094efaae64b5e155dafc9d",
+      "test_paths": [
+        "tests/test_next_gen.py"
+      ],
+      "timestamp": 1598162284
+    },
+    {
+      "commit_tree": "6087e68f7fa40fb7e396f2b2800fbb9f2b3c82d8",
+      "committed_at": "2020-08-21T05:19:15+02:00",
+      "full_patch_bytes": 1066,
+      "full_patch_sha256": "cb0c202cba3bc5f0c27bfcdebec4798a5cc4b20116e7c7cfcb298ce7044d0939",
+      "history_position": 1098,
+      "order": 106,
+      "parent": "1a29941d5cf74ca585780495cb6c17fd013ec861",
+      "parent_tree": "9873313d188a5616ff7a832fd1b017af2aa80358",
+      "paths": [
+        "src/attr/_next_gen.py",
+        "tests/test_next_gen.py"
+      ],
+      "pr": 671,
+      "pr_identity_provenance": "1-parent PR-title subject suffix; remote PR page not queried",
+      "pr_url": "https://github.com/python-attrs/attrs/pull/671",
+      "python_test_paths": [
+        "tests/test_next_gen.py"
+      ],
+      "sha": "358c85e74c5e9c73a222268cb34c914c52135497",
+      "source_python_paths": [
+        "src/attr/_next_gen.py"
+      ],
+      "subject": "Fix auto-detection of eq/ne in NG APIs (#671)",
+      "task_id": "pr-671",
+      "test_patch_bytes": 664,
+      "test_patch_sha256": "85d4e78ecc23a0e1907b77afd4bd85f2d25753ce2346221b96b2e1eca93d56e2",
+      "test_paths": [
+        "tests/test_next_gen.py"
+      ],
+      "timestamp": 1597979955
+    },
+    {
+      "commit_tree": "47b7dd1991e3f3da443084ada5790f637293dc38",
+      "committed_at": "2020-08-20T19:01:34+02:00",
+      "full_patch_bytes": 7247,
+      "full_patch_sha256": "59914fcd8c476ed572790d0d60c18f6be6e2eab23628a3ea74f87ec2c6a6895d",
+      "history_position": 1102,
+      "order": 107,
+      "parent": "c67a649b3812891b23f9e6468c641808a9b2dfaa",
+      "parent_tree": "f884d3827c20fb929889490ebd2e0b272d7a22cc",
+      "paths": [
+        "changelog.d/669.change.rst",
+        "docs/api.rst",
+        "src/attr/__init__.py",
+        "src/attr/__init__.pyi",
+        "src/attr/_next_gen.py",
+        "tests/test_next_gen.py",
+        "tests/typing_example.py"
+      ],
+      "pr": 669,
+      "pr_identity_provenance": "1-parent PR-title subject suffix; remote PR page not queried",
+      "pr_url": "https://github.com/python-attrs/attrs/pull/669",
+      "python_test_paths": [
+        "tests/test_next_gen.py",
+        "tests/typing_example.py"
+      ],
+      "sha": "fda437c91f2a8c32d75fd27c5b50c12346d4ab48",
+      "source_python_paths": [
+        "src/attr/__init__.py",
+        "src/attr/_next_gen.py"
+      ],
+      "subject": "Add attr.field (#669)",
+      "task_id": "pr-669",
+      "test_patch_bytes": 1597,
+      "test_patch_sha256": "e938e00dac7f539a3eb906246128bbaba51a2710528fa5e08327d2f49a77a135",
+      "test_paths": [
+        "tests/test_next_gen.py",
+        "tests/typing_example.py"
+      ],
+      "timestamp": 1597942894
+    },
+    {
+      "commit_tree": "7b3b96149886cc6517ed32242c5d4bef088425f1",
+      "committed_at": "2020-08-13T13:49:44+02:00",
+      "full_patch_bytes": 22837,
+      "full_patch_sha256": "9984b66356c6089863842ee65ca6bc90f3062f16cd41437854ff50f827ac24fa",
+      "history_position": 1109,
+      "order": 108,
+      "parent": "e554373d16a000c6b022ef3f46b7607f704f4e8b",
+      "parent_tree": "023512018192da2154d52c44cf5e3ae295fb5b35",
+      "paths": [
+        "src/attr/_make.py",
+        "tests/test_functional.py",
+        "tests/test_make.py",
+        "tests/test_setattr.py"
+      ],
+      "pr": 663,
+      "pr_identity_provenance": "1-parent PR-title subject suffix; remote PR page not queried",
+      "pr_url": "https://github.com/python-attrs/attrs/pull/663",
+      "python_test_paths": [
+        "tests/test_functional.py",
+        "tests/test_make.py",
+        "tests/test_setattr.py"
+      ],
+      "sha": "106c33c205fd06aed175d138ac01d5832522232e",
+      "source_python_paths": [
+        "src/attr/_make.py"
+      ],
+      "subject": "Clear __setattr__ if it was inherited && written by us (#663)",
+      "task_id": "pr-663",
+      "test_patch_bytes": 16861,
+      "test_patch_sha256": "082041e1419b3decec944396c916a95c28b0ce7bdf6b5406336cea9e33274d17",
+      "test_paths": [
+        "tests/test_functional.py",
+        "tests/test_make.py",
+        "tests/test_setattr.py"
+      ],
+      "timestamp": 1597319384
+    },
+    {
+      "commit_tree": "218065f39264f3cdf69dce5ade48f5d7db5774d2",
+      "committed_at": "2020-07-22T11:43:07+02:00",
+      "full_patch_bytes": 9510,
+      "full_patch_sha256": "53b0e726334add840c28a49bfb5ffe18da36f13f4563bd23ebb9a1833235fb8e",
+      "history_position": 1115,
+      "order": 109,
+      "parent": "3c9830f340535b663f2ceaca2d52d363bbf70df6",
+      "parent_tree": "f750dd144eac55bcde10766d2a1e51724bcbeacc",
+      "paths": [
+        "changelog.d/302.change.rst",
+        "docs/api.rst",
+        "docs/examples.rst",
+        "src/attr/__init__.py",
+        "src/attr/__init__.pyi",
+        "src/attr/_make.py",
+        "tests/test_annotations.py"
+      ],
+      "pr": 302,
+      "pr_identity_provenance": "1-parent PR-title subject suffix; remote PR page not queried",
+      "pr_url": "https://github.com/python-attrs/attrs/pull/302",
+      "python_test_paths": [
+        "tests/test_annotations.py"
+      ],
+      "sha": "c42bf9ebb928b551a2c34d39ba59c9c765ebc842",
+      "source_python_paths": [
+        "src/attr/__init__.py",
+        "src/attr/_make.py"
+      ],
+      "subject": "Add attr.resolve_types (#302)",
+      "task_id": "pr-302",
+      "test_patch_bytes": 3710,
+      "test_patch_sha256": "abee0d219ecb6bb8645fe0c742d950a7f35bf3c4feeab0a46df9ccef8b2567b4",
+      "test_paths": [
+        "tests/test_annotations.py"
+      ],
+      "timestamp": 1595410987
+    },
+    {
+      "commit_tree": "1868962b400009721a66cf0af99aad5174134daf",
+      "committed_at": "2020-04-06T11:41:52+02:00",
+      "full_patch_bytes": 22048,
+      "full_patch_sha256": "a37c8f5a8d38da1178ff586821fb50ee29d05f323c4995c54dff4b729a44ae01",
+      "history_position": 1137,
+      "order": 110,
+      "parent": "f8f3f598a38163481513785c83a555d09b10bcd5",
+      "parent_tree": "9dd8a8f8c306af2c4970554e8666b452faf38562",
+      "paths": [
+        "changelog.d/428.change.rst",
+        "changelog.d/635.change.rst",
+        "docs/api.rst",
+        "docs/extending.rst",
+        "src/attr/_make.py",
+        "tests/test_dark_magic.py",
+        "tests/test_make.py",
+        "tests/utils.py"
+      ],
+      "pr": 635,
+      "pr_identity_provenance": "1-parent PR-title subject suffix; remote PR page not queried",
+      "pr_url": "https://github.com/python-attrs/attrs/pull/635",
+      "python_test_paths": [
+        "tests/test_dark_magic.py",
+        "tests/test_make.py",
+        "tests/utils.py"
+      ],
+      "sha": "33b61316f8fd97d78374818e5ecc21068cf69ae3",
+      "source_python_paths": [
+        "src/attr/_make.py"
+      ],
+      "subject": "Fix attribute collection (#635)",
+      "task_id": "pr-635",
+      "test_patch_bytes": 7879,
+      "test_patch_sha256": "a91212351904d00b81446afa025249407a6b57d4dbef73b9e9cbc7708ca12881",
+      "test_paths": [
+        "tests/test_dark_magic.py",
+        "tests/test_make.py",
+        "tests/utils.py"
+      ],
+      "timestamp": 1586166112
+    },
+    {
+      "commit_tree": "a7e90b70f78362519f869df015d9f966339fecac",
+      "committed_at": "2020-03-16T13:03:12+01:00",
+      "full_patch_bytes": 24544,
+      "full_patch_sha256": "d0f61f78dd120629bd6d3ed5e0e11085af872e86e33d2d2afef8222d846516ce",
+      "history_position": 1142,
+      "order": 111,
+      "parent": "94ad4f39172929a9696670eb03a9151feda63e03",
+      "parent_tree": "ef93086b571ce11b134668fbf541e6d81cf2fde4",
+      "paths": [
+        "changelog.d/607.change.rst",
+        "docs/api.rst",
+        "src/attr/__init__.pyi",
+        "src/attr/_make.py",
+        "src/attr/exceptions.py",
+        "tests/test_make.py",
+        "tests/typing_example.py"
+      ],
+      "pr": 607,
+      "pr_identity_provenance": "1-parent PR-title subject suffix; remote PR page not queried",
+      "pr_url": "https://github.com/python-attrs/attrs/pull/607",
+      "python_test_paths": [
+        "tests/test_make.py",
+        "tests/typing_example.py"
+      ],
+      "sha": "196d94861337f7480a854d2ee130c1394732a2ce",
+      "source_python_paths": [
+        "src/attr/_make.py",
+        "src/attr/exceptions.py"
+      ],
+      "subject": "Add auto-detection of self-implemented methods (#607)",
+      "task_id": "pr-607",
+      "test_patch_bytes": 13003,
+      "test_patch_sha256": "99e0c7a1cda0db7a6556aa7372f3b3fdf7ca3e6e1fd9a69ca578254fc222f271",
+      "test_paths": [
+        "tests/test_make.py",
+        "tests/typing_example.py"
+      ],
+      "timestamp": 1584360192
+    },
+    {
+      "commit_tree": "612f0c2d9e252c0af2a8865880f21e8586033da2",
+      "committed_at": "2020-03-13T06:06:14+01:00",
+      "full_patch_bytes": 2341,
+      "full_patch_sha256": "1e0a287514e91fe239a98abd18849fbe19473cf194a146c7576fecf678205230",
+      "history_position": 1148,
+      "order": 112,
+      "parent": "4bd682709134155ec79c5077a748a8bd3ade39d9",
+      "parent_tree": "962ef8267872b0d8eceff000d8f6b534c85cf7db",
+      "paths": [
+        "changelog.d/590.change.rst",
+        "src/attr/_make.py",
+        "tests/test_slots.py"
+      ],
+      "pr": 590,
+      "pr_identity_provenance": "1-parent PR-title subject suffix; remote PR page not queried",
+      "pr_url": "https://github.com/python-attrs/attrs/pull/590",
+      "python_test_paths": [
+        "tests/test_slots.py"
+      ],
+      "sha": "07810aec7b98198944a98d26fe7e809dbcfb0068",
+      "source_python_paths": [
+        "src/attr/_make.py"
+      ],
+      "subject": "Fix issue 589 (#590)",
+      "task_id": "pr-590",
+      "test_patch_bytes": 1229,
+      "test_patch_sha256": "1f86c5df67d56cfaed04f039919f1bdf6a051cc527ea5ea5734ea29390903b86",
+      "test_paths": [
+        "tests/test_slots.py"
+      ],
+      "timestamp": 1584075974
+    },
+    {
+      "commit_tree": "962ef8267872b0d8eceff000d8f6b534c85cf7db",
+      "committed_at": "2020-03-09T14:56:09+01:00",
+      "full_patch_bytes": 3336,
+      "full_patch_sha256": "0ed27aba511a8406ba7575894c685f6c1d86a41a7185e368b978ecfcaab950f8",
+      "history_position": 1149,
+      "order": 113,
+      "parent": "609b10e84f5fb87d1f20300fb0368961da8f70d0",
+      "parent_tree": "af77e2ad88b3aca14fc79d4a577de02642906fe3",
+      "paths": [
+        "src/attr/_make.py",
+        "tests/test_make.py"
+      ],
+      "pr": 632,
+      "pr_identity_provenance": "1-parent PR-title subject suffix; remote PR page not queried",
+      "pr_url": "https://github.com/python-attrs/attrs/pull/632",
+      "python_test_paths": [
+        "tests/test_make.py"
+      ],
+      "sha": "4bd682709134155ec79c5077a748a8bd3ade39d9",
+      "source_python_paths": [
+        "src/attr/_make.py"
+      ],
+      "subject": "Wrapped __ne__ in a _make_ne function #626 (#632)",
+      "task_id": "pr-632",
+      "test_patch_bytes": 1200,
+      "test_patch_sha256": "fedd2b6ae7471e503d411edf59ece6c6e8e9273a6df2e68a8f457fa20e7f2c74",
+      "test_paths": [
+        "tests/test_make.py"
+      ],
+      "timestamp": 1583762169
+    },
+    {
+      "commit_tree": "a83429cc8c6653f62b42f6f6283ea0735931ac59",
+      "committed_at": "2020-03-06T13:54:27+01:00",
+      "full_patch_bytes": 1997,
+      "full_patch_sha256": "5b94c7c5f79bf02748fb64bdb54422cca948aa2bfca193ca8dc6e597548662f9",
+      "history_position": 1152,
+      "order": 114,
+      "parent": "9fcfe3479f3e98d4909208039b6b98cc70837b9d",
+      "parent_tree": "f9b8e3b28f6600a9c0dde98ef3a8e2914364b6c7",
+      "paths": [
+        "changelog.d/506.change.rst",
+        "src/attr/_make.py",
+        "tests/test_make.py"
+      ],
+      "pr": 506,
+      "pr_identity_provenance": "1-parent PR-title subject suffix; remote PR page not queried",
+      "pr_url": "https://github.com/python-attrs/attrs/pull/506",
+      "python_test_paths": [
+        "tests/test_make.py"
+      ],
+      "sha": "4dea97e633e888d78750b47976fb64d362603bb5",
+      "source_python_paths": [
+        "src/attr/_make.py"
+      ],
+      "subject": "added first doc stub (#506)",
+      "task_id": "pr-506",
+      "test_patch_bytes": 1140,
+      "test_patch_sha256": "0a447b19f2b683d8325380503a46776c3320875aa11fbc91c10b1dc1b7e7524b",
+      "test_paths": [
+        "tests/test_make.py"
+      ],
+      "timestamp": 1583499267
+    },
+    {
+      "commit_tree": "f9b8e3b28f6600a9c0dde98ef3a8e2914364b6c7",
+      "committed_at": "2020-03-06T10:34:11+01:00",
+      "full_patch_bytes": 5187,
+      "full_patch_sha256": "a4118d88a27829d36c16474c36f0fc2c5d21fdd2492eae271ba3eb248b2e8180",
+      "history_position": 1153,
+      "order": 115,
+      "parent": "d6a65fb89f8ac7868213f5cecdbec5b3611bfdca",
+      "parent_tree": "7357380982460b5cda64cf298377f928ad2db652",
+      "paths": [
+        "changelog.d/618.change.rst",
+        "docs/api.rst",
+        "src/attr/_make.py",
+        "src/attr/converters.py",
+        "src/attr/converters.pyi",
+        "tests/test_converters.py"
+      ],
+      "pr": 618,
+      "pr_identity_provenance": "1-parent PR-title subject suffix; remote PR page not queried",
+      "pr_url": "https://github.com/python-attrs/attrs/pull/618",
+      "python_test_paths": [
+        "tests/test_converters.py"
+      ],
+      "sha": "9fcfe3479f3e98d4909208039b6b98cc70837b9d",
+      "source_python_paths": [
+        "src/attr/_make.py",
+        "src/attr/converters.py"
+      ],
+      "subject": "Add and_ converter (#618)",
+      "task_id": "pr-618",
+      "test_patch_bytes": 1676,
+      "test_patch_sha256": "e3e94f758fa33a483b8383ab99ef33b4660cb93ef2b6b59286a59462cf5d8e59",
+      "test_paths": [
+        "tests/test_converters.py"
+      ],
+      "timestamp": 1583487251
+    },
+    {
+      "commit_tree": "0671fc4a1d8c71041d242dd2cea286ae74150904",
+      "committed_at": "2020-01-13T08:46:11+01:00",
+      "full_patch_bytes": 1966,
+      "full_patch_sha256": "a0c6a7ae819215aeddcc5594365c840b3ece0ede7e70afdc5b91d9c372da9076",
+      "history_position": 1156,
+      "order": 116,
+      "parent": "ac541fbe556eb8c085a9cea26616f0ebad6ef632",
+      "parent_tree": "0eff000b1e31edc7797c19f1a8489a3568a52ef4",
+      "paths": [
+        "changelog.d/611.change.rst",
+        "src/attr/_make.py",
+        "tests/test_make.py"
+      ],
+      "pr": 612,
+      "pr_identity_provenance": "1-parent PR-title subject suffix; remote PR page not queried",
+      "pr_url": "https://github.com/python-attrs/attrs/pull/612",
+      "python_test_paths": [
+        "tests/test_make.py"
+      ],
+      "sha": "9b5e988ccc36d906b5c1ef6681ba7242f758fe2f",
+      "source_python_paths": [
+        "src/attr/_make.py"
+      ],
+      "subject": "Fixed frozen and cache_hash incompatibility (#612)",
+      "task_id": "pr-612",
+      "test_patch_bytes": 604,
+      "test_patch_sha256": "3e05a68e41ae8c2920e3cd7330019d69be27e2f1b7e6f0302566d774b9444a3c",
+      "test_paths": [
+        "tests/test_make.py"
+      ],
+      "timestamp": 1578901571
+    }
+  ],
+  "counts": {
+    "first_parent_commits_scanned_in_window": 1170,
+    "static_rejections_by_first_reason": {
+      "missing_source_or_python_test": 137,
+      "not_unambiguous_pr_landing": 712,
+      "path_count_outside_2_20": 171,
+      "path_outside_frozen_roots": 23,
+      "status_not_A_or_M": 11
+    },
+    "structurally_eligible": 116,
+    "unambiguous_pr_landings": 458
+  },
+  "created_at_utc": "2026-08-24T12:49:12.536+00:00",
+  "cutoff_epoch": 1577836800,
+  "dynamic_budget": 200,
+  "head": "30fd617c45854a5555550c9a0bf921bc3ee28786",
+  "head_tree": "1ab4e425129b3e41340845ed0dee407df6c63126",
+  "measurement": "second-repository-static-candidate-ledger",
+  "order": "first-parent newest-to-oldest",
+  "repository": "C:\\Users\\joshp\\Desktop\\Blast-Radius\\exploratory\\causal\\repositories\\python-attrs",
+  "repository_url": "https://github.com/python-attrs/attrs.git",
+  "schema_version": 1,
+  "selection_rule": "exploratory/causal/ATTRS-SELECTION-RULE.md",
+  "selection_rule_sha256": "99e982b6baad6951a5448e5d7539b86248177974143d7cc3952df67aece52ba3",
+  "target_tasks": 30
+}

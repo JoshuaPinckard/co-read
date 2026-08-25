@@ -1,0 +1,42 @@
+============================= test session starts =============================
+platform win32 -- Python 3.11.9, pytest-9.1.1, pluggy-1.6.0
+rootdir: C:\Users\joshp\Desktop\Blast-Radius\exploratory\causal\repositories\pallets-jinja
+configfile: pyproject.toml
+testpaths: tests
+plugins: timeout-2.4.0
+collected 911 items
+
+tests\test_api.py ..................................                     [  3%]
+tests\test_async.py .................................................... [  9%]
+........................                                                 [ 12%]
+tests\test_async_filters.py ............................................ [ 16%]
+.....                                                                    [ 17%]
+tests\test_bytecode_cache.py ...                                         [ 17%]
+tests\test_compile.py ......                                             [ 18%]
+tests\test_core_tags.py ................................................ [ 23%]
+...............                                                          [ 25%]
+tests\test_debug.py .......                                              [ 26%]
+tests\test_ext.py ...................................................    [ 31%]
+tests\test_filters.py .................................................. [ 37%]
+........................................................................ [ 45%]
+..........                                                               [ 46%]
+tests\test_idtracking.py .....                                           [ 46%]
+tests\test_imports.py ...............                                    [ 48%]
+tests\test_inheritance.py ......................                         [ 50%]
+tests\test_lexnparse.py ................................................ [ 56%]
+........................................................................ [ 63%]
+..............................                                           [ 67%]
+tests\test_loader.py ...........................................         [ 72%]
+tests\test_nativetypes.py .............................                  [ 75%]
+tests\test_nodes.py .                                                    [ 75%]
+tests\test_pickle.py .                                                   [ 75%]
+tests\test_regression.py ............................................... [ 80%]
+.......                                                                  [ 81%]
+tests\test_runtime.py ...................                                [ 83%]
+tests\test_security.py .................                                 [ 85%]
+tests\test_tests.py .................................................... [ 90%]
+......................................................                   [ 96%]
+tests\test_utils.py ............................                         [100%]
+
+- generated xml file: C:\Users\joshp\Desktop\Blast-Radius\exploratory\causal\gates\pallets__jinja\run-1.xml -
+============================= 911 passed in 5.26s =============================

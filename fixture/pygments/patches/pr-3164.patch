@@ -1,0 +1,122 @@
+diff --git a/pygments/lexers/matlab.py b/pygments/lexers/matlab.py
+index b27f4db63edd75313a76304d7a403f9d62d2b3b2..5cc815ca697340faa0413001e98b5602761f746c 100644
+--- a/pygments/lexers/matlab.py
++++ b/pygments/lexers/matlab.py
+@@ -20,6 +20,32 @@ from pygments.lexers import _scilab_builtins
+ __all__ = ['MatlabLexer', 'MatlabSessionLexer', 'OctaveLexer', 'ScilabLexer']
+ 
+ 
++# The function-definition signature, shared by the Matlab, Octave and Scilab
++# lexers (which all use the same syntax). Tokenised incrementally rather than
++# with a single regex so that a `...` line continuation may appear anywhere in
++# the signature, which is valid in all three languages.
++_deffunc = [
++    (r'[ \t]+', Whitespace),
++    (r'\.\.\..*?\n', Comment),  # line continuation
++    # output argument(s): `[a, b] =` (may span continuations) or `y =`
++    (r'(\[)([^\]]*)(\])([ \t]*)(=)',
++     bygroups(Punctuation, Text, Punctuation, Whitespace, Punctuation)),
++    (r'([a-zA-Z_]\w*)([ \t]*)(=)(?!=)',
++     bygroups(Text, Whitespace, Punctuation)),
++    (r'[a-zA-Z_]\w*', Name.Function),  # function name
++    (r'\(', Punctuation, 'deffunc_args'),
++    (r'\n', Whitespace, '#pop'),  # end of a no-argument-list signature
++    default('#pop'),
++]
++
++_deffunc_args = [
++    (r'\.\.\..*?\n', Comment),  # line continuation
++    (r'\)', Punctuation, '#pop:2'),
++    (r'[^)\n.]+', Text),
++    (r'[.\n]', Text),
++]
++
++
+ class MatlabLexer(RegexLexer):
+     """
+     For Matlab source code.
+@@ -2675,15 +2701,8 @@ class MatlabLexer(RegexLexer):
+             (r'^.*\n', Comment.Multiline),
+             (r'.', Comment.Multiline),
+         ],
+-        'deffunc': [
+-            (r'(\s*)(?:(\S+)(\s*)(=)(\s*))?(.+)(\()(.*)(\))(\s*)',
+-             bygroups(Whitespace, Text, Whitespace, Punctuation,
+-                      Whitespace, Name.Function, Punctuation, Text,
+-                      Punctuation, Whitespace), '#pop'),
+-            # function with no args
+-            (r'(\s*)([a-zA-Z_]\w*)',
+-             bygroups(Whitespace, Name.Function), '#pop'),
+-        ],
++        'deffunc': _deffunc,
++        'deffunc_args': _deffunc_args,
+         'propattrs': [
+             (r'(\w+)(\s*)(=)(\s*)(\d+)',
+              bygroups(Name.Builtin, Whitespace, Punctuation, Whitespace,
+@@ -3210,15 +3229,8 @@ class OctaveLexer(RegexLexer):
+         'string': [
+             (r"[^']*'", String, '#pop'),
+         ],
+-        'deffunc': [
+-            (r'(\s*)(?:(\S+)(\s*)(=)(\s*))?(.+)(\()(.*)(\))(\s*)',
+-             bygroups(Whitespace, Text, Whitespace, Punctuation,
+-                      Whitespace, Name.Function, Punctuation, Text,
+-                      Punctuation, Whitespace), '#pop'),
+-            # function with no args
+-            (r'(\s*)([a-zA-Z_]\w*)',
+-             bygroups(Whitespace, Name.Function), '#pop'),
+-        ],
++        'deffunc': _deffunc,
++        'deffunc_args': _deffunc_args,
+     }
+ 
+     def analyse_text(text):
+@@ -3284,14 +3296,8 @@ class ScilabLexer(RegexLexer):
+             (r"[^']*'", String, '#pop'),
+             (r'.', String, '#pop'),
+         ],
+-        'deffunc': [
+-            (r'(\s*)(?:(\S+)(\s*)(=)(\s*))?(.+)(\()(.*)(\))(\s*)',
+-             bygroups(Whitespace, Text, Whitespace, Punctuation,
+-                      Whitespace, Name.Function, Punctuation, Text,
+-                      Punctuation, Whitespace), '#pop'),
+-            # function with no args
+-            (r'(\s*)([a-zA-Z_]\w*)', bygroups(Text, Name.Function), '#pop'),
+-        ],
++        'deffunc': _deffunc,
++        'deffunc_args': _deffunc_args,
+     }
+ 
+     # the following is needed to distinguish Scilab and GAP .tst files
+diff --git a/tests/snippets/matlab/test_function_definition_line_continuation.txt b/tests/snippets/matlab/test_function_definition_line_continuation.txt
+new file mode 100644
+index 0000000000000000000000000000000000000000..a3f17f37678715aee5d46e8ee6feec6e16459857
+--- /dev/null
++++ b/tests/snippets/matlab/test_function_definition_line_continuation.txt
+@@ -0,0 +1,26 @@
++---input---
++function [o1, ...
++    o2] = my_fun(a1, ...
++    a2)
++end
++
++---tokens---
++'function'    Keyword
++' '           Text.Whitespace
++'['           Punctuation
++'o1, ...\n    o2' Text
++']'           Punctuation
++' '           Text.Whitespace
++'='           Punctuation
++' '           Text.Whitespace
++'my_fun'      Name.Function
++'('           Punctuation
++'a1, '        Text
++'...\n'       Comment
++
++'    a2'      Text
++')'           Punctuation
++'\n'          Text.Whitespace
++
++'end'         Keyword
++'\n'          Text.Whitespace

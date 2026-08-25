@@ -1,0 +1,15 @@
+diff --git a/tests/snippets/ruby/test_shift_operator.txt b/tests/snippets/ruby/test_shift_operator.txt
+new file mode 100644
+index 0000000000000000000000000000000000000000..888fc49254f5a81fc6763b89e0bf245650193fd8
+--- /dev/null
++++ b/tests/snippets/ruby/test_shift_operator.txt
+@@ -0,0 +1,9 @@
++---input---
++[]<<a
++
++---tokens---
++'['           Operator
++']'           Operator
++'<<'          Operator
++'a'           Name
++'\n'          Text.Whitespace

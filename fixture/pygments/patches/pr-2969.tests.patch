@@ -1,0 +1,134 @@
+diff --git a/tests/examplefiles/bash/doif.sh b/tests/examplefiles/bash/doif.sh
+new file mode 100644
+index 0000000000000000000000000000000000000000..716d8ab410f3c7846354810dbf8faca0431c40b5
+--- /dev/null
++++ b/tests/examplefiles/bash/doif.sh
+@@ -0,0 +1,27 @@
++#!/bin/bash
++
++make -f Makefile
++
++# For testing purposes, not intented to be correct
++do-release-upgrade
++do--release-upgrade
++do_something
++doanotherthing
++do@arobase
++do?question
++do!exclamation
++do@!?test
++lets-do-it
++if-else-script
++
++do
++    true;
++done
++until [ false ]
++
++num=15
++if [ $num -gt 10 ]; then
++  echo "Number is greater than 10"
++else
++  echo "Number is 10 or less"
++fi
+diff --git a/tests/examplefiles/bash/doif.sh.output b/tests/examplefiles/bash/doif.sh.output
+new file mode 100644
+index 0000000000000000000000000000000000000000..38243477a0f3eb2717018fc6e3431ed73a056f78
+--- /dev/null
++++ b/tests/examplefiles/bash/doif.sh.output
+@@ -0,0 +1,95 @@
++'#!/bin/bash\n' Comment.Hashbang
++
++'\n'          Text.Whitespace
++
++'make'        Text
++' '           Text.Whitespace
++'-f'          Text
++' '           Text.Whitespace
++'Makefile'    Text
++'\n\n'        Text.Whitespace
++
++'# For testing purposes, not intented to be correct\n' Comment.Single
++
++'do-release-upgrade' Text
++'\n'          Text.Whitespace
++
++'do--release-upgrade' Text
++'\n'          Text.Whitespace
++
++'do_something' Text
++'\n'          Text.Whitespace
++
++'doanotherthing' Text
++'\n'          Text.Whitespace
++
++'do@arobase'  Text
++'\n'          Text.Whitespace
++
++'do?question' Text
++'\n'          Text.Whitespace
++
++'do!exclamation' Text
++'\n'          Text.Whitespace
++
++'do@!?test'   Text
++'\n'          Text.Whitespace
++
++'lets-do-it'  Text
++'\n'          Text.Whitespace
++
++'if-else-script' Text
++'\n\n'        Text.Whitespace
++
++'do'          Keyword
++'\n    '      Text.Whitespace
++'true'        Text
++';'           Punctuation
++'\n'          Text.Whitespace
++
++'done'        Keyword
++'\n'          Text.Whitespace
++
++'until'       Keyword
++' '           Text.Whitespace
++'['           Operator
++' '           Text.Whitespace
++'false'       Name.Builtin
++' '           Text.Whitespace
++']'           Operator
++'\n\n'        Text.Whitespace
++
++'num'         Name.Variable
++'='           Operator
++'15'          Literal.Number
++'\n'          Text.Whitespace
++
++'if'          Keyword
++' '           Text.Whitespace
++'['           Operator
++' '           Text.Whitespace
++'$num'        Name.Variable
++' '           Text.Whitespace
++'-gt'         Text
++' '           Text.Whitespace
++'10'          Literal.Number
++' '           Text.Whitespace
++']'           Operator
++';'           Punctuation
++' '           Text.Whitespace
++'then'        Keyword
++'\n  '        Text.Whitespace
++'echo'        Name.Builtin
++' '           Text.Whitespace
++'"Number is greater than 10"' Literal.String.Double
++'\n'          Text.Whitespace
++
++'else'        Keyword
++'\n  '        Text.Whitespace
++'echo'        Name.Builtin
++' '           Text.Whitespace
++'"Number is 10 or less"' Literal.String.Double
++'\n'          Text.Whitespace
++
++'fi'          Keyword
++'\n'          Text.Whitespace

@@ -1,0 +1,26 @@
+============================= test session starts =============================
+platform win32 -- Python 3.11.9, pytest-8.4.2, pluggy-1.6.0
+rootdir: C:\Users\joshp\AppData\Local\Temp\blast-radius-pygments-causal-opbff12g\screen-pr-2969-1iau0b4o\tests-only
+configfile: pyproject.toml
+collected 1 item
+
+tests\examplefiles\bash\doif.sh F                                        [100%]
+
+================================== FAILURES ===================================
+_______________________ tests\examplefiles\bash\doif.sh _______________________
+The tokens produced by the "bash" lexer differ from the expected ones in the file "tests\examplefiles\bash\doif.sh".
+Run `tox -- tests\examplefiles --update-goldens` to update it.
+
+  
+  Skipping 277 identical leading characters in diff, use -v to show
+    ingle
+    
+  + 'do'          Keyword
+  - 'do-release-upgrade' Text
+  ?  --...
+  
+  ...Full output truncated (103 lines hidden), use '-vv' to show
+- generated xml file: C:\Users\joshp\Desktop\Blast-Radius\exploratory\causal\verification\pygments-results-arms\screening\pr-2969\tests-only-targeted.xml -
+=========================== short test summary info ===========================
+FAILED tests/examplefiles/bash/doif.sh::
+============================== 1 failed in 1.66s ==============================

@@ -1,0 +1,220 @@
+diff --git a/tests/examplefiles/go/3199.go b/tests/examplefiles/go/3199.go
+new file mode 100644
+index 0000000000000000000000000000000000000000..dc423b46e717ea493a6e013049a1e67b9b6d9e21
+--- /dev/null
++++ b/tests/examplefiles/go/3199.go
+@@ -0,0 +1,16 @@
++package main
++
++func main() {
++	var (
++		float float32
++		_ = float64(float)
++		_ map[string]any
++		_ chan int
++		_ = [...]int{0o755, 0O_644, 0777}
++		x = 0b1100 ^ 0B1001 | 0b00_10
++		_ = 1_000_000
++		_ = 0x_fefe_1a3d
++		_ = !(x > 0 && x < 8)
++	)
++	x ^= 0b_0101
++}
+diff --git a/tests/examplefiles/go/3199.go.output b/tests/examplefiles/go/3199.go.output
+new file mode 100644
+index 0000000000000000000000000000000000000000..7d2b7f8b7294777fb347bc5e8396af9071db5327
+--- /dev/null
++++ b/tests/examplefiles/go/3199.go.output
+@@ -0,0 +1,146 @@
++'package'     Keyword.Namespace
++' '           Text.Whitespace
++'main'        Name.Other
++'\n'          Text.Whitespace
++
++'\n'          Text.Whitespace
++
++'func'        Keyword.Declaration
++' '           Text.Whitespace
++'main'        Name.Other
++'('           Punctuation
++')'           Punctuation
++' '           Text.Whitespace
++'{'           Punctuation
++'\n'          Text.Whitespace
++
++'\t'          Text.Whitespace
++'var'         Keyword.Declaration
++' '           Text.Whitespace
++'('           Punctuation
++'\n'          Text.Whitespace
++
++'\t\t'        Text.Whitespace
++'float'       Name.Other
++' '           Text.Whitespace
++'float32'     Keyword.Type
++'\n'          Text.Whitespace
++
++'\t\t'        Text.Whitespace
++'_'           Name.Other
++' '           Text.Whitespace
++'='           Operator
++' '           Text.Whitespace
++'float64'     Keyword.Type
++'('           Punctuation
++'float'       Name.Other
++')'           Punctuation
++'\n'          Text.Whitespace
++
++'\t\t'        Text.Whitespace
++'_'           Name.Other
++' '           Text.Whitespace
++'map'         Keyword.Type
++'['           Punctuation
++'string'      Keyword.Type
++']'           Punctuation
++'any'         Keyword.Type
++'\n'          Text.Whitespace
++
++'\t\t'        Text.Whitespace
++'_'           Name.Other
++' '           Text.Whitespace
++'chan'        Keyword.Type
++' '           Text.Whitespace
++'int'         Keyword.Type
++'\n'          Text.Whitespace
++
++'\t\t'        Text.Whitespace
++'_'           Name.Other
++' '           Text.Whitespace
++'='           Operator
++' '           Text.Whitespace
++'['           Punctuation
++'...'         Punctuation
++']'           Punctuation
++'int'         Keyword.Type
++'{'           Punctuation
++'0o755'       Literal.Number.Oct
++','           Punctuation
++' '           Text.Whitespace
++'0O_644'      Literal.Number.Oct
++','           Punctuation
++' '           Text.Whitespace
++'0777'        Literal.Number.Oct
++'}'           Punctuation
++'\n'          Text.Whitespace
++
++'\t\t'        Text.Whitespace
++'x'           Name.Other
++' '           Text.Whitespace
++'='           Operator
++' '           Text.Whitespace
++'0b1100'      Literal.Number.Bin
++' '           Text.Whitespace
++'^'           Operator
++' '           Text.Whitespace
++'0B1001'      Literal.Number.Bin
++' '           Text.Whitespace
++'|'           Operator
++' '           Text.Whitespace
++'0b00_10'     Literal.Number.Bin
++'\n'          Text.Whitespace
++
++'\t\t'        Text.Whitespace
++'_'           Name.Other
++' '           Text.Whitespace
++'='           Operator
++' '           Text.Whitespace
++'1_000_000'   Literal.Number.Integer
++'\n'          Text.Whitespace
++
++'\t\t'        Text.Whitespace
++'_'           Name.Other
++' '           Text.Whitespace
++'='           Operator
++' '           Text.Whitespace
++'0x_fefe_1a3d' Literal.Number.Hex
++'\n'          Text.Whitespace
++
++'\t\t'        Text.Whitespace
++'_'           Name.Other
++' '           Text.Whitespace
++'='           Operator
++' '           Text.Whitespace
++'!'           Operator
++'('           Punctuation
++'x'           Name.Other
++' '           Text.Whitespace
++'>'           Operator
++' '           Text.Whitespace
++'0'           Literal.Number.Integer
++' '           Text.Whitespace
++'&&'          Operator
++' '           Text.Whitespace
++'x'           Name.Other
++' '           Text.Whitespace
++'<'           Operator
++' '           Text.Whitespace
++'8'           Literal.Number.Integer
++')'           Punctuation
++'\n'          Text.Whitespace
++
++'\t'          Text.Whitespace
++')'           Punctuation
++'\n'          Text.Whitespace
++
++'\t'          Text.Whitespace
++'x'           Name.Other
++' '           Text.Whitespace
++'^='          Operator
++' '           Text.Whitespace
++'0b_0101'     Literal.Number.Bin
++'\n'          Text.Whitespace
++
++'}'           Punctuation
++'\n'          Text.Whitespace
+diff --git a/tests/examplefiles/go/generics.go.output b/tests/examplefiles/go/generics.go.output
+index f50e6f7a1bffbd740901a1128bcb988582df6317..2f8e3e9732c65189ab982e4c8cae02f640349b66 100644
+--- a/tests/examplefiles/go/generics.go.output
++++ b/tests/examplefiles/go/generics.go.output
+@@ -15,27 +15,27 @@
+ '\n'          Text.Whitespace
+ 
+ '\t'          Text.Whitespace
+-'~'           Operator
++'~'           Punctuation
+ 'int'         Keyword.Type
+ ' '           Text.Whitespace
+ '|'           Operator
+ ' '           Text.Whitespace
+-'~'           Operator
++'~'           Punctuation
+ 'int8'        Keyword.Type
+ ' '           Text.Whitespace
+ '|'           Operator
+ ' '           Text.Whitespace
+-'~'           Operator
++'~'           Punctuation
+ 'int16'       Keyword.Type
+ ' '           Text.Whitespace
+ '|'           Operator
+ ' '           Text.Whitespace
+-'~'           Operator
++'~'           Punctuation
+ 'int32'       Keyword.Type
+ ' '           Text.Whitespace
+ '|'           Operator
+ ' '           Text.Whitespace
+-'~'           Operator
++'~'           Punctuation
+ 'int64'       Keyword.Type
+ '\n'          Text.Whitespace
+ 
+@@ -68,7 +68,7 @@
+ ' '           Text.Whitespace
+ 'v'           Name.Other
+ ' '           Text.Whitespace
+-'<'           Punctuation
++'<'           Operator
+ ' '           Text.Whitespace
+ '0'           Literal.Number.Integer
+ ' '           Text.Whitespace

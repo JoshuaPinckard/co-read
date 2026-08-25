@@ -1,0 +1,25 @@
+============================= test session starts =============================
+platform win32 -- Python 3.11.9, pytest-8.4.2, pluggy-1.6.0
+rootdir: C:\Users\joshp\AppData\Local\Temp\blast-radius-pygments-causal-opbff12g\screen-pr-3176-tjnae8kb\tests-only
+configfile: pyproject.toml
+collected 1 item
+
+tests\snippets\cpp\test_function_after_namespace.txt F                   [100%]
+
+================================== FAILURES ===================================
+____________ tests\snippets\cpp\test_function_after_namespace.txt _____________
+The tokens produced by the "cpp" lexer differ from the expected ones in the file "tests\snippets\cpp\test_function_after_namespace.txt".
+Run `tox -- tests\snippets --update-goldens` to update it.
+
+  
+  Skipping 200 identical leading characters in diff, use -v to show
+  -       Name.Function
+  +       Name
+    '('           Punctuation
+    ')'           Punctuation
+    ';'           Punctuation
+    '\n'          Text.Whitespace
+- generated xml file: C:\Users\joshp\Desktop\Blast-Radius\exploratory\causal\verification\pygments-results-arms\screening\pr-3176\tests-only-targeted.xml -
+=========================== short test summary info ===========================
+FAILED tests/snippets/cpp/test_function_after_namespace.txt::
+============================== 1 failed in 0.13s ==============================

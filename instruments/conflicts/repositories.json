@@ -1,0 +1,168 @@
+{
+  "schema_version": 1,
+  "selection_id": "real-merge-conflicts-phase-a-v1",
+  "clone_filter": "blob:none",
+  "mirror_root": "corpus/_conflict_mirrors",
+  "repositories": [
+    {
+      "repo": "pallets/click",
+      "slug": "pallets__click",
+      "local_source_slug": "pallets__click",
+      "url": "https://github.com/pallets/click.git",
+      "frozen_head": "2c8cd3ac958a7eb316d67f2d316c27086c4c0369",
+      "primary_language": "Python",
+      "primary_shape": "library",
+      "project_shape_note": "Mature single-package command-line toolkit with separate src, tests, examples, and documentation trees."
+    },
+    {
+      "repo": "pallets/itsdangerous",
+      "slug": "pallets__itsdangerous",
+      "local_source_slug": "pallets__itsdangerous",
+      "url": "https://github.com/pallets/itsdangerous.git",
+      "frozen_head": "672971d66a2ef9f85151e53283113f33d642dabd",
+      "primary_language": "Python",
+      "primary_shape": "library",
+      "project_shape_note": "Compact single-package cryptographic serialization library with a conventional tests tree."
+    },
+    {
+      "repo": "psf/requests",
+      "slug": "psf__requests",
+      "local_source_slug": "psf__requests",
+      "url": "https://github.com/psf/requests.git",
+      "frozen_head": "8f8b212de8c2129d7954c6cd373762880375620a",
+      "primary_language": "Python",
+      "primary_shape": "library",
+      "project_shape_note": "Single-package HTTP client library with a distinct tests directory and long merge-based history."
+    },
+    {
+      "repo": "ansible/ansible",
+      "slug": "ansible__ansible",
+      "local_source_slug": "ansible__ansible",
+      "url": "https://github.com/ansible/ansible.git",
+      "frozen_head": "b85437b7f6e39476252b271778b8c7dcebbd931a",
+      "primary_language": "Python",
+      "primary_shape": "infrastructure",
+      "project_shape_note": "Large automation system combining Python with a very broad YAML, plugin, fixture, and integration-test surface."
+    },
+    {
+      "repo": "pygments/pygments",
+      "slug": "pygments__pygments",
+      "local_source_slug": "pygments__pygments",
+      "url": "https://github.com/pygments/pygments.git",
+      "frozen_head": "38f426a6b1cd4ffc6429f5808031b7c62ea57b1f",
+      "primary_language": "Python",
+      "primary_shape": "library",
+      "project_shape_note": "Syntax-highlighting library with a large lexer tree, golden inputs and outputs, and an existing strict deterministic fixture gate at this commit."
+    },
+    {
+      "repo": "jupyter/notebook",
+      "slug": "jupyter__notebook",
+      "local_source_slug": "jupyter__notebook",
+      "url": "https://github.com/jupyter/notebook.git",
+      "frozen_head": "062a2e41d3d2170ee144deff7b8e0fd252de96e2",
+      "primary_language": "JavaScript/TypeScript",
+      "primary_shape": "application",
+      "project_shape_note": "Browser application and extension-oriented framework with TypeScript, Python, JSON notebook artifacts, and generated front-end metadata."
+    },
+    {
+      "repo": "superfluid-org/protocol-monorepo",
+      "slug": "superfluid-org__protocol-monorepo",
+      "local_source_slug": "superfluid-org__protocol-monorepo",
+      "url": "https://github.com/superfluid-org/protocol-monorepo.git",
+      "frozen_head": "3e1bb8ba92d28470cb15f3b6eb53a2ea0ddafb90",
+      "primary_language": "JavaScript/TypeScript",
+      "primary_shape": "infrastructure",
+      "project_shape_note": "Manifest monorepo combining TypeScript packages, Solidity contracts, SDKs, deployment tooling, and tests; its first-parent history contains no two-parent merges."
+    },
+    {
+      "repo": "gohugoio/hugo",
+      "slug": "gohugoio__hugo",
+      "local_source_slug": "gohugoio__hugo",
+      "url": "https://github.com/gohugoio/hugo.git",
+      "frozen_head": "7b5199fdeff7d7682e9f979f468d55bc7b67b934",
+      "primary_language": "Go",
+      "primary_shape": "application",
+      "project_shape_note": "Static-site generator and content framework with adjacent Go tests, embedded resources, documentation, and examples."
+    },
+    {
+      "repo": "hashicorp/terraform",
+      "slug": "hashicorp__terraform",
+      "local_source_slug": "hashicorp__terraform",
+      "url": "https://github.com/hashicorp/terraform.git",
+      "frozen_head": "883c7221ee2e0bc2fad6912fd4b3cc4b53a598a7",
+      "primary_language": "Go",
+      "primary_shape": "infrastructure",
+      "project_shape_note": "Large infrastructure-as-code command-line application with many internal packages, HCL fixtures, providers, and integration tests."
+    },
+    {
+      "repo": "hashicorp/terraform-provider-random",
+      "slug": "hashicorp__terraform-provider-random",
+      "local_source_slug": "hashicorp__terraform-provider-random",
+      "url": "https://github.com/hashicorp/terraform-provider-random.git",
+      "frozen_head": "f4c97d75848f22c53667b308a7dd89d3e1f06ce5",
+      "primary_language": "Go",
+      "primary_shape": "library",
+      "project_shape_note": "Small Terraform provider plugin with Go source, acceptance tests, HCL examples, generated documentation, and release metadata."
+    },
+    {
+      "repo": "prometheus/prometheus",
+      "slug": "prometheus__prometheus",
+      "local_source_slug": "prometheus__prometheus",
+      "url": "https://github.com/prometheus/prometheus.git",
+      "frozen_head": "d15adb9ad7e5d9fbde3a9a8f30200593a5a14d86",
+      "primary_language": "Go",
+      "primary_shape": "infrastructure",
+      "project_shape_note": "Monitoring server with Go back end, TypeScript web UI, generated assets, protocol definitions, and a history that includes vendored trees."
+    },
+    {
+      "repo": "BurntSushi/ripgrep",
+      "slug": "BurntSushi__ripgrep",
+      "local_source_slug": "BurntSushi__ripgrep",
+      "url": "https://github.com/BurntSushi/ripgrep.git",
+      "frozen_head": "3fce3b5bb0236da2df6d99672afb8a719642eca7",
+      "primary_language": "Rust",
+      "primary_shape": "application",
+      "project_shape_note": "Rust command-line application and reusable crates with tests split between inline modules, integration fixtures, and shell-completion assets."
+    },
+    {
+      "repo": "apache/commons-lang",
+      "slug": "apache__commons-lang",
+      "local_source_slug": "apache__commons-lang",
+      "url": "https://github.com/apache/commons-lang.git",
+      "frozen_head": "4d91b28fce7317132360aa9f3bbf31cc6e479f00",
+      "primary_language": "Java",
+      "primary_shape": "library",
+      "project_shape_note": "Mature Java utility library with parallel src/main/java and src/test/java hierarchies and Maven release metadata."
+    },
+    {
+      "repo": "chinabugotech/hutool",
+      "slug": "chinabugotech__hutool",
+      "local_source_slug": "chinabugotech__hutool",
+      "url": "https://github.com/chinabugotech/hutool.git",
+      "frozen_head": "8870454b2a0c29cc6ffd31dcf5667c8ceb2fc442",
+      "primary_language": "Java",
+      "primary_shape": "framework",
+      "project_shape_note": "Manifest monorepo of Java utility modules with mirrored tests and a history beginning with a large source import."
+    },
+    {
+      "repo": "redis/redis",
+      "slug": "redis__redis",
+      "local_source_slug": "redis__redis",
+      "url": "https://github.com/redis/redis.git",
+      "frozen_head": "78432ed8e48aba009721a15a88ea8f5c9597b8e5",
+      "primary_language": "C/C++",
+      "primary_shape": "infrastructure",
+      "project_shape_note": "C data server with core, modules, command metadata, generated files, Tcl integration tests, and packaging infrastructure."
+    },
+    {
+      "repo": "ydb-platform/ydb",
+      "slug": "ydb-platform__ydb",
+      "local_source_slug": "ydb-platform__ydb",
+      "url": "https://github.com/ydb-platform/ydb.git",
+      "frozen_head": "406cdd6bdf080292978a484c9ae63a23714e9059",
+      "primary_language": "C/C++",
+      "primary_shape": "infrastructure",
+      "project_shape_note": "Very large database and distributed-systems monorepo with C/C++, Python, Go, generated protocol code, vendored dependencies, and many test suites."
+    }
+  ]
+}

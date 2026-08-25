@@ -1,0 +1,69 @@
+diff --git a/pygments/lexers/kusto.py b/pygments/lexers/kusto.py
+index 8012348578ad177a7e4f352f672ee8abee340bb2..216330bb1ef56d539aef7060fb4aace3534b0298 100644
+--- a/pygments/lexers/kusto.py
++++ b/pygments/lexers/kusto.py
+@@ -36,7 +36,7 @@ KUSTO_KEYWORDS = [
+ # https://github.com/microsoft/Kusto-Query-Language/blob/master/src/Kusto.Language/Syntax/SyntaxFacts.cs
+ KUSTO_PUNCTUATION = [
+     "(", ")", "[", "]", "{", "}", "|", "<|", "+", "-", "*", "/",
+-    "%", ".." "!", "<", "<=", ">", ">=", "=", "==", "!=", "<>",
++    "%", ".", "..", "!", "<", "<=", ">", ">=", "=", "==", "!=", "<>",
+     ":", ";", ",", "=~", "!~", "?", "=>",
+ ]
+ 
+@@ -56,10 +56,10 @@ class KustoLexer(RegexLexer):
+             (r"\s+", Whitespace),
+             (words(KUSTO_KEYWORDS, suffix=r"\b"), Keyword),
+             (r"//.*", Comment),
+-            (words(KUSTO_PUNCTUATION), Punctuation),
+-            (r"[^\W\d]\w*", Name),
+             # Numbers can take the form 1, .1, 1., 1.1, 1.1111, etc.
+             (r"\d+[.]\d*|[.]\d+", Number.Float),
++            (words(KUSTO_PUNCTUATION), Punctuation),
++            (r"[^\W\d]\w*", Name),
+             (r"\d+", Number.Integer),
+             (r"'", String, "single_string"),
+             (r'"', String, "double_string"),
+diff --git a/tests/snippets/kusto/test_kusto.txt b/tests/snippets/kusto/test_kusto.txt
+index 133e72377328e99824f20319910a50c42d725781..4b3e6feea330561e3ff678f135f0b08cd539db51 100644
+--- a/tests/snippets/kusto/test_kusto.txt
++++ b/tests/snippets/kusto/test_kusto.txt
+@@ -4,6 +4,9 @@ StormEvents
+ | where State == "FLORIDA"
+ | count
+ 
++resources
++| project owner=tags.owner
++
+ ---tokens---
+ 'StormEvents' Name
+ '\n'          Text.Whitespace
+@@ -26,8 +29,7 @@ StormEvents
+ '01'          Literal.Number.Integer
+ ')'           Punctuation
+ ' '           Text.Whitespace
+-'.'           Error
+-'.'           Error
++'..'          Punctuation
+ ' '           Text.Whitespace
+ 'datetime'    Keyword
+ '('           Punctuation
+@@ -56,4 +58,18 @@ StormEvents
+ '|'           Punctuation
+ ' '           Text.Whitespace
+ 'count'       Keyword
++'\n\n'        Text.Whitespace
++
++'resources'   Name
++'\n'          Text.Whitespace
++
++'|'           Punctuation
++' '           Text.Whitespace
++'project'     Keyword
++' '           Text.Whitespace
++'owner'       Name
++'='           Punctuation
++'tags'        Name
++'.'           Punctuation
++'owner'       Name
+ '\n'          Text.Whitespace

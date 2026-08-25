@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?><testsuites name="pytest tests"><testsuite name="pytest" errors="0" failures="1" skipped="0" tests="1" time="0.080" timestamp="2026-08-24T08:31:19.160856-07:00" hostname="JoshP"><testcase classname="tests.snippets.zone.a-record.txt" name="" time="0.004"><failure message="The tokens produced by the &quot;zone&quot; lexer differ from the expected ones in the file &quot;tests\snippets\zone\a-record.txt&quot;.&#10;Run `tox -- tests\snippets --update-goldens` to update it.&#10;&#10;  &#10;  Skipping 222 identical leading characters in diff, use -v to show&#10;  - ta2'      Name&#10;  + ta2'      Literal&#10;    '           ' Text.Whitespace&#10;  - 'A'           Keyword.Type&#10;  + 'A'           Literal...&#10;  &#10;  ...Full output truncated (3 lines hidden), use '-vv' to show">The tokens produced by the "zone" lexer differ from the expected ones in the file "tests\snippets\zone\a-record.txt".
+Run `tox -- tests\snippets --update-goldens` to update it.
+
+  
+  Skipping 222 identical leading characters in diff, use -v to show
+  - ta2'      Name
+  + ta2'      Literal
+    '           ' Text.Whitespace
+  - 'A'           Keyword.Type
+  + 'A'           Literal...
+  
+  ...Full output truncated (3 lines hidden), use '-vv' to show</failure></testcase></testsuite></testsuites>

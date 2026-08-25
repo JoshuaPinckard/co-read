@@ -1,0 +1,41 @@
+============================= test session starts =============================
+platform win32 -- Python 3.11.9, pytest-8.4.2, pluggy-1.6.0
+rootdir: C:\Users\joshp\AppData\Local\Temp\blast-radius-jinja-causal\a1614-tiqsfgik\b
+configfile: setup.cfg
+testpaths: tests
+plugins: timeout-2.4.0
+collected 835 items
+
+tests\test_api.py .................................                      [  3%]
+tests\test_async.py .................................................... [ 10%]
+....                                                                     [ 10%]
+tests\test_async_filters.py .........................................    [ 15%]
+tests\test_bytecode_cache.py ...                                         [ 15%]
+tests\test_compile.py ..                                                 [ 16%]
+tests\test_core_tags.py ................................................ [ 21%]
+..............                                                           [ 23%]
+tests\test_debug.py .......                                              [ 24%]
+tests\test_ext.py .................................................      [ 30%]
+tests\test_filters.py .................................................. [ 36%]
+........................................................................ [ 44%]
+                                                                         [ 44%]
+tests\test_idtracking.py .....                                           [ 45%]
+tests\test_imports.py ...............                                    [ 47%]
+tests\test_inheritance.py ......................                         [ 49%]
+tests\test_lexnparse.py ................................................ [ 55%]
+........................................................................ [ 64%]
+..............................                                           [ 67%]
+tests\test_loader.py ........................................            [ 72%]
+tests\test_nativetypes.py ..........................                     [ 75%]
+tests\test_nodes.py .                                                    [ 75%]
+tests\test_pickle.py .                                                   [ 76%]
+tests\test_regression.py ............................................... [ 81%]
+.....                                                                    [ 82%]
+tests\test_runtime.py .......                                            [ 83%]
+tests\test_security.py ...............                                   [ 84%]
+tests\test_tests.py .................................................... [ 91%]
+......................................................                   [ 97%]
+tests\test_utils.py ....................                                 [100%]
+
+- generated xml file: C:\Users\joshp\Desktop\Blast-Radius\exploratory\causal\verification\jinja-results-arms\pr-1614\base.xml -
+============================= 835 passed in 7.35s =============================

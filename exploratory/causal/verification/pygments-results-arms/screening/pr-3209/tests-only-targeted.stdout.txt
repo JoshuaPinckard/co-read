@@ -1,0 +1,23 @@
+============================= test session starts =============================
+platform win32 -- Python 3.11.9, pytest-8.4.2, pluggy-1.6.0
+rootdir: C:\Users\joshp\AppData\Local\Temp\blast-radius-pygments-causal-opbff12g\screen-pr-3209-mmy2zpdp\tests-only
+configfile: pyproject.toml
+collected 1 item
+
+tests\snippets\yaml\2827.txt F                                           [100%]
+
+================================== FAILURES ===================================
+________________________ tests\snippets\yaml\2827.txt _________________________
+The tokens produced by the "yaml" lexer differ from the expected ones in the file "tests\snippets\yaml\2827.txt".
+Run `tox -- tests\snippets --update-goldens` to update it.
+
+  
+  Skipping 118 identical leading characters in diff, use -v to show
+  - 0'        Literal.Scalar.Plain
+  + 0'        Error
+    'baz'         Literal.Scalar.Plain
+    '\n'          Text.Whitespace
+- generated xml file: C:\Users\joshp\Desktop\Blast-Radius\exploratory\causal\verification\pygments-results-arms\screening\pr-3209\tests-only-targeted.xml -
+=========================== short test summary info ===========================
+FAILED tests/snippets/yaml/2827.txt::
+============================== 1 failed in 0.80s ==============================

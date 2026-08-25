@@ -1,0 +1,56 @@
+diff --git a/pygments/lexers/javascript.py b/pygments/lexers/javascript.py
+index 4141f93b635da29d21e79f19a0773364a722be8a..2654b83d95b16f22163988e46e755d047da8da37 100644
+--- a/pygments/lexers/javascript.py
++++ b/pygments/lexers/javascript.py
+@@ -162,7 +162,10 @@ class TypeScriptLexer(JavascriptLexer):
+             # Match variable type keywords
+             (r'\b(string|boolean|number)\b', Keyword.Type),
+             # Match stuff like: module name {...}
+-            (r'\b(module)(\s*)([\w?.$]+)(\s*)',
++            # Require whitespace after `module` so identifiers that merely
++            # start with it (e.g. `modules`) or property access (`module.x`)
++            # are not mis-tokenized as the contextual namespace keyword.
++            (r'\b(module)(\s+)([\w?.$]+)(\s*)',
+              bygroups(Keyword.Reserved, Whitespace, Name.Other, Whitespace), 'slashstartsregex'),
+             # Match stuff like: (function: return type)
+             (r'([\w?.$]+)(\s*)(:)(\s*)([\w?.$]+)',
+diff --git a/tests/snippets/typescript/2823.txt b/tests/snippets/typescript/2823.txt
+new file mode 100644
+index 0000000000000000000000000000000000000000..af4b23648146279f0b4eca5ef5cbacab16af33fe
+--- /dev/null
++++ b/tests/snippets/typescript/2823.txt
+@@ -0,0 +1,34 @@
++---input---
++{ modules: 0 }
++module.exports = foo;
++module Foo { }
++
++---tokens---
++'{'           Punctuation
++' '           Text.Whitespace
++'modules'     Name.Other
++':'           Operator
++' '           Text.Whitespace
++'0'           Keyword.Type
++' '           Text.Whitespace
++'}'           Punctuation
++'\n'          Text.Whitespace
++
++'module'      Name.Other
++'.'           Punctuation
++'exports'     Name.Other
++' '           Text.Whitespace
++'='           Operator
++' '           Text.Whitespace
++'foo'         Name.Other
++';'           Punctuation
++'\n'          Text.Whitespace
++
++'module'      Keyword.Reserved
++' '           Text.Whitespace
++'Foo'         Name.Other
++' '           Text.Whitespace
++'{'           Punctuation
++' '           Text.Whitespace
++'}'           Punctuation
++'\n'          Text.Whitespace

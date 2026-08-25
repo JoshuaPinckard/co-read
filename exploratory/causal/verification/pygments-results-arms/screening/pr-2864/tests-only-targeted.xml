@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?><testsuites name="pytest tests"><testsuite name="pytest" errors="0" failures="1" skipped="0" tests="1" time="0.210" timestamp="2026-08-24T08:29:29.422137-07:00" hostname="JoshP"><testcase classname="tests.examplefiles.spice.dijkstra.spice" name="" time="0.008"><failure message="The tokens produced by the &quot;spice&quot; lexer differ from the expected ones in the file &quot;tests\examplefiles\spice\dijkstra.spice&quot;.&#10;Run `tox -- tests\examplefiles --update-goldens` to update it.&#10;&#10;  &#10;  Skipping 1484 identical leading characters in diff, use -v to show&#10;  - t'        Keyword&#10;  + t'        Name.Other&#10;    '&lt;'           Punctuation&#10;    'int'         Keyword.Type&#10;    '&gt;'           Punctuation...&#10;  &#10;  ...Full output truncated (868 lines hidden), use '-vv' to show">The tokens produced by the "spice" lexer differ from the expected ones in the file "tests\examplefiles\spice\dijkstra.spice".
+Run `tox -- tests\examplefiles --update-goldens` to update it.
+
+  
+  Skipping 1484 identical leading characters in diff, use -v to show
+  - t'        Keyword
+  + t'        Name.Other
+    '&lt;'           Punctuation
+    'int'         Keyword.Type
+    '&gt;'           Punctuation...
+  
+  ...Full output truncated (868 lines hidden), use '-vv' to show</failure></testcase></testsuite></testsuites>

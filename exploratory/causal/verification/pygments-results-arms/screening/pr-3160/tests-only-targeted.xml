@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?><testsuites name="pytest tests"><testsuite name="pytest" errors="0" failures="1" skipped="0" tests="1" time="0.076" timestamp="2026-08-24T08:23:05.191629-07:00" hostname="JoshP"><testcase classname="tests.snippets.wat.test_sign_extension_instructions.txt" name="" time="0.006"><failure message="The tokens produced by the &quot;wat&quot; lexer differ from the expected ones in the file &quot;tests\snippets\wat\test_sign_extension_instructions.txt&quot;.&#10;Run `tox -- tests\snippets --update-goldens` to update it.&#10;&#10;  &#10;  - 'i32.extend8_s' Name.Builtin&#10;  + 'i32'         Keyword.Type&#10;  + '.'           Error&#10;  + 'e'           Error&#10;  + 'x'           Error&#10;  + 't'           Error...&#10;  &#10;  ...Full output truncated (53 lines hidden), use '-vv' to show">The tokens produced by the "wat" lexer differ from the expected ones in the file "tests\snippets\wat\test_sign_extension_instructions.txt".
+Run `tox -- tests\snippets --update-goldens` to update it.
+
+  
+  - 'i32.extend8_s' Name.Builtin
+  + 'i32'         Keyword.Type
+  + '.'           Error
+  + 'e'           Error
+  + 'x'           Error
+  + 't'           Error...
+  
+  ...Full output truncated (53 lines hidden), use '-vv' to show</failure></testcase></testsuite></testsuites>

@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?><testsuites name="pytest tests"><testsuite name="pytest" errors="0" failures="1" skipped="0" tests="1" time="0.181" timestamp="2026-08-24T08:28:07.215051-07:00" hostname="JoshP"><testcase classname="tests.examplefiles.control.control" name="" time="0.005"><failure message="The tokens produced by the &quot;control&quot; lexer differ from the expected ones in the file &quot;tests\examplefiles\control\control&quot;.&#10;Run `tox -- tests\examplefiles --update-goldens` to update it.&#10;&#10;  &#10;  Skipping 3396 identical leading characters in diff, use -v to show&#10;       Text&#10;  - '['           Punctuation&#10;  - 'amd64'       Name.Entity&#10;  ?        --&#10;  + '[amd64]'     Name.Entity...&#10;  &#10;  ...Full output truncated (87 lines hidden), use '-vv' to show">The tokens produced by the "control" lexer differ from the expected ones in the file "tests\examplefiles\control\control".
+Run `tox -- tests\examplefiles --update-goldens` to update it.
+
+  
+  Skipping 3396 identical leading characters in diff, use -v to show
+       Text
+  - '['           Punctuation
+  - 'amd64'       Name.Entity
+  ?        --
+  + '[amd64]'     Name.Entity...
+  
+  ...Full output truncated (87 lines hidden), use '-vv' to show</failure></testcase></testsuite></testsuites>

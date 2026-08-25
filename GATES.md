@@ -28,11 +28,16 @@ tree.
 Discharged 2026-08-23: repository initialised, initial commit taken, brief frozen
 to `brief/BRIEF-v1-2026-08-23.md` with sha256 recorded in `brief/FREEZE.md`.
 
-Outstanding: no remote. The PI has directed this project to the `joshuapinckard`
-GitHub account rather than the ToolsEnabled organisation. `gh` is not installed
-on this machine and the ToolsEnabled GitHub tooling authenticates as the company,
-so the remote must be created and wired by the owner. **Until that is done the
-evidence base exists on exactly one disk.** This is a live Gate 0 defect.
+Remote discharged 2026-08-24: `origin` is `github.com/JoshuaPinckard/co-read`
+under the personal account as directed; `public` is the curated branch, `main`
+the full record. Residual defect, narrower than before: commits queue behind
+the index lock while workers run, so the newest results can exist on one disk
+for hours at a time. Push at every lock-free opportunity.
+
+**Prompt freeze (standing rule, added 2026-08-24).** Every worker prompt is
+frozen to `prompts/` with a SHA-256 before or at launch. The first wave's
+prompts were lost with a session scratchpad — a real Gate 0 breach, disclosed
+in `prompts/README.md` — which is why this is now a rule rather than a habit.
 
 ## Gate 1 — fix known-wrong things, zero model calls
 
@@ -108,6 +113,20 @@ rationed.
 **Prioritisation rule:** spend the marginal evaluation on the axis that attacks
 the main validity threat, not on more of the same. Here that means
 cross-language generalisation before more JavaScript repositories.
+
+**Confirmatory precondition (added 2026-08-24, transferred from LEAN-Bench).**
+No confirmatory run until `HYPOTHESES.md` is PI-approved and its commit
+precedes the first draw. Everything before that stays under `exploratory/` and
+is cited as the source of predictions, never as their confirmation.
+
+**Clean-room bar for agent subjects (added 2026-08-24).** When agents are the
+thing being measured — the arms ladder — the LEAN-Bench clean-room rule
+applies: environment manifest, same-day calibrated planted-marker canary,
+certificates beside the data. The Codex CLI reads instruction files from
+exactly its home and working directories (channel forensics, LEAN-Bench
+cleanroom 2026-08-21); both locations are recorded per run. Analysis workers
+are instruments, not subjects, and carry the lighter standing disclosure in
+`prompts/README.md`.
 
 ---
 

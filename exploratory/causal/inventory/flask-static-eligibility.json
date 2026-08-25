@@ -1,0 +1,88 @@
+{
+  "repository": "pallets/flask",
+  "accepted_gate_commit": "d318b683471101618febed18996405ad26462110",
+  "walk": "first-parent newest-to-oldest",
+  "cutoff": "2020-01-01T00:00:00Z",
+  "date_field_for_cutoff": "committer date (git --since-as-filter)",
+  "patch_command": "git diff --binary --full-index --find-renames=50% -l0 <parent> <commit>",
+  "aggregate": {
+    "funnel": {
+      "history_commits_in_range": 600,
+      "pass_criterion_1": 35,
+      "pass_criterion_2": 10,
+      "pass_criterion_3": 4,
+      "pass_criterion_4": 2,
+      "pass_criterion_5_structurally_eligible": 2
+    },
+    "first_failure_counts": {
+      "criterion_1_not_exactly_one_parent": 474,
+      "criterion_1_subject_missing_terminal_pr": 91,
+      "criterion_2_path_count_outside_2_12": 25,
+      "criterion_3_no_src_flask_python": 5,
+      "criterion_3_no_tests_python": 1,
+      "criterion_4_out_of_scope_path": 2
+    },
+    "independent_failure_counts_within_reached_stage": {
+      "criterion_1_not_exactly_one_parent": 474,
+      "criterion_1_subject_missing_terminal_pr": 494,
+      "criterion_2_path_count_outside_2_12": 25,
+      "criterion_3_no_src_flask_python": 5,
+      "criterion_3_no_tests_python": 6,
+      "criterion_4_out_of_scope_path": 2
+    }
+  },
+  "eligible_count": 2,
+  "eligible": [
+    {
+      "eligible_ordinal": 1,
+      "history_ordinal": 282,
+      "sha": "9b44bf2818d8e3cde422ad7f43fb33dfc6737289",
+      "parent": "d7482cd765351e7495bfce45f9fb55732e91ab3a",
+      "author_date": "2022-07-06T22:05:20+01:00",
+      "commit_date": "2022-07-06T14:05:20-07:00",
+      "subject": "Improve decorator typing (#4676)",
+      "pr": 4676,
+      "paths": [
+        "src/flask/app.py",
+        "src/flask/blueprints.py",
+        "src/flask/scaffold.py",
+        "src/flask/typing.py",
+        "src/flask/views.py",
+        "tests/typing/typing_route.py"
+      ],
+      "test_paths": [
+        "tests/typing/typing_route.py"
+      ],
+      "source_python_paths": [
+        "src/flask/app.py",
+        "src/flask/blueprints.py",
+        "src/flask/scaffold.py",
+        "src/flask/typing.py",
+        "src/flask/views.py"
+      ],
+      "patch_bytes": 24992
+    },
+    {
+      "eligible_ordinal": 2,
+      "history_ordinal": 491,
+      "sha": "22987b68173e9bf56cc450cb7aeb93f5480a2660",
+      "parent": "7a444c5dab97d640282ec8fc4838bef2c128273f",
+      "author_date": "2020-11-04T21:16:05-05:00",
+      "commit_date": "2020-11-04T18:16:05-08:00",
+      "subject": "include samesite and secure when removing session cookie (#3726)",
+      "pr": 3726,
+      "paths": [
+        "CHANGES.rst",
+        "src/flask/sessions.py",
+        "tests/test_basic.py"
+      ],
+      "test_paths": [
+        "tests/test_basic.py"
+      ],
+      "source_python_paths": [
+        "src/flask/sessions.py"
+      ],
+      "patch_bytes": 2675
+    }
+  ]
+}

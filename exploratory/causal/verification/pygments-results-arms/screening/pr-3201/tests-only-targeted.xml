@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?><testsuites name="pytest tests"><testsuite name="pytest" errors="0" failures="1" skipped="0" tests="3" time="0.135" timestamp="2026-08-24T08:19:01.715497-07:00" hostname="JoshP"><testcase classname="tests.test_groff_formatter" name="test_basic" time="0.025" /><testcase classname="tests.test_groff_formatter" name="test_inheritance_custom_tokens" time="0.001" /><testcase classname="tests.test_groff_formatter" name="test_wrap_does_not_duplicate_characters" time="0.001"><failure message="AssertionError: assert 'abcd\nefgh\nhij' == 'abcd\nefgh\nij'&#10;  &#10;    abcd&#10;    efgh&#10;  - ij&#10;  + hij&#10;  ? +">def test_wrap_does_not_duplicate_characters():
+        # A piece longer than ``wrap`` that does not end in a newline must not
+        # have a character duplicated when it is soft-wrapped. The tail slice used
+        # to reach one character too far to the left when there was no trailing
+        # newline, repeating the last character of the preceding full chunk.
+        fmt = GroffFormatter(wrap=4)
+&gt;       assert fmt._wrap_line("abcdefghij") == "abcd\nefgh\nij"
+E       AssertionError: assert 'abcd\nefgh\nhij' == 'abcd\nefgh\nij'
+E         
+E           abcd
+E           efgh
+E         - ij
+E         + hij
+E         ? +
+
+tests\test_groff_formatter.py:89: AssertionError</failure></testcase></testsuite></testsuites>

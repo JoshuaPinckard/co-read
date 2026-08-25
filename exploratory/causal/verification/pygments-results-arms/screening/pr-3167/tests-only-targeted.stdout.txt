@@ -1,0 +1,26 @@
+============================= test session starts =============================
+platform win32 -- Python 3.11.9, pytest-8.4.2, pluggy-1.6.0
+rootdir: C:\Users\joshp\AppData\Local\Temp\blast-radius-pygments-causal-opbff12g\screen-pr-3167-b5nuazc1\tests-only
+configfile: pyproject.toml
+collected 1 item
+
+tests\snippets\googlesql\test_leading_substring_set_not_keyword.txt F    [100%]
+
+================================== FAILURES ===================================
+_____ tests\snippets\googlesql\test_leading_substring_set_not_keyword.txt _____
+The tokens produced by the "googlesql" lexer differ from the expected ones in the file "tests\snippets\googlesql\test_leading_substring_set_not_keyword.txt".
+Run `tox -- tests\snippets --update-goldens` to update it.
+
+  
+  Skipping 46 identical leading characters in diff, use -v to show
+    space
+  + 'set'         Keyword
+  - 'settings'    Name
+  ?  ---
+  + 'tings'       Name
+  ?            +++
+    '\n'          Text.Whitespace
+- generated xml file: C:\Users\joshp\Desktop\Blast-Radius\exploratory\causal\verification\pygments-results-arms\screening\pr-3167\tests-only-targeted.xml -
+=========================== short test summary info ===========================
+FAILED tests/snippets/googlesql/test_leading_substring_set_not_keyword.txt::
+============================== 1 failed in 0.17s ==============================

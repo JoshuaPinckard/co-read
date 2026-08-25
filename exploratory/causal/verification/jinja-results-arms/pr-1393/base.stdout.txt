@@ -1,0 +1,86 @@
+============================= test session starts =============================
+platform win32 -- Python 3.11.9, pytest-8.4.2, pluggy-1.6.0
+rootdir: C:\Users\joshp\AppData\Local\Temp\blast-radius-jinja-causal\a1393-it3uvnn8\b
+configfile: setup.cfg
+testpaths: tests
+plugins: timeout-2.4.0
+collected 817 items
+
+tests\test_api.py .................................                      [  4%]
+tests\test_async.py .................................................... [ 10%]
+.                                                                        [ 10%]
+tests\test_async_filters.py .........................................    [ 15%]
+tests\test_bytecode_cache.py ...                                         [ 15%]
+tests\test_core_tags.py ................................................ [ 21%]
+..............                                                           [ 23%]
+tests\test_debug.py F......                                              [ 24%]
+tests\test_ext.py ...............................................        [ 30%]
+tests\test_features.py .                                                 [ 30%]
+tests\test_filters.py .................................................. [ 36%]
+......................................................................   [ 44%]
+tests\test_idtracking.py .....                                           [ 45%]
+tests\test_imports.py ...............                                    [ 47%]
+tests\test_inheritance.py ......................                         [ 50%]
+tests\test_lexnparse.py ................................................ [ 55%]
+........................................................................ [ 64%]
+..............................                                           [ 68%]
+tests\test_loader.py ..................................                  [ 72%]
+tests\test_nativetypes.py ........................                       [ 75%]
+tests\test_regression.py ............................................... [ 81%]
+.....                                                                    [ 81%]
+tests\test_runtime.py .......                                            [ 82%]
+tests\test_security.py ...............                                   [ 84%]
+tests\test_tests.py .................................................... [ 90%]
+......................................................                   [ 97%]
+tests\test_utils.py ....................                                 [100%]
+
+================================== FAILURES ===================================
+________________________ TestDebug.test_runtime_error _________________________
+
+self = <test_debug.TestDebug object at 0x0000018F1FF7B950>
+fs_env = <jinja2.environment.Environment object at 0x0000018F2013CCD0>
+
+        def test_runtime_error(self, fs_env):
+            def test():
+                tmpl.render(fail=lambda: 1 / 0)
+    
+            tmpl = fs_env.get_template("broken.html")
+>           self.assert_traceback_matches(
+                test,
+                r"""
+      File ".*?broken.html", line 2, in (top-level template code|<module>)
+        \{\{ fail\(\) \}\}
+      File ".*debug?.pyc?", line \d+, in <lambda>
+        tmpl\.render\(fail=lambda: 1 / 0\)
+    ZeroDivisionError: (int(eger)? )?division (or modulo )?by zero
+    """,
+            )
+
+tests\test_debug.py:35: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+self = <test_debug.TestDebug object at 0x0000018F1FF7B950>
+callback = <function TestDebug.test_runtime_error.<locals>.test at 0x0000018F201725C0>
+expected_tb = '\n  File ".*?broken.html", line 2, in (top-level template code|<module>)\n    \\{\\{ fail\\(\\) \\}\\}\n  File ".*deb... <lambda>\n    tmpl\\.render\\(fail=lambda: 1 / 0\\)\nZeroDivisionError: (int(eger)? )?division (or modulo )?by zero\n'
+
+    def assert_traceback_matches(self, callback, expected_tb):
+        with pytest.raises(Exception) as exc_info:
+            callback()
+    
+        tb = format_exception(exc_info.type, exc_info.value, exc_info.tb)
+        m = re.search(expected_tb.strip(), "".join(tb))
+>       assert (
+            m is not None
+        ), "Traceback did not match:\n\n{''.join(tb)}\nexpected:\n{expected_tb}"
+E       AssertionError: Traceback did not match:
+E         
+E         {''.join(tb)}
+E         expected:
+E         {expected_tb}
+E       assert None is not None
+
+tests\test_debug.py:26: AssertionError
+- generated xml file: C:\Users\joshp\Desktop\Blast-Radius\exploratory\causal\verification\jinja-results-arms\pr-1393\base.xml -
+=========================== short test summary info ===========================
+FAILED tests/test_debug.py::TestDebug::test_runtime_error - AssertionError: T...
+======================== 1 failed, 816 passed in 3.93s ========================

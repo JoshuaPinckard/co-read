@@ -1,0 +1,74 @@
+diff --git a/pygments/formatters/html.py b/pygments/formatters/html.py
+index 907302ae15b57fb97ade4dec7727bcef4c9ce63f..7c5efc7ee8bd9ff3507e42deb36c4d84b2f99d77 100644
+--- a/pygments/formatters/html.py
++++ b/pygments/formatters/html.py
+@@ -13,6 +13,7 @@ import os
+ import sys
+ import os.path
+ from io import StringIO
++from html import escape as _escape
+ 
+ from pygments.formatter import Formatter
+ from pygments.token import Token, Text, STANDARD_TYPES
+@@ -817,8 +818,14 @@ class HtmlFormatter(Formatter):
+ 
+     @functools.lru_cache(maxsize=100)
+     def _translate_parts(self, value):
+-        """HTML-escape a value and split it by newlines."""
+-        return html_escape(value).split('\n')
++        """HTML-escape a value and split it by newlines.
++
++        ``quote=False`` is intentional: token values are emitted as element
++        text content (inside ``<span>``/``<pre>``), where ``"`` and ``'`` do
++        not need escaping.  Skipping those two replacements is measurably
++        faster on the per-token hot path.
++        """
++        return _escape(value, quote=False).split('\n')
+ 
+     def _format_lines(self, tokensource):
+         """
+diff --git a/tests/test_html_formatter.py b/tests/test_html_formatter.py
+index a12d50c172d95d0f9f98e97903af5271d1dfc258..cf9da523ea0275f39fbc7e2001bd801cce4e3e77 100644
+--- a/tests/test_html_formatter.py
++++ b/tests/test_html_formatter.py
+@@ -17,7 +17,7 @@ import pytest
+ from pygments.formatters import HtmlFormatter, NullFormatter
+ from pygments.lexers import PythonLexer
+ from pygments.style import Style
+-from pygments.token import Name
++from pygments.token import Name, Token
+ from pygments.util import html_escape
+ 
+ TESTDIR = path.dirname(path.abspath(__file__))
+@@ -37,10 +37,30 @@ def test_correct_output():
+     nfmt.format(tokensource, noutfile)
+ 
+     stripped_html = re.sub('<.*?>', '', houtfile.getvalue())
+-    escaped_text = html_escape(noutfile.getvalue())
++    # The formatter escapes token values as element text content, where the
++    # quote characters do not need escaping (quote=False), so compare against
++    # text escaped the same way.
++    escaped_text = html_escape(noutfile.getvalue(), quote=False)
+     assert stripped_html == escaped_text
+ 
+ 
++def test_quotes_in_token_text_are_not_escaped():
++    # Token values are emitted as element text content, so " and ' are left
++    # as-is (html.escape(..., quote=False)); only &, < and > are escaped.
++    # This documents the behaviour introduced in PR #3185.
++    fmt = HtmlFormatter(nowrap=True)
++    outfile = StringIO()
++    fmt.format([(Token.Text, 'a "b" \'c\' & <d>\n')], outfile)
++    output = outfile.getvalue()
++
++    assert '"b"' in output       # double quotes stay literal
++    assert "'c'" in output       # single quotes stay literal
++    assert '&quot;' not in output
++    assert '&#x27;' not in output
++    assert '&amp;' in output      # ampersand is still escaped
++    assert '&lt;d&gt;' in output  # angle brackets are still escaped
++
++
+ def test_external_css():
+     # test correct behavior
+     # CSS should be in /tmp directory

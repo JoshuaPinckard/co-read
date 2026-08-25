@@ -1,0 +1,40 @@
+diff --git a/pygments/lexers/dotnet.py b/pygments/lexers/dotnet.py
+index 561136092168bb156136220c79fb765a474fdc4b..da370a2dfef06610f77b5ccf714737e62ed8c40d 100644
+--- a/pygments/lexers/dotnet.py
++++ b/pygments/lexers/dotnet.py
+@@ -97,6 +97,7 @@ class CSharpLexer(RegexLexer):
+                 (r'[()\[\];:,.]', Punctuation),
+                 (r'[{}]', Punctuation),
+                 (r'\$*"{3,}.*?"{3,}', String),
++                (r'(?:\$@|@\$)"(""|[^"])*"', String),
+                 (r'@"(""|[^"])*"', String),
+                 (r'\$?"(\\\\|\\[^\\]|[^"\\\n])*["\n]', String),
+                 (r"'\\.'|'[^\\]'", String.Char),
+diff --git a/tests/snippets/csharp/2685.txt b/tests/snippets/csharp/2685.txt
+new file mode 100644
+index 0000000000000000000000000000000000000000..88ac907da888ed04b2417d1a9f9ce32f013e60f4
+--- /dev/null
++++ b/tests/snippets/csharp/2685.txt
+@@ -0,0 +1,22 @@
++---input---
++Console.WriteLine($@"C:\Users\{username}\Desktop");
++Console.WriteLine(@$"C:\Users\{username}\Desktop");
++
++---tokens---
++'Console'     Name
++'.'           Punctuation
++'WriteLine'   Name
++'('           Punctuation
++'$@"C:\\Users\\{username}\\Desktop"' Literal.String
++')'           Punctuation
++';'           Punctuation
++'\n'          Text.Whitespace
++
++'Console'     Name
++'.'           Punctuation
++'WriteLine'   Name
++'('           Punctuation
++'@$"C:\\Users\\{username}\\Desktop"' Literal.String
++')'           Punctuation
++';'           Punctuation
++'\n'          Text.Whitespace

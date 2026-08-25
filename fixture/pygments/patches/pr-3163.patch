@@ -1,0 +1,68 @@
+diff --git a/pygments/lexers/d.py b/pygments/lexers/d.py
+index e85c33c942ab1ed4b5797153d703d132f286836a..12e7a78a6c21fe123dece39ee1d9f6f0b9a559ae 100644
+--- a/pygments/lexers/d.py
++++ b/pygments/lexers/d.py
+@@ -109,18 +109,18 @@ class DLexer(RegexLexer):
+             (r'q"\(', String, 'delimited_parenthesis'),
+             (r'q"<', String, 'delimited_angle'),
+             (r'q"\{', String, 'delimited_curly'),
+-            (r'q"([a-zA-Z_]\w*)\n.*?\n\1"', String),
++            (r'q"([^\W\d]\w*)\n.*?\n\1"', String),
+             (r'q"(.).*?\1"', String),
+             # -- TokenString
+             (r'q\{', String, 'token_string'),
+             # Attributes
+-            (r'@([a-zA-Z_]\w*)?', Name.Decorator),
++            (r'@([^\W\d]\w*)?', Name.Decorator),
+             # Tokens
+             (r'(~=|\^=|%=|\*=|==|!>=|!<=|!<>=|!<>|!<|!>|!=|>>>=|>>>|>>=|>>|>='
+              r'|<>=|<>|<<=|<<|<=|\+\+|\+=|--|-=|\|\||\|=|&&|&=|\.\.\.|\.\.|/=)'
+              r'|[/.&|\-+<>!()\[\]{}?,;:$=*%^~]', Punctuation),
+             # Identifier
+-            (r'[a-zA-Z_]\w*', Name),
++            (r'[^\W\d]\w*', Name),
+             # Line
+             (r'(#line)(\s)(.*)(\n)', bygroups(Comment.Special, Whitespace,
+                 Comment.Special, Whitespace)),
+diff --git a/tests/snippets/d/test_unicode_identifiers.txt b/tests/snippets/d/test_unicode_identifiers.txt
+new file mode 100644
+index 0000000000000000000000000000000000000000..9cfe5a2a99dcb88e8bb7efa232f776a78d1176e0
+--- /dev/null
++++ b/tests/snippets/d/test_unicode_identifiers.txt
+@@ -0,0 +1,36 @@
++---input---
++class Pencere
++{
++    Düğme düğme;
++    void ğĞiletiGöster() {}
++}
++
++---tokens---
++'class'       Keyword
++' '           Text.Whitespace
++'Pencere'     Name
++'\n'          Text.Whitespace
++
++'{'           Punctuation
++'\n'          Text.Whitespace
++
++'    '        Text.Whitespace
++'Düğme'       Name
++' '           Text.Whitespace
++'düğme'       Name
++';'           Punctuation
++'\n'          Text.Whitespace
++
++'    '        Text.Whitespace
++'void'        Keyword.Type
++' '           Text.Whitespace
++'ğĞiletiGöster' Name
++'('           Punctuation
++')'           Punctuation
++' '           Text.Whitespace
++'{'           Punctuation
++'}'           Punctuation
++'\n'          Text.Whitespace
++
++'}'           Punctuation
++'\n'          Text.Whitespace

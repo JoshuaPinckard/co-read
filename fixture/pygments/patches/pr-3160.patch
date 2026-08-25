@@ -1,0 +1,42 @@
+diff --git a/pygments/lexers/webassembly.py b/pygments/lexers/webassembly.py
+index f9d409f9c0c46c90884e5af53678d390747470e3..e076bb139d116f54e8c020e9cb3e6c386845f888 100644
+--- a/pygments/lexers/webassembly.py
++++ b/pygments/lexers/webassembly.py
+@@ -58,6 +58,9 @@ builtins = (
+     'f64.convert_i64_s', 'f64.convert_i64_u', 'f64.promote_f32',
+     'i32.reinterpret_f32', 'i64.reinterpret_f64', 'f32.reinterpret_i32',
+     'f64.reinterpret_i64',
++    # sign-extension operators
++    'i32.extend8_s', 'i32.extend16_s', 'i64.extend8_s', 'i64.extend16_s',
++    'i64.extend32_s',
+ )
+ 
+ 
+diff --git a/tests/snippets/wat/test_sign_extension_instructions.txt b/tests/snippets/wat/test_sign_extension_instructions.txt
+new file mode 100644
+index 0000000000000000000000000000000000000000..a49a5f7d95063b69e0df983fdfb6e226c1998100
+--- /dev/null
++++ b/tests/snippets/wat/test_sign_extension_instructions.txt
+@@ -0,0 +1,22 @@
++---input---
++i32.extend8_s
++i32.extend16_s
++i64.extend8_s
++i64.extend16_s
++i64.extend32_s
++
++---tokens---
++'i32.extend8_s' Name.Builtin
++'\n'          Text
++
++'i32.extend16_s' Name.Builtin
++'\n'          Text
++
++'i64.extend8_s' Name.Builtin
++'\n'          Text
++
++'i64.extend16_s' Name.Builtin
++'\n'          Text
++
++'i64.extend32_s' Name.Builtin
++'\n'          Text

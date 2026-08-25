@@ -1,0 +1,73 @@
+{#
+    sphinxdoc/layout.html
+    ~~~~~~~~~~~~~~~~~~~~~
+
+    Sphinx layout template for the sphinxdoc theme.
+
+    :copyright: Copyright 2007-2013 by the Sphinx team, see AUTHORS.
+    :license: BSD, see LICENSE for details.
+#}
+{%- extends "basic/layout.html" %}
+
+{# put the sidebar before the body #}
+{% block sidebar1 %}{{ sidebar() }}{% endblock %}
+{% block sidebar2 %}{% endblock %}
+
+{% block relbar1 %}{% endblock %}
+{% block relbar2 %}{% endblock %}
+
+{% block extrahead %}
+    <link href='https://fonts.googleapis.com/css?family={{ theme_font|replace(' ', '+') }}:300,400,700'
+          rel='stylesheet' type='text/css'>
+{{ super() }}
+{%- if not embedded %}
+    <style type="text/css">
+      table.right { float: right; margin-left: 20px; }
+      table.right td { border: 1px solid #ccc; }
+      {% if pagename == 'index' %}
+      .related { display: none; }
+      {% endif %}
+    </style>
+{%- endif %}
+{% endblock %}
+
+{% block header %}
+<div class="outerwrapper">
+<div class="pageheader">
+  <ul>
+    <li><a href="{{ pathto('index') }}">Home</a></li>
+    {% if demo_active %}
+    <li><a href="{{ pathto('demo') }}">Demo</a></li>
+    {% endif %}
+    <li><a href="{{ pathto('languages') }}">Languages</a></li>
+    <li><a href="{{ pathto('styles') }}">Styles</a></li>
+    <li><a href="{{ pathto('faq') }}">FAQ</a></li>
+    <li><a href="{{ pathto('download') }}">Get it</a></li>
+    <li><a href="{{ pathto('docs/index') }}">Docs</a></li>
+  </ul>
+  <div>
+    <a href="{{ pathto('index') }}">
+      <img src="{{ pathto('_static/logo_new.png', 1) }}" alt="Pygments logo" height="100" />
+    </a>
+  </div>
+</div>
+<div class="flexwrapper">
+{% endblock %}
+
+{% block footer %}
+    </div> {# closes "flexwrapper" div #}
+    <div class="footer" role="contentinfo">
+      &copy; Copyright 2006-present, Georg Brandl and Pygments contributors.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> {{
+      sphinx_version }}. <br/>
+      Pygments logo created by <a href="https://joelunger.com">Joel Unger</a>.
+      Backgrounds from <a href="https://subtlepatterns.com">subtlepatterns.com</a>.
+    </div>
+  </div> {# closes "outerwrapper" div #}
+{% endblock %}
+
+{% block sidebarrel %}
+{% endblock %}
+
+{% block sidebarsourcelink %}
+{% endblock %}

@@ -1,0 +1,26 @@
+============================= test session starts =============================
+platform win32 -- Python 3.11.9, pytest-8.4.2, pluggy-1.6.0
+rootdir: C:\Users\joshp\AppData\Local\Temp\blast-radius-pygments-causal-opbff12g\screen-pr-3199-40rcizir\tests-only
+configfile: pyproject.toml
+collected 1 item
+
+tests\examplefiles\go\3199.go F                                          [100%]
+
+================================== FAILURES ===================================
+________________________ tests\examplefiles\go\3199.go ________________________
+The tokens produced by the "go" lexer differ from the expected ones in the file "tests\examplefiles\go\3199.go".
+Run `tox -- tests\examplefiles --update-goldens` to update it.
+
+  
+  Skipping 562 identical leading characters in diff, use -v to show
+  - at'       Name.Other
+  + at'       Keyword.Type
+    ' '           Text.Whitespace
+    'float32'     Keyword.Type
+    '\n'          Text.Whitespace...
+  
+  ...Full output truncated (160 lines hidden), use '-vv' to show
+- generated xml file: C:\Users\joshp\Desktop\Blast-Radius\exploratory\causal\verification\pygments-results-arms\screening\pr-3199\tests-only-targeted.xml -
+=========================== short test summary info ===========================
+FAILED tests/examplefiles/go/3199.go::
+============================== 1 failed in 0.25s ==============================

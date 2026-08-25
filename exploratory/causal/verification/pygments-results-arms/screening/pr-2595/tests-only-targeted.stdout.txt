@@ -1,0 +1,26 @@
+============================= test session starts =============================
+platform win32 -- Python 3.11.9, pytest-8.4.2, pluggy-1.6.0
+rootdir: C:\Users\joshp\AppData\Local\Temp\blast-radius-pygments-causal-opbff12g\screen-pr-2595-6ce1ukw3\tests-only
+configfile: pyproject.toml
+collected 1 item
+
+tests\snippets\zone\a-record.txt F                                       [100%]
+
+================================== FAILURES ===================================
+______________________ tests\snippets\zone\a-record.txt _______________________
+The tokens produced by the "zone" lexer differ from the expected ones in the file "tests\snippets\zone\a-record.txt".
+Run `tox -- tests\snippets --update-goldens` to update it.
+
+  
+  Skipping 222 identical leading characters in diff, use -v to show
+  - ta2'      Name
+  + ta2'      Literal
+    '           ' Text.Whitespace
+  - 'A'           Keyword.Type
+  + 'A'           Literal...
+  
+  ...Full output truncated (3 lines hidden), use '-vv' to show
+- generated xml file: C:\Users\joshp\Desktop\Blast-Radius\exploratory\causal\verification\pygments-results-arms\screening\pr-2595\tests-only-targeted.xml -
+=========================== short test summary info ===========================
+FAILED tests/snippets/zone/a-record.txt::
+============================== 1 failed in 0.10s ==============================

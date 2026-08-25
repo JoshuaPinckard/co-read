@@ -1,0 +1,345 @@
+============================= test session starts =============================
+platform win32 -- Python 3.11.9, pytest-8.4.2, pluggy-1.6.0
+rootdir: C:\Users\joshp\AppData\Local\Temp\blast-radius-attrs-causal\a1593-8q9ypgb2\b
+configfile: pyproject.toml
+testpaths: tests
+plugins: hypothesis-6.161.6, xdist-3.8.0
+collected 1393 items
+
+tests\test_3rd_party.py .                                                [  0%]
+tests\test_abc.py ....                                                   [  0%]
+tests\test_annotations.py .............................................. [  3%]
+.                                                                        [  3%]
+tests\test_cmp.py ...................................................... [  7%]
+........................                                                 [  9%]
+tests\test_compat.py ...                                                 [  9%]
+tests\test_config.py ....                                                [  9%]
+tests\test_converters.py ......................................          [ 12%]
+tests\test_dunders.py .................................................. [ 16%]
+.................................................                        [ 19%]
+tests\test_filters.py .................................                  [ 22%]
+tests\test_funcs.py .................................................... [ 25%]
+.                                                                        [ 25%]
+tests\test_functional.py ............................................... [ 29%]
+........................................................................ [ 34%]
+........................................................................ [ 39%]
+........................................................................ [ 44%]
+........................................................................ [ 49%]
+........................................................................ [ 55%]
+sss                                                                      [ 55%]
+tests\test_hooks.py ....................                                 [ 56%]
+tests\test_import.py ...                                                 [ 56%]
+tests\test_init_subclass.py ....                                         [ 57%]
+tests\test_make.py ..................................................... [ 61%]
+........................................................................ [ 66%]
+........................................................................ [ 71%]
+........................................................................ [ 76%]
+....s.......                                                             [ 77%]
+tests\test_next_gen.py ....................................              [ 79%]
+tests\test_packaging.py FF..FF                                           [ 80%]
+tests\test_pattern_matching.py .....                                     [ 80%]
+tests\test_pyright.py sss                                                [ 80%]
+tests\test_setattr.py ....................x..................            [ 83%]
+tests\test_slots.py ..............s..................................... [ 87%]
+..                                                                       [ 87%]
+tests\test_utils.py ..                                                   [ 87%]
+tests\test_validators.py ............................................... [ 91%]
+........................................................................ [ 96%]
+............................................                             [ 99%]
+tests\test_version_info.py .......                                       [100%]
+
+================================== FAILURES ===================================
+__________________ TestLegacyMetadataHack.test_version[attr] __________________
+
+cls = <class 'importlib.metadata.Distribution'>, name = 'attrs'
+
+    @classmethod
+    def from_name(cls, name: str):
+        """Return the Distribution for the given package name.
+    
+        :param name: The name of the distribution package to search for.
+        :return: The Distribution instance (or subclass thereof) for the named
+            package, if found.
+        :raises PackageNotFoundError: When the named package's distribution
+            metadata cannot be found.
+        :raises ValueError: When an invalid value is supplied for name.
+        """
+        if not name:
+            raise ValueError("A distribution name is required.")
+        try:
+>           return next(cls.discover(name=name))
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E           StopIteration
+
+..\..\..\..\Programs\Python\Python311\Lib\importlib\metadata\__init__.py:563: StopIteration
+
+During handling of the above exception, another exception occurred:
+
+self = <tests.test_packaging.TestLegacyMetadataHack object at 0x00000287CFEC1450>
+mod = <module 'attr' from 'C:\\Users\\joshp\\AppData\\Local\\Temp\\blast-radius-attrs-causal\\a1593-8q9ypgb2\\b\\src\\attr\\__init__.py'>
+recwarn = WarningsRecorder(record=True)
+
+    def test_version(self, mod, recwarn):
+        """
+        __version__ returns the correct version and doesn't warn.
+        """
+>       assert metadata.version("attrs") == mod.__version__
+               ^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests\test_packaging.py:22: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+..\..\..\..\Programs\Python\Python311\Lib\importlib\metadata\__init__.py:1009: in version
+    return distribution(distribution_name).version
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+..\..\..\..\Programs\Python\Python311\Lib\importlib\metadata\__init__.py:982: in distribution
+    return Distribution.from_name(distribution_name)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+cls = <class 'importlib.metadata.Distribution'>, name = 'attrs'
+
+    @classmethod
+    def from_name(cls, name: str):
+        """Return the Distribution for the given package name.
+    
+        :param name: The name of the distribution package to search for.
+        :return: The Distribution instance (or subclass thereof) for the named
+            package, if found.
+        :raises PackageNotFoundError: When the named package's distribution
+            metadata cannot be found.
+        :raises ValueError: When an invalid value is supplied for name.
+        """
+        if not name:
+            raise ValueError("A distribution name is required.")
+        try:
+            return next(cls.discover(name=name))
+        except StopIteration:
+>           raise PackageNotFoundError(name)
+E           importlib.metadata.PackageNotFoundError: No package metadata was found for attrs
+
+..\..\..\..\Programs\Python\Python311\Lib\importlib\metadata\__init__.py:565: PackageNotFoundError
+_________________ TestLegacyMetadataHack.test_version[attrs] __________________
+
+cls = <class 'importlib.metadata.Distribution'>, name = 'attrs'
+
+    @classmethod
+    def from_name(cls, name: str):
+        """Return the Distribution for the given package name.
+    
+        :param name: The name of the distribution package to search for.
+        :return: The Distribution instance (or subclass thereof) for the named
+            package, if found.
+        :raises PackageNotFoundError: When the named package's distribution
+            metadata cannot be found.
+        :raises ValueError: When an invalid value is supplied for name.
+        """
+        if not name:
+            raise ValueError("A distribution name is required.")
+        try:
+>           return next(cls.discover(name=name))
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E           StopIteration
+
+..\..\..\..\Programs\Python\Python311\Lib\importlib\metadata\__init__.py:563: StopIteration
+
+During handling of the above exception, another exception occurred:
+
+self = <tests.test_packaging.TestLegacyMetadataHack object at 0x00000287CFED15D0>
+mod = <module 'attrs' from 'C:\\Users\\joshp\\AppData\\Local\\Temp\\blast-radius-attrs-causal\\a1593-8q9ypgb2\\b\\src\\attrs\\__init__.py'>
+recwarn = WarningsRecorder(record=True)
+
+    def test_version(self, mod, recwarn):
+        """
+        __version__ returns the correct version and doesn't warn.
+        """
+>       assert metadata.version("attrs") == mod.__version__
+               ^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests\test_packaging.py:22: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+..\..\..\..\Programs\Python\Python311\Lib\importlib\metadata\__init__.py:1009: in version
+    return distribution(distribution_name).version
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+..\..\..\..\Programs\Python\Python311\Lib\importlib\metadata\__init__.py:982: in distribution
+    return Distribution.from_name(distribution_name)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+cls = <class 'importlib.metadata.Distribution'>, name = 'attrs'
+
+    @classmethod
+    def from_name(cls, name: str):
+        """Return the Distribution for the given package name.
+    
+        :param name: The name of the distribution package to search for.
+        :return: The Distribution instance (or subclass thereof) for the named
+            package, if found.
+        :raises PackageNotFoundError: When the named package's distribution
+            metadata cannot be found.
+        :raises ValueError: When an invalid value is supplied for name.
+        """
+        if not name:
+            raise ValueError("A distribution name is required.")
+        try:
+            return next(cls.discover(name=name))
+        except StopIteration:
+>           raise PackageNotFoundError(name)
+E           importlib.metadata.PackageNotFoundError: No package metadata was found for attrs
+
+..\..\..\..\Programs\Python\Python311\Lib\importlib\metadata\__init__.py:565: PackageNotFoundError
+_______________ TestLegacyMetadataHack.test_version_info[attr] ________________
+
+cls = <class 'importlib.metadata.Distribution'>, name = 'attrs'
+
+    @classmethod
+    def from_name(cls, name: str):
+        """Return the Distribution for the given package name.
+    
+        :param name: The name of the distribution package to search for.
+        :return: The Distribution instance (or subclass thereof) for the named
+            package, if found.
+        :raises PackageNotFoundError: When the named package's distribution
+            metadata cannot be found.
+        :raises ValueError: When an invalid value is supplied for name.
+        """
+        if not name:
+            raise ValueError("A distribution name is required.")
+        try:
+>           return next(cls.discover(name=name))
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E           StopIteration
+
+..\..\..\..\Programs\Python\Python311\Lib\importlib\metadata\__init__.py:563: StopIteration
+
+During handling of the above exception, another exception occurred:
+
+self = <tests.test_packaging.TestLegacyMetadataHack object at 0x00000287CFEE3A50>
+recwarn = WarningsRecorder(record=True)
+mod = <module 'attr' from 'C:\\Users\\joshp\\AppData\\Local\\Temp\\blast-radius-attrs-causal\\a1593-8q9ypgb2\\b\\src\\attr\\__init__.py'>
+
+    def test_version_info(self, recwarn, mod):
+        """
+        ___version_info__ is not deprecated, therefore doesn't raise a warning
+        and parses correctly.
+        """
+>       assert isinstance(mod.__version_info__, attr.VersionInfo)
+                          ^^^^^^^^^^^^^^^^^^^^
+
+tests\test_packaging.py:41: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+src\attr\__init__.py:106: in __getattr__
+    meta = metadata("attrs")
+           ^^^^^^^^^^^^^^^^^
+..\..\..\..\Programs\Python\Python311\Lib\importlib\metadata\__init__.py:999: in metadata
+    return Distribution.from_name(distribution_name).metadata
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+cls = <class 'importlib.metadata.Distribution'>, name = 'attrs'
+
+    @classmethod
+    def from_name(cls, name: str):
+        """Return the Distribution for the given package name.
+    
+        :param name: The name of the distribution package to search for.
+        :return: The Distribution instance (or subclass thereof) for the named
+            package, if found.
+        :raises PackageNotFoundError: When the named package's distribution
+            metadata cannot be found.
+        :raises ValueError: When an invalid value is supplied for name.
+        """
+        if not name:
+            raise ValueError("A distribution name is required.")
+        try:
+            return next(cls.discover(name=name))
+        except StopIteration:
+>           raise PackageNotFoundError(name)
+E           importlib.metadata.PackageNotFoundError: No package metadata was found for attrs
+
+..\..\..\..\Programs\Python\Python311\Lib\importlib\metadata\__init__.py:565: PackageNotFoundError
+_______________ TestLegacyMetadataHack.test_version_info[attrs] _______________
+
+cls = <class 'importlib.metadata.Distribution'>, name = 'attrs'
+
+    @classmethod
+    def from_name(cls, name: str):
+        """Return the Distribution for the given package name.
+    
+        :param name: The name of the distribution package to search for.
+        :return: The Distribution instance (or subclass thereof) for the named
+            package, if found.
+        :raises PackageNotFoundError: When the named package's distribution
+            metadata cannot be found.
+        :raises ValueError: When an invalid value is supplied for name.
+        """
+        if not name:
+            raise ValueError("A distribution name is required.")
+        try:
+>           return next(cls.discover(name=name))
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E           StopIteration
+
+..\..\..\..\Programs\Python\Python311\Lib\importlib\metadata\__init__.py:563: StopIteration
+
+During handling of the above exception, another exception occurred:
+
+self = <tests.test_packaging.TestLegacyMetadataHack object at 0x00000287CFEE0B50>
+recwarn = WarningsRecorder(record=True)
+mod = <module 'attrs' from 'C:\\Users\\joshp\\AppData\\Local\\Temp\\blast-radius-attrs-causal\\a1593-8q9ypgb2\\b\\src\\attrs\\__init__.py'>
+
+    def test_version_info(self, recwarn, mod):
+        """
+        ___version_info__ is not deprecated, therefore doesn't raise a warning
+        and parses correctly.
+        """
+>       assert isinstance(mod.__version_info__, attr.VersionInfo)
+                          ^^^^^^^^^^^^^^^^^^^^
+
+tests\test_packaging.py:41: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+src\attr\__init__.py:106: in __getattr__
+    meta = metadata("attrs")
+           ^^^^^^^^^^^^^^^^^
+..\..\..\..\Programs\Python\Python311\Lib\importlib\metadata\__init__.py:999: in metadata
+    return Distribution.from_name(distribution_name).metadata
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+cls = <class 'importlib.metadata.Distribution'>, name = 'attrs'
+
+    @classmethod
+    def from_name(cls, name: str):
+        """Return the Distribution for the given package name.
+    
+        :param name: The name of the distribution package to search for.
+        :return: The Distribution instance (or subclass thereof) for the named
+            package, if found.
+        :raises PackageNotFoundError: When the named package's distribution
+            metadata cannot be found.
+        :raises ValueError: When an invalid value is supplied for name.
+        """
+        if not name:
+            raise ValueError("A distribution name is required.")
+        try:
+            return next(cls.discover(name=name))
+        except StopIteration:
+>           raise PackageNotFoundError(name)
+E           importlib.metadata.PackageNotFoundError: No package metadata was found for attrs
+
+..\..\..\..\Programs\Python\Python311\Lib\importlib\metadata\__init__.py:565: PackageNotFoundError
+- generated xml file: C:\Users\joshp\Desktop\Blast-Radius\exploratory\causal\verification\attrs-results-arms\pr-1593\base.xml -
+=========================== short test summary info ===========================
+SKIPPED [1] tests\test_functional.py:786: requires Python 3.13+
+SKIPPED [1] tests\test_functional.py:795: requires Python 3.13+
+SKIPPED [1] tests\test_functional.py:809: requires Python 3.13+
+SKIPPED [1] tests\test_make.py:3083: Pre-3.10 only.
+SKIPPED [1] tests\test_pyright.py:35: Requires pyright.
+SKIPPED [1] tests\test_pyright.py:83: Requires pyright.
+SKIPPED [1] tests\test_pyright.py:111: Requires pyright.
+SKIPPED [1] tests\test_slots.py:517: slots without weakref_slot should only work on PyPy
+XFAIL tests/test_setattr.py::TestSetAttr::test_slotted_confused
+FAILED tests/test_packaging.py::TestLegacyMetadataHack::test_version[attr] - ...
+FAILED tests/test_packaging.py::TestLegacyMetadataHack::test_version[attrs]
+FAILED tests/test_packaging.py::TestLegacyMetadataHack::test_version_info[attr]
+FAILED tests/test_packaging.py::TestLegacyMetadataHack::test_version_info[attrs]
+============ 4 failed, 1380 passed, 8 skipped, 1 xfailed in 28.11s ============

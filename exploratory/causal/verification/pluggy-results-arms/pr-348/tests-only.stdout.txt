@@ -1,0 +1,120 @@
+============================= test session starts =============================
+platform win32 -- Python 3.11.9, pytest-7.4.4, pluggy-unknown
+benchmark: 4.0.0 (defaults: timer=time.perf_counter disable_gc=False min_rounds=5 min_time=0.000005 max_time=1.0 calibration_precision=10 warmup=False warmup_iterations=100000)
+rootdir: C:\Users\joshp\AppData\Local\Temp\blast-radius-pluggy-causal\a348-kakinmlu\t
+configfile: tox.ini
+testpaths: testing
+plugins: benchmark-4.0.0
+collected 85 items
+
+testing\test_details.py .....                                            [  5%]
+testing\test_helpers.py .....                                            [ 11%]
+testing\test_hookcaller.py ....................                          [ 35%]
+testing\test_invocations.py .........                                    [ 45%]
+testing\test_multicall.py ..........                                     [ 57%]
+testing\test_pluginmanager.py ................F......F........           [ 95%]
+testing\test_tracer.py ....                                              [100%]
+
+================================== FAILURES ===================================
+____________________ test_historic_with_subset_hook_caller ____________________
+
+pm = <pluggy._manager.PluginManager object at 0x000002685A29DD80>
+
+    def test_historic_with_subset_hook_caller(pm: PluginManager) -> None:
+        class Hooks:
+            @hookspec(historic=True)
+            def he_method1(self, arg):
+                ...
+    
+        pm.add_hookspecs(Hooks)
+    
+        out = []
+    
+        class Plugin:
+            @hookimpl
+            def he_method1(self, arg):
+                out.append(arg)
+    
+        plugin = Plugin()
+        pm.register(plugin)
+    
+        class Plugin2:
+            @hookimpl
+            def he_method1(self, arg):
+                out.append(arg * 10)
+    
+        shc = pm.subset_hook_caller("he_method1", remove_plugins=[plugin])
+        shc.call_historic(kwargs=dict(arg=1))
+    
+        pm.register(Plugin2())
+>       assert out == [10]
+E       assert [] == [10]
+E         Right contains one more item: 10
+E         Use -v to get more diff
+
+testing\test_pluginmanager.py:256: AssertionError
+___________________________ test_subset_hook_caller ___________________________
+
+pm = <pluggy._manager.PluginManager object at 0x00000268582418A0>
+
+    def test_subset_hook_caller(pm: PluginManager) -> None:
+        class Hooks:
+            @hookspec
+            def he_method1(self, arg):
+                pass
+    
+        pm.add_hookspecs(Hooks)
+    
+        out = []
+    
+        class Plugin1:
+            @hookimpl
+            def he_method1(self, arg):
+                out.append(arg)
+    
+        class Plugin2:
+            @hookimpl
+            def he_method1(self, arg):
+                out.append(arg * 10)
+    
+        class PluginNo:
+            pass
+    
+        plugin1, plugin2, plugin3 = Plugin1(), Plugin2(), PluginNo()
+        pm.register(plugin1)
+        pm.register(plugin2)
+        pm.register(plugin3)
+        pm.hook.he_method1(arg=1)
+        assert out == [10, 1]
+        out[:] = []
+    
+        hc = pm.subset_hook_caller("he_method1", [plugin1])
+        hc(arg=2)
+        assert out == [20]
+        out[:] = []
+    
+        hc = pm.subset_hook_caller("he_method1", [plugin2])
+        hc(arg=2)
+        assert out == [2]
+        out[:] = []
+    
+        pm.unregister(plugin1)
+        hc(arg=2)
+        assert out == []
+        out[:] = []
+    
+        pm.hook.he_method1(arg=1)
+        assert out == [10]
+    
+>       assert repr(hc) == "<_SubsetHookCaller 'he_method1'>"
+E       assert "<_HookCaller 'he_method1'>" == "<_SubsetHook...'he_method1'>"
+E         - <_SubsetHookCaller 'he_method1'>
+E         ?   ------
+E         + <_HookCaller 'he_method1'>
+
+testing\test_pluginmanager.py:441: AssertionError
+- generated xml file: C:\Users\joshp\Desktop\Blast-Radius\exploratory\causal\verification\pluggy-results-arms\pr-348\tests-only.xml -
+=========================== short test summary info ===========================
+FAILED testing/test_pluginmanager.py::test_historic_with_subset_hook_caller
+FAILED testing/test_pluginmanager.py::test_subset_hook_caller - assert "<_Hoo...
+======================== 2 failed, 83 passed in 0.29s =========================

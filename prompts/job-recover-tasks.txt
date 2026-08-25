@@ -1,0 +1,42 @@
+Recover failed causal tasks and expand the fixture. Two jobs, both mechanical, no model judgement needed for the core work.
+
+## Context
+
+`fixture/click/` in this repository holds thirteen historical Click PRs as paired source and test patches, plus two base trees. A causal dependency sweep ran them and **five of thirteen failed to apply to their predeclared base**: pr-787, pr-1061, pr-2991, pr-3013, pr-3330. The other eight produced 292 causal observations.
+
+Separately, an earlier failure is instructive: pr-973 initially failed because it was tried against `base-overlap` when it belongs to `base-control`. Base membership cannot be inferred from directory layout — `git apply --check` succeeds against *both* bases for these patches, so the predeclared bundle in `fixture/click/TASKS.md` is the tie-breaker.
+
+There is a full Click clone with history at `exploratory/posture/repositories/pallets-click` (3,329 commits).
+
+## Job 1 — recover the five failures
+
+For each of pr-787, pr-1061, pr-2991, pr-3013, pr-3330:
+
+1. Capture the exact `git apply` error against both bases, with `--exclude` on the test paths.
+2. Diagnose: wrong base, path layout mismatch (`click/` versus `src/click/`), context drift because the base was built by reverting a different set of commits, or a genuinely unapplicable patch.
+3. If the patch applies to the *other* base, that is the fix — record it and verify green-red-green there.
+4. If it applies to neither, determine whether it can be regenerated from the Click clone: find the PR's merge commit, and emit a fresh source/test patch pair against whichever base tree it does apply to. Regeneration is legitimate; hand-editing a patch to force it is not.
+5. If a task genuinely cannot be recovered, record why and stop on it.
+
+Write recovered pairs to `fixture/click/patches/` using the existing naming, and record every decision in `exploratory/causal/RECOVERY.md`.
+
+## Job 2 — expand the task set
+
+Thirteen tasks in one repository is the causal measurement's main weakness. Click has 3,329 commits; generate more.
+
+Selection rule, fixed before you look at any outcome and stated in the report: a candidate commit must touch at least one file under the package source directory, must add or modify at least one test file, must apply cleanly to a base you construct, and its tests must exhibit the green-red-green property — green on the base with tests absent, **red with its test patch applied but its source patch reverted**, green with both. That last property is what makes a task a probe rather than a sample, and it is the expensive check.
+
+Target **40 additional tasks**. Report how many candidates were examined to yield them, since the yield rate is itself a useful number for anyone repeating this.
+
+Do NOT run any perturbation sweep here — that runs on cloud, which has pytest but no network. Your job is to produce validated task definitions and patch pairs.
+
+Keep the fixture additions small: patches only, plus any new base tree if one is genuinely required. Do not vendor blobs or history beyond what already exists.
+
+## Output
+
+- `exploratory/causal/RECOVERY.md` — the five diagnoses and their outcomes.
+- `exploratory/causal/EXPANSION.md` — the selection rule as fixed in advance, candidates examined, tasks yielded, the yield rate, and the green-red-green verification result for every accepted task.
+- New patch pairs under `fixture/click/patches/`.
+- Required sections in both: **"Claims that could NOT be verified"** and **"What would change this verdict"**, with per-claim confidence and its reason.
+
+Do not fabricate. A task that cannot be validated is a recorded result, not an omission. Do not modify existing files under `fixture/click/patches/` or either base tree.

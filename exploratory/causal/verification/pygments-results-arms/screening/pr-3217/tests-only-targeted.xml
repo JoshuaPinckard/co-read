@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?><testsuites name="pytest tests"><testsuite name="pytest" errors="0" failures="1" skipped="0" tests="30" time="1.959" timestamp="2026-08-24T08:11:00.927808-07:00" hostname="JoshP"><testcase classname="tests.test_cmdline" name="test_normal" time="0.123" /><testcase classname="tests.test_cmdline" name="test_stdin" time="0.880" /><testcase classname="tests.test_cmdline" name="test_outfile" time="0.224" /><testcase classname="tests.test_cmdline" name="test_load_from_file" time="0.049" /><testcase classname="tests.test_cmdline" name="test_stream_opt" time="0.002" /><testcase classname="tests.test_cmdline" name="test_h_opt" time="0.006" /><testcase classname="tests.test_cmdline" name="test_L_opt" time="0.113"><failure message="assert 0 == 2">def test_L_opt():
+        o = check_success('-L')
+        assert 'Lexers' in o and 'Formatters' in o and 'Filters' in o and 'Styles' in o
+        o = check_success('-L', 'lexer')
+        assert 'Lexers' in o and 'Formatters' not in o
+        check_success('-L', 'lexers')
+&gt;       check_failure('-L', 'invalid-kind', code=2)
+
+tests\test_cmdline.py:165: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+cmdline = ('-L', 'invalid-kind'), kwds = {}, expected_code = 2, code = 0
+out = 'Pygments version 2.21.0, (c) 2006-present by Georg Brandl, Matthäus Chajdas and contributors.\r\n'
+err = 'usage: __main__.py [-l LEXER | -g] [-F FILTER[:options]] [-f FORMATTER]\r\n                   [-O OPTION=value[,OPTIO...\r\n  -a ARG        Formatter-specific additional argument for the -S (print style\r\n                sheet) mode.\r\n'
+@py_assert1 = False, @py_format3 = '0 == 2', @py_format5 = 'assert 0 == 2'
+
+    def check_failure(*cmdline, **kwds):
+        expected_code = kwds.pop('code', 1)
+        try:
+            code, out, err = run_cmdline(*cmdline, **kwds)
+        except SystemExit as err:
+            assert err.args[0] == expected_code
+        else:
+&gt;           assert code == expected_code
+E           assert 0 == 2
+
+tests\test_cmdline.py:77: AssertionError</failure></testcase><testcase classname="tests.test_cmdline" name="test_O_opt" time="0.027" /><testcase classname="tests.test_cmdline" name="test_P_opt" time="0.025" /><testcase classname="tests.test_cmdline" name="test_F_opt" time="0.025" /><testcase classname="tests.test_cmdline" name="test_H_opt" time="0.003" /><testcase classname="tests.test_cmdline" name="test_S_opt" time="0.002" /><testcase classname="tests.test_cmdline" name="test_N_opt" time="0.002" /><testcase classname="tests.test_cmdline" name="test_C_opt" time="0.019" /><testcase classname="tests.test_cmdline" name="test_invalid_opts[opts0]" time="0.002" /><testcase classname="tests.test_cmdline" name="test_invalid_opts[opts1]" time="0.004" /><testcase classname="tests.test_cmdline" name="test_invalid_opts[opts2]" time="0.004" /><testcase classname="tests.test_cmdline" name="test_invalid_opts[opts3]" time="0.003" /><testcase classname="tests.test_cmdline" name="test_invalid_opts[opts4]" time="0.003" /><testcase classname="tests.test_cmdline" name="test_invalid_opts[opts5]" time="0.003" /><testcase classname="tests.test_cmdline" name="test_invalid_opts[opts6]" time="0.002" /><testcase classname="tests.test_cmdline" name="test_invalid_opts[opts7]" time="0.001" /><testcase classname="tests.test_cmdline" name="test_invalid_opts[opts8]" time="0.001" /><testcase classname="tests.test_cmdline" name="test_invalid_opts[opts9]" time="0.001" /><testcase classname="tests.test_cmdline" name="test_invalid_opts[opts10]" time="0.003" /><testcase classname="tests.test_cmdline" name="test_invalid_opts[opts11]" time="0.001" /><testcase classname="tests.test_cmdline" name="test_invalid_opts[opts12]" time="0.001" /><testcase classname="tests.test_cmdline" name="test_errors" time="0.009" /><testcase classname="tests.test_cmdline" name="test_exception" time="0.002" /><testcase classname="tests.test_cmdline" name="test_parse_opts" time="0.000" /></testsuite></testsuites>

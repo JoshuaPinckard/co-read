@@ -1,0 +1,10 @@
+============================= test session starts =============================
+platform win32 -- Python 3.11.9, pytest-8.4.2, pluggy-1.6.0
+rootdir: C:\Users\joshp\AppData\Local\Temp\blast-radius-pygments-causal-opbff12g\screen-pr-3057-1cw8ktmz\tests-only
+configfile: pyproject.toml
+collected 1 item
+
+tests\examplefiles\devicetree\example.dts .                              [100%]
+
+- generated xml file: C:\Users\joshp\Desktop\Blast-Radius\exploratory\causal\verification\pygments-results-arms\screening\pr-3057\tests-only-targeted.xml -
+============================= 1 passed in 42.01s ==============================

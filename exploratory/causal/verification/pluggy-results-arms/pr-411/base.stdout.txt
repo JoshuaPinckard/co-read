@@ -1,0 +1,19 @@
+============================= test session starts =============================
+platform win32 -- Python 3.11.9, pytest-7.4.4, pluggy-unknown
+benchmark: 4.0.0 (defaults: timer=time.perf_counter disable_gc=False min_rounds=5 min_time=0.000005 max_time=1.0 calibration_precision=10 warmup=False warmup_iterations=100000)
+rootdir: C:\Users\joshp\AppData\Local\Temp\blast-radius-pluggy-causal\a411-9g7cv4k8\b
+configfile: tox.ini
+testpaths: testing
+plugins: benchmark-4.0.0
+collected 100 items
+
+testing\test_details.py .....                                            [  5%]
+testing\test_helpers.py ......                                           [ 11%]
+testing\test_hookcaller.py ....................                          [ 31%]
+testing\test_invocations.py ..........                                   [ 41%]
+testing\test_multicall.py ......................                         [ 63%]
+testing\test_pluginmanager.py .................................          [ 96%]
+testing\test_tracer.py ....                                              [100%]
+
+- generated xml file: C:\Users\joshp\Desktop\Blast-Radius\exploratory\causal\verification\pluggy-results-arms\pr-411\base.xml -
+============================= 100 passed in 0.37s =============================

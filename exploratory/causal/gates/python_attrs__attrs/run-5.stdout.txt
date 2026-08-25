@@ -1,0 +1,541 @@
+============================= test session starts =============================
+platform win32 -- Python 3.11.9, pytest-9.1.1, pluggy-1.6.0
+rootdir: C:\Users\joshp\Desktop\Blast-Radius\exploratory\causal\repositories\python-attrs
+configfile: pyproject.toml
+testpaths: tests
+plugins: hypothesis-6.161.6, xdist-3.8.0
+collected 1412 items
+
+tests\test_3rd_party.py .                                                [  0%]
+tests\test_abc.py ....                                                   [  0%]
+tests\test_annotations.py .........................ss................... [  3%]
+....                                                                     [  3%]
+tests\test_cmp.py ...................................................... [  7%]
+........................                                                 [  9%]
+tests\test_compat.py ......                                              [  9%]
+tests\test_config.py ....                                                [ 10%]
+tests\test_converters.py ......................................          [ 12%]
+tests\test_dunders.py .................................................. [ 16%]
+.................................................                        [ 19%]
+tests\test_filters.py .................................                  [ 22%]
+tests\test_funcs.py .................................................... [ 25%]
+.                                                                        [ 25%]
+tests\test_functional.py ............................................... [ 29%]
+........................................................................ [ 34%]
+........................................................................ [ 39%]
+........................................................................ [ 44%]
+........................................................................ [ 49%]
+........................................................................ [ 54%]
+ssss                                                                     [ 55%]
+tests\test_hooks.py ....................                                 [ 56%]
+tests\test_import.py ...                                                 [ 56%]
+tests\test_init_subclass.py ....                                         [ 56%]
+tests\test_make.py ..................................................... [ 60%]
+........................................................................ [ 65%]
+........................................................................ [ 70%]
+........................................................................ [ 75%]
+...........                                                              [ 76%]
+tests\test_next_gen.py ....................................              [ 79%]
+tests\test_packaging.py ......                                           [ 79%]
+tests\test_pattern_matching.py .....                                     [ 80%]
+tests\test_pyright.py FFF                                                [ 80%]
+tests\test_setattr.py ............................x..................    [ 83%]
+tests\test_slots.py ..............s..................................... [ 87%]
+..                                                                       [ 87%]
+tests\test_utils.py ..                                                   [ 87%]
+tests\test_validators.py ............................................... [ 90%]
+........................................................................ [ 96%]
+.................................................                        [ 99%]
+tests\test_version_info.py .......                                       [100%]
+
+================================== FAILURES ===================================
+____________________________ test_pyright_baseline ____________________________
+
+    def test_pyright_baseline():
+        """
+        The typing.dataclass_transform decorator allows pyright to determine
+        attrs decorated class types.
+        """
+    
+        test_file = Path(__file__).parent / "dataclass_transform_example.py"
+    
+>       diagnostics = parse_pyright_output(test_file)
+                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests\test_pyright.py:43: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+tests\test_pyright.py:22: in parse_pyright_output
+    pyright = subprocess.run(  # noqa: PLW1510
+C:\Users\joshp\AppData\Local\Programs\Python\Python311\Lib\subprocess.py:548: in run
+    with Popen(*popenargs, **kwargs) as process:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+C:\Users\joshp\AppData\Local\Programs\Python\Python311\Lib\subprocess.py:1026: in __init__
+    self._execute_child(args, executable, preexec_fn, close_fds,
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+self = <Popen: returncode: None args: ['pyright', '--outputjson', 'C:\\Users\\joshp...>
+args = 'pyright --outputjson C:\\Users\\joshp\\Desktop\\Blast-Radius\\exploratory\\causal\\repositories\\python-attrs\\tests\\dataclass_transform_example.py'
+executable = None, preexec_fn = None, close_fds = False, pass_fds = ()
+cwd = None, env = None
+startupinfo = <subprocess.STARTUPINFO object at 0x000001BE968D7A90>
+creationflags = 0, shell = False, p2cread = Handle(1920), p2cwrite = -1
+c2pread = 11, c2pwrite = Handle(3920), errread = 12, errwrite = Handle(3932)
+unused_restore_signals = True, unused_gid = None, unused_gids = None
+unused_uid = None, unused_umask = -1, unused_start_new_session = False
+unused_process_group = -1
+
+    def _execute_child(self, args, executable, preexec_fn, close_fds,
+                       pass_fds, cwd, env,
+                       startupinfo, creationflags, shell,
+                       p2cread, p2cwrite,
+                       c2pread, c2pwrite,
+                       errread, errwrite,
+                       unused_restore_signals,
+                       unused_gid, unused_gids, unused_uid,
+                       unused_umask,
+                       unused_start_new_session, unused_process_group):
+        """Execute program (MS Windows version)"""
+    
+        assert not pass_fds, "pass_fds not supported on Windows."
+    
+        if isinstance(args, str):
+            pass
+        elif isinstance(args, bytes):
+            if shell:
+                raise TypeError('bytes args is not allowed on Windows')
+            args = list2cmdline([args])
+        elif isinstance(args, os.PathLike):
+            if shell:
+                raise TypeError('path-like args is not allowed when '
+                                'shell is true')
+            args = list2cmdline([args])
+        else:
+            args = list2cmdline(args)
+    
+        if executable is not None:
+            executable = os.fsdecode(executable)
+    
+        # Process startup details
+        if startupinfo is None:
+            startupinfo = STARTUPINFO()
+        else:
+            # bpo-34044: Copy STARTUPINFO since it is modified above,
+            # so the caller can reuse it multiple times.
+            startupinfo = startupinfo.copy()
+    
+        use_std_handles = -1 not in (p2cread, c2pwrite, errwrite)
+        if use_std_handles:
+            startupinfo.dwFlags |= _winapi.STARTF_USESTDHANDLES
+            startupinfo.hStdInput = p2cread
+            startupinfo.hStdOutput = c2pwrite
+            startupinfo.hStdError = errwrite
+    
+        attribute_list = startupinfo.lpAttributeList
+        have_handle_list = bool(attribute_list and
+                                "handle_list" in attribute_list and
+                                attribute_list["handle_list"])
+    
+        # If we were given an handle_list or need to create one
+        if have_handle_list or (use_std_handles and close_fds):
+            if attribute_list is None:
+                attribute_list = startupinfo.lpAttributeList = {}
+            handle_list = attribute_list["handle_list"] = \
+                list(attribute_list.get("handle_list", []))
+    
+            if use_std_handles:
+                handle_list += [int(p2cread), int(c2pwrite), int(errwrite)]
+    
+            handle_list[:] = self._filter_handle_list(handle_list)
+    
+            if handle_list:
+                if not close_fds:
+                    warnings.warn("startupinfo.lpAttributeList['handle_list'] "
+                                  "overriding close_fds", RuntimeWarning)
+    
+                # When using the handle_list we always request to inherit
+                # handles but the only handles that will be inherited are
+                # the ones in the handle_list
+                close_fds = False
+    
+        if shell:
+            startupinfo.dwFlags |= _winapi.STARTF_USESHOWWINDOW
+            startupinfo.wShowWindow = _winapi.SW_HIDE
+            if not executable:
+                # gh-101283: without a fully-qualified path, before Windows
+                # checks the system directories, it first looks in the
+                # application directory, and also the current directory if
+                # NeedCurrentDirectoryForExePathW(ExeName) is true, so try
+                # to avoid executing unqualified "cmd.exe".
+                comspec = os.environ.get('ComSpec')
+                if not comspec:
+                    system_root = os.environ.get('SystemRoot', '')
+                    comspec = os.path.join(system_root, 'System32', 'cmd.exe')
+                    if not os.path.isabs(comspec):
+                        raise FileNotFoundError('shell not found: neither %ComSpec% nor %SystemRoot% is set')
+                if os.path.isabs(comspec):
+                    executable = comspec
+            else:
+                comspec = executable
+    
+            args = '{} /c "{}"'.format (comspec, args)
+    
+        if cwd is not None:
+            cwd = os.fsdecode(cwd)
+    
+        sys.audit("subprocess.Popen", executable, args, cwd, env)
+    
+        # Start the process
+        try:
+>           hp, ht, pid, tid = _winapi.CreateProcess(executable, args,
+                                     # no special security
+                                     None, None,
+                                     int(not close_fds),
+                                     creationflags,
+                                     env,
+                                     cwd,
+                                     startupinfo)
+E                                    FileNotFoundError: [WinError 2] The system cannot find the file specified
+
+C:\Users\joshp\AppData\Local\Programs\Python\Python311\Lib\subprocess.py:1538: FileNotFoundError
+______________________ test_pyright_attrsinstance_compat ______________________
+
+tmp_path = WindowsPath('C:/Users/joshp/AppData/Local/Temp/pytest-of-joshp/pytest-807/test_pyright_attrsinstance_com0')
+
+    def test_pyright_attrsinstance_compat(tmp_path):
+        """
+        Test that `AttrsInstance` is compatible with Pyright.
+        """
+        test_pyright_attrsinstance_compat_path = (
+            tmp_path / "test_pyright_attrsinstance_compat.py"
+        )
+        test_pyright_attrsinstance_compat_path.write_text(
+            """\
+    import attrs
+    
+    # We can assign any old object to `AttrsInstance`.
+    foo: attrs.AttrsInstance = object()
+    
+    reveal_type(attrs.AttrsInstance)
+    """
+        )
+    
+>       diagnostics = parse_pyright_output(test_pyright_attrsinstance_compat_path)
+                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests\test_pyright.py:107: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+tests\test_pyright.py:22: in parse_pyright_output
+    pyright = subprocess.run(  # noqa: PLW1510
+C:\Users\joshp\AppData\Local\Programs\Python\Python311\Lib\subprocess.py:548: in run
+    with Popen(*popenargs, **kwargs) as process:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+C:\Users\joshp\AppData\Local\Programs\Python\Python311\Lib\subprocess.py:1026: in __init__
+    self._execute_child(args, executable, preexec_fn, close_fds,
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+self = <Popen: returncode: None args: ['pyright', '--outputjson', 'C:\\Users\\joshp...>
+args = 'pyright --outputjson C:\\Users\\joshp\\AppData\\Local\\Temp\\pytest-of-joshp\\pytest-807\\test_pyright_attrsinstance_com0\\test_pyright_attrsinstance_compat.py'
+executable = None, preexec_fn = None, close_fds = False, pass_fds = ()
+cwd = None, env = None
+startupinfo = <subprocess.STARTUPINFO object at 0x000001BE96887210>
+creationflags = 0, shell = False, p2cread = Handle(3924), p2cwrite = -1
+c2pread = 11, c2pwrite = Handle(3840), errread = 12, errwrite = Handle(3520)
+unused_restore_signals = True, unused_gid = None, unused_gids = None
+unused_uid = None, unused_umask = -1, unused_start_new_session = False
+unused_process_group = -1
+
+    def _execute_child(self, args, executable, preexec_fn, close_fds,
+                       pass_fds, cwd, env,
+                       startupinfo, creationflags, shell,
+                       p2cread, p2cwrite,
+                       c2pread, c2pwrite,
+                       errread, errwrite,
+                       unused_restore_signals,
+                       unused_gid, unused_gids, unused_uid,
+                       unused_umask,
+                       unused_start_new_session, unused_process_group):
+        """Execute program (MS Windows version)"""
+    
+        assert not pass_fds, "pass_fds not supported on Windows."
+    
+        if isinstance(args, str):
+            pass
+        elif isinstance(args, bytes):
+            if shell:
+                raise TypeError('bytes args is not allowed on Windows')
+            args = list2cmdline([args])
+        elif isinstance(args, os.PathLike):
+            if shell:
+                raise TypeError('path-like args is not allowed when '
+                                'shell is true')
+            args = list2cmdline([args])
+        else:
+            args = list2cmdline(args)
+    
+        if executable is not None:
+            executable = os.fsdecode(executable)
+    
+        # Process startup details
+        if startupinfo is None:
+            startupinfo = STARTUPINFO()
+        else:
+            # bpo-34044: Copy STARTUPINFO since it is modified above,
+            # so the caller can reuse it multiple times.
+            startupinfo = startupinfo.copy()
+    
+        use_std_handles = -1 not in (p2cread, c2pwrite, errwrite)
+        if use_std_handles:
+            startupinfo.dwFlags |= _winapi.STARTF_USESTDHANDLES
+            startupinfo.hStdInput = p2cread
+            startupinfo.hStdOutput = c2pwrite
+            startupinfo.hStdError = errwrite
+    
+        attribute_list = startupinfo.lpAttributeList
+        have_handle_list = bool(attribute_list and
+                                "handle_list" in attribute_list and
+                                attribute_list["handle_list"])
+    
+        # If we were given an handle_list or need to create one
+        if have_handle_list or (use_std_handles and close_fds):
+            if attribute_list is None:
+                attribute_list = startupinfo.lpAttributeList = {}
+            handle_list = attribute_list["handle_list"] = \
+                list(attribute_list.get("handle_list", []))
+    
+            if use_std_handles:
+                handle_list += [int(p2cread), int(c2pwrite), int(errwrite)]
+    
+            handle_list[:] = self._filter_handle_list(handle_list)
+    
+            if handle_list:
+                if not close_fds:
+                    warnings.warn("startupinfo.lpAttributeList['handle_list'] "
+                                  "overriding close_fds", RuntimeWarning)
+    
+                # When using the handle_list we always request to inherit
+                # handles but the only handles that will be inherited are
+                # the ones in the handle_list
+                close_fds = False
+    
+        if shell:
+            startupinfo.dwFlags |= _winapi.STARTF_USESHOWWINDOW
+            startupinfo.wShowWindow = _winapi.SW_HIDE
+            if not executable:
+                # gh-101283: without a fully-qualified path, before Windows
+                # checks the system directories, it first looks in the
+                # application directory, and also the current directory if
+                # NeedCurrentDirectoryForExePathW(ExeName) is true, so try
+                # to avoid executing unqualified "cmd.exe".
+                comspec = os.environ.get('ComSpec')
+                if not comspec:
+                    system_root = os.environ.get('SystemRoot', '')
+                    comspec = os.path.join(system_root, 'System32', 'cmd.exe')
+                    if not os.path.isabs(comspec):
+                        raise FileNotFoundError('shell not found: neither %ComSpec% nor %SystemRoot% is set')
+                if os.path.isabs(comspec):
+                    executable = comspec
+            else:
+                comspec = executable
+    
+            args = '{} /c "{}"'.format (comspec, args)
+    
+        if cwd is not None:
+            cwd = os.fsdecode(cwd)
+    
+        sys.audit("subprocess.Popen", executable, args, cwd, env)
+    
+        # Start the process
+        try:
+>           hp, ht, pid, tid = _winapi.CreateProcess(executable, args,
+                                     # no special security
+                                     None, None,
+                                     int(not close_fds),
+                                     creationflags,
+                                     env,
+                                     cwd,
+                                     startupinfo)
+E                                    FileNotFoundError: [WinError 2] The system cannot find the file specified
+
+C:\Users\joshp\AppData\Local\Programs\Python\Python311\Lib\subprocess.py:1538: FileNotFoundError
+_____________________ test_pyright_field_converters_tuple _____________________
+
+tmp_path = WindowsPath('C:/Users/joshp/AppData/Local/Temp/pytest-of-joshp/pytest-807/test_pyright_field_converters_0')
+
+    def test_pyright_field_converters_tuple(tmp_path):
+        """
+        Test that `field(converter=(_, _, ...))` raises no FPs in Pyright.
+        """
+        test_pyright_field_converters_tuple_path = (
+            tmp_path / "test_pyright_field_converters_tuple.py"
+        )
+        test_pyright_field_converters_tuple_path.write_text(
+            """\
+    import attrs
+    
+    
+    def square(value: int) -> int:
+        return value * value
+    
+    def negate(value: int) -> int:
+        return -value
+    
+    
+    @attrs.define
+    class SomeClass:
+    
+        value: int = attrs.field(converter=(square, negate))
+    """
+        )
+    
+>       diagnostics = parse_pyright_output(
+            test_pyright_field_converters_tuple_path
+        )
+
+tests\test_pyright.py:143: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+tests\test_pyright.py:22: in parse_pyright_output
+    pyright = subprocess.run(  # noqa: PLW1510
+C:\Users\joshp\AppData\Local\Programs\Python\Python311\Lib\subprocess.py:548: in run
+    with Popen(*popenargs, **kwargs) as process:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+C:\Users\joshp\AppData\Local\Programs\Python\Python311\Lib\subprocess.py:1026: in __init__
+    self._execute_child(args, executable, preexec_fn, close_fds,
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+self = <Popen: returncode: None args: ['pyright', '--outputjson', 'C:\\Users\\joshp...>
+args = 'pyright --outputjson C:\\Users\\joshp\\AppData\\Local\\Temp\\pytest-of-joshp\\pytest-807\\test_pyright_field_converters_0\\test_pyright_field_converters_tuple.py'
+executable = None, preexec_fn = None, close_fds = False, pass_fds = ()
+cwd = None, env = None
+startupinfo = <subprocess.STARTUPINFO object at 0x000001BE97448110>
+creationflags = 0, shell = False, p2cread = Handle(2856), p2cwrite = -1
+c2pread = 11, c2pwrite = Handle(3920), errread = 12, errwrite = Handle(3940)
+unused_restore_signals = True, unused_gid = None, unused_gids = None
+unused_uid = None, unused_umask = -1, unused_start_new_session = False
+unused_process_group = -1
+
+    def _execute_child(self, args, executable, preexec_fn, close_fds,
+                       pass_fds, cwd, env,
+                       startupinfo, creationflags, shell,
+                       p2cread, p2cwrite,
+                       c2pread, c2pwrite,
+                       errread, errwrite,
+                       unused_restore_signals,
+                       unused_gid, unused_gids, unused_uid,
+                       unused_umask,
+                       unused_start_new_session, unused_process_group):
+        """Execute program (MS Windows version)"""
+    
+        assert not pass_fds, "pass_fds not supported on Windows."
+    
+        if isinstance(args, str):
+            pass
+        elif isinstance(args, bytes):
+            if shell:
+                raise TypeError('bytes args is not allowed on Windows')
+            args = list2cmdline([args])
+        elif isinstance(args, os.PathLike):
+            if shell:
+                raise TypeError('path-like args is not allowed when '
+                                'shell is true')
+            args = list2cmdline([args])
+        else:
+            args = list2cmdline(args)
+    
+        if executable is not None:
+            executable = os.fsdecode(executable)
+    
+        # Process startup details
+        if startupinfo is None:
+            startupinfo = STARTUPINFO()
+        else:
+            # bpo-34044: Copy STARTUPINFO since it is modified above,
+            # so the caller can reuse it multiple times.
+            startupinfo = startupinfo.copy()
+    
+        use_std_handles = -1 not in (p2cread, c2pwrite, errwrite)
+        if use_std_handles:
+            startupinfo.dwFlags |= _winapi.STARTF_USESTDHANDLES
+            startupinfo.hStdInput = p2cread
+            startupinfo.hStdOutput = c2pwrite
+            startupinfo.hStdError = errwrite
+    
+        attribute_list = startupinfo.lpAttributeList
+        have_handle_list = bool(attribute_list and
+                                "handle_list" in attribute_list and
+                                attribute_list["handle_list"])
+    
+        # If we were given an handle_list or need to create one
+        if have_handle_list or (use_std_handles and close_fds):
+            if attribute_list is None:
+                attribute_list = startupinfo.lpAttributeList = {}
+            handle_list = attribute_list["handle_list"] = \
+                list(attribute_list.get("handle_list", []))
+    
+            if use_std_handles:
+                handle_list += [int(p2cread), int(c2pwrite), int(errwrite)]
+    
+            handle_list[:] = self._filter_handle_list(handle_list)
+    
+            if handle_list:
+                if not close_fds:
+                    warnings.warn("startupinfo.lpAttributeList['handle_list'] "
+                                  "overriding close_fds", RuntimeWarning)
+    
+                # When using the handle_list we always request to inherit
+                # handles but the only handles that will be inherited are
+                # the ones in the handle_list
+                close_fds = False
+    
+        if shell:
+            startupinfo.dwFlags |= _winapi.STARTF_USESHOWWINDOW
+            startupinfo.wShowWindow = _winapi.SW_HIDE
+            if not executable:
+                # gh-101283: without a fully-qualified path, before Windows
+                # checks the system directories, it first looks in the
+                # application directory, and also the current directory if
+                # NeedCurrentDirectoryForExePathW(ExeName) is true, so try
+                # to avoid executing unqualified "cmd.exe".
+                comspec = os.environ.get('ComSpec')
+                if not comspec:
+                    system_root = os.environ.get('SystemRoot', '')
+                    comspec = os.path.join(system_root, 'System32', 'cmd.exe')
+                    if not os.path.isabs(comspec):
+                        raise FileNotFoundError('shell not found: neither %ComSpec% nor %SystemRoot% is set')
+                if os.path.isabs(comspec):
+                    executable = comspec
+            else:
+                comspec = executable
+    
+            args = '{} /c "{}"'.format (comspec, args)
+    
+        if cwd is not None:
+            cwd = os.fsdecode(cwd)
+    
+        sys.audit("subprocess.Popen", executable, args, cwd, env)
+    
+        # Start the process
+        try:
+>           hp, ht, pid, tid = _winapi.CreateProcess(executable, args,
+                                     # no special security
+                                     None, None,
+                                     int(not close_fds),
+                                     creationflags,
+                                     env,
+                                     cwd,
+                                     startupinfo)
+E                                    FileNotFoundError: [WinError 2] The system cannot find the file specified
+
+C:\Users\joshp\AppData\Local\Programs\Python\Python311\Lib\subprocess.py:1538: FileNotFoundError
+- generated xml file: C:\Users\joshp\Desktop\Blast-Radius\exploratory\causal\gates\python_attrs__attrs\run-5.xml -
+=========================== short test summary info ===========================
+SKIPPED [2] tests\test_annotations.py:437: Python 3.14 changed annotation evaluation behavior.
+SKIPPED [1] tests\test_functional.py:786: requires Python 3.13+
+SKIPPED [1] tests\test_functional.py:795: requires Python 3.13+
+SKIPPED [1] tests\test_functional.py:809: requires Python 3.13+
+SKIPPED [1] tests\test_functional.py:820: requires Python 3.13+
+SKIPPED [1] tests\test_slots.py:517: slots without weakref_slot should only work on PyPy
+XFAIL tests/test_setattr.py::TestSetAttr::test_slotted_confused
+FAILED tests/test_pyright.py::test_pyright_baseline - FileNotFoundError: [Win...
+FAILED tests/test_pyright.py::test_pyright_attrsinstance_compat - FileNotFoun...
+FAILED tests/test_pyright.py::test_pyright_field_converters_tuple - FileNotFo...
+============ 3 failed, 1401 passed, 7 skipped, 1 xfailed in 22.48s ============

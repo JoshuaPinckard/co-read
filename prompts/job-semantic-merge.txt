@@ -1,0 +1,52 @@
+Measure the SILENT SEMANTIC BREAKAGE rate of clean merges. This is the number that prices the central objection to fine-grained (byte/line) coordination: two edits that merge cleanly at the text level can still be wrong together. If that happens often, fine-grained claiming is only safe behind a test gate; if it is rare, fine-grained claiming is nearly free. Nobody in this project has this number, and it decides a design argument currently running on intuition.
+
+Method precedent exists (proactive conflict detection, Brun et al., FSE 2011 — "speculative merging"); this is a modern replay of that shape on determinism-gated repositories, with byte-range analysis attached. Do not claim the method is novel; the numbers are the contribution.
+
+## Repositories — ONLY the two gated ones
+
+`pallets/click` and `pygments/pygments`. Both passed a strict five-run determinism gate in this project (see `fixture/click/GATE.md` and `exploratory/causal/SECOND-REPO.md`). Do NOT add other repos: an ungated suite makes the outcome measure noise.
+
+**Copy each repo from `corpus/_clones/` into your own scratch area and work only on the copy.** Never mutate anything under `corpus/_clones/`. Confirm the copy's origin commit coverage is sufficient; if a clone is blob-filtered and hydration fails, record it and reduce scope rather than fetching indefinitely.
+
+## Per merge commit M with exactly two parents P1, P2
+
+1. `B = git merge-base P1 P2`. Skip fast-forwards and octopus merges; count them.
+2. `git merge-tree --write-tree P1 P2` (git 2.46). Record: conflicted or clean, conflicted paths if any.
+3. **Both-sides-touched analysis** (all merges): the set of files modified in B..P1 AND in B..P2. For each such file, did it textually conflict? This yields the OVER-BLOCK RATE of file-granularity claiming: the fraction of same-file concurrent edits that did NOT textually conflict. Report per repo with numerator and denominator.
+4. **For clean merges only**, the semantic outcome:
+   a. Per-merge gate: check out P1 in a worktree, run the suite. Same for P2. If either fails, errors at collection, or needs dependencies the current environment lacks — EXCLUDE the merge and record the reason. Both parents green is the baseline; without it the merge is uninformative.
+   b. Materialize the mechanical merge result (the tree written by merge-tree) in a worktree and run the suite on it.
+   c. Both parents green + merged tree red = SILENT SEMANTIC BREAKAGE. Record the failing tests.
+5. **Developer-intervention check** (cheap, all clean merges): compare the mechanical merge's tree hash to the actual recorded merge commit's tree hash. A difference means the developer changed something beyond the mechanical merge even though it was "clean" — evidence of manual semantic reconciliation. Count it.
+
+## Budget and pilot — MANDATORY
+
+Test runs dominate cost: each evaluated clean merge costs up to 3 suite runs. Total compute budget ~4 hours.
+
+- Pilot on 10 most-recent qualifying merges per repo. Measure actual per-merge wall-clock. THEN set the per-repo cap to fit the budget, walking backward from the most recent merge.
+- **No silent caps**: state the cap, state how many merges exist beyond it, state that they were not evaluated. A biased-toward-recent window is acceptable and must be named as such (recent trees are most likely to run in the current environment).
+- Old commits will fail in the current environment (dependency drift). That is an exclusion with a recorded reason, not a failure. Report the exclusion rate — if most merges are excluded, say plainly that the measurable window is narrow and the estimate is conditioned on it.
+
+## Discipline
+
+- The suites were gated at ONE commit each. At other commits, determinism is NOT established. Mitigate: any merged-tree failure must be re-run once; if the second run disagrees with the first, mark the merge FLAKY and exclude it from the breakage numerator and denominator, reporting the flaky count separately. Never let a flake become a "semantic conflict".
+- Distinguish test failures from collection/import errors. An import error on the merged tree while both parents collect cleanly IS a genuine breakage signal (name it as such); an import error on a parent is an exclusion.
+- Keep every raw pytest exit status and summary line on disk under `exploratory/conflicts/semantic-runs/`.
+- Randomize nothing; process merges newest-first deterministically.
+
+## Output
+
+`exploratory/conflicts/SEMANTIC.md`:
+
+1. **The two headline rates, first**: over-block rate of file-granularity claiming (same-file concurrent edits that did not conflict / all same-file concurrent edits), and silent semantic breakage rate (clean merges that went red / clean merges evaluated with green-green parents). Per repo, with denominators in the same sentence.
+2. Merge census: total merges, two-parent merges, conflicted vs clean, excluded and why, evaluated.
+3. The developer-intervention count for clean merges.
+4. Failing-test details for every silent breakage found, with the merge commit, both parent subjects, and the byte distance between the two sides' nearest edits — were the semantically conflicting edits near each other or far apart? This bears directly on whether ANY textual granularity could have caught them.
+5. Flaky count and exclusion table.
+6. What this implies for the claim architecture: at the measured rates, is fine-grained claiming safe only behind a test-verified integration gate, nearly free, or genuinely risky? Answer directly.
+7. **"Claims that could NOT be verified"** and **"What would change this verdict."**
+8. Per-claim confidence with its reason, not a document-level label.
+
+State plainly: two repositories, both Python libraries, recent-history window, current-environment conditioning. This bounds the design decision; it does not measure software in general.
+
+Scripts under `instruments/conflicts/`. Do not fabricate. Do not modify `fixture/`, `corpus/_clones/`, or any running job's files.

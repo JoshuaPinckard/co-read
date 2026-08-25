@@ -1,0 +1,33 @@
+Close the single stated caveat on this project's strongest result.
+
+Read first: `exploratory/unification/RESULTS.md`. It compared a co-read association matrix against a co-change association matrix on `toolsenabled-current` and found mean top-10 Jaccard overlap of 7.82%, below a popularity-only null of 17.68%, with union-support Spearman −0.505. Its own limitation, stated explicitly: **it compared RAW PAIR COUNTS, not the estimator actually deployed.** Its confidence statement says so — "Confidence does not extend to an untested normalized score such as PMI, confidence, or time decay."
+
+That matters because §7A of the brief deploys **time-decayed confidence**, not raw counts. So strictly the result shows raw co-occurrence differs from raw co-reading. Whether normalisation closes the gap is untested, and it is the one thing that could soften the verdict.
+
+## The job
+
+Re-run the same comparison with normalised scores on both sides. Reuse `instruments/unification/` — do not write a third implementation of either matrix, and do not modify the existing scripts. Add new ones.
+
+Score variants, applied to **both** the co-read and the co-change matrix:
+
+1. Raw pair count — the existing baseline, for comparability.
+2. Confidence — count(a,b) / count(a). Directional; report both directions.
+3. Time-decayed confidence, half-life 150 commits for co-change. For co-read, decay by task-window index with a half-life you choose and state.
+4. PMI — log( P(a,b) / (P(a)P(b)) ).
+5. Normalised PMI.
+
+For each of the 25 pairings (5 score variants × 5 score variants is not needed — use the 5 matched pairings, same variant on both sides, plus raw-vs-decayed cross-checks if cheap), report mean top-10 Jaccard, union-support Spearman, and the popularity-only null for that variant.
+
+**The popularity null must be recomputed per variant.** A null built for raw counts does not calibrate a PMI comparison. This is the step most likely to be skipped and it invalidates the answer if it is.
+
+## The question to answer, in the first section
+
+**Does normalisation close the gap?** Specifically: does any matched variant lift the observed overlap above its own popularity-only null? The raw-count finding was that observed agreement is 9.87 points *below* null. If a normalised variant reverses that, the unification verdict softens and must be restated. If every variant stays below its null, the verdict hardens considerably and that is a much stronger result than the one currently written down.
+
+Report per-variant, not just the best or worst.
+
+Write `exploratory/unification/NORMALIZATION.md`. Required sections: **"Claims that could NOT be verified"** and **"What would change this verdict"**. Per-claim confidence with its reason.
+
+Do not compute confidence intervals across pairs — a commit of k files yields k(k-1)/2 dependent pairs and a task's reads are likewise dependent. Say so and omit, or resample whole commits and whole task windows.
+
+Read-only on the transcript corpus and on `toolsenabled-current`. Modify nothing outside this project.

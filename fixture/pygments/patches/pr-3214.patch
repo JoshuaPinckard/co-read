@@ -1,0 +1,60 @@
+diff --git a/pygments/lexers/jsx.py b/pygments/lexers/jsx.py
+index cbfeeeda1eed64a63a839c54c22b92a021c61fcd..be5150fbd84a291a45ad7f7aab9cea4fe8bb2168 100644
+--- a/pygments/lexers/jsx.py
++++ b/pygments/lexers/jsx.py
+@@ -74,6 +74,7 @@ class JsxLexer(JavascriptLexer):
+         "root": [
+             include("jsx"),
+             inherit,
++            (r"'", Text),
+         ],
+     **_JSX_RULES}
+ 
+@@ -96,5 +97,6 @@ class TsxLexer(TypeScriptLexer):
+         "root": [
+             include("jsx"),
+             inherit,
++            (r"'", Text),
+         ],
+     **_JSX_RULES}
+diff --git a/tests/snippets/jsx/test_apostrophe_text.txt b/tests/snippets/jsx/test_apostrophe_text.txt
+new file mode 100644
+index 0000000000000000000000000000000000000000..953214c2d88a7c66c78bdb4bcd3cc343874bdd20
+--- /dev/null
++++ b/tests/snippets/jsx/test_apostrophe_text.txt
+@@ -0,0 +1,35 @@
++---input---
++const View = () => <div>I'm the Block view component!</div>;
++
++---tokens---
++'const'       Keyword.Declaration
++' '           Text.Whitespace
++'View'        Name.Other
++' '           Text.Whitespace
++'='           Operator
++' '           Text.Whitespace
++'('           Punctuation
++')'           Punctuation
++' '           Text.Whitespace
++'=>'          Punctuation
++' '           Text.Whitespace
++'<'           Punctuation
++'div'         Name.Tag
++'>'           Punctuation
++'I'           Name.Other
++"'"           Text
++'m'           Name.Other
++' '           Text.Whitespace
++'the'         Name.Other
++' '           Text.Whitespace
++'Block'       Name.Other
++' '           Text.Whitespace
++'view'        Name.Other
++' '           Text.Whitespace
++'component'   Name.Other
++'!'           Operator
++'</'          Punctuation
++'div'         Name.Tag
++'>'           Punctuation
++';'           Punctuation
++'\n'          Text.Whitespace

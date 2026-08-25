@@ -1,0 +1,30 @@
+============================= test session starts =============================
+platform win32 -- Python 3.11.9, pytest-8.4.2, pluggy-1.6.0
+rootdir: C:\Users\joshp\AppData\Local\Temp\blast-radius-pygments-causal-opbff12g\screen-pr-3175-mv20uv5n\tests-only
+configfile: pyproject.toml
+collected 4 items
+
+tests\test_latex_formatter.py .s.F                                       [100%]
+
+================================== FAILURES ===================================
+____________________ test_embedded_lexer_inherits_options _____________________
+
+    def test_embedded_lexer_inherits_options():
+        # gh-2975: wrapping a lexer in LatexEmbeddedLexer (as the command line
+        # does when `escapeinside` is set) must not override the wrapped lexer's
+        # input-preprocessing options such as `stripnl`. Previously the wrapper
+        # was built with default options, so `stripnl=False` was ignored and
+        # leading/trailing blank lines were stripped anyway.
+        from pygments.lexers.special import TextLexer
+    
+        inner = TextLexer(stripnl=False)
+        wrapped = LatexEmbeddedLexer('|', '|', inner)
+>       assert wrapped.stripnl is False
+E       assert True is False
+E        +  where True = <pygments.lexers.LatexEmbeddedLexer>.stripnl
+
+C:\Users\joshp\AppData\Local\Temp\blast-radius-pygments-causal-opbff12g\screen-pr-3175-mv20uv5n\tests-only\tests\test_latex_formatter.py:120: AssertionError
+- generated xml file: C:\Users\joshp\Desktop\Blast-Radius\exploratory\causal\verification\pygments-results-arms\screening\pr-3175\tests-only-targeted.xml -
+=========================== short test summary info ===========================
+FAILED tests/test_latex_formatter.py::test_embedded_lexer_inherits_options - ...
+=================== 1 failed, 2 passed, 1 skipped in 0.15s ====================

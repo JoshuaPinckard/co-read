@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?><testsuites name="pytest tests"><testsuite name="pytest" errors="0" failures="1" skipped="0" tests="1" time="0.076" timestamp="2026-08-24T08:23:53.003312-07:00" hostname="JoshP"><testcase classname="tests.snippets.tcl.test_variable_dash.txt" name="" time="0.006"><failure message="The tokens produced by the &quot;tcl&quot; lexer differ from the expected ones in the file &quot;tests\snippets\tcl\test_variable_dash.txt&quot;.&#10;Run `tox -- tests\snippets --update-goldens` to update it.&#10;&#10;  &#10;  Skipping 71 identical leading characters in diff, use -v to show&#10;    Text&#10;  - '$foo'        Name.Variable&#10;  ?       --&#10;  + '$foo-b'      Name.Variable&#10;  ?      ++...&#10;  &#10;  ...Full output truncated (8 lines hidden), use '-vv' to show">The tokens produced by the "tcl" lexer differ from the expected ones in the file "tests\snippets\tcl\test_variable_dash.txt".
+Run `tox -- tests\snippets --update-goldens` to update it.
+
+  
+  Skipping 71 identical leading characters in diff, use -v to show
+    Text
+  - '$foo'        Name.Variable
+  ?       --
+  + '$foo-b'      Name.Variable
+  ?      ++...
+  
+  ...Full output truncated (8 lines hidden), use '-vv' to show</failure></testcase></testsuite></testsuites>

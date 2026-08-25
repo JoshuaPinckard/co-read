@@ -1,0 +1,26 @@
+============================= test session starts =============================
+platform win32 -- Python 3.11.9, pytest-8.4.2, pluggy-1.6.0
+rootdir: C:\Users\joshp\AppData\Local\Temp\blast-radius-pygments-causal-opbff12g\screen-pr-3164-gdqxpy_g\tests-only
+configfile: pyproject.toml
+collected 1 item
+
+tests\snippets\matlab\test_function_definition_line_continuation.txt F   [100%]
+
+================================== FAILURES ===================================
+____ tests\snippets\matlab\test_function_definition_line_continuation.txt _____
+The tokens produced by the "matlab" lexer differ from the expected ones in the file "tests\snippets\matlab\test_function_definition_line_continuation.txt".
+Run `tox -- tests\snippets --update-goldens` to update it.
+
+  
+    'function'    Keyword
+  + ' '           Error
+  + '['           Error
+  + 'o1'          Name.Function
+  + ','           Punctuation
+    ' '           Text.Whitespace...
+  
+  ...Full output truncated (28 lines hidden), use '-vv' to show
+- generated xml file: C:\Users\joshp\Desktop\Blast-Radius\exploratory\causal\verification\pygments-results-arms\screening\pr-3164\tests-only-targeted.xml -
+=========================== short test summary info ===========================
+FAILED tests/snippets/matlab/test_function_definition_line_continuation.txt::
+============================== 1 failed in 0.19s ==============================

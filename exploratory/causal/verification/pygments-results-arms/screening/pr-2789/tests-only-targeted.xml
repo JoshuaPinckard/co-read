@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?><testsuites name="pytest tests"><testsuite name="pytest" errors="0" failures="3" skipped="0" tests="3" time="0.111" timestamp="2026-08-24T08:30:11.485497-07:00" hostname="JoshP"><testcase classname="tests.snippets.bqn.test_inter_word.txt" name="" time="0.004"><failure message="The tokens produced by the &quot;bqn&quot; lexer differ from the expected ones in the file &quot;tests\snippets\bqn\test_inter_word.txt&quot;.&#10;Run `tox -- tests\snippets --update-goldens` to update it.&#10;&#10;  &#10;    '{'           Keyword.Type&#10;  - 'ab'          Name.Variable&#10;  ?     ---&#10;  + 'ab#x1D54Ais'       Name.Variable&#10;  ?    +++&#10;  - '#x1D54A'           Operator...&#10;  &#10;  ...Full output truncated (6 lines hidden), use '-vv' to show">The tokens produced by the "bqn" lexer differ from the expected ones in the file "tests\snippets\bqn\test_inter_word.txt".
+Run `tox -- tests\snippets --update-goldens` to update it.
+
+  
+    '{'           Keyword.Type
+  - 'ab'          Name.Variable
+  ?     ---
+  + 'ab#x1D54Ais'       Name.Variable
+  ?    +++
+  - '#x1D54A'           Operator...
+  
+  ...Full output truncated (6 lines hidden), use '-vv' to show</failure></testcase><testcase classname="tests.snippets.bqn.test_number_underscores.txt" name="" time="0.005"><failure message="The tokens produced by the &quot;bqn&quot; lexer differ from the expected ones in the file &quot;tests\snippets\bqn\test_number_underscores.txt&quot;.&#10;Run `tox -- tests\snippets --update-goldens` to update it.&#10;&#10;  &#10;    '⟨'           Punctuation&#10;  - '1_.0__1_'    Literal.Number&#10;  ?   -------&#10;  + '1'           Literal.Number&#10;  ?    +++++++&#10;  + '_'           Error...&#10;  &#10;  ...Full output truncated (17 lines hidden), use '-vv' to show">The tokens produced by the "bqn" lexer differ from the expected ones in the file "tests\snippets\bqn\test_number_underscores.txt".
+Run `tox -- tests\snippets --update-goldens` to update it.
+
+  
+    '⟨'           Punctuation
+  - '1_.0__1_'    Literal.Number
+  ?   -------
+  + '1'           Literal.Number
+  ?    +++++++
+  + '_'           Error...
+  
+  ...Full output truncated (17 lines hidden), use '-vv' to show</failure></testcase><testcase classname="tests.snippets.bqn.test_recursive_modifier.txt" name="" time="0.001"><failure message="The tokens produced by the &quot;bqn&quot; lexer differ from the expected ones in the file &quot;tests\snippets\bqn\test_recursive_modifier.txt&quot;.&#10;Run `tox -- tests\snippets --update-goldens` to update it.&#10;&#10;  &#10;  + '_'           Error&#10;  - '_#x1D563'          Name.Attribute&#10;  ?  -&#10;  + '#x1D563'           Name.Attribute&#10;  ?    +&#10;    ' '           Text.Whitespace...&#10;  &#10;  ...Full output truncated (7 lines hidden), use '-vv' to show">The tokens produced by the "bqn" lexer differ from the expected ones in the file "tests\snippets\bqn\test_recursive_modifier.txt".
+Run `tox -- tests\snippets --update-goldens` to update it.
+
+  
+  + '_'           Error
+  - '_#x1D563'          Name.Attribute
+  ?  -
+  + '#x1D563'           Name.Attribute
+  ?    +
+    ' '           Text.Whitespace...
+  
+  ...Full output truncated (7 lines hidden), use '-vv' to show</failure></testcase></testsuite></testsuites>

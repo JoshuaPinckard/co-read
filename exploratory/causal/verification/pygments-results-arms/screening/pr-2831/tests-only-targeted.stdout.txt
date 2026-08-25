@@ -1,0 +1,71 @@
+============================= test session starts =============================
+platform win32 -- Python 3.11.9, pytest-8.4.2, pluggy-1.6.0
+rootdir: C:\Users\joshp\AppData\Local\Temp\blast-radius-pygments-causal-opbff12g\screen-pr-2831-5nbv_lqw\tests-only
+configfile: pyproject.toml
+collected 4 items
+
+tests\snippets\elpi\test_func.txt F                                      [ 25%]
+tests\snippets\elpi\test_pred.txt F                                      [ 50%]
+tests\snippets\elpi\test_quotations.txt F                                [ 75%]
+tests\snippets\elpi\test_type.txt F                                      [100%]
+
+================================== FAILURES ===================================
+______________________ tests\snippets\elpi\test_func.txt ______________________
+The tokens produced by the "elpi" lexer differ from the expected ones in the file "tests\snippets\elpi\test_func.txt".
+Run `tox -- tests\snippets --update-goldens` to update it.
+
+  
+  - 'func'        Keyword.Declaration
+  + 'func'        Text
+    ' '           Text.Whitespace
+  - 'map'         Name.Function
+  + 'map'         Text
+    ' '           Text.Whitespace...
+  
+  ...Full output truncated (67 lines hidden), use '-vv' to show
+______________________ tests\snippets\elpi\test_pred.txt ______________________
+The tokens produced by the "elpi" lexer differ from the expected ones in the file "tests\snippets\elpi\test_pred.txt".
+Run `tox -- tests\snippets --update-goldens` to update it.
+
+  
+  Skipping 322 identical leading characters in diff, use -v to show
+  -           Keyword.Mode
+  +           Text
+    ' '           Text.Whitespace
+    'o:'          Keyword.Mode
+    'list'        Keyword.Type...
+  
+  ...Full output truncated (38 lines hidden), use '-vv' to show
+___________________ tests\snippets\elpi\test_quotations.txt ___________________
+The tokens produced by the "elpi" lexer differ from the expected ones in the file "tests\snippets\elpi\test_quotations.txt".
+Run `tox -- tests\snippets --update-goldens` to update it.
+
+  
+  Skipping 2392 identical leading characters in diff, use -v to show
+  -           Keyword.Mode
+  +           Text
+    ' '           Text.Whitespace
+    'o:'          Keyword.Mode
+    'term'        Keyword.Type...
+  
+  ...Full output truncated (108 lines hidden), use '-vv' to show
+______________________ tests\snippets\elpi\test_type.txt ______________________
+The tokens produced by the "elpi" lexer differ from the expected ones in the file "tests\snippets\elpi\test_type.txt".
+Run `tox -- tests\snippets --update-goldens` to update it.
+
+  
+  Skipping 2565 identical leading characters in diff, use -v to show
+  -           Keyword.Mode
+  +           Text
+    ' '           Text.Whitespace
+    'o:'          Keyword.Mode
+    'tm'          Keyword.Type
+    '.'           Text
+    '\n'          Text.Whitespace
+- generated xml file: C:\Users\joshp\Desktop\Blast-Radius\exploratory\causal\verification\pygments-results-arms\screening\pr-2831\tests-only-targeted.xml -
+=========================== short test summary info ===========================
+FAILED tests/snippets/elpi/test_func.txt::
+FAILED tests/snippets/elpi/test_pred.txt::
+FAILED tests/snippets/elpi/test_quotations.txt::
+FAILED tests/snippets/elpi/test_type.txt::
+============================== 4 failed in 0.16s ==============================

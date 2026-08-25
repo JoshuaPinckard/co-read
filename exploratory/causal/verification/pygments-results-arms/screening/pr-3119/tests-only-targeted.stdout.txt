@@ -1,0 +1,22 @@
+============================= test session starts =============================
+platform win32 -- Python 3.11.9, pytest-8.4.2, pluggy-1.6.0
+rootdir: C:\Users\joshp\AppData\Local\Temp\blast-radius-pygments-causal-opbff12g\screen-pr-3119-jghsedke\tests-only
+configfile: pyproject.toml
+collected 1 item
+
+tests\snippets\python\test_frozendict_builtin.txt F                      [100%]
+
+================================== FAILURES ===================================
+______________ tests\snippets\python\test_frozendict_builtin.txt ______________
+The tokens produced by the "python" lexer differ from the expected ones in the file "tests\snippets\python\test_frozendict_builtin.txt".
+Run `tox -- tests\snippets --update-goldens` to update it.
+
+  
+  Skipping 66 identical leading characters in diff, use -v to show
+  - ict'  Name.Builtin
+  + ict'  Name
+    '\n'          Text.Whitespace
+- generated xml file: C:\Users\joshp\Desktop\Blast-Radius\exploratory\causal\verification\pygments-results-arms\screening\pr-3119\tests-only-targeted.xml -
+=========================== short test summary info ===========================
+FAILED tests/snippets/python/test_frozendict_builtin.txt::
+============================== 1 failed in 0.12s ==============================

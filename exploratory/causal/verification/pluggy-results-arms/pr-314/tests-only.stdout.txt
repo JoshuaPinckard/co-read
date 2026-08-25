@@ -1,0 +1,54 @@
+============================= test session starts =============================
+platform win32 -- Python 3.11.9, pytest-7.4.4, pluggy-unknown
+benchmark: 4.0.0 (defaults: timer=time.perf_counter disable_gc=False min_rounds=5 min_time=0.000005 max_time=1.0 calibration_precision=10 warmup=False warmup_iterations=100000)
+rootdir: C:\Users\joshp\AppData\Local\Temp\blast-radius-pluggy-causal\a314-99gvnwkj\t
+configfile: tox.ini
+testpaths: testing
+plugins: benchmark-4.0.0
+collected 17 items / 4 errors
+
+=================================== ERRORS ====================================
+__________________ ERROR collecting testing/test_helpers.py ___________________
+ImportError while importing test module 'C:\Users\joshp\AppData\Local\Temp\blast-radius-pluggy-causal\a314-99gvnwkj\t\testing\test_helpers.py'.
+Hint: make sure your test modules/packages have valid Python names.
+Traceback:
+..\..\..\..\Programs\Python\Python311\Lib\importlib\__init__.py:126: in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+testing\test_helpers.py:1: in <module>
+    from pluggy._hooks import varnames
+E   ModuleNotFoundError: No module named 'pluggy._hooks'
+_________________ ERROR collecting testing/test_hookcaller.py _________________
+ImportError while importing test module 'C:\Users\joshp\AppData\Local\Temp\blast-radius-pluggy-causal\a314-99gvnwkj\t\testing\test_hookcaller.py'.
+Hint: make sure your test modules/packages have valid Python names.
+Traceback:
+..\..\..\..\Programs\Python\Python311\Lib\importlib\__init__.py:126: in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+testing\test_hookcaller.py:4: in <module>
+    from pluggy._hooks import HookImpl
+E   ModuleNotFoundError: No module named 'pluggy._hooks'
+_________________ ERROR collecting testing/test_multicall.py __________________
+ImportError while importing test module 'C:\Users\joshp\AppData\Local\Temp\blast-radius-pluggy-causal\a314-99gvnwkj\t\testing\test_multicall.py'.
+Hint: make sure your test modules/packages have valid Python names.
+Traceback:
+..\..\..\..\Programs\Python\Python311\Lib\importlib\__init__.py:126: in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+testing\test_multicall.py:3: in <module>
+    from pluggy._hooks import HookImpl
+E   ModuleNotFoundError: No module named 'pluggy._hooks'
+_______________ ERROR collecting testing/test_pluginmanager.py ________________
+ImportError while importing test module 'C:\Users\joshp\AppData\Local\Temp\blast-radius-pluggy-causal\a314-99gvnwkj\t\testing\test_pluginmanager.py'.
+Hint: make sure your test modules/packages have valid Python names.
+Traceback:
+..\..\..\..\Programs\Python\Python311\Lib\importlib\__init__.py:126: in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+testing\test_pluginmanager.py:12: in <module>
+    from pluggy._manager import importlib_metadata
+E   ModuleNotFoundError: No module named 'pluggy._manager'
+- generated xml file: C:\Users\joshp\Desktop\Blast-Radius\exploratory\causal\verification\pluggy-results-arms\pr-314\tests-only.xml -
+=========================== short test summary info ===========================
+ERROR testing/test_helpers.py
+ERROR testing/test_hookcaller.py
+ERROR testing/test_multicall.py
+ERROR testing/test_pluginmanager.py
+!!!!!!!!!!!!!!!!!!! Interrupted: 4 errors during collection !!!!!!!!!!!!!!!!!!!
+============================== 4 errors in 0.39s ==============================

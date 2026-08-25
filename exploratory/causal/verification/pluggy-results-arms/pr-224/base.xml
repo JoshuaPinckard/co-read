@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?><testsuites><testsuite name="pytest" errors="0" failures="1" skipped="0" tests="90" time="0.552" timestamp="2026-08-24T07:01:23.302672" hostname="JoshP"><testcase classname="testing.test_deprecations" name="test_result_deprecated" time="0.001" /><testcase classname="testing.test_deprecations" name="test_implprefix_deprecated" time="0.001" /><testcase classname="testing.test_deprecations" name="test_callhistoric_proc_deprecated" time="0.001" /><testcase classname="testing.test_deprecations" name="test_multicall_deprecated" time="0.001" /><testcase classname="testing.test_details" name="test_parse_hookimpl_override" time="0.001" /><testcase classname="testing.test_details" name="test_warn_when_deprecated_specified" time="0.001" /><testcase classname="testing.test_details" name="test_plugin_getattr_raises_errors" time="0.000" /><testcase classname="testing.test_details" name="test_warning_on_call_vs_hookspec_arg_mismatch" time="0.001" /><testcase classname="testing.test_details" name="test_repr" time="0.000" /><testcase classname="testing.test_helpers" name="test_varnames" time="0.000" /><testcase classname="testing.test_helpers" name="test_varnames_default" time="0.000" /><testcase classname="testing.test_helpers" name="test_varnames_class" time="0.003" /><testcase classname="testing.test_helpers" name="test_varnames_keyword_only" time="0.001" /><testcase classname="testing.test_helpers" name="test_formatdef" time="0.001" /><testcase classname="testing.test_hookcaller" name="test_adding_nonwrappers" time="0.001" /><testcase classname="testing.test_hookcaller" name="test_adding_nonwrappers_trylast" time="0.001" /><testcase classname="testing.test_hookcaller" name="test_adding_nonwrappers_trylast3" time="0.001" /><testcase classname="testing.test_hookcaller" name="test_adding_nonwrappers_trylast2" time="0.001" /><testcase classname="testing.test_hookcaller" name="test_adding_nonwrappers_tryfirst" time="0.001" /><testcase classname="testing.test_hookcaller" name="test_adding_wrappers_ordering" time="0.001" /><testcase classname="testing.test_hookcaller" name="test_adding_wrappers_ordering_tryfirst" time="0.001" /><testcase classname="testing.test_hookcaller" name="test_hookspec" time="0.001" /><testcase classname="testing.test_hookcaller" name="test_hookimpl[True-hookwrapper]" time="0.001" /><testcase classname="testing.test_hookcaller" name="test_hookimpl[True-optionalhook]" time="0.001" /><testcase classname="testing.test_hookcaller" name="test_hookimpl[True-tryfirst]" time="0.001" /><testcase classname="testing.test_hookcaller" name="test_hookimpl[True-trylast]" time="0.000" /><testcase classname="testing.test_hookcaller" name="test_hookimpl[False-hookwrapper]" time="0.000" /><testcase classname="testing.test_hookcaller" name="test_hookimpl[False-optionalhook]" time="0.001" /><testcase classname="testing.test_hookcaller" name="test_hookimpl[False-tryfirst]" time="0.001" /><testcase classname="testing.test_hookcaller" name="test_hookimpl[False-trylast]" time="0.000" /><testcase classname="testing.test_hookcaller" name="test_hookrelay_registry" time="0.001" /><testcase classname="testing.test_invocations" name="test_argmismatch" time="0.001" /><testcase classname="testing.test_invocations" name="test_only_kwargs" time="0.001" /><testcase classname="testing.test_invocations" name="test_opt_in_args" time="0.001" /><testcase classname="testing.test_invocations" name="test_call_order" time="0.001" /><testcase classname="testing.test_invocations" name="test_firstresult_definition" time="0.001" /><testcase classname="testing.test_invocations" name="test_firstresult_force_result" time="0.001" /><testcase classname="testing.test_invocations" name="test_firstresult_returns_none" time="0.001" /><testcase classname="testing.test_invocations" name="test_firstresult_no_plugin" time="0.001" /><testcase classname="testing.test_multicall" name="test_uses_copy_of_methods" time="0.002"><failure message="pytest.PytestReturnNotNoneWarning: Expected None, but testing/test_multicall.py::test_uses_copy_of_methods returned False, which will be an error in a future version of pytest.  Did you mean to use `assert` instead of `return`?">cls = &lt;class '_pytest.runner.CallInfo'&gt;
+func = &lt;function call_runtest_hook.&lt;locals&gt;.&lt;lambda&gt; at 0x0000029AE9151BC0&gt;
+when = 'call'
+reraise = (&lt;class '_pytest.outcomes.Exit'&gt;, &lt;class 'KeyboardInterrupt'&gt;)
+
+    @classmethod
+    def from_call(
+        cls,
+        func: "Callable[[], TResult]",
+        when: "Literal['collect', 'setup', 'call', 'teardown']",
+        reraise: Optional[
+            Union[Type[BaseException], Tuple[Type[BaseException], ...]]
+        ] = None,
+    ) -&gt; "CallInfo[TResult]":
+        """Call func, wrapping the result in a CallInfo.
+    
+        :param func:
+            The function to call. Called without arguments.
+        :param when:
+            The phase in which the function is called.
+        :param reraise:
+            Exception or exceptions that shall propagate if raised by the
+            function, instead of being wrapped in the CallInfo.
+        """
+        excinfo = None
+        start = timing.time()
+        precise_start = timing.perf_counter()
+        try:
+&gt;           result: Optional[TResult] = func()
+
+C:\Users\joshp\Desktop\Blast-Radius\exploratory\causal\envs\pluggy-historical\Lib\site-packages\_pytest\runner.py:341: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+C:\Users\joshp\Desktop\Blast-Radius\exploratory\causal\envs\pluggy-historical\Lib\site-packages\_pytest\runner.py:262: in &lt;lambda&gt;
+    lambda: ihook(item=item, **kwds), when=when, reraise=reraise
+src\pluggy\hooks.py:289: in __call__
+    return self._hookexec(self, self.get_hookimpls(), kwargs)
+src\pluggy\manager.py:91: in _hookexec
+    return self._inner_hookexec(hook, methods, kwargs)
+src\pluggy\manager.py:82: in &lt;lambda&gt;
+    self._inner_hookexec = lambda hook, methods, kwargs: hook.multicall(
+C:\Users\joshp\Desktop\Blast-Radius\exploratory\causal\envs\pluggy-historical\Lib\site-packages\_pytest\runner.py:177: in pytest_runtest_call
+    raise e
+C:\Users\joshp\Desktop\Blast-Radius\exploratory\causal\envs\pluggy-historical\Lib\site-packages\_pytest\runner.py:169: in pytest_runtest_call
+    item.runtest()
+C:\Users\joshp\Desktop\Blast-Radius\exploratory\causal\envs\pluggy-historical\Lib\site-packages\_pytest\python.py:1792: in runtest
+    self.ihook.pytest_pyfunc_call(pyfuncitem=self)
+src\pluggy\hooks.py:289: in __call__
+    return self._hookexec(self, self.get_hookimpls(), kwargs)
+src\pluggy\manager.py:91: in _hookexec
+    return self._inner_hookexec(hook, methods, kwargs)
+src\pluggy\manager.py:82: in &lt;lambda&gt;
+    self._inner_hookexec = lambda hook, methods, kwargs: hook.multicall(
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+pyfuncitem = &lt;Function test_uses_copy_of_methods&gt;
+
+    @hookimpl(trylast=True)
+    def pytest_pyfunc_call(pyfuncitem: "Function") -&gt; Optional[object]:
+        testfunction = pyfuncitem.obj
+        if is_async_function(testfunction):
+            async_warn_and_skip(pyfuncitem.nodeid)
+        funcargs = pyfuncitem.funcargs
+        testargs = {arg: funcargs[arg] for arg in pyfuncitem._fixtureinfo.argnames}
+        result = testfunction(**testargs)
+        if hasattr(result, "__await__") or hasattr(result, "__aiter__"):
+            async_warn_and_skip(pyfuncitem.nodeid)
+        elif result is not None:
+&gt;           warnings.warn(
+                PytestReturnNotNoneWarning(
+                    f"Expected None, but {pyfuncitem.nodeid} returned {result!r}, which will be an error in a "
+                    "future version of pytest.  Did you mean to use `assert` instead of `return`?"
+                )
+            )
+E           pytest.PytestReturnNotNoneWarning: Expected None, but testing/test_multicall.py::test_uses_copy_of_methods returned False, which will be an error in a future version of pytest.  Did you mean to use `assert` instead of `return`?
+
+C:\Users\joshp\Desktop\Blast-Radius\exploratory\causal\envs\pluggy-historical\Lib\site-packages\_pytest\python.py:198: PytestReturnNotNoneWarning</failure></testcase><testcase classname="testing.test_multicall" name="test_call_passing" time="0.001" /><testcase classname="testing.test_multicall" name="test_keyword_args" time="0.001" /><testcase classname="testing.test_multicall" name="test_keyword_args_with_defaultargs" time="0.001" /><testcase classname="testing.test_multicall" name="test_tags_call_error" time="0.001" /><testcase classname="testing.test_multicall" name="test_call_subexecute" time="0.001" /><testcase classname="testing.test_multicall" name="test_call_none_is_no_result" time="0.001" /><testcase classname="testing.test_multicall" name="test_hookwrapper" time="0.001" /><testcase classname="testing.test_multicall" name="test_hookwrapper_order" time="0.001" /><testcase classname="testing.test_multicall" name="test_hookwrapper_not_yield" time="0.001" /><testcase classname="testing.test_multicall" name="test_hookwrapper_too_many_yield" time="0.001" /><testcase classname="testing.test_multicall" name="test_hookwrapper_exception[ValueError]" time="0.001" /><testcase classname="testing.test_multicall" name="test_hookwrapper_exception[SystemExit]" time="0.001" /><testcase classname="testing.test_pluginmanager" name="test_plugin_double_register" time="0.001" /><testcase classname="testing.test_pluginmanager" name="test_pm" time="0.001" /><testcase classname="testing.test_pluginmanager" name="test_has_plugin" time="0.001" /><testcase classname="testing.test_pluginmanager" name="test_register_dynamic_attr[spec-is-class]" time="0.001" /><testcase classname="testing.test_pluginmanager" name="test_register_dynamic_attr[spec-is-instance]" time="0.001" /><testcase classname="testing.test_pluginmanager" name="test_pm_name" time="0.001" /><testcase classname="testing.test_pluginmanager" name="test_set_blocked" time="0.001" /><testcase classname="testing.test_pluginmanager" name="test_register_mismatch_method[spec-is-class]" time="0.002" /><testcase classname="testing.test_pluginmanager" name="test_register_mismatch_method[spec-is-instance]" time="0.001" /><testcase classname="testing.test_pluginmanager" name="test_register_mismatch_arg[spec-is-class]" time="0.001" /><testcase classname="testing.test_pluginmanager" name="test_register_mismatch_arg[spec-is-instance]" time="0.001" /><testcase classname="testing.test_pluginmanager" name="test_register" time="0.001" /><testcase classname="testing.test_pluginmanager" name="test_register_unknown_hooks" time="0.001" /><testcase classname="testing.test_pluginmanager" name="test_register_historic" time="0.001" /><testcase classname="testing.test_pluginmanager" name="test_with_result_memorized[True]" time="0.001" /><testcase classname="testing.test_pluginmanager" name="test_with_result_memorized[False]" time="0.001" /><testcase classname="testing.test_pluginmanager" name="test_with_callbacks_immediately_executed" time="0.001" /><testcase classname="testing.test_pluginmanager" name="test_register_historic_incompat_hookwrapper" time="0.001" /><testcase classname="testing.test_pluginmanager" name="test_call_extra" time="0.001" /><testcase classname="testing.test_pluginmanager" name="test_call_with_too_few_args" time="0.001" /><testcase classname="testing.test_pluginmanager" name="test_subset_hook_caller" time="0.001" /><testcase classname="testing.test_pluginmanager" name="test_get_hookimpls" time="0.002" /><testcase classname="testing.test_pluginmanager" name="test_add_hookspecs_nohooks" time="0.001" /><testcase classname="testing.test_pluginmanager" name="test_reject_prefixed_module" time="0.001" /><testcase classname="testing.test_pluginmanager" name="test_load_setuptools_instantiation" time="0.001" /><testcase classname="testing.test_pluginmanager" name="test_add_tracefuncs[spec-is-class]" time="0.001" /><testcase classname="testing.test_pluginmanager" name="test_add_tracefuncs[spec-is-instance]" time="0.002" /><testcase classname="testing.test_pluginmanager" name="test_hook_tracing[spec-is-class]" time="0.001" /><testcase classname="testing.test_pluginmanager" name="test_hook_tracing[spec-is-instance]" time="0.001" /><testcase classname="testing.test_pluginmanager" name="test_implprefix_warning" time="0.001" /><testcase classname="testing.test_pluginmanager" name="test_prefix_hookimpl[True]" time="0.001" /><testcase classname="testing.test_pluginmanager" name="test_prefix_hookimpl[False]" time="0.001" /><testcase classname="testing.test_pluginmanager" name="test_prefix_hookimpl_dontmatch_module" time="0.001" /><testcase classname="testing.test_tracer" name="test_simple" time="0.001" /><testcase classname="testing.test_tracer" name="test_indent" time="0.001" /><testcase classname="testing.test_tracer" name="test_readable_output_dictargs" time="0.001" /><testcase classname="testing.test_tracer" name="test_setprocessor" time="0.001" /><testcase classname="testing.test_tracer" name="test_setmyprocessor" time="0.001" /></testsuite></testsuites>

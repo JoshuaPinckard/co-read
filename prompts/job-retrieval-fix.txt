@@ -1,0 +1,32 @@
+Re-run the Grep-replacement benchmark with two defects corrected. The previous pass ran end to end and then honestly reported that it could not measure anything: retention was fine at 11,773 of 13,327 Grep calls, but the **scored population collapsed to 20 queries**, with recall computed on 12.
+
+Read first: `exploratory/retrieval/RESULTS.md` and `instruments/retrieval/SPEC.md`. The specification is otherwise sound — the labels, the arms, the tokenisation rules, the metrics, the reporting order all stand.
+
+## Defect 1 — the scope was wrong, and it was the specification's fault
+
+The spec said to index `toolsenabled-current` "since it is where the queries come from." That is false. The queries are spread across several distinct trees. Measured distribution of query scope across the eval set: `toolsenabled/opensource/wt-capability`, plain `toolsenabled`, `toolsenabled-current` and several of its subdirectories, plus temporary checkouts. Almost every query fell outside the single indexed tree.
+
+**Fix:** index every tree that queries actually target, and score each query against the index for *its own* tree. Derive the tree set empirically from the eval set's `cwd` and query `path` fields rather than assuming. Report the resulting scored population per tree and in total, and report how many queries still fall outside any indexed tree.
+
+## Defect 2 — no commit SHA, so every query was scored against today's HEAD
+
+The previous report states: "None of the transcript records carries an explicit commit SHA, so all 20 scored records are HEAD fallbacks." Any file that changed between the query and now introduces error.
+
+**Fix:** reconstruct tree state by timestamp. Transcript records carry `timestamp` and `gitBranch`, and the repositories have history, so for each query select the commit on that branch closest in time at or before the query. Report, per query, whether an exact-time reconstruction was possible or a fallback was used, and give the distribution of time gaps between query and chosen commit. Where a repository is not a git checkout, say so and fall back with the count reported.
+
+## What to produce
+
+Write new scripts alongside the existing ones. **Do not modify `instruments/retrieval/build_evalset.py`, `arms.py`, `index.py`, or `score.py`** — another analysis reads them. Add a corrected runner.
+
+Output `exploratory/retrieval/RESULTS-V2.md`, in the specification's required order:
+
+1. **Retention first**, then **scored population per tree**. If the population is still small, that is the finding and it goes at the top.
+2. Per-arm table across all four arms plus the legacy-tokeniser ablation.
+3. The head-to-head verdict: does anything beat ripgrep on recall **and** mean response size simultaneously? The previous answer was no, on twenty queries. Answer it on the corrected population.
+4. The tokenisation ablation. The previous pass measured identifier-aware splitting at +8.3 points of recall-at-twenty at 300 seconds and +9.1 at 60 seconds, consistent in sign but on twelve queries. Confirm or refute at scale — this is the specification's predicted largest lever.
+5. Window sensitivity at 60, 300 and 900 seconds, with the population regenerated independently at each.
+6. **"Claims that could NOT be verified"** and **"What would change this verdict"**. Per-claim confidence with its reason.
+
+Note in the report that the eval set is one organisation's transcripts and 98.6% of records come from a single tree, so a session-level split licenses within-repository generalisation and nothing more.
+
+Do not fabricate. If an arm cannot run on a tree, leave the cell empty and say why. A reported bug is worth more than a plausible table.

@@ -1,0 +1,86 @@
+============================= test session starts =============================
+platform win32 -- Python 3.11.9, pytest-8.4.2, pluggy-1.6.0
+rootdir: C:\Users\joshp\AppData\Local\Temp\blast-radius-pygments-causal-opbff12g\screen-pr-3168-p134s1tk\tests-only
+configfile: pyproject.toml
+collected 5 items
+
+tests\snippets\smithy\test_control_statement.txt F                       [ 20%]
+tests\snippets\smithy\test_enum.txt F                                    [ 40%]
+tests\snippets\smithy\test_inline_operation.txt F                        [ 60%]
+tests\snippets\smithy\test_mixins_and_elision.txt F                      [ 80%]
+tests\snippets\smithy\test_textblock.txt F                               [100%]
+
+================================== FAILURES ===================================
+______________ tests\snippets\smithy\test_control_statement.txt _______________
+The tokens produced by the "smithy" lexer differ from the expected ones in the file "tests\snippets\smithy\test_control_statement.txt".
+Run `tox -- tests\snippets --update-goldens` to update it.
+
+  
+  Skipping 131 identical leading characters in diff, use -v to show
+  - nputSuffix' Keyword.Declaration
+  - ':'           Name.Decorator
+  - ' "Request"'  Name.Class
+  + nputSuffix:' Name.Label
+  + ' '           Text.Whitespace
+  + '"Request"'   Literal.String.Double
+    '\n'          Text.Whitespace
+_____________________ tests\snippets\smithy\test_enum.txt _____________________
+The tokens produced by the "smithy" lexer differ from the expected ones in the file "tests\snippets\smithy\test_enum.txt".
+Run `tox -- tests\snippets --update-goldens` to update it.
+
+  
+  - 'enum'        Keyword.Declaration
+  + 'enum'        Name.Variable.Class
+  + ' '           Text.Whitespace
+  - ' Suit'       Name.Class
+  ?  -
+  + 'Suit'        Name.Variable.Class...
+  
+  ...Full output truncated (37 lines hidden), use '-vv' to show
+_______________ tests\snippets\smithy\test_inline_operation.txt _______________
+The tokens produced by the "smithy" lexer differ from the expected ones in the file "tests\snippets\smithy\test_inline_operation.txt".
+Run `tox -- tests\snippets --update-goldens` to update it.
+
+  
+  Skipping 194 identical leading characters in diff, use -v to show
+    tespace
+  + ':'           Punctuation
+  - ':='          Name.Decorator
+  ?  -
+  + '='           Name.Decorator...
+  
+  ...Full output truncated (13 lines hidden), use '-vv' to show
+______________ tests\snippets\smithy\test_mixins_and_elision.txt ______________
+The tokens produced by the "smithy" lexer differ from the expected ones in the file "tests\snippets\smithy\test_mixins_and_elision.txt".
+Run `tox -- tests\snippets --update-goldens` to update it.
+
+  
+  Skipping 94 identical leading characters in diff, use -v to show
+  - '         Keyword.Declaration
+  + '         Name.Variable.Class
+    ' '           Text.Whitespace
+    'User'        Name.Variable.Class
+    ' '           Text.Whitespace...
+  
+  ...Full output truncated (22 lines hidden), use '-vv' to show
+__________________ tests\snippets\smithy\test_textblock.txt ___________________
+The tokens produced by the "smithy" lexer differ from the expected ones in the file "tests\snippets\smithy\test_textblock.txt".
+Run `tox -- tests\snippets --update-goldens` to update it.
+
+  
+  Skipping 44 identical leading characters in diff, use -v to show
+      Text
+  - '"""\n    A text block with "interior" quotes and a {"json": "value"}.\n    """' Literal.String.Doc
+  + '""'          Literal.String.Double
+  + '"\n    A text block with "' Literal.String.Double
+  + 'interior'    Name.Variable.Class...
+  
+  ...Full output truncated (12 lines hidden), use '-vv' to show
+- generated xml file: C:\Users\joshp\Desktop\Blast-Radius\exploratory\causal\verification\pygments-results-arms\screening\pr-3168\tests-only-targeted.xml -
+=========================== short test summary info ===========================
+FAILED tests/snippets/smithy/test_control_statement.txt::
+FAILED tests/snippets/smithy/test_enum.txt::
+FAILED tests/snippets/smithy/test_inline_operation.txt::
+FAILED tests/snippets/smithy/test_mixins_and_elision.txt::
+FAILED tests/snippets/smithy/test_textblock.txt::
+============================== 5 failed in 0.17s ==============================

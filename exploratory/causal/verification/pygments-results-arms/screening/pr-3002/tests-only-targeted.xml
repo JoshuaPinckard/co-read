@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?><testsuites name="pytest tests"><testsuite name="pytest" errors="0" failures="1" skipped="0" tests="1" time="0.222" timestamp="2026-08-24T08:29:08.024470-07:00" hostname="JoshP"><testcase classname="tests.examplefiles.php.test.php" name="" time="0.028"><failure message="The tokens produced by the &quot;php&quot; lexer differ from the expected ones in the file &quot;tests\examplefiles\php\test.php&quot;.&#10;Run `tox -- tests\examplefiles --update-goldens` to update it.&#10;&#10;  &#10;  Skipping 77007 identical leading characters in diff, use -v to show&#10;  - donly'    Keyword&#10;  + donly'    Name.Other&#10;    ' '           Text&#10;    'string'      Name.Other&#10;    ' '           Text...&#10;  &#10;  ...Full output truncated (185 lines hidden), use '-vv' to show">The tokens produced by the "php" lexer differ from the expected ones in the file "tests\examplefiles\php\test.php".
+Run `tox -- tests\examplefiles --update-goldens` to update it.
+
+  
+  Skipping 77007 identical leading characters in diff, use -v to show
+  - donly'    Keyword
+  + donly'    Name.Other
+    ' '           Text
+    'string'      Name.Other
+    ' '           Text...
+  
+  ...Full output truncated (185 lines hidden), use '-vv' to show</failure></testcase></testsuite></testsuites>

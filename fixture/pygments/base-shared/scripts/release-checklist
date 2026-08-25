@@ -1,0 +1,27 @@
+Release checklist
+=================
+
+* Check ``git status``
+* Check all lexers have ``versionadded:: `` set correctly.
+* ``tox``
+* ``tox -e check``
+* LATER when configured properly: ``tox -e pylint``
+* Update version in ``pygments/__init__.py`` (we use ``X.Y.Z``, so a new major release would be ``3.0.0``)
+* Check pyproject.toml metadata: long description, trove classifiers
+* Update release date/code name in ``CHANGES``
+* ``git commit``
+* Wait for the CI to finish
+* ``git clean -xdf`` (warning: removes all untracked and ignored files,
+   do a dry run with ``git clean -xdfn`` first)
+* ``python3 -m build``
+* Check the size of the generated packages. If they're significantly different from the last release, check if the repository is in a modified state and that ``git clean`` was run.
+* ``twine upload --repository test-pygments dist/*`` (``dist`` must only contain the current files given we used ``git clean -xdf``)
+* Check Test-PyPI release page for obvious errors (like different file sizes!)
+* ``twine upload --repository pygments dist/*``
+* ``git tag -a $NEWVER``, i.e. ``git tag -a 1.0.0``. The message is "$NEWVER release".
+* Add new ``CHANGES`` heading for next version
+* ``git commit``
+* ``git push``, ``git push --tags``
+* Add new release on https://github.com/pygments/pygments/releases
+* Add new milestone on https://github.com/pygments/pygments/milestones if needed
+* Write announcement and send to mailing list/python-announce

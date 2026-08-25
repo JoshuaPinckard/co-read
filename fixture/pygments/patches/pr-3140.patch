@@ -1,0 +1,109 @@
+diff --git a/pygments/lexers/julia.py b/pygments/lexers/julia.py
+index ba0e0d98756292eae7028b77a38ab05c35df9039..6bd893e6f083a5045ecaab7d104bafdb050d8468 100644
+--- a/pygments/lexers/julia.py
++++ b/pygments/lexers/julia.py
+@@ -212,8 +212,7 @@ class JuliaLexer(RegexLexer):
+ 
+         'regex': [
+             (r'(")([imsxa]*)?', bygroups(String.Regex, String.Affix), '#pop'),
+-            (r'\\"', String.Regex),
+-            (r'[^\\"]+', String.Regex),
++            (r'(\\[BbDdEgNQSsUuWw\\.*+?^$|()[\]{}\" ]|[^\\\"])+', String.Regex),
+         ],
+ 
+         'tqregex': [
+diff --git a/tests/snippets/julia/test_rstrings.txt b/tests/snippets/julia/test_rstrings.txt
+new file mode 100644
+index 0000000000000000000000000000000000000000..1d64ca8e2e915e151113fba533b7e9eac6f6429f
+--- /dev/null
++++ b/tests/snippets/julia/test_rstrings.txt
+@@ -0,0 +1,89 @@
++---input---
++r"hello"
++r"he\\llo"
++r"hello\""
++r"hello\\"
++r"a*+?.|()\\^#"
++r"a\"bc"
++r""
++r""i
++r"hello"i
++r"he\\llo"m
++r"hello\""x
++r"hello\\"s
++
++---tokens---
++'r'           Literal.String.Affix
++'"'           Literal.String.Regex
++'hello'       Literal.String.Regex
++'"'           Literal.String.Regex
++'\n'          Text.Whitespace
++
++'r'           Literal.String.Affix
++'"'           Literal.String.Regex
++'he\\\\llo'   Literal.String.Regex
++'"'           Literal.String.Regex
++'\n'          Text.Whitespace
++
++'r'           Literal.String.Affix
++'"'           Literal.String.Regex
++'hello\\"'    Literal.String.Regex
++'"'           Literal.String.Regex
++'\n'          Text.Whitespace
++
++'r'           Literal.String.Affix
++'"'           Literal.String.Regex
++'hello\\\\'   Literal.String.Regex
++'"'           Literal.String.Regex
++'\n'          Text.Whitespace
++
++'r'           Literal.String.Affix
++'"'           Literal.String.Regex
++'a*+?.|()\\\\^#' Literal.String.Regex
++'"'           Literal.String.Regex
++'\n'          Text.Whitespace
++
++'r'           Literal.String.Affix
++'"'           Literal.String.Regex
++'a\\"bc'      Literal.String.Regex
++'"'           Literal.String.Regex
++'\n'          Text.Whitespace
++
++'r'           Literal.String.Affix
++'"'           Literal.String.Regex
++'"'           Literal.String.Regex
++'\n'          Text.Whitespace
++
++'r'           Literal.String.Affix
++'"'           Literal.String.Regex
++'"'           Literal.String.Regex
++'i'           Literal.String.Affix
++'\n'          Text.Whitespace
++
++'r'           Literal.String.Affix
++'"'           Literal.String.Regex
++'hello'       Literal.String.Regex
++'"'           Literal.String.Regex
++'i'           Literal.String.Affix
++'\n'          Text.Whitespace
++
++'r'           Literal.String.Affix
++'"'           Literal.String.Regex
++'he\\\\llo'   Literal.String.Regex
++'"'           Literal.String.Regex
++'m'           Literal.String.Affix
++'\n'          Text.Whitespace
++
++'r'           Literal.String.Affix
++'"'           Literal.String.Regex
++'hello\\"'    Literal.String.Regex
++'"'           Literal.String.Regex
++'x'           Literal.String.Affix
++'\n'          Text.Whitespace
++
++'r'           Literal.String.Affix
++'"'           Literal.String.Regex
++'hello\\\\'   Literal.String.Regex
++'"'           Literal.String.Regex
++'s'           Literal.String.Affix
++'\n'          Text.Whitespace

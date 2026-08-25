@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?><testsuites name="pytest tests"><testsuite name="pytest" errors="0" failures="1" skipped="0" tests="1" time="0.103" timestamp="2026-08-24T08:26:14.835702-07:00" hostname="JoshP"><testcase classname="tests.snippets.python.test_frozendict_builtin.txt" name="" time="0.020"><failure message="The tokens produced by the &quot;python&quot; lexer differ from the expected ones in the file &quot;tests\snippets\python\test_frozendict_builtin.txt&quot;.&#10;Run `tox -- tests\snippets --update-goldens` to update it.&#10;&#10;  &#10;  Skipping 66 identical leading characters in diff, use -v to show&#10;  - ict'  Name.Builtin&#10;  + ict'  Name&#10;    '\n'          Text.Whitespace">The tokens produced by the "python" lexer differ from the expected ones in the file "tests\snippets\python\test_frozendict_builtin.txt".
+Run `tox -- tests\snippets --update-goldens` to update it.
+
+  
+  Skipping 66 identical leading characters in diff, use -v to show
+  - ict'  Name.Builtin
+  + ict'  Name
+    '\n'          Text.Whitespace</failure></testcase></testsuite></testsuites>

@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?><testsuites name="pytest tests"><testsuite name="pytest" errors="0" failures="1" skipped="0" tests="1" time="0.563" timestamp="2026-08-24T08:13:13.813583-07:00" hostname="JoshP"><testcase classname="tests.examplefiles.bash.doif.sh" name="" time="0.030"><failure message="The tokens produced by the &quot;bash&quot; lexer differ from the expected ones in the file &quot;tests\examplefiles\bash\doif.sh&quot;.&#10;Run `tox -- tests\examplefiles --update-goldens` to update it.&#10;&#10;  &#10;  Skipping 277 identical leading characters in diff, use -v to show&#10;    ingle&#10;    &#10;  + 'do'          Keyword&#10;  - 'do-release-upgrade' Text&#10;  ?  --...&#10;  &#10;  ...Full output truncated (103 lines hidden), use '-vv' to show">The tokens produced by the "bash" lexer differ from the expected ones in the file "tests\examplefiles\bash\doif.sh".
+Run `tox -- tests\examplefiles --update-goldens` to update it.
+
+  
+  Skipping 277 identical leading characters in diff, use -v to show
+    ingle
+    
+  + 'do'          Keyword
+  - 'do-release-upgrade' Text
+  ?  --...
+  
+  ...Full output truncated (103 lines hidden), use '-vv' to show</failure></testcase></testsuite></testsuites>

@@ -1,0 +1,239 @@
+============================= test session starts =============================
+platform win32 -- Python 3.11.9, pytest-8.4.2, pluggy-1.6.0
+rootdir: C:\Users\joshp\AppData\Local\Temp\blast-radius-jinja-causal\a1081-nbwmomq_\b
+configfile: setup.cfg
+testpaths: tests
+plugins: timeout-2.4.0
+collected 681 items
+
+tests\test_api.py ................................                       [  4%]
+tests\test_async.py ............................................         [ 11%]
+tests\test_asyncfilters.py ......................................        [ 16%]
+tests\test_bytecode_cache.py ...                                         [ 17%]
+tests\test_core_tags.py ................................................ [ 24%]
+..............                                                           [ 26%]
+tests\test_debug.py F...                                                 [ 26%]
+tests\test_ext.py ..........................................             [ 33%]
+tests\test_features.py .s                                                [ 33%]
+tests\test_filters.py .................................................. [ 40%]
+......................................................                   [ 48%]
+tests\test_idtracking.py .....                                           [ 49%]
+tests\test_imports.py ...........                                        [ 50%]
+tests\test_inheritance.py ................                               [ 53%]
+tests\test_lexnparse.py ................................................ [ 60%]
+..........................................................               [ 68%]
+tests\test_loader.py .................s..                                [ 71%]
+tests\test_nativetypes.py .F............                                 [ 73%]
+tests\test_regression.py .................s........................      [ 80%]
+tests\test_security.py ...............                                   [ 82%]
+tests\test_tests.py .................................................... [ 89%]
+..................................................                       [ 97%]
+tests\test_utils.py ...................                                  [100%]
+
+================================== FAILURES ===================================
+________________________ TestDebug.test_runtime_error _________________________
+
+self = <test_debug.TestDebug object at 0x000001C3B24C4650>
+callback = <function TestDebug.test_runtime_error.<locals>.test at 0x000001C3B2865800>
+expected_tb = '\n  File ".*?broken.html", line 2, in (top-level template code|<module>)\n    \\{\\{ fail\\(\\) \\}\\}\n  File ".*deb... <lambda>\n    tmpl\\.render\\(fail=lambda: 1 / 0\\)\nZeroDivisionError: (int(eger)? )?division (or modulo )?by zero\n'
+
+    def assert_traceback_matches(self, callback, expected_tb):
+        try:
+>           callback()
+
+tests\test_debug.py:32: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+tests\test_debug.py:43: in test
+    tmpl.render(fail=lambda: 1 / 0)
+jinja2\asyncsupport.py:76: in render
+    return original_render(self, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+jinja2\environment.py:1010: in render
+    return self.environment.handle_exception(exc_info, True)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+jinja2\environment.py:782: in handle_exception
+    reraise(exc_type, exc_value, tb)
+jinja2\_compat.py:37: in reraise
+    raise value.with_traceback(tb)
+tests\res\templates\broken.html:2: in <module>
+    {{ fail() }}
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+>   tmpl.render(fail=lambda: 1 / 0)
+                             ^^^^^
+E   ZeroDivisionError: division by zero
+
+tests\test_debug.py:43: ZeroDivisionError
+
+During handling of the above exception, another exception occurred:
+
+self = <test_debug.TestDebug object at 0x000001C3B24C4650>
+fs_env = <jinja2.environment.Environment object at 0x000001C3B2859FD0>
+
+        def test_runtime_error(self, fs_env):
+            def test():
+                tmpl.render(fail=lambda: 1 / 0)
+            tmpl = fs_env.get_template('broken.html')
+>           self.assert_traceback_matches(test, r'''
+      File ".*?broken.html", line 2, in (top-level template code|<module>)
+        \{\{ fail\(\) \}\}
+      File ".*debug?.pyc?", line \d+, in <lambda>
+        tmpl\.render\(fail=lambda: 1 / 0\)
+    ZeroDivisionError: (int(eger)? )?division (or modulo )?by zero
+    ''')
+
+tests\test_debug.py:45: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+self = <test_debug.TestDebug object at 0x000001C3B24C4650>
+callback = <function TestDebug.test_runtime_error.<locals>.test at 0x000001C3B2865800>
+expected_tb = '\n  File ".*?broken.html", line 2, in (top-level template code|<module>)\n    \\{\\{ fail\\(\\) \\}\\}\n  File ".*deb... <lambda>\n    tmpl\\.render\\(fail=lambda: 1 / 0\\)\nZeroDivisionError: (int(eger)? )?division (or modulo )?by zero\n'
+
+    def assert_traceback_matches(self, callback, expected_tb):
+        try:
+            callback()
+        except Exception as e:
+            tb = format_exception(*sys.exc_info())
+            if re.search(expected_tb.strip(), ''.join(tb)) is None:
+>               assert False, ('Traceback did not match:\n\n%s\nexpected:\n%s' %
+                               (''.join(tb), expected_tb))
+E               AssertionError: Traceback did not match:
+E                 
+E                 Traceback (most recent call last):
+E                   File "C:\Users\joshp\AppData\Local\Temp\blast-radius-jinja-causal\a1081-nbwmomq_\b\tests\test_debug.py", line 32, in assert_traceback_matches
+E                     callback()
+E                   File "C:\Users\joshp\AppData\Local\Temp\blast-radius-jinja-causal\a1081-nbwmomq_\b\tests\test_debug.py", line 43, in test
+E                     tmpl.render(fail=lambda: 1 / 0)
+E                   File "C:\Users\joshp\AppData\Local\Temp\blast-radius-jinja-causal\a1081-nbwmomq_\b\jinja2\asyncsupport.py", line 76, in render
+E                     return original_render(self, *args, **kwargs)
+E                            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E                   File "C:\Users\joshp\AppData\Local\Temp\blast-radius-jinja-causal\a1081-nbwmomq_\b\jinja2\environment.py", line 1010, in render
+E                     return self.environment.handle_exception(exc_info, True)
+E                            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E                   File "C:\Users\joshp\AppData\Local\Temp\blast-radius-jinja-causal\a1081-nbwmomq_\b\jinja2\environment.py", line 782, in handle_exception
+E                     reraise(exc_type, exc_value, tb)
+E                   File "C:\Users\joshp\AppData\Local\Temp\blast-radius-jinja-causal\a1081-nbwmomq_\b\jinja2\_compat.py", line 37, in reraise
+E                     raise value.with_traceback(tb)
+E                   File "C:\Users\joshp\AppData\Local\Temp\blast-radius-jinja-causal\a1081-nbwmomq_\b\tests/res/templates\broken.html", line 2, in <module>
+E                     {{ fail() }}
+E                   File "C:\Users\joshp\AppData\Local\Temp\blast-radius-jinja-causal\a1081-nbwmomq_\b\tests\test_debug.py", line 43, in <lambda>
+E                     tmpl.render(fail=lambda: 1 / 0)
+E                                              ~~^~~
+E                 ZeroDivisionError: division by zero
+E                 
+E                 expected:
+E                 
+E                   File ".*?broken.html", line 2, in (top-level template code|<module>)
+E                     \{\{ fail\(\) \}\}
+E                   File ".*debug?.pyc?", line \d+, in <lambda>
+E                     tmpl\.render\(fail=lambda: 1 / 0\)
+E                 ZeroDivisionError: (int(eger)? )?division (or modulo )?by zero
+E                 
+E               assert False
+
+tests\test_debug.py:36: AssertionError
+_____________ TestNativeEnvironment.test_undefined_native_return ______________
+
+self = <test_nativetypes.TestNativeEnvironment object at 0x000001C3B21D6E50>
+env = <jinja2.nativetypes.NativeEnvironment object at 0x000001C3B29D4E10>
+
+    def test_undefined_native_return(self, env):
+        t = env.from_string('{{ missing }}')
+>       assert isinstance(t.render(), Undefined)
+                          ^^^^^^^^^^
+
+tests\test_nativetypes.py:21: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+jinja2\nativetypes.py:216: in render
+    return self.environment.handle_exception(exc_info, True)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+jinja2\environment.py:782: in handle_exception
+    reraise(exc_type, exc_value, tb)
+jinja2\_compat.py:37: in reraise
+    raise value.with_traceback(tb)
+jinja2\nativetypes.py:32: in native_concat
+    return literal_eval(out)
+           ^^^^^^^^^^^^^^^^^
+..\..\..\..\Programs\Python\Python311\Lib\ast.py:110: in literal_eval
+    return _convert(node_or_string)
+           ^^^^^^^^^^^^^^^^^^^^^^^^
+..\..\..\..\Programs\Python\Python311\Lib\ast.py:109: in _convert
+    return _convert_signed_num(node)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^
+..\..\..\..\Programs\Python\Python311\Lib\ast.py:83: in _convert_signed_num
+    return _convert_num(node)
+           ^^^^^^^^^^^^^^^^^^
+..\..\..\..\Programs\Python\Python311\Lib\ast.py:74: in _convert_num
+    _raise_malformed_node(node)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+node = Undefined
+
+    def _raise_malformed_node(node):
+        msg = "malformed node or string"
+>       if lno := getattr(node, 'lineno', None):
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       jinja2.exceptions.UndefinedError: 'missing' is undefined
+
+..\..\..\..\Programs\Python\Python311\Lib\ast.py:69: UndefinedError
+============================== warnings summary ===============================
+tests\conftest.py:19
+  C:\Users\joshp\AppData\Local\Temp\blast-radius-jinja-causal\a1081-nbwmomq_\b\tests\conftest.py:19: PytestRemovedIn9Warning: The (path: py.path.local) argument is deprecated, please use (collection_path: pathlib.Path)
+  see https://docs.pytest.org/en/latest/deprecations.html#py-path-local-arguments-for-hooks-replaced-with-pathlib-path
+    def pytest_ignore_collect(path):
+
+tests/test_core_tags.py::TestSet::test_block_escaping_filtered
+  <template>:20: DeprecationWarning: 'soft_unicode' has been renamed to 'soft_str'. The old name will be removed in MarkupSafe 2.1.
+
+tests/test_core_tags.py::TestSet::test_block_filtered
+tests/test_core_tags.py::TestSet::test_block_filtered
+  <template>:19: DeprecationWarning: 'soft_unicode' has been renamed to 'soft_str'. The old name will be removed in MarkupSafe 2.1.
+
+tests/test_core_tags.py::TestSet::test_block_filtered
+tests/test_core_tags.py::TestSet::test_block_filtered_set
+tests/test_filters.py::TestFilter::test_string
+  C:\Users\joshp\AppData\Local\Temp\blast-radius-jinja-causal\a1081-nbwmomq_\b\jinja2\environment.py:1007: DeprecationWarning: 'soft_unicode' has been renamed to 'soft_str'. The old name will be removed in MarkupSafe 2.1.
+    return concat(self.root_render_func(self.new_context(vars)))
+
+tests/test_core_tags.py::TestSet::test_block_filtered
+tests/test_core_tags.py::TestSet::test_block_filtered_set
+  C:\Users\joshp\AppData\Local\Temp\blast-radius-jinja-causal\a1081-nbwmomq_\b\jinja2\environment.py:1154: DeprecationWarning: 'soft_unicode' has been renamed to 'soft_str'. The old name will be removed in MarkupSafe 2.1.
+    body_stream = list(template.root_render_func(context))
+
+tests/test_core_tags.py::TestSet::test_block_filtered_set
+tests/test_core_tags.py::TestSet::test_block_filtered_set
+  <template>:31: DeprecationWarning: 'soft_unicode' has been renamed to 'soft_str'. The old name will be removed in MarkupSafe 2.1.
+
+tests/test_ext.py::TestInternationalization::test_trans_stringformatting
+tests/test_filters.py::TestFilter::test_trim[None-..stays..]
+tests/test_filters.py::TestFilter::test_trim[.-  ..stays]
+tests/test_filters.py::TestFilter::test_trim[ .-stays]
+  <template>:13: DeprecationWarning: 'soft_unicode' has been renamed to 'soft_str'. The old name will be removed in MarkupSafe 2.1.
+
+tests/test_filters.py: 16 warnings
+tests/test_lexnparse.py: 2 warnings
+  C:\Users\joshp\AppData\Local\Temp\blast-radius-jinja-causal\a1081-nbwmomq_\b\jinja2\nodes.py:664: DeprecationWarning: 'soft_unicode' has been renamed to 'soft_str'. The old name will be removed in MarkupSafe 2.1.
+    return filter_(*args, **kwargs)
+
+tests/test_filters.py: 10 warnings
+  <template>:12: DeprecationWarning: 'soft_unicode' has been renamed to 'soft_str'. The old name will be removed in MarkupSafe 2.1.
+
+tests/test_filters.py::TestFilter::test_block
+tests/test_filters.py::TestFilter::test_filtertag
+  <template>:17: DeprecationWarning: 'soft_unicode' has been renamed to 'soft_str'. The old name will be removed in MarkupSafe 2.1.
+
+tests/test_lexnparse.py::TestLexer::test_balancing
+tests/test_lexnparse.py::TestLexer::test_balancing
+tests/test_lexnparse.py::TestLexer::test_balancing
+  <template>:14: DeprecationWarning: 'soft_unicode' has been renamed to 'soft_str'. The old name will be removed in MarkupSafe 2.1.
+
+tests/test_nativetypes.py::TestNativeEnvironment::test_constant_dunder_to_string
+  C:\Users\joshp\AppData\Local\Temp\blast-radius-jinja-causal\a1081-nbwmomq_\b\jinja2\nativetypes.py:83: DeprecationWarning: 'soft_unicode' has been renamed to 'soft_str'. The old name will be removed in MarkupSafe 2.1.
+    const = child.as_const(frame.eval_ctx)
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+- generated xml file: C:\Users\joshp\Desktop\Blast-Radius\exploratory\causal\verification\jinja-results-arms\pr-1081\base.xml -
+=========================== short test summary info ===========================
+FAILED tests/test_debug.py::TestDebug::test_runtime_error - AssertionError: T...
+FAILED tests/test_nativetypes.py::TestNativeEnvironment::test_undefined_native_return
+============ 2 failed, 676 passed, 3 skipped, 49 warnings in 5.05s ============

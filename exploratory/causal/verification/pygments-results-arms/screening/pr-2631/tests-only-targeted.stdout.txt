@@ -1,0 +1,71 @@
+============================= test session starts =============================
+platform win32 -- Python 3.11.9, pytest-8.4.2, pluggy-1.6.0
+rootdir: C:\Users\joshp\AppData\Local\Temp\blast-radius-pygments-causal-opbff12g\screen-pr-2631-s8bhjbr1\tests-only
+configfile: pyproject.toml
+collected 4 items
+
+tests\snippets\rust\test_func.txt F                                      [ 25%]
+tests\snippets\rust\test_rawstrings.txt F                                [ 50%]
+tests\snippets\rust\test_struct.txt F                                    [ 75%]
+tests\snippets\rust\test_use.txt F                                       [100%]
+
+================================== FAILURES ===================================
+______________________ tests\snippets\rust\test_func.txt ______________________
+The tokens produced by the "rust" lexer differ from the expected ones in the file "tests\snippets\rust\test_func.txt".
+Run `tox -- tests\snippets --update-goldens` to update it.
+
+  
+    'fn'          Keyword
+  - ' '           Text.Whitespace
+  ?                   -----------
+  + ' '           Text
+    'func'        Name.Function
+    '('           Punctuation...
+  
+  ...Full output truncated (21 lines hidden), use '-vv' to show
+___________________ tests\snippets\rust\test_rawstrings.txt ___________________
+The tokens produced by the "rust" lexer differ from the expected ones in the file "tests\snippets\rust\test_rawstrings.txt".
+Run `tox -- tests\snippets --update-goldens` to update it.
+
+  
+    'fn'          Keyword
+  - ' '           Text.Whitespace
+  ?                   -----------
+  + ' '           Text
+    'main'        Name.Function
+    '('           Punctuation...
+  
+  ...Full output truncated (92 lines hidden), use '-vv' to show
+_____________________ tests\snippets\rust\test_struct.txt _____________________
+The tokens produced by the "rust" lexer differ from the expected ones in the file "tests\snippets\rust\test_struct.txt".
+Run `tox -- tests\snippets --update-goldens` to update it.
+
+  
+    'struct'      Keyword
+  - ' '           Text.Whitespace
+  ?                   -----------
+  + ' '           Text
+    'X'           Name.Class
+    ' '           Text.Whitespace...
+  
+  ...Full output truncated (14 lines hidden), use '-vv' to show
+______________________ tests\snippets\rust\test_use.txt _______________________
+The tokens produced by the "rust" lexer differ from the expected ones in the file "tests\snippets\rust\test_use.txt".
+Run `tox -- tests\snippets --update-goldens` to update it.
+
+  
+  Skipping 75 identical leading characters in diff, use -v to show
+  -           Punctuation
+  +           Text
+    'collections' Name
+  - '::'          Punctuation
+  + '::'          Text...
+  
+  ...Full output truncated (3 lines hidden), use '-vv' to show
+- generated xml file: C:\Users\joshp\Desktop\Blast-Radius\exploratory\causal\verification\pygments-results-arms\screening\pr-2631\tests-only-targeted.xml -
+=========================== short test summary info ===========================
+FAILED tests/snippets/rust/test_func.txt::
+FAILED tests/snippets/rust/test_rawstrings.txt::
+FAILED tests/snippets/rust/test_struct.txt::
+FAILED tests/snippets/rust/test_use.txt::
+============================== 4 failed in 0.16s ==============================

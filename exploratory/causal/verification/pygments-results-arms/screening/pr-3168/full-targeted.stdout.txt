@@ -1,0 +1,14 @@
+============================= test session starts =============================
+platform win32 -- Python 3.11.9, pytest-8.4.2, pluggy-1.6.0
+rootdir: C:\Users\joshp\AppData\Local\Temp\blast-radius-pygments-causal-opbff12g\screen-pr-3168-p134s1tk\full
+configfile: pyproject.toml
+collected 5 items
+
+tests\snippets\smithy\test_control_statement.txt .                       [ 20%]
+tests\snippets\smithy\test_enum.txt .                                    [ 40%]
+tests\snippets\smithy\test_inline_operation.txt .                        [ 60%]
+tests\snippets\smithy\test_mixins_and_elision.txt .                      [ 80%]
+tests\snippets\smithy\test_textblock.txt .                               [100%]
+
+- generated xml file: C:\Users\joshp\Desktop\Blast-Radius\exploratory\causal\verification\pygments-results-arms\screening\pr-3168\full-targeted.xml -
+============================== 5 passed in 0.16s ==============================

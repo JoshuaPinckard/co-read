@@ -1,0 +1,101 @@
+============================= test session starts =============================
+platform win32 -- Python 3.11.9, pytest-7.4.4, pluggy-unknown
+benchmark: 4.0.0 (defaults: timer=time.perf_counter disable_gc=False min_rounds=5 min_time=0.000005 max_time=1.0 calibration_precision=10 warmup=False warmup_iterations=100000)
+rootdir: C:\Users\joshp\AppData\Local\Temp\blast-radius-pluggy-causal\a224-i71ejgn6\b
+configfile: tox.ini
+testpaths: testing
+plugins: benchmark-4.0.0
+collected 90 items
+
+testing\test_deprecations.py ....                                        [  4%]
+testing\test_details.py .....                                            [ 10%]
+testing\test_helpers.py .....                                            [ 15%]
+testing\test_hookcaller.py .................                             [ 34%]
+testing\test_invocations.py ........                                     [ 43%]
+testing\test_multicall.py F............                                  [ 57%]
+testing\test_pluginmanager.py .................................          [ 94%]
+testing\test_tracer.py .....                                             [100%]
+
+================================== FAILURES ===================================
+__________________________ test_uses_copy_of_methods __________________________
+
+cls = <class '_pytest.runner.CallInfo'>
+func = <function call_runtest_hook.<locals>.<lambda> at 0x0000029AE9151BC0>
+when = 'call'
+reraise = (<class '_pytest.outcomes.Exit'>, <class 'KeyboardInterrupt'>)
+
+    @classmethod
+    def from_call(
+        cls,
+        func: "Callable[[], TResult]",
+        when: "Literal['collect', 'setup', 'call', 'teardown']",
+        reraise: Optional[
+            Union[Type[BaseException], Tuple[Type[BaseException], ...]]
+        ] = None,
+    ) -> "CallInfo[TResult]":
+        """Call func, wrapping the result in a CallInfo.
+    
+        :param func:
+            The function to call. Called without arguments.
+        :param when:
+            The phase in which the function is called.
+        :param reraise:
+            Exception or exceptions that shall propagate if raised by the
+            function, instead of being wrapped in the CallInfo.
+        """
+        excinfo = None
+        start = timing.time()
+        precise_start = timing.perf_counter()
+        try:
+>           result: Optional[TResult] = func()
+
+C:\Users\joshp\Desktop\Blast-Radius\exploratory\causal\envs\pluggy-historical\Lib\site-packages\_pytest\runner.py:341: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+C:\Users\joshp\Desktop\Blast-Radius\exploratory\causal\envs\pluggy-historical\Lib\site-packages\_pytest\runner.py:262: in <lambda>
+    lambda: ihook(item=item, **kwds), when=when, reraise=reraise
+src\pluggy\hooks.py:289: in __call__
+    return self._hookexec(self, self.get_hookimpls(), kwargs)
+src\pluggy\manager.py:91: in _hookexec
+    return self._inner_hookexec(hook, methods, kwargs)
+src\pluggy\manager.py:82: in <lambda>
+    self._inner_hookexec = lambda hook, methods, kwargs: hook.multicall(
+C:\Users\joshp\Desktop\Blast-Radius\exploratory\causal\envs\pluggy-historical\Lib\site-packages\_pytest\runner.py:177: in pytest_runtest_call
+    raise e
+C:\Users\joshp\Desktop\Blast-Radius\exploratory\causal\envs\pluggy-historical\Lib\site-packages\_pytest\runner.py:169: in pytest_runtest_call
+    item.runtest()
+C:\Users\joshp\Desktop\Blast-Radius\exploratory\causal\envs\pluggy-historical\Lib\site-packages\_pytest\python.py:1792: in runtest
+    self.ihook.pytest_pyfunc_call(pyfuncitem=self)
+src\pluggy\hooks.py:289: in __call__
+    return self._hookexec(self, self.get_hookimpls(), kwargs)
+src\pluggy\manager.py:91: in _hookexec
+    return self._inner_hookexec(hook, methods, kwargs)
+src\pluggy\manager.py:82: in <lambda>
+    self._inner_hookexec = lambda hook, methods, kwargs: hook.multicall(
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+pyfuncitem = <Function test_uses_copy_of_methods>
+
+    @hookimpl(trylast=True)
+    def pytest_pyfunc_call(pyfuncitem: "Function") -> Optional[object]:
+        testfunction = pyfuncitem.obj
+        if is_async_function(testfunction):
+            async_warn_and_skip(pyfuncitem.nodeid)
+        funcargs = pyfuncitem.funcargs
+        testargs = {arg: funcargs[arg] for arg in pyfuncitem._fixtureinfo.argnames}
+        result = testfunction(**testargs)
+        if hasattr(result, "__await__") or hasattr(result, "__aiter__"):
+            async_warn_and_skip(pyfuncitem.nodeid)
+        elif result is not None:
+>           warnings.warn(
+                PytestReturnNotNoneWarning(
+                    f"Expected None, but {pyfuncitem.nodeid} returned {result!r}, which will be an error in a "
+                    "future version of pytest.  Did you mean to use `assert` instead of `return`?"
+                )
+            )
+E           pytest.PytestReturnNotNoneWarning: Expected None, but testing/test_multicall.py::test_uses_copy_of_methods returned False, which will be an error in a future version of pytest.  Did you mean to use `assert` instead of `return`?
+
+C:\Users\joshp\Desktop\Blast-Radius\exploratory\causal\envs\pluggy-historical\Lib\site-packages\_pytest\python.py:198: PytestReturnNotNoneWarning
+- generated xml file: C:\Users\joshp\Desktop\Blast-Radius\exploratory\causal\verification\pluggy-results-arms\pr-224\base.xml -
+=========================== short test summary info ===========================
+FAILED testing/test_multicall.py::test_uses_copy_of_methods - pytest.PytestRe...
+======================== 1 failed, 89 passed in 0.54s =========================

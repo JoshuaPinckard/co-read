@@ -1,0 +1,63 @@
+============================= test session starts =============================
+platform win32 -- Python 3.11.9, pytest-9.1.1, pluggy-1.6.0
+rootdir: C:\Users\joshp\Desktop\Blast-Radius\exploratory\causal\repositories\python-attrs
+configfile: pyproject.toml
+testpaths: tests
+plugins: hypothesis-6.161.6, xdist-3.8.0
+collected 1412 items
+
+tests\test_3rd_party.py .                                                [  0%]
+tests\test_abc.py ....                                                   [  0%]
+tests\test_annotations.py .........................ss................... [  3%]
+....                                                                     [  3%]
+tests\test_cmp.py ...................................................... [  7%]
+........................                                                 [  9%]
+tests\test_compat.py ......                                              [  9%]
+tests\test_config.py ....                                                [ 10%]
+tests\test_converters.py ......................................          [ 12%]
+tests\test_dunders.py .................................................. [ 16%]
+.................................................                        [ 19%]
+tests\test_filters.py .................................                  [ 22%]
+tests\test_funcs.py .................................................... [ 25%]
+.                                                                        [ 25%]
+tests\test_functional.py ............................................... [ 29%]
+........................................................................ [ 34%]
+........................................................................ [ 39%]
+........................................................................ [ 44%]
+........................................................................ [ 49%]
+........................................................................ [ 54%]
+ssss                                                                     [ 55%]
+tests\test_hooks.py ....................                                 [ 56%]
+tests\test_import.py ...                                                 [ 56%]
+tests\test_init_subclass.py ....                                         [ 56%]
+tests\test_make.py ..................................................... [ 60%]
+........................................................................ [ 65%]
+........................................................................ [ 70%]
+........................................................................ [ 75%]
+...........                                                              [ 76%]
+tests\test_next_gen.py ....................................              [ 79%]
+tests\test_packaging.py ......                                           [ 79%]
+tests\test_pattern_matching.py .....                                     [ 80%]
+tests\test_pyright.py sss                                                [ 80%]
+tests\test_setattr.py ............................x..................    [ 83%]
+tests\test_slots.py ..............s..................................... [ 87%]
+..                                                                       [ 87%]
+tests\test_utils.py ..                                                   [ 87%]
+tests\test_validators.py ............................................... [ 90%]
+........................................................................ [ 96%]
+.................................................                        [ 99%]
+tests\test_version_info.py .......                                       [100%]
+
+- generated xml file: C:\Users\joshp\Desktop\Blast-Radius\exploratory\causal\gates\python_attrs__attrs_clean_path\run-2.xml -
+=========================== short test summary info ===========================
+SKIPPED [2] tests\test_annotations.py:437: Python 3.14 changed annotation evaluation behavior.
+SKIPPED [1] tests\test_functional.py:786: requires Python 3.13+
+SKIPPED [1] tests\test_functional.py:795: requires Python 3.13+
+SKIPPED [1] tests\test_functional.py:809: requires Python 3.13+
+SKIPPED [1] tests\test_functional.py:820: requires Python 3.13+
+SKIPPED [1] tests\test_pyright.py:35: Requires pyright.
+SKIPPED [1] tests\test_pyright.py:89: Requires pyright.
+SKIPPED [1] tests\test_pyright.py:117: Requires pyright.
+SKIPPED [1] tests\test_slots.py:517: slots without weakref_slot should only work on PyPy
+XFAIL tests/test_setattr.py::TestSetAttr::test_slotted_confused
+================ 1401 passed, 10 skipped, 1 xfailed in 23.90s =================

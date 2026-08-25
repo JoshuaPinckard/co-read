@@ -1,0 +1,114 @@
+============================= test session starts =============================
+platform win32 -- Python 3.11.9, pytest-9.1.1, pluggy-1.6.0
+rootdir: C:\Users\joshp\Desktop\Blast-Radius\exploratory\causal\repositories\marshmallow-3.26.2
+configfile: pyproject.toml
+collected 1240 items
+
+tests\test_decorators.py ......................................          [  3%]
+tests\test_deserialization.py .......................................... [  6%]
+........................................................................ [ 12%]
+........................................................................ [ 18%]
+........................................................................ [ 23%]
+........................................................................ [ 29%]
+....................................                                     [ 32%]
+tests\test_error_store.py ...............................                [ 35%]
+tests\test_exceptions.py .......                                         [ 35%]
+tests\test_fields.py ................................................... [ 39%]
+........................................................................ [ 45%]
+.......................................                                  [ 48%]
+tests\test_options.py ..................                                 [ 50%]
+tests\test_registry.py ..........                                        [ 50%]
+tests\test_schema.py ................................................... [ 55%]
+........................................................................ [ 60%]
+........................................................................ [ 66%]
+...................................................                      [ 70%]
+tests\test_serialization.py ............................................ [ 74%]
+........................................................................ [ 80%]
+...................                                                      [ 81%]
+tests\test_utils.py .................................F..                 [ 84%]
+tests\test_validate.py ................................................. [ 88%]
+........................................................................ [ 94%]
+.....................................................................    [ 99%]
+tests\test_version_attributes.py F                                       [100%]
+
+================================== FAILURES ===================================
+___________________ test_from_timestamp_with_overflow_value ___________________
+
+    def test_from_timestamp_with_overflow_value():
+        value = 9223372036854775
+>       with pytest.raises(ValueError, match="out of range"):
+E       AssertionError: Regex pattern did not match.
+E         Expected regex: 'out of range'
+E         Actual message: 'Error converting value to datetime'
+
+tests\test_utils.py:253: AssertionError
+_____________________ test_version_attributes_deprecated ______________________
+
+cls = <class 'importlib.metadata.Distribution'>, name = 'marshmallow'
+
+    @classmethod
+    def from_name(cls, name: str):
+        """Return the Distribution for the given package name.
+    
+        :param name: The name of the distribution package to search for.
+        :return: The Distribution instance (or subclass thereof) for the named
+            package, if found.
+        :raises PackageNotFoundError: When the named package's distribution
+            metadata cannot be found.
+        :raises ValueError: When an invalid value is supplied for name.
+        """
+        if not name:
+            raise ValueError("A distribution name is required.")
+        try:
+>           return next(cls.discover(name=name))
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E           StopIteration
+
+C:\Users\joshp\AppData\Local\Programs\Python\Python311\Lib\importlib\metadata\__init__.py:563: StopIteration
+
+During handling of the above exception, another exception occurred:
+
+    def test_version_attributes_deprecated():
+        with pytest.warns(DeprecationWarning):
+>           marshmallow.__version__
+
+tests\test_version_attributes.py:9: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+src\marshmallow\__init__.py:34: in __getattr__
+    return importlib.metadata.version("marshmallow")
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+C:\Users\joshp\AppData\Local\Programs\Python\Python311\Lib\importlib\metadata\__init__.py:1009: in version
+    return distribution(distribution_name).version
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+C:\Users\joshp\AppData\Local\Programs\Python\Python311\Lib\importlib\metadata\__init__.py:982: in distribution
+    return Distribution.from_name(distribution_name)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+cls = <class 'importlib.metadata.Distribution'>, name = 'marshmallow'
+
+    @classmethod
+    def from_name(cls, name: str):
+        """Return the Distribution for the given package name.
+    
+        :param name: The name of the distribution package to search for.
+        :return: The Distribution instance (or subclass thereof) for the named
+            package, if found.
+        :raises PackageNotFoundError: When the named package's distribution
+            metadata cannot be found.
+        :raises ValueError: When an invalid value is supplied for name.
+        """
+        if not name:
+            raise ValueError("A distribution name is required.")
+        try:
+            return next(cls.discover(name=name))
+        except StopIteration:
+>           raise PackageNotFoundError(name)
+E           importlib.metadata.PackageNotFoundError: No package metadata was found for marshmallow
+
+C:\Users\joshp\AppData\Local\Programs\Python\Python311\Lib\importlib\metadata\__init__.py:565: PackageNotFoundError
+- generated xml file: C:\Users\joshp\Desktop\Blast-Radius\exploratory\causal\gates\marshmallow_code__marshmallow_3_26_2\run-4.xml -
+=========================== short test summary info ===========================
+FAILED tests/test_utils.py::test_from_timestamp_with_overflow_value - Asserti...
+FAILED tests/test_version_attributes.py::test_version_attributes_deprecated
+======================= 2 failed, 1238 passed in 3.56s ========================

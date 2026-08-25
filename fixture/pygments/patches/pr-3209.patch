@@ -1,0 +1,48 @@
+diff --git a/pygments/lexers/data.py b/pygments/lexers/data.py
+index 131203c6b9fb273ebf1287a8b924b9e31760346a..7ed50c44c39374c5d4c099b1bbf85efe2f3ea1e4 100644
+--- a/pygments/lexers/data.py
++++ b/pygments/lexers/data.py
+@@ -350,7 +350,7 @@ class YamlLexer(ExtendedRegexLexer):
+             # line breaks are ignored
+             (r'\n+', Whitespace),
+             # other whitespaces are a part of the value
+-            (r'[ ]+', Name.Variable),
++            (r'[ \xa0]+', Name.Variable),
+         ],
+ 
+         # single-quoted scalars
+@@ -403,7 +403,7 @@ class YamlLexer(ExtendedRegexLexer):
+             # line breaks are ignored
+             (r'\n+', Whitespace, 'plain-scalar-in-block-context-new-line'),
+             # other whitespaces are a part of the value
+-            (r'[ ]+', Literal.Scalar.Plain),
++            (r'[ \xa0]+', Literal.Scalar.Plain),
+             # regular non-whitespace characters
+             (r'(?::(?!\s)|[^\s:])+', Literal.Scalar.Plain),
+         ],
+@@ -420,7 +420,7 @@ class YamlLexer(ExtendedRegexLexer):
+             # line breaks are ignored
+             (r'\n+', Whitespace),
+             # other whitespaces are a part of the value
+-            (r'[ ]+', Name.Variable),
++            (r'[ \xa0]+', Name.Variable),
+             # regular non-whitespace characters
+             (r'[^\s,:?\[\]{}]+', Name.Variable),
+         ],
+diff --git a/tests/snippets/yaml/2827.txt b/tests/snippets/yaml/2827.txt
+new file mode 100644
+index 0000000000000000000000000000000000000000..f177ee4b143369ae8ebcb4265d25841a0c5a9e33
+--- /dev/null
++++ b/tests/snippets/yaml/2827.txt
+@@ -0,0 +1,11 @@
++---input---
++foo: bar baz
++
++---tokens---
++'foo'         Name.Tag
++':'           Punctuation
++' '           Text.Whitespace
++'bar'         Literal.Scalar.Plain
++'\xa0'        Literal.Scalar.Plain
++'baz'         Literal.Scalar.Plain
++'\n'          Text.Whitespace

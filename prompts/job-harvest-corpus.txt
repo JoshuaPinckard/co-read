@@ -1,0 +1,60 @@
+Mine a corpus of REAL multi-agent integration conflicts. Every published agent-coordination system is evaluated on synthetic contention. This corpus is production: concurrent agents worked a shared checkout and their collisions were adjudicated by hand, with stated evidence and named winners.
+
+## STRICT READ-ONLY BOUNDARY — read this first
+
+The source tree `C:/Users/joshp/Desktop/toolsenabled/engine` is a LIVE working checkout with other agents actively editing it right now.
+
+- **READ ONLY.** Never write, edit, stage, commit, checkout, stash, reset, or run any mutating git command there.
+- Do not run its tests, builds, installers or scripts.
+- **Copy** what you need into `C:/Users/joshp/Desktop/Blast-Radius/corpus/harvest-reports/` and work from the copy. Record the source path and a SHA-256 for every file copied.
+- If a file changes mid-read, note it and use the copy you took. Do not re-read to "get the latest".
+
+All output goes under `C:/Users/joshp/Desktop/Blast-Radius/`.
+
+## The corpus
+
+35 `REPORT-*.md` files at the engine root plus `logs/`. Start from `REPORT-MG1-conflict.md` (a dedicated collision-adjudication report), `REPORT-H3-harvest-cloud.md` (the cloud harvest record), `REPORT-H1-verify-closed.md`, `REPORT-H2-verify-claims.md`, `REPORT-HV1-apply-engine.md`, `REPORT-W10-engine-commit-prep.md`. Also read `src/lib/cloud-agent/cloud-mirror.js` and `src/lib/single-source.js` and `tools/agent-contract.js` for the mechanism these reports describe.
+
+## What to extract
+
+Build a structured record, one row per **collision** — two or more tasks targeting the same file, symbol, or hunk:
+
+- Colliding task identities (or explicitly `unknown`).
+- The contested path and symbol.
+- Who won, and the stated reason.
+- **Resolution basis** — classify: staleness of one patch, presence/absence of a test, a safety boundary, a measured RED result, compatibility (both kept), or unresolved.
+- **Was ownership attributable at all?** This is the headline variable. Count paths where the adjudicator wrote `unknown` because no agent had filed a report naming itself.
+- **Was any change observed to appear and then disappear** — staged then reverted to committed content — and could the adjudicator distinguish a deliberate revert from another writer's overwrite?
+- Whether the losing work was destroyed or preserved.
+
+## The three questions this is for
+
+1. **Attributability rate.** Of all contested paths, what fraction had a known owning task? Ownership here is reconstructed from self-filed reports — testimony, not instrumentation. Quantify how often testimony was absent.
+2. **Unattributable reversals.** How many times did work vanish with no way to tell revert from clobber? Even one is meaningful; report the exact count and quote each in full.
+3. **Isolation staleness vs harvest quality.** `cloud-mirror.js` records that a branch 5 commits behind harvested clean while one 467 behind produced empty applies, fixes already present, and citations to unrelated code. Find every other instance where harvest quality is tied to base staleness. Extract any numbers: commits behind, applied vs skipped hunk counts, RED/GREEN outcomes. **Is there enough to plot harvest quality against staleness, even crudely?** If there are only two points, say exactly that — two points is not a curve.
+
+## Discipline
+
+- **Quote, do not paraphrase.** Every count must be traceable to quoted text with a file and line.
+- These reports are **agent-written testimony about agents' own work.** They are not instrumentation and may be self-serving, incomplete, or wrong. State this as a limitation of every claim derived from them. Where a report's claim about the code is checkable against the code, check it and report agreement or disagreement.
+- Some reports reference files that no longer exist or were renamed. Record the dangling reference rather than resolving it silently.
+- Do not infer a collision that no report asserts. Absence of a report is not absence of a collision — say so.
+
+## Output
+
+`C:/Users/joshp/Desktop/Blast-Radius/exploratory/harvest/CORPUS.md`:
+
+1. **The attributability rate**, first line, with numerator and denominator.
+2. The collision table: every collision with task ids, path, winner, basis, attributable yes/no.
+3. Unattributable reversals, quoted in full.
+4. The staleness-versus-quality evidence, with every number found and an explicit statement of how many data points exist.
+5. Resolution-basis distribution — what actually decided these, since that tells a designer what an automated resolver would need to know.
+6. **Where the reports contradict each other or contradict the code.**
+7. **"Claims that could NOT be verified"** and **"What would change this verdict."**
+8. Per-claim confidence with its reason, not a document-level label.
+
+Also emit `exploratory/harvest/collisions.json` with the structured rows.
+
+State plainly: one team, one codebase, one harness, agent-authored sources. This bounds a design decision; it does not measure multi-agent software engineering in general.
+
+Do not fabricate. A collision you cannot attribute is a finding, not a gap to fill.

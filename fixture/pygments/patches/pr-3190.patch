@@ -1,0 +1,45 @@
+diff --git a/pygments/regexopt.py b/pygments/regexopt.py
+index 9010eb3fb517ff4134b4f52581179fa80b0f7540..48ddc387f59a4312d17eda7efea429e4a8e0ff21 100644
+--- a/pygments/regexopt.py
++++ b/pygments/regexopt.py
+@@ -98,5 +98,5 @@ def regex_opt(strings, prefix='', suffix=''):
+ 
+     *prefix* and *suffix* are pre- and appended to the final regex.
+     """
+-    strings = sorted(strings)
++    strings = sorted(set(strings))
+     return prefix + regex_opt_inner(strings, '(') + suffix
+diff --git a/tests/test_regexopt.py b/tests/test_regexopt.py
+index 31ed3b948ecc04832b1e990aea75fd4f011e9181..f2d566541c37ac8b7ab35b239bdea4aeea565b56 100644
+--- a/tests/test_regexopt.py
++++ b/tests/test_regexopt.py
+@@ -100,3 +100,29 @@ def test_same_length_suffix_grouping():
+     assert rex.groups == 2
+     groups = rex.match('am').groups()
+     assert groups == ('a', 'm')
++
++
++def test_duplicates():
++    # duplicate words must not produce a redundant character class like [ss]
++    opt = regex_opt(('as', 'abstract', 'and', 'as', 'break'))
++    print(opt)
++    assert '[ss]' not in opt
++    rex = re.compile(opt)
++    assert rex.match('as')
++    assert rex.match('abstract')
++    assert rex.match('and')
++    assert rex.match('break')
++    assert not rex.match('x')
++    assert rex.groups == 1
++
++
++def test_duplicate_single_chars():
++    # duplicate one-character words must be collapsed in the character class
++    opt = regex_opt(('a', 'a', 'b'))
++    print(opt)
++    assert opt.count('a') == 1
++    rex = re.compile(opt)
++    assert rex.match('a')
++    assert rex.match('b')
++    assert not rex.match('c')
++    assert rex.groups == 1

@@ -1,0 +1,57 @@
+{
+  "census_counts": {
+    "both_sides_touched_clean_units": 475,
+    "both_sides_touched_textually_conflicted_units": 209,
+    "both_sides_touched_units": 684,
+    "both_sides_touched_unknown_units": 0,
+    "clean": 398,
+    "clean_developer_intervention_proxy": 1,
+    "clean_mechanical_matches_recorded": 397,
+    "conflicted": 121,
+    "divergent_two_parent": 519,
+    "fast_forwardable_two_parent_skipped": 664,
+    "octopus_merge_commits": 0,
+    "total_merge_commits": 1183,
+    "two_parent_merge_commits": 1183
+  },
+  "developer_intervention": {
+    "denominator": 398,
+    "interpretation": "tree inequality is evidence of intervention but can also reflect historical Git strategy/config differences",
+    "numerator": 1
+  },
+  "exclusions": [],
+  "generated_at_utc": "2026-08-25T00:21:26.225+00:00",
+  "measurement": "silent-semantic-breakage-summary",
+  "rates": {
+    "file_granularity_over_block": {
+      "denominator": 684,
+      "numerator": 475,
+      "rate": 0.6944444444444444
+    },
+    "silent_semantic_breakage": {
+      "denominator": 44,
+      "numerator": 0,
+      "rate": 0.0
+    }
+  },
+  "replay": {
+    "clean_merges_beyond_cap_not_evaluated": 354,
+    "clean_qualifying_merges": 398,
+    "evaluated_denominator": 44,
+    "exclusion_count": 0,
+    "exclusion_rate": 0.0,
+    "flaky_count": 0,
+    "frozen_cap": 44,
+    "green_green_parents": 44,
+    "merged_infrastructure_exclusion_count": 0,
+    "outcomes": {
+      "evaluated_green": 44
+    },
+    "parent_exclusion_count": 0,
+    "records_completed": 44,
+    "total_wall_seconds": 3330.952738800086
+  },
+  "repository": "pallets/click",
+  "schema_version": 1,
+  "silent_breakages": []
+}

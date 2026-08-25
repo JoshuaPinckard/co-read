@@ -1,0 +1,32 @@
+diff --git a/tests/snippets/matlab/test_function_definition_line_continuation.txt b/tests/snippets/matlab/test_function_definition_line_continuation.txt
+new file mode 100644
+index 0000000000000000000000000000000000000000..a3f17f37678715aee5d46e8ee6feec6e16459857
+--- /dev/null
++++ b/tests/snippets/matlab/test_function_definition_line_continuation.txt
+@@ -0,0 +1,26 @@
++---input---
++function [o1, ...
++    o2] = my_fun(a1, ...
++    a2)
++end
++
++---tokens---
++'function'    Keyword
++' '           Text.Whitespace
++'['           Punctuation
++'o1, ...\n    o2' Text
++']'           Punctuation
++' '           Text.Whitespace
++'='           Punctuation
++' '           Text.Whitespace
++'my_fun'      Name.Function
++'('           Punctuation
++'a1, '        Text
++'...\n'       Comment
++
++'    a2'      Text
++')'           Punctuation
++'\n'          Text.Whitespace
++
++'end'         Keyword
++'\n'          Text.Whitespace

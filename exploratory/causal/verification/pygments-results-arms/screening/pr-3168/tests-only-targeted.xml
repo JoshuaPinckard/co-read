@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?><testsuites name="pytest tests"><testsuite name="pytest" errors="0" failures="5" skipped="0" tests="5" time="0.148" timestamp="2026-08-24T08:25:21.464172-07:00" hostname="JoshP"><testcase classname="tests.snippets.smithy.test_control_statement.txt" name="" time="0.004"><failure message="The tokens produced by the &quot;smithy&quot; lexer differ from the expected ones in the file &quot;tests\snippets\smithy\test_control_statement.txt&quot;.&#10;Run `tox -- tests\snippets --update-goldens` to update it.&#10;&#10;  &#10;  Skipping 131 identical leading characters in diff, use -v to show&#10;  - nputSuffix' Keyword.Declaration&#10;  - ':'           Name.Decorator&#10;  - ' &quot;Request&quot;'  Name.Class&#10;  + nputSuffix:' Name.Label&#10;  + ' '           Text.Whitespace&#10;  + '&quot;Request&quot;'   Literal.String.Double&#10;    '\n'          Text.Whitespace">The tokens produced by the "smithy" lexer differ from the expected ones in the file "tests\snippets\smithy\test_control_statement.txt".
+Run `tox -- tests\snippets --update-goldens` to update it.
+
+  
+  Skipping 131 identical leading characters in diff, use -v to show
+  - nputSuffix' Keyword.Declaration
+  - ':'           Name.Decorator
+  - ' "Request"'  Name.Class
+  + nputSuffix:' Name.Label
+  + ' '           Text.Whitespace
+  + '"Request"'   Literal.String.Double
+    '\n'          Text.Whitespace</failure></testcase><testcase classname="tests.snippets.smithy.test_enum.txt" name="" time="0.001"><failure message="The tokens produced by the &quot;smithy&quot; lexer differ from the expected ones in the file &quot;tests\snippets\smithy\test_enum.txt&quot;.&#10;Run `tox -- tests\snippets --update-goldens` to update it.&#10;&#10;  &#10;  - 'enum'        Keyword.Declaration&#10;  + 'enum'        Name.Variable.Class&#10;  + ' '           Text.Whitespace&#10;  - ' Suit'       Name.Class&#10;  ?  -&#10;  + 'Suit'        Name.Variable.Class...&#10;  &#10;  ...Full output truncated (37 lines hidden), use '-vv' to show">The tokens produced by the "smithy" lexer differ from the expected ones in the file "tests\snippets\smithy\test_enum.txt".
+Run `tox -- tests\snippets --update-goldens` to update it.
+
+  
+  - 'enum'        Keyword.Declaration
+  + 'enum'        Name.Variable.Class
+  + ' '           Text.Whitespace
+  - ' Suit'       Name.Class
+  ?  -
+  + 'Suit'        Name.Variable.Class...
+  
+  ...Full output truncated (37 lines hidden), use '-vv' to show</failure></testcase><testcase classname="tests.snippets.smithy.test_inline_operation.txt" name="" time="0.001"><failure message="The tokens produced by the &quot;smithy&quot; lexer differ from the expected ones in the file &quot;tests\snippets\smithy\test_inline_operation.txt&quot;.&#10;Run `tox -- tests\snippets --update-goldens` to update it.&#10;&#10;  &#10;  Skipping 194 identical leading characters in diff, use -v to show&#10;    tespace&#10;  + ':'           Punctuation&#10;  - ':='          Name.Decorator&#10;  ?  -&#10;  + '='           Name.Decorator...&#10;  &#10;  ...Full output truncated (13 lines hidden), use '-vv' to show">The tokens produced by the "smithy" lexer differ from the expected ones in the file "tests\snippets\smithy\test_inline_operation.txt".
+Run `tox -- tests\snippets --update-goldens` to update it.
+
+  
+  Skipping 194 identical leading characters in diff, use -v to show
+    tespace
+  + ':'           Punctuation
+  - ':='          Name.Decorator
+  ?  -
+  + '='           Name.Decorator...
+  
+  ...Full output truncated (13 lines hidden), use '-vv' to show</failure></testcase><testcase classname="tests.snippets.smithy.test_mixins_and_elision.txt" name="" time="0.001"><failure message="The tokens produced by the &quot;smithy&quot; lexer differ from the expected ones in the file &quot;tests\snippets\smithy\test_mixins_and_elision.txt&quot;.&#10;Run `tox -- tests\snippets --update-goldens` to update it.&#10;&#10;  &#10;  Skipping 94 identical leading characters in diff, use -v to show&#10;  - '         Keyword.Declaration&#10;  + '         Name.Variable.Class&#10;    ' '           Text.Whitespace&#10;    'User'        Name.Variable.Class&#10;    ' '           Text.Whitespace...&#10;  &#10;  ...Full output truncated (22 lines hidden), use '-vv' to show">The tokens produced by the "smithy" lexer differ from the expected ones in the file "tests\snippets\smithy\test_mixins_and_elision.txt".
+Run `tox -- tests\snippets --update-goldens` to update it.
+
+  
+  Skipping 94 identical leading characters in diff, use -v to show
+  - '         Keyword.Declaration
+  + '         Name.Variable.Class
+    ' '           Text.Whitespace
+    'User'        Name.Variable.Class
+    ' '           Text.Whitespace...
+  
+  ...Full output truncated (22 lines hidden), use '-vv' to show</failure></testcase><testcase classname="tests.snippets.smithy.test_textblock.txt" name="" time="0.001"><failure message="The tokens produced by the &quot;smithy&quot; lexer differ from the expected ones in the file &quot;tests\snippets\smithy\test_textblock.txt&quot;.&#10;Run `tox -- tests\snippets --update-goldens` to update it.&#10;&#10;  &#10;  Skipping 44 identical leading characters in diff, use -v to show&#10;      Text&#10;  - '&quot;&quot;&quot;\n    A text block with &quot;interior&quot; quotes and a {&quot;json&quot;: &quot;value&quot;}.\n    &quot;&quot;&quot;' Literal.String.Doc&#10;  + '&quot;&quot;'          Literal.String.Double&#10;  + '&quot;\n    A text block with &quot;' Literal.String.Double&#10;  + 'interior'    Name.Variable.Class...&#10;  &#10;  ...Full output truncated (12 lines hidden), use '-vv' to show">The tokens produced by the "smithy" lexer differ from the expected ones in the file "tests\snippets\smithy\test_textblock.txt".
+Run `tox -- tests\snippets --update-goldens` to update it.
+
+  
+  Skipping 44 identical leading characters in diff, use -v to show
+      Text
+  - '"""\n    A text block with "interior" quotes and a {"json": "value"}.\n    """' Literal.String.Doc
+  + '""'          Literal.String.Double
+  + '"\n    A text block with "' Literal.String.Double
+  + 'interior'    Name.Variable.Class...
+  
+  ...Full output truncated (12 lines hidden), use '-vv' to show</failure></testcase></testsuite></testsuites>

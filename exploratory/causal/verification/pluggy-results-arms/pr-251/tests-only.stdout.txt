@@ -1,0 +1,78 @@
+============================= test session starts =============================
+platform win32 -- Python 3.11.9, pytest-7.4.4, pluggy-unknown
+benchmark: 4.0.0 (defaults: timer=time.perf_counter disable_gc=False min_rounds=5 min_time=0.000005 max_time=1.0 calibration_precision=10 warmup=False warmup_iterations=100000)
+rootdir: C:\Users\joshp\AppData\Local\Temp\blast-radius-pluggy-causal\a251-c0rxsago\t
+configfile: tox.ini
+testpaths: testing
+plugins: benchmark-4.0.0
+collected 90 items
+
+testing\test_deprecations.py ....                                        [  4%]
+testing\test_details.py .....                                            [ 10%]
+testing\test_helpers.py .....                                            [ 15%]
+testing\test_hookcaller.py .................FF                           [ 36%]
+testing\test_invocations.py ........                                     [ 45%]
+testing\test_multicall.py ............                                   [ 58%]
+testing\test_pluginmanager.py .................................          [ 95%]
+testing\test_tracer.py ....                                              [100%]
+
+================================== FAILURES ===================================
+___________________ test_hookrelay_registration_by_specname ___________________
+
+pm = <pluggy.manager.PluginManager object at 0x000002032D1725D0>
+
+    def test_hookrelay_registration_by_specname(pm):
+        """Verify hook caller instances may also be registered by specifying a
+        specname option to the hookimpl"""
+    
+        class Api(object):
+            @hookspec
+            def hello(self, arg):
+                "api hook 1"
+    
+        pm.add_hookspecs(Api)
+        hook = pm.hook
+        assert hasattr(hook, "hello")
+        assert len(pm.hook.hello.get_hookimpls()) == 0
+    
+>       class Plugin(object):
+
+testing\test_hookcaller.py:232: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+    class Plugin(object):
+>       @hookimpl(specname="hello")
+E       TypeError: HookimplMarker.__call__() got an unexpected keyword argument 'specname'
+
+testing\test_hookcaller.py:233: TypeError
+_______________ test_hookrelay_registration_by_specname_raises ________________
+
+pm = <pluggy.manager.PluginManager object at 0x000002032D11FF50>
+
+    def test_hookrelay_registration_by_specname_raises(pm):
+        """Verify using specname still raises the types of errors during registration as it
+        would have without using specname."""
+    
+        class Api(object):
+            @hookspec
+            def hello(self, arg):
+                "api hook 1"
+    
+        pm.add_hookspecs(Api)
+    
+        # make sure a bad signature still raises an error when using specname
+>       class Plugin(object):
+
+testing\test_hookcaller.py:255: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+    class Plugin(object):
+>       @hookimpl(specname="hello")
+E       TypeError: HookimplMarker.__call__() got an unexpected keyword argument 'specname'
+
+testing\test_hookcaller.py:256: TypeError
+- generated xml file: C:\Users\joshp\Desktop\Blast-Radius\exploratory\causal\verification\pluggy-results-arms\pr-251\tests-only.xml -
+=========================== short test summary info ===========================
+FAILED testing/test_hookcaller.py::test_hookrelay_registration_by_specname - ...
+FAILED testing/test_hookcaller.py::test_hookrelay_registration_by_specname_raises
+======================== 2 failed, 88 passed in 0.31s =========================

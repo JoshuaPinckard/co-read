@@ -1,0 +1,589 @@
+============================= test session starts =============================
+platform win32 -- Python 3.11.9, pytest-7.4.4, pluggy-unknown
+benchmark: 4.0.0 (defaults: timer=time.perf_counter disable_gc=False min_rounds=5 min_time=0.000005 max_time=1.0 calibration_precision=10 warmup=False warmup_iterations=100000)
+rootdir: C:\Users\joshp\AppData\Local\Temp\blast-radius-pluggy-causal\a389-357e7tlg\t
+configfile: tox.ini
+testpaths: testing
+plugins: benchmark-4.0.0
+collected 100 items
+
+testing\test_details.py F....                                            [  5%]
+testing\test_helpers.py ......                                           [ 11%]
+testing\test_hookcaller.py .....FFF............                          [ 31%]
+testing\test_invocations.py ...F..F...                                   [ 41%]
+testing\test_multicall.py ......FFF...FF...FFFFF                         [ 63%]
+testing\test_pluginmanager.py .....................F...........          [ 96%]
+testing\test_tracer.py ....                                              [100%]
+
+================================== FAILURES ===================================
+________________________ test_parse_hookimpl_override _________________________
+
+    def test_parse_hookimpl_override() -> None:
+        class MyPluginManager(PluginManager):
+            def parse_hookimpl_opts(self, module_or_class, name):
+                opts = PluginManager.parse_hookimpl_opts(self, module_or_class, name)
+                if opts is None:
+                    if name.startswith("x1"):
+                        opts = {}  # type: ignore[assignment]
+                return opts
+    
+        class Plugin:
+            def x1meth(self):
+                pass
+    
+            @hookimpl(hookwrapper=True, tryfirst=True)
+            def x1meth2(self):
+                yield  # pragma: no cover
+    
+            @hookimpl(trylast=True)
+            def x1meth3(self):
+                return (yield)  # pragma: no cover
+    
+        class Spec:
+            @hookspec
+            def x1meth(self):
+                pass
+    
+            @hookspec
+            def x1meth2(self):
+                pass
+    
+            @hookspec
+            def x1meth3(self):
+                pass
+    
+        pm = MyPluginManager(hookspec.project_name)
+        pm.register(Plugin())
+        pm.add_hookspecs(Spec)
+    
+        hookimpls = pm.hook.x1meth.get_hookimpls()
+        assert len(hookimpls) == 1
+        assert not hookimpls[0].hookwrapper
+>       assert not hookimpls[0].isgeneratorfunction
+E       AttributeError: 'HookImpl' object has no attribute 'isgeneratorfunction'
+
+testing\test_details.py:52: AttributeError
+________________________ test_adding_wrappers_ordering ________________________
+
+hc = <_HookCaller 'he_method1'>
+addmeth = <test_hookcaller.AddMeth object at 0x000002A8E364E750>
+
+    def test_adding_wrappers_ordering(hc: _HookCaller, addmeth: AddMeth) -> None:
+        @addmeth(hookwrapper=True)
+        def he_method1():
+            yield
+    
+        @addmeth()
+        def he_method1_fun():
+            yield
+    
+        @addmeth()
+        def he_method1_middle():
+            return
+    
+        @addmeth(hookwrapper=True)
+        def he_method3_fun():
+            yield
+    
+        @addmeth(hookwrapper=True)
+        def he_method3():
+            yield
+    
+>       assert funcs(hc.get_hookimpls()) == [
+            he_method1_middle,
+            he_method1,
+            he_method1_fun,
+            he_method3_fun,
+            he_method3,
+        ]
+E       assert [<function te...02A8E2BC1E40>] == [<function te...02A8E2BC1E40>]
+E         At index 0 diff: <function test_adding_wrappers_ordering.<locals>.he_method1_fun at 0x000002A8E2BC1C60> != <function test_adding_wrappers_ordering.<locals>.he_method1_middle at 0x000002A8E2BC1D00>
+E         Use -v to get more diff
+
+testing\test_hookcaller.py:169: AssertionError
+___________________ test_adding_wrappers_ordering_tryfirst ____________________
+
+hc = <_HookCaller 'he_method1'>
+addmeth = <test_hookcaller.AddMeth object at 0x000002A8E36BB890>
+
+    def test_adding_wrappers_ordering_tryfirst(hc: _HookCaller, addmeth: AddMeth) -> None:
+        @addmeth(hookwrapper=True, tryfirst=True)
+        def he_method1():
+            yield
+    
+        @addmeth(hookwrapper=True)
+        def he_method2():
+            yield
+    
+        @addmeth(tryfirst=True)
+        def he_method3():
+            yield
+    
+>       assert funcs(hc.get_hookimpls()) == [he_method2, he_method1, he_method3]
+E       assert [<function te...02A8E2C7AE80>] == [<function te...02A8E2C7BE20>]
+E         At index 0 diff: <function test_adding_wrappers_ordering_tryfirst.<locals>.he_method3 at 0x000002A8E2C7BE20> != <function test_adding_wrappers_ordering_tryfirst.<locals>.he_method2 at 0x000002A8E2C7B920>
+E         Use -v to get more diff
+
+testing\test_hookcaller.py:191: AssertionError
+________________________ test_adding_wrappers_complex _________________________
+
+hc = <_HookCaller 'he_method1'>
+addmeth = <test_hookcaller.AddMeth object at 0x000002A8E36EA710>
+
+    def test_adding_wrappers_complex(hc: _HookCaller, addmeth: AddMeth) -> None:
+        assert funcs(hc.get_hookimpls()) == []
+    
+        @addmeth(hookwrapper=True, trylast=True)
+        def m1():
+            yield
+    
+        assert funcs(hc.get_hookimpls()) == [m1]
+    
+        @addmeth()
+        def m2() -> None:
+            ...
+    
+        assert funcs(hc.get_hookimpls()) == [m2, m1]
+    
+        @addmeth(trylast=True)
+        def m3() -> None:
+            ...
+    
+        assert funcs(hc.get_hookimpls()) == [m3, m2, m1]
+    
+        @addmeth(hookwrapper=True)
+        def m4() -> None:
+            ...
+    
+        assert funcs(hc.get_hookimpls()) == [m3, m2, m1, m4]
+    
+        @addmeth(tryfirst=True)
+        def m5():
+            yield
+    
+>       assert funcs(hc.get_hookimpls()) == [m3, m2, m1, m4, m5]
+E       assert [<function te...02A8E2BC1800>] == [<function te...02A8E2BC2160>]
+E         At index 2 diff: <function test_adding_wrappers_complex.<locals>.m5 at 0x000002A8E2BC2160> != <function test_adding_wrappers_complex.<locals>.m1 at 0x000002A8E2C7B380>
+E         Use -v to get more diff
+
+testing\test_hookcaller.py:225: AssertionError
+_______________________________ test_call_order _______________________________
+
+pm = <pluggy._manager.PluginManager object at 0x000002A8E2BFD540>
+
+    def test_call_order(pm: PluginManager) -> None:
+        class Api:
+            @hookspec
+            def hello(self, arg):
+                "api hook 1"
+    
+        pm.add_hookspecs(Api)
+    
+        class Plugin1:
+            @hookimpl
+            def hello(self, arg):
+                return 1
+    
+        class Plugin2:
+            @hookimpl
+            def hello(self, arg):
+                return 2
+    
+        class Plugin3:
+            @hookimpl
+            def hello(self, arg):
+                return 3
+    
+        class Plugin4:
+            @hookimpl(hookwrapper=True)
+            def hello(self, arg):
+                assert arg == 0
+                outcome = yield
+                assert outcome.get_result() == [3, 2, 1]
+                assert outcome.exception is None
+                assert outcome.excinfo is None
+    
+        class Plugin5:
+            @hookimpl
+            def hello(self, arg):
+                assert arg == 0
+                outcome = yield
+                assert outcome == [3, 2, 1]
+                return outcome
+    
+        pm.register(Plugin1())
+        pm.register(Plugin2())
+        pm.register(Plugin3())
+        pm.register(Plugin4())  # hookwrapper should get same list result
+        pm.register(Plugin5())  # hookwrapper should get same list result
+>       res = pm.hook.hello(arg=0)
+
+testing\test_invocations.py:119: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+src\pluggy\_hooks.py:411: in __call__
+    return self._hookexec(self.name, self._hookimpls, kwargs, firstresult)
+src\pluggy\_manager.py:122: in _hookexec
+    return self._inner_hookexec(hook_name, methods, kwargs, firstresult)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+self = <test_invocations.test_call_order.<locals>.Plugin4 object at 0x000002A8E1327610>
+arg = 0
+
+    @hookimpl(hookwrapper=True)
+    def hello(self, arg):
+        assert arg == 0
+        outcome = yield
+>       assert outcome.get_result() == [3, 2, 1]
+E       assert [<generator o...120>, 3, 2, 1] == [3, 2, 1]
+E         At index 0 diff: <generator object test_call_order.<locals>.Plugin5.hello at 0x000002A8E1285120> != 3
+E         Left contains one more item: 1
+E         Use -v to get more diff
+
+testing\test_invocations.py:102: AssertionError
+________________________ test_firstresult_force_result ________________________
+
+pm = <pluggy._manager.PluginManager object at 0x000002A8E2BFEE60>
+
+    def test_firstresult_force_result(pm: PluginManager) -> None:
+        """Verify forcing a result in a wrapper."""
+    
+        class Api:
+            @hookspec(firstresult=True)
+            def hello(self, arg):
+                "api hook 1"
+    
+        pm.add_hookspecs(Api)
+    
+        class Plugin1:
+            @hookimpl
+            def hello(self, arg):
+                return arg + 1
+    
+        class Plugin2:
+            @hookimpl
+            def hello(self, arg):
+                assert arg == 3
+                outcome = yield
+                assert outcome == 4
+                return 0
+    
+        class Plugin3:
+            @hookimpl
+            def hello(self, arg):
+                return None
+    
+        pm.register(Plugin1())
+        pm.register(Plugin2())  # wrapper
+        pm.register(Plugin3())  # ignored since returns None
+        res = pm.hook.hello(arg=3)
+>       assert res == 0  # this result is forced and not a list
+E       assert <generator object test_firstresult_force_result.<locals>.Plugin2.hello at 0x000002A8E1285360> == 0
+
+testing\test_invocations.py:236: AssertionError
+_____________________________ test_generator_fun ______________________________
+
+    def test_generator_fun() -> None:
+        out = []
+    
+        @hookimpl
+        def m1():
+            out.append("m1 init")
+            result = yield
+            out.append("m1 finish")
+            return result * 2
+    
+        @hookimpl
+        def m2():
+            out.append("m2")
+            return 2
+    
+        res = MC([m2, m1], {})
+>       assert res == [2, 2]
+E       assert [<generator o...8E11E5F20>, 2] == [2, 2]
+E         At index 0 diff: <generator object test_generator_fun.<locals>.m1 at 0x000002A8E11E5F20> != 2
+E         Use -v to get more diff
+
+testing\test_multicall.py:130: AssertionError
+________________________ test_generator_fun_two_yields ________________________
+
+    def test_generator_fun_two_yields() -> None:
+        @hookimpl
+        def m():
+            yield
+            yield
+    
+>       with pytest.raises(RuntimeError, match="has second yield"):
+E       Failed: DID NOT RAISE <class 'RuntimeError'>
+
+testing\test_multicall.py:144: Failed
+___________________________ test_hookwrapper_order ____________________________
+
+    def test_hookwrapper_order() -> None:
+        out = []
+    
+        @hookimpl(hookwrapper=True)
+        def m1():
+            out.append("m1 init")
+            yield 1
+            out.append("m1 finish")
+    
+        @hookimpl
+        def m2():
+            out.append("m2 init")
+            result = yield 2
+            out.append("m2 finish")
+            return result
+    
+        @hookimpl(hookwrapper=True)
+        def m3():
+            out.append("m3 init")
+            yield 3
+            out.append("m3 finish")
+    
+        @hookimpl(hookwrapper=True)
+        def m4():
+            out.append("m4 init")
+            yield 4
+            out.append("m4 finish")
+    
+        res = MC([m4, m3, m2, m1], {})
+>       assert res == []
+E       assert [<generator o...02A8E0F04520>] == []
+E         Left contains one more item: <generator object test_hookwrapper_order.<locals>.m2 at 0x000002A8E0F04520>
+E         Use -v to get more diff
+
+testing\test_multicall.py:177: AssertionError
+____________________ test_generator_fun_yield_not_executed ____________________
+
+    def test_generator_fun_yield_not_executed() -> None:
+        @hookimpl
+        def m1():
+            if False:
+                yield  # type: ignore[unreachable]
+    
+>       with pytest.raises(RuntimeError, match="did not yield"):
+E       Failed: DID NOT RAISE <class 'RuntimeError'>
+
+testing\test_multicall.py:227: Failed
+______________________ test_generator_fun_too_many_yield ______________________
+
+    def test_generator_fun_too_many_yield() -> None:
+        out = []
+    
+        @hookimpl
+        def m1():
+            try:
+                yield 1
+                yield 2
+            finally:
+                out.append("cleanup")
+    
+>       with pytest.raises(RuntimeError) as ex:
+E       Failed: DID NOT RAISE <class 'RuntimeError'>
+
+testing\test_multicall.py:242: Failed
+__________________ test_generator_fun_exception[ValueError] ___________________
+
+exc = <class 'ValueError'>
+
+    @pytest.mark.parametrize("exc", [ValueError, SystemExit])
+    def test_generator_fun_exception(exc: "Type[BaseException]") -> None:
+        out = []
+    
+        @hookimpl
+        def m1():
+            out.append("m1 init")
+            try:
+                result = yield
+            except BaseException as e:
+                assert isinstance(e, exc)
+                raise
+            finally:
+                out.append("m1 finish")
+            return result
+    
+        @hookimpl
+        def m2():
+            out.append("m2 init")
+            raise exc
+    
+        with pytest.raises(exc):
+            MC([m2, m1], {})
+>       assert out == ["m1 init", "m2 init", "m1 finish"]
+E       AssertionError: assert ['m2 init'] == ['m1 init', '..., 'm1 finish']
+E         At index 0 diff: 'm2 init' != 'm1 init'
+E         Right contains 2 more items, first extra item: 'm2 init'
+E         Use -v to get more diff
+
+testing\test_multicall.py:345: AssertionError
+__________________ test_generator_fun_exception[SystemExit] ___________________
+
+exc = <class 'SystemExit'>
+
+    @pytest.mark.parametrize("exc", [ValueError, SystemExit])
+    def test_generator_fun_exception(exc: "Type[BaseException]") -> None:
+        out = []
+    
+        @hookimpl
+        def m1():
+            out.append("m1 init")
+            try:
+                result = yield
+            except BaseException as e:
+                assert isinstance(e, exc)
+                raise
+            finally:
+                out.append("m1 finish")
+            return result
+    
+        @hookimpl
+        def m2():
+            out.append("m2 init")
+            raise exc
+    
+        with pytest.raises(exc):
+            MC([m2, m1], {})
+>       assert out == ["m1 init", "m2 init", "m1 finish"]
+E       AssertionError: assert ['m2 init'] == ['m1 init', '..., 'm1 finish']
+E         At index 0 diff: 'm2 init' != 'm1 init'
+E         Right contains 2 more items, first extra item: 'm2 init'
+E         Use -v to get more diff
+
+testing\test_multicall.py:345: AssertionError
+____________________ test_generator_fun_exception_chaining ____________________
+
+    def test_generator_fun_exception_chaining() -> None:
+        @hookimpl
+        def m1():
+            raise Exception("m1")
+    
+        @hookimpl
+        def m2():
+            try:
+                yield
+            except Exception:
+                raise Exception("m2")
+    
+        @hookimpl
+        def m3():
+            yield
+            return 10
+    
+        @hookimpl
+        def m4():
+            try:
+                yield
+            except Exception as e:
+                raise Exception("m4") from e
+    
+        with pytest.raises(Exception) as excinfo:
+            MC([m1, m2, m3, m4], {})
+>       assert str(excinfo.value) == "m4"
+E       AssertionError: assert 'm1' == 'm4'
+E         - m4
+E         + m1
+
+testing\test_multicall.py:374: AssertionError
+___________________ test_unwind_inner_wrapper_teardown_exc ____________________
+
+    def test_unwind_inner_wrapper_teardown_exc() -> None:
+        out = []
+    
+        @hookimpl
+        def m1():
+            out.append("m1 init")
+            try:
+                yield
+                out.append("m1 unreachable")
+            except BaseException:
+                out.append("m1 teardown")
+                raise
+            finally:
+                out.append("m1 cleanup")
+    
+        @hookimpl
+        def m2():
+            out.append("m2 init")
+            yield
+            out.append("m2 raise")
+            raise ValueError()
+    
+>       with pytest.raises(ValueError):
+E       Failed: DID NOT RAISE <class 'ValueError'>
+
+testing\test_multicall.py:403: Failed
+__________________ test_suppress_inner_wrapper_teardown_exc ___________________
+
+    def test_suppress_inner_wrapper_teardown_exc() -> None:
+        out = []
+    
+        @hookimpl
+        def m1():
+            out.append("m1 init")
+            result = yield
+            out.append("m1 finish")
+            return result
+    
+        @hookimpl
+        def m2():
+            out.append("m2 init")
+            try:
+                yield
+                out.append("m2 unreachable")
+            except ValueError:
+                out.append("m2 suppress")
+                return 22
+    
+        @hookimpl
+        def m3():
+            out.append("m3 init")
+            yield
+            out.append("m3 raise")
+            raise ValueError()
+    
+>       assert MC([m3, m2, m1], {}) == 22
+E       assert [<generator object test_suppress_inner_wrapper_teardown_exc.<locals>.m1 at 0x000002A8E12D8040>, <generator object test... at 0x000002A8E12DBED0>, <generator object test_suppress_inner_wrapper_teardown_exc.<locals>.m3 at 0x000002A8E12D97D0>] == 22
+E        +  where [<generator object test_suppress_inner_wrapper_teardown_exc.<locals>.m1 at 0x000002A8E12D8040>, <generator object test... at 0x000002A8E12DBED0>, <generator object test_suppress_inner_wrapper_teardown_exc.<locals>.m3 at 0x000002A8E12D97D0>] = MC([<function test_suppress_inner_wrapper_teardown_exc.<locals>.m3 at 0x000002A8E2BC2CA0>, <function test_suppress_inner_...cals>.m2 at 0x000002A8E2BC1760>, <function test_suppress_inner_wrapper_teardown_exc.<locals>.m1 at 0x000002A8E2BC1C60>], {})
+
+testing\test_multicall.py:446: AssertionError
+________________ test_register_historic_incompat_generator_fun ________________
+
+pm = <pluggy._manager.PluginManager object at 0x000002A8E3506800>
+
+    def test_register_historic_incompat_generator_fun(pm: PluginManager) -> None:
+        class Hooks:
+            @hookspec(historic=True)
+            def he_method1(self, arg):
+                pass
+    
+        pm.add_hookspecs(Hooks)
+    
+        class Plugin:
+            @hookimpl()
+            def he_method1(self, arg):
+                yield
+    
+>       with pytest.raises(PluginValidationError):
+E       Failed: DID NOT RAISE <class 'pluggy._manager.PluginValidationError'>
+
+testing\test_pluginmanager.py:376: Failed
+- generated xml file: C:\Users\joshp\Desktop\Blast-Radius\exploratory\causal\verification\pluggy-results-arms\pr-389\tests-only.xml -
+=========================== short test summary info ===========================
+FAILED testing/test_details.py::test_parse_hookimpl_override - AttributeError...
+FAILED testing/test_hookcaller.py::test_adding_wrappers_ordering - assert [<f...
+FAILED testing/test_hookcaller.py::test_adding_wrappers_ordering_tryfirst - a...
+FAILED testing/test_hookcaller.py::test_adding_wrappers_complex - assert [<fu...
+FAILED testing/test_invocations.py::test_call_order - assert [<generator o......
+FAILED testing/test_invocations.py::test_firstresult_force_result - assert <g...
+FAILED testing/test_multicall.py::test_generator_fun - assert [<generator o.....
+FAILED testing/test_multicall.py::test_generator_fun_two_yields - Failed: DID...
+FAILED testing/test_multicall.py::test_hookwrapper_order - assert [<generator...
+FAILED testing/test_multicall.py::test_generator_fun_yield_not_executed - Fai...
+FAILED testing/test_multicall.py::test_generator_fun_too_many_yield - Failed:...
+FAILED testing/test_multicall.py::test_generator_fun_exception[ValueError] - ...
+FAILED testing/test_multicall.py::test_generator_fun_exception[SystemExit] - ...
+FAILED testing/test_multicall.py::test_generator_fun_exception_chaining - Ass...
+FAILED testing/test_multicall.py::test_unwind_inner_wrapper_teardown_exc - Fa...
+FAILED testing/test_multicall.py::test_suppress_inner_wrapper_teardown_exc - ...
+FAILED testing/test_pluginmanager.py::test_register_historic_incompat_generator_fun
+======================== 17 failed, 83 passed in 0.52s ========================

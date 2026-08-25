@@ -1,0 +1,1 @@
+<?xml version="1.0" encoding="utf-8"?><testsuites name="pytest tests"><testsuite name="pytest" errors="0" failures="0" skipped="0" tests="1" time="0.077" timestamp="2026-08-24T08:23:10.050613-07:00" hostname="JoshP"><testcase classname="tests.snippets.wat.test_sign_extension_instructions.txt" name="" time="0.006" /></testsuite></testsuites>

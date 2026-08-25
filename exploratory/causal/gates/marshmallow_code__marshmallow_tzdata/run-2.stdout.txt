@@ -1,0 +1,48 @@
+============================= test session starts =============================
+platform win32 -- Python 3.11.9, pytest-9.1.1, pluggy-1.6.0
+rootdir: C:\Users\joshp\Desktop\Blast-Radius\exploratory\causal\repositories\marshmallow
+configfile: pyproject.toml
+collected 1190 items
+
+tests\test_context.py ............                                       [  1%]
+tests\test_decorators.py ............................................    [  4%]
+tests\test_deserialization.py .......................................... [  8%]
+........................................................................ [ 14%]
+........................................................................ [ 20%]
+........................................................................ [ 26%]
+........................................................................ [ 32%]
+..................................................................       [ 37%]
+tests\test_error_store.py ...............................                [ 40%]
+tests\test_exceptions.py .......                                         [ 41%]
+tests\test_fields.py ................................................... [ 45%]
+.........................................................                [ 50%]
+tests\test_options.py ..........                                         [ 51%]
+tests\test_registry.py ..........                                        [ 51%]
+tests\test_schema.py ................................................... [ 56%]
+........................................................................ [ 62%]
+........................................................................ [ 68%]
+........                                                                 [ 68%]
+tests\test_serialization.py ............................................ [ 72%]
+........................................................................ [ 78%]
+.............                                                            [ 79%]
+tests\test_utils.py .............F.....                                  [ 81%]
+tests\test_validate.py ................................................. [ 85%]
+........................................................................ [ 91%]
+........................................................................ [ 97%]
+............................                                             [100%]
+
+================================== FAILURES ===================================
+___________________ test_from_timestamp_with_overflow_value ___________________
+
+    def test_from_timestamp_with_overflow_value():
+        value = 9223372036854775
+>       with pytest.raises(ValueError, match=r"out of range|year must be in 1\.\.9999"):
+E       AssertionError: Regex pattern did not match.
+E         Expected regex: 'out of range|year must be in 1\\.\\.9999'
+E         Actual message: 'Error converting value to datetime'
+
+tests\test_utils.py:117: AssertionError
+- generated xml file: C:\Users\joshp\Desktop\Blast-Radius\exploratory\causal\gates\marshmallow_code__marshmallow_tzdata\run-2.xml -
+=========================== short test summary info ===========================
+FAILED tests/test_utils.py::test_from_timestamp_with_overflow_value - Asserti...
+======================= 1 failed, 1189 passed in 3.99s ========================

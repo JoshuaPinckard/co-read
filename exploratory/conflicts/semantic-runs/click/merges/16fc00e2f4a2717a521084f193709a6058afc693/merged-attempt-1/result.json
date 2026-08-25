@@ -1,0 +1,79 @@
+{
+  "after": {
+    "head": "16fc00e2f4a2717a521084f193709a6058afc693",
+    "head_tree": "9e28643ba5d8cb662b6770e7437c8422f8dd9b5e",
+    "index_tree": "9e28643ba5d8cb662b6770e7437c8422f8dd9b5e",
+    "tracked_diff_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "tracked_status": ""
+  },
+  "artifacts": {
+    "exit_status": "C:\\Users\\joshp\\Desktop\\Blast-Radius\\exploratory\\conflicts\\semantic-runs\\click\\merges\\16fc00e2f4a2717a521084f193709a6058afc693\\merged-attempt-1\\exit-status.txt",
+    "junit": "C:\\Users\\joshp\\Desktop\\Blast-Radius\\exploratory\\conflicts\\semantic-runs\\click\\merges\\16fc00e2f4a2717a521084f193709a6058afc693\\merged-attempt-1\\junit.xml",
+    "stderr": "C:\\Users\\joshp\\Desktop\\Blast-Radius\\exploratory\\conflicts\\semantic-runs\\click\\merges\\16fc00e2f4a2717a521084f193709a6058afc693\\merged-attempt-1\\stderr.txt",
+    "stdout": "C:\\Users\\joshp\\Desktop\\Blast-Radius\\exploratory\\conflicts\\semantic-runs\\click\\merges\\16fc00e2f4a2717a521084f193709a6058afc693\\merged-attempt-1\\stdout.txt",
+    "summary_line": "C:\\Users\\joshp\\Desktop\\Blast-Radius\\exploratory\\conflicts\\semantic-runs\\click\\merges\\16fc00e2f4a2717a521084f193709a6058afc693\\merged-attempt-1\\summary-line.txt"
+  },
+  "attempt": 1,
+  "before": {
+    "head": "16fc00e2f4a2717a521084f193709a6058afc693",
+    "head_tree": "9e28643ba5d8cb662b6770e7437c8422f8dd9b5e",
+    "index_tree": "9e28643ba5d8cb662b6770e7437c8422f8dd9b5e",
+    "tracked_diff_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "tracked_status": ""
+  },
+  "checkout_commit": "16fc00e2f4a2717a521084f193709a6058afc693",
+  "checkout_tree": "9e28643ba5d8cb662b6770e7437c8422f8dd9b5e",
+  "classification": "green",
+  "command": [
+    "C:\\Users\\joshp\\Desktop\\Blast-Radius-semantic-scratch-20260824\\click-test-env-v2\\Scripts\\python.exe",
+    "-m",
+    "pytest",
+    "--junitxml=C:\\Users\\joshp\\Desktop\\Blast-Radius\\exploratory\\conflicts\\semantic-runs\\click\\merges\\16fc00e2f4a2717a521084f193709a6058afc693\\merged-attempt-1\\junit.xml"
+  ],
+  "completed_at_utc": "2026-08-24T23:35:31.964+00:00",
+  "cwd": "C:\\Users\\joshp\\Desktop\\Blast-Radius-semantic-scratch-20260824\\semantic-worktrees\\16fc00e2f4a2-merged-attempt-1",
+  "elapsed_seconds": 13.405402199947275,
+  "environment": {
+    "GIT_NO_LAZY_FETCH": "1",
+    "PYTEST_DISABLE_PLUGIN_AUTOLOAD": "1",
+    "PYTHONDONTWRITEBYTECODE": "1",
+    "PYTHONHASHSEED": "0",
+    "PYTHONNOUSERSITE": "1",
+    "PYTHONPATH": "C:\\Users\\joshp\\Desktop\\Blast-Radius-semantic-scratch-20260824\\semantic-worktrees\\16fc00e2f4a2-merged-attempt-1\\src;C:\\Users\\joshp\\Desktop\\Blast-Radius\\instruments\\posture\\python39_compat"
+  },
+  "exit_code": 0,
+  "failure_text_signature_sha256": "65138be8a1c17e0ba7bbb19a942447d13dbe52e65356d6aae7579e56fc515091",
+  "junit": {
+    "case_count": 1707,
+    "cases_sha256": "da7dd40ab814d787a61f660f1fe227d48f5657bed448e5bd0c5ad62829c77196",
+    "counts": {
+      "error": 0,
+      "failure": 0,
+      "passed": 1611,
+      "skipped": 96
+    },
+    "failing_cases": []
+  },
+  "junit_sha256": "de355fcf6bc1dd5a6a5b0c6446eb9c267729d164f9c92ba4cdb63b7d02bd8d2e",
+  "merge_commit": "16fc00e2f4a2717a521084f193709a6058afc693",
+  "process_launch_error": null,
+  "protocol_sha256": "021a620bdcec20d3f59f59c4496599c45256aa66a241e5e3cd81bd01a2f01822",
+  "pytest_summary_line": "======= 1611 passed, 95 skipped, 31000 deselected, 1 xfailed in 10.91s ========",
+  "role": "merged",
+  "schema_version": 1,
+  "source_root": "C:\\Users\\joshp\\Desktop\\Blast-Radius-semantic-scratch-20260824\\semantic-worktrees\\16fc00e2f4a2-merged-attempt-1\\src",
+  "started_at_utc": "2026-08-24T23:35:17.003+00:00",
+  "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "stdout_sha256": "55eabab16fc159b12a112472ee10f320880b81656485bd4db427f17082fca271",
+  "timed_out": false,
+  "timeout_detail": null,
+  "timeout_seconds": 120.0,
+  "timeout_termination": null,
+  "tracked_state_unchanged": true,
+  "worktree_cleanup": {
+    "filesystem_fallback_used": false,
+    "git_worktree_remove_exit": 0,
+    "git_worktree_remove_stderr": "",
+    "removed": true
+  }
+}

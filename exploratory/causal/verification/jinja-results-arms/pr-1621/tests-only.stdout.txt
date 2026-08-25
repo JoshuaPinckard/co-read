@@ -1,0 +1,106 @@
+============================= test session starts =============================
+platform win32 -- Python 3.11.9, pytest-8.4.2, pluggy-1.6.0
+rootdir: C:\Users\joshp\AppData\Local\Temp\blast-radius-jinja-causal\a1621-jechfo5r\t
+configfile: setup.cfg
+testpaths: tests
+plugins: timeout-2.4.0
+collected 841 items
+
+tests\test_api.py .................................                      [  3%]
+tests\test_async.py .................................................... [ 10%]
+......                                                                   [ 10%]
+tests\test_async_filters.py ...........................................  [ 15%]
+tests\test_bytecode_cache.py ...                                         [ 16%]
+tests\test_compile.py ..                                                 [ 16%]
+tests\test_core_tags.py ................................................ [ 22%]
+..............                                                           [ 23%]
+tests\test_debug.py .......                                              [ 24%]
+tests\test_ext.py .................................................      [ 30%]
+tests\test_filters.py .................................................. [ 36%]
+........................................................................ [ 45%]
+..                                                                       [ 45%]
+tests\test_idtracking.py .....                                           [ 45%]
+tests\test_imports.py ...............                                    [ 47%]
+tests\test_inheritance.py ......................                         [ 50%]
+tests\test_lexnparse.py ................................................ [ 56%]
+........................................................................ [ 64%]
+..............................                                           [ 68%]
+tests\test_loader.py ...........................F..F..F......            [ 72%]
+tests\test_nativetypes.py ..........................                     [ 75%]
+tests\test_nodes.py .                                                    [ 76%]
+tests\test_pickle.py .                                                   [ 76%]
+tests\test_regression.py ............................................... [ 81%]
+.....                                                                    [ 82%]
+tests\test_runtime.py .......                                            [ 83%]
+tests\test_security.py ...............                                   [ 85%]
+tests\test_tests.py .................................................... [ 91%]
+......................................................                   [ 97%]
+tests\test_utils.py ....................                                 [100%]
+
+================================== FAILURES ===================================
+_________________ test_package_dir_source[foo/test.html-FOO] __________________
+
+package_dir_loader = <jinja2.loaders.PackageLoader object at 0x00000178BE7F7690>
+template = 'foo/test.html', expect = 'FOO'
+
+    @pytest.mark.parametrize(
+        ("template", "expect"), [("foo/test.html", "FOO"), ("test.html", "BAR")]
+    )
+    def test_package_dir_source(package_dir_loader, template, expect):
+        source, name, up_to_date = package_dir_loader.get_source(None, template)
+        assert source.rstrip() == expect
+>       assert name.endswith(posixpath.join(*split_template_path(template)))
+E       AssertionError: assert False
+E        +  where False = <built-in method endswith of str object at 0x00000178C0FAC8F0>('foo/test.html')
+E        +    where <built-in method endswith of str object at 0x00000178C0FAC8F0> = 'C:\\Users\\joshp\\AppData\\Local\\Temp\\blast-radius-jinja-causal\\a1621-jechfo5r\\t\\tests\\res\\templates\\foo\\test.html'.endswith
+E        +    and   'foo/test.html' = <function join at 0x00000178BDA32B60>(*['foo', 'test.html'])
+E        +      where <function join at 0x00000178BDA32B60> = posixpath.join
+E        +      and   ['foo', 'test.html'] = split_template_path('foo/test.html')
+
+tests\test_loader.py:307: AssertionError
+_________________ test_package_file_source[foo/test.html-FOO] _________________
+
+package_file_loader = <jinja2.loaders.PackageLoader object at 0x00000178C0D393D0>
+template = 'foo/test.html', expect = 'FOO'
+
+    @pytest.mark.parametrize(
+        ("template", "expect"), [("foo/test.html", "FOO"), ("test.html", "BAR")]
+    )
+    def test_package_file_source(package_file_loader, template, expect):
+        source, name, up_to_date = package_file_loader.get_source(None, template)
+        assert source.rstrip() == expect
+>       assert name.endswith(posixpath.join(*split_template_path(template)))
+E       AssertionError: assert False
+E        +  where False = <built-in method endswith of str object at 0x00000178C11B26F0>('foo/test.html')
+E        +    where <built-in method endswith of str object at 0x00000178C11B26F0> = 'C:\\Users\\joshp\\AppData\\Local\\Temp\\blast-radius-jinja-causal\\a1621-jechfo5r\\t\\tests\\res\\templates\\foo\\test.html'.endswith
+E        +    and   'foo/test.html' = <function join at 0x00000178BDA32B60>(*['foo', 'test.html'])
+E        +      where <function join at 0x00000178BDA32B60> = posixpath.join
+E        +      and   ['foo', 'test.html'] = split_template_path('foo/test.html')
+
+tests\test_loader.py:329: AssertionError
+_________________ test_package_zip_source[foo/test.html-FOO] __________________
+
+package_zip_loader = <jinja2.loaders.PackageLoader object at 0x00000178C0A6EAD0>
+template = 'foo/test.html', expect = 'FOO'
+
+    @pytest.mark.parametrize(
+        ("template", "expect"), [("foo/test.html", "FOO"), ("test.html", "BAR")]
+    )
+    def test_package_zip_source(package_zip_loader, template, expect):
+        source, name, up_to_date = package_zip_loader.get_source(None, template)
+        assert source.rstrip() == expect
+>       assert name.endswith(posixpath.join(*split_template_path(template)))
+E       AssertionError: assert False
+E        +  where False = <built-in method endswith of str object at 0x00000178C0E91D70>('foo/test.html')
+E        +    where <built-in method endswith of str object at 0x00000178C0E91D70> = 'C:\\Users\\joshp\\AppData\\Local\\Temp\\blast-radius-jinja-causal\\a1621-jechfo5r\\t\\tests\\res\\package.zip\\t_pack\\templates\\foo\\test.html'.endswith
+E        +    and   'foo/test.html' = <function join at 0x00000178BDA32B60>(*['foo', 'test.html'])
+E        +      where <function join at 0x00000178BDA32B60> = posixpath.join
+E        +      and   ['foo', 'test.html'] = split_template_path('foo/test.html')
+
+tests\test_loader.py:352: AssertionError
+- generated xml file: C:\Users\joshp\Desktop\Blast-Radius\exploratory\causal\verification\jinja-results-arms\pr-1621\tests-only.xml -
+=========================== short test summary info ===========================
+FAILED tests/test_loader.py::test_package_dir_source[foo/test.html-FOO] - Ass...
+FAILED tests/test_loader.py::test_package_file_source[foo/test.html-FOO] - As...
+FAILED tests/test_loader.py::test_package_zip_source[foo/test.html-FOO] - Ass...
+======================== 3 failed, 838 passed in 7.31s ========================

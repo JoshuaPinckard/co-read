@@ -1,0 +1,57 @@
+Measure whether agents actually undo each other's work. This tests a design hole: every coordination mechanism in this project assumes conflicts are ACCIDENTAL. Two agents with genuinely opposed objectives would oscillate, and nothing in the design would notice.
+
+## The hypothesis
+
+Agent A writes region R. Agent B reverts or substantially reverses it. A rewrites. Each is individually correct given its own instructions; the system as a whole makes no progress. Optimistic concurrency theory does not model this — it assumes transactions want to commit, not to defeat each other.
+
+If this happens at a measurable rate, the coordination design needs a task-level conflict detector, not just a region-level one. If it never happens, that whole class can be documented as out of scope with evidence.
+
+## The data
+
+The Claude Code transcript corpus at `C:/Users/USER/.claude/projects/` — roughly 5,500 JSONL files. Prior extractions in this project established:
+
+- 99.6% of Read results carry `toolUseResult.file` with `filePath`, `startLine`, `numLines`. Use the RESULT, not the input arguments.
+- **98.7% of Edit/Write results carry both `structuredPatch` (hunk line offsets) and `originalFile` (the complete file content before the edit).** That pre-image is what makes reversal detectable.
+- Agent identity is `agentId` when present, else `sessionId`. Subagent transcripts live at `<sessionId>/subagents/agent-<id>.jsonl`.
+- 167,459 Bash and 15,414 PowerShell calls carry paths only in command strings and are outside structured capture, so every count is a lower bound.
+
+Reuse `instruments/hazard/extract_hazards.py` for the event walk. Do not modify it.
+
+## What to detect
+
+For each file, build the ordered sequence of writes with their agent, timestamp, `oldString`, `newString` and hunk ranges. Then classify successive write pairs by *different* agents on overlapping line ranges:
+
+1. **Exact reversal** — B's `newString` restores A's `oldString` at the same location. The strongest signal and unambiguous.
+2. **Partial reversal** — B's edit substantially undoes A's within the same hunk. Define "substantially" concretely, state your definition, and report sensitivity to it.
+3. **Oscillation** — a reversal followed by a re-application by the original agent, or any A→B→A alternation on one region. **This is the headline: it is the pattern that makes no progress.**
+4. **Independent co-editing** — different agents editing the same region without reversing each other. The benign case and the control.
+
+Report each as counts and as a fraction of all multi-agent region write sequences. **State the denominator explicitly every time.**
+
+## Also measure
+
+- Time between the write and its reversal.
+- How many distinct agents participate in the longest oscillation observed.
+- Whether oscillations concentrate in particular file types — a coordination markdown file being rewritten repeatedly is a different phenomenon from source code being reverted, and they must be reported separately.
+- Whether the reverting agent had **read** the region before reverting it. An agent that reverts without reading is not resolving a conflict; it is unaware of one, and that distinction matters for the design.
+
+## What would make this measurement wrong
+
+- Formatters, linters and codegen produce mechanical reversals that are not goal conflicts. Identify and separate them — an edit whose diff is purely whitespace or import ordering is not an agent disagreeing.
+- A single agent legitimately revising its own work is not oscillation. Only cross-agent sequences count.
+- Git operations that rewrite files wholesale would appear as huge reversals. Exclude or flag them.
+
+## Output
+
+`exploratory/oscillation/RESULTS.md`:
+
+1. **Does it happen?** First line, with the rate and its denominator. If the answer is that it essentially never happens, say so plainly — that is a clean and valuable result that lets a whole design concern be documented as out of scope.
+2. The four classifications with counts, rates and denominators.
+3. The mechanical-cause separation, with what was excluded and why.
+4. Concrete examples: three actual oscillation sequences printed in full, with file, agents, timestamps and the reversing diffs, so a human can judge whether they are genuine goal conflicts or artifacts.
+5. **"Claims that could NOT be verified"** and **"What would change this verdict"**.
+6. Per-claim confidence with its reason, not a document-level label.
+
+Note that this corpus is one team, one harness, Node-dominated, and that agents here were largely working toward compatible goals — so a low rate is evidence about *this* workload and not evidence that adversarial task assignment is safe.
+
+Read-only on the transcript corpus. Do not fabricate. Write scripts under `instruments/oscillation/`.

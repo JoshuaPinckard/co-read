@@ -1,0 +1,37 @@
+diff --git a/pygments/lexers/templates.py b/pygments/lexers/templates.py
+index b2b69dd2d3a32f7f0ebed0f54a116c7b16ba36ae..a30b0135195f51b75d5185e8b3508825a7503dd1 100644
+--- a/pygments/lexers/templates.py
++++ b/pygments/lexers/templates.py
+@@ -2168,7 +2168,7 @@ class TwigLexer(RegexLexer):
+     # Note that a backslash is included in the following two patterns
+     # PHP uses a backslash as a namespace separator
+     _ident_char = r'[\\\w-]|[^\x00-\x7f]'
+-    _ident_begin = r'(?:[\\_a-z]|[^\x00-\x7f])'
++    _ident_begin = r'(?:[\\_a-zA-Z]|[^\x00-\x7f])'
+     _ident_end = r'(?:' + _ident_char + ')*'
+     _ident_inner = _ident_begin + _ident_end
+ 
+diff --git a/tests/snippets/twig/test_uppercase_variable_names.txt b/tests/snippets/twig/test_uppercase_variable_names.txt
+new file mode 100644
+index 0000000000000000000000000000000000000000..a27b327a4848f0f19a26e6229cbe15544c524c25
+--- /dev/null
++++ b/tests/snippets/twig/test_uppercase_variable_names.txt
+@@ -0,0 +1,18 @@
++---input---
++{{ MediaHelper.background(content.media, mediaRenderOptions) }}
++
++---tokens---
++'{{'          Comment.Preproc
++' '           Text
++'MediaHelper' Name.Variable
++'.background' Name.Variable
++'('           Operator
++'content'     Name.Variable
++'.media'      Name.Variable
++','           Operator
++' '           Text
++'mediaRenderOptions' Name.Variable
++')'           Operator
++' '           Text
++'}}'          Comment.Preproc
++'\n'          Other

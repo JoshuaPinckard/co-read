@@ -1,0 +1,10 @@
+============================= test session starts =============================
+platform win32 -- Python 3.11.9, pytest-8.4.2, pluggy-1.6.0
+rootdir: C:\Users\joshp\AppData\Local\Temp\blast-radius-pygments-causal-opbff12g\screen-pr-3217-pht6f_b4\full
+configfile: pyproject.toml
+collected 30 items
+
+tests\test_cmdline.py ..............................                     [100%]
+
+- generated xml file: C:\Users\joshp\Desktop\Blast-Radius\exploratory\causal\verification\pygments-results-arms\screening\pr-3217\full-targeted.xml -
+============================= 30 passed in 2.67s ==============================

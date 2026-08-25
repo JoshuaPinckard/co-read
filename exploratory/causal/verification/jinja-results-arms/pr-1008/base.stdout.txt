@@ -1,0 +1,487 @@
+============================= test session starts =============================
+platform win32 -- Python 3.11.9, pytest-8.4.2, pluggy-1.6.0
+rootdir: C:\Users\joshp\AppData\Local\Temp\blast-radius-jinja-causal\a1008-h3dsw7d7\b
+configfile: setup.cfg
+testpaths: tests
+plugins: timeout-2.4.0
+collected 546 items
+
+tests\test_api.py ..........................                             [  4%]
+tests\test_async.py ............................................         [ 12%]
+tests\test_asyncfilters.py ....................................          [ 19%]
+tests\test_bytecode_cache.py ...                                         [ 19%]
+tests\test_core_tags.py ................................................ [ 28%]
+..............                                                           [ 31%]
+tests\test_debug.py F...                                                 [ 32%]
+tests\test_ext.py .........................................              [ 39%]
+tests\test_features.py .s                                                [ 39%]
+tests\test_filters.py .................................................. [ 49%]
+...................................                                      [ 55%]
+tests\test_idtracking.py .....                                           [ 56%]
+tests\test_imports.py ...........                                        [ 58%]
+tests\test_inheritance.py ................                               [ 61%]
+tests\test_lexnparse.py ................................................ [ 70%]
+..........................................                               [ 77%]
+tests\test_loader.py .................s..                                [ 81%]
+tests\test_nativetypes.py .F............                                 [ 84%]
+tests\test_regression.py .................s......................        [ 91%]
+tests\test_security.py ...............                                   [ 94%]
+tests\test_tests.py ...........................                          [ 99%]
+tests\test_utils.py .....                                                [100%]
+
+================================== FAILURES ===================================
+________________________ TestDebug.test_runtime_error _________________________
+
+self = <test_debug.TestDebug object at 0x0000012A90CCA810>
+callback = <function TestDebug.test_runtime_error.<locals>.test at 0x0000012A910298A0>
+expected_tb = '\n  File ".*?broken.html", line 2, in (top-level template code|<module>)\n    \\{\\{ fail\\(\\) \\}\\}\n  File ".*deb... <lambda>\n    tmpl\\.render\\(fail=lambda: 1 / 0\\)\nZeroDivisionError: (int(eger)? )?division (or modulo )?by zero\n'
+
+    def assert_traceback_matches(self, callback, expected_tb):
+        try:
+>           callback()
+
+tests\test_debug.py:32: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+tests\test_debug.py:43: in test
+    tmpl.render(fail=lambda: 1 / 0)
+jinja2\asyncsupport.py:76: in render
+    return original_render(self, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+jinja2\environment.py:1010: in render
+    return self.environment.handle_exception(exc_info, True)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+jinja2\environment.py:782: in handle_exception
+    reraise(exc_type, exc_value, tb)
+jinja2\_compat.py:37: in reraise
+    raise value.with_traceback(tb)
+tests\res\templates\broken.html:2: in <module>
+    {{ fail() }}
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+>   tmpl.render(fail=lambda: 1 / 0)
+                             ^^^^^
+E   ZeroDivisionError: division by zero
+
+tests\test_debug.py:43: ZeroDivisionError
+
+During handling of the above exception, another exception occurred:
+
+self = <test_debug.TestDebug object at 0x0000012A90CCA810>
+fs_env = <jinja2.environment.Environment object at 0x0000012A90FFF790>
+
+        def test_runtime_error(self, fs_env):
+            def test():
+                tmpl.render(fail=lambda: 1 / 0)
+            tmpl = fs_env.get_template('broken.html')
+>           self.assert_traceback_matches(test, r'''
+      File ".*?broken.html", line 2, in (top-level template code|<module>)
+        \{\{ fail\(\) \}\}
+      File ".*debug?.pyc?", line \d+, in <lambda>
+        tmpl\.render\(fail=lambda: 1 / 0\)
+    ZeroDivisionError: (int(eger)? )?division (or modulo )?by zero
+    ''')
+
+tests\test_debug.py:45: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+self = <test_debug.TestDebug object at 0x0000012A90CCA810>
+callback = <function TestDebug.test_runtime_error.<locals>.test at 0x0000012A910298A0>
+expected_tb = '\n  File ".*?broken.html", line 2, in (top-level template code|<module>)\n    \\{\\{ fail\\(\\) \\}\\}\n  File ".*deb... <lambda>\n    tmpl\\.render\\(fail=lambda: 1 / 0\\)\nZeroDivisionError: (int(eger)? )?division (or modulo )?by zero\n'
+
+    def assert_traceback_matches(self, callback, expected_tb):
+        try:
+            callback()
+        except Exception as e:
+            tb = format_exception(*sys.exc_info())
+            if re.search(expected_tb.strip(), ''.join(tb)) is None:
+>               assert False, ('Traceback did not match:\n\n%s\nexpected:\n%s' %
+                               (''.join(tb), expected_tb))
+E               AssertionError: Traceback did not match:
+E                 
+E                 Traceback (most recent call last):
+E                   File "C:\Users\joshp\AppData\Local\Temp\blast-radius-jinja-causal\a1008-h3dsw7d7\b\tests\test_debug.py", line 32, in assert_traceback_matches
+E                     callback()
+E                   File "C:\Users\joshp\AppData\Local\Temp\blast-radius-jinja-causal\a1008-h3dsw7d7\b\tests\test_debug.py", line 43, in test
+E                     tmpl.render(fail=lambda: 1 / 0)
+E                   File "C:\Users\joshp\AppData\Local\Temp\blast-radius-jinja-causal\a1008-h3dsw7d7\b\jinja2\asyncsupport.py", line 76, in render
+E                     return original_render(self, *args, **kwargs)
+E                            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E                   File "C:\Users\joshp\AppData\Local\Temp\blast-radius-jinja-causal\a1008-h3dsw7d7\b\jinja2\environment.py", line 1010, in render
+E                     return self.environment.handle_exception(exc_info, True)
+E                            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E                   File "C:\Users\joshp\AppData\Local\Temp\blast-radius-jinja-causal\a1008-h3dsw7d7\b\jinja2\environment.py", line 782, in handle_exception
+E                     reraise(exc_type, exc_value, tb)
+E                   File "C:\Users\joshp\AppData\Local\Temp\blast-radius-jinja-causal\a1008-h3dsw7d7\b\jinja2\_compat.py", line 37, in reraise
+E                     raise value.with_traceback(tb)
+E                   File "C:\Users\joshp\AppData\Local\Temp\blast-radius-jinja-causal\a1008-h3dsw7d7\b\tests/res/templates\broken.html", line 2, in <module>
+E                     {{ fail() }}
+E                   File "C:\Users\joshp\AppData\Local\Temp\blast-radius-jinja-causal\a1008-h3dsw7d7\b\tests\test_debug.py", line 43, in <lambda>
+E                     tmpl.render(fail=lambda: 1 / 0)
+E                                              ~~^~~
+E                 ZeroDivisionError: division by zero
+E                 
+E                 expected:
+E                 
+E                   File ".*?broken.html", line 2, in (top-level template code|<module>)
+E                     \{\{ fail\(\) \}\}
+E                   File ".*debug?.pyc?", line \d+, in <lambda>
+E                     tmpl\.render\(fail=lambda: 1 / 0\)
+E                 ZeroDivisionError: (int(eger)? )?division (or modulo )?by zero
+E                 
+E               assert False
+
+tests\test_debug.py:36: AssertionError
+_____________ TestNativeEnvironment.test_undefined_native_return ______________
+
+self = <test_nativetypes.TestNativeEnvironment object at 0x0000012A90998E50>
+env = <jinja2.nativetypes.NativeEnvironment object at 0x0000012A91192B10>
+
+    def test_undefined_native_return(self, env):
+        t = env.from_string('{{ missing }}')
+>       assert isinstance(t.render(), Undefined)
+                          ^^^^^^^^^^
+
+tests\test_nativetypes.py:21: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+jinja2\nativetypes.py:216: in render
+    return self.environment.handle_exception(exc_info, True)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+jinja2\environment.py:782: in handle_exception
+    reraise(exc_type, exc_value, tb)
+jinja2\_compat.py:37: in reraise
+    raise value.with_traceback(tb)
+jinja2\nativetypes.py:32: in native_concat
+    return literal_eval(out)
+           ^^^^^^^^^^^^^^^^^
+..\..\..\..\Programs\Python\Python311\Lib\ast.py:110: in literal_eval
+    return _convert(node_or_string)
+           ^^^^^^^^^^^^^^^^^^^^^^^^
+..\..\..\..\Programs\Python\Python311\Lib\ast.py:109: in _convert
+    return _convert_signed_num(node)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^
+..\..\..\..\Programs\Python\Python311\Lib\ast.py:83: in _convert_signed_num
+    return _convert_num(node)
+           ^^^^^^^^^^^^^^^^^^
+..\..\..\..\Programs\Python\Python311\Lib\ast.py:74: in _convert_num
+    _raise_malformed_node(node)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+node = Undefined
+
+    def _raise_malformed_node(node):
+        msg = "malformed node or string"
+>       if lno := getattr(node, 'lineno', None):
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       jinja2.exceptions.UndefinedError: 'missing' is undefined
+
+..\..\..\..\Programs\Python\Python311\Lib\ast.py:69: UndefinedError
+============================== warnings summary ===============================
+tests\conftest.py:19
+  C:\Users\joshp\AppData\Local\Temp\blast-radius-jinja-causal\a1008-h3dsw7d7\b\tests\conftest.py:19: PytestRemovedIn9Warning: The (path: py.path.local) argument is deprecated, please use (collection_path: pathlib.Path)
+  see https://docs.pytest.org/en/latest/deprecations.html#py-path-local-arguments-for-hooks-replaced-with-pathlib-path
+    def pytest_ignore_collect(path, config):
+
+tests\test_api.py:24
+  C:\Users\joshp\AppData\Local\Temp\blast-radius-jinja-causal\a1008-h3dsw7d7\b\tests\test_api.py:24: PytestUnknownMarkWarning: Unknown pytest.mark.api - is this a typo?  You can register custom marks to avoid this warning - for details, see https://docs.pytest.org/en/stable/how-to/mark.html
+    @pytest.mark.api
+
+tests\test_api.py:25
+  C:\Users\joshp\AppData\Local\Temp\blast-radius-jinja-causal\a1008-h3dsw7d7\b\tests\test_api.py:25: PytestUnknownMarkWarning: Unknown pytest.mark.extended - is this a typo?  You can register custom marks to avoid this warning - for details, see https://docs.pytest.org/en/stable/how-to/mark.html
+    @pytest.mark.extended
+
+tests\test_api.py:108
+  C:\Users\joshp\AppData\Local\Temp\blast-radius-jinja-causal\a1008-h3dsw7d7\b\tests\test_api.py:108: PytestUnknownMarkWarning: Unknown pytest.mark.api - is this a typo?  You can register custom marks to avoid this warning - for details, see https://docs.pytest.org/en/stable/how-to/mark.html
+    @pytest.mark.api
+
+tests\test_api.py:109
+  C:\Users\joshp\AppData\Local\Temp\blast-radius-jinja-causal\a1008-h3dsw7d7\b\tests\test_api.py:109: PytestUnknownMarkWarning: Unknown pytest.mark.meta - is this a typo?  You can register custom marks to avoid this warning - for details, see https://docs.pytest.org/en/stable/how-to/mark.html
+    @pytest.mark.meta
+
+tests\test_api.py:156
+  C:\Users\joshp\AppData\Local\Temp\blast-radius-jinja-causal\a1008-h3dsw7d7\b\tests\test_api.py:156: PytestUnknownMarkWarning: Unknown pytest.mark.api - is this a typo?  You can register custom marks to avoid this warning - for details, see https://docs.pytest.org/en/stable/how-to/mark.html
+    @pytest.mark.api
+
+tests\test_api.py:157
+  C:\Users\joshp\AppData\Local\Temp\blast-radius-jinja-causal\a1008-h3dsw7d7\b\tests\test_api.py:157: PytestUnknownMarkWarning: Unknown pytest.mark.streaming - is this a typo?  You can register custom marks to avoid this warning - for details, see https://docs.pytest.org/en/stable/how-to/mark.html
+    @pytest.mark.streaming
+
+tests\test_api.py:200
+  C:\Users\joshp\AppData\Local\Temp\blast-radius-jinja-causal\a1008-h3dsw7d7\b\tests\test_api.py:200: PytestUnknownMarkWarning: Unknown pytest.mark.api - is this a typo?  You can register custom marks to avoid this warning - for details, see https://docs.pytest.org/en/stable/how-to/mark.html
+    @pytest.mark.api
+
+tests\test_api.py:201
+  C:\Users\joshp\AppData\Local\Temp\blast-radius-jinja-causal\a1008-h3dsw7d7\b\tests\test_api.py:201: PytestUnknownMarkWarning: Unknown pytest.mark.undefined - is this a typo?  You can register custom marks to avoid this warning - for details, see https://docs.pytest.org/en/stable/how-to/mark.html
+    @pytest.mark.undefined
+
+tests\test_api.py:331
+  C:\Users\joshp\AppData\Local\Temp\blast-radius-jinja-causal\a1008-h3dsw7d7\b\tests\test_api.py:331: PytestUnknownMarkWarning: Unknown pytest.mark.api - is this a typo?  You can register custom marks to avoid this warning - for details, see https://docs.pytest.org/en/stable/how-to/mark.html
+    @pytest.mark.api
+
+tests\test_api.py:332
+  C:\Users\joshp\AppData\Local\Temp\blast-radius-jinja-causal\a1008-h3dsw7d7\b\tests\test_api.py:332: PytestUnknownMarkWarning: Unknown pytest.mark.lowlevel - is this a typo?  You can register custom marks to avoid this warning - for details, see https://docs.pytest.org/en/stable/how-to/mark.html
+    @pytest.mark.lowlevel
+
+tests\test_async.py:124
+  C:\Users\joshp\AppData\Local\Temp\blast-radius-jinja-causal\a1008-h3dsw7d7\b\tests\test_async.py:124: PytestUnknownMarkWarning: Unknown pytest.mark.imports - is this a typo?  You can register custom marks to avoid this warning - for details, see https://docs.pytest.org/en/stable/how-to/mark.html
+    @pytest.mark.imports
+
+tests\test_async.py:171
+  C:\Users\joshp\AppData\Local\Temp\blast-radius-jinja-causal\a1008-h3dsw7d7\b\tests\test_async.py:171: PytestUnknownMarkWarning: Unknown pytest.mark.imports - is this a typo?  You can register custom marks to avoid this warning - for details, see https://docs.pytest.org/en/stable/how-to/mark.html
+    @pytest.mark.imports
+
+tests\test_async.py:172
+  C:\Users\joshp\AppData\Local\Temp\blast-radius-jinja-causal\a1008-h3dsw7d7\b\tests\test_async.py:172: PytestUnknownMarkWarning: Unknown pytest.mark.includes - is this a typo?  You can register custom marks to avoid this warning - for details, see https://docs.pytest.org/en/stable/how-to/mark.html
+    @pytest.mark.includes
+
+tests\test_async.py:262
+  C:\Users\joshp\AppData\Local\Temp\blast-radius-jinja-causal\a1008-h3dsw7d7\b\tests\test_async.py:262: PytestUnknownMarkWarning: Unknown pytest.mark.core_tags - is this a typo?  You can register custom marks to avoid this warning - for details, see https://docs.pytest.org/en/stable/how-to/mark.html
+    @pytest.mark.core_tags
+
+tests\test_async.py:263
+  C:\Users\joshp\AppData\Local\Temp\blast-radius-jinja-causal\a1008-h3dsw7d7\b\tests\test_async.py:263: PytestUnknownMarkWarning: Unknown pytest.mark.for_loop - is this a typo?  You can register custom marks to avoid this warning - for details, see https://docs.pytest.org/en/stable/how-to/mark.html
+    @pytest.mark.for_loop
+
+tests\test_bytecode_cache.py:29
+  C:\Users\joshp\AppData\Local\Temp\blast-radius-jinja-causal\a1008-h3dsw7d7\b\tests\test_bytecode_cache.py:29: PytestUnknownMarkWarning: Unknown pytest.mark.byte_code_cache - is this a typo?  You can register custom marks to avoid this warning - for details, see https://docs.pytest.org/en/stable/how-to/mark.html
+    @pytest.mark.byte_code_cache
+
+tests\test_core_tags.py:21
+  C:\Users\joshp\AppData\Local\Temp\blast-radius-jinja-causal\a1008-h3dsw7d7\b\tests\test_core_tags.py:21: PytestUnknownMarkWarning: Unknown pytest.mark.core_tags - is this a typo?  You can register custom marks to avoid this warning - for details, see https://docs.pytest.org/en/stable/how-to/mark.html
+    @pytest.mark.core_tags
+
+tests\test_core_tags.py:22
+  C:\Users\joshp\AppData\Local\Temp\blast-radius-jinja-causal\a1008-h3dsw7d7\b\tests\test_core_tags.py:22: PytestUnknownMarkWarning: Unknown pytest.mark.for_loop - is this a typo?  You can register custom marks to avoid this warning - for details, see https://docs.pytest.org/en/stable/how-to/mark.html
+    @pytest.mark.for_loop
+
+tests\test_core_tags.py:239
+  C:\Users\joshp\AppData\Local\Temp\blast-radius-jinja-causal\a1008-h3dsw7d7\b\tests\test_core_tags.py:239: PytestUnknownMarkWarning: Unknown pytest.mark.core_tags - is this a typo?  You can register custom marks to avoid this warning - for details, see https://docs.pytest.org/en/stable/how-to/mark.html
+    @pytest.mark.core_tags
+
+tests\test_core_tags.py:240
+  C:\Users\joshp\AppData\Local\Temp\blast-radius-jinja-causal\a1008-h3dsw7d7\b\tests\test_core_tags.py:240: PytestUnknownMarkWarning: Unknown pytest.mark.if_condition - is this a typo?  You can register custom marks to avoid this warning - for details, see https://docs.pytest.org/en/stable/how-to/mark.html
+    @pytest.mark.if_condition
+
+tests\test_core_tags.py:283
+  C:\Users\joshp\AppData\Local\Temp\blast-radius-jinja-causal\a1008-h3dsw7d7\b\tests\test_core_tags.py:283: PytestUnknownMarkWarning: Unknown pytest.mark.core_tags - is this a typo?  You can register custom marks to avoid this warning - for details, see https://docs.pytest.org/en/stable/how-to/mark.html
+    @pytest.mark.core_tags
+
+tests\test_core_tags.py:284
+  C:\Users\joshp\AppData\Local\Temp\blast-radius-jinja-causal\a1008-h3dsw7d7\b\tests\test_core_tags.py:284: PytestUnknownMarkWarning: Unknown pytest.mark.macros - is this a typo?  You can register custom marks to avoid this warning - for details, see https://docs.pytest.org/en/stable/how-to/mark.html
+    @pytest.mark.macros
+
+tests\test_core_tags.py:383
+  C:\Users\joshp\AppData\Local\Temp\blast-radius-jinja-causal\a1008-h3dsw7d7\b\tests\test_core_tags.py:383: PytestUnknownMarkWarning: Unknown pytest.mark.core_tags - is this a typo?  You can register custom marks to avoid this warning - for details, see https://docs.pytest.org/en/stable/how-to/mark.html
+    @pytest.mark.core_tags
+
+tests\test_core_tags.py:384
+  C:\Users\joshp\AppData\Local\Temp\blast-radius-jinja-causal\a1008-h3dsw7d7\b\tests\test_core_tags.py:384: PytestUnknownMarkWarning: Unknown pytest.mark.set - is this a typo?  You can register custom marks to avoid this warning - for details, see https://docs.pytest.org/en/stable/how-to/mark.html
+    @pytest.mark.set
+
+tests\test_core_tags.py:484
+  C:\Users\joshp\AppData\Local\Temp\blast-radius-jinja-causal\a1008-h3dsw7d7\b\tests\test_core_tags.py:484: PytestUnknownMarkWarning: Unknown pytest.mark.core_tags - is this a typo?  You can register custom marks to avoid this warning - for details, see https://docs.pytest.org/en/stable/how-to/mark.html
+    @pytest.mark.core_tags
+
+tests\test_core_tags.py:485
+  C:\Users\joshp\AppData\Local\Temp\blast-radius-jinja-causal\a1008-h3dsw7d7\b\tests\test_core_tags.py:485: PytestUnknownMarkWarning: Unknown pytest.mark.with_ - is this a typo?  You can register custom marks to avoid this warning - for details, see https://docs.pytest.org/en/stable/how-to/mark.html
+    @pytest.mark.with_
+
+tests\test_debug.py:27
+  C:\Users\joshp\AppData\Local\Temp\blast-radius-jinja-causal\a1008-h3dsw7d7\b\tests\test_debug.py:27: PytestUnknownMarkWarning: Unknown pytest.mark.debug - is this a typo?  You can register custom marks to avoid this warning - for details, see https://docs.pytest.org/en/stable/how-to/mark.html
+    @pytest.mark.debug
+
+tests\test_ext.py:169
+  C:\Users\joshp\AppData\Local\Temp\blast-radius-jinja-causal\a1008-h3dsw7d7\b\tests\test_ext.py:169: PytestUnknownMarkWarning: Unknown pytest.mark.ext - is this a typo?  You can register custom marks to avoid this warning - for details, see https://docs.pytest.org/en/stable/how-to/mark.html
+    @pytest.mark.ext
+
+tests\test_ext.py:244
+  C:\Users\joshp\AppData\Local\Temp\blast-radius-jinja-causal\a1008-h3dsw7d7\b\tests\test_ext.py:244: PytestUnknownMarkWarning: Unknown pytest.mark.ext - is this a typo?  You can register custom marks to avoid this warning - for details, see https://docs.pytest.org/en/stable/how-to/mark.html
+    @pytest.mark.ext
+
+tests\test_ext.py:374
+  C:\Users\joshp\AppData\Local\Temp\blast-radius-jinja-causal\a1008-h3dsw7d7\b\tests\test_ext.py:374: PytestUnknownMarkWarning: Unknown pytest.mark.ext - is this a typo?  You can register custom marks to avoid this warning - for details, see https://docs.pytest.org/en/stable/how-to/mark.html
+    @pytest.mark.ext
+
+tests\test_ext.py:407
+  C:\Users\joshp\AppData\Local\Temp\blast-radius-jinja-causal\a1008-h3dsw7d7\b\tests\test_ext.py:407: PytestUnknownMarkWarning: Unknown pytest.mark.ext - is this a typo?  You can register custom marks to avoid this warning - for details, see https://docs.pytest.org/en/stable/how-to/mark.html
+    @pytest.mark.ext
+
+tests\test_ext.py:489
+  C:\Users\joshp\AppData\Local\Temp\blast-radius-jinja-causal\a1008-h3dsw7d7\b\tests\test_ext.py:489: PytestUnknownMarkWarning: Unknown pytest.mark.ext - is this a typo?  You can register custom marks to avoid this warning - for details, see https://docs.pytest.org/en/stable/how-to/mark.html
+    @pytest.mark.ext
+
+tests\test_filters.py:26
+  C:\Users\joshp\AppData\Local\Temp\blast-radius-jinja-causal\a1008-h3dsw7d7\b\tests\test_filters.py:26: PytestUnknownMarkWarning: Unknown pytest.mark.filter - is this a typo?  You can register custom marks to avoid this warning - for details, see https://docs.pytest.org/en/stable/how-to/mark.html
+    @pytest.mark.filter
+
+tests\test_imports.py:29
+  C:\Users\joshp\AppData\Local\Temp\blast-radius-jinja-causal\a1008-h3dsw7d7\b\tests\test_imports.py:29: PytestUnknownMarkWarning: Unknown pytest.mark.imports - is this a typo?  You can register custom marks to avoid this warning - for details, see https://docs.pytest.org/en/stable/how-to/mark.html
+    @pytest.mark.imports
+
+tests\test_imports.py:99
+  C:\Users\joshp\AppData\Local\Temp\blast-radius-jinja-causal\a1008-h3dsw7d7\b\tests\test_imports.py:99: PytestUnknownMarkWarning: Unknown pytest.mark.imports - is this a typo?  You can register custom marks to avoid this warning - for details, see https://docs.pytest.org/en/stable/how-to/mark.html
+    @pytest.mark.imports
+
+tests\test_imports.py:100
+  C:\Users\joshp\AppData\Local\Temp\blast-radius-jinja-causal\a1008-h3dsw7d7\b\tests\test_imports.py:100: PytestUnknownMarkWarning: Unknown pytest.mark.includes - is this a typo?  You can register custom marks to avoid this warning - for details, see https://docs.pytest.org/en/stable/how-to/mark.html
+    @pytest.mark.includes
+
+tests\test_inheritance.py:80
+  C:\Users\joshp\AppData\Local\Temp\blast-radius-jinja-causal\a1008-h3dsw7d7\b\tests\test_inheritance.py:80: PytestUnknownMarkWarning: Unknown pytest.mark.inheritance - is this a typo?  You can register custom marks to avoid this warning - for details, see https://docs.pytest.org/en/stable/how-to/mark.html
+    @pytest.mark.inheritance
+
+tests\test_inheritance.py:203
+  C:\Users\joshp\AppData\Local\Temp\blast-radius-jinja-causal\a1008-h3dsw7d7\b\tests\test_inheritance.py:203: PytestUnknownMarkWarning: Unknown pytest.mark.inheritance - is this a typo?  You can register custom marks to avoid this warning - for details, see https://docs.pytest.org/en/stable/how-to/mark.html
+    @pytest.mark.inheritance
+
+tests\test_lexnparse.py:28
+  C:\Users\joshp\AppData\Local\Temp\blast-radius-jinja-causal\a1008-h3dsw7d7\b\tests\test_lexnparse.py:28: PytestUnknownMarkWarning: Unknown pytest.mark.lexnparse - is this a typo?  You can register custom marks to avoid this warning - for details, see https://docs.pytest.org/en/stable/how-to/mark.html
+    @pytest.mark.lexnparse
+
+tests\test_lexnparse.py:29
+  C:\Users\joshp\AppData\Local\Temp\blast-radius-jinja-causal\a1008-h3dsw7d7\b\tests\test_lexnparse.py:29: PytestUnknownMarkWarning: Unknown pytest.mark.tokenstream - is this a typo?  You can register custom marks to avoid this warning - for details, see https://docs.pytest.org/en/stable/how-to/mark.html
+    @pytest.mark.tokenstream
+
+tests\test_lexnparse.py:56
+  C:\Users\joshp\AppData\Local\Temp\blast-radius-jinja-causal\a1008-h3dsw7d7\b\tests\test_lexnparse.py:56: PytestUnknownMarkWarning: Unknown pytest.mark.lexnparse - is this a typo?  You can register custom marks to avoid this warning - for details, see https://docs.pytest.org/en/stable/how-to/mark.html
+    @pytest.mark.lexnparse
+
+tests\test_lexnparse.py:57
+  C:\Users\joshp\AppData\Local\Temp\blast-radius-jinja-causal\a1008-h3dsw7d7\b\tests\test_lexnparse.py:57: PytestUnknownMarkWarning: Unknown pytest.mark.lexer - is this a typo?  You can register custom marks to avoid this warning - for details, see https://docs.pytest.org/en/stable/how-to/mark.html
+    @pytest.mark.lexer
+
+tests\test_lexnparse.py:169
+  C:\Users\joshp\AppData\Local\Temp\blast-radius-jinja-causal\a1008-h3dsw7d7\b\tests\test_lexnparse.py:169: PytestUnknownMarkWarning: Unknown pytest.mark.lexnparse - is this a typo?  You can register custom marks to avoid this warning - for details, see https://docs.pytest.org/en/stable/how-to/mark.html
+    @pytest.mark.lexnparse
+
+tests\test_lexnparse.py:170
+  C:\Users\joshp\AppData\Local\Temp\blast-radius-jinja-causal\a1008-h3dsw7d7\b\tests\test_lexnparse.py:170: PytestUnknownMarkWarning: Unknown pytest.mark.parser - is this a typo?  You can register custom marks to avoid this warning - for details, see https://docs.pytest.org/en/stable/how-to/mark.html
+    @pytest.mark.parser
+
+tests\test_lexnparse.py:286
+  C:\Users\joshp\AppData\Local\Temp\blast-radius-jinja-causal\a1008-h3dsw7d7\b\tests\test_lexnparse.py:286: PytestUnknownMarkWarning: Unknown pytest.mark.lexnparse - is this a typo?  You can register custom marks to avoid this warning - for details, see https://docs.pytest.org/en/stable/how-to/mark.html
+    @pytest.mark.lexnparse
+
+tests\test_lexnparse.py:287
+  C:\Users\joshp\AppData\Local\Temp\blast-radius-jinja-causal\a1008-h3dsw7d7\b\tests\test_lexnparse.py:287: PytestUnknownMarkWarning: Unknown pytest.mark.syntax - is this a typo?  You can register custom marks to avoid this warning - for details, see https://docs.pytest.org/en/stable/how-to/mark.html
+    @pytest.mark.syntax
+
+tests\test_lexnparse.py:487
+  C:\Users\joshp\AppData\Local\Temp\blast-radius-jinja-causal\a1008-h3dsw7d7\b\tests\test_lexnparse.py:487: PytestUnknownMarkWarning: Unknown pytest.mark.lexnparse - is this a typo?  You can register custom marks to avoid this warning - for details, see https://docs.pytest.org/en/stable/how-to/mark.html
+    @pytest.mark.lexnparse
+
+tests\test_lexnparse.py:488
+  C:\Users\joshp\AppData\Local\Temp\blast-radius-jinja-causal\a1008-h3dsw7d7\b\tests\test_lexnparse.py:488: PytestUnknownMarkWarning: Unknown pytest.mark.lstripblocks - is this a typo?  You can register custom marks to avoid this warning - for details, see https://docs.pytest.org/en/stable/how-to/mark.html
+    @pytest.mark.lstripblocks
+
+tests\test_loader.py:24
+  C:\Users\joshp\AppData\Local\Temp\blast-radius-jinja-causal\a1008-h3dsw7d7\b\tests\test_loader.py:24: PytestUnknownMarkWarning: Unknown pytest.mark.loaders - is this a typo?  You can register custom marks to avoid this warning - for details, see https://docs.pytest.org/en/stable/how-to/mark.html
+    @pytest.mark.loaders
+
+tests\test_loader.py:122
+  C:\Users\joshp\AppData\Local\Temp\blast-radius-jinja-causal\a1008-h3dsw7d7\b\tests\test_loader.py:122: PytestUnknownMarkWarning: Unknown pytest.mark.loaders - is this a typo?  You can register custom marks to avoid this warning - for details, see https://docs.pytest.org/en/stable/how-to/mark.html
+    @pytest.mark.loaders
+
+tests\test_loader.py:123
+  C:\Users\joshp\AppData\Local\Temp\blast-radius-jinja-causal\a1008-h3dsw7d7\b\tests\test_loader.py:123: PytestUnknownMarkWarning: Unknown pytest.mark.moduleloader - is this a typo?  You can register custom marks to avoid this warning - for details, see https://docs.pytest.org/en/stable/how-to/mark.html
+    @pytest.mark.moduleloader
+
+tests\test_regression.py:19
+  C:\Users\joshp\AppData\Local\Temp\blast-radius-jinja-causal\a1008-h3dsw7d7\b\tests\test_regression.py:19: PytestUnknownMarkWarning: Unknown pytest.mark.regression - is this a typo?  You can register custom marks to avoid this warning - for details, see https://docs.pytest.org/en/stable/how-to/mark.html
+    @pytest.mark.regression
+
+tests\test_regression.py:80
+  C:\Users\joshp\AppData\Local\Temp\blast-radius-jinja-causal\a1008-h3dsw7d7\b\tests\test_regression.py:80: PytestUnknownMarkWarning: Unknown pytest.mark.regression - is this a typo?  You can register custom marks to avoid this warning - for details, see https://docs.pytest.org/en/stable/how-to/mark.html
+    @pytest.mark.regression
+
+tests\test_security.py:44
+  C:\Users\joshp\AppData\Local\Temp\blast-radius-jinja-causal\a1008-h3dsw7d7\b\tests\test_security.py:44: PytestUnknownMarkWarning: Unknown pytest.mark.sandbox - is this a typo?  You can register custom marks to avoid this warning - for details, see https://docs.pytest.org/en/stable/how-to/mark.html
+    @pytest.mark.sandbox
+
+tests\test_security.py:168
+  C:\Users\joshp\AppData\Local\Temp\blast-radius-jinja-causal\a1008-h3dsw7d7\b\tests\test_security.py:168: PytestUnknownMarkWarning: Unknown pytest.mark.sandbox - is this a typo?  You can register custom marks to avoid this warning - for details, see https://docs.pytest.org/en/stable/how-to/mark.html
+    @pytest.mark.sandbox
+
+tests\test_security.py:192
+  C:\Users\joshp\AppData\Local\Temp\blast-radius-jinja-causal\a1008-h3dsw7d7\b\tests\test_security.py:192: PytestUnknownMarkWarning: Unknown pytest.mark.sandbox - is this a typo?  You can register custom marks to avoid this warning - for details, see https://docs.pytest.org/en/stable/how-to/mark.html
+    @pytest.mark.sandbox
+
+tests\test_tests.py:16
+  C:\Users\joshp\AppData\Local\Temp\blast-radius-jinja-causal\a1008-h3dsw7d7\b\tests\test_tests.py:16: PytestUnknownMarkWarning: Unknown pytest.mark.test_tests - is this a typo?  You can register custom marks to avoid this warning - for details, see https://docs.pytest.org/en/stable/how-to/mark.html
+    @pytest.mark.test_tests
+
+tests\test_utils.py:21
+  C:\Users\joshp\AppData\Local\Temp\blast-radius-jinja-causal\a1008-h3dsw7d7\b\tests\test_utils.py:21: PytestUnknownMarkWarning: Unknown pytest.mark.utils - is this a typo?  You can register custom marks to avoid this warning - for details, see https://docs.pytest.org/en/stable/how-to/mark.html
+    @pytest.mark.utils
+
+tests\test_utils.py:22
+  C:\Users\joshp\AppData\Local\Temp\blast-radius-jinja-causal\a1008-h3dsw7d7\b\tests\test_utils.py:22: PytestUnknownMarkWarning: Unknown pytest.mark.lrucache - is this a typo?  You can register custom marks to avoid this warning - for details, see https://docs.pytest.org/en/stable/how-to/mark.html
+    @pytest.mark.lrucache
+
+tests\test_utils.py:48
+  C:\Users\joshp\AppData\Local\Temp\blast-radius-jinja-causal\a1008-h3dsw7d7\b\tests\test_utils.py:48: PytestUnknownMarkWarning: Unknown pytest.mark.utils - is this a typo?  You can register custom marks to avoid this warning - for details, see https://docs.pytest.org/en/stable/how-to/mark.html
+    @pytest.mark.utils
+
+tests\test_utils.py:49
+  C:\Users\joshp\AppData\Local\Temp\blast-radius-jinja-causal\a1008-h3dsw7d7\b\tests\test_utils.py:49: PytestUnknownMarkWarning: Unknown pytest.mark.helpers - is this a typo?  You can register custom marks to avoid this warning - for details, see https://docs.pytest.org/en/stable/how-to/mark.html
+    @pytest.mark.helpers
+
+tests\test_utils.py:78
+  C:\Users\joshp\AppData\Local\Temp\blast-radius-jinja-causal\a1008-h3dsw7d7\b\tests\test_utils.py:78: PytestUnknownMarkWarning: Unknown pytest.mark.utils - is this a typo?  You can register custom marks to avoid this warning - for details, see https://docs.pytest.org/en/stable/how-to/mark.html
+    @pytest.mark.utils
+
+tests\test_utils.py:79
+  C:\Users\joshp\AppData\Local\Temp\blast-radius-jinja-causal\a1008-h3dsw7d7\b\tests\test_utils.py:79: PytestUnknownMarkWarning: Unknown pytest.mark.escapeUrlizeTarget - is this a typo?  You can register custom marks to avoid this warning - for details, see https://docs.pytest.org/en/stable/how-to/mark.html
+    @pytest.mark.escapeUrlizeTarget
+
+tests/test_core_tags.py::TestSet::test_block_escaping_filtered
+  <template>:20: DeprecationWarning: 'soft_unicode' has been renamed to 'soft_str'. The old name will be removed in MarkupSafe 2.1.
+
+tests/test_core_tags.py::TestSet::test_block_filtered
+tests/test_core_tags.py::TestSet::test_block_filtered
+  <template>:19: DeprecationWarning: 'soft_unicode' has been renamed to 'soft_str'. The old name will be removed in MarkupSafe 2.1.
+
+tests/test_core_tags.py::TestSet::test_block_filtered
+tests/test_core_tags.py::TestSet::test_block_filtered_set
+tests/test_filters.py::TestFilter::test_string
+  C:\Users\joshp\AppData\Local\Temp\blast-radius-jinja-causal\a1008-h3dsw7d7\b\jinja2\environment.py:1007: DeprecationWarning: 'soft_unicode' has been renamed to 'soft_str'. The old name will be removed in MarkupSafe 2.1.
+    return concat(self.root_render_func(self.new_context(vars)))
+
+tests/test_core_tags.py::TestSet::test_block_filtered
+tests/test_core_tags.py::TestSet::test_block_filtered_set
+  C:\Users\joshp\AppData\Local\Temp\blast-radius-jinja-causal\a1008-h3dsw7d7\b\jinja2\environment.py:1154: DeprecationWarning: 'soft_unicode' has been renamed to 'soft_str'. The old name will be removed in MarkupSafe 2.1.
+    body_stream = list(template.root_render_func(context))
+
+tests/test_core_tags.py::TestSet::test_block_filtered_set
+tests/test_core_tags.py::TestSet::test_block_filtered_set
+  <template>:31: DeprecationWarning: 'soft_unicode' has been renamed to 'soft_str'. The old name will be removed in MarkupSafe 2.1.
+
+tests/test_ext.py::TestInternationalization::test_trans_stringformatting
+  <template>:13: DeprecationWarning: 'soft_unicode' has been renamed to 'soft_str'. The old name will be removed in MarkupSafe 2.1.
+
+tests/test_filters.py: 16 warnings
+tests/test_lexnparse.py: 2 warnings
+  C:\Users\joshp\AppData\Local\Temp\blast-radius-jinja-causal\a1008-h3dsw7d7\b\jinja2\nodes.py:664: DeprecationWarning: 'soft_unicode' has been renamed to 'soft_str'. The old name will be removed in MarkupSafe 2.1.
+    return filter_(*args, **kwargs)
+
+tests/test_filters.py: 10 warnings
+  <template>:12: DeprecationWarning: 'soft_unicode' has been renamed to 'soft_str'. The old name will be removed in MarkupSafe 2.1.
+
+tests/test_filters.py::TestFilter::test_block
+tests/test_filters.py::TestFilter::test_filtertag
+  <template>:17: DeprecationWarning: 'soft_unicode' has been renamed to 'soft_str'. The old name will be removed in MarkupSafe 2.1.
+
+tests/test_lexnparse.py::TestLexer::test_balancing
+tests/test_lexnparse.py::TestLexer::test_balancing
+tests/test_lexnparse.py::TestLexer::test_balancing
+  <template>:14: DeprecationWarning: 'soft_unicode' has been renamed to 'soft_str'. The old name will be removed in MarkupSafe 2.1.
+
+tests/test_nativetypes.py::TestNativeEnvironment::test_constant_dunder_to_string
+  C:\Users\joshp\AppData\Local\Temp\blast-radius-jinja-causal\a1008-h3dsw7d7\b\jinja2\nativetypes.py:83: DeprecationWarning: 'soft_unicode' has been renamed to 'soft_str'. The old name will be removed in MarkupSafe 2.1.
+    const = child.as_const(frame.eval_ctx)
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+- generated xml file: C:\Users\joshp\Desktop\Blast-Radius\exploratory\causal\verification\jinja-results-arms\pr-1008\base.xml -
+=========================== short test summary info ===========================
+FAILED tests/test_debug.py::TestDebug::test_runtime_error - AssertionError: T...
+FAILED tests/test_nativetypes.py::TestNativeEnvironment::test_undefined_native_return
+=========== 2 failed, 541 passed, 3 skipped, 109 warnings in 4.25s ============

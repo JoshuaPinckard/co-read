@@ -1,0 +1,160 @@
+============================= test session starts =============================
+platform win32 -- Python 3.11.9, pytest-7.4.4, pluggy-unknown
+benchmark: 4.0.0 (defaults: timer=time.perf_counter disable_gc=False min_rounds=5 min_time=0.000005 max_time=1.0 calibration_precision=10 warmup=False warmup_iterations=100000)
+rootdir: C:\Users\joshp\AppData\Local\Temp\blast-radius-pluggy-causal\a388-q78tyosl\t
+configfile: tox.ini
+testpaths: testing
+plugins: benchmark-4.0.0
+collected 86 items
+
+testing\test_details.py .....                                            [  5%]
+testing\test_helpers.py ......                                           [ 12%]
+testing\test_hookcaller.py ....................                          [ 36%]
+testing\test_invocations.py ...F.....                                    [ 46%]
+testing\test_multicall.py ........FF                                     [ 58%]
+testing\test_pluginmanager.py ................................           [ 95%]
+testing\test_tracer.py ....                                              [100%]
+
+================================== FAILURES ===================================
+_______________________________ test_call_order _______________________________
+
+pm = <pluggy._manager.PluginManager object at 0x0000020D042D9D80>
+
+    def test_call_order(pm: PluginManager) -> None:
+        class Api:
+            @hookspec
+            def hello(self, arg):
+                "api hook 1"
+    
+        pm.add_hookspecs(Api)
+    
+        class Plugin1:
+            @hookimpl
+            def hello(self, arg):
+                return 1
+    
+        class Plugin2:
+            @hookimpl
+            def hello(self, arg):
+                return 2
+    
+        class Plugin3:
+            @hookimpl
+            def hello(self, arg):
+                return 3
+    
+        class Plugin4:
+            @hookimpl(hookwrapper=True)
+            def hello(self, arg):
+                assert arg == 0
+                outcome = yield
+                assert outcome.get_result() == [3, 2, 1]
+                assert outcome.exception is None
+                assert outcome.excinfo is None
+    
+        pm.register(Plugin1())
+        pm.register(Plugin2())
+        pm.register(Plugin3())
+        pm.register(Plugin4())  # hookwrapper should get same list result
+>       res = pm.hook.hello(arg=0)
+
+testing\test_invocations.py:110: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+src\pluggy\_hooks.py:409: in __call__
+    return self._hookexec(self.name, self._hookimpls, kwargs, firstresult)
+src\pluggy\_manager.py:126: in _hookexec
+    return self._inner_hookexec(hook_name, methods, kwargs, firstresult)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+self = <test_invocations.test_call_order.<locals>.Plugin4 object at 0x0000020D0429B290>
+arg = 0
+
+    @hookimpl(hookwrapper=True)
+    def hello(self, arg):
+        assert arg == 0
+        outcome = yield
+        assert outcome.get_result() == [3, 2, 1]
+>       assert outcome.exception is None
+E       AttributeError: '_Result' object has no attribute 'exception'
+
+testing\test_invocations.py:103: AttributeError
+___________________ test_hookwrapper_exception[ValueError] ____________________
+
+exc = <class 'ValueError'>
+
+    @pytest.mark.parametrize("exc", [ValueError, SystemExit])
+    def test_hookwrapper_exception(exc: "Type[BaseException]") -> None:
+        out = []
+    
+        @hookimpl(hookwrapper=True)
+        def m1():
+            out.append("m1 init")
+            result = yield
+            assert isinstance(result.exception, exc)
+            assert result.excinfo[0] == exc
+            out.append("m1 finish")
+    
+        @hookimpl
+        def m2():
+            raise exc
+    
+        with pytest.raises(exc):
+>           MC([m2, m1], {})
+
+testing\test_multicall.py:162: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+testing\test_multicall.py:31: in MC
+    return caller("foo", hookfuncs, kwargs, firstresult)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+    @hookimpl(hookwrapper=True)
+    def m1():
+        out.append("m1 init")
+        result = yield
+>       assert isinstance(result.exception, exc)
+E       AttributeError: '_Result' object has no attribute 'exception'
+
+testing\test_multicall.py:153: AttributeError
+___________________ test_hookwrapper_exception[SystemExit] ____________________
+
+exc = <class 'SystemExit'>
+
+    @pytest.mark.parametrize("exc", [ValueError, SystemExit])
+    def test_hookwrapper_exception(exc: "Type[BaseException]") -> None:
+        out = []
+    
+        @hookimpl(hookwrapper=True)
+        def m1():
+            out.append("m1 init")
+            result = yield
+            assert isinstance(result.exception, exc)
+            assert result.excinfo[0] == exc
+            out.append("m1 finish")
+    
+        @hookimpl
+        def m2():
+            raise exc
+    
+        with pytest.raises(exc):
+>           MC([m2, m1], {})
+
+testing\test_multicall.py:162: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+testing\test_multicall.py:31: in MC
+    return caller("foo", hookfuncs, kwargs, firstresult)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+    @hookimpl(hookwrapper=True)
+    def m1():
+        out.append("m1 init")
+        result = yield
+>       assert isinstance(result.exception, exc)
+E       AttributeError: '_Result' object has no attribute 'exception'
+
+testing\test_multicall.py:153: AttributeError
+- generated xml file: C:\Users\joshp\Desktop\Blast-Radius\exploratory\causal\verification\pluggy-results-arms\pr-388\tests-only.xml -
+=========================== short test summary info ===========================
+FAILED testing/test_invocations.py::test_call_order - AttributeError: '_Resul...
+FAILED testing/test_multicall.py::test_hookwrapper_exception[ValueError] - At...
+FAILED testing/test_multicall.py::test_hookwrapper_exception[SystemExit] - At...
+======================== 3 failed, 83 passed in 0.57s =========================

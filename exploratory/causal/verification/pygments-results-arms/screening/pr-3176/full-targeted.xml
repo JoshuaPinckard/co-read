@@ -1,0 +1,1 @@
+<?xml version="1.0" encoding="utf-8"?><testsuites name="pytest tests"><testsuite name="pytest" errors="0" failures="0" skipped="0" tests="1" time="0.093" timestamp="2026-08-24T08:24:47.858597-07:00" hostname="JoshP"><testcase classname="tests.snippets.cpp.test_function_after_namespace.txt" name="" time="0.013" /></testsuite></testsuites>

@@ -1,0 +1,271 @@
+{
+  "actual_tree": "24f8d0c330254e2fbabaa49c6c64a779b0767ea3",
+  "both_sides_touched_paths": [],
+  "completed_at_utc": "2026-08-24T23:26:16.400+00:00",
+  "developer_intervention_proxy": false,
+  "materialization": "recorded merge commit (tree exactly matches mechanical tree)",
+  "mechanical_commit": "2c8cd3ac958a7eb316d67f2d316c27086c4c0369",
+  "mechanical_tree": "24f8d0c330254e2fbabaa49c6c64a779b0767ea3",
+  "merge_base": "61b69e967e525bd502f5bf42def4d551e761fe0e",
+  "merge_commit": "2c8cd3ac958a7eb316d67f2d316c27086c4c0369",
+  "newest_first_ordinal": 1,
+  "outcome": "evaluated_green",
+  "parent_subjects": [
+    "Add support of `pathlib.Path` to `edit` (#3781)",
+    "Add FAQ entry about `UnicodeEncodeError` on Windows"
+  ],
+  "parents": [
+    "e1fd5946ab26aaf372009eaff1acf947140b40fb",
+    "131c86aadddfa5cb6dca8339c9d6294c4eacb8ac"
+  ],
+  "runs": {
+    "merged": [
+      {
+        "after": {
+          "head": "2c8cd3ac958a7eb316d67f2d316c27086c4c0369",
+          "head_tree": "24f8d0c330254e2fbabaa49c6c64a779b0767ea3",
+          "index_tree": "24f8d0c330254e2fbabaa49c6c64a779b0767ea3",
+          "tracked_diff_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "tracked_status": ""
+        },
+        "artifacts": {
+          "exit_status": "C:\\Users\\joshp\\Desktop\\Blast-Radius\\exploratory\\conflicts\\semantic-runs\\click\\merges\\2c8cd3ac958a7eb316d67f2d316c27086c4c0369\\merged-attempt-1\\exit-status.txt",
+          "junit": "C:\\Users\\joshp\\Desktop\\Blast-Radius\\exploratory\\conflicts\\semantic-runs\\click\\merges\\2c8cd3ac958a7eb316d67f2d316c27086c4c0369\\merged-attempt-1\\junit.xml",
+          "stderr": "C:\\Users\\joshp\\Desktop\\Blast-Radius\\exploratory\\conflicts\\semantic-runs\\click\\merges\\2c8cd3ac958a7eb316d67f2d316c27086c4c0369\\merged-attempt-1\\stderr.txt",
+          "stdout": "C:\\Users\\joshp\\Desktop\\Blast-Radius\\exploratory\\conflicts\\semantic-runs\\click\\merges\\2c8cd3ac958a7eb316d67f2d316c27086c4c0369\\merged-attempt-1\\stdout.txt",
+          "summary_line": "C:\\Users\\joshp\\Desktop\\Blast-Radius\\exploratory\\conflicts\\semantic-runs\\click\\merges\\2c8cd3ac958a7eb316d67f2d316c27086c4c0369\\merged-attempt-1\\summary-line.txt"
+        },
+        "attempt": 1,
+        "before": {
+          "head": "2c8cd3ac958a7eb316d67f2d316c27086c4c0369",
+          "head_tree": "24f8d0c330254e2fbabaa49c6c64a779b0767ea3",
+          "index_tree": "24f8d0c330254e2fbabaa49c6c64a779b0767ea3",
+          "tracked_diff_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "tracked_status": ""
+        },
+        "checkout_commit": "2c8cd3ac958a7eb316d67f2d316c27086c4c0369",
+        "checkout_tree": "24f8d0c330254e2fbabaa49c6c64a779b0767ea3",
+        "classification": "green",
+        "command": [
+          "C:\\Users\\joshp\\Desktop\\Blast-Radius-semantic-scratch-20260824\\click-test-env-v2\\Scripts\\python.exe",
+          "-m",
+          "pytest",
+          "--junitxml=C:\\Users\\joshp\\Desktop\\Blast-Radius\\exploratory\\conflicts\\semantic-runs\\click\\merges\\2c8cd3ac958a7eb316d67f2d316c27086c4c0369\\merged-attempt-1\\junit.xml"
+        ],
+        "completed_at_utc": "2026-08-24T23:26:12.284+00:00",
+        "cwd": "C:\\Users\\joshp\\Desktop\\Blast-Radius-semantic-scratch-20260824\\semantic-worktrees\\2c8cd3ac958a-merged-attempt-1",
+        "elapsed_seconds": 13.21286979992874,
+        "environment": {
+          "GIT_NO_LAZY_FETCH": "1",
+          "PYTEST_DISABLE_PLUGIN_AUTOLOAD": "1",
+          "PYTHONDONTWRITEBYTECODE": "1",
+          "PYTHONHASHSEED": "0",
+          "PYTHONNOUSERSITE": "1",
+          "PYTHONPATH": "C:\\Users\\joshp\\Desktop\\Blast-Radius-semantic-scratch-20260824\\semantic-worktrees\\2c8cd3ac958a-merged-attempt-1\\src;C:\\Users\\joshp\\Desktop\\Blast-Radius\\instruments\\posture\\python39_compat"
+        },
+        "exit_code": 0,
+        "failure_text_signature_sha256": "1fbbf32222232b3381cc357ca6a1fab68d3b2dedef51809b63697acec0faef62",
+        "junit": {
+          "case_count": 2016,
+          "cases_sha256": "ee8322425d474f119ff79215b44b44a15074d8bee40b9893a60633149907b59d",
+          "counts": {
+            "error": 0,
+            "failure": 0,
+            "passed": 1907,
+            "skipped": 109
+          },
+          "failing_cases": []
+        },
+        "junit_sha256": "a4e176cab3cb41ee7453b711b75357abd66f56d3834cbd6ae7e1f85e8d16270c",
+        "merge_commit": "2c8cd3ac958a7eb316d67f2d316c27086c4c0369",
+        "process_launch_error": null,
+        "protocol_sha256": "021a620bdcec20d3f59f59c4496599c45256aa66a241e5e3cd81bd01a2f01822",
+        "pytest_summary_line": "======= 1907 passed, 108 skipped, 31000 deselected, 1 xfailed in 9.98s ========",
+        "role": "merged",
+        "schema_version": 1,
+        "source_root": "C:\\Users\\joshp\\Desktop\\Blast-Radius-semantic-scratch-20260824\\semantic-worktrees\\2c8cd3ac958a-merged-attempt-1\\src",
+        "started_at_utc": "2026-08-24T23:25:54.198+00:00",
+        "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "stdout_sha256": "3537b06dbf912bb46b67ca9e514ef8389ae69dd4f00ec37982fc9c1cb9dc8157",
+        "timed_out": false,
+        "timeout_detail": null,
+        "timeout_seconds": 120.0,
+        "timeout_termination": null,
+        "tracked_state_unchanged": true,
+        "worktree_cleanup": {
+          "filesystem_fallback_used": false,
+          "git_worktree_remove_exit": 0,
+          "git_worktree_remove_stderr": "",
+          "removed": true
+        }
+      }
+    ],
+    "parent1": [
+      {
+        "after": {
+          "head": "e1fd5946ab26aaf372009eaff1acf947140b40fb",
+          "head_tree": "5492745346afdabe6a1d3086b1395f2806d4e82d",
+          "index_tree": "5492745346afdabe6a1d3086b1395f2806d4e82d",
+          "tracked_diff_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "tracked_status": ""
+        },
+        "artifacts": {
+          "exit_status": "C:\\Users\\joshp\\Desktop\\Blast-Radius\\exploratory\\conflicts\\semantic-runs\\click\\merges\\2c8cd3ac958a7eb316d67f2d316c27086c4c0369\\parent1-attempt-1\\exit-status.txt",
+          "junit": "C:\\Users\\joshp\\Desktop\\Blast-Radius\\exploratory\\conflicts\\semantic-runs\\click\\merges\\2c8cd3ac958a7eb316d67f2d316c27086c4c0369\\parent1-attempt-1\\junit.xml",
+          "stderr": "C:\\Users\\joshp\\Desktop\\Blast-Radius\\exploratory\\conflicts\\semantic-runs\\click\\merges\\2c8cd3ac958a7eb316d67f2d316c27086c4c0369\\parent1-attempt-1\\stderr.txt",
+          "stdout": "C:\\Users\\joshp\\Desktop\\Blast-Radius\\exploratory\\conflicts\\semantic-runs\\click\\merges\\2c8cd3ac958a7eb316d67f2d316c27086c4c0369\\parent1-attempt-1\\stdout.txt",
+          "summary_line": "C:\\Users\\joshp\\Desktop\\Blast-Radius\\exploratory\\conflicts\\semantic-runs\\click\\merges\\2c8cd3ac958a7eb316d67f2d316c27086c4c0369\\parent1-attempt-1\\summary-line.txt"
+        },
+        "attempt": 1,
+        "before": {
+          "head": "e1fd5946ab26aaf372009eaff1acf947140b40fb",
+          "head_tree": "5492745346afdabe6a1d3086b1395f2806d4e82d",
+          "index_tree": "5492745346afdabe6a1d3086b1395f2806d4e82d",
+          "tracked_diff_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "tracked_status": ""
+        },
+        "checkout_commit": "e1fd5946ab26aaf372009eaff1acf947140b40fb",
+        "checkout_tree": "5492745346afdabe6a1d3086b1395f2806d4e82d",
+        "classification": "green",
+        "command": [
+          "C:\\Users\\joshp\\Desktop\\Blast-Radius-semantic-scratch-20260824\\click-test-env-v2\\Scripts\\python.exe",
+          "-m",
+          "pytest",
+          "--junitxml=C:\\Users\\joshp\\Desktop\\Blast-Radius\\exploratory\\conflicts\\semantic-runs\\click\\merges\\2c8cd3ac958a7eb316d67f2d316c27086c4c0369\\parent1-attempt-1\\junit.xml"
+        ],
+        "completed_at_utc": "2026-08-24T23:25:23.704+00:00",
+        "cwd": "C:\\Users\\joshp\\Desktop\\Blast-Radius-semantic-scratch-20260824\\semantic-worktrees\\2c8cd3ac958a-parent1-attempt-1",
+        "elapsed_seconds": 10.306477100006305,
+        "environment": {
+          "GIT_NO_LAZY_FETCH": "1",
+          "PYTEST_DISABLE_PLUGIN_AUTOLOAD": "1",
+          "PYTHONDONTWRITEBYTECODE": "1",
+          "PYTHONHASHSEED": "0",
+          "PYTHONNOUSERSITE": "1",
+          "PYTHONPATH": "C:\\Users\\joshp\\Desktop\\Blast-Radius-semantic-scratch-20260824\\semantic-worktrees\\2c8cd3ac958a-parent1-attempt-1\\src;C:\\Users\\joshp\\Desktop\\Blast-Radius\\instruments\\posture\\python39_compat"
+        },
+        "exit_code": 0,
+        "failure_text_signature_sha256": "1fbbf32222232b3381cc357ca6a1fab68d3b2dedef51809b63697acec0faef62",
+        "junit": {
+          "case_count": 2016,
+          "cases_sha256": "ee8322425d474f119ff79215b44b44a15074d8bee40b9893a60633149907b59d",
+          "counts": {
+            "error": 0,
+            "failure": 0,
+            "passed": 1907,
+            "skipped": 109
+          },
+          "failing_cases": []
+        },
+        "junit_sha256": "7acd22246ac6947d9a3aee8ce7dcc208ed4de669906c78423ac99683a9e257b9",
+        "merge_commit": "2c8cd3ac958a7eb316d67f2d316c27086c4c0369",
+        "process_launch_error": null,
+        "protocol_sha256": "021a620bdcec20d3f59f59c4496599c45256aa66a241e5e3cd81bd01a2f01822",
+        "pytest_summary_line": "======= 1907 passed, 108 skipped, 31000 deselected, 1 xfailed in 7.86s ========",
+        "role": "parent1",
+        "schema_version": 1,
+        "source_root": "C:\\Users\\joshp\\Desktop\\Blast-Radius-semantic-scratch-20260824\\semantic-worktrees\\2c8cd3ac958a-parent1-attempt-1\\src",
+        "started_at_utc": "2026-08-24T23:25:09.643+00:00",
+        "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "stdout_sha256": "8601365d17d15f811ea5c205b4e7913730cffeef896391e48125fa710fe2c9fc",
+        "timed_out": false,
+        "timeout_detail": null,
+        "timeout_seconds": 120.0,
+        "timeout_termination": null,
+        "tracked_state_unchanged": true,
+        "worktree_cleanup": {
+          "filesystem_fallback_used": false,
+          "git_worktree_remove_exit": 0,
+          "git_worktree_remove_stderr": "",
+          "removed": true
+        }
+      }
+    ],
+    "parent2": [
+      {
+        "after": {
+          "head": "131c86aadddfa5cb6dca8339c9d6294c4eacb8ac",
+          "head_tree": "6f728a308123d75d4229c73d875488afc393b4af",
+          "index_tree": "6f728a308123d75d4229c73d875488afc393b4af",
+          "tracked_diff_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "tracked_status": ""
+        },
+        "artifacts": {
+          "exit_status": "C:\\Users\\joshp\\Desktop\\Blast-Radius\\exploratory\\conflicts\\semantic-runs\\click\\merges\\2c8cd3ac958a7eb316d67f2d316c27086c4c0369\\parent2-attempt-1\\exit-status.txt",
+          "junit": "C:\\Users\\joshp\\Desktop\\Blast-Radius\\exploratory\\conflicts\\semantic-runs\\click\\merges\\2c8cd3ac958a7eb316d67f2d316c27086c4c0369\\parent2-attempt-1\\junit.xml",
+          "stderr": "C:\\Users\\joshp\\Desktop\\Blast-Radius\\exploratory\\conflicts\\semantic-runs\\click\\merges\\2c8cd3ac958a7eb316d67f2d316c27086c4c0369\\parent2-attempt-1\\stderr.txt",
+          "stdout": "C:\\Users\\joshp\\Desktop\\Blast-Radius\\exploratory\\conflicts\\semantic-runs\\click\\merges\\2c8cd3ac958a7eb316d67f2d316c27086c4c0369\\parent2-attempt-1\\stdout.txt",
+          "summary_line": "C:\\Users\\joshp\\Desktop\\Blast-Radius\\exploratory\\conflicts\\semantic-runs\\click\\merges\\2c8cd3ac958a7eb316d67f2d316c27086c4c0369\\parent2-attempt-1\\summary-line.txt"
+        },
+        "attempt": 1,
+        "before": {
+          "head": "131c86aadddfa5cb6dca8339c9d6294c4eacb8ac",
+          "head_tree": "6f728a308123d75d4229c73d875488afc393b4af",
+          "index_tree": "6f728a308123d75d4229c73d875488afc393b4af",
+          "tracked_diff_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "tracked_status": ""
+        },
+        "checkout_commit": "131c86aadddfa5cb6dca8339c9d6294c4eacb8ac",
+        "checkout_tree": "6f728a308123d75d4229c73d875488afc393b4af",
+        "classification": "green",
+        "command": [
+          "C:\\Users\\joshp\\Desktop\\Blast-Radius-semantic-scratch-20260824\\click-test-env-v2\\Scripts\\python.exe",
+          "-m",
+          "pytest",
+          "--junitxml=C:\\Users\\joshp\\Desktop\\Blast-Radius\\exploratory\\conflicts\\semantic-runs\\click\\merges\\2c8cd3ac958a7eb316d67f2d316c27086c4c0369\\parent2-attempt-1\\junit.xml"
+        ],
+        "completed_at_utc": "2026-08-24T23:25:45.689+00:00",
+        "cwd": "C:\\Users\\joshp\\Desktop\\Blast-Radius-semantic-scratch-20260824\\semantic-worktrees\\2c8cd3ac958a-parent2-attempt-1",
+        "elapsed_seconds": 9.048176200012676,
+        "environment": {
+          "GIT_NO_LAZY_FETCH": "1",
+          "PYTEST_DISABLE_PLUGIN_AUTOLOAD": "1",
+          "PYTHONDONTWRITEBYTECODE": "1",
+          "PYTHONHASHSEED": "0",
+          "PYTHONNOUSERSITE": "1",
+          "PYTHONPATH": "C:\\Users\\joshp\\Desktop\\Blast-Radius-semantic-scratch-20260824\\semantic-worktrees\\2c8cd3ac958a-parent2-attempt-1\\src;C:\\Users\\joshp\\Desktop\\Blast-Radius\\instruments\\posture\\python39_compat"
+        },
+        "exit_code": 0,
+        "failure_text_signature_sha256": "2ada873a6085b011015c6d350cf384c2277dc1f3d0c518a919efefdbfa2a98b0",
+        "junit": {
+          "case_count": 1996,
+          "cases_sha256": "b618990be8d61cff08af7d605314db70c376277edadca00c043b1e159f51b743",
+          "counts": {
+            "error": 0,
+            "failure": 0,
+            "passed": 1895,
+            "skipped": 101
+          },
+          "failing_cases": []
+        },
+        "junit_sha256": "0c76a22e3922103809d253c132129d4ffa6500c46f10b4f60213ac85f23d5715",
+        "merge_commit": "2c8cd3ac958a7eb316d67f2d316c27086c4c0369",
+        "process_launch_error": null,
+        "protocol_sha256": "021a620bdcec20d3f59f59c4496599c45256aa66a241e5e3cd81bd01a2f01822",
+        "pytest_summary_line": "======= 1895 passed, 100 skipped, 31000 deselected, 1 xfailed in 7.18s ========",
+        "role": "parent2",
+        "schema_version": 1,
+        "source_root": "C:\\Users\\joshp\\Desktop\\Blast-Radius-semantic-scratch-20260824\\semantic-worktrees\\2c8cd3ac958a-parent2-attempt-1\\src",
+        "started_at_utc": "2026-08-24T23:25:33.663+00:00",
+        "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "stdout_sha256": "88cfeccade59cc45b44b08e96a4235d8260419cd6e92b44a9569838d1cd3640c",
+        "timed_out": false,
+        "timeout_detail": null,
+        "timeout_seconds": 120.0,
+        "timeout_termination": null,
+        "tracked_state_unchanged": true,
+        "worktree_cleanup": {
+          "filesystem_fallback_used": false,
+          "git_worktree_remove_exit": 0,
+          "git_worktree_remove_stderr": "",
+          "removed": true
+        }
+      }
+    ]
+  },
+  "started_at_utc": "2026-08-24T23:25:06.980+00:00",
+  "subject": "Add FAQ entry about `UnicodeEncodeError` on Windows (#3778)",
+  "updated_at_utc": "2026-08-24T23:26:16.400+00:00",
+  "wall_seconds": 69.41966070001945,
+  "wall_seconds_so_far": 69.41966070001945
+}

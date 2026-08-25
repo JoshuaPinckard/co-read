@@ -1,0 +1,24 @@
+============================= test session starts =============================
+platform win32 -- Python 3.11.9, pytest-7.4.4, pluggy-unknown
+benchmark: 4.0.0 (defaults: timer=time.perf_counter disable_gc=False min_rounds=5 min_time=0.000005 max_time=1.0 calibration_precision=10 warmup=False warmup_iterations=100000)
+rootdir: C:\Users\joshp\AppData\Local\Temp\blast-radius-pluggy-causal\a429-nalfrqyu\t
+configfile: tox.ini
+testpaths: testing
+plugins: benchmark-4.0.0
+collected 83 items / 1 error
+
+=================================== ERRORS ====================================
+_________________ ERROR collecting testing/test_hookcaller.py _________________
+ImportError while importing test module 'C:\Users\joshp\AppData\Local\Temp\blast-radius-pluggy-causal\a429-nalfrqyu\t\testing\test_hookcaller.py'.
+Hint: make sure your test modules/packages have valid Python names.
+Traceback:
+..\..\..\..\Programs\Python\Python311\Lib\importlib\__init__.py:126: in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+testing\test_hookcaller.py:12: in <module>
+    from pluggy._hooks import HookCaller
+E   ImportError: cannot import name 'HookCaller' from 'pluggy._hooks' (C:\Users\joshp\AppData\Local\Temp\blast-radius-pluggy-causal\a429-nalfrqyu\t\src\pluggy\_hooks.py)
+- generated xml file: C:\Users\joshp\Desktop\Blast-Radius\exploratory\causal\verification\pluggy-results-arms\pr-429\tests-only.xml -
+=========================== short test summary info ===========================
+ERROR testing/test_hookcaller.py
+!!!!!!!!!!!!!!!!!!! Interrupted: 1 error during collection !!!!!!!!!!!!!!!!!!!!
+============================== 1 error in 0.38s ===============================

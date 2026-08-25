@@ -1,0 +1,36 @@
+Extend the replay corpus from ten repositories to fifty. This is the measurement paper's weakest point: its central claim is that recall-at-K is not comparable across repositories, and that claim is far stronger at fifty than at ten.
+
+This must run locally. Codex Cloud was probed and has **no network egress** — both `git clone` and `curl` fail with `CONNECT tunnel failed, response 403` — so it cannot acquire repositories.
+
+## Reuse, do not rewrite
+
+`instruments/replay/` already contains a correct harness: `clone.py`, `extract.py`, `replay.py`, `report.py`, with verified first-parent walking, rename handling via git's similarity detector, clique factorization, and leakage assertions. Its specification is `instruments/replay/SPEC.md`. Ten repositories are already cloned under `corpus/_clones/` and their results are in `exploratory/language-hole/`.
+
+Do not modify anything under `instruments/replay/`. Another analysis is reading those files. Add new repositories to the corpus and run the existing harness over them.
+
+## Selecting the forty
+
+**The sampling rule is fixed before selection and written down.** This is not a convenience sample dressed up afterwards. Use: public GitHub repositories with at least 500 first-parent commits, stratified across primary language and repository layout, chosen by a seeded deterministic rule from a dated listing you record. State the rule, the seed, and the listing date in the report, and report the realised strata counts.
+
+Cover the axes the existing ten already span, and add the ones they miss. Currently missing and worth having: a configuration-only repository with almost no code, a monorepo whose directory structure carries no semantic meaning, a repository whose history is one squashed import, a repository with fewer than five contributors, and at least one non-English-identifier codebase.
+
+Clone with `--filter=blob:none`. Cap total disk and say what the cap is.
+
+## Scale control
+
+Some will be very large. Apply the existing harness's cap — repositories over 20,000 reachable commits get the most recent 5,000 replayed, left-truncated, with learned indexes starting empty — and **log every cap you apply**. The existing run's two capped repositories showed markedly worse results, and left truncation is a plausible cause; note where a cap makes a row non-comparable.
+
+Run smallest first so results land early. Write results incrementally per repository so a later failure loses nothing.
+
+## Report
+
+`exploratory/language-hole/CORPUS-50.md`, and answer these:
+
+1. Does co-change precision-at-one still transfer? The ten-repository result was 0.531 to 0.678 with nine of ten above the JavaScript baseline of 0.500. Report the distribution across fifty and the count above baseline.
+2. Does recall-at-ten still track mean ground-truth set size? Plot the relationship and report the correlation. **Report every recall figure next to its ground-truth set size**; a recall number without it is uninterpretable and the existing report says so.
+3. Does the lift over the popularity control still vary systematically with commit size — lowest in small-commit repositories, highest in large ones?
+4. Which repository shapes break the mechanism, if any? Precision-at-one falling materially below 0.500 is the falsifier the existing report named.
+
+Required sections: **"Claims that could NOT be verified"** and **"What would change this verdict"**. Per-claim confidence with its reason. Scope-naming rule: say "50 repositories drawn under rule X", never "repositories".
+
+Do not fabricate. A repository that fails to clone or extract is a recorded result, not an omission.

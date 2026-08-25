@@ -1,0 +1,182 @@
+{
+  "accepted": 0,
+  "budget": 200,
+  "candidate_ledger_sha256": "0123e677a07ee31ae0e852768cef4e898a8eb0bd4c24a4f13f6017d3b78cbb10",
+  "examined": 4,
+  "measurement": "second-repository-causal-task-verification",
+  "records": [
+    {
+      "accepted": false,
+      "base_tree_check": {
+        "actual_paths": 236,
+        "blob_mismatches": [],
+        "expected_modes_sha256": "edb99933a10e1b52ad17ac45205bd5f41ef26544a3edbf7fb6229d60e0044120",
+        "expected_paths": 236,
+        "extra": [],
+        "matches_parent": true,
+        "missing": []
+      },
+      "completed_at_utc": "2026-08-24T12:01:34.893+00:00",
+      "parent": "3596b1ab61cea85edb8970e83ff61daa073facf8",
+      "pr": 6133,
+      "rejection_reason": "reverse_patch_does_not_reconstruct_parent",
+      "reverse_construction_check": {
+        "application": {
+          "applied": true,
+          "returncode": 0,
+          "stage": "apply",
+          "stderr": ""
+        },
+        "comparison": {
+          "actual_paths": 236,
+          "blob_mismatches": [
+            "CHANGES.rst",
+            "src/flask/sansio/scaffold.py",
+            "tests/test_basic.py"
+          ],
+          "expected_modes_sha256": "edb99933a10e1b52ad17ac45205bd5f41ef26544a3edbf7fb6229d60e0044120",
+          "expected_paths": 236,
+          "extra": [],
+          "missing": []
+        },
+        "matches_parent": false
+      },
+      "sha": "d8eaaba824655046958d1a97f11780de460c3271",
+      "started_at_utc": "2026-08-24T12:01:28.668+00:00",
+      "task_id": "pr-6133"
+    },
+    {
+      "accepted": false,
+      "base_tree_check": {
+        "actual_paths": 236,
+        "blob_mismatches": [],
+        "expected_modes_sha256": "edb99933a10e1b52ad17ac45205bd5f41ef26544a3edbf7fb6229d60e0044120",
+        "expected_paths": 236,
+        "extra": [],
+        "matches_parent": true,
+        "missing": []
+      },
+      "completed_at_utc": "2026-08-24T12:02:06.522+00:00",
+      "parent": "514fc6b3e8402e4c646d5284e97a4f0ab50a7c4b",
+      "pr": 6096,
+      "rejection_reason": "reverse_patch_does_not_reconstruct_parent",
+      "reverse_construction_check": {
+        "application": {
+          "applied": true,
+          "returncode": 0,
+          "stage": "apply",
+          "stderr": ""
+        },
+        "comparison": {
+          "actual_paths": 236,
+          "blob_mismatches": [
+            "src/flask/app.py",
+            "src/flask/testing.py",
+            "tests/test_basic.py",
+            "tests/test_testing.py"
+          ],
+          "expected_modes_sha256": "edb99933a10e1b52ad17ac45205bd5f41ef26544a3edbf7fb6229d60e0044120",
+          "expected_paths": 236,
+          "extra": [],
+          "missing": []
+        },
+        "matches_parent": false
+      },
+      "sha": "05e9c6bd630ecf4ec0ec884b1fc7901663737bc7",
+      "started_at_utc": "2026-08-24T12:01:56.924+00:00",
+      "task_id": "pr-6096"
+    },
+    {
+      "accepted": false,
+      "base_tree_check": {
+        "actual_paths": 235,
+        "blob_mismatches": [],
+        "expected_modes_sha256": "f71f39be7de9075687ac3371bb0696ef8b626159ef12673f2acc9e0efee5d78b",
+        "expected_paths": 235,
+        "extra": [],
+        "matches_parent": true,
+        "missing": []
+      },
+      "completed_at_utc": "2026-08-24T12:02:23.549+00:00",
+      "parent": "d3b78fd18a8d9e224cb9ef58a23cec9b1ffc9ce9",
+      "pr": 5917,
+      "rejection_reason": "reverse_patch_does_not_reconstruct_parent",
+      "reverse_construction_check": {
+        "application": {
+          "applied": true,
+          "returncode": 0,
+          "stage": "apply",
+          "stderr": ""
+        },
+        "comparison": {
+          "actual_paths": 235,
+          "blob_mismatches": [
+            "CHANGES.rst",
+            "docs/config.rst",
+            "src/flask/sansio/app.py",
+            "tests/test_basic.py",
+            "tests/test_blueprints.py",
+            "tests/test_cli.py",
+            "tests/test_views.py"
+          ],
+          "expected_modes_sha256": "f71f39be7de9075687ac3371bb0696ef8b626159ef12673f2acc9e0efee5d78b",
+          "expected_paths": 235,
+          "extra": [],
+          "missing": []
+        },
+        "matches_parent": false
+      },
+      "sha": "12e95c93b488725f80753f34b2e0d24838ca4646",
+      "started_at_utc": "2026-08-24T12:02:17.266+00:00",
+      "task_id": "pr-5917"
+    },
+    {
+      "accepted": false,
+      "base_tree_check": {
+        "actual_paths": 234,
+        "blob_mismatches": [],
+        "expected_modes_sha256": "89bd15950f3824ee6ae50352e5cff492c3fb307fa9e76fb6384e7af69e5ffb56",
+        "expected_paths": 234,
+        "extra": [],
+        "matches_parent": true,
+        "missing": []
+      },
+      "completed_at_utc": "2026-08-24T12:02:45.831+00:00",
+      "parent": "88a65bb374e87a18816a780dbd4ae69d307aa85c",
+      "pr": 5818,
+      "rejection_reason": "reverse_patch_does_not_reconstruct_parent",
+      "reverse_construction_check": {
+        "application": {
+          "applied": true,
+          "returncode": 0,
+          "stage": "apply",
+          "stderr": ""
+        },
+        "comparison": {
+          "actual_paths": 234,
+          "blob_mismatches": [
+            "CHANGES.rst",
+            "src/flask/app.py",
+            "src/flask/ctx.py",
+            "src/flask/templating.py",
+            "tests/test_reqctx.py",
+            "tests/test_subclassing.py"
+          ],
+          "expected_modes_sha256": "89bd15950f3824ee6ae50352e5cff492c3fb307fa9e76fb6384e7af69e5ffb56",
+          "expected_paths": 234,
+          "extra": [],
+          "missing": []
+        },
+        "matches_parent": false
+      },
+      "sha": "70d04b5a2620705011e65f79ccfd52caa86f5d6a",
+      "started_at_utc": "2026-08-24T12:02:36.969+00:00",
+      "task_id": "pr-5818"
+    }
+  ],
+  "schema_version": 1,
+  "selection_rule_sha256": "879ddb5a78505ed13916feafabadacb471b7f731a9d174e9db7fc9c022669932",
+  "started_at_utc": "2026-08-24T12:01:26.184+00:00",
+  "status": "running",
+  "target": 30
+}

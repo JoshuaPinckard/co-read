@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?><testsuites name="pytest tests"><testsuite name="pytest" errors="0" failures="1" skipped="0" tests="1" time="0.224" timestamp="2026-08-24T08:32:04.018322-07:00" hostname="JoshP"><testcase classname="tests.examplefiles.logtalk.source.lgt" name="" time="0.037"><failure message="The tokens produced by the &quot;logtalk&quot; lexer differ from the expected ones in the file &quot;tests\examplefiles\logtalk\source.lgt&quot;.&#10;Run `tox -- tests\examplefiles --update-goldens` to update it.&#10;&#10;  &#10;  Skipping 32463 identical leading characters in diff, use -v to show&#10;  - on_error' Keyword&#10;  + on_error' Text&#10;    '('           Text&#10;    'Culprit'     Name.Variable&#10;    ')'           Text...&#10;  &#10;  ...Full output truncated (2558 lines hidden), use '-vv' to show">The tokens produced by the "logtalk" lexer differ from the expected ones in the file "tests\examplefiles\logtalk\source.lgt".
+Run `tox -- tests\examplefiles --update-goldens` to update it.
+
+  
+  Skipping 32463 identical leading characters in diff, use -v to show
+  - on_error' Keyword
+  + on_error' Text
+    '('           Text
+    'Culprit'     Name.Variable
+    ')'           Text...
+  
+  ...Full output truncated (2558 lines hidden), use '-vv' to show</failure></testcase></testsuite></testsuites>

@@ -1,0 +1,94 @@
+============================= test session starts =============================
+platform win32 -- Python 3.11.9, pytest-8.4.2, pluggy-1.6.0
+rootdir: C:\Users\joshp\AppData\Local\Temp\blast-radius-jinja-causal\a1564-veu4tk5z\t
+configfile: setup.cfg
+testpaths: tests
+plugins: timeout-2.4.0
+collected 835 items
+
+tests\test_api.py .................................                      [  3%]
+tests\test_async.py .................................................... [ 10%]
+....                                                                     [ 10%]
+tests\test_async_filters.py .........................................    [ 15%]
+tests\test_bytecode_cache.py ...                                         [ 15%]
+tests\test_compile.py ..                                                 [ 16%]
+tests\test_core_tags.py ................................................ [ 21%]
+..............                                                           [ 23%]
+tests\test_debug.py .......                                              [ 24%]
+tests\test_ext.py .................................................      [ 30%]
+tests\test_filters.py ........................................FF........ [ 36%]
+........................................................................ [ 44%]
+                                                                         [ 44%]
+tests\test_idtracking.py .....                                           [ 45%]
+tests\test_imports.py ...............                                    [ 47%]
+tests\test_inheritance.py ......................                         [ 49%]
+tests\test_lexnparse.py ................................................ [ 55%]
+........................................................................ [ 64%]
+..............................                                           [ 67%]
+tests\test_loader.py ........................................            [ 72%]
+tests\test_nativetypes.py ..........................                     [ 75%]
+tests\test_nodes.py .                                                    [ 75%]
+tests\test_pickle.py .                                                   [ 76%]
+tests\test_regression.py ............................................... [ 81%]
+.....                                                                    [ 82%]
+tests\test_runtime.py .......                                            [ 83%]
+tests\test_security.py ...............                                   [ 84%]
+tests\test_tests.py .................................................... [ 91%]
+......................................................                   [ 97%]
+tests\test_utils.py ....................                                 [100%]
+
+================================== FAILURES ===================================
+____________________________ TestFilter.test_items ____________________________
+
+self = <test_filters.TestFilter object at 0x00000183BC175950>
+env = <jinja2.environment.Environment object at 0x00000183BBDCAC90>
+
+    def test_items(self, env):
+        d = {i: c for i, c in enumerate("abc")}
+>       tmpl = env.from_string("""{{ d|items|list }}""")
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests\test_filters.py:256: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+src\jinja2\environment.py:1095: in from_string
+    return cls.from_code(self, self.compile(source), gs, None)
+                               ^^^^^^^^^^^^^^^^^^^^
+src\jinja2\environment.py:758: in compile
+    self.handle_exception(source=source_hint)
+src\jinja2\environment.py:926: in handle_exception
+    raise rewrite_traceback_stack(source=source)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+>   ???
+E   jinja2.exceptions.TemplateAssertionError: No filter named 'items'.
+
+<unknown>:1: TemplateAssertionError
+_______________________ TestFilter.test_items_undefined _______________________
+
+self = <test_filters.TestFilter object at 0x00000183BC176350>
+env = <jinja2.environment.Environment object at 0x00000183BC0CC810>
+
+    def test_items_undefined(self, env):
+>       tmpl = env.from_string("""{{ d|items|list }}""")
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests\test_filters.py:261: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+src\jinja2\environment.py:1095: in from_string
+    return cls.from_code(self, self.compile(source), gs, None)
+                               ^^^^^^^^^^^^^^^^^^^^
+src\jinja2\environment.py:758: in compile
+    self.handle_exception(source=source_hint)
+src\jinja2\environment.py:926: in handle_exception
+    raise rewrite_traceback_stack(source=source)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+>   ???
+E   jinja2.exceptions.TemplateAssertionError: No filter named 'items'.
+
+<unknown>:1: TemplateAssertionError
+- generated xml file: C:\Users\joshp\Desktop\Blast-Radius\exploratory\causal\verification\jinja-results-arms\pr-1564\tests-only.xml -
+=========================== short test summary info ===========================
+FAILED tests/test_filters.py::TestFilter::test_items - jinja2.exceptions.Temp...
+FAILED tests/test_filters.py::TestFilter::test_items_undefined - jinja2.excep...
+======================== 2 failed, 833 passed in 3.95s ========================
