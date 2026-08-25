@@ -1,0 +1,19 @@
+Run the causal perturbation sweep over the 40 expansion tasks in fixture/click. This extends the 13-task sweep whose protocol is recorded in exploratory/causal/RESULTS.md — REPLICATE that protocol exactly; do not redesign it.
+
+Read first: fixture/click/README.md, fixture/click/GATE.md, fixture/click/TASKS.md, exploratory/causal/RESULTS.md (the established protocol, exclusion rules, and output schema), exploratory/causal/EXPANSION.md (the 40 validated tasks and their anchors).
+
+Protocol per task, exactly as in RESULTS.md:
+1. Materialize the task's base tree; verify by tree hash.
+2. Apply the task's source and test patches; verify its focal tests pass (green). A task failing this step is recorded and excluded, not repaired.
+3. For each file in the sweep set (same enumeration rule as RESULTS.md — state the rule you found there and follow it): AST-insert `raise RuntimeError("perturbed")` as the first statement of every function body in that file, run the task's focal tests only, record red or green, restore the file exactly.
+4. Fixed deterministic order throughout; no randomness anywhere; record the tree hash before and after every task to prove restoration.
+
+Environment notes: no network egress — everything needed is committed in this repository. Python and pytest are preinstalled. Click's suite uses the `not stress` marker; focal test selection comes from each task's test patch as in RESULTS.md.
+
+Output, committed as your task result:
+- exploratory/causal/EXPANSION-RESULTS.md — per-task dependency rates with numerators and denominators; any task that failed green verification, listed with its actual pytest output; comparison of the four anchor groups.
+- exploratory/causal/LABELS-expansion.json — same schema as exploratory/causal/LABELS.json.
+
+Mandatory sections in the report: "Claims that could NOT be verified", "What would change this verdict", and per-claim confidence with its reason (never a document-level label). Known instrument caveat to carry forward verbatim: one task in the original sweep did not reproduce between two runs (pr-2972: 9/31 vs 10/31); treat any within-run anomaly as reportable data, and if compute allows, run one task twice and report whether its label set is identical.
+
+Do not fabricate. A task that cannot run is a recorded result. Do not modify fixture/, prompts/, or any existing result document.

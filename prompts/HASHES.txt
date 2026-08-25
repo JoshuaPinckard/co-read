@@ -1,4 +1,6 @@
-﻿6c77cef3255f5dcdb3a7001de9a3b71b6d95ba5d1d2391e8deb9dcf0f12b10f5  job-abort-rate.txt  4993 bytes
+﻿f6bb5edbff35e91bfeb1ab1576dc2f8786eb0fb4aeafb3cbcbfa979d88b9fb7f  cloud-click-expansion-sweep.txt  2371 bytes
+4473908d97aa592caf4b951890d569e41737fe07ed5e8c742412cfbe7661e8e8  cloud-pygments-sweep.txt  2565 bytes
+6c77cef3255f5dcdb3a7001de9a3b71b6d95ba5d1d2391e8deb9dcf0f12b10f5  job-abort-rate.txt  4993 bytes
 ba82b1eec4ee9aa1346043353a3d3903dfa4a78ec8bded82f438ff265199e5e3  job-bootstrap.txt  3152 bytes
 c22309f5e1a3bc264b5197cf3ba5cbd6eff1fa5bae2980b47fb7d6670a967d48  job-conflict-mine.txt  5664 bytes
 6100720243029ee4ed59b30bd935ad2c87accf441c063b07490cb89e6e39721d  job-coread-predictor.txt  3711 bytes
