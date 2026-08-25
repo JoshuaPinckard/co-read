@@ -1,8 +1,13 @@
 # Pre-stated hypotheses — committed before any confirmatory run
 
-Status: **DRAFT for PI review. No confirmatory run happens until the PI
-approves this file and its commit precedes the first draw.** (Rule transferred
-from LEAN-Bench `HYPOTHESES.md`, which enforces the same precondition.)
+Status: **APPROVED by the PI, 2026-08-25, as amended at pre-approval review
+(commit `df41955`).** The approval covers the six propositions, the derived
+instrument hypotheses with their timing disclosures, the arms-ladder design
+with its realism note, and the four preconditions including the canary build
+cost. Confirmatory runs are licensed only after H5's cell sizes, metrics,
+and exclusion rule are fixed with the PI and committed as an amendment here;
+that sizing amendment must precede the first draw. (Rule transferred from
+LEAN-Bench `HYPOTHESES.md`, which enforces the same precondition.)
 
 Everything to date lives under `exploratory/` and stays there. Exploratory
 numbers are cited as sources of predictions, never as confirmations. A
