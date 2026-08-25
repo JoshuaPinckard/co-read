@@ -1,0 +1,213 @@
+diff --git a/src/click/__init__.py b/src/click/__init__.py
+index 1aa547c57af68954b3bcd6012873881030e53d91..30b24602c1169699bc644e43ceb4b2ce02189895 100644
+--- a/src/click/__init__.py
++++ b/src/click/__init__.py
+@@ -32,6 +32,7 @@ from .exceptions import BadParameter as BadParameter
+ from .exceptions import ClickException as ClickException
+ from .exceptions import FileError as FileError
+ from .exceptions import MissingParameter as MissingParameter
++from .exceptions import NoSuchCommand as NoSuchCommand
+ from .exceptions import NoSuchOption as NoSuchOption
+ from .exceptions import UsageError as UsageError
+ from .formatting import HelpFormatter as HelpFormatter
+diff --git a/src/click/core.py b/src/click/core.py
+index f0a624be3be3703ec49e1a7202e9b5d320070283..8466db4951ce5a7dab55b61bf6be430b62b0e3a7 100644
+--- a/src/click/core.py
++++ b/src/click/core.py
+@@ -27,6 +27,7 @@ from .exceptions import ClickException
+ from .exceptions import Exit
+ from .exceptions import MissingParameter
+ from .exceptions import NoArgsIsHelpError
++from .exceptions import NoSuchCommand
+ from .exceptions import UsageError
+ from .formatting import HelpFormatter
+ from .formatting import join_options
+@@ -1908,7 +1909,6 @@ class Group(Command):
+         self, ctx: Context, args: list[str]
+     ) -> tuple[str | None, Command | None, list[str]]:
+         cmd_name = make_str(args[0])
+-        original_cmd_name = cmd_name
+ 
+         # Get the command
+         cmd = self.get_command(ctx, cmd_name)
+@@ -1928,7 +1928,7 @@ class Group(Command):
+         if cmd is None and not ctx.resilient_parsing:
+             if _split_opt(cmd_name)[0]:
+                 self.parse_args(ctx, args)
+-            ctx.fail(_("No such command {name!r}.").format(name=original_cmd_name))
++            raise NoSuchCommand(cmd_name, possibilities=self.commands, ctx=ctx)
+         return cmd_name if cmd else None, cmd, args[1:]
+ 
+     def shell_complete(self, ctx: Context, incomplete: str) -> list[CompletionItem]:
+diff --git a/src/click/exceptions.py b/src/click/exceptions.py
+index 4d782ee361442e4aafeac7e371ab12789c8a3751..a0263fdbe0d9920d3d9399a5bc15c1c012a9d55c 100644
+--- a/src/click/exceptions.py
++++ b/src/click/exceptions.py
+@@ -23,6 +23,15 @@ def _join_param_hints(param_hint: cabc.Sequence[str] | str | None) -> str | None
+     return param_hint
+ 
+ 
++def _format_possibilities(possibilities: list[str]) -> str:
++    possibility_str = ", ".join(repr(p) for p in sorted(possibilities))
++    return ngettext(
++        "Did you mean {possibility}?",
++        "(Did you mean one of: {possibilities}?)",
++        len(possibilities),
++    ).format(possibility=possibility_str, possibilities=possibility_str)
++
++
+ class ClickException(Exception):
+     """An exception that Click can handle and show to the user."""
+ 
+@@ -206,8 +215,7 @@ class MissingParameter(BadParameter):
+ 
+ 
+ class NoSuchOption(UsageError):
+-    """Raised if click attempted to handle an option that does not
+-    exist.
++    """Raised if Click attempted to handle an option that does not exist.
+ 
+     .. versionadded:: 4.0
+     """
+@@ -216,27 +224,51 @@ class NoSuchOption(UsageError):
+         self,
+         option_name: str,
+         message: str | None = None,
+-        possibilities: cabc.Sequence[str] | None = None,
++        possibilities: cabc.Iterable[str] | None = None,
+         ctx: Context | None = None,
+     ) -> None:
+         if message is None:
+-            message = _("No such option: {name}").format(name=option_name)
++            message = _("No such option {name!r}.").format(name=option_name)
+ 
+         super().__init__(message, ctx)
+         self.option_name = option_name
+-        self.possibilities = possibilities
++        self.possibilities: list[str] | None = None
++        if possibilities:
++            from difflib import get_close_matches
++
++            self.possibilities = get_close_matches(option_name, possibilities)
+ 
+     def format_message(self) -> str:
+         if not self.possibilities:
+             return self.message
++        return f"{self.message} {_format_possibilities(self.possibilities)}"
++
++
++class NoSuchCommand(UsageError):
++    """Raised if Click attempted to handle a command that does not exist."""
++
++    def __init__(
++        self,
++        command_name: str,
++        message: str | None = None,
++        possibilities: cabc.Iterable[str] | None = None,
++        ctx: Context | None = None,
++    ) -> None:
++        if message is None:
++            message = _("No such command {name!r}.").format(name=command_name)
++
++        super().__init__(message, ctx)
++        self.command_name = command_name
++        self.possibilities: list[str] | None = None
++        if possibilities:
++            from difflib import get_close_matches
+ 
+-        possibility_str = ", ".join(sorted(self.possibilities))
+-        suggest = ngettext(
+-            "Did you mean {possibility}?",
+-            "(Possible options: {possibilities})",
+-            len(self.possibilities),
+-        ).format(possibility=possibility_str, possibilities=possibility_str)
+-        return f"{self.message} {suggest}"
++            self.possibilities = get_close_matches(command_name, possibilities)
++
++    def format_message(self) -> str:
++        if not self.possibilities:
++            return self.message
++        return f"{self.message} {_format_possibilities(self.possibilities)}"
+ 
+ 
+ class BadOptionUsage(UsageError):
+diff --git a/src/click/parser.py b/src/click/parser.py
+index 1ea1f7166e4b9eac5bcb632ecd86fe0331829141..1318644b384edefa65aa0f1d7dafd93276190829 100644
+--- a/src/click/parser.py
++++ b/src/click/parser.py
+@@ -360,10 +360,7 @@ class _OptionParser:
+         self, opt: str, explicit_value: str | None, state: _ParsingState
+     ) -> None:
+         if opt not in self._long_opt:
+-            from difflib import get_close_matches
+-
+-            possibilities = get_close_matches(opt, self._long_opt)
+-            raise NoSuchOption(opt, possibilities=possibilities, ctx=self.ctx)
++            raise NoSuchOption(opt, possibilities=self._long_opt, ctx=self.ctx)
+ 
+         option = self._long_opt[opt]
+         if option.takes_value:
+diff --git a/tests/test_commands.py b/tests/test_commands.py
+index f26529a5425293546152faff273dec5770430c91..ddce905bf7932ec7d9ffae4aa7b83a1a1b9ca7aa 100644
+--- a/tests/test_commands.py
++++ b/tests/test_commands.py
+@@ -573,3 +573,35 @@ def test_abort_exceptions_with_disabled_standalone_mode(runner, exc):
+     assert rv.exit_code == 1
+     assert isinstance(rv.exception.__cause__, exc)
+     assert rv.exception.__cause__.args == ("catch me!",)
++
++
++def test_unknown_command(runner):
++    result = runner.invoke(click.Group(), "unknown")
++    assert result.exception
++    assert "No such command 'unknown'." in result.output
++
++
++@pytest.mark.parametrize(
++    ("value", "expect"),
++    [
++        ("pause", "Did you mean 'push'?"),
++        ("decline", "(Did you mean one of: 'declare', 'refine'?)"),
++    ],
++)
++def test_suggest_possible_commands(runner, value, expect):
++    cli = click.Group()
++
++    @cli.command()
++    def push():
++        pass
++
++    @cli.command()
++    def declare():
++        pass
++
++    @cli.command()
++    def refine():
++        pass
++
++    result = runner.invoke(cli, [value])
++    assert expect in result.output
+diff --git a/tests/test_options.py b/tests/test_options.py
+index e335f3c1a0857ba0c45b5ccc8b03fbfa6de6f085..c5ed5efa19a535a8c133a7b61dfe65497fad82ce 100644
+--- a/tests/test_options.py
++++ b/tests/test_options.py
+@@ -141,15 +141,15 @@ def test_unknown_options(runner, unknown_flag):
+ 
+     result = runner.invoke(cli, [unknown_flag])
+     assert result.exception
+-    assert f"No such option: {unknown_flag}" in result.output
++    assert f"No such option '{unknown_flag}'." in result.output
+ 
+ 
+ @pytest.mark.parametrize(
+     ("value", "expect"),
+     [
+-        ("--cat", "Did you mean --count?"),
+-        ("--bounds", "(Possible options: --bound, --count)"),
+-        ("--bount", "(Possible options: --bound, --count)"),
++        ("--cat", "Did you mean '--count'?"),
++        ("--bounds", "(Did you mean one of: '--bound', '--count'?)"),
++        ("--bount", "(Did you mean one of: '--bound', '--count'?)"),
+     ],
+ )
+ def test_suggest_possible_options(runner, value, expect):

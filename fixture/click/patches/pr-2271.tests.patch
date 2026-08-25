@@ -1,0 +1,147 @@
+diff --git a/tests/test_arguments.py b/tests/test_arguments.py
+index 7f6629fbae38ad31e6f3b45b3433bc3dc49cc7ae..1c2a2bf187c407dd3391885e07b7f45fdb6f7a02 100644
+--- a/tests/test_arguments.py
++++ b/tests/test_arguments.py
+@@ -262,6 +262,44 @@ def test_implicit_non_required(runner):
+     assert result.output == "test\n"
+ 
+ 
++def test_deprecated_usage(runner):
++    @click.command()
++    @click.argument("f", required=False, deprecated=True)
++    def cli(f):
++        click.echo(f)
++
++    result = runner.invoke(cli, ["--help"])
++    assert result.exit_code == 0, result.output
++    assert "[F!]" in result.output
++
++
++@pytest.mark.parametrize("deprecated", [True, "USE B INSTEAD"])
++def test_deprecated_warning(runner, deprecated):
++    @click.command()
++    @click.argument(
++        "my-argument", required=False, deprecated=deprecated, default="default argument"
++    )
++    def cli(my_argument: str):
++        click.echo(f"{my_argument}")
++
++    # defaults should not give a deprecated warning
++    result = runner.invoke(cli, [])
++    assert result.exit_code == 0, result.output
++    assert "is deprecated" not in result.output
++
++    result = runner.invoke(cli, ["hello"])
++    assert result.exit_code == 0, result.output
++    assert "argument 'MY_ARGUMENT' is deprecated" in result.output
++
++    if isinstance(deprecated, str):
++        assert deprecated in result.output
++
++
++def test_deprecated_required(runner):
++    with pytest.raises(ValueError, match="is deprecated and still required"):
++        click.Argument(["a"], required=True, deprecated=True)
++
++
+ def test_eat_options(runner):
+     @click.command()
+     @click.option("-f")
+diff --git a/tests/test_commands.py b/tests/test_commands.py
+index 5a56799adfd4b2c64998476a948c38910782a646..fc13b2fc717452799df3bce08813b1ed658d4462 100644
+--- a/tests/test_commands.py
++++ b/tests/test_commands.py
+@@ -322,23 +322,31 @@ def test_unprocessed_options(runner):
+ 
+ 
+ @pytest.mark.parametrize("doc", ["CLI HELP", None])
+-def test_deprecated_in_help_messages(runner, doc):
+-    @click.command(deprecated=True, help=doc)
++@pytest.mark.parametrize("deprecated", [True, "USE OTHER COMMAND INSTEAD"])
++def test_deprecated_in_help_messages(runner, doc, deprecated):
++    @click.command(deprecated=deprecated, help=doc)
+     def cli():
+         pass
+ 
+     result = runner.invoke(cli, ["--help"])
+-    assert "(Deprecated)" in result.output
++    assert "(DEPRECATED" in result.output
+ 
++    if isinstance(deprecated, str):
++        assert deprecated in result.output
+ 
+-def test_deprecated_in_invocation(runner):
+-    @click.command(deprecated=True)
++
++@pytest.mark.parametrize("deprecated", [True, "USE OTHER COMMAND INSTEAD"])
++def test_deprecated_in_invocation(runner, deprecated):
++    @click.command(deprecated=deprecated)
+     def deprecated_cmd():
+         pass
+ 
+     result = runner.invoke(deprecated_cmd)
+     assert "DeprecationWarning:" in result.output
+ 
++    if isinstance(deprecated, str):
++        assert deprecated in result.output
++
+ 
+ def test_command_parse_args_collects_option_prefixes():
+     @click.command()
+diff --git a/tests/test_options.py b/tests/test_options.py
+index 7397f36676575c48fc94c99e760b1c0b43f406df..5785a062362ad4da2edd8fbef9814159f0d9a005 100644
+--- a/tests/test_options.py
++++ b/tests/test_options.py
+@@ -33,6 +33,52 @@ def test_invalid_option(runner):
+     assert "'--foo'" in message
+ 
+ 
++@pytest.mark.parametrize("deprecated", [True, "USE B INSTEAD"])
++def test_deprecated_usage(runner, deprecated):
++    @click.command()
++    @click.option("--foo", default="bar", deprecated=deprecated)
++    def cmd(foo):
++        click.echo(foo)
++
++    result = runner.invoke(cmd, ["--help"])
++    assert "(DEPRECATED" in result.output
++
++    if isinstance(deprecated, str):
++        assert deprecated in result.output
++
++
++@pytest.mark.parametrize("deprecated", [True, "USE B INSTEAD"])
++def test_deprecated_warning(runner, deprecated):
++    @click.command()
++    @click.option(
++        "--my-option", required=False, deprecated=deprecated, default="default option"
++    )
++    def cli(my_option: str):
++        click.echo(f"{my_option}")
++
++    # defaults should not give a deprecated warning
++    result = runner.invoke(cli, [])
++    assert result.exit_code == 0, result.output
++    assert "is deprecated" not in result.output
++
++    result = runner.invoke(cli, ["--my-option", "hello"])
++    assert result.exit_code == 0, result.output
++    assert "option 'my_option' is deprecated" in result.output
++
++    if isinstance(deprecated, str):
++        assert deprecated in result.output
++
++
++def test_deprecated_required(runner):
++    with pytest.raises(ValueError, match="is deprecated and still required"):
++        click.Option(["--a"], required=True, deprecated=True)
++
++
++def test_deprecated_prompt(runner):
++    with pytest.raises(ValueError, match="`deprecated` options cannot use `prompt`"):
++        click.Option(["--a"], prompt=True, deprecated=True)
++
++
+ def test_invalid_nargs(runner):
+     with pytest.raises(TypeError, match="nargs=-1"):
+ 

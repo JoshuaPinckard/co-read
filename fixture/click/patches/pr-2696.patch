@@ -1,0 +1,55 @@
+diff --git a/src/click/core.py b/src/click/core.py
+index cc0d4603b442c72cf170d2090c7888ae59d9ba89..6e669a294b64dbc9b30582bed2330014260eec89 100644
+--- a/src/click/core.py
++++ b/src/click/core.py
+@@ -2372,8 +2372,8 @@ class Option(Parameter):
+         For single option boolean flags, the default remains hidden if
+         its value is ``False``.
+     :param show_envvar: Controls if an environment variable should be
+-        shown on the help page. Normally, environment variables are not
+-        shown.
++        shown on the help page and error messages.
++        Normally, environment variables are not shown.
+     :param prompt: If set to ``True`` or a non empty string then the
+         user will be prompted for input. If set to ``True`` the prompt
+         will be the option name capitalized.
+@@ -2551,6 +2551,12 @@ class Option(Parameter):
+         )
+         return info_dict
+ 
++    def get_error_hint(self, ctx: Context) -> str:
++        result = super().get_error_hint(ctx)
++        if self.show_envvar:
++            result += f" (env var: '{self.envvar}')"
++        return result
++
+     def _parse_decls(
+         self, decls: cabc.Sequence[str], expose_value: bool
+     ) -> tuple[str | None, list[str], list[str]]:
+diff --git a/tests/test_options.py b/tests/test_options.py
+index 7397f36676575c48fc94c99e760b1c0b43f406df..7a2fa53ef737487e6a85cd262c97777d68bbc41c 100644
+--- a/tests/test_options.py
++++ b/tests/test_options.py
+@@ -527,6 +527,22 @@ def test_missing_choice(runner):
+     assert "bar" in choices
+ 
+ 
++def test_missing_envvar(runner):
++    cli = click.Command(
++        "cli", params=[click.Option(["--foo"], envvar="bar", required=True)]
++    )
++    result = runner.invoke(cli)
++    assert result.exit_code == 2
++    assert "Error: Missing option '--foo'." in result.output
++    cli = click.Command(
++        "cli",
++        params=[click.Option(["--foo"], envvar="bar", show_envvar=True, required=True)],
++    )
++    result = runner.invoke(cli)
++    assert result.exit_code == 2
++    assert "Error: Missing option '--foo' (env var: 'bar')." in result.output
++
++
+ def test_case_insensitive_choice(runner):
+     @click.command()
+     @click.option("--foo", type=click.Choice(["Orange", "Apple"], case_sensitive=False))

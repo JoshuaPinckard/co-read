@@ -1,0 +1,57 @@
+diff --git a/src/click/types.py b/src/click/types.py
+index e71c1c21e4c2e1f954ceeed228507478f138993a..148c6fc3d08e91ab8cb503d623befc2656fc61c1 100644
+--- a/src/click/types.py
++++ b/src/click/types.py
+@@ -973,7 +973,8 @@ class Path(ParamType):
+     ) -> str | bytes | os.PathLike[str]:
+         rv = value
+ 
+-        is_dash = self.file_okay and self.allow_dash and rv in (b"-", "-")
++        dash = b"-" if isinstance(rv, bytes) else "-"
++        is_dash = self.file_okay and self.allow_dash and rv == dash
+ 
+         if not is_dash:
+             if self.resolve_path:
+diff --git a/tests/test_types.py b/tests/test_types.py
+index 75434f1042bf73f1c6d20559b49f29d49b88cd18..22128f8f87c98672cca7ce37e8d65db477dc8ee0 100644
+--- a/tests/test_types.py
++++ b/tests/test_types.py
+@@ -1,6 +1,8 @@
+ import os.path
+ import pathlib
+ import platform
++import subprocess
++import sys
+ import tempfile
+ 
+ import pytest
+@@ -106,6 +108,29 @@ def test_path_type(runner, cls, expect):
+     assert result.return_value == expect
+ 
+ 
++def test_path_dash_no_byteswarning():
++    """Detecting the ``-`` dash sentinel must not compare ``bytes`` against
++    ``str``, which raises a ``BytesWarning`` under ``python -bb``.
++
++    The warning is only emitted when the interpreter runs with ``-b``, so this
++    has to be checked in a subprocess. ``-bb`` turns the warning into an error,
++    so a clean exit means no mismatched comparison happened.
++    """
++    program = (
++        "import click\n"
++        "convert = click.Path(allow_dash=True).convert\n"
++        "for value in ('-', '', b'-', b''):\n"
++        "    convert(value, None, None)\n"
++    )
++    result = subprocess.run(
++        [sys.executable, "-bb", "-c", program],
++        capture_output=True,
++        text=True,
++    )
++    assert result.returncode == 0, result.stderr
++    assert "BytesWarning" not in result.stderr
++
++
+ def _symlinks_supported():
+     with tempfile.TemporaryDirectory(prefix="click-pytest-") as tempdir:
+         target = os.path.join(tempdir, "target")

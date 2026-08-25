@@ -1,0 +1,19 @@
+diff --git a/tests/test_options.py b/tests/test_options.py
+index 91249b234f33718c985f4a75c582fb1988b4ad3e..7397f36676575c48fc94c99e760b1c0b43f406df 100644
+--- a/tests/test_options.py
++++ b/tests/test_options.py
+@@ -786,6 +786,14 @@ def test_show_default_string(runner):
+     assert "[default: (unlimited)]" in message
+ 
+ 
++def test_show_default_with_empty_string(runner):
++    """When show_default is True and default is set to an empty string."""
++    opt = click.Option(["--limit"], default="", show_default=True)
++    ctx = click.Context(click.Command("cli"))
++    message = opt.get_help_record(ctx)[1]
++    assert '[default: ""]' in message
++
++
+ def test_do_not_show_no_default(runner):
+     """When show_default is True and no default is set do not show None."""
+     opt = click.Option(["--limit"], show_default=True)

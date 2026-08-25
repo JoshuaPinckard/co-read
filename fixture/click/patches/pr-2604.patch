@@ -1,0 +1,105 @@
+diff --git a/src/click/decorators.py b/src/click/decorators.py
+index 797449d630d60e4f997312151e99c5fc429dfbda..807ddf9560b7a27da97a20c52efc9b791ab0068a 100644
+--- a/src/click/decorators.py
++++ b/src/click/decorators.py
+@@ -182,9 +182,10 @@ def command(
+     callback.  This will also automatically attach all decorated
+     :func:`option`\s and :func:`argument`\s as parameters to the command.
+ 
+-    The name of the command defaults to the name of the function with
+-    underscores replaced by dashes.  If you want to change that, you can
+-    pass the intended name as the first argument.
++    The name of the command defaults to the name of the function, converted to
++    lowercase, with underscores ``_`` replaced by dashes ``-``, and the suffixes
++    ``_command``, ``_cmd``, ``_group``, and ``_grp`` are removed. For example,
++    ``init_data_command`` becomes ``init-data``.
+ 
+     All keyword arguments are forwarded to the underlying command class.
+     For the ``params`` argument, any decorated params are appended to
+@@ -194,10 +195,13 @@ def command(
+     that can be invoked as a command line utility or be attached to a
+     command :class:`Group`.
+ 
+-    :param name: the name of the command.  This defaults to the function
+-                 name with underscores replaced by dashes.
+-    :param cls: the command class to instantiate.  This defaults to
+-                :class:`Command`.
++    :param name: The name of the command. Defaults to modifying the function's
++        name as described above.
++    :param cls: The command class to create. Defaults to :class:`Command`.
++
++    .. versionchanged:: 8.2
++        The suffixes ``_command``, ``_cmd``, ``_group``, and ``_grp`` are
++        removed when generating the name.
+ 
+     .. versionchanged:: 8.1
+         This decorator can be applied without parentheses.
+@@ -240,12 +244,16 @@ def command(
+             assert cls is not None
+             assert not callable(name)
+ 
+-        cmd = cls(
+-            name=name or f.__name__.lower().replace("_", "-"),
+-            callback=f,
+-            params=params,
+-            **attrs,
+-        )
++        if name is not None:
++            cmd_name = name
++        else:
++            cmd_name = f.__name__.lower().replace("_", "-")
++            cmd_left, sep, suffix = cmd_name.rpartition("-")
++
++            if sep and suffix in {"command", "cmd", "group", "grp"}:
++                cmd_name = cmd_left
++
++        cmd = cls(name=cmd_name, callback=f, params=params, **attrs)
+         cmd.__doc__ = f.__doc__
+         return cmd
+ 
+diff --git a/tests/test_command_decorators.py b/tests/test_command_decorators.py
+index cfdab3c31f944e8532899bda170e325b2b708504..5bd268c0a60be62ed5b8d667d61ac35bc4c2a6b8 100644
+--- a/tests/test_command_decorators.py
++++ b/tests/test_command_decorators.py
+@@ -1,3 +1,5 @@
++import pytest
++
+ import click
+ 
+ 
+@@ -69,3 +71,22 @@ def test_params_argument(runner):
+     assert cli.params[1].name == "b"
+     result = runner.invoke(cli, ["1", "2"])
+     assert result.output == "1 2\n"
++
++
++@pytest.mark.parametrize(
++    "name",
++    [
++        "init_data",
++        "init_data_command",
++        "init_data_cmd",
++        "init_data_group",
++        "init_data_grp",
++    ],
++)
++def test_generate_name(name: str) -> None:
++    def f():
++        pass
++
++    f.__name__ = name
++    f = click.command(f)
++    assert f.name == "init-data"
+diff --git a/tests/test_commands.py b/tests/test_commands.py
+index ed9d96f3c5178d1f43bcadd8db89d3f3a3fd3f8b..65608106aa60c648222cf9a2eea2401505cfd631 100644
+--- a/tests/test_commands.py
++++ b/tests/test_commands.py
+@@ -249,7 +249,7 @@ def test_other_command_invoke_with_defaults(runner):
+     result = runner.invoke(cli, standalone_mode=False)
+     # invoke should type cast default values, str becomes int, empty
+     # multiple should be empty tuple instead of None
+-    assert result.return_value == ("other-cmd", 42, 15, ())
++    assert result.return_value == ("other", 42, 15, ())
+ 
+ 
+ def test_invoked_subcommand(runner):

@@ -1,0 +1,40 @@
+diff --git a/src/click/testing.py b/src/click/testing.py
+index e0df0d2a657fe19523957b85964b9956e5c78a30..36762cdb1cb932233a39e2085875af95827f9eb6 100644
+--- a/src/click/testing.py
++++ b/src/click/testing.py
+@@ -8,6 +8,7 @@ import tempfile
+ import typing as t
+ from types import TracebackType
+ 
++from . import _compat
+ from . import formatting
+ from . import termui
+ from . import utils
+@@ -315,6 +316,7 @@ class CliRunner:
+         termui.hidden_prompt_func = hidden_input
+         termui._getchar = _getchar
+         utils.should_strip_ansi = should_strip_ansi  # type: ignore
++        _compat.should_strip_ansi = should_strip_ansi
+ 
+         old_env = {}
+         try:
+diff --git a/tests/test_testing.py b/tests/test_testing.py
+index 9f294b3a133f81a02ffa3c6e092be5066bed2a12..0a3ac26f4d232e7f7cec3a917e7f7f0e3b0e135b 100644
+--- a/tests/test_testing.py
++++ b/tests/test_testing.py
+@@ -5,7 +5,6 @@ from io import BytesIO
+ import pytest
+ 
+ import click
+-from click._compat import WIN
+ from click.testing import CliRunner
+ 
+ 
+@@ -184,7 +183,6 @@ def test_catch_exceptions():
+     assert result.exit_code == 1
+ 
+ 
+-@pytest.mark.skipif(WIN, reason="Test does not make sense on Windows.")
+ def test_with_color():
+     @click.command()
+     def cli():

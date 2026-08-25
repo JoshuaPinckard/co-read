@@ -1,0 +1,13 @@
+diff --git a/tests/test_info_dict.py b/tests/test_info_dict.py
+index 79d39ee513011d689f3bfc9f2bec3d0c8c1f5dd8..11b670311d0e991f26ed76bdb73618aa71228cb1 100644
+--- a/tests/test_info_dict.py
++++ b/tests/test_info_dict.py
+@@ -58,7 +58,7 @@ NUMBER_OPTION = (
+         "help": None,
+         "prompt": None,
+         "is_flag": False,
+-        "flag_value": False,
++        "flag_value": None,
+         "count": False,
+         "hidden": False,
+     },

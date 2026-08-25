@@ -1,0 +1,8 @@
+# Evidence integrity: fixtures and corpus data are byte-exact artifacts.
+# Line-ending normalization silently rewrites blobs and changes tree hashes —
+# this is exactly how the Pygments base-shared commit diverged from its
+# declared tree (core.autocrlf=true mangled CRLF test inputs on add).
+fixture/** -text
+corpus/** -text
+exploratory/** -text
+prompts/** -text

@@ -1,0 +1,96 @@
+diff --git a/src/click/core.py b/src/click/core.py
+index f0a624be3be3703ec49e1a7202e9b5d320070283..4e162223327d83aa259bc2ac8b3a9e38aad12481 100644
+--- a/src/click/core.py
++++ b/src/click/core.py
+@@ -1583,8 +1583,15 @@ class Group(Command):
+         self.invoke_without_command = invoke_without_command
+ 
+         if subcommand_metavar is None:
++            # When the group can run without a subcommand, the leading command
++            # token is optional, so wrap it in brackets to reflect that.
+             if chain:
+-                subcommand_metavar = "COMMAND1 [ARGS]... [COMMAND2 [ARGS]...]..."
++                if invoke_without_command:
++                    subcommand_metavar = "[COMMAND1] [ARGS]... [COMMAND2 [ARGS]...]..."
++                else:
++                    subcommand_metavar = "COMMAND1 [ARGS]... [COMMAND2 [ARGS]...]..."
++            elif invoke_without_command:
++                subcommand_metavar = "[COMMAND] [ARGS]..."
+             else:
+                 subcommand_metavar = "COMMAND [ARGS]..."
+ 
+diff --git a/tests/test_arguments.py b/tests/test_arguments.py
+index 2ecf518af5d66bcf6f615928bf2f38e52414c812..60152820d99430809c1c4ab30e8a923240b29e24 100644
+--- a/tests/test_arguments.py
++++ b/tests/test_arguments.py
+@@ -306,6 +306,32 @@ def test_deprecated_usage(runner):
+     assert "[F!]" in result.output
+ 
+ 
++@pytest.mark.parametrize(
++    ("kwargs", "expected"),
++    [
++        ({}, "FOO"),
++        ({"required": True}, "FOO"),
++        ({"required": False}, "[FOO]"),
++        ({"default": "x"}, "[FOO]"),
++        ({"nargs": -1}, "[FOO]..."),
++        ({"nargs": -1, "required": True}, "FOO..."),
++        ({"nargs": 2}, "FOO..."),
++        ({"nargs": 2, "required": False}, "[FOO]..."),
++    ],
++)
++def test_argument_metavar_marks_optional(runner, kwargs, expected):
++    """An argument is bracketed in the usage line only when it is optional."""
++
++    @click.command()
++    @click.argument("foo", **kwargs)
++    def cli(foo):
++        pass
++
++    result = runner.invoke(cli, ["--help"])
++    assert result.exit_code == 0
++    assert result.output.splitlines()[0] == f"Usage: cli [OPTIONS] {expected}"
++
++
+ @pytest.mark.parametrize("deprecated", [True, "USE B INSTEAD"])
+ def test_deprecated_warning(runner, deprecated):
+     @click.command()
+diff --git a/tests/test_commands.py b/tests/test_commands.py
+index f26529a5425293546152faff273dec5770430c91..2722d4ac13665d1e45115db08a074ea010ebf990 100644
+--- a/tests/test_commands.py
++++ b/tests/test_commands.py
+@@ -299,6 +299,33 @@ def test_invoked_subcommand(runner):
+     assert result.output == "no subcommand, use default\nin subcommand\n"
+ 
+ 
++@pytest.mark.parametrize(
++    ("chain", "invoke_without_command", "metavar"),
++    [
++        (False, False, "COMMAND [ARGS]..."),
++        (False, True, "[COMMAND] [ARGS]..."),
++        (True, False, "COMMAND1 [ARGS]... [COMMAND2 [ARGS]...]..."),
++        (True, True, "[COMMAND1] [ARGS]... [COMMAND2 [ARGS]...]..."),
++    ],
++)
++def test_subcommand_metavar_marks_optional(
++    runner, chain, invoke_without_command, metavar
++):
++    """The leading subcommand token is bracketed only when it is optional."""
++
++    @click.group(chain=chain, invoke_without_command=invoke_without_command)
++    def cli():
++        pass
++
++    @cli.command()
++    def sub():
++        pass
++
++    result = runner.invoke(cli, ["--help"])
++    assert result.exit_code == 0
++    assert result.output.splitlines()[0] == f"Usage: cli [OPTIONS] {metavar}"
++
++
+ def test_aliased_command_canonical_name(runner):
+     class AliasedGroup(click.Group):
+         def get_command(self, ctx, cmd_name):

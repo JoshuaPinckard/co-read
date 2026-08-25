@@ -1,0 +1,31 @@
+diff --git a/src/click/core.py b/src/click/core.py
+index cc0d4603b442c72cf170d2090c7888ae59d9ba89..1ed706702f7c1e59759cdab2ac9320e462e15cbf 100644
+--- a/src/click/core.py
++++ b/src/click/core.py
+@@ -2490,11 +2490,10 @@ class Option(Parameter):
+             else:
+                 self.default = False
+ 
+-        if flag_value is None:
+-            flag_value = not self.default
+-
+         self.type: types.ParamType
+         if is_flag and type is None:
++            if flag_value is None:
++                flag_value = not self.default
+             # Re-guess the type from the flag value instead of the
+             # default.
+             self.type = types.convert_type(None, flag_value)
+diff --git a/tests/test_info_dict.py b/tests/test_info_dict.py
+index 79d39ee513011d689f3bfc9f2bec3d0c8c1f5dd8..11b670311d0e991f26ed76bdb73618aa71228cb1 100644
+--- a/tests/test_info_dict.py
++++ b/tests/test_info_dict.py
+@@ -58,7 +58,7 @@ NUMBER_OPTION = (
+         "help": None,
+         "prompt": None,
+         "is_flag": False,
+-        "flag_value": False,
++        "flag_value": None,
+         "count": False,
+         "hidden": False,
+     },

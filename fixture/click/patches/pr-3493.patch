@@ -1,0 +1,66 @@
+diff --git a/src/click/utils.py b/src/click/utils.py
+index beae26f761607f0a7a617d4ce8789bf49bb99b6b..e054441f2f6d7a65c98bd28395c0f07ba8777444 100644
+--- a/src/click/utils.py
++++ b/src/click/utils.py
+@@ -220,7 +220,7 @@ class KeepOpenFile:
+ 
+ 
+ def echo(
+-    message: t.Any | None = None,
++    message: object = None,
+     file: t.IO[t.Any] | None = None,
+     nl: bool = True,
+     err: bool = False,
+@@ -275,14 +275,15 @@ def echo(
+         if file is None:
+             return
+ 
+-    # Convert non bytes/text into the native string type.
+-    if message is not None and not isinstance(message, (str, bytes, bytearray)):
+-        out: str | bytes | bytearray | None = str(message)
+-    else:
+-        out = message
++    match message:
++        case str() | bytes() | bytearray():
++            out = message
++        case None:
++            out = ""
++        case _:
++            out = str(message)
+ 
+     if nl:
+-        out = out or ""
+         if isinstance(out, str):
+             out += "\n"
+         else:
+@@ -298,7 +299,6 @@ def echo(
+     # would expect. Eg: you can write to StringIO for other cases.
+     if isinstance(out, (bytes, bytearray)):
+         binary_file = _find_binary_writer(file)
+-
+         if binary_file is not None:
+             file.flush()
+             binary_file.write(out)
+diff --git a/tests/test_utils.py b/tests/test_utils.py
+index 1b1575657c7d5a74d7ab0fd55088f7ee4ddfae23..dceb5cea03df452d2a756ef3a5ab6c34f7bc39bb 100644
+--- a/tests/test_utils.py
++++ b/tests/test_utils.py
+@@ -8,6 +8,7 @@ from contextlib import nullcontext
+ from decimal import Decimal
+ from fractions import Fraction
+ from functools import partial
++from io import BytesIO
+ from io import StringIO
+ from pathlib import Path
+ from tempfile import tempdir
+@@ -98,6 +99,10 @@ def test_echo_custom_file():
+     click.echo("hello", file=f)
+     assert f.getvalue() == "hello\n"
+ 
++    b = BytesIO()
++    click.echo(b"", b)
++    assert b.getvalue() == b"\n"
++
+ 
+ def test_echo_no_streams(monkeypatch, runner):
+     """echo should not fail when stdout and stderr are None with pythonw on Windows."""

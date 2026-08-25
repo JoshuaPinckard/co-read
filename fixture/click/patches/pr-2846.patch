@@ -1,0 +1,131 @@
+diff --git a/src/click/shell_completion.py b/src/click/shell_completion.py
+index cdb58222c5b0fd5fd6c4c328e940b29caab3a2fb..3f7391580f42b2c1448b2aec529a498050534a97 100644
+--- a/src/click/shell_completion.py
++++ b/src/click/shell_completion.py
+@@ -124,6 +124,12 @@ _SOURCE_BASH = """\
+ %(complete_func)s_setup;
+ """
+ 
++# See ZshComplete.format_completion below, and issue #2703, before
++# changing this script.
++#
++# (TL;DR: _describe is picky about the format, but this Zsh script snippet
++# is already widely deployed.  So freeze this script, and use clever-ish
++# handling of colons in ZshComplet.format_completion.)
+ _SOURCE_ZSH = """\
+ #compdef %(prog_name)s
+ 
+@@ -373,7 +379,21 @@ class ZshComplete(ShellComplete):
+         return args, incomplete
+ 
+     def format_completion(self, item: CompletionItem) -> str:
+-        return f"{item.type}\n{item.value}\n{item.help if item.help else '_'}"
++        help_ = item.help or "_"
++        # The zsh completion script uses `_describe` on items with help
++        # texts (which splits the item help from the item value at the
++        # first unescaped colon) and `compadd` on items without help
++        # text (which uses the item value as-is and does not support
++        # colon escaping).  So escape colons in the item value if and
++        # only if the item help is not the sentinel "_" value, as used
++        # by the completion script.
++        #
++        # (The zsh completion script is potentially widely deployed, and
++        # thus harder to fix than this method.)
++        #
++        # See issue #1812 and issue #2703 for further context.
++        value = item.value.replace(":", r"\:") if help_ != "_" else item.value
++        return f"{item.type}\n{value}\n{help_}"
+ 
+ 
+ class FishComplete(ShellComplete):
+diff --git a/tests/test_shell_completion.py b/tests/test_shell_completion.py
+index 3511f0743ab7100aa565b4f37d4f1ae75b9c7501..0ad1649137bdf6f1d2ba4219c98a652acc9d4c9a 100644
+--- a/tests/test_shell_completion.py
++++ b/tests/test_shell_completion.py
+@@ -1,4 +1,6 @@
++import textwrap
+ import warnings
++from collections.abc import Mapping
+ 
+ import pytest
+ 
+@@ -324,6 +326,79 @@ def test_full_complete(runner, shell, env, expect):
+     assert result.output == expect
+ 
+ 
++@pytest.mark.parametrize(
++    ("env", "expect"),
++    [
++        (
++            {"COMP_WORDS": "", "COMP_CWORD": "0"},
++            textwrap.dedent(
++                """\
++                    plain
++                    a
++                    _
++                    plain
++                    b
++                    bee
++                    plain
++                    c\\:d
++                    cee:dee
++                    plain
++                    c:e
++                    _
++                """
++            ),
++        ),
++        (
++            {"COMP_WORDS": "a c", "COMP_CWORD": "1"},
++            textwrap.dedent(
++                """\
++                    plain
++                    c\\:d
++                    cee:dee
++                    plain
++                    c:e
++                    _
++                """
++            ),
++        ),
++        (
++            {"COMP_WORDS": "a c:", "COMP_CWORD": "1"},
++            textwrap.dedent(
++                """\
++                    plain
++                    c\\:d
++                    cee:dee
++                    plain
++                    c:e
++                    _
++                """
++            ),
++        ),
++    ],
++)
++@pytest.mark.usefixtures("_patch_for_completion")
++def test_zsh_full_complete_with_colons(
++    runner, env: Mapping[str, str], expect: str
++) -> None:
++    cli = Group(
++        "cli",
++        commands=[
++            Command("a"),
++            Command("b", help="bee"),
++            Command("c:d", help="cee:dee"),
++            Command("c:e"),
++        ],
++    )
++    result = runner.invoke(
++        cli,
++        env={
++            **env,
++            "_CLI_COMPLETE": "zsh_complete",
++        },
++    )
++    assert result.output == expect
++
++
+ @pytest.mark.usefixtures("_patch_for_completion")
+ def test_context_settings(runner):
+     def complete(ctx, param, incomplete):
