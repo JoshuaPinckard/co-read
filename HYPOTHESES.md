@@ -169,9 +169,31 @@ build per-language runners (Go, Java) first as their own gated
 instruments. Sites with mutually unsatisfiable tests are the
 contradictory-task subset for P3.
 
-Cell sizes, metrics, and the exclusion rule are **fixed with the PI at
-approval** — the population is now known (107 candidates), so sizing is no
-longer premature; committing it without the PI would still be theater.
+**Sizing decisions fixed with the PI, 2026-08-25:**
+
+- **Scope: build the Go and Java runners before the arms run.** The PI chose
+  the largest population over the fastest start. Candidate sites before
+  validation: Click 24, commons-lang 19 (Java), terraform 12 (Go), hugo 3
+  (Go), Pygments 2 — ~60. Each runner is its own gated instrument: a
+  perturbation operator for its language, focal-test oracles, and a
+  five-run determinism gate at each site's base before that site is
+  eligible. A site failing its gate is a recorded rejection.
+- **Draws: 5 per cell** (site × arm), two agents per draw, all five arms.
+- **Phases:** Phase 0 — site validation (each side's test patch must
+  independently discriminate its source change from the shared base),
+  runner builds, shim with event log and the PI's N=3 escalation budget,
+  canary build and calibration. Phase 1 — pilot, 6 sites × 5 arms × 2
+  draws, with a stop rule: if unmediated concurrency produces no collisions,
+  the sites are not exercising the phenomenon and the main phase does not
+  start until that is understood. Phase 2 — all validated sites × 5 arms ×
+  5 draws.
+- **Metrics as fixed in P2/P3/P4/P6:** correct completions per agent-minute
+  and per wall-clock (primary); realized collision rate at byte and file
+  granularity over identical events; redone effort; escalation count and
+  disposition; log-only attribution rate; livelock candidates.
+- The surviving-site count is a measured input, not a choice; the final
+  cell table is committed here as a further amendment when validation and
+  the runner gates report, before the first pilot draw.
 
 Preconditions for any arms run, non-negotiable:
 1. This file approved and committed first.

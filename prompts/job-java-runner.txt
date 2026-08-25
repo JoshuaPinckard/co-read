@@ -1,0 +1,28 @@
+Build and gate the JAVA runner: the per-language instrument for the arms ladder on apache/commons-lang (19 both-tests conflicted merges — the second-largest site population). Phase 0 of the approved program (read HYPOTHESES.md section C). Mirror the METHOD of the Python machinery (perturbation + focal oracles + five-run gates); do not port code.
+
+## Components
+
+1. **Perturbation operator.** Insert `if (true) throw new RuntimeException("perturbed");` as the first statement of every method body in a target .java file. Implementation choice is yours — JavaParser (com.github.javaparser) vendored as a single jar into tools/java/ is the expected route; record its version and sha256. Rules to state: constructors included or not, static initializers, abstract/interface default methods, generated sources excluded how. Byte-exact restoration verified by hash on every use.
+2. **Focal oracle.** Maven surefire on focal test classes only: `mvn -q test -Dtest=<ClassA,ClassB> -DfailIfNoTests=false` with a pinned local repository (maven.repo.local under tools/), offline mode (-o) after one warm-up resolve, and the repo's own surefire config otherwise untouched. Focal classes come from the site's test-side diff. State the mapping rule, including nested test classes and parameterized tests.
+3. **Determinism gate.** At each site's base: five identical normalized focal runs (per-test pass/fail, timing ignored). Round-trip gate for the perturbation operator on 20 sample files.
+
+## Environment
+
+Record exact JDK and Maven versions. commons-lang is an old, conventional Maven build — historical bases may need an older source/target level than the current JDK accepts; if a base fails to compile under the available JDK, try the newest locally available JDK that accepts it, record which, and reject the site only if none works. Install any needed JDK/Maven into tools/ project-locally, never system-wide, with versions and hashes recorded.
+
+## Candidate sites
+
+The 19 both-tests conflicted merges of apache/commons-lang from corpus/conflicts/. Materialize bases in scratch worktrees from the task-owned mirror (read-only source). For each: compile check, focal mapping, five-run gate. A base that does not compile, a focal class that no longer exists at B, or a flaky focal subset are rejections with recorded reasons — rejections are results.
+
+## Output
+
+exploratory/arms/JAVA-RUNNER.md:
+1. First line: gate verdict — sites passing / 19.
+2. Perturbation rules and round-trip verification.
+3. The focal-mapping rule with three worked examples.
+4. Per-site gate table: base, JDK used, focal classes, five-run result, verdict, reason.
+5. "Claims that could NOT be verified", "What would change this verdict", per-claim confidence with reasons.
+
+Tool source under instruments/arms/java/; site rows appended to exploratory/arms/sites-java.json in the same schema as sites.json.
+
+Do not fabricate. Do not modify corpus mirrors, fixture/, prompts/, or existing results.

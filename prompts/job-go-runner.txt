@@ -1,0 +1,28 @@
+Build and gate the GO runner: the per-language instrument that lets the arms ladder run on Go repositories. Phase 0 of the approved program (read HYPOTHESES.md section C, the sizing decisions). The Python machinery this mirrors: instruments/ perturbation + focal pytest oracles + five-run determinism gates. Reproduce the METHOD for Go; do not port code line-by-line.
+
+## Components
+
+1. **Perturbation operator.** A small Go tool (go/parser + go/printer, or golang.org/x/tools/go/ast) that inserts `panic("perturbed")` as the first statement of every function body in a target file, and restores the file byte-exactly afterward. Byte-exact restoration is verified by hash on every use. Handle: methods, init(), anonymous funcs at top level (state your rule for closures — perturbing only named function/method bodies is acceptable if stated). Generated files (//go:build ignore, .pb.go, zz_generated) are excluded by a stated rule.
+2. **Focal oracle.** Run only the focal tests: `go test <packages> -run '<anchored regex of focal Test names>' -count=1` with GOFLAGS pinned, module cache warm, and network disabled after warm-up (GOPROXY=off for the runs). Focal test names come from a site's test-side diff. State exactly how a test file diff maps to -run patterns, including table-driven subtests (match the parent TestXxx).
+3. **Determinism gate.** At a site's base commit: run the focal subset five times; identical normalized results required (pass/fail per test, ignoring timing). Any variation rejects the site. Also gate the perturbation round-trip: perturb + restore + hash-verify on 20 sample files per repo.
+
+## Candidate sites to gate
+
+From corpus/conflicts/: hashicorp/terraform (12 both-tests conflicted merges) and gohugoio/hugo (3). For each: materialize base B in a scratch worktree from the task-owned mirror (read-only source), map focal tests, run the gate. Terraform's full suite is enormous — that is WHY the oracle is focal-only; never run the full suite. If a focal subset needs external services (terraform acceptance tests guarded by TF_ACC), those tests are excluded by the guard and the site is judged on what remains; a site whose focal set is entirely TF_ACC-gated is rejected with that reason.
+
+## Go environment
+
+Record exact go version. If Go is not installed, install a pinned toolchain into a project-local directory (tools/go/) — never system-wide; record the version and sha256 of the archive. Modules: vendor or warm the module cache per repo before disabling the proxy; record what was fetched.
+
+## Output
+
+exploratory/arms/GO-RUNNER.md:
+1. First line: gate verdict — how many of the 15 Go sites pass base-determinism and focal-mapping, per repo.
+2. The perturbation operator's rules and its round-trip verification results.
+3. The focal-mapping rule with three worked examples.
+4. Per-site gate table: base, focal tests, five-run result, verdict, reason.
+5. Rejections are results. "Claims that could NOT be verified", "What would change this verdict", per-claim confidence with reasons.
+
+Tool source under instruments/arms/go/; site rows appended to exploratory/arms/sites-go.json in the same schema as sites.json.
+
+Do not fabricate. Do not modify corpus mirrors, fixture/, prompts/, or existing results.

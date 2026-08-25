@@ -1,0 +1,36 @@
+Validate the Python arms-ladder sites: turn mined conflict merges into verified two-sided agent task sites. Phase 0 of the approved confirmatory program (HYPOTHESES.md, section C — read it first, especially the sizing decisions and preconditions).
+
+## Population
+
+From corpus/conflicts/, the conflicted merges where BOTH sides touched test files, in pallets/click (24) and pygments/pygments (2). MINING.md's per-repo table is the census; the JSONL rows carry each merge's parents, base, and conflicted paths.
+
+## What a validated site is
+
+For merge M with parents P1, P2, base B: two tasks, one per side. Side i's source change is the base→Pi diff restricted to non-test files; its test change is the base→Pi diff restricted to test files. A site is VALIDATED when, for EACH side independently, from a worktree at B:
+
+1. Focal tests from side i's test patch, applied WITHOUT side i's source changes → at least one focal test FAILS (red).
+2. With both applied → all focal tests PASS (green).
+3. The base B itself, before anything: focal-test determinism gate — run the focal subset five times, identical normalized results. A flaky focal subset rejects the site.
+
+Record actual pytest counts for every check. This is the same green-red-green property as fixture/click/TASKS.md — read that for the established verification style.
+
+## Rules
+
+- Work in scratch copies from the task-owned mirrors under corpus/_conflict_mirrors/ (read-only source; never mutate them, never mutate corpus/_clones).
+- Fix the focal-test selection rule before running anything and state it: tests named in side i's test patch, mapped to runnable pytest node ids; a test file that no longer collects at B is recorded, not silently dropped.
+- Historical environment drift: run under the current gated environments (see exploratory/conflicts/SEMANTIC.md for Click's exact setup — reuse it). A side whose focal tests cannot collect at B is an exclusion with a recorded reason.
+- A rejection is a result. Report every site: validated, or rejected with the exact failing check.
+- Both sides green-green with no red anywhere means the tests do not discriminate — rejected as non-probe, recorded.
+
+## Output
+
+exploratory/arms/SITES.md:
+1. First line: X validated / Y attempted, per repo.
+2. Per-site table: merge, parents, base, focal tests per side, the six check outcomes with pytest counts, verdict.
+3. The focal-selection rule as fixed in advance.
+4. Sites whose two sides' focal tests are MUTUALLY UNSATISFIABLE (side A's focal tests cannot pass while side B's do, verified by applying both source changes where they merge cleanly and running both focal sets) — these are the contradictory-task subset for P3. Count and name them; if the two sources conflict textually, record that the joint check is not constructible that way and say so.
+5. "Claims that could NOT be verified" and "What would change this verdict", per-claim confidence with reasons.
+
+Also emit exploratory/arms/sites.json: machine-readable rows for the harness (repo, merge, base, per-side patch file paths under exploratory/arms/patches/, focal node ids, verdict).
+
+Do not fabricate. Do not modify fixture/, prompts/, corpus mirrors, or any existing result document.

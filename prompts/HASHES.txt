@@ -5,11 +5,14 @@ ba82b1eec4ee9aa1346043353a3d3903dfa4a78ec8bded82f438ff265199e5e3  job-bootstrap.
 c22309f5e1a3bc264b5197cf3ba5cbd6eff1fa5bae2980b47fb7d6670a967d48  job-conflict-mine.txt  5664 bytes
 6100720243029ee4ed59b30bd935ad2c87accf441c063b07490cb89e6e39721d  job-coread-predictor.txt  3711 bytes
 e41b253dee0520ddecfbb82bc4ade4242457bbc2be13823a35fcd3f5d643ea09  job-corpus.txt  3638 bytes
+68a374df51dcdbc58a8199e4874d801a9287570af47bdf33c83b22971fa0ffe9  job-go-runner.txt  3253 bytes
 a81111fd5964c1b32833c4249eece2333e34ed552ff01f3b2196c57446305d34  job-harvest-corpus.txt  5128 bytes
 6127df5f9550da03bbcbc84e78f0fe710ac20503eea699ae227d1773cba4e2df  job-hazard-upgrade.txt  3795 bytes
+4244f560e9ca5f0c65a48038be1c64c6480bfdcd1ff8422f506406558a8ccdd1  job-java-runner.txt  2976 bytes
 db4e04ef2020f58480e4a63fca9c622ee261ffc4b6bfc34b53afa51459ab43e3  job-normalization.txt  3067 bytes
 bdf952f5732222652857f34228d045d740b87e89364e64f1f7e5357a1b26c223  job-oscillation.txt  4813 bytes
 ea6e0750731a377dd9fbdc285cdfae2f2d64977089424600b89139cf8970862d  job-recover-tasks.txt  3748 bytes
 f7b108b7e01fb6103177453f406bb47e1e8d65a9e82a2364c79f4b743a39c772  job-retrieval-fix.txt  3689 bytes
 eb16c5fd1c8e3ca013537f5542c71dac00b22b305a41e306adfd19834bfdcf6a  job-second-repo.txt  3867 bytes
 3e33ae98158db46b3cfac9c9120c6e22798eb7615a0efbc2d732e813f5b94811  job-semantic-merge.txt  5986 bytes
+5c8d200812fede61f088bdf547fb3bd8740ec70dfb8047940d78bec8f33f1dfa  job-site-validation.txt  3229 bytes
