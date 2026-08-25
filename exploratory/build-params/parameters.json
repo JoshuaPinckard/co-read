@@ -1,0 +1,3791 @@
+{
+  "claims_that_could_not_be_verified": [
+    "True physical byte offsets, original encodings, raw on-disk byte counts, or identity across symlinks/hardlinks/renames.",
+    "Historical Git repository roots for targets that no longer resolve to an extant current .git ancestor.",
+    "Actual simultaneous execution rather than co-activity within the same UTC minute.",
+    "Explicit session close times or uncensored last-write-to-close claim linger.",
+    "Files actually read or written by shell subprocesses, scripts, git, package managers, formatters, code generators, variables, or glob expansion.",
+    "Reads through Grep/search, prompts, shared context, or other non-Read tools.",
+    "That a first read caused a later write or that a claim had to remain live throughout the measured interval.",
+    "Binary workload completeness when tools refused or omitted binary payloads.",
+    "Event-log byte retention or byte bandwidth before the final serialized event schema is benchmarked.",
+    "Sub-minute peak throughput or operation-overlap durations.",
+    "The earlier approximate 5:1 shell dominance: this freeze measures 3.292:1 after deduplication and 3.012:1 over raw copied-record occurrences.",
+    "The earlier 99.6% Read and 98.7% Edit/Write metadata figures as corpus-wide usable-metadata coverage; source-specific result shapes differ materially.",
+    "Generalization beyond this one team, Claude Code harness, compatible-goal history, and Node-dominated workload."
+  ],
+  "confidence": {
+    "capture_coverage": {
+      "measurement_confidence": "Moderate-low for recovered shell paths; High for channel counts",
+      "reason": "Shell/tool counts are exact after quarantine; lexical path recovery is conditioned on a 50-command manual audit and does not prove effects.",
+      "scope_confidence": "workload_default_only"
+    },
+    "corpus_freeze": {
+      "measurement_confidence": "High",
+      "reason": "Sorted byte lengths were fixed before reads; exact prefixes and per-file/global SHA-256 values are recorded, with read/truncation/growth diagnostics.",
+      "scope_confidence": "in_slice"
+    },
+    "edit_region_sizes": {
+      "measurement_confidence": "High in exact-preimage slice; Moderate for byte interpretation",
+      "reason": "Patches parse and old blocks validate against same-result originalFile; most successful subagent writes lack this evidence.",
+      "scope_confidence": "workload_default_only"
+    },
+    "event_volume": {
+      "measurement_confidence": "High for paired structured events; low as total file activity",
+      "reason": "Direct timestamps and exact active-hour denominators, but shell and non-Read channels are not typed file events.",
+      "scope_confidence": "workload_default_only"
+    },
+    "file_type_mix": {
+      "measurement_confidence": "Moderate",
+      "reason": "Mutually exclusive extension/basename rules are deterministic; binary means binary-looking path, not inspected content.",
+      "scope_confidence": "workload_default_only"
+    },
+    "index_cardinality": {
+      "measurement_confidence": "High in localized structured slice",
+      "reason": "First-seen files/pairs and zero-growth ISO weeks are deterministic; completeness is limited by missing structured paths and aliases.",
+      "scope_confidence": "workload_default_only"
+    },
+    "observed_concurrency": {
+      "measurement_confidence": "High for minute buckets; Moderate-low for true overlap/repository grouping",
+      "reason": "Actor sets are deterministic for conflict-free post-quarantine calls; excluded ambiguous IDs may move tails. Same-minute activity is not duration overlap and historical Git-root attribution is incomplete.",
+      "scope_confidence": "workload_default_only"
+    },
+    "read_multiplicity": {
+      "measurement_confidence": "High for localized lexical paths; Moderate as total reader fan-out",
+      "reason": "Rolling/calendar windows and identities are deterministic, but shell/search exposures are omitted and aliases are unresolved.",
+      "scope_confidence": "workload_default_only"
+    },
+    "read_to_write_intervals": {
+      "measurement_confidence": "Moderate-low",
+      "reason": "Endpoints are observed, but causality is unproven, many operations lack paths, and observed end is a censored last record rather than close.",
+      "scope_confidence": "workload_default_only"
+    },
+    "read_window_sizes": {
+      "measurement_confidence": "High for lines; Moderate for bytes",
+      "reason": "Result startLine/numLines are direct; UTF-8 payload bytes are re-encoded transcript text, not disk bytes. Subagent metadata is absent.",
+      "scope_confidence": "workload_default_only"
+    },
+    "session_lengths": {
+      "measurement_confidence": "High as observed timestamp span; Low as launch-to-close lifetime",
+      "reason": "Spans and kept-call counts are direct after identity reconciliation and quarantine, but excluded ambiguous IDs may move call tails, idle gaps remain, and no close/crash marker exists.",
+      "scope_confidence": "workload_default_only"
+    },
+    "universal_defaults": {
+      "measurement_confidence": "Not verified",
+      "reason": "Only one team, harness, and Node-dominated workload was measured.",
+      "scope_confidence": "unsupported_universal"
+    }
+  },
+  "corpus": {
+    "corpus_bytes": 4151991960,
+    "corpus_file_count": 6290,
+    "corpus_root": "<redacted-current-user>/.claude/projects",
+    "corpus_snapshot_sha256": "dcba21bb558eb1cc32dfc29a92b46817c2b8050d56c685bec7234ba2501c7458",
+    "diagnostics": {
+      "call_dedup_session_identity_conflicts": 8554,
+      "call_dedup_tool_or_time_conflicts": 3,
+      "deduplicated_operations": 58229,
+      "deduplicated_shell_commands": 191764,
+      "deduplicated_tool_calls": 288580,
+      "duplicate_result_occurrences": 66,
+      "duplicate_shell_occurrences": 204,
+      "duplicate_tool_call_occurrences": 312,
+      "duplicated_result_tool_use_ids": 66,
+      "duplicated_shell_tool_use_ids": 204,
+      "duplicated_tool_call_ids": 312,
+      "files_added_after_snapshot": 12,
+      "files_read_successfully": 6290,
+      "frozen_manifest_files_resolved": 6290,
+      "jsonl_lines": 1099873,
+      "live_files_outside_frozen_manifest": 12,
+      "live_jsonl_files_at_manifest_resolution": 6302,
+      "manifest_resolution_candidates_hashed": 6300,
+      "metadata_direct_subagent_Edit_error": 93,
+      "metadata_direct_subagent_Edit_missing_tool_use_result": 9421,
+      "metadata_direct_subagent_Read_error": 77,
+      "metadata_direct_subagent_Read_missing_result_file": 13244,
+      "metadata_direct_subagent_Write_error": 24,
+      "metadata_direct_subagent_Write_missing_tool_use_result": 3215,
+      "metadata_main_Edit_error": 139,
+      "metadata_main_Edit_exact_write": 3410,
+      "metadata_main_Edit_patch_preimage_mismatch": 53,
+      "metadata_main_Edit_patch_without_string_preimage": 6413,
+      "metadata_main_Read_error": 101,
+      "metadata_main_Read_exact_read": 5456,
+      "metadata_main_Read_invalid_read_range": 431,
+      "metadata_main_Write_error": 66,
+      "metadata_main_Write_exact_write": 887,
+      "metadata_main_Write_patch_without_string_preimage": 193,
+      "metadata_main_Write_write_create_without_patch": 4595,
+      "metadata_workflow_subagent_Edit_error": 61,
+      "metadata_workflow_subagent_Edit_missing_tool_use_result": 5733,
+      "metadata_workflow_subagent_Read_error": 153,
+      "metadata_workflow_subagent_Read_missing_result_file": 12978,
+      "metadata_workflow_subagent_Write_error": 46,
+      "metadata_workflow_subagent_Write_missing_tool_use_result": 3712,
+      "operation_dedup_metadata_conflicts": 22,
+      "operation_dedup_session_identity_conflicts": 2407,
+      "original_file_key_direct_subagent_Edit": 0,
+      "original_file_key_direct_subagent_Read": 0,
+      "original_file_key_direct_subagent_Write": 0,
+      "original_file_key_main_Edit": 9876,
+      "original_file_key_main_Read": 0,
+      "original_file_key_main_Write": 5675,
+      "original_file_key_workflow_subagent_Edit": 0,
+      "original_file_key_workflow_subagent_Read": 0,
+      "original_file_key_workflow_subagent_Write": 0,
+      "original_file_string_direct_subagent_Edit": 0,
+      "original_file_string_direct_subagent_Read": 0,
+      "original_file_string_direct_subagent_Write": 0,
+      "original_file_string_main_Edit": 3463,
+      "original_file_string_main_Read": 0,
+      "original_file_string_main_Write": 887,
+      "original_file_string_workflow_subagent_Edit": 0,
+      "original_file_string_workflow_subagent_Read": 0,
+      "original_file_string_workflow_subagent_Write": 0,
+      "paired_result_occurrences": 70501,
+      "read_content_line_mismatches": 60,
+      "result_occurrences_direct_subagent_Edit": 9514,
+      "result_occurrences_direct_subagent_Read": 13321,
+      "result_occurrences_direct_subagent_Write": 3239,
+      "result_occurrences_main_Edit": 10015,
+      "result_occurrences_main_Read": 5988,
+      "result_occurrences_main_Write": 5741,
+      "result_occurrences_workflow_subagent_Edit": 5794,
+      "result_occurrences_workflow_subagent_Read": 13131,
+      "result_occurrences_workflow_subagent_Write": 3758,
+      "shell_command_occurrences_Bash": 193518,
+      "shell_command_occurrences_PowerShell": 18993,
+      "shell_command_string_occurrences": 212511,
+      "shell_dedup_command_or_time_conflicts": 1,
+      "shell_dedup_session_identity_conflicts": 4794,
+      "source_local_results_without_structured_call": 256491,
+      "structured_call_occurrences_direct_subagent_Edit": 9514,
+      "structured_call_occurrences_direct_subagent_Read": 13321,
+      "structured_call_occurrences_direct_subagent_Write": 3239,
+      "structured_call_occurrences_main_Edit": 10039,
+      "structured_call_occurrences_main_Read": 5997,
+      "structured_call_occurrences_main_Write": 5738,
+      "structured_call_occurrences_workflow_subagent_Edit": 5794,
+      "structured_call_occurrences_workflow_subagent_Read": 13133,
+      "structured_call_occurrences_workflow_subagent_Write": 3782,
+      "subagent_filename_agent_matches": 685639,
+      "subagent_filename_agent_mismatches": 0,
+      "subagent_parent_session_matches": 685639,
+      "subagent_parent_session_mismatches": 0,
+      "subagent_records_with_explicit_agent": 685639,
+      "subagent_records_with_session": 685639,
+      "successful_result_occurrences_direct_subagent_Edit": 9421,
+      "successful_result_occurrences_direct_subagent_Read": 13244,
+      "successful_result_occurrences_direct_subagent_Write": 3215,
+      "successful_result_occurrences_main_Edit": 9876,
+      "successful_result_occurrences_main_Read": 5887,
+      "successful_result_occurrences_main_Write": 5675,
+      "successful_result_occurrences_workflow_subagent_Edit": 5733,
+      "successful_result_occurrences_workflow_subagent_Read": 12978,
+      "successful_result_occurrences_workflow_subagent_Write": 3712,
+      "tool_call_occurrences_Agent": 1532,
+      "tool_call_occurrences_Artifact": 43,
+      "tool_call_occurrences_AskUserQuestion": 353,
+      "tool_call_occurrences_Bash": 193518,
+      "tool_call_occurrences_CronCreate": 51,
+      "tool_call_occurrences_CronDelete": 32,
+      "tool_call_occurrences_CronList": 23,
+      "tool_call_occurrences_Edit": 25347,
+      "tool_call_occurrences_EnterPlanMode": 1,
+      "tool_call_occurrences_ExitPlanMode": 511,
+      "tool_call_occurrences_Glob": 1319,
+      "tool_call_occurrences_Grep": 14292,
+      "tool_call_occurrences_ListAgents": 12,
+      "tool_call_occurrences_Monitor": 285,
+      "tool_call_occurrences_PowerShell": 18993,
+      "tool_call_occurrences_PushNotification": 7,
+      "tool_call_occurrences_Read": 32451,
+      "tool_call_occurrences_ReportFindings": 1,
+      "tool_call_occurrences_ScheduleWakeup": 791,
+      "tool_call_occurrences_SendMessage": 1980,
+      "tool_call_occurrences_Skill": 96,
+      "tool_call_occurrences_StructuredOutput": 3128,
+      "tool_call_occurrences_TaskOutput": 418,
+      "tool_call_occurrences_TaskStop": 458,
+      "tool_call_occurrences_TodoWrite": 2524,
+      "tool_call_occurrences_ToolSearch": 3343,
+      "tool_call_occurrences_WebFetch": 3290,
+      "tool_call_occurrences_WebSearch": 1857,
+      "tool_call_occurrences_Workflow": 599,
+      "tool_call_occurrences_Write": 12759,
+      "tool_call_occurrences_mcp__claude_ai_Google_Drive__list_recent_files": 1,
+      "tool_call_occurrences_mcp__claude_ai_Google_Drive__search_files": 1,
+      "tool_call_occurrences_mcp__playwright__browser_click": 35,
+      "tool_call_occurrences_mcp__playwright__browser_close": 1,
+      "tool_call_occurrences_mcp__playwright__browser_file_upload": 2,
+      "tool_call_occurrences_mcp__playwright__browser_navigate": 31,
+      "tool_call_occurrences_mcp__playwright__browser_resize": 11,
+      "tool_call_occurrences_mcp__playwright__browser_run_code_unsafe": 3,
+      "tool_call_occurrences_mcp__playwright__browser_snapshot": 3,
+      "tool_call_occurrences_mcp__playwright__browser_tabs": 5,
+      "tool_call_occurrences_mcp__playwright__browser_take_screenshot": 1,
+      "tool_call_occurrences_mcp__playwright__browser_type": 3,
+      "tool_call_occurrences_mcp__playwright__browser_wait_for": 22,
+      "tool_call_occurrences_mcp__probe__danger_exec": 3,
+      "tool_call_occurrences_mcp__probe__probe_marker": 2,
+      "tool_call_occurrences_mcp__probe__te_marker": 2,
+      "tool_call_occurrences_mcp__toolsenabed__browser_playwright_call": 2,
+      "tool_call_occurrences_mcp__toolsenabend__audit_flush": 1,
+      "tool_call_occurrences_mcp__toolsenabled-full-remote__browser_playwright_tools": 1,
+      "tool_call_occurrences_mcp__toolsenabled-full-remote__host_list_processes": 1,
+      "tool_call_occurrences_mcp__toolsenabled-full-remote__system_kill_switch_status": 2,
+      "tool_call_occurrences_mcp__toolsenabled-full-remote__system_status": 1,
+      "tool_call_occurrences_mcp__toolsenabled-full-remote__workstation_status": 1,
+      "tool_call_occurrences_mcp__toolsenabled-readonly__agent_comms_local_roster": 2,
+      "tool_call_occurrences_mcp__toolsenabled-readonly__audit_status": 36,
+      "tool_call_occurrences_mcp__toolsenabled-readonly__audit_tail": 18,
+      "tool_call_occurrences_mcp__toolsenabled-readonly__audit_verify": 3,
+      "tool_call_occurrences_mcp__toolsenabled-readonly__browser_playwright_status": 6,
+      "tool_call_occurrences_mcp__toolsenabled-readonly__browser_playwright_tools": 3,
+      "tool_call_occurrences_mcp__toolsenabled-readonly__browser_status": 4,
+      "tool_call_occurrences_mcp__toolsenabled-readonly__cloud_account_list": 5,
+      "tool_call_occurrences_mcp__toolsenabled-readonly__cloud_task_diff": 1,
+      "tool_call_occurrences_mcp__toolsenabled-readonly__cloud_task_list": 3,
+      "tool_call_occurrences_mcp__toolsenabled-readonly__cloud_task_status": 5,
+      "tool_call_occurrences_mcp__toolsenabled-readonly__code_diagnostics": 2,
+      "tool_call_occurrences_mcp__toolsenabled-readonly__code_document_symbols": 6,
+      "tool_call_occurrences_mcp__toolsenabled-readonly__code_find_references": 80,
+      "tool_call_occurrences_mcp__toolsenabled-readonly__code_goto_definition": 10,
+      "tool_call_occurrences_mcp__toolsenabled-readonly__code_status": 53,
+      "tool_call_occurrences_mcp__toolsenabled-readonly__code_workspace_symbols": 17,
+      "tool_call_occurrences_mcp__toolsenabled-readonly__digitalocean_app_list": 3,
+      "tool_call_occurrences_mcp__toolsenabled-readonly__digitalocean_doctor": 12,
+      "tool_call_occurrences_mcp__toolsenabled-readonly__digitalocean_google_login_status": 3,
+      "tool_call_occurrences_mcp__toolsenabled-readonly__digitalocean_inventory": 5,
+      "tool_call_occurrences_mcp__toolsenabled-readonly__firebase_doctor": 1,
+      "tool_call_occurrences_mcp__toolsenabled-readonly__gcloud_account_inspect": 5,
+      "tool_call_occurrences_mcp__toolsenabled-readonly__gcloud_doctor": 1,
+      "tool_call_occurrences_mcp__toolsenabled-readonly__github_release_list": 3,
+      "tool_call_occurrences_mcp__toolsenabled-readonly__github_repo_get": 18,
+      "tool_call_occurrences_mcp__toolsenabled-readonly__gmail_list": 6,
+      "tool_call_occurrences_mcp__toolsenabled-readonly__google_accounts": 2,
+      "tool_call_occurrences_mcp__toolsenabled-readonly__ide_consent_read": 1,
+      "tool_call_occurrences_mcp__toolsenabled-readonly__instagram_verify": 2,
+      "tool_call_occurrences_mcp__toolsenabled-readonly__jarvis_feed": 3,
+      "tool_call_occurrences_mcp__toolsenabled-readonly__jarvis_lifecycle_status": 12,
+      "tool_call_occurrences_mcp__toolsenabled-readonly__jarvis_list": 8,
+      "tool_call_occurrences_mcp__toolsenabled-readonly__jarvis_providers": 1,
+      "tool_call_occurrences_mcp__toolsenabled-readonly__jarvis_status": 5,
+      "tool_call_occurrences_mcp__toolsenabled-readonly__memory_get": 458,
+      "tool_call_occurrences_mcp__toolsenabled-readonly__memory_search": 643,
+      "tool_call_occurrences_mcp__toolsenabled-readonly__ocr_read": 1,
+      "tool_call_occurrences_mcp__toolsenabled-readonly__owner_forms_describe": 3,
+      "tool_call_occurrences_mcp__toolsenabled-readonly__owner_prompts_status": 6,
+      "tool_call_occurrences_mcp__toolsenabled-readonly__paddle_doctor": 2,
+      "tool_call_occurrences_mcp__toolsenabled-readonly__pay_check": 7,
+      "tool_call_occurrences_mcp__toolsenabled-readonly__payment_method_card_status": 2,
+      "tool_call_occurrences_mcp__toolsenabled-readonly__purchase_decision": 6,
+      "tool_call_occurrences_mcp__toolsenabled-readonly__research_local_tiers_status": 4,
+      "tool_call_occurrences_mcp__toolsenabled-readonly__sandbox_doctor": 2,
+      "tool_call_occurrences_mcp__toolsenabled-readonly__scheduler_list": 1,
+      "tool_call_occurrences_mcp__toolsenabled-readonly__screen_list_monitors": 2,
+      "tool_call_occurrences_mcp__toolsenabled-readonly__screen_read_capture": 2,
+      "tool_call_occurrences_mcp__toolsenabled-readonly__search_query": 4,
+      "tool_call_occurrences_mcp__toolsenabled-readonly__search_status": 3,
+      "tool_call_occurrences_mcp__toolsenabled-readonly__settings_read": 6,
+      "tool_call_occurrences_mcp__toolsenabled-readonly__system_doctor": 30,
+      "tool_call_occurrences_mcp__toolsenabled-readonly__system_status": 55,
+      "tool_call_occurrences_mcp__toolsenabled-readonly__task_get": 6,
+      "tool_call_occurrences_mcp__toolsenabled-readonly__task_list": 20,
+      "tool_call_occurrences_mcp__toolsenabled-readonly__telegram_poll": 2,
+      "tool_call_occurrences_mcp__toolsenabled-readonly__web_fetch": 3,
+      "tool_call_occurrences_mcp__toolsenabled-readonly__web_lookup": 2,
+      "tool_call_occurrences_mcp__toolsenabled-readonly__web_search": 1,
+      "tool_call_occurrences_mcp__toolsenabled-readonly__window_list": 14,
+      "tool_call_occurrences_mcp__toolsenabled-remote__agent_comms_read": 5,
+      "tool_call_occurrences_mcp__toolsenabled-remote__agent_comms_send": 1,
+      "tool_call_occurrences_mcp__toolsenabled-remote__audit_status": 1,
+      "tool_call_occurrences_mcp__toolsenabled-remote__audit_tail": 1,
+      "tool_call_occurrences_mcp__toolsenabled-remote__browser_playwright_call": 1,
+      "tool_call_occurrences_mcp__toolsenabled-remote__browser_playwright_status": 4,
+      "tool_call_occurrences_mcp__toolsenabled-remote__browser_playwright_tools": 2,
+      "tool_call_occurrences_mcp__toolsenabled-remote__browser_status": 2,
+      "tool_call_occurrences_mcp__toolsenabled-remote__code_diagnostics": 2,
+      "tool_call_occurrences_mcp__toolsenabled-remote__code_document_symbols": 1,
+      "tool_call_occurrences_mcp__toolsenabled-remote__code_find_references": 1,
+      "tool_call_occurrences_mcp__toolsenabled-remote__code_status": 9,
+      "tool_call_occurrences_mcp__toolsenabled-remote__digitalocean_app_list": 1,
+      "tool_call_occurrences_mcp__toolsenabled-remote__digitalocean_inventory": 4,
+      "tool_call_occurrences_mcp__toolsenabled-remote__firebase_doctor": 1,
+      "tool_call_occurrences_mcp__toolsenabled-remote__gcloud_account_inspect": 3,
+      "tool_call_occurrences_mcp__toolsenabled-remote__gcloud_doctor": 1,
+      "tool_call_occurrences_mcp__toolsenabled-remote__github_repo_get": 1,
+      "tool_call_occurrences_mcp__toolsenabled-remote__google_accounts": 1,
+      "tool_call_occurrences_mcp__toolsenabled-remote__host_list_dir": 13,
+      "tool_call_occurrences_mcp__toolsenabled-remote__host_read_file": 5,
+      "tool_call_occurrences_mcp__toolsenabled-remote__host_write_file": 10,
+      "tool_call_occurrences_mcp__toolsenabled-remote__http_request": 2,
+      "tool_call_occurrences_mcp__toolsenabled-remote__memory_get": 313,
+      "tool_call_occurrences_mcp__toolsenabled-remote__memory_search": 164,
+      "tool_call_occurrences_mcp__toolsenabled-remote__memory_set": 281,
+      "tool_call_occurrences_mcp__toolsenabled-remote__paddle_doctor": 1,
+      "tool_call_occurrences_mcp__toolsenabled-remote__pay_check": 1,
+      "tool_call_occurrences_mcp__toolsenabled-remote__payment_method_card_status": 3,
+      "tool_call_occurrences_mcp__toolsenabled-remote__repo_read_file": 7,
+      "tool_call_occurrences_mcp__toolsenabled-remote__system_ask": 2,
+      "tool_call_occurrences_mcp__toolsenabled-remote__system_ask_remote": 2,
+      "tool_call_occurrences_mcp__toolsenabled-remote__system_doctor": 3,
+      "tool_call_occurrences_mcp__toolsenabled-remote__system_notify": 1,
+      "tool_call_occurrences_mcp__toolsenabled-remote__system_status": 2,
+      "tool_call_occurrences_mcp__toolsenabled-remote__web_fetch": 2,
+      "tool_call_occurrences_mcp__toolsenabled-remote__web_search": 1,
+      "tool_call_occurrences_mcp__toolsenabled-remote__workspace_list": 2,
+      "tool_call_occurrences_mcp__toolsenabled__agent_comms_local_roster": 2,
+      "tool_call_occurrences_mcp__toolsenabled__agent_comms_read": 11,
+      "tool_call_occurrences_mcp__toolsenabled__agent_comms_send": 7,
+      "tool_call_occurrences_mcp__toolsenabled__audit_flush": 18,
+      "tool_call_occurrences_mcp__toolsenabled__audit_status": 28,
+      "tool_call_occurrences_mcp__toolsenabled__audit_tail": 21,
+      "tool_call_occurrences_mcp__toolsenabled__audit_verify": 13,
+      "tool_call_occurrences_mcp__toolsenabled__browser_find": 1,
+      "tool_call_occurrences_mcp__toolsenabled__browser_navigate": 3,
+      "tool_call_occurrences_mcp__toolsenabled__browser_playwright_call": 1751,
+      "tool_call_occurrences_mcp__toolsenabled__browser_playwright_status": 23,
+      "tool_call_occurrences_mcp__toolsenabled__browser_playwright_tools": 50,
+      "tool_call_occurrences_mcp__toolsenabled__browser_snapshot": 2,
+      "tool_call_occurrences_mcp__toolsenabled__browser_start": 100,
+      "tool_call_occurrences_mcp__toolsenabled__browser_status": 86,
+      "tool_call_occurrences_mcp__toolsenabled__browser_stop": 7,
+      "tool_call_occurrences_mcp__toolsenabled__browser_type": 1,
+      "tool_call_occurrences_mcp__toolsenabled__calendar_list": 3,
+      "tool_call_occurrences_mcp__toolsenabled__clipboard_write": 1,
+      "tool_call_occurrences_mcp__toolsenabled__cloud_account_list": 10,
+      "tool_call_occurrences_mcp__toolsenabled__cloud_task_diff": 9,
+      "tool_call_occurrences_mcp__toolsenabled__cloud_task_launch": 42,
+      "tool_call_occurrences_mcp__toolsenabled__cloud_task_list": 31,
+      "tool_call_occurrences_mcp__toolsenabled__cloud_task_status": 10,
+      "tool_call_occurrences_mcp__toolsenabled__code_diagnostics": 1,
+      "tool_call_occurrences_mcp__toolsenabled__code_document_symbols": 4,
+      "tool_call_occurrences_mcp__toolsenabled__code_find_references": 22,
+      "tool_call_occurrences_mcp__toolsenabled__code_goto_definition": 1,
+      "tool_call_occurrences_mcp__toolsenabled__code_status": 5,
+      "tool_call_occurrences_mcp__toolsenabled__code_workspace_symbols": 1,
+      "tool_call_occurrences_mcp__toolsenabled__deployment_detect": 1,
+      "tool_call_occurrences_mcp__toolsenabled__digitalocean_app_list": 3,
+      "tool_call_occurrences_mcp__toolsenabled__digitalocean_doctor": 7,
+      "tool_call_occurrences_mcp__toolsenabled__digitalocean_google_login_status": 1,
+      "tool_call_occurrences_mcp__toolsenabled__digitalocean_inventory": 5,
+      "tool_call_occurrences_mcp__toolsenabled__drive_find": 16,
+      "tool_call_occurrences_mcp__toolsenabled__drive_upload": 22,
+      "tool_call_occurrences_mcp__toolsenabled__firebase_doctor": 2,
+      "tool_call_occurrences_mcp__toolsenabled__gcloud_account_inspect": 7,
+      "tool_call_occurrences_mcp__toolsenabled__gcloud_doctor": 3,
+      "tool_call_occurrences_mcp__toolsenabled__github_release_list": 1,
+      "tool_call_occurrences_mcp__toolsenabled__github_repo_get": 23,
+      "tool_call_occurrences_mcp__toolsenabled__gmail_list": 18,
+      "tool_call_occurrences_mcp__toolsenabled__gmail_send": 2,
+      "tool_call_occurrences_mcp__toolsenabled__google_accounts": 21,
+      "tool_call_occurrences_mcp__toolsenabled__host_exec": 3,
+      "tool_call_occurrences_mcp__toolsenabled__host_list_processes": 12,
+      "tool_call_occurrences_mcp__toolsenabled__host_read_file": 1,
+      "tool_call_occurrences_mcp__toolsenabled__http_request": 13,
+      "tool_call_occurrences_mcp__toolsenabled__instagram_verify": 8,
+      "tool_call_occurrences_mcp__toolsenabled__jarvis_cancel": 6,
+      "tool_call_occurrences_mcp__toolsenabled__jarvis_feed": 16,
+      "tool_call_occurrences_mcp__toolsenabled__jarvis_lifecycle": 3,
+      "tool_call_occurrences_mcp__toolsenabled__jarvis_lifecycle_status": 9,
+      "tool_call_occurrences_mcp__toolsenabled__jarvis_list": 10,
+      "tool_call_occurrences_mcp__toolsenabled__jarvis_mission": 2,
+      "tool_call_occurrences_mcp__toolsenabled__jarvis_provider_set": 1,
+      "tool_call_occurrences_mcp__toolsenabled__jarvis_providers": 5,
+      "tool_call_occurrences_mcp__toolsenabled__jarvis_request_help": 1,
+      "tool_call_occurrences_mcp__toolsenabled__jarvis_status": 19,
+      "tool_call_occurrences_mcp__toolsenabled__jarvis_submit": 6,
+      "tool_call_occurrences_mcp__toolsenabled__memory_get": 219,
+      "tool_call_occurrences_mcp__toolsenabled__memory_search": 540,
+      "tool_call_occurrences_mcp__toolsenabled__memory_set": 842,
+      "tool_call_occurrences_mcp__toolsenabled__ocr_read": 6,
+      "tool_call_occurrences_mcp__toolsenabled__owner_forms_describe": 48,
+      "tool_call_occurrences_mcp__toolsenabled__owner_identity_profile_status": 3,
+      "tool_call_occurrences_mcp__toolsenabled__owner_prompts_cancel": 8,
+      "tool_call_occurrences_mcp__toolsenabled__owner_prompts_start": 38,
+      "tool_call_occurrences_mcp__toolsenabled__owner_prompts_status": 48,
+      "tool_call_occurrences_mcp__toolsenabled__paddle_catalog_list": 1,
+      "tool_call_occurrences_mcp__toolsenabled__paddle_doctor": 4,
+      "tool_call_occurrences_mcp__toolsenabled__pay_check": 8,
+      "tool_call_occurrences_mcp__toolsenabled__payment_method_card_status": 16,
+      "tool_call_occurrences_mcp__toolsenabled__purchase_decision": 6,
+      "tool_call_occurrences_mcp__toolsenabled__purchase_request": 8,
+      "tool_call_occurrences_mcp__toolsenabled__research_lifecycle_status": 3,
+      "tool_call_occurrences_mcp__toolsenabled__research_local_tiers_status": 1,
+      "tool_call_occurrences_mcp__toolsenabled__research_project_list": 3,
+      "tool_call_occurrences_mcp__toolsenabled__sandbox_doctor": 1,
+      "tool_call_occurrences_mcp__toolsenabled__screen_capture": 7,
+      "tool_call_occurrences_mcp__toolsenabled__screen_capture_region": 1,
+      "tool_call_occurrences_mcp__toolsenabled__screen_capture_window": 57,
+      "tool_call_occurrences_mcp__toolsenabled__screen_list_monitors": 1,
+      "tool_call_occurrences_mcp__toolsenabled__screen_read_capture": 33,
+      "tool_call_occurrences_mcp__toolsenabled__search_status": 2,
+      "tool_call_occurrences_mcp__toolsenabled__settings_read": 3,
+      "tool_call_occurrences_mcp__toolsenabled__sound_play": 10,
+      "tool_call_occurrences_mcp__toolsenabled__system_ask": 13,
+      "tool_call_occurrences_mcp__toolsenabled__system_ask_remote": 3,
+      "tool_call_occurrences_mcp__toolsenabled__system_credential_request": 69,
+      "tool_call_occurrences_mcp__toolsenabled__system_doctor": 81,
+      "tool_call_occurrences_mcp__toolsenabled__system_kill_switch_activate": 1,
+      "tool_call_occurrences_mcp__toolsenabled__system_kill_switch_status": 5,
+      "tool_call_occurrences_mcp__toolsenabled__system_notify": 14,
+      "tool_call_occurrences_mcp__toolsenabled__system_status": 25,
+      "tool_call_occurrences_mcp__toolsenabled__task_cancel": 1,
+      "tool_call_occurrences_mcp__toolsenabled__task_get": 3,
+      "tool_call_occurrences_mcp__toolsenabled__task_list": 16,
+      "tool_call_occurrences_mcp__toolsenabled__task_submit": 1,
+      "tool_call_occurrences_mcp__toolsenabled__telegram_poll": 2,
+      "tool_call_occurrences_mcp__toolsenabled__telegram_send": 47,
+      "tool_call_occurrences_mcp__toolsenabled__web_extract": 1,
+      "tool_call_occurrences_mcp__toolsenabled__web_fetch": 8,
+      "tool_call_occurrences_mcp__toolsenabled__web_lookup": 4,
+      "tool_call_occurrences_mcp__toolsenabled__web_search": 14,
+      "tool_call_occurrences_mcp__toolsenabled__window_focus": 21,
+      "tool_call_occurrences_mcp__toolsenabled__window_list": 86,
+      "tool_call_occurrences_mcp__toolsenabole__browser_playwright_call": 1,
+      "tool_call_occurrences_source_direct_subagent": 103381,
+      "tool_call_occurrences_source_main": 86142,
+      "tool_call_occurrences_source_workflow_subagent": 137957
+    },
+    "identity_rule": "agentId when present, otherwise sessionId",
+    "logical_actor_count_with_timestamp": 5971,
+    "path_rule": "result metadata only for structured operations; best-effort parsed command paths reported separately",
+    "raw_session_id_count": 875,
+    "repository_proxy_rule": "first directory below .claude/projects (Claude project bucket), not a verified VCS root",
+    "snapshot_rule": "reuse an existing path-redacted manifest by ordered prefix-hash mapping, then read exactly its recorded byte prefixes",
+    "snapshot_utc": "2026-08-25T14:54:34.024634Z"
+  },
+  "generated_utc": "2026-08-25T15:57:30.406930Z",
+  "parameters": {
+    "capture_coverage": {
+      "all_successful_structured_read_edit_write_events": 57610,
+      "canonical_non_pattern_path_mentions": 454596,
+      "canonical_shell_mentions_to_localized_structured_path_events": {
+        "denominator": 9024,
+        "numerator": 454596,
+        "percent": 5037.632978723404,
+        "ratio": 50.37632978723404
+      },
+      "commands_with_any_parser_path_mention": 176442,
+      "commands_with_canonical_non_pattern_path": 175336,
+      "deduplicated_shell_commands": 191764,
+      "deduplicated_structured_file_tool_calls": 58250,
+      "distinct_canonical_shell_path_actor_pairs": 160806,
+      "distinct_canonical_shell_paths": 63141,
+      "global_tool_id_group_quarantine": {
+        "all_tool_calls": {
+          "eligible_tool_id_groups": 297137,
+          "excluded_ambiguous_groups": 8557,
+          "excluded_percent": 2.8798163809959716,
+          "kept_groups": 288580,
+          "kept_percent": 97.12018361900402
+        },
+        "interpretation": "counts and distributions are conditional on the kept, conflict-free tool-ID groups",
+        "result_linked_operations": {
+          "eligible_tool_id_groups": 60658,
+          "excluded_ambiguous_groups": 2429,
+          "excluded_percent": 4.004418213590952,
+          "kept_groups": 58229,
+          "kept_percent": 95.99558178640905
+        },
+        "shell_commands": {
+          "eligible_tool_id_groups": 196559,
+          "excluded_ambiguous_groups": 4795,
+          "excluded_percent": 2.439471100280323,
+          "kept_groups": 191764,
+          "kept_percent": 97.56052889971967
+        }
+      },
+      "intent_description": "regex heuristic: read, write, read_write, or ambiguous; intent is not filesystem-effect proof",
+      "localized_structured_read_edit_write_events": 9024,
+      "mentions_per_parser_positive_command": {
+        "count": 176442,
+        "max": 234,
+        "p50": 2,
+        "p90": 5,
+        "p99": 11,
+        "percentile_method": "nearest-rank; rank=ceil(p*n)"
+      },
+      "parser_description": "quote-aware token scan; absolute/UNC, explicit relative, path-flag, common-basename, and known-extension candidates; resolves literals against recorded cwd; retains home/environment aliases as unresolved symbolic mentions; excludes URLs, switches, unresolved variables, and globs from canonical-file counts",
+      "parser_positive_shell_commands_to_localized_structured_path_events": {
+        "denominator": 9024,
+        "numerator": 175336,
+        "percent": 1942.9964539007092,
+        "ratio": 19.42996453900709
+      },
+      "raw_channel_occurrences": {
+        "note": "occurrences include copied transcript records; deduplicated conflict-quarantined ratio is primary",
+        "shell_commands_with_string": 212511,
+        "shell_to_structured_ratio": 3.011905268081126,
+        "structured_read_edit_write_calls": 70557
+      },
+      "shell_by_intent_heuristic": {
+        "ambiguous": 36719,
+        "read": 65626,
+        "read_write": 78896,
+        "write": 10523
+      },
+      "shell_by_tool": {
+        "Bash": 176606,
+        "PowerShell": 15158
+      },
+      "shell_channel_calls_to_structured_file_tool_calls": {
+        "denominator": 58250,
+        "numerator": 191764,
+        "percent": 329.2085836909871,
+        "ratio": 3.2920858369098713
+      },
+      "shell_commands_to_successful_structured_events": {
+        "denominator": 57610,
+        "numerator": 191764,
+        "percent": 332.8658219059191,
+        "ratio": 3.328658219059191
+      },
+      "shell_parser_hand_validation": {
+        "by_stratum": {
+          "Bash_negative": {
+            "ambiguous_reference_mentions": 0,
+            "command_any_recovery_rate": 0.0,
+            "command_any_recovery_wilson_95": {
+              "denominator": 9,
+              "estimate": 0.0,
+              "high": 0.2991450484195441,
+              "low": 0.0,
+              "method": "Wilson score, 95%",
+              "successes": 0
+            },
+            "command_complete_recovery_rate": 0.0,
+            "command_complete_recovery_wilson_95": {
+              "denominator": 9,
+              "estimate": 0.0,
+              "high": 0.2991450484195441,
+              "low": 0.0,
+              "method": "Wilson score, 95%",
+              "successes": 0
+            },
+            "commands": 10,
+            "commands_any_recovery": 0,
+            "commands_complete_recovery": 0,
+            "commands_with_human_reference": 9,
+            "fn": 16,
+            "fp": 0,
+            "human_reference_mentions": 16,
+            "inverse_sampling_weight": 1135.3,
+            "mention_precision": null,
+            "mention_recall": 0.0,
+            "opaque_reference_mentions": 5,
+            "population_commands": 11353,
+            "sample_commands": 10,
+            "tp": 0
+          },
+          "Bash_positive": {
+            "ambiguous_reference_mentions": 0,
+            "command_any_recovery_rate": 0.7894736842105263,
+            "command_any_recovery_wilson_95": {
+              "denominator": 19,
+              "estimate": 0.7894736842105263,
+              "high": 0.9149232336708375,
+              "low": 0.5666572155618583,
+              "method": "Wilson score, 95%",
+              "successes": 15
+            },
+            "command_complete_recovery_rate": 0.15789473684210525,
+            "command_complete_recovery_wilson_95": {
+              "denominator": 19,
+              "estimate": 0.15789473684210525,
+              "high": 0.37565475270329074,
+              "low": 0.05520471638534141,
+              "method": "Wilson score, 95%",
+              "successes": 3
+            },
+            "commands": 20,
+            "commands_any_recovery": 15,
+            "commands_complete_recovery": 3,
+            "commands_with_human_reference": 19,
+            "fn": 34,
+            "fp": 30,
+            "human_reference_mentions": 53,
+            "inverse_sampling_weight": 8262.65,
+            "mention_precision": 0.3877551020408163,
+            "mention_recall": 0.3584905660377358,
+            "opaque_reference_mentions": 0,
+            "population_commands": 165253,
+            "sample_commands": 20,
+            "tp": 19
+          },
+          "PowerShell_negative": {
+            "ambiguous_reference_mentions": 0,
+            "command_any_recovery_rate": 0.0,
+            "command_any_recovery_wilson_95": {
+              "denominator": 3,
+              "estimate": 0.0,
+              "high": 0.5614970317550454,
+              "low": 5.551115123125783e-17,
+              "method": "Wilson score, 95%",
+              "successes": 0
+            },
+            "command_complete_recovery_rate": 0.0,
+            "command_complete_recovery_wilson_95": {
+              "denominator": 3,
+              "estimate": 0.0,
+              "high": 0.5614970317550454,
+              "low": 5.551115123125783e-17,
+              "method": "Wilson score, 95%",
+              "successes": 0
+            },
+            "commands": 10,
+            "commands_any_recovery": 0,
+            "commands_complete_recovery": 0,
+            "commands_with_human_reference": 3,
+            "fn": 3,
+            "fp": 0,
+            "human_reference_mentions": 3,
+            "inverse_sampling_weight": 396.9,
+            "mention_precision": null,
+            "mention_recall": 0.0,
+            "opaque_reference_mentions": 0,
+            "population_commands": 3969,
+            "sample_commands": 10,
+            "tp": 0
+          },
+          "PowerShell_positive": {
+            "ambiguous_reference_mentions": 0,
+            "command_any_recovery_rate": 0.9,
+            "command_any_recovery_wilson_95": {
+              "denominator": 10,
+              "estimate": 0.9,
+              "high": 0.9821237869049271,
+              "low": 0.5958499732047615,
+              "method": "Wilson score, 95%",
+              "successes": 9
+            },
+            "command_complete_recovery_rate": 0.5,
+            "command_complete_recovery_wilson_95": {
+              "denominator": 10,
+              "estimate": 0.5,
+              "high": 0.7634069094874361,
+              "low": 0.236593090512564,
+              "method": "Wilson score, 95%",
+              "successes": 5
+            },
+            "commands": 10,
+            "commands_any_recovery": 9,
+            "commands_complete_recovery": 5,
+            "commands_with_human_reference": 10,
+            "fn": 12,
+            "fp": 12,
+            "human_reference_mentions": 24,
+            "inverse_sampling_weight": 1118.9,
+            "mention_precision": 0.5,
+            "mention_recall": 0.5,
+            "opaque_reference_mentions": 0,
+            "population_commands": 11189,
+            "sample_commands": 10,
+            "tp": 12
+          }
+        },
+        "entries": [
+          {
+            "ambiguous_reference_count": 0,
+            "command_any_recovery": false,
+            "command_complete_recovery": false,
+            "command_has_reference": true,
+            "fn": 1,
+            "fp": 0,
+            "human_reference_count": 1,
+            "opaque_reference_count": 1,
+            "parser_positive": false,
+            "reason_codes": [
+              "opaque_inline_literal_missed"
+            ],
+            "sample_rank": 1,
+            "selection_hash": "00001ce846865138f3b5b2ddf74b1fd53aeee3943942e2b07ccc9039bd970c4c",
+            "stratum": "Bash_negative",
+            "tp": 0
+          },
+          {
+            "ambiguous_reference_count": 0,
+            "command_any_recovery": false,
+            "command_complete_recovery": false,
+            "command_has_reference": true,
+            "fn": 4,
+            "fp": 0,
+            "human_reference_count": 4,
+            "opaque_reference_count": 0,
+            "parser_positive": false,
+            "reason_codes": [
+              "posix_drive_path_missed",
+              "bare_directory_missed",
+              "glob_missed"
+            ],
+            "sample_rank": 2,
+            "selection_hash": "0003537281ba3395787bb0bcb2d1c5f510ddf83c3036b63d593f61ff265b694a",
+            "stratum": "Bash_negative",
+            "tp": 0
+          },
+          {
+            "ambiguous_reference_count": 0,
+            "command_any_recovery": false,
+            "command_complete_recovery": false,
+            "command_has_reference": true,
+            "fn": 1,
+            "fp": 0,
+            "human_reference_count": 1,
+            "opaque_reference_count": 1,
+            "parser_positive": false,
+            "reason_codes": [
+              "opaque_inline_literal_missed"
+            ],
+            "sample_rank": 3,
+            "selection_hash": "0003c801a8cc50097a2655cc34c94da5781c852e2086e751573978bcb307f13a",
+            "stratum": "Bash_negative",
+            "tp": 0
+          },
+          {
+            "ambiguous_reference_count": 0,
+            "command_any_recovery": false,
+            "command_complete_recovery": false,
+            "command_has_reference": true,
+            "fn": 1,
+            "fp": 0,
+            "human_reference_count": 1,
+            "opaque_reference_count": 0,
+            "parser_positive": false,
+            "reason_codes": [
+              "assignment_path_missed"
+            ],
+            "sample_rank": 4,
+            "selection_hash": "00085391d8eaed9f991c2f15f6aeb5ccfb4d2c2cc11c6baaa5f3d3ab3dd60eef",
+            "stratum": "Bash_negative",
+            "tp": 0
+          },
+          {
+            "ambiguous_reference_count": 0,
+            "command_any_recovery": false,
+            "command_complete_recovery": false,
+            "command_has_reference": true,
+            "fn": 2,
+            "fp": 0,
+            "human_reference_count": 2,
+            "opaque_reference_count": 1,
+            "parser_positive": false,
+            "reason_codes": [
+              "posix_drive_path_missed",
+              "opaque_inline_literal_missed"
+            ],
+            "sample_rank": 5,
+            "selection_hash": "000e7c610bd48c4e652b573b5b26e6e35462c465e744427a65b20fdfd8e2e356",
+            "stratum": "Bash_negative",
+            "tp": 0
+          },
+          {
+            "ambiguous_reference_count": 0,
+            "command_any_recovery": false,
+            "command_complete_recovery": false,
+            "command_has_reference": true,
+            "fn": 1,
+            "fp": 0,
+            "human_reference_count": 1,
+            "opaque_reference_count": 0,
+            "parser_positive": false,
+            "reason_codes": [
+              "posix_drive_path_missed"
+            ],
+            "sample_rank": 6,
+            "selection_hash": "0013dc1a42dbf5ec824826b865c40b88706963d86d755b3196837d5f505a966d",
+            "stratum": "Bash_negative",
+            "tp": 0
+          },
+          {
+            "ambiguous_reference_count": 0,
+            "command_any_recovery": false,
+            "command_complete_recovery": false,
+            "command_has_reference": false,
+            "fn": 0,
+            "fp": 0,
+            "human_reference_count": 0,
+            "opaque_reference_count": 0,
+            "parser_positive": false,
+            "reason_codes": [
+              "no_filesystem_reference"
+            ],
+            "sample_rank": 7,
+            "selection_hash": "0023513ebe54360dee105466ee60331410f04f3767dd0238270a02307ae58dd3",
+            "stratum": "Bash_negative",
+            "tp": 0
+          },
+          {
+            "ambiguous_reference_count": 0,
+            "command_any_recovery": false,
+            "command_complete_recovery": false,
+            "command_has_reference": true,
+            "fn": 1,
+            "fp": 0,
+            "human_reference_count": 1,
+            "opaque_reference_count": 0,
+            "parser_positive": false,
+            "reason_codes": [
+              "assignment_path_missed"
+            ],
+            "sample_rank": 8,
+            "selection_hash": "002fab5d2f68701683fafd21f66fac18c7a459f467c37dfcc16512ea1b5259f9",
+            "stratum": "Bash_negative",
+            "tp": 0
+          },
+          {
+            "ambiguous_reference_count": 0,
+            "command_any_recovery": false,
+            "command_complete_recovery": false,
+            "command_has_reference": true,
+            "fn": 2,
+            "fp": 0,
+            "human_reference_count": 2,
+            "opaque_reference_count": 0,
+            "parser_positive": false,
+            "reason_codes": [
+              "posix_drive_path_missed",
+              "bare_directory_missed"
+            ],
+            "sample_rank": 9,
+            "selection_hash": "003cef9fb9f36228a43d684af461bd202c6926e998c1a1dace8c54b24ad25b08",
+            "stratum": "Bash_negative",
+            "tp": 0
+          },
+          {
+            "ambiguous_reference_count": 0,
+            "command_any_recovery": false,
+            "command_complete_recovery": false,
+            "command_has_reference": true,
+            "fn": 3,
+            "fp": 0,
+            "human_reference_count": 3,
+            "opaque_reference_count": 2,
+            "parser_positive": false,
+            "reason_codes": [
+              "posix_drive_path_missed",
+              "opaque_inline_literal_missed"
+            ],
+            "sample_rank": 10,
+            "selection_hash": "003d8ff8fceeea1b7c6f82d1efdaaa07ff367d63f29c2f56e298611b254c95d9",
+            "stratum": "Bash_negative",
+            "tp": 0
+          },
+          {
+            "ambiguous_reference_count": 0,
+            "command_any_recovery": true,
+            "command_complete_recovery": false,
+            "command_has_reference": true,
+            "fn": 1,
+            "fp": 1,
+            "human_reference_count": 2,
+            "opaque_reference_count": 0,
+            "parser_positive": true,
+            "reason_codes": [
+              "working_directory_change_unmodeled"
+            ],
+            "sample_rank": 11,
+            "selection_hash": "0000257da17195e722db191ad04e3326ec89bfe84960ecf2774cceeaf234c6d2",
+            "stratum": "Bash_positive",
+            "tp": 1
+          },
+          {
+            "ambiguous_reference_count": 0,
+            "command_any_recovery": false,
+            "command_complete_recovery": false,
+            "command_has_reference": false,
+            "fn": 0,
+            "fp": 1,
+            "human_reference_count": 0,
+            "opaque_reference_count": 0,
+            "parser_positive": true,
+            "reason_codes": [
+              "descriptor_redirection_false_positive"
+            ],
+            "sample_rank": 12,
+            "selection_hash": "00009056b5345ca33ffad764dc766a28510f6dd54b997a9681bee940d49382fa",
+            "stratum": "Bash_positive",
+            "tp": 0
+          },
+          {
+            "ambiguous_reference_count": 0,
+            "command_any_recovery": false,
+            "command_complete_recovery": false,
+            "command_has_reference": true,
+            "fn": 3,
+            "fp": 2,
+            "human_reference_count": 3,
+            "opaque_reference_count": 0,
+            "parser_positive": true,
+            "reason_codes": [
+              "posix_drive_path_missed",
+              "working_directory_change_unmodeled"
+            ],
+            "sample_rank": 13,
+            "selection_hash": "00009dc375b24083e5570f8b70979c85f19f91fc0dbbcf182be595eeab678115",
+            "stratum": "Bash_positive",
+            "tp": 0
+          },
+          {
+            "ambiguous_reference_count": 0,
+            "command_any_recovery": false,
+            "command_complete_recovery": false,
+            "command_has_reference": true,
+            "fn": 3,
+            "fp": 2,
+            "human_reference_count": 3,
+            "opaque_reference_count": 0,
+            "parser_positive": true,
+            "reason_codes": [
+              "assignment_path_missed",
+              "posix_drive_path_missed",
+              "symbolic_path_misresolved",
+              "descriptor_redirection_false_positive"
+            ],
+            "sample_rank": 14,
+            "selection_hash": "0001135d1ef7288c096715954407151cd06f03c2916aa4e941b8d04e480ac14d",
+            "stratum": "Bash_positive",
+            "tp": 0
+          },
+          {
+            "ambiguous_reference_count": 0,
+            "command_any_recovery": false,
+            "command_complete_recovery": false,
+            "command_has_reference": true,
+            "fn": 2,
+            "fp": 1,
+            "human_reference_count": 2,
+            "opaque_reference_count": 0,
+            "parser_positive": true,
+            "reason_codes": [
+              "posix_drive_path_missed",
+              "working_directory_change_unmodeled"
+            ],
+            "sample_rank": 15,
+            "selection_hash": "00016a9c0b9fac9cce7bc1613a0af1a4b7c84212270b2c31c3fa4b5d5c162ea0",
+            "stratum": "Bash_positive",
+            "tp": 0
+          },
+          {
+            "ambiguous_reference_count": 0,
+            "command_any_recovery": true,
+            "command_complete_recovery": false,
+            "command_has_reference": true,
+            "fn": 3,
+            "fp": 3,
+            "human_reference_count": 4,
+            "opaque_reference_count": 0,
+            "parser_positive": true,
+            "reason_codes": [
+              "working_directory_change_unmodeled"
+            ],
+            "sample_rank": 16,
+            "selection_hash": "0001a07157cb9a9c0de0e08c32c4fb62980167d51ea2dc461a8ef89a8502bcf9",
+            "stratum": "Bash_positive",
+            "tp": 1
+          },
+          {
+            "ambiguous_reference_count": 0,
+            "command_any_recovery": true,
+            "command_complete_recovery": true,
+            "command_has_reference": true,
+            "fn": 0,
+            "fp": 1,
+            "human_reference_count": 1,
+            "opaque_reference_count": 0,
+            "parser_positive": true,
+            "reason_codes": [
+              "exact_path_match",
+              "descriptor_redirection_false_positive"
+            ],
+            "sample_rank": 17,
+            "selection_hash": "0002401f900e9ccea391afb57914288fc09cd7c7f9e7c62bc9c9aae0543b0505",
+            "stratum": "Bash_positive",
+            "tp": 1
+          },
+          {
+            "ambiguous_reference_count": 0,
+            "command_any_recovery": true,
+            "command_complete_recovery": false,
+            "command_has_reference": true,
+            "fn": 1,
+            "fp": 1,
+            "human_reference_count": 2,
+            "opaque_reference_count": 0,
+            "parser_positive": true,
+            "reason_codes": [
+              "working_directory_change_unmodeled"
+            ],
+            "sample_rank": 18,
+            "selection_hash": "0002418d599c751e421f2730630ca93f6ebba16d1f177d6dd6cfa6036a0709b3",
+            "stratum": "Bash_positive",
+            "tp": 1
+          },
+          {
+            "ambiguous_reference_count": 0,
+            "command_any_recovery": true,
+            "command_complete_recovery": false,
+            "command_has_reference": true,
+            "fn": 2,
+            "fp": 0,
+            "human_reference_count": 3,
+            "opaque_reference_count": 0,
+            "parser_positive": true,
+            "reason_codes": [
+              "posix_drive_path_missed",
+              "bare_directory_missed"
+            ],
+            "sample_rank": 19,
+            "selection_hash": "00026d19da01aad4301c73a789cb1e2c77d29d71b839d4c58b31904e121191a0",
+            "stratum": "Bash_positive",
+            "tp": 1
+          },
+          {
+            "ambiguous_reference_count": 0,
+            "command_any_recovery": true,
+            "command_complete_recovery": false,
+            "command_has_reference": true,
+            "fn": 2,
+            "fp": 2,
+            "human_reference_count": 3,
+            "opaque_reference_count": 0,
+            "parser_positive": true,
+            "reason_codes": [
+              "working_directory_change_unmodeled"
+            ],
+            "sample_rank": 20,
+            "selection_hash": "00027322485bf8e3d109f97ee1521186dd29f413dc07739a72c9f0f430ffc54e",
+            "stratum": "Bash_positive",
+            "tp": 1
+          },
+          {
+            "ambiguous_reference_count": 0,
+            "command_any_recovery": true,
+            "command_complete_recovery": false,
+            "command_has_reference": true,
+            "fn": 1,
+            "fp": 1,
+            "human_reference_count": 2,
+            "opaque_reference_count": 0,
+            "parser_positive": true,
+            "reason_codes": [
+              "working_directory_change_unmodeled"
+            ],
+            "sample_rank": 21,
+            "selection_hash": "0002af2329b0936f9993dbf06b0736fabd4df42dad669c385fab094668ac5021",
+            "stratum": "Bash_positive",
+            "tp": 1
+          },
+          {
+            "ambiguous_reference_count": 0,
+            "command_any_recovery": true,
+            "command_complete_recovery": true,
+            "command_has_reference": true,
+            "fn": 0,
+            "fp": 1,
+            "human_reference_count": 4,
+            "opaque_reference_count": 0,
+            "parser_positive": true,
+            "reason_codes": [
+              "exact_path_match",
+              "descriptor_redirection_false_positive"
+            ],
+            "sample_rank": 22,
+            "selection_hash": "0002ce1411c2fc3ef1234ea6fbcdee747aa3e78d38a5d34a4d4eb2050be35bd8",
+            "stratum": "Bash_positive",
+            "tp": 4
+          },
+          {
+            "ambiguous_reference_count": 0,
+            "command_any_recovery": true,
+            "command_complete_recovery": false,
+            "command_has_reference": true,
+            "fn": 4,
+            "fp": 2,
+            "human_reference_count": 5,
+            "opaque_reference_count": 0,
+            "parser_positive": true,
+            "reason_codes": [
+              "posix_drive_path_missed",
+              "working_directory_change_unmodeled",
+              "glob_unresolved_and_deduplicated"
+            ],
+            "sample_rank": 23,
+            "selection_hash": "0002e0f5f3089005275e41b5ec97aa589842d3cbe9432841c4dfe798abac0c72",
+            "stratum": "Bash_positive",
+            "tp": 1
+          },
+          {
+            "ambiguous_reference_count": 0,
+            "command_any_recovery": true,
+            "command_complete_recovery": false,
+            "command_has_reference": true,
+            "fn": 1,
+            "fp": 1,
+            "human_reference_count": 2,
+            "opaque_reference_count": 0,
+            "parser_positive": true,
+            "reason_codes": [
+              "working_directory_change_unmodeled"
+            ],
+            "sample_rank": 24,
+            "selection_hash": "0002eb9a07c12d330e110d01df396daeb749c7840fae54d062620a7b052c04a9",
+            "stratum": "Bash_positive",
+            "tp": 1
+          },
+          {
+            "ambiguous_reference_count": 0,
+            "command_any_recovery": false,
+            "command_complete_recovery": false,
+            "command_has_reference": true,
+            "fn": 2,
+            "fp": 1,
+            "human_reference_count": 2,
+            "opaque_reference_count": 0,
+            "parser_positive": true,
+            "reason_codes": [
+              "posix_drive_path_missed",
+              "working_directory_change_unmodeled"
+            ],
+            "sample_rank": 25,
+            "selection_hash": "00030368ba2984d3fcdb623fb8bf0cefc9ba95ce87c2ea84141821459c1f5a58",
+            "stratum": "Bash_positive",
+            "tp": 0
+          },
+          {
+            "ambiguous_reference_count": 0,
+            "command_any_recovery": true,
+            "command_complete_recovery": false,
+            "command_has_reference": true,
+            "fn": 1,
+            "fp": 1,
+            "human_reference_count": 2,
+            "opaque_reference_count": 0,
+            "parser_positive": true,
+            "reason_codes": [
+              "working_directory_change_unmodeled"
+            ],
+            "sample_rank": 26,
+            "selection_hash": "0003848a7f808b1c48509130fd3f9aa386fb6c77a91fde9c4bad8140babe05ae",
+            "stratum": "Bash_positive",
+            "tp": 1
+          },
+          {
+            "ambiguous_reference_count": 0,
+            "command_any_recovery": true,
+            "command_complete_recovery": true,
+            "command_has_reference": true,
+            "fn": 0,
+            "fp": 0,
+            "human_reference_count": 1,
+            "opaque_reference_count": 0,
+            "parser_positive": true,
+            "reason_codes": [
+              "exact_path_match"
+            ],
+            "sample_rank": 27,
+            "selection_hash": "0003909a3141dd9bf84a07dfd0a1f4abcafccbaf52ecf46d2b31e43e90fe76b7",
+            "stratum": "Bash_positive",
+            "tp": 1
+          },
+          {
+            "ambiguous_reference_count": 0,
+            "command_any_recovery": true,
+            "command_complete_recovery": false,
+            "command_has_reference": true,
+            "fn": 1,
+            "fp": 1,
+            "human_reference_count": 2,
+            "opaque_reference_count": 0,
+            "parser_positive": true,
+            "reason_codes": [
+              "working_directory_change_unmodeled"
+            ],
+            "sample_rank": 28,
+            "selection_hash": "00041aebd3cea6967d5845894901f94b9cc1159e8af76e25613a4a814dac67d5",
+            "stratum": "Bash_positive",
+            "tp": 1
+          },
+          {
+            "ambiguous_reference_count": 0,
+            "command_any_recovery": true,
+            "command_complete_recovery": false,
+            "command_has_reference": true,
+            "fn": 4,
+            "fp": 5,
+            "human_reference_count": 6,
+            "opaque_reference_count": 0,
+            "parser_positive": true,
+            "reason_codes": [
+              "working_directory_change_unmodeled",
+              "descriptor_redirection_false_positive"
+            ],
+            "sample_rank": 29,
+            "selection_hash": "0004354f10a2a6c577d54311d46e4f15934c42e2e393dac0503f784ca833dd76",
+            "stratum": "Bash_positive",
+            "tp": 2
+          },
+          {
+            "ambiguous_reference_count": 0,
+            "command_any_recovery": true,
+            "command_complete_recovery": false,
+            "command_has_reference": true,
+            "fn": 3,
+            "fp": 3,
+            "human_reference_count": 4,
+            "opaque_reference_count": 0,
+            "parser_positive": true,
+            "reason_codes": [
+              "assignment_path_missed",
+              "executable_path_excluded",
+              "symbolic_path_misresolved",
+              "glob_unresolved"
+            ],
+            "sample_rank": 30,
+            "selection_hash": "000468a0763512a2e60a6ea51503bcac22478520b925879622fadaa2e14e85d0",
+            "stratum": "Bash_positive",
+            "tp": 1
+          },
+          {
+            "ambiguous_reference_count": 0,
+            "command_any_recovery": false,
+            "command_complete_recovery": false,
+            "command_has_reference": false,
+            "fn": 0,
+            "fp": 0,
+            "human_reference_count": 0,
+            "opaque_reference_count": 0,
+            "parser_positive": false,
+            "reason_codes": [
+              "nonfilesystem_here_string"
+            ],
+            "sample_rank": 31,
+            "selection_hash": "000cd8facb8f8d4108d89d2255f4427cc48169bc12a8db8f6c8a0ced392ae6f4",
+            "stratum": "PowerShell_negative",
+            "tp": 0
+          },
+          {
+            "ambiguous_reference_count": 0,
+            "command_any_recovery": false,
+            "command_complete_recovery": false,
+            "command_has_reference": false,
+            "fn": 0,
+            "fp": 0,
+            "human_reference_count": 0,
+            "opaque_reference_count": 0,
+            "parser_positive": false,
+            "reason_codes": [
+              "no_filesystem_reference"
+            ],
+            "sample_rank": 32,
+            "selection_hash": "001d8202762925117e874d09b1c201f45eb99b7d531fc5e2b9c99696099f02d8",
+            "stratum": "PowerShell_negative",
+            "tp": 0
+          },
+          {
+            "ambiguous_reference_count": 0,
+            "command_any_recovery": false,
+            "command_complete_recovery": false,
+            "command_has_reference": false,
+            "fn": 0,
+            "fp": 0,
+            "human_reference_count": 0,
+            "opaque_reference_count": 0,
+            "parser_positive": false,
+            "reason_codes": [
+              "no_filesystem_reference"
+            ],
+            "sample_rank": 33,
+            "selection_hash": "001dfbbfc80ab4aeb7a7cea1c06bd7cdc5b6c3b36d2da7d1f29f174e6da450e7",
+            "stratum": "PowerShell_negative",
+            "tp": 0
+          },
+          {
+            "ambiguous_reference_count": 0,
+            "command_any_recovery": false,
+            "command_complete_recovery": false,
+            "command_has_reference": true,
+            "fn": 1,
+            "fp": 0,
+            "human_reference_count": 1,
+            "opaque_reference_count": 0,
+            "parser_positive": false,
+            "reason_codes": [
+              "git_C_treated_as_opaque"
+            ],
+            "sample_rank": 34,
+            "selection_hash": "0025459848579d4b28c9700c7e34007c578110b890b82c9e78918c641cbc9e14",
+            "stratum": "PowerShell_negative",
+            "tp": 0
+          },
+          {
+            "ambiguous_reference_count": 0,
+            "command_any_recovery": false,
+            "command_complete_recovery": false,
+            "command_has_reference": false,
+            "fn": 0,
+            "fp": 0,
+            "human_reference_count": 0,
+            "opaque_reference_count": 0,
+            "parser_positive": false,
+            "reason_codes": [
+              "executable_names_excluded"
+            ],
+            "sample_rank": 35,
+            "selection_hash": "002a063be4b3a9f63757b530762803acf1a271e6ce837d1802553afd00c042f9",
+            "stratum": "PowerShell_negative",
+            "tp": 0
+          },
+          {
+            "ambiguous_reference_count": 0,
+            "command_any_recovery": false,
+            "command_complete_recovery": false,
+            "command_has_reference": false,
+            "fn": 0,
+            "fp": 0,
+            "human_reference_count": 0,
+            "opaque_reference_count": 0,
+            "parser_positive": false,
+            "reason_codes": [
+              "no_filesystem_reference"
+            ],
+            "sample_rank": 36,
+            "selection_hash": "002f8046f3b1315c413ff14a86e0fbbc34e15d18f91490ca3b1d1df5774283cf",
+            "stratum": "PowerShell_negative",
+            "tp": 0
+          },
+          {
+            "ambiguous_reference_count": 0,
+            "command_any_recovery": false,
+            "command_complete_recovery": false,
+            "command_has_reference": true,
+            "fn": 1,
+            "fp": 0,
+            "human_reference_count": 1,
+            "opaque_reference_count": 0,
+            "parser_positive": false,
+            "reason_codes": [
+              "git_C_treated_as_opaque"
+            ],
+            "sample_rank": 37,
+            "selection_hash": "0053f5c80ee37af0e3fb81cc7bcb716db395ee0268f029b822efdd149485d56b",
+            "stratum": "PowerShell_negative",
+            "tp": 0
+          },
+          {
+            "ambiguous_reference_count": 0,
+            "command_any_recovery": false,
+            "command_complete_recovery": false,
+            "command_has_reference": true,
+            "fn": 1,
+            "fp": 0,
+            "human_reference_count": 1,
+            "opaque_reference_count": 0,
+            "parser_positive": false,
+            "reason_codes": [
+              "symbolic_env_path_missed"
+            ],
+            "sample_rank": 38,
+            "selection_hash": "005a4b20879e47f016a90fd50ce6f727d11b102b0a8037f090ab2adf0583158b",
+            "stratum": "PowerShell_negative",
+            "tp": 0
+          },
+          {
+            "ambiguous_reference_count": 0,
+            "command_any_recovery": false,
+            "command_complete_recovery": false,
+            "command_has_reference": false,
+            "fn": 0,
+            "fp": 0,
+            "human_reference_count": 0,
+            "opaque_reference_count": 0,
+            "parser_positive": false,
+            "reason_codes": [
+              "no_filesystem_reference"
+            ],
+            "sample_rank": 39,
+            "selection_hash": "005de9099ec81c1ab48efc0c7da9bb94667bb8f17cca5ad9275de5bab2b5c7f6",
+            "stratum": "PowerShell_negative",
+            "tp": 0
+          },
+          {
+            "ambiguous_reference_count": 0,
+            "command_any_recovery": false,
+            "command_complete_recovery": false,
+            "command_has_reference": false,
+            "fn": 0,
+            "fp": 0,
+            "human_reference_count": 0,
+            "opaque_reference_count": 0,
+            "parser_positive": false,
+            "reason_codes": [
+              "no_filesystem_reference"
+            ],
+            "sample_rank": 40,
+            "selection_hash": "006436a9da3f1b2e6f0c043420ca4b0257e9b5b57dc1d01f730e24e38f6a2841",
+            "stratum": "PowerShell_negative",
+            "tp": 0
+          },
+          {
+            "ambiguous_reference_count": 0,
+            "command_any_recovery": true,
+            "command_complete_recovery": true,
+            "command_has_reference": true,
+            "fn": 0,
+            "fp": 1,
+            "human_reference_count": 2,
+            "opaque_reference_count": 0,
+            "parser_positive": true,
+            "reason_codes": [
+              "exact_path_match",
+              "descriptor_redirection_false_positive"
+            ],
+            "sample_rank": 41,
+            "selection_hash": "0002f0d8d64de6c3e9de14ee6e271c3b5f1d478850e67d00f8c7fa4cf4478afd",
+            "stratum": "PowerShell_positive",
+            "tp": 2
+          },
+          {
+            "ambiguous_reference_count": 0,
+            "command_any_recovery": true,
+            "command_complete_recovery": true,
+            "command_has_reference": true,
+            "fn": 0,
+            "fp": 0,
+            "human_reference_count": 1,
+            "opaque_reference_count": 0,
+            "parser_positive": true,
+            "reason_codes": [
+              "exact_path_match"
+            ],
+            "sample_rank": 42,
+            "selection_hash": "0008972f957859205ceda6371900b8c8d959eee1e271ab2f0031d3b8caf0e43c",
+            "stratum": "PowerShell_positive",
+            "tp": 1
+          },
+          {
+            "ambiguous_reference_count": 0,
+            "command_any_recovery": true,
+            "command_complete_recovery": true,
+            "command_has_reference": true,
+            "fn": 0,
+            "fp": 0,
+            "human_reference_count": 1,
+            "opaque_reference_count": 0,
+            "parser_positive": true,
+            "reason_codes": [
+              "exact_path_match"
+            ],
+            "sample_rank": 43,
+            "selection_hash": "000a2d086bdbcd5ad6e548f3bf121f62bcf6acc85a074468272baeed9f92c18e",
+            "stratum": "PowerShell_positive",
+            "tp": 1
+          },
+          {
+            "ambiguous_reference_count": 0,
+            "command_any_recovery": true,
+            "command_complete_recovery": false,
+            "command_has_reference": true,
+            "fn": 7,
+            "fp": 7,
+            "human_reference_count": 8,
+            "opaque_reference_count": 0,
+            "parser_positive": true,
+            "reason_codes": [
+              "working_directory_change_unmodeled",
+              "quoted_subexpression_misparsed",
+              "glob_unresolved"
+            ],
+            "sample_rank": 44,
+            "selection_hash": "000f9cfbc7d549fc4690c3b0e248b583bc731884b838c6c255434db7716662d4",
+            "stratum": "PowerShell_positive",
+            "tp": 1
+          },
+          {
+            "ambiguous_reference_count": 0,
+            "command_any_recovery": true,
+            "command_complete_recovery": false,
+            "command_has_reference": true,
+            "fn": 1,
+            "fp": 1,
+            "human_reference_count": 2,
+            "opaque_reference_count": 0,
+            "parser_positive": true,
+            "reason_codes": [
+              "symbolic_env_path_misresolved"
+            ],
+            "sample_rank": 45,
+            "selection_hash": "001be57165dd4778f4a412456e77d3eda33d45e95d07a29c83c15c91211992a6",
+            "stratum": "PowerShell_positive",
+            "tp": 1
+          },
+          {
+            "ambiguous_reference_count": 0,
+            "command_any_recovery": true,
+            "command_complete_recovery": false,
+            "command_has_reference": true,
+            "fn": 1,
+            "fp": 1,
+            "human_reference_count": 2,
+            "opaque_reference_count": 0,
+            "parser_positive": true,
+            "reason_codes": [
+              "working_directory_change_unmodeled"
+            ],
+            "sample_rank": 46,
+            "selection_hash": "001e2f98b1c9b40981f4a9c970629dff1b612def407c3d89e69d625d6327c1b1",
+            "stratum": "PowerShell_positive",
+            "tp": 1
+          },
+          {
+            "ambiguous_reference_count": 0,
+            "command_any_recovery": true,
+            "command_complete_recovery": true,
+            "command_has_reference": true,
+            "fn": 0,
+            "fp": 1,
+            "human_reference_count": 2,
+            "opaque_reference_count": 0,
+            "parser_positive": true,
+            "reason_codes": [
+              "exact_path_match",
+              "descriptor_redirection_false_positive"
+            ],
+            "sample_rank": 47,
+            "selection_hash": "001ed28f40053e43efe3624fea220c856c3e83c359d2baa03a8a0f9be655e3d0",
+            "stratum": "PowerShell_positive",
+            "tp": 2
+          },
+          {
+            "ambiguous_reference_count": 0,
+            "command_any_recovery": true,
+            "command_complete_recovery": false,
+            "command_has_reference": true,
+            "fn": 1,
+            "fp": 0,
+            "human_reference_count": 2,
+            "opaque_reference_count": 0,
+            "parser_positive": true,
+            "reason_codes": [
+              "filter_glob_missed"
+            ],
+            "sample_rank": 48,
+            "selection_hash": "0028c017699ed7f7ec024904178ac838cf52f62a470b156b383ee4c244a9019e",
+            "stratum": "PowerShell_positive",
+            "tp": 1
+          },
+          {
+            "ambiguous_reference_count": 0,
+            "command_any_recovery": true,
+            "command_complete_recovery": true,
+            "command_has_reference": true,
+            "fn": 0,
+            "fp": 0,
+            "human_reference_count": 2,
+            "opaque_reference_count": 0,
+            "parser_positive": true,
+            "reason_codes": [
+              "exact_path_match"
+            ],
+            "sample_rank": 49,
+            "selection_hash": "002ea5d81ec7c689da88e40c07d522c465dac6049a9f8d36da56dac7745c77eb",
+            "stratum": "PowerShell_positive",
+            "tp": 2
+          },
+          {
+            "ambiguous_reference_count": 0,
+            "command_any_recovery": false,
+            "command_complete_recovery": false,
+            "command_has_reference": true,
+            "fn": 2,
+            "fp": 1,
+            "human_reference_count": 2,
+            "opaque_reference_count": 0,
+            "parser_positive": true,
+            "reason_codes": [
+              "symbolic_env_path_missed",
+              "null_sink_false_positive"
+            ],
+            "sample_rank": 50,
+            "selection_hash": "003258b16e3017d9486fcccab6c6183ee1399a7663b42c4905bd1f3db0e17419",
+            "stratum": "PowerShell_positive",
+            "tp": 0
+          }
+        ],
+        "frozen_prefix_sha256": "dcba21bb558eb1cc32dfc29a92b46817c2b8050d56c685bec7234ba2501c7458",
+        "interpretation": "Recovery validates lexical path mentions, not successful I/O or read/write effects. Ambiguous references are excluded from recall; commands were disproportionately stratified.",
+        "population_weighted_estimates": {
+          "command_any_recovery_rate": 0.7462081907034304,
+          "command_complete_recovery_rate": 0.1691788554620234,
+          "estimated_commands_with_reference": 179587.75000000003,
+          "estimated_fn_mentions": 313712.39999999997,
+          "estimated_fp_mentions": 261306.3,
+          "estimated_tp_mentions": 170417.15,
+          "mention_precision": 0.3947368390575032,
+          "mention_recall": 0.3520073294431212,
+          "method": "inverse-stratum sampling weights; point estimates only because path mentions cluster within commands"
+        },
+        "raw_hand_checked_counts": {
+          "ambiguous_reference_mentions": 0,
+          "command_any_recovery_rate": 0.5853658536585366,
+          "command_any_recovery_wilson_95": {
+            "denominator": 41,
+            "estimate": 0.5853658536585366,
+            "high": 0.7224345054574786,
+            "low": 0.4336710313403013,
+            "method": "Wilson score, 95%",
+            "successes": 24
+          },
+          "command_complete_recovery_rate": 0.1951219512195122,
+          "command_complete_recovery_wilson_95": {
+            "denominator": 41,
+            "estimate": 0.1951219512195122,
+            "high": 0.3401358518706343,
+            "low": 0.10234437385158025,
+            "method": "Wilson score, 95%",
+            "successes": 8
+          },
+          "commands": 50,
+          "commands_any_recovery": 24,
+          "commands_complete_recovery": 8,
+          "commands_with_human_reference": 41,
+          "fn": 65,
+          "fp": 42,
+          "human_reference_mentions": 96,
+          "mention_precision": 0.4246575342465753,
+          "mention_recall": 0.3229166666666667,
+          "opaque_reference_mentions": 5,
+          "tp": 31
+        },
+        "reviewed_utc": "2026-08-25T15:08:53Z",
+        "reviewer": "independent Codex manual audit",
+        "sample_size": 50,
+        "selection_rule": "deterministic disproportionate strata: Bash parser-positive 20, Bash negative 10, PowerShell positive 10, PowerShell negative 10; lowest frozen-corpus-seeded SHA-256 ranks"
+      },
+      "structured_result_metadata_by_source_occurrence": {
+        "direct_subagent": {
+          "Edit": {
+            "exact_metadata_coverage": {
+              "denominator": 9421,
+              "numerator": 0,
+              "percent": 0.0,
+              "ratio": 0.0
+            },
+            "exact_structured_metadata_occurrences": 0,
+            "original_file_key_occurrences": 0,
+            "original_file_string_occurrences": 0,
+            "successful_result_occurrences": 9421
+          },
+          "MultiEdit": {
+            "exact_metadata_coverage": {
+              "denominator": 0,
+              "numerator": 0,
+              "percent": null,
+              "ratio": null
+            },
+            "exact_structured_metadata_occurrences": 0,
+            "original_file_key_occurrences": 0,
+            "original_file_string_occurrences": 0,
+            "successful_result_occurrences": 0
+          },
+          "NotebookEdit": {
+            "exact_metadata_coverage": {
+              "denominator": 0,
+              "numerator": 0,
+              "percent": null,
+              "ratio": null
+            },
+            "exact_structured_metadata_occurrences": 0,
+            "original_file_key_occurrences": 0,
+            "original_file_string_occurrences": 0,
+            "successful_result_occurrences": 0
+          },
+          "NotebookRead": {
+            "exact_metadata_coverage": {
+              "denominator": 0,
+              "numerator": 0,
+              "percent": null,
+              "ratio": null
+            },
+            "exact_structured_metadata_occurrences": 0,
+            "original_file_key_occurrences": 0,
+            "original_file_string_occurrences": 0,
+            "successful_result_occurrences": 0
+          },
+          "Read": {
+            "exact_metadata_coverage": {
+              "denominator": 13244,
+              "numerator": 0,
+              "percent": 0.0,
+              "ratio": 0.0
+            },
+            "exact_structured_metadata_occurrences": 0,
+            "original_file_key_occurrences": 0,
+            "original_file_string_occurrences": 0,
+            "successful_result_occurrences": 13244
+          },
+          "Write": {
+            "exact_metadata_coverage": {
+              "denominator": 3215,
+              "numerator": 0,
+              "percent": 0.0,
+              "ratio": 0.0
+            },
+            "exact_structured_metadata_occurrences": 0,
+            "original_file_key_occurrences": 0,
+            "original_file_string_occurrences": 0,
+            "successful_result_occurrences": 3215
+          }
+        },
+        "main": {
+          "Edit": {
+            "exact_metadata_coverage": {
+              "denominator": 9876,
+              "numerator": 3410,
+              "percent": 34.52814904819765,
+              "ratio": 0.3452814904819765
+            },
+            "exact_structured_metadata_occurrences": 3410,
+            "original_file_key_occurrences": 9876,
+            "original_file_string_occurrences": 3463,
+            "successful_result_occurrences": 9876
+          },
+          "MultiEdit": {
+            "exact_metadata_coverage": {
+              "denominator": 0,
+              "numerator": 0,
+              "percent": null,
+              "ratio": null
+            },
+            "exact_structured_metadata_occurrences": 0,
+            "original_file_key_occurrences": 0,
+            "original_file_string_occurrences": 0,
+            "successful_result_occurrences": 0
+          },
+          "NotebookEdit": {
+            "exact_metadata_coverage": {
+              "denominator": 0,
+              "numerator": 0,
+              "percent": null,
+              "ratio": null
+            },
+            "exact_structured_metadata_occurrences": 0,
+            "original_file_key_occurrences": 0,
+            "original_file_string_occurrences": 0,
+            "successful_result_occurrences": 0
+          },
+          "NotebookRead": {
+            "exact_metadata_coverage": {
+              "denominator": 0,
+              "numerator": 0,
+              "percent": null,
+              "ratio": null
+            },
+            "exact_structured_metadata_occurrences": 0,
+            "original_file_key_occurrences": 0,
+            "original_file_string_occurrences": 0,
+            "successful_result_occurrences": 0
+          },
+          "Read": {
+            "exact_metadata_coverage": {
+              "denominator": 5887,
+              "numerator": 5456,
+              "percent": 92.67878376082895,
+              "ratio": 0.9267878376082894
+            },
+            "exact_structured_metadata_occurrences": 5456,
+            "original_file_key_occurrences": 0,
+            "original_file_string_occurrences": 0,
+            "successful_result_occurrences": 5887
+          },
+          "Write": {
+            "exact_metadata_coverage": {
+              "denominator": 5675,
+              "numerator": 887,
+              "percent": 15.629955947136564,
+              "ratio": 0.15629955947136565
+            },
+            "exact_structured_metadata_occurrences": 887,
+            "original_file_key_occurrences": 5675,
+            "original_file_string_occurrences": 887,
+            "successful_result_occurrences": 5675
+          }
+        },
+        "workflow_subagent": {
+          "Edit": {
+            "exact_metadata_coverage": {
+              "denominator": 5733,
+              "numerator": 0,
+              "percent": 0.0,
+              "ratio": 0.0
+            },
+            "exact_structured_metadata_occurrences": 0,
+            "original_file_key_occurrences": 0,
+            "original_file_string_occurrences": 0,
+            "successful_result_occurrences": 5733
+          },
+          "MultiEdit": {
+            "exact_metadata_coverage": {
+              "denominator": 0,
+              "numerator": 0,
+              "percent": null,
+              "ratio": null
+            },
+            "exact_structured_metadata_occurrences": 0,
+            "original_file_key_occurrences": 0,
+            "original_file_string_occurrences": 0,
+            "successful_result_occurrences": 0
+          },
+          "NotebookEdit": {
+            "exact_metadata_coverage": {
+              "denominator": 0,
+              "numerator": 0,
+              "percent": null,
+              "ratio": null
+            },
+            "exact_structured_metadata_occurrences": 0,
+            "original_file_key_occurrences": 0,
+            "original_file_string_occurrences": 0,
+            "successful_result_occurrences": 0
+          },
+          "NotebookRead": {
+            "exact_metadata_coverage": {
+              "denominator": 0,
+              "numerator": 0,
+              "percent": null,
+              "ratio": null
+            },
+            "exact_structured_metadata_occurrences": 0,
+            "original_file_key_occurrences": 0,
+            "original_file_string_occurrences": 0,
+            "successful_result_occurrences": 0
+          },
+          "Read": {
+            "exact_metadata_coverage": {
+              "denominator": 12978,
+              "numerator": 0,
+              "percent": 0.0,
+              "ratio": 0.0
+            },
+            "exact_structured_metadata_occurrences": 0,
+            "original_file_key_occurrences": 0,
+            "original_file_string_occurrences": 0,
+            "successful_result_occurrences": 12978
+          },
+          "Write": {
+            "exact_metadata_coverage": {
+              "denominator": 3712,
+              "numerator": 0,
+              "percent": 0.0,
+              "ratio": 0.0
+            },
+            "exact_structured_metadata_occurrences": 0,
+            "original_file_key_occurrences": 0,
+            "original_file_string_occurrences": 0,
+            "successful_result_occurrences": 3712
+          }
+        }
+      },
+      "unresolved_or_pattern_path_mentions": 14382
+    },
+    "edit_region_sizes": {
+      "added_lf_normalized_utf8_bytes_per_change_block": {
+        "count": 4489,
+        "max": 18706,
+        "p50": 202,
+        "p90": 985,
+        "p99": 3190,
+        "percentile_method": "nearest-rank; rank=ceil(p*n)"
+      },
+      "added_line_count_per_change_block": {
+        "count": 4489,
+        "max": 400,
+        "p50": 2,
+        "p90": 14,
+        "p99": 49,
+        "percentile_method": "nearest-rank; rank=ceil(p*n)"
+      },
+      "aggregate_claim_bytes_per_write": {
+        "count": 1354,
+        "max": 22714,
+        "p50": 680,
+        "p90": 3733,
+        "p99": 13888,
+        "percentile_method": "nearest-rank; rank=ceil(p*n)"
+      },
+      "aggregate_claim_lines_per_write": {
+        "count": 1354,
+        "max": 452,
+        "p50": 9,
+        "p90": 56,
+        "p99": 200,
+        "percentile_method": "nearest-rank; rank=ceil(p*n)"
+      },
+      "claim_definition": "per contiguous +/- change block max(removed, added); pure insertions are zero-width on the old side but claim their added span; byte proxy is LF-normalized UTF-8 max(old,new)",
+      "claim_lf_normalized_utf8_bytes_per_change_block": {
+        "count": 4489,
+        "max": 18706,
+        "p50": 273,
+        "p90": 1104,
+        "p99": 3515,
+        "percentile_method": "nearest-rank; rank=ceil(p*n)"
+      },
+      "claim_line_span_per_change_block": {
+        "count": 4489,
+        "max": 400,
+        "p50": 4,
+        "p90": 16,
+        "p99": 53,
+        "percentile_method": "nearest-rank; rank=ceil(p*n)"
+      },
+      "context_lines_per_raw_hunk": {
+        "count": 1618,
+        "max": 59,
+        "p50": 6,
+        "p90": 14,
+        "p99": 36,
+        "percentile_method": "nearest-rank; rank=ceil(p*n)"
+      },
+      "declared_new_lines_per_raw_hunk_including_context": {
+        "count": 1618,
+        "max": 457,
+        "p50": 15,
+        "p90": 53,
+        "p99": 180,
+        "percentile_method": "nearest-rank; rank=ceil(p*n)"
+      },
+      "declared_old_lines_per_raw_hunk_including_context": {
+        "count": 1618,
+        "max": 206,
+        "p50": 7,
+        "p90": 29,
+        "p99": 142,
+        "percentile_method": "nearest-rank; rank=ceil(p*n)"
+      },
+      "exact_byte_definition": "raw hunk old-side byte span reconstructed from the same originalFile string with its observed separators; transcript Unicode, not verified disk encoding",
+      "exact_preimage_validated_patch_write_denominator": 1354,
+      "hunks_per_write": {
+        "count": 1354,
+        "max": 50,
+        "p50": 1,
+        "p90": 8,
+        "p99": 31,
+        "percentile_method": "nearest-rank; rank=ceil(p*n)"
+      },
+      "localized_write_denominator": 6505,
+      "original_file_utf8_bytes": {
+        "count": 1394,
+        "max": 10041,
+        "p50": 5806,
+        "p90": 9087,
+        "p99": 9912,
+        "percentile_method": "nearest-rank; rank=ceil(p*n)"
+      },
+      "parsed_change_block_denominator": 4489,
+      "pure_deletion_change_blocks": {
+        "denominator": 4489,
+        "numerator": 174,
+        "percent": 3.8761416796613943,
+        "ratio": 0.03876141679661395
+      },
+      "pure_insertion_change_blocks": {
+        "denominator": 4489,
+        "numerator": 970,
+        "percent": 21.60837603029628,
+        "ratio": 0.2160837603029628
+      },
+      "raw_structured_patch_hunk_denominator": 1618,
+      "removed_lf_normalized_utf8_bytes_per_change_block": {
+        "count": 4489,
+        "max": 5929,
+        "p50": 90,
+        "p90": 481,
+        "p99": 1593,
+        "percentile_method": "nearest-rank; rank=ceil(p*n)"
+      },
+      "removed_line_count_per_change_block": {
+        "count": 4489,
+        "max": 130,
+        "p50": 1,
+        "p90": 6,
+        "p99": 20,
+        "percentile_method": "nearest-rank; rank=ceil(p*n)"
+      },
+      "successful_edit_write_denominator": 28586,
+      "transcript_utf8_old_span_bytes_per_raw_hunk": {
+        "count": 1618,
+        "max": 9824,
+        "p50": 454,
+        "p90": 1893,
+        "p99": 8173,
+        "percentile_method": "nearest-rank; rank=ceil(p*n)"
+      },
+      "valid_nonempty_patch_write_denominator_before_preimage_validation": 4319,
+      "write_create_result_utf8_bytes": {
+        "count": 2186,
+        "max": 59358,
+        "p50": 4147,
+        "p90": 9692,
+        "p99": 24447,
+        "percentile_method": "nearest-rank; rank=ceil(p*n)"
+      },
+      "write_creates_without_patch": 2186,
+      "writes_with_original_file_key": {
+        "denominator": 28586,
+        "numerator": 6505,
+        "percent": 22.755894493808157,
+        "ratio": 0.22755894493808157
+      },
+      "writes_with_string_original_file": {
+        "denominator": 28586,
+        "numerator": 1394,
+        "percent": 4.876512978381026,
+        "ratio": 0.04876512978381026
+      }
+    },
+    "event_volume": {
+      "active_aggregate_utc_hour_denominator": 520,
+      "active_session_hour_by_family": {
+        "read": {
+          "count": 4279,
+          "max": 114,
+          "p50": 4,
+          "p90": 16,
+          "p99": 38,
+          "percentile_method": "nearest-rank; rank=ceil(p*n)"
+        },
+        "write": {
+          "count": 2918,
+          "max": 112,
+          "p50": 5,
+          "p90": 25,
+          "p99": 55,
+          "percentile_method": "nearest-rank; rank=ceil(p*n)"
+        }
+      },
+      "active_session_hour_by_tool": {
+        "Edit": {
+          "count": 1897,
+          "max": 105,
+          "p50": 6,
+          "p90": 25,
+          "p99": 52,
+          "percentile_method": "nearest-rank; rank=ceil(p*n)"
+        },
+        "Read": {
+          "count": 4279,
+          "max": 114,
+          "p50": 4,
+          "p90": 16,
+          "p99": 38,
+          "percentile_method": "nearest-rank; rank=ceil(p*n)"
+        },
+        "Write": {
+          "count": 2513,
+          "max": 44,
+          "p50": 2,
+          "p90": 8,
+          "p99": 18,
+          "percentile_method": "nearest-rank; rank=ceil(p*n)"
+        }
+      },
+      "active_session_hour_denominator": 5174,
+      "active_session_hour_event_count": {
+        "count": 5174,
+        "max": 148,
+        "p50": 6,
+        "p90": 28,
+        "p99": 68,
+        "percentile_method": "nearest-rank; rank=ceil(p*n)"
+      },
+      "aggregate_utc_hour_event_count": {
+        "count": 520,
+        "max": 1071,
+        "p50": 55,
+        "p90": 276,
+        "p99": 788,
+        "percentile_method": "nearest-rank; rank=ceil(p*n)"
+      },
+      "by_tool": {
+        "Edit": 19209,
+        "Read": 29024,
+        "Write": 9377
+      },
+      "deduplicated_structured_calls": 58250,
+      "event_timestamp": "successful result completion time",
+      "failed_result_linked_structured_events": 619,
+      "global_tool_id_group_quarantine": {
+        "all_tool_calls": {
+          "eligible_tool_id_groups": 297137,
+          "excluded_ambiguous_groups": 8557,
+          "excluded_percent": 2.8798163809959716,
+          "kept_groups": 288580,
+          "kept_percent": 97.12018361900402
+        },
+        "interpretation": "counts and distributions are conditional on the kept, conflict-free tool-ID groups",
+        "result_linked_operations": {
+          "eligible_tool_id_groups": 60658,
+          "excluded_ambiguous_groups": 2429,
+          "excluded_percent": 4.004418213590952,
+          "kept_groups": 58229,
+          "kept_percent": 95.99558178640905
+        },
+        "shell_commands": {
+          "eligible_tool_id_groups": 196559,
+          "excluded_ambiguous_groups": 4795,
+          "excluded_percent": 2.439471100280323,
+          "kept_groups": 191764,
+          "kept_percent": 97.56052889971967
+        }
+      },
+      "result_linked_core_operations_including_errors": 58229,
+      "successful_deduplicated_structured_events": 57610
+    },
+    "file_type_mix": {
+      "classification_rule": "mutually exclusive path-extension/basename classifier; binary means binary-looking extension, not inspected content",
+      "localized_read_event_distribution": {
+        "categories": {
+          "binary": {
+            "count": 0,
+            "distinct_file_count": 0,
+            "distinct_file_percent": 0.0,
+            "events_per_distinct_file": {
+              "count": 0,
+              "max": null,
+              "p50": null,
+              "p90": null,
+              "p99": null,
+              "percentile_method": "nearest-rank; rank=ceil(p*n)"
+            },
+            "percent": 0.0
+          },
+          "config": {
+            "count": 35,
+            "distinct_file_count": 33,
+            "distinct_file_percent": 2.3706896551724137,
+            "events_per_distinct_file": {
+              "count": 33,
+              "max": 2,
+              "p50": 1,
+              "p90": 1,
+              "p99": 2,
+              "percentile_method": "nearest-rank; rank=ceil(p*n)"
+            },
+            "percent": 1.3894402540690751
+          },
+          "json": {
+            "count": 212,
+            "distinct_file_count": 119,
+            "distinct_file_percent": 8.548850574712644,
+            "events_per_distinct_file": {
+              "count": 119,
+              "max": 15,
+              "p50": 1,
+              "p90": 3,
+              "p99": 12,
+              "percentile_method": "nearest-rank; rank=ceil(p*n)"
+            },
+            "percent": 8.416038110361255
+          },
+          "lock": {
+            "count": 0,
+            "distinct_file_count": 0,
+            "distinct_file_percent": 0.0,
+            "events_per_distinct_file": {
+              "count": 0,
+              "max": null,
+              "p50": null,
+              "p90": null,
+              "p99": null,
+              "percentile_method": "nearest-rank; rank=ceil(p*n)"
+            },
+            "percent": 0.0
+          },
+          "markdown": {
+            "count": 678,
+            "distinct_file_count": 369,
+            "distinct_file_percent": 26.50862068965517,
+            "events_per_distinct_file": {
+              "count": 369,
+              "max": 29,
+              "p50": 1,
+              "p90": 3,
+              "p99": 17,
+              "percentile_method": "nearest-rank; rank=ceil(p*n)"
+            },
+            "percent": 26.915442635966652
+          },
+          "other": {
+            "count": 414,
+            "distinct_file_count": 290,
+            "distinct_file_percent": 20.833333333333332,
+            "events_per_distinct_file": {
+              "count": 290,
+              "max": 14,
+              "p50": 1,
+              "p90": 2,
+              "p99": 7,
+              "percentile_method": "nearest-rank; rank=ceil(p*n)"
+            },
+            "percent": 16.435093290988487
+          },
+          "source": {
+            "count": 1180,
+            "distinct_file_count": 581,
+            "distinct_file_percent": 41.73850574712644,
+            "events_per_distinct_file": {
+              "count": 581,
+              "max": 40,
+              "p50": 1,
+              "p90": 4,
+              "p99": 12,
+              "percentile_method": "nearest-rank; rank=ceil(p*n)"
+            },
+            "percent": 46.84398570861453
+          }
+        },
+        "denominator": 2519,
+        "distinct_file_denominator": 1392
+      },
+      "localized_write_event_distribution": {
+        "categories": {
+          "binary": {
+            "count": 0,
+            "distinct_file_count": 0,
+            "distinct_file_percent": 0.0,
+            "events_per_distinct_file": {
+              "count": 0,
+              "max": null,
+              "p50": null,
+              "p90": null,
+              "p99": null,
+              "percentile_method": "nearest-rank; rank=ceil(p*n)"
+            },
+            "percent": 0.0
+          },
+          "config": {
+            "count": 6,
+            "distinct_file_count": 4,
+            "distinct_file_percent": 0.1392272885485555,
+            "events_per_distinct_file": {
+              "count": 4,
+              "max": 2,
+              "p50": 1,
+              "p90": 2,
+              "p99": 2,
+              "percentile_method": "nearest-rank; rank=ceil(p*n)"
+            },
+            "percent": 0.09223674096848578
+          },
+          "json": {
+            "count": 332,
+            "distinct_file_count": 203,
+            "distinct_file_percent": 7.065784893839193,
+            "events_per_distinct_file": {
+              "count": 203,
+              "max": 20,
+              "p50": 1,
+              "p90": 3,
+              "p99": 12,
+              "percentile_method": "nearest-rank; rank=ceil(p*n)"
+            },
+            "percent": 5.1037663335895465
+          },
+          "lock": {
+            "count": 0,
+            "distinct_file_count": 0,
+            "distinct_file_percent": 0.0,
+            "events_per_distinct_file": {
+              "count": 0,
+              "max": null,
+              "p50": null,
+              "p90": null,
+              "p99": null,
+              "percentile_method": "nearest-rank; rank=ceil(p*n)"
+            },
+            "percent": 0.0
+          },
+          "markdown": {
+            "count": 1925,
+            "distinct_file_count": 796,
+            "distinct_file_percent": 27.706230421162548,
+            "events_per_distinct_file": {
+              "count": 796,
+              "max": 72,
+              "p50": 1,
+              "p90": 3,
+              "p99": 31,
+              "percentile_method": "nearest-rank; rank=ceil(p*n)"
+            },
+            "percent": 29.59262106072252
+          },
+          "other": {
+            "count": 614,
+            "distinct_file_count": 287,
+            "distinct_file_percent": 9.989557953358858,
+            "events_per_distinct_file": {
+              "count": 287,
+              "max": 50,
+              "p50": 1,
+              "p90": 4,
+              "p99": 25,
+              "percentile_method": "nearest-rank; rank=ceil(p*n)"
+            },
+            "percent": 9.438893159108378
+          },
+          "source": {
+            "count": 3628,
+            "distinct_file_count": 1583,
+            "distinct_file_percent": 55.099199443090846,
+            "events_per_distinct_file": {
+              "count": 1583,
+              "max": 92,
+              "p50": 1,
+              "p90": 5,
+              "p99": 16,
+              "percentile_method": "nearest-rank; rank=ceil(p*n)"
+            },
+            "percent": 55.77248270561107
+          }
+        },
+        "denominator": 6505,
+        "distinct_file_denominator": 2873
+      },
+      "read_category_distribution_per_read_active_actor": {
+        "binary": {
+          "active_actor_denominator": 140,
+          "event_count_including_zero": {
+            "count": 140,
+            "max": 0,
+            "p50": 0,
+            "p90": 0,
+            "p99": 0,
+            "percentile_method": "nearest-rank; rank=ceil(p*n)"
+          },
+          "event_share_percent_including_zero": {
+            "count": 140,
+            "max": 0.0,
+            "p50": 0.0,
+            "p90": 0.0,
+            "p99": 0.0,
+            "percentile_method": "nearest-rank; rank=ceil(p*n)"
+          }
+        },
+        "config": {
+          "active_actor_denominator": 140,
+          "event_count_including_zero": {
+            "count": 140,
+            "max": 33,
+            "p50": 0,
+            "p90": 0,
+            "p99": 2,
+            "percentile_method": "nearest-rank; rank=ceil(p*n)"
+          },
+          "event_share_percent_including_zero": {
+            "count": 140,
+            "max": 50.76923076923077,
+            "p50": 0.0,
+            "p90": 0.0,
+            "p99": 6.666666666666667,
+            "percentile_method": "nearest-rank; rank=ceil(p*n)"
+          }
+        },
+        "json": {
+          "active_actor_denominator": 140,
+          "event_count_including_zero": {
+            "count": 140,
+            "max": 56,
+            "p50": 0,
+            "p90": 2,
+            "p99": 26,
+            "percentile_method": "nearest-rank; rank=ceil(p*n)"
+          },
+          "event_share_percent_including_zero": {
+            "count": 140,
+            "max": 100.0,
+            "p50": 0.0,
+            "p90": 20.0,
+            "p99": 100.0,
+            "percentile_method": "nearest-rank; rank=ceil(p*n)"
+          }
+        },
+        "lock": {
+          "active_actor_denominator": 140,
+          "event_count_including_zero": {
+            "count": 140,
+            "max": 0,
+            "p50": 0,
+            "p90": 0,
+            "p99": 0,
+            "percentile_method": "nearest-rank; rank=ceil(p*n)"
+          },
+          "event_share_percent_including_zero": {
+            "count": 140,
+            "max": 0.0,
+            "p50": 0.0,
+            "p90": 0.0,
+            "p99": 0.0,
+            "percentile_method": "nearest-rank; rank=ceil(p*n)"
+          }
+        },
+        "markdown": {
+          "active_actor_denominator": 140,
+          "event_count_including_zero": {
+            "count": 140,
+            "max": 50,
+            "p50": 2,
+            "p90": 12,
+            "p99": 46,
+            "percentile_method": "nearest-rank; rank=ceil(p*n)"
+          },
+          "event_share_percent_including_zero": {
+            "count": 140,
+            "max": 100.0,
+            "p50": 43.47826086956522,
+            "p90": 100.0,
+            "p99": 100.0,
+            "percentile_method": "nearest-rank; rank=ceil(p*n)"
+          }
+        },
+        "other": {
+          "active_actor_denominator": 140,
+          "event_count_including_zero": {
+            "count": 140,
+            "max": 91,
+            "p50": 0,
+            "p90": 6,
+            "p99": 46,
+            "percentile_method": "nearest-rank; rank=ceil(p*n)"
+          },
+          "event_share_percent_including_zero": {
+            "count": 140,
+            "max": 100.0,
+            "p50": 0.0,
+            "p90": 40.0,
+            "p99": 100.0,
+            "percentile_method": "nearest-rank; rank=ceil(p*n)"
+          }
+        },
+        "source": {
+          "active_actor_denominator": 140,
+          "event_count_including_zero": {
+            "count": 140,
+            "max": 178,
+            "p50": 1,
+            "p90": 18,
+            "p99": 119,
+            "percentile_method": "nearest-rank; rank=ceil(p*n)"
+          },
+          "event_share_percent_including_zero": {
+            "count": 140,
+            "max": 100.0,
+            "p50": 16.666666666666668,
+            "p90": 81.25,
+            "p99": 100.0,
+            "percentile_method": "nearest-rank; rank=ceil(p*n)"
+          }
+        }
+      },
+      "write_category_distribution_per_write_active_actor": {
+        "binary": {
+          "active_actor_denominator": 122,
+          "event_count_including_zero": {
+            "count": 122,
+            "max": 0,
+            "p50": 0,
+            "p90": 0,
+            "p99": 0,
+            "percentile_method": "nearest-rank; rank=ceil(p*n)"
+          },
+          "event_share_percent_including_zero": {
+            "count": 122,
+            "max": 0.0,
+            "p50": 0.0,
+            "p90": 0.0,
+            "p99": 0.0,
+            "percentile_method": "nearest-rank; rank=ceil(p*n)"
+          }
+        },
+        "config": {
+          "active_actor_denominator": 122,
+          "event_count_including_zero": {
+            "count": 122,
+            "max": 3,
+            "p50": 0,
+            "p90": 0,
+            "p99": 1,
+            "percentile_method": "nearest-rank; rank=ceil(p*n)"
+          },
+          "event_share_percent_including_zero": {
+            "count": 122,
+            "max": 3.75,
+            "p50": 0.0,
+            "p90": 0.0,
+            "p99": 3.4482758620689653,
+            "percentile_method": "nearest-rank; rank=ceil(p*n)"
+          }
+        },
+        "json": {
+          "active_actor_denominator": 122,
+          "event_count_including_zero": {
+            "count": 122,
+            "max": 61,
+            "p50": 0,
+            "p90": 6,
+            "p99": 37,
+            "percentile_method": "nearest-rank; rank=ceil(p*n)"
+          },
+          "event_share_percent_including_zero": {
+            "count": 122,
+            "max": 100.0,
+            "p50": 0.0,
+            "p90": 18.91891891891892,
+            "p99": 100.0,
+            "percentile_method": "nearest-rank; rank=ceil(p*n)"
+          }
+        },
+        "lock": {
+          "active_actor_denominator": 122,
+          "event_count_including_zero": {
+            "count": 122,
+            "max": 0,
+            "p50": 0,
+            "p90": 0,
+            "p99": 0,
+            "percentile_method": "nearest-rank; rank=ceil(p*n)"
+          },
+          "event_share_percent_including_zero": {
+            "count": 122,
+            "max": 0.0,
+            "p50": 0.0,
+            "p90": 0.0,
+            "p99": 0.0,
+            "percentile_method": "nearest-rank; rank=ceil(p*n)"
+          }
+        },
+        "markdown": {
+          "active_actor_denominator": 122,
+          "event_count_including_zero": {
+            "count": 122,
+            "max": 191,
+            "p50": 2,
+            "p90": 47,
+            "p99": 154,
+            "percentile_method": "nearest-rank; rank=ceil(p*n)"
+          },
+          "event_share_percent_including_zero": {
+            "count": 122,
+            "max": 100.0,
+            "p50": 50.0,
+            "p90": 100.0,
+            "p99": 100.0,
+            "percentile_method": "nearest-rank; rank=ceil(p*n)"
+          }
+        },
+        "other": {
+          "active_actor_denominator": 122,
+          "event_count_including_zero": {
+            "count": 122,
+            "max": 107,
+            "p50": 0,
+            "p90": 9,
+            "p99": 88,
+            "percentile_method": "nearest-rank; rank=ceil(p*n)"
+          },
+          "event_share_percent_including_zero": {
+            "count": 122,
+            "max": 100.0,
+            "p50": 0.0,
+            "p90": 33.333333333333336,
+            "p99": 100.0,
+            "percentile_method": "nearest-rank; rank=ceil(p*n)"
+          }
+        },
+        "source": {
+          "active_actor_denominator": 122,
+          "event_count_including_zero": {
+            "count": 122,
+            "max": 530,
+            "p50": 1,
+            "p90": 71,
+            "p99": 434,
+            "percentile_method": "nearest-rank; rank=ceil(p*n)"
+          },
+          "event_share_percent_including_zero": {
+            "count": 122,
+            "max": 100.0,
+            "p50": 7.6923076923076925,
+            "p90": 77.42616033755274,
+            "p99": 100.0,
+            "percentile_method": "nearest-rank; rank=ceil(p*n)"
+          }
+        }
+      }
+    },
+    "index_cardinality": {
+      "distinct_file_session_pairs": 1799,
+      "distinct_files_ever_read": 1392,
+      "growth_time_span_definition": "every ISO week from the first to last timestamped logical-actor record in the frozen corpus, including leading, trailing, and internal zero-growth weeks",
+      "growth_week_denominator_including_zero_growth_weeks": 7,
+      "new_distinct_files_per_iso_week": {
+        "count": 7,
+        "max": 443,
+        "p50": 187,
+        "p90": 443,
+        "p99": 443,
+        "percentile_method": "nearest-rank; rank=ceil(p*n)"
+      },
+      "new_file_session_pairs_per_iso_week": {
+        "count": 7,
+        "max": 566,
+        "p50": 220,
+        "p90": 566,
+        "p99": 566,
+        "percentile_method": "nearest-rank; rank=ceil(p*n)"
+      },
+      "weekly_growth": [
+        {
+          "cumulative_distinct_files": 4,
+          "cumulative_file_session_pairs": 4,
+          "iso_week": "2026-W29",
+          "new_distinct_files": 4,
+          "new_file_session_pairs": 4
+        },
+        {
+          "cumulative_distinct_files": 90,
+          "cumulative_file_session_pairs": 90,
+          "iso_week": "2026-W30",
+          "new_distinct_files": 86,
+          "new_file_session_pairs": 86
+        },
+        {
+          "cumulative_distinct_files": 305,
+          "cumulative_file_session_pairs": 430,
+          "iso_week": "2026-W31",
+          "new_distinct_files": 215,
+          "new_file_session_pairs": 340
+        },
+        {
+          "cumulative_distinct_files": 748,
+          "cumulative_file_session_pairs": 996,
+          "iso_week": "2026-W32",
+          "new_distinct_files": 443,
+          "new_file_session_pairs": 566
+        },
+        {
+          "cumulative_distinct_files": 1163,
+          "cumulative_file_session_pairs": 1523,
+          "iso_week": "2026-W33",
+          "new_distinct_files": 415,
+          "new_file_session_pairs": 527
+        },
+        {
+          "cumulative_distinct_files": 1350,
+          "cumulative_file_session_pairs": 1743,
+          "iso_week": "2026-W34",
+          "new_distinct_files": 187,
+          "new_file_session_pairs": 220
+        },
+        {
+          "cumulative_distinct_files": 1392,
+          "cumulative_file_session_pairs": 1799,
+          "iso_week": "2026-W35",
+          "new_distinct_files": 42,
+          "new_file_session_pairs": 56
+        }
+      ]
+    },
+    "observed_concurrency": {
+      "all_deduplicated_tool_calls_project_bucket_sensitivity": {
+        "active_repo_minute_denominator": 22761,
+        "active_utc_minute_denominator": 20319,
+        "events_excluded_from_repo_proxy_for_multiple_buckets": 0,
+        "maximum_same_repo_sessions_per_active_global_minute": {
+          "count": 20319,
+          "max": 53,
+          "p50": 2,
+          "p90": 8,
+          "p99": 24,
+          "percentile_method": "nearest-rank; rank=ceil(p*n)"
+        },
+        "peak_repo_minute_utc": "2026-08-23T17:28:00Z",
+        "peak_utc_minute": "2026-08-23T17:28:00Z",
+        "simultaneous_sessions_per_active_repo_minute": {
+          "count": 22761,
+          "max": 53,
+          "p50": 1,
+          "p90": 8,
+          "p99": 23,
+          "percentile_method": "nearest-rank; rank=ceil(p*n)"
+        },
+        "simultaneous_sessions_per_active_utc_minute": {
+          "count": 20319,
+          "max": 53,
+          "p50": 2,
+          "p90": 8,
+          "p99": 24,
+          "percentile_method": "nearest-rank; rank=ceil(p*n)"
+        }
+      },
+      "current_filesystem_lookup_utc": "2026-08-25T15:54:47.984213Z",
+      "current_git_root_attribution": {
+        "denominator": 57610,
+        "numerator": 6448,
+        "percent": 11.192501301857316,
+        "ratio": 0.11192501301857316
+      },
+      "current_git_root_unknown_event_count": 51162,
+      "global_tool_id_group_quarantine": {
+        "all_tool_calls": {
+          "eligible_tool_id_groups": 297137,
+          "excluded_ambiguous_groups": 8557,
+          "excluded_percent": 2.8798163809959716,
+          "kept_groups": 288580,
+          "kept_percent": 97.12018361900402
+        },
+        "interpretation": "counts and distributions are conditional on the kept, conflict-free tool-ID groups",
+        "result_linked_operations": {
+          "eligible_tool_id_groups": 60658,
+          "excluded_ambiguous_groups": 2429,
+          "excluded_percent": 4.004418213590952,
+          "kept_groups": 58229,
+          "kept_percent": 95.99558178640905
+        },
+        "shell_commands": {
+          "eligible_tool_id_groups": 196559,
+          "excluded_ambiguous_groups": 4795,
+          "excluded_percent": 2.439471100280323,
+          "kept_groups": 191764,
+          "kept_percent": 97.56052889971967
+        }
+      },
+      "primary_identity": "logical actor: agentId when present, otherwise sessionId",
+      "raw_session_id_project_bucket_proxy": {
+        "active_repo_minute_denominator": 12637,
+        "active_utc_minute_denominator": 12136,
+        "events_excluded_from_repo_proxy_for_multiple_buckets": 0,
+        "maximum_same_repo_sessions_per_active_global_minute": {
+          "count": 12136,
+          "max": 4,
+          "p50": 1,
+          "p90": 1,
+          "p99": 2,
+          "percentile_method": "nearest-rank; rank=ceil(p*n)"
+        },
+        "peak_repo_minute_utc": "2026-07-28T19:17:00Z",
+        "peak_utc_minute": "2026-07-28T19:15:00Z",
+        "simultaneous_sessions_per_active_repo_minute": {
+          "count": 12637,
+          "max": 4,
+          "p50": 1,
+          "p90": 1,
+          "p99": 2,
+          "percentile_method": "nearest-rank; rank=ceil(p*n)"
+        },
+        "simultaneous_sessions_per_active_utc_minute": {
+          "count": 12136,
+          "max": 6,
+          "p50": 1,
+          "p90": 2,
+          "p99": 3,
+          "percentile_method": "nearest-rank; rank=ceil(p*n)"
+        }
+      },
+      "repository_scope": "primary same-repository slice resolves each structured target to an extant current .git ancestor; historical/deleted targets are unknown. Claude project directory results are a separately labeled proxy",
+      "structured_plus_shell_project_bucket_sensitivity": {
+        "active_repo_minute_denominator": 21240,
+        "active_utc_minute_denominator": 19401,
+        "events_excluded_from_repo_proxy_for_multiple_buckets": 0,
+        "maximum_same_repo_sessions_per_active_global_minute": {
+          "count": 19401,
+          "max": 52,
+          "p50": 2,
+          "p90": 8,
+          "p99": 23,
+          "percentile_method": "nearest-rank; rank=ceil(p*n)"
+        },
+        "peak_repo_minute_utc": "2026-08-23T17:28:00Z",
+        "peak_utc_minute": "2026-08-23T17:28:00Z",
+        "simultaneous_sessions_per_active_repo_minute": {
+          "count": 21240,
+          "max": 52,
+          "p50": 1,
+          "p90": 7,
+          "p99": 22,
+          "percentile_method": "nearest-rank; rank=ceil(p*n)"
+        },
+        "simultaneous_sessions_per_active_utc_minute": {
+          "count": 19401,
+          "max": 52,
+          "p50": 2,
+          "p90": 8,
+          "p99": 23,
+          "percentile_method": "nearest-rank; rank=ceil(p*n)"
+        }
+      },
+      "structured_successful_read_edit_write_project_bucket_proxy": {
+        "active_repo_minute_denominator": 12637,
+        "active_utc_minute_denominator": 12136,
+        "events_excluded_from_repo_proxy_for_multiple_buckets": 0,
+        "maximum_same_repo_sessions_per_active_global_minute": {
+          "count": 12136,
+          "max": 25,
+          "p50": 1,
+          "p90": 5,
+          "p99": 10,
+          "percentile_method": "nearest-rank; rank=ceil(p*n)"
+        },
+        "peak_repo_minute_utc": "2026-08-25T12:58:00Z",
+        "peak_utc_minute": "2026-08-25T12:58:00Z",
+        "simultaneous_sessions_per_active_repo_minute": {
+          "count": 12637,
+          "max": 25,
+          "p50": 1,
+          "p90": 4,
+          "p99": 10,
+          "percentile_method": "nearest-rank; rank=ceil(p*n)"
+        },
+        "simultaneous_sessions_per_active_utc_minute": {
+          "count": 12136,
+          "max": 25,
+          "p50": 1,
+          "p90": 5,
+          "p99": 10,
+          "percentile_method": "nearest-rank; rank=ceil(p*n)"
+        }
+      },
+      "structured_target_current_git_root": {
+        "active_repo_minute_denominator": 3356,
+        "active_utc_minute_denominator": 3268,
+        "events_excluded_from_repo_proxy_for_multiple_buckets": 0,
+        "maximum_same_repo_sessions_per_active_global_minute": {
+          "count": 3268,
+          "max": 4,
+          "p50": 1,
+          "p90": 1,
+          "p99": 2,
+          "percentile_method": "nearest-rank; rank=ceil(p*n)"
+        },
+        "peak_repo_minute_utc": "2026-07-28T19:14:00Z",
+        "peak_utc_minute": "2026-07-28T19:15:00Z",
+        "simultaneous_sessions_per_active_repo_minute": {
+          "count": 3356,
+          "max": 4,
+          "p50": 1,
+          "p90": 1,
+          "p99": 2,
+          "percentile_method": "nearest-rank; rank=ceil(p*n)"
+        },
+        "simultaneous_sessions_per_active_utc_minute": {
+          "count": 3268,
+          "max": 5,
+          "p50": 1,
+          "p90": 1,
+          "p99": 2,
+          "percentile_method": "nearest-rank; rank=ceil(p*n)"
+        }
+      }
+    },
+    "read_multiplicity": {
+      "credential_redacted_top_path_count": 3,
+      "distinct_file_denominator": 1392,
+      "distinct_sessions_per_file_iso_week": {
+        "count": 1481,
+        "max": 16,
+        "p50": 1,
+        "p90": 2,
+        "p99": 5,
+        "percentile_method": "nearest-rank; rank=ceil(p*n)"
+      },
+      "distinct_sessions_per_file_utc_day": {
+        "count": 1667,
+        "max": 11,
+        "p50": 1,
+        "p90": 1,
+        "p99": 4,
+        "percentile_method": "nearest-rank; rank=ceil(p*n)"
+      },
+      "file_iso_week_bucket_denominator": 1481,
+      "file_utc_day_bucket_denominator": 1667,
+      "per_file_peak_daily_multiplicity": {
+        "count": 1392,
+        "max": 11,
+        "p50": 1,
+        "p90": 1,
+        "p99": 4,
+        "percentile_method": "nearest-rank; rank=ceil(p*n)"
+      },
+      "per_file_peak_weekly_multiplicity": {
+        "count": 1392,
+        "max": 16,
+        "p50": 1,
+        "p90": 2,
+        "p99": 5,
+        "percentile_method": "nearest-rank; rank=ceil(p*n)"
+      },
+      "per_file_rolling_24h_max_distinct_sessions": {
+        "count": 1392,
+        "max": 11,
+        "p50": 1,
+        "p90": 1,
+        "p99": 4,
+        "percentile_method": "nearest-rank; rank=ceil(p*n)"
+      },
+      "per_file_rolling_7d_max_distinct_sessions": {
+        "count": 1392,
+        "max": 16,
+        "p50": 1,
+        "p90": 2,
+        "p99": 5,
+        "percentile_method": "nearest-rank; rank=ceil(p*n)"
+      },
+      "top_20_hottest_files": [
+        {
+          "all_time_distinct_sessions": 17,
+          "category": "doc",
+          "credential_redacted": false,
+          "path": "<home>\\desktop\\toolsenabled\\context\\systems.md",
+          "path_id": "b4fe57e35ad7f11c",
+          "peak_distinct_sessions_iso_week": 16,
+          "peak_distinct_sessions_utc_day": 11,
+          "rank": 1,
+          "read_events": 17,
+          "rolling_24h_max_distinct_sessions": 11,
+          "rolling_7d_max_distinct_sessions": 16
+        },
+        {
+          "all_time_distinct_sessions": 24,
+          "category": "doc",
+          "credential_redacted": false,
+          "path": "<home>\\desktop\\toolsenabled\\standing-orders.md",
+          "path_id": "4d1019b8997462d6",
+          "peak_distinct_sessions_iso_week": 11,
+          "peak_distinct_sessions_utc_day": 5,
+          "rank": 2,
+          "read_events": 29,
+          "rolling_24h_max_distinct_sessions": 6,
+          "rolling_7d_max_distinct_sessions": 16
+        },
+        {
+          "all_time_distinct_sessions": 15,
+          "category": "config",
+          "credential_redacted": false,
+          "path": "<home>\\desktop\\toolsenabled\\config\\agent-org.json",
+          "path_id": "b7e046f21fc78e3d",
+          "peak_distinct_sessions_iso_week": 8,
+          "peak_distinct_sessions_utc_day": 4,
+          "rank": 3,
+          "read_events": 15,
+          "rolling_24h_max_distinct_sessions": 5,
+          "rolling_7d_max_distinct_sessions": 12
+        },
+        {
+          "all_time_distinct_sessions": 13,
+          "category": "doc",
+          "credential_redacted": false,
+          "path": "<home>\\desktop\\toolsenabled-current\\standing-orders.md",
+          "path_id": "b885669c67229539",
+          "peak_distinct_sessions_iso_week": 8,
+          "peak_distinct_sessions_utc_day": 5,
+          "rank": 4,
+          "read_events": 21,
+          "rolling_24h_max_distinct_sessions": 5,
+          "rolling_7d_max_distinct_sessions": 11
+        },
+        {
+          "all_time_distinct_sessions": 11,
+          "category": "doc",
+          "credential_redacted": false,
+          "path": "<home>\\desktop\\toolsenabled\\reports\\open-gates.md",
+          "path_id": "78aec4fe090981ee",
+          "peak_distinct_sessions_iso_week": 7,
+          "peak_distinct_sessions_utc_day": 3,
+          "rank": 5,
+          "read_events": 14,
+          "rolling_24h_max_distinct_sessions": 3,
+          "rolling_7d_max_distinct_sessions": 10
+        },
+        {
+          "all_time_distinct_sessions": 9,
+          "category": "source",
+          "credential_redacted": false,
+          "path": "<home>\\desktop\\portfolio dashboard\\app\\db.py",
+          "path_id": "db1b68e2cef9714e",
+          "peak_distinct_sessions_iso_week": 9,
+          "peak_distinct_sessions_utc_day": 9,
+          "rank": 6,
+          "read_events": 10,
+          "rolling_24h_max_distinct_sessions": 9,
+          "rolling_7d_max_distinct_sessions": 9
+        },
+        {
+          "all_time_distinct_sessions": 9,
+          "category": "doc",
+          "credential_redacted": false,
+          "path": "<home>\\desktop\\toolsenabled\\build-queue.md",
+          "path_id": "4116462604394c37",
+          "peak_distinct_sessions_iso_week": 7,
+          "peak_distinct_sessions_utc_day": 4,
+          "rank": 7,
+          "read_events": 18,
+          "rolling_24h_max_distinct_sessions": 4,
+          "rolling_7d_max_distinct_sessions": 8
+        },
+        {
+          "all_time_distinct_sessions": 9,
+          "category": "doc",
+          "credential_redacted": false,
+          "path": "<home>\\desktop\\toolsenabled-current\\build-queue.md",
+          "path_id": "3c9619b77607a85e",
+          "peak_distinct_sessions_iso_week": 5,
+          "peak_distinct_sessions_utc_day": 5,
+          "rank": 8,
+          "read_events": 12,
+          "rolling_24h_max_distinct_sessions": 5,
+          "rolling_7d_max_distinct_sessions": 7
+        },
+        {
+          "all_time_distinct_sessions": 7,
+          "category": "config",
+          "credential_redacted": false,
+          "path": "<home>\\desktop\\servercontrol\\servers.json",
+          "path_id": "4303e994193f2e31",
+          "peak_distinct_sessions_iso_week": 6,
+          "peak_distinct_sessions_utc_day": 6,
+          "rank": 9,
+          "read_events": 7,
+          "rolling_24h_max_distinct_sessions": 6,
+          "rolling_7d_max_distinct_sessions": 6
+        },
+        {
+          "all_time_distinct_sessions": 6,
+          "category": "source",
+          "credential_redacted": false,
+          "path": "<home>\\desktop\\llmbenchmarking\\lean-bench\\harness\\models.py",
+          "path_id": "70767cb3a5205670",
+          "peak_distinct_sessions_iso_week": 6,
+          "peak_distinct_sessions_utc_day": 6,
+          "rank": 10,
+          "read_events": 6,
+          "rolling_24h_max_distinct_sessions": 6,
+          "rolling_7d_max_distinct_sessions": 6
+        },
+        {
+          "all_time_distinct_sessions": 6,
+          "category": "doc",
+          "credential_redacted": false,
+          "path": "<home>\\desktop\\toolsenabled-current\\docs\\agent-coordination-protocol.md",
+          "path_id": "c4030d9db4cd5291",
+          "peak_distinct_sessions_iso_week": 6,
+          "peak_distinct_sessions_utc_day": 5,
+          "rank": 11,
+          "read_events": 6,
+          "rolling_24h_max_distinct_sessions": 6,
+          "rolling_7d_max_distinct_sessions": 6
+        },
+        {
+          "all_time_distinct_sessions": 7,
+          "category": "source",
+          "credential_redacted": false,
+          "path": "<home>\\desktop\\toolsenabled-current\\src\\lib\\mission-bridge\\actions.js",
+          "path_id": "bb1262d9246aa3eb",
+          "peak_distinct_sessions_iso_week": 5,
+          "peak_distinct_sessions_utc_day": 3,
+          "rank": 12,
+          "read_events": 22,
+          "rolling_24h_max_distinct_sessions": 3,
+          "rolling_7d_max_distinct_sessions": 6
+        },
+        {
+          "all_time_distinct_sessions": 8,
+          "category": "doc",
+          "credential_redacted": false,
+          "path": "<home>\\.claude\\projects\\c--users-<user>-desktop-toolsenabled\\memory\\memory.md",
+          "path_id": "b0f07c75397f27e2",
+          "peak_distinct_sessions_iso_week": 6,
+          "peak_distinct_sessions_utc_day": 2,
+          "rank": 13,
+          "read_events": 10,
+          "rolling_24h_max_distinct_sessions": 2,
+          "rolling_7d_max_distinct_sessions": 6
+        },
+        {
+          "all_time_distinct_sessions": 5,
+          "category": "doc",
+          "credential_redacted": true,
+          "path": "<home>\\.claude\\projects\\c--users-<user>-appdata-local-temp-claude-c--users-<user>-desktop-toolsenabled-legal-b6a617e2-5c2f-4d0c-b7d7-6689f4a4b19f-scratchpad-credexp-armoff-workspace\\memory\\<credential-path-redacted>",
+          "path_id": "edd591a63b87e0cd",
+          "peak_distinct_sessions_iso_week": 5,
+          "peak_distinct_sessions_utc_day": 5,
+          "rank": 14,
+          "read_events": 5,
+          "rolling_24h_max_distinct_sessions": 5,
+          "rolling_7d_max_distinct_sessions": 5
+        },
+        {
+          "all_time_distinct_sessions": 5,
+          "category": "doc",
+          "credential_redacted": true,
+          "path": "<home>\\.claude\\projects\\c--users-<user>-appdata-local-temp-claude-c--users-<user>-desktop-toolsenabled-legal-b6a617e2-5c2f-4d0c-b7d7-6689f4a4b19f-scratchpad-credexp-armon-workspace\\memory\\<credential-path-redacted>",
+          "path_id": "f86a7cc0d9d7b36f",
+          "peak_distinct_sessions_iso_week": 5,
+          "peak_distinct_sessions_utc_day": 5,
+          "rank": 15,
+          "read_events": 5,
+          "rolling_24h_max_distinct_sessions": 5,
+          "rolling_7d_max_distinct_sessions": 5
+        },
+        {
+          "all_time_distinct_sessions": 5,
+          "category": "doc",
+          "credential_redacted": false,
+          "path": "<home>\\desktop\\toolsenabled-current\\docs\\coordinator\\dispatch-queue-2026-08-13.md",
+          "path_id": "be078b760110de95",
+          "peak_distinct_sessions_iso_week": 5,
+          "peak_distinct_sessions_utc_day": 5,
+          "rank": 16,
+          "read_events": 5,
+          "rolling_24h_max_distinct_sessions": 5,
+          "rolling_7d_max_distinct_sessions": 5
+        },
+        {
+          "all_time_distinct_sessions": 5,
+          "category": "doc",
+          "credential_redacted": false,
+          "path": "<home>\\desktop\\toolsenabled\\context\\portfolio-dashboard.md",
+          "path_id": "700f26c628aad221",
+          "peak_distinct_sessions_iso_week": 5,
+          "peak_distinct_sessions_utc_day": 5,
+          "rank": 17,
+          "read_events": 5,
+          "rolling_24h_max_distinct_sessions": 5,
+          "rolling_7d_max_distinct_sessions": 5
+        },
+        {
+          "all_time_distinct_sessions": 5,
+          "category": "source",
+          "credential_redacted": true,
+          "path": "<home>\\desktop\\toolsenabled\\tools\\<credential-path-redacted>",
+          "path_id": "272998a0f93f9ba6",
+          "peak_distinct_sessions_iso_week": 4,
+          "peak_distinct_sessions_utc_day": 2,
+          "rank": 18,
+          "read_events": 5,
+          "rolling_24h_max_distinct_sessions": 3,
+          "rolling_7d_max_distinct_sessions": 5
+        },
+        {
+          "all_time_distinct_sessions": 6,
+          "category": "doc",
+          "credential_redacted": false,
+          "path": "<home>\\desktop\\toolsenabled-current\\claude.md",
+          "path_id": "d0fbc67b97d41257",
+          "peak_distinct_sessions_iso_week": 4,
+          "peak_distinct_sessions_utc_day": 2,
+          "rank": 19,
+          "read_events": 7,
+          "rolling_24h_max_distinct_sessions": 2,
+          "rolling_7d_max_distinct_sessions": 5
+        },
+        {
+          "all_time_distinct_sessions": 4,
+          "category": "doc",
+          "credential_redacted": false,
+          "path": "<home>\\desktop\\toolsenabled-current\\scratch\\r1177-first-swarm-evidence.md",
+          "path_id": "194cd44bde608253",
+          "peak_distinct_sessions_iso_week": 4,
+          "peak_distinct_sessions_utc_day": 4,
+          "rank": 20,
+          "read_events": 4,
+          "rolling_24h_max_distinct_sessions": 4,
+          "rolling_7d_max_distinct_sessions": 4
+        }
+      ]
+    },
+    "read_to_write_intervals": {
+      "censoring": "no explicit close marker; live, paused, or crashed sessions are right-censored at the frozen last record",
+      "first_read_result_to_absolute_first_write_call_seconds": {
+        "count": 405,
+        "max": 278233.52100014687,
+        "p50": 25.75499987602234,
+        "p90": 3519.388000011444,
+        "p99": 133320.74100017548,
+        "percentile_method": "nearest-rank; rank=ceil(p*n)"
+      },
+      "first_read_result_to_first_following_write_call_seconds_sensitivity": {
+        "count": 521,
+        "max": 278233.52100014687,
+        "p50": 21.85800004005432,
+        "p90": 1543.755000114441,
+        "p99": 130193.5720000267,
+        "percentile_method": "nearest-rank; rank=ceil(p*n)"
+      },
+      "last_write_of_any_file_to_session_end_seconds_per_actor": {
+        "count": 122,
+        "max": 1179691.2799999714,
+        "p50": 57.80299997329712,
+        "p90": 8968.994999885559,
+        "p99": 49781.30399990082,
+        "percentile_method": "nearest-rank; rank=ceil(p*n)"
+      },
+      "last_write_result_to_session_end_seconds": {
+        "count": 3094,
+        "max": 1329345.2690000534,
+        "p50": 83035.18700003624,
+        "p90": 259336.9390001297,
+        "p99": 511917.3789999485,
+        "percentile_method": "nearest-rank; rank=ceil(p*n)"
+      },
+      "linger_pairs_missing_or_negative_session_end": 0,
+      "literal_pairs_first_write_at_or_after_first_read": 405,
+      "pairs_first_write_before_first_read": 149,
+      "pairs_with_no_write_after_first_read": 33,
+      "session_end_definition": "last timestamped record for the logical actor in the frozen corpus prefix",
+      "session_file_pairs_with_any_write_after_first_read": 521,
+      "session_file_pairs_with_read_and_write": 554,
+      "session_file_pairs_with_write_for_linger": 3094
+    },
+    "read_window_sizes": {
+      "byte_definition": "UTF-8 byte length of every same-result toolUseResult.file.content string; metadata line-count agreement is diagnostic only, not an eligibility gate; not on-disk encoding or line-ending bytes",
+      "localized_coverage": {
+        "denominator": 29024,
+        "numerator": 2519,
+        "percent": 8.679024255788313,
+        "ratio": 0.08679024255788313
+      },
+      "localized_valid_window_denominator": 2519,
+      "num_lines": {
+        "count": 2519,
+        "max": 2076,
+        "p50": 44,
+        "p90": 210,
+        "p99": 1069,
+        "percentile_method": "nearest-rank; rank=ceil(p*n)"
+      },
+      "returned_content_byte_denominator": 2519,
+      "returned_content_line_count_matches_metadata": {
+        "denominator": 2519,
+        "numerator": 2482,
+        "percent": 98.53116315998412,
+        "ratio": 0.9853116315998413
+      },
+      "returned_utf8_bytes_per_line": {
+        "count": 2519,
+        "max": 58659.0,
+        "p50": 51.0,
+        "p90": 102.15189873417721,
+        "p99": 3205.0,
+        "percentile_method": "nearest-rank; rank=ceil(p*n)"
+      },
+      "returned_window_utf8_bytes": {
+        "count": 2519,
+        "max": 73894,
+        "p50": 2350,
+        "p90": 13901,
+        "p99": 59161,
+        "percentile_method": "nearest-rank; rank=ceil(p*n)"
+      },
+      "returned_window_utf8_bytes_metadata_line_count_aligned": {
+        "count": 2482,
+        "max": 73894,
+        "p50": 2410,
+        "p90": 13988,
+        "p99": 59613,
+        "percentile_method": "nearest-rank; rank=ceil(p*n)"
+      },
+      "start_line": {
+        "count": 2519,
+        "max": 15130,
+        "p50": 1,
+        "p90": 700,
+        "p99": 3585,
+        "percentile_method": "nearest-rank; rank=ceil(p*n)"
+      },
+      "successful_read_denominator": 29024
+    },
+    "session_lengths": {
+      "actors_with_any_deduplicated_tool_call": 5290,
+      "all_tool_calls_per_actor": {
+        "count": 5290,
+        "max": 6999,
+        "p50": 31,
+        "p90": 105,
+        "p99": 314,
+        "percentile_method": "nearest-rank; rank=ceil(p*n)"
+      },
+      "all_tool_calls_per_raw_session_including_zero": {
+        "count": 875,
+        "max": 59279,
+        "p50": 0,
+        "p90": 43,
+        "p99": 8169,
+        "percentile_method": "nearest-rank; rank=ceil(p*n)"
+      },
+      "ambiguous_session_structured_operations_excluded": 0,
+      "ambiguous_session_tool_calls_excluded": 0,
+      "core_active_actor_denominator": 3765,
+      "global_tool_id_group_quarantine": {
+        "all_tool_calls": {
+          "eligible_tool_id_groups": 297137,
+          "excluded_ambiguous_groups": 8557,
+          "excluded_percent": 2.8798163809959716,
+          "kept_groups": 288580,
+          "kept_percent": 97.12018361900402
+        },
+        "interpretation": "counts and distributions are conditional on the kept, conflict-free tool-ID groups",
+        "result_linked_operations": {
+          "eligible_tool_id_groups": 60658,
+          "excluded_ambiguous_groups": 2429,
+          "excluded_percent": 4.004418213590952,
+          "kept_groups": 58229,
+          "kept_percent": 95.99558178640905
+        },
+        "shell_commands": {
+          "eligible_tool_id_groups": 196559,
+          "excluded_ambiguous_groups": 4795,
+          "excluded_percent": 2.439471100280323,
+          "kept_groups": 191764,
+          "kept_percent": 97.56052889971967
+        }
+      },
+      "localized_reads_per_raw_session_including_zero": {
+        "count": 875,
+        "max": 243,
+        "p50": 0,
+        "p90": 3,
+        "p99": 93,
+        "percentile_method": "nearest-rank; rank=ceil(p*n)"
+      },
+      "localized_writes_per_raw_session_including_zero": {
+        "count": 875,
+        "max": 709,
+        "p50": 0,
+        "p90": 2,
+        "p99": 214,
+        "percentile_method": "nearest-rank; rank=ceil(p*n)"
+      },
+      "logical_actor_identity_rule": "agentId when present, otherwise sessionId",
+      "raw_session_id_count": 875,
+      "raw_session_wall_clock_denominator": 875,
+      "raw_session_wall_clock_seconds_first_to_last_timestamped_record": {
+        "count": 875,
+        "max": 1418367.0250000954,
+        "p50": 126.85000014305115,
+        "p90": 3797.4749999046326,
+        "p99": 583316.5620000362,
+        "percentile_method": "nearest-rank; rank=ceil(p*n)"
+      },
+      "shell_active_actor_denominator": 4865,
+      "shell_commands_per_shell_active_actor": {
+        "count": 4865,
+        "max": 5448,
+        "p50": 23,
+        "p90": 77,
+        "p99": 231,
+        "percentile_method": "nearest-rank; rank=ceil(p*n)"
+      },
+      "structured_active_span_seconds_per_core_active_actor": {
+        "count": 3765,
+        "max": 1352179.269999981,
+        "p50": 199.65199995040894,
+        "p90": 1991.7639999389648,
+        "p99": 31021.292999982834,
+        "percentile_method": "nearest-rank; rank=ceil(p*n)"
+      },
+      "successful_read_edit_write_events_per_any_tool_actor_including_zero": {
+        "count": 5290,
+        "max": 941,
+        "p50": 3,
+        "p90": 27,
+        "p99": 89,
+        "percentile_method": "nearest-rank; rank=ceil(p*n)"
+      },
+      "successful_read_edit_write_events_per_core_active_actor": {
+        "count": 3765,
+        "max": 941,
+        "p50": 7,
+        "p90": 36,
+        "p99": 97,
+        "percentile_method": "nearest-rank; rank=ceil(p*n)"
+      },
+      "successful_read_edit_write_events_per_raw_session_including_zero": {
+        "count": 875,
+        "max": 12096,
+        "p50": 0,
+        "p90": 7,
+        "p99": 1593,
+        "percentile_method": "nearest-rank; rank=ceil(p*n)"
+      },
+      "wall_clock_actor_denominator": 5971,
+      "wall_clock_definition": "first to last timestamped record for the logical actor in the frozen prefix; idle gaps remain included",
+      "wall_clock_seconds_first_to_last_timestamped_record": {
+        "count": 5971,
+        "max": 1418367.0250000954,
+        "p50": 390.36500000953674,
+        "p90": 2138.7720000743866,
+        "p99": 39005.80499982834,
+        "percentile_method": "nearest-rank; rank=ceil(p*n)"
+      },
+      "zero_duration_actor_count": 0
+    },
+    "shell_gap_items_1_through_7": {
+      "common_shell_gap": {
+        "canonical_path_mentions": 454596,
+        "commands_with_canonical_path": 175336,
+        "deduplicated_shell_commands": 191764,
+        "relative_to_successful_structured_events": {
+          "denominator": 57610,
+          "numerator": 191764,
+          "percent": 332.8658219059191,
+          "ratio": 3.328658219059191
+        }
+      },
+      "item_1_event_volume": {
+        "parser_positive_shell_commands_relative_to_structured_events": {
+          "denominator": 57610,
+          "numerator": 175336,
+          "percent": 304.34993924665855,
+          "ratio": 3.0434993924665856
+        },
+        "untyped_shell_commands_relative_to_structured_events": {
+          "denominator": 57610,
+          "numerator": 191764,
+          "percent": 332.8658219059191,
+          "ratio": 3.328658219059191
+        }
+      },
+      "item_2_read_windows": {
+        "heuristic_read_or_read_write_shell_commands_with_canonical_paths": 136220,
+        "shell_canonical_path_mentions_without_line_windows": 454596,
+        "shell_mentions_relative_to_read_windows": {
+          "denominator": 2519,
+          "numerator": 454596,
+          "percent": 18046.68519253672,
+          "ratio": 180.46685192536722
+        },
+        "structured_localized_read_windows": 2519
+      },
+      "item_3_edit_regions": {
+        "ambiguous_shell_commands_with_canonical_paths": 29410,
+        "shell_write_or_read_write_commands_with_canonical_paths": 87628,
+        "structured_patch_hunks": 4489
+      },
+      "item_4_read_multiplicity": {
+        "all_shell_mentions_as_reads_daily_scenario_sensitivity": {
+          "count": 84470,
+          "max": 725,
+          "p50": 1,
+          "p90": 3,
+          "p99": 15,
+          "percentile_method": "nearest-rank; rank=ceil(p*n)"
+        },
+        "all_shell_mentions_as_reads_rolling_24h_per_path": {
+          "count": 63829,
+          "max": 769,
+          "p50": 1,
+          "p90": 3,
+          "p99": 16,
+          "percentile_method": "nearest-rank; rank=ceil(p*n)"
+        },
+        "all_shell_mentions_as_reads_rolling_7d_per_path": {
+          "count": 63829,
+          "max": 1709,
+          "p50": 1,
+          "p90": 3,
+          "p99": 24,
+          "percentile_method": "nearest-rank; rank=ceil(p*n)"
+        },
+        "all_shell_mentions_as_reads_weekly_scenario_sensitivity": {
+          "count": 70858,
+          "max": 1701,
+          "p50": 1,
+          "p90": 3,
+          "p99": 21,
+          "percentile_method": "nearest-rank; rank=ceil(p*n)"
+        },
+        "maximum_rolling_24h_absolute_lift": 769,
+        "maximum_rolling_7d_absolute_lift": 1709,
+        "paths_whose_rolling_24h_max_increases": 62988,
+        "paths_whose_rolling_7d_max_increases": 63053,
+        "primary_daily_distribution": {
+          "count": 1667,
+          "max": 11,
+          "p50": 1,
+          "p90": 1,
+          "p99": 4,
+          "percentile_method": "nearest-rank; rank=ceil(p*n)"
+        },
+        "primary_weekly_distribution": {
+          "count": 1481,
+          "max": 16,
+          "p50": 1,
+          "p90": 2,
+          "p99": 5,
+          "percentile_method": "nearest-rank; rank=ceil(p*n)"
+        }
+      },
+      "item_5_read_write_intervals": {
+        "heuristic_shell_read_write_union_eligible_pairs": 107912,
+        "heuristic_union_interval_seconds": {
+          "count": 107912,
+          "max": 548852.5920000076,
+          "p50": 0.0,
+          "p90": 0.0,
+          "p99": 1463.4390001296997,
+          "percentile_method": "nearest-rank; rank=ceil(p*n)"
+        },
+        "literal_pairs_with_any_same_path_shell_mention": {
+          "denominator": 405,
+          "numerator": 127,
+          "percent": 31.358024691358025,
+          "ratio": 0.3135802469135803
+        },
+        "literal_pairs_with_same_path_shell_mention_after_first_write": 108,
+        "literal_pairs_with_same_path_shell_mention_before_first_read": 76,
+        "literal_pairs_with_same_path_shell_mention_between_read_and_write": 36,
+        "primary_literal_eligible_session_file_pairs": 405,
+        "primary_subsequent_write_proxy_pairs": 521,
+        "warning": "shell intent is heuristic and cannot be treated as observed read/write truth"
+      },
+      "item_6_concurrency": {
+        "note": "structured-plus-shell minute counts isolate the observed shell timestamp channel but still miss non-tool thinking time and do not prove duration overlap",
+        "paired_actor_count_delta_on_structured_plus_shell_minute_support": {
+          "expanded_active_repo_minute_denominator": 21240,
+          "expanded_active_utc_minute_denominator": 19401,
+          "global_actor_delta_per_expanded_active_utc_minute": {
+            "count": 19401,
+            "max": 52,
+            "p50": 1,
+            "p90": 5,
+            "p99": 18,
+            "percentile_method": "nearest-rank; rank=ceil(p*n)"
+          },
+          "global_minutes_with_positive_actor_delta": {
+            "denominator": 19401,
+            "numerator": 14666,
+            "percent": 75.5940415442503,
+            "ratio": 0.755940415442503
+          },
+          "repo_minutes_with_positive_actor_delta": {
+            "denominator": 21240,
+            "numerator": 15598,
+            "percent": 73.43691148775895,
+            "ratio": 0.7343691148775895
+          },
+          "same_project_actor_delta_per_expanded_active_repo_minute": {
+            "count": 21240,
+            "max": 52,
+            "p50": 1,
+            "p90": 4,
+            "p99": 17,
+            "percentile_method": "nearest-rank; rank=ceil(p*n)"
+          },
+          "support": "structured-plus-shell active minute/repository-minute cells; structured count is zero where absent"
+        },
+        "structured_only_current_git_root_resolved_slice": {
+          "active_repo_minute_denominator": 3356,
+          "active_utc_minute_denominator": 3268,
+          "events_excluded_from_repo_proxy_for_multiple_buckets": 0,
+          "maximum_same_repo_sessions_per_active_global_minute": {
+            "count": 3268,
+            "max": 4,
+            "p50": 1,
+            "p90": 1,
+            "p99": 2,
+            "percentile_method": "nearest-rank; rank=ceil(p*n)"
+          },
+          "peak_repo_minute_utc": "2026-07-28T19:14:00Z",
+          "peak_utc_minute": "2026-07-28T19:15:00Z",
+          "simultaneous_sessions_per_active_repo_minute": {
+            "count": 3356,
+            "max": 4,
+            "p50": 1,
+            "p90": 1,
+            "p99": 2,
+            "percentile_method": "nearest-rank; rank=ceil(p*n)"
+          },
+          "simultaneous_sessions_per_active_utc_minute": {
+            "count": 3268,
+            "max": 5,
+            "p50": 1,
+            "p90": 1,
+            "p99": 2,
+            "percentile_method": "nearest-rank; rank=ceil(p*n)"
+          }
+        },
+        "structured_only_project_bucket_proxy": {
+          "active_repo_minute_denominator": 12637,
+          "active_utc_minute_denominator": 12136,
+          "events_excluded_from_repo_proxy_for_multiple_buckets": 0,
+          "maximum_same_repo_sessions_per_active_global_minute": {
+            "count": 12136,
+            "max": 25,
+            "p50": 1,
+            "p90": 5,
+            "p99": 10,
+            "percentile_method": "nearest-rank; rank=ceil(p*n)"
+          },
+          "peak_repo_minute_utc": "2026-08-25T12:58:00Z",
+          "peak_utc_minute": "2026-08-25T12:58:00Z",
+          "simultaneous_sessions_per_active_repo_minute": {
+            "count": 12637,
+            "max": 25,
+            "p50": 1,
+            "p90": 4,
+            "p99": 10,
+            "percentile_method": "nearest-rank; rank=ceil(p*n)"
+          },
+          "simultaneous_sessions_per_active_utc_minute": {
+            "count": 12136,
+            "max": 25,
+            "p50": 1,
+            "p90": 5,
+            "p99": 10,
+            "percentile_method": "nearest-rank; rank=ceil(p*n)"
+          }
+        },
+        "structured_plus_shell_calls": {
+          "active_repo_minute_denominator": 21240,
+          "active_utc_minute_denominator": 19401,
+          "events_excluded_from_repo_proxy_for_multiple_buckets": 0,
+          "maximum_same_repo_sessions_per_active_global_minute": {
+            "count": 19401,
+            "max": 52,
+            "p50": 2,
+            "p90": 8,
+            "p99": 23,
+            "percentile_method": "nearest-rank; rank=ceil(p*n)"
+          },
+          "peak_repo_minute_utc": "2026-08-23T17:28:00Z",
+          "peak_utc_minute": "2026-08-23T17:28:00Z",
+          "simultaneous_sessions_per_active_repo_minute": {
+            "count": 21240,
+            "max": 52,
+            "p50": 1,
+            "p90": 7,
+            "p99": 22,
+            "percentile_method": "nearest-rank; rank=ceil(p*n)"
+          },
+          "simultaneous_sessions_per_active_utc_minute": {
+            "count": 19401,
+            "max": 52,
+            "p50": 2,
+            "p90": 8,
+            "p99": 23,
+            "percentile_method": "nearest-rank; rank=ceil(p*n)"
+          }
+        }
+      },
+      "item_7_index_cardinality": {
+        "candidate_path_cardinality_lift": {
+          "denominator": 1392,
+          "numerator": 62437,
+          "percent": 4485.416666666667,
+          "ratio": 44.854166666666664
+        },
+        "candidate_path_session_pair_cardinality_lift": {
+          "denominator": 1799,
+          "numerator": 160410,
+          "percent": 8916.620344635909,
+          "ratio": 89.16620344635909
+        },
+        "shell_only_distinct_paths": 62437,
+        "shell_only_path_session_pairs": 160410,
+        "structured_distinct_file_session_pairs": 1799,
+        "structured_distinct_files": 1392,
+        "union_if_all_recovered_shell_mentions_were_reads_distinct_paths": 63829,
+        "union_if_all_recovered_shell_mentions_were_reads_path_session_pairs": 162209
+      }
+    }
+  },
+  "percentile_rule": "nearest-rank over the explicitly named population; max is observed maximum",
+  "recommended_seeds": {
+    "capture_adapter": {
+      "mechanical_claims_from_lexical_shell_mentions": false,
+      "shell_to_structured_file_tool_call_ratio": 3.2920858369098713,
+      "weighted_shell_parser_mention_precision": 0.3947368390575032,
+      "weighted_shell_parser_mention_recall": 0.3520073294431212
+    },
+    "concurrency": {
+      "current_git_root_structured_attribution_coverage": {
+        "denominator": 57610,
+        "numerator": 6448,
+        "percent": 11.192501301857316,
+        "ratio": 0.11192501301857316
+      },
+      "observed_max_all_tool_logical_actors_per_active_minute": 53,
+      "observed_max_same_claude_project_bucket_proxy_all_calls": 53,
+      "observed_max_same_current_git_root_in_resolved_structured_slice": 4,
+      "p99_all_tool_logical_actors_per_active_minute": 24,
+      "p99_same_claude_project_bucket_proxy_all_calls": 23,
+      "p99_same_current_git_root_in_resolved_structured_slice": 2
+    },
+    "event_log": {
+      "observed_max_aggregate_events_per_active_utc_hour": 1071,
+      "observed_max_events_per_active_actor_hour": 148,
+      "p99_aggregate_events_per_active_utc_hour": 788,
+      "p99_events_per_active_actor_hour": 68,
+      "retention_bytes": null,
+      "retention_bytes_reason": "final event serialization has not been benchmarked"
+    },
+    "format_fast_path": {
+      "observed_binary_read_write_events": 0,
+      "observed_lock_read_write_events": 0,
+      "source_plus_markdown_localized_read_percent": 73.75942834458118,
+      "source_plus_markdown_localized_write_percent": 85.36510376633359
+    },
+    "interpretation": "Observed percentile seeds for @perrepo startup; recalibrate online and retain observed maxima as diagnostics, not universal hard limits.",
+    "lease_proxy": {
+      "p90_first_read_to_absolute_first_write_seconds": 3519.388000011444,
+      "p90_last_file_write_to_observed_actor_end_seconds": 259336.9390001297,
+      "p99_first_read_to_absolute_first_write_seconds": 133320.74100017548,
+      "rounded_initial_renewable_lease_seed_seconds": 3600,
+      "seed_derivation": "one hour, rounded from the observed p90 first-read-to-absolute-first-write interval",
+      "warning": "long/censored tails require renewal and explicit close; do not install the linger percentile as an unattended lease"
+    },
+    "one_shot_dispatch": {
+      "observed_max_all_tool_calls_per_actor": 6999,
+      "observed_max_successful_structured_events_per_core_active_actor": 941,
+      "p99_all_tool_calls_per_actor": 314,
+      "p99_observed_actor_wall_clock_seconds": 39005.80499982834,
+      "p99_successful_structured_events_per_core_active_actor": 97,
+      "warning": "observed wall clock includes idle gaps and is not a dispatch timeout or close boundary"
+    },
+    "read_claim": {
+      "p90_lines": 210,
+      "p90_returned_utf8_bytes": 13901,
+      "p99_lines": 1069,
+      "p99_returned_utf8_bytes": 59161
+    },
+    "read_index": {
+      "all_shell_mentions_as_reads_candidate_path_actor_pairs": 162209,
+      "all_shell_mentions_as_reads_candidate_paths": 63829,
+      "p99_new_file_actor_pairs_per_iso_week": 566,
+      "p99_new_files_per_iso_week": 443,
+      "structured_seed_distinct_files": 1392,
+      "structured_seed_file_actor_pairs": 1799
+    },
+    "write_claim_change_block": {
+      "p90_lf_normalized_utf8_bytes": 1104,
+      "p90_lines": 16,
+      "p99_lf_normalized_utf8_bytes": 3515,
+      "p99_lines": 53
+    }
+  },
+  "schema_version": 1,
+  "scope": {
+    "corpus_access": "read-only frozen byte prefixes",
+    "use": "self-calibrating @perrepo seed defaults, not universal constants",
+    "workload": "one team, one Claude Code harness, Node-dominated"
+  },
+  "what_would_change_this_verdict": [
+    "Persist normalized repository/worktree IDs, real file IDs, encodings, raw byte ranges, and before/after hashes on every file operation.",
+    "Emit structured shell/subprocess effects with expanded paths, read/write direction, success, and byte intervals.",
+    "Emit explicit session start, heartbeat, close, and crash events plus operation start/end intervals.",
+    "Capture result-side path/range/patch/pre-image metadata uniformly in main, direct-subagent, and workflow-subagent transcripts.",
+    "Serialize and benchmark the finalized event record to convert event-count retention into bytes and sustained write bandwidth.",
+    "Validate the shell parser on a larger independently reviewed sample, especially opaque inline-code, heredoc/here-string, variable, and glob cases.",
+    "Replicate across teams, harnesses, languages, repository sizes, and intentionally adversarial workloads."
+  ]
+}

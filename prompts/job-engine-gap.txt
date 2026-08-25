@@ -1,0 +1,39 @@
+Audit the ENGINE against the redesign's build items and produce the seam-by-seam gap analysis a build team needs. The redesign is settled; the question is exactly what exists, what is stubbed, what is absent, and where each new component attaches.
+
+## STRICT READ-ONLY BOUNDARY
+
+`C:/Users/joshp/Desktop/toolsenabled/engine` is a LIVE working checkout with other agents actively editing it. READ ONLY: no writes, no staging, no git mutations, no running its tests/builds/scripts. Copy files you need into `C:/Users/joshp/Desktop/Blast-Radius/corpus/engine-audit/` with recorded SHA-256s and work from copies. If a file changes mid-read, note it and keep your copy.
+
+## The build items to audit against (from the redesign document)
+
+1. Event log with actor identity, dispatch roster, byte-interval region addressing (content hashes on materialized bytes; append-only; immutable reports).
+2. Inverted read index; claims derived MECHANICALLY at the API layer from mediated calls (never agent-declared).
+3. Write-time validation with repair + an N=3 escalation budget on cross-agent region alternation.
+4. Exact-tier holds (region in a live read set); everything ranked advisory only.
+5. Identifier lookup; BM25 in shadow; Grep input narrowing.
+6. Silence-rate regime switch per seed file.
+7. Contract-conflict screen at dispatch; stateless per-task agents.
+8. Isolated-lane mode: harvest integration under tests, lane staleness budget (~16 commits / 1 week), private-index + compare-and-swap ref updates.
+
+## What to establish, per item, with file:line evidence from the copies
+
+- What already exists that serves it (name the modules, count the lines, quote the load-bearing signatures).
+- Its wiring status: reachable in production paths, reachable only in tests, or dead/stubbed. Known prior findings to verify rather than assume: `packages/internal-vcs/` ClaimAuthority (~69 files) with a public `claims` export that throws; the coordinator decision doc saying it "is NOT a fencing authority"; `tools/agent-contract.js` CONTRACT/1 requiring only role/target/do/because/done/report; `src/lib/tool-registry.js` as the mediation point; `src/lib/cloud-agent/cloud-mirror.js` staleness refusals; `tools/repo-sync.js` as protected-main receiver.
+- The precise attachment seam: which function, which dispatch path, which existing check the new component slots behind — the answer to "where does the first line of new code go".
+- What must NOT be touched during the BUILD (fail-closed safety seams the item must route around, like assertOutwardGate/schedulerApprovalBypass). Note: the OWNER has widened scope — repo-sync is now a first-class redesign subject, so audit it fully (its receiver model, refusal codes, receipt/staleness machinery, filter-configuration assumptions, and every caller), while still never mutating anything in this pass.
+- Collisions with in-flight work: if the live tree shows uncommitted edits near a seam, record the path and symbol so the build plan can sequence around it — do not resolve or judge them.
+
+Also inventory: every mediated file-touching tool in the registry (the capture surface for mechanical claims — name each tool and whether its handler exposes path + range + content), and the shell-execution path (the known capture gap).
+
+And a dedicated repo-sync section: locate the actual module(s) (tools/repo-sync.js and relatives), its complete current behavior (what it observes, what it refuses, what it writes), its exact consumers, and its exposure to the three findings that now bear on it — line-ending/filter smudging (does it compare bytes or git-normalized content?), staleness measurement (does it measure divergence in commits/time, and against what base?), and shared-index usage (does anything in its path share a git index across actors?). GrepSaver likewise: locate grepsaver modules (tools/grepsaver-orient.js and relatives), their index structure, and their current retrieval path versus the redesign's identifier-lookup + shadow-BM25 + Grep-narrowing design.
+
+## Output
+
+`C:/Users/joshp/Desktop/Blast-Radius/exploratory/build-params/ENGINE-GAP.md`:
+1. First: the eight-item gap table — exists/stubbed/absent, wiring status, seam, estimated blast radius of attaching there (files that would change).
+2. Per-item detail with file:line evidence.
+3. The mediated-tool capture inventory.
+4. In-flight collision notes.
+5. "Claims that could NOT be verified", "What would change this verdict", per-claim confidence with reasons.
+
+One rule above all: report the tree as it IS, not as the reports about it claim — prior audits found agent reports contradicting the code. Do not fabricate.
