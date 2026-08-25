@@ -1,4 +1,6 @@
 ﻿f6bb5edbff35e91bfeb1ab1576dc2f8786eb0fb4aeafb3cbcbfa979d88b9fb7f  cloud-click-expansion-sweep.txt  2371 bytes
+7b887dbcc5a9ae1abd3d7a6cc801e40f045823349a320e91fa2dabc8e658de17  cloud-expansion-shard.txt  1158 bytes
+23d49e9b0f1ba6fecd5df71fcc97b253ef2667086b33182ae77dab6caaa12f91  cloud-original-sweep-rerun.txt  1620 bytes
 4473908d97aa592caf4b951890d569e41737fe07ed5e8c742412cfbe7661e8e8  cloud-pygments-sweep.txt  2565 bytes
 6c77cef3255f5dcdb3a7001de9a3b71b6d95ba5d1d2391e8deb9dcf0f12b10f5  job-abort-rate.txt  4993 bytes
 ba82b1eec4ee9aa1346043353a3d3903dfa4a78ec8bded82f438ff265199e5e3  job-bootstrap.txt  3152 bytes
@@ -11,6 +13,7 @@ a81111fd5964c1b32833c4249eece2333e34ed552ff01f3b2196c57446305d34  job-harvest-co
 4244f560e9ca5f0c65a48038be1c64c6480bfdcd1ff8422f506406558a8ccdd1  job-java-runner.txt  2976 bytes
 db4e04ef2020f58480e4a63fca9c622ee261ffc4b6bfc34b53afa51459ab43e3  job-normalization.txt  3067 bytes
 bdf952f5732222652857f34228d045d740b87e89364e64f1f7e5357a1b26c223  job-oscillation.txt  4813 bytes
+87e4397ca45bfed8e77c5577486d665c8bdccde46a112a1bccd643a4ceee6813  job-pygments-fixture-repair.txt  3239 bytes
 ea6e0750731a377dd9fbdc285cdfae2f2d64977089424600b89139cf8970862d  job-recover-tasks.txt  3748 bytes
 f7b108b7e01fb6103177453f406bb47e1e8d65a9e82a2364c79f4b743a39c772  job-retrieval-fix.txt  3689 bytes
 eb16c5fd1c8e3ca013537f5542c71dac00b22b305a41e306adfd19834bfdcf6a  job-second-repo.txt  3867 bytes

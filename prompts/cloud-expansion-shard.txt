@@ -1,0 +1,10 @@
+SHARD DIRECTIVE (parameterized; the launch prompt names the group and task list).
+
+Follow prompts/cloud-click-expansion-sweep.txt in this repository EXACTLY, with these modifications only:
+
+1. Run ONLY the tasks named in the launch prompt's task list (one anchor group), not all 40.
+2. The expansion bases and patches are now committed and repaired (commit "Repair the expansion fixture"): the four base-expansion-N subtree hashes equal the declared hashes in exploratory/causal/EXPANSION.md. Verify your group's base tree hash as step 1; it will match. If it does not, stop and report exactly that.
+3. Write outputs to exploratory/causal/EXPANSION-RESULTS-g<N>.md and exploratory/causal/LABELS-expansion-g<N>.json (same schema), where <N> is your group number.
+4. Run your group's FIRST task twice and report whether the two label sets are byte-identical — the determinism question is under active scrutiny.
+
+Everything else — protocol, enumeration rule, operator, exclusion rules, mandatory report sections, per-claim confidence — is as the referenced frozen prompt specifies. Do not fabricate. Do not modify fixture/, prompts/, or existing results.

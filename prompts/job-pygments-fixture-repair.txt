@@ -1,0 +1,25 @@
+Repair the Pygments fixture so the cloud sweep can run. The cloud task correctly refused all 30 tasks: the committed fixture/pygments/base-shared hashes to b4640888cdb4a5f62551f49083e14a370a214e64 but declares ad20930041fbd242b17a4ce3e84770b63743ef7e.
+
+## Root cause pattern, already proven on Click (read the commit "Repair the expansion fixture")
+
+Exports made through git checkout/archive on this Windows machine smudge line endings when the source tree carries text=auto attributes, and this repo's earlier autocrlf=true adds re-normalized on staging. Byte-exact reconstruction must come from git plumbing with core.autocrlf=false and core.eol=lf.
+
+## The task
+
+1. Read fixture/pygments/README.md, TASKS.md, TASKS.json and exploratory/causal/SECOND-REPO.md to recover the exact construction rule of base-shared: which commits were reverted from anchor 38f426a6b1cd4ffc6429f5808031b7c62ea57b1f, in what order.
+2. In a SCRATCH clone made from corpus/_conflict_mirrors/pygments__pygments (read-only source; never mutate it), with core.autocrlf=false and core.eol=lf configured in the scratch clone, replay that construction. The scratch clone lives in your own scratch area, never under corpus/.
+3. Verify the resulting tree hash equals ad20930041fbd242b17a4ce3e84770b63743ef7e. If it does not, report the actual hash and STOP — do not guess an alternative construction. A failed reconstruction with the exact divergence point identified is a complete result.
+4. If it matches: export the tree byte-exactly (git archive with -c core.autocrlf=false -c core.eol=lf, or checkout-index from a clean index) and REPLACE the contents of fixture/pygments/base-shared with the export. Move the old contents to a clearly named directory in your scratch area first.
+5. Verify every patch in fixture/pygments/patches applies cleanly to the reconstructed base (git apply --check from the base directory) — the patches were committed under the same autocrlf era and may be mangled too. For each task in TASKS.json, verify the patched tree hash matches the expected value recorded there, using the same private-index staging technique. Report per-task MATCH/MISMATCH. If patches are mangled, regenerate them from the scratch clone (the construction rule defines each side's diff) and verify again.
+6. Do NOT run git add/commit against the repository's shared index — other workers hold it. Verify subtree hashes using GIT_INDEX_FILE pointed at a private index file in your scratch area (read-tree HEAD, add the fixture path, write-tree, rev-parse <tree>:fixture/pygments/base-shared). Leave the corrected files on disk for the orchestrator to commit.
+
+## Output
+
+exploratory/causal/PYGMENTS-FIXTURE-REPAIR.md:
+1. First line: reconstruction verdict — declared tree reproduced or not, and the private-index verification hash of the corrected on-disk base.
+2. The construction rule as recovered, and the replay steps.
+3. Per-patch apply/tree-hash verification table (30 tasks).
+4. What was replaced on disk and where the old bytes were preserved.
+5. "Claims that could NOT be verified", "What would change this verdict", per-claim confidence with reasons.
+
+Do not fabricate. Do not modify corpus mirrors, prompts/, or any existing result document.
