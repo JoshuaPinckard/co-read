@@ -119,6 +119,29 @@ No confirmatory run until `HYPOTHESES.md` is PI-approved and its commit
 precedes the first draw. Everything before that stays under `exploratory/` and
 is cited as the source of predictions, never as their confirmation.
 
+**Cloud transport policy (added 2026-08-26, after the PI's challenge).** The
+engine's cloud routing was itself under concurrent modification during this
+study: at the audit snapshot its freshness gate was an uncommitted
+working-tree edit, 33 dirty paths sat on or near the launch seams, and the
+MCP server serving launches is the live checkout. Consequences, standing:
+
+1. Per-launch transport state for launches before this date is unknown and,
+   for the dirty components, unrecoverable. Disclosed, not repaired.
+2. Cloud results are consumed only through mechanical verification —
+   declared tree hashes, pytest counts, label schemas — never through worker
+   narrative alone, with the transport caveat attached at ingestion.
+3. Future research launches either bypass the engine routing (direct
+   provider CLI, pinned and recorded) or stamp engine HEAD plus a status
+   digest at launch. Every cloud prompt embeds its own SHA-256 for the
+   worker to echo into its report, and opens by inventorying and hashing
+   every instruction file visible in its container.
+4. The engine seam audit is snapshot evidence (HEAD `42ccc28` plus the
+   recorded dirty set, 2026-08-25T14:11Z); every buildout seam is
+   re-verified at build time.
+5. Cloud is for mechanical label sweeps over hash-gated fixtures only.
+   Subjects never run there: no event stream, no shared tree, no
+   controllable instruction surface.
+
 **Clean-room bar for agent subjects (added 2026-08-24).** When agents are the
 thing being measured — the arms ladder — the LEAN-Bench clean-room rule
 applies: environment manifest, same-day calibrated planted-marker canary,
