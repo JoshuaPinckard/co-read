@@ -1,0 +1,194 @@
+{
+  "base": "6245807b95a01ff3538f06bcc93e38042474aca9",
+  "canonical_merge_tree": {
+    "exit_code": 1,
+    "matches_canonical_row": true,
+    "result_tree": "aaf9a8c12f5ee3fd14f022ae736e677a868cb1a5",
+    "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "stdout_sha256": "5217d30e0c8d4ba9789f746290a552eef93ed18c6c95621e51d727e5e9af4417"
+  },
+  "conflicted_paths": [
+    "CHANGES.rst"
+  ],
+  "corpus_line": 40,
+  "joint_source": {
+    "constructible": false,
+    "patch": null,
+    "reason": "canonical textual conflict intersects source union",
+    "source_conflict_paths": [
+      "CHANGES.rst"
+    ],
+    "source_paths": [
+      ".github/ISSUE_TEMPLATE.md",
+      "CHANGES.rst",
+      "CODE_OF_CONDUCT.md",
+      "LICENSE.rst",
+      "click/__init__.py",
+      "click/_bashcomplete.py",
+      "click/_compat.py",
+      "click/_termui_impl.py",
+      "click/_winconsole.py",
+      "click/core.py",
+      "click/decorators.py",
+      "click/exceptions.py",
+      "click/parser.py",
+      "click/termui.py",
+      "click/testing.py",
+      "docs/advanced.rst",
+      "docs/bashcomplete.rst",
+      "docs/commands.rst",
+      "docs/options.rst",
+      "docs/python3.rst",
+      "docs/quickstart.rst",
+      "docs/setuptools.rst",
+      "docs/testing.rst",
+      "docs/utils.rst",
+      "docs/why.rst",
+      "examples/aliases/aliases.py",
+      "setup.py"
+    ]
+  },
+  "merge": "22697863f0a252082226068290eff3d57f79a3ec",
+  "parents": [
+    "cd35e790c1e41485c18d3e8b5d0891c0280cc96f",
+    "93d947c2e3c5584729d7de35644f778c0e8e147e"
+  ],
+  "prepared_at_utc": "2026-08-25T16:23:05.535+00:00",
+  "protocol_sha256": "fb1c0a9f9c7b48c30178d8a7e737250e18535ada63959c49c73c180505c69828",
+  "repo_slug": "pallets__click",
+  "repository": "pallets/click",
+  "result_tree": "aaf9a8c12f5ee3fd14f022ae736e677a868cb1a5",
+  "runner_sha256": "e04bc99409e584636ce8cb81cc22f6a7ca9c917f9ec9e46ab68a4c2328b6b6c6",
+  "schema_version": 1,
+  "sides": {
+    "parent1": {
+      "changed_paths": [
+        "CHANGES.rst",
+        "CODE_OF_CONDUCT.md",
+        "LICENSE.rst",
+        "click/__init__.py",
+        "click/_bashcomplete.py",
+        "click/_compat.py",
+        "click/_termui_impl.py",
+        "click/_winconsole.py",
+        "click/core.py",
+        "click/parser.py",
+        "click/termui.py",
+        "docs/advanced.rst",
+        "docs/bashcomplete.rst",
+        "docs/commands.rst",
+        "docs/quickstart.rst",
+        "docs/setuptools.rst",
+        "examples/aliases/aliases.py",
+        "setup.py",
+        "tests/test_basic.py",
+        "tests/test_compat.py",
+        "tests/test_context.py",
+        "tests/test_termui.py"
+      ],
+      "parent": "cd35e790c1e41485c18d3e8b5d0891c0280cc96f",
+      "reconstructed_parent_tree": "e3f49c50109643e0c2f8ebc4f854f9cbc49219e7",
+      "source_patch": {
+        "bytes": 30279,
+        "path": "exploratory/arms/patches/pallets__click/22697863f0a252082226068290eff3d57f79a3ec/parent1-source.patch",
+        "sha256": "8474a6d4f7c2c8457af31ffdb05ca207dcf65e58454e639493dcd282cc519466"
+      },
+      "source_paths": [
+        "CHANGES.rst",
+        "CODE_OF_CONDUCT.md",
+        "LICENSE.rst",
+        "click/__init__.py",
+        "click/_bashcomplete.py",
+        "click/_compat.py",
+        "click/_termui_impl.py",
+        "click/_winconsole.py",
+        "click/core.py",
+        "click/parser.py",
+        "click/termui.py",
+        "docs/advanced.rst",
+        "docs/bashcomplete.rst",
+        "docs/commands.rst",
+        "docs/quickstart.rst",
+        "docs/setuptools.rst",
+        "examples/aliases/aliases.py",
+        "setup.py"
+      ],
+      "test_patch": {
+        "bytes": 6412,
+        "path": "exploratory/arms/patches/pallets__click/22697863f0a252082226068290eff3d57f79a3ec/parent1-test.patch",
+        "sha256": "b1227c04bbed709602ae1dbf315952b618ff61ad80948483ceff940149aad25a"
+      },
+      "test_paths": [
+        "tests/test_basic.py",
+        "tests/test_compat.py",
+        "tests/test_context.py",
+        "tests/test_termui.py"
+      ]
+    },
+    "parent2": {
+      "changed_paths": [
+        ".github/ISSUE_TEMPLATE.md",
+        "CHANGES.rst",
+        "click/_compat.py",
+        "click/_termui_impl.py",
+        "click/_winconsole.py",
+        "click/core.py",
+        "click/decorators.py",
+        "click/exceptions.py",
+        "click/termui.py",
+        "click/testing.py",
+        "docs/commands.rst",
+        "docs/options.rst",
+        "docs/python3.rst",
+        "docs/quickstart.rst",
+        "docs/testing.rst",
+        "docs/utils.rst",
+        "docs/why.rst",
+        "tests/test_arguments.py",
+        "tests/test_options.py",
+        "tests/test_termui.py",
+        "tests/test_testing.py",
+        "tests/test_utils.py"
+      ],
+      "parent": "93d947c2e3c5584729d7de35644f778c0e8e147e",
+      "reconstructed_parent_tree": "1cf5cb74618e1a488750f2cb8e61b9e420496db2",
+      "source_patch": {
+        "bytes": 41747,
+        "path": "exploratory/arms/patches/pallets__click/22697863f0a252082226068290eff3d57f79a3ec/parent2-source.patch",
+        "sha256": "0f3cd5abf7896c173246e492a7a35ed62a542571bd2946184b8ad56b4ac4d0cc"
+      },
+      "source_paths": [
+        ".github/ISSUE_TEMPLATE.md",
+        "CHANGES.rst",
+        "click/_compat.py",
+        "click/_termui_impl.py",
+        "click/_winconsole.py",
+        "click/core.py",
+        "click/decorators.py",
+        "click/exceptions.py",
+        "click/termui.py",
+        "click/testing.py",
+        "docs/commands.rst",
+        "docs/options.rst",
+        "docs/python3.rst",
+        "docs/quickstart.rst",
+        "docs/testing.rst",
+        "docs/utils.rst",
+        "docs/why.rst"
+      ],
+      "test_patch": {
+        "bytes": 12890,
+        "path": "exploratory/arms/patches/pallets__click/22697863f0a252082226068290eff3d57f79a3ec/parent2-test.patch",
+        "sha256": "9b5887c03d917f4ab15f3925a189f0136c00890191a242f9f21b5dc3754d63d9"
+      },
+      "test_paths": [
+        "tests/test_arguments.py",
+        "tests/test_options.py",
+        "tests/test_termui.py",
+        "tests/test_testing.py",
+        "tests/test_utils.py"
+      ]
+    }
+  },
+  "site_index": 6
+}

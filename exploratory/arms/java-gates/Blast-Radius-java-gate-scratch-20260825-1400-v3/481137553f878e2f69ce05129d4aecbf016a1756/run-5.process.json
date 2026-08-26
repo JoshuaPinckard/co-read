@@ -1,0 +1,53 @@
+{
+  "command": [
+    "mvn",
+    "-q",
+    "-o",
+    "-s",
+    "<project>/tools/java/maven-settings.xml",
+    "-gs",
+    "<project>/tools/java/maven-settings.xml",
+    "-Dmaven.repo.local=<project>/tools/maven-repository",
+    "test",
+    "-Dtest=DateFormatUtilsTest,DateUtilsRoundingTest,DateUtilsTest,DurationFormatUtilsTest,FastDatePrinterTest,StringUtilsEqualsIndexOfTest,StringUtilsTest",
+    "-DfailIfNoTests=false"
+  ],
+  "elapsed_seconds": 46.266,
+  "label": "run-5",
+  "normalized": {
+    "normalized_sha256": "36ebdb54e6f1da789200a15f36ef9cebe43410972f32b062782d68c64a5bb520",
+    "outcome_counts": {
+      "pass": 316
+    },
+    "parse_errors": [],
+    "path": "exploratory/arms/java-gates/Blast-Radius-java-gate-scratch-20260825-1400-v3/481137553f878e2f69ce05129d4aecbf016a1756/run-5.normalized.json",
+    "sha256": "75d0cda326ed6a198825fe72ed576a38dd8d04688283f5e788c1caa8aaa41d5f",
+    "test_count": 316
+  },
+  "reports_archive": "exploratory/arms/java-gates/Blast-Radius-java-gate-scratch-20260825-1400-v3/481137553f878e2f69ce05129d4aecbf016a1756/run-5.reports.zip",
+  "reports_archive_sha256": "a6f959ca77480f1e5085ee0fc3ba4910ce23d64a97461af2e23dfede6a4b88af",
+  "returncode": 0,
+  "source_export": {
+    "base": "47c186298927e373b31fe26444b9dbc313cccce6",
+    "clean_including_untracked_before": true,
+    "head_after": "47c186298927e373b31fe26444b9dbc313cccce6",
+    "head_before": "47c186298927e373b31fe26444b9dbc313cccce6",
+    "path": "C:/Users/joshp/Desktop/Blast-Radius-java-gate-scratch-20260825-1400-v3/attempts/focal/481137553f878e2f69ce05129d4aecbf016a1756/47c186298927/offline-run-5",
+    "tracked_after": {
+      "tracked_file_count": 359,
+      "tracked_manifest_sha256": "3f14f99d24dc8f6cffbfd4e05a44386ddcce2a32d91d601939aec09e3d27b42e"
+    },
+    "tracked_before": {
+      "tracked_file_count": 359,
+      "tracked_manifest_sha256": "3f14f99d24dc8f6cffbfd4e05a44386ddcce2a32d91d601939aec09e3d27b42e"
+    },
+    "tracked_status_after": "",
+    "tracked_unchanged": true
+  },
+  "stderr": "exploratory/arms/java-gates/Blast-Radius-java-gate-scratch-20260825-1400-v3/481137553f878e2f69ce05129d4aecbf016a1756/run-5.stderr.bin",
+  "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "stdout": "exploratory/arms/java-gates/Blast-Radius-java-gate-scratch-20260825-1400-v3/481137553f878e2f69ce05129d4aecbf016a1756/run-5.stdout.bin",
+  "stdout_sha256": "434511cd89cbefa3b2ec2060a6a4c63e8ca6b0b3dc784358b6a456b46621daee",
+  "timed_out": false,
+  "timeout_termination": null
+}

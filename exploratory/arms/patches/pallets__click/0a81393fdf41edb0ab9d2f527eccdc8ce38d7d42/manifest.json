@@ -1,0 +1,115 @@
+{
+  "base": "3e88d3dcadbe357c90059bbaeb691f4a2d20d9e6",
+  "canonical_merge_tree": {
+    "exit_code": 1,
+    "matches_canonical_row": true,
+    "result_tree": "5dac80094ef692e7f73cbf97de81e5c95cebaa13",
+    "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "stdout_sha256": "59a4567bc989eb9e49d18392a68d7535794f5be722e93fe9d5cc96db9416fa67"
+  },
+  "conflicted_paths": [
+    "src/click/__init__.py"
+  ],
+  "corpus_line": 50,
+  "joint_source": {
+    "constructible": false,
+    "patch": null,
+    "reason": "canonical textual conflict intersects source union",
+    "source_conflict_paths": [
+      "src/click/__init__.py"
+    ],
+    "source_paths": [
+      ".gitignore",
+      "CHANGES.rst",
+      "docs/.DS_Store",
+      "docs/options.rst",
+      "examples/README",
+      "setup.cfg",
+      "src/click/__init__.py",
+      "src/click/core.py"
+    ]
+  },
+  "merge": "0a81393fdf41edb0ab9d2f527eccdc8ce38d7d42",
+  "parents": [
+    "655918a61e22cade722dacb9bf798e86b13093af",
+    "96146c9d0b25d700d00b65c916739bd491dd15e0"
+  ],
+  "prepared_at_utc": "2026-08-25T16:24:31.897+00:00",
+  "protocol_sha256": "fb1c0a9f9c7b48c30178d8a7e737250e18535ada63959c49c73c180505c69828",
+  "repo_slug": "pallets__click",
+  "repository": "pallets/click",
+  "result_tree": "5dac80094ef692e7f73cbf97de81e5c95cebaa13",
+  "runner_sha256": "e04bc99409e584636ce8cb81cc22f6a7ca9c917f9ec9e46ab68a4c2328b6b6c6",
+  "schema_version": 1,
+  "sides": {
+    "parent1": {
+      "changed_paths": [
+        ".gitignore",
+        "CHANGES.rst",
+        "docs/.DS_Store",
+        "docs/options.rst",
+        "examples/README",
+        "setup.cfg",
+        "src/click/__init__.py",
+        "src/click/core.py",
+        "tests/test_formatting.py",
+        "tests/test_options.py"
+      ],
+      "parent": "655918a61e22cade722dacb9bf798e86b13093af",
+      "reconstructed_parent_tree": "16ab8bf712f8de446bdeb7860d99e69b92bfc8fc",
+      "source_patch": {
+        "bytes": 7647,
+        "path": "exploratory/arms/patches/pallets__click/0a81393fdf41edb0ab9d2f527eccdc8ce38d7d42/parent1-source.patch",
+        "sha256": "c2cfb045f8731475c65aa1723fe0245e0d5071b7b00f6d497291d71bcc138636"
+      },
+      "source_paths": [
+        ".gitignore",
+        "CHANGES.rst",
+        "docs/.DS_Store",
+        "docs/options.rst",
+        "examples/README",
+        "setup.cfg",
+        "src/click/__init__.py",
+        "src/click/core.py"
+      ],
+      "test_patch": {
+        "bytes": 2405,
+        "path": "exploratory/arms/patches/pallets__click/0a81393fdf41edb0ab9d2f527eccdc8ce38d7d42/parent1-test.patch",
+        "sha256": "f0078145042c7f7e552960aac6acce10af8beb4696d750084cffa8afdf2a1e8a"
+      },
+      "test_paths": [
+        "tests/test_formatting.py",
+        "tests/test_options.py"
+      ]
+    },
+    "parent2": {
+      "changed_paths": [
+        "CHANGES.rst",
+        "src/click/__init__.py",
+        "src/click/core.py",
+        "tests/test_options.py"
+      ],
+      "parent": "96146c9d0b25d700d00b65c916739bd491dd15e0",
+      "reconstructed_parent_tree": "5ab57004a7dfa9a6f54c553a65e29ceb292d3eb7",
+      "source_patch": {
+        "bytes": 3988,
+        "path": "exploratory/arms/patches/pallets__click/0a81393fdf41edb0ab9d2f527eccdc8ce38d7d42/parent2-source.patch",
+        "sha256": "66c797cbc480e2a0b66c4a1153c67bb249deffa0c6240914a5e1c3021a3b4033"
+      },
+      "source_paths": [
+        "CHANGES.rst",
+        "src/click/__init__.py",
+        "src/click/core.py"
+      ],
+      "test_patch": {
+        "bytes": 2986,
+        "path": "exploratory/arms/patches/pallets__click/0a81393fdf41edb0ab9d2f527eccdc8ce38d7d42/parent2-test.patch",
+        "sha256": "736692e2e1a37cc829962fa6c556cbc64ed66cb1a44220b2cbf7d0d848ed37ec"
+      },
+      "test_paths": [
+        "tests/test_options.py"
+      ]
+    }
+  },
+  "site_index": 14
+}

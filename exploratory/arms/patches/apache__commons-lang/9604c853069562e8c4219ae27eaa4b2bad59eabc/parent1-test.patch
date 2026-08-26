@@ -1,0 +1,2074 @@
+diff --git a/src/test/java/org/apache/commons/lang3/AnnotationUtilsTest.java b/src/test/java/org/apache/commons/lang3/AnnotationUtilsTest.java
+index 446e8d916a484c9bc668f03497819e2b5323ea4e..e87abaed97b2ef6c3508db1cd5f85b7fe55c7d0d 100644
+--- a/src/test/java/org/apache/commons/lang3/AnnotationUtilsTest.java
++++ b/src/test/java/org/apache/commons/lang3/AnnotationUtilsTest.java
+@@ -41,7 +41,6 @@ import org.junit.Before;
+ import org.junit.Test;
+ 
+ /**
+- * @version $Id$
+  */
+ public class AnnotationUtilsTest {
+     @TestAnnotation(
+diff --git a/src/test/java/org/apache/commons/lang3/ArrayUtilsAddTest.java b/src/test/java/org/apache/commons/lang3/ArrayUtilsAddTest.java
+index 6c18f62103d7da4934fd7ce1974ee62c4dfe61a9..212f9789d7b8d7508ee7fe72a71df4358d9bf53e 100644
+--- a/src/test/java/org/apache/commons/lang3/ArrayUtilsAddTest.java
++++ b/src/test/java/org/apache/commons/lang3/ArrayUtilsAddTest.java
+@@ -30,8 +30,6 @@ import org.junit.Test;
+ 
+ /**
+  * Tests ArrayUtils add methods.
+- *
+- * @version $Id$
+  */
+ public class ArrayUtilsAddTest {
+ 
+diff --git a/src/test/java/org/apache/commons/lang3/ArrayUtilsRemoveMultipleTest.java b/src/test/java/org/apache/commons/lang3/ArrayUtilsRemoveMultipleTest.java
+index ba01c8092ecd894ec450668173b54b73a56bca4b..6b548b71636f3c2372ad24c89579589268b9c3b6 100644
+--- a/src/test/java/org/apache/commons/lang3/ArrayUtilsRemoveMultipleTest.java
++++ b/src/test/java/org/apache/commons/lang3/ArrayUtilsRemoveMultipleTest.java
+@@ -29,8 +29,6 @@ import org.junit.Test;
+ 
+ /**
+  * Tests ArrayUtils remove and removeElement methods.
+- * 
+- * @version $Id$
+  */
+ public class ArrayUtilsRemoveMultipleTest {
+ 
+diff --git a/src/test/java/org/apache/commons/lang3/ArrayUtilsRemoveTest.java b/src/test/java/org/apache/commons/lang3/ArrayUtilsRemoveTest.java
+index 302de1e28e64ee3bf265e2b42424df0e708d8b03..1a5d920eaedf8c07bcf3796da4dc3e04b84b9640 100644
+--- a/src/test/java/org/apache/commons/lang3/ArrayUtilsRemoveTest.java
++++ b/src/test/java/org/apache/commons/lang3/ArrayUtilsRemoveTest.java
+@@ -28,8 +28,6 @@ import org.junit.Test;
+ 
+ /**
+  * Tests ArrayUtils remove and removeElement methods.
+- * 
+- * @version $Id$
+  */
+ public class ArrayUtilsRemoveTest {
+ 
+diff --git a/src/test/java/org/apache/commons/lang3/ArrayUtilsTest.java b/src/test/java/org/apache/commons/lang3/ArrayUtilsTest.java
+index be3e119602714f53dc43221ea62e4396e7500260..588068e7585239c98472b6a1dfe5762e8c5a7796 100644
+--- a/src/test/java/org/apache/commons/lang3/ArrayUtilsTest.java
++++ b/src/test/java/org/apache/commons/lang3/ArrayUtilsTest.java
+@@ -29,8 +29,6 @@ import org.junit.Test;
+ 
+ /**
+  * Unit tests {@link org.apache.commons.lang3.ArrayUtils}.
+- *
+- * @version $Id$
+  */
+ @SuppressWarnings("deprecation") // deliberate use of deprecated code
+ public class ArrayUtilsTest  {
+@@ -2142,18 +2140,18 @@ public class ArrayUtilsTest  {
+         assertEquals(4, array[1]);
+         assertEquals(1, array[2]);
+         assertEquals(2, array[3]);
+-    }
+ 
+-    @Test(expected = ArrayIndexOutOfBoundsException.class)
+-    public void testSwapCharOutOfRange() {
+-        char[] array = new char[] {1, 2, 3};
++        array = new char[] {1, 2, 3};
+         ArrayUtils.swap(array, 0, 3);
+-    }
+-
+-    @Test(expected = ArrayIndexOutOfBoundsException.class)
+-    public void testSwapCharOutOfRangeLen() {
+-        char[] array = new char[] {1, 2, 3};
++        assertEquals(1, array[0]);
++        assertEquals(2, array[1]);
++        assertEquals(3, array[2]);
++        
++        array = new char[] {1, 2, 3};
+         ArrayUtils.swap(array, 0, 2, 2);
++        assertEquals(3, array[0]);
++        assertEquals(2, array[1]);
++        assertEquals(1, array[2]);
+     }
+     
+     @Test
+@@ -2173,18 +2171,18 @@ public class ArrayUtilsTest  {
+         assertEquals(4, array[1], 0);
+         assertEquals(1, array[2], 0);
+         assertEquals(2, array[3], 0);
+-    }
+ 
+-    @Test(expected = ArrayIndexOutOfBoundsException.class)
+-    public void testSwapFloatOutOfRange() {
+-        float[] array = new float[] {1, 2, 3};
++        array = new float[] {1, 2, 3};
+         ArrayUtils.swap(array, 0, 3);
+-    }
+-
+-    @Test(expected = ArrayIndexOutOfBoundsException.class)
+-    public void testSwapFloatOutOfRangeLen() {
+-        float[] array = new float[] {1, 2, 3};
++        assertEquals(1, array[0], 0);
++        assertEquals(2, array[1], 0);
++        assertEquals(3, array[2], 0);
++        
++        array = new float[] {1, 2, 3};
+         ArrayUtils.swap(array, 0, 2, 2);
++        assertEquals(3, array[0], 0);
++        assertEquals(2, array[1], 0);
++        assertEquals(1, array[2], 0);
+     }
+     
+     @Test
+@@ -2204,18 +2202,18 @@ public class ArrayUtilsTest  {
+         assertEquals(4, array[1], 0);
+         assertEquals(1, array[2], 0);
+         assertEquals(2, array[3], 0);
+-    }
+ 
+-    @Test(expected = ArrayIndexOutOfBoundsException.class)
+-    public void testSwapDoubleOutOfRange() {
+-        double[] array = new double[] {1, 2, 3};
++        array = new double[] {1, 2, 3};
+         ArrayUtils.swap(array, 0, 3);
+-    }
+-
+-    @Test(expected = ArrayIndexOutOfBoundsException.class)
+-    public void testSwapDoubleOutOfRangeLen() {
+-        double[] array = new double[] {1, 2, 3};
++        assertEquals(1, array[0], 0);
++        assertEquals(2, array[1], 0);
++        assertEquals(3, array[2], 0);
++        
++        array = new double[] {1, 2, 3};
+         ArrayUtils.swap(array, 0, 2, 2);
++        assertEquals(3, array[0], 0);
++        assertEquals(2, array[1], 0);
++        assertEquals(1, array[2], 0);
+     }
+     
+     @Test
+@@ -2235,6 +2233,18 @@ public class ArrayUtilsTest  {
+         assertEquals(4, array[1]);
+         assertEquals(1, array[2]);
+         assertEquals(2, array[3]);
++        
++        array = new int[] {1, 2, 3};
++        ArrayUtils.swap(array, 3, 0);
++        assertEquals(1, array[0]);
++        assertEquals(2, array[1]);
++        assertEquals(3, array[2]);
++        
++        array = new int[] {1, 2, 3};
++        ArrayUtils.swap(array, 0, 2, 2);
++        assertEquals(3, array[0]);
++        assertEquals(2, array[1]);
++        assertEquals(1, array[2]);
+     }
+     
+     @Test
+@@ -2249,18 +2259,6 @@ public class ArrayUtilsTest  {
+         assertArrayEquals(new int[] {2, 3, 1}, array);
+     }
+ 
+-    @Test(expected = ArrayIndexOutOfBoundsException.class)
+-    public void testSwapIntOutOfRange() {
+-        int[] array = new int[] {1, 2, 3};
+-        ArrayUtils.swap(array, 0, 3);
+-    }
+-
+-    @Test(expected = ArrayIndexOutOfBoundsException.class)
+-    public void testSwapIntOutOfRangeLen() {
+-        int[] array = new int[] {1, 2, 3};
+-        ArrayUtils.swap(array, 0, 2, 2);
+-    }
+-    
+     @Test
+     public void testSwapLong() {
+         long[] array = new long[] {1, 2, 3};
+@@ -2278,18 +2276,18 @@ public class ArrayUtilsTest  {
+         assertEquals(4, array[1]);
+         assertEquals(1, array[2]);
+         assertEquals(2, array[3]);
+-    }
+-
+-    @Test(expected = ArrayIndexOutOfBoundsException.class)
+-    public void testSwapLongOutOfRange() {
+-        long[] array = new long[] {1, 2, 3};
++        
++        array = new long[] {1, 2, 3};
+         ArrayUtils.swap(array, 0, 3);
+-    }
+-
+-    @Test(expected = ArrayIndexOutOfBoundsException.class)
+-    public void testSwapLongOutOfRangeLen() {
+-        long[] array = new long[] {1, 2, 3};
++        assertEquals(1, array[0]);
++        assertEquals(2, array[1]);
++        assertEquals(3, array[2]);
++        
++        array = new long[] {1, 2, 3};
+         ArrayUtils.swap(array, 0, 2, 2);
++        assertEquals(3, array[0]);
++        assertEquals(2, array[1]);
++        assertEquals(1, array[2]);
+     }
+ 
+     @Test
+@@ -2309,18 +2307,21 @@ public class ArrayUtilsTest  {
+         assertEquals("4", array[1]);
+         assertEquals("1", array[2]);
+         assertEquals("2", array[3]);
+-    }
+ 
+-    @Test(expected = ArrayIndexOutOfBoundsException.class)
+-    public void testSwapObjectOutOfRange() {
+-        String[] array = new String[] {"1", "2", "3"};
+-        ArrayUtils.swap(array, 0, 3);
+-    }
++        array = new String[] {"1", "2", "3", "4"};
++        ArrayUtils.swap(array, -1, 2, 3);
++        assertEquals("3", array[0]);
++        assertEquals("4", array[1]);
++        assertEquals("1", array[2]);
++        assertEquals("2", array[3]);
+ 
+-    @Test(expected = ArrayIndexOutOfBoundsException.class)
+-    public void testSwapObjectOutOfRangeLen() {
+-        String[] array = new String[] {"1", "2", "3"};
+-        ArrayUtils.swap(array, 0, 2, 2);
++        array = new String[] {"1", "2", "3", "4", "5"};
++        ArrayUtils.swap(array, -3, 2, 3);
++        assertEquals("3", array[0]);
++        assertEquals("4", array[1]);
++        assertEquals("5", array[2]);
++        assertEquals("2", array[3]);
++        assertEquals("1", array[4]);
+     }
+ 
+     //-----------------------------------------------------------------------
+@@ -2481,6 +2482,13 @@ public class ArrayUtilsTest  {
+         assertEquals(4, array[1]);
+         assertEquals(1, array[2]);
+         assertEquals(2, array[3]);
++        array = new short[] {1, 2, 3, 4, 5};
++        ArrayUtils.shift(array, 2);
++        assertEquals(4, array[0]);
++        assertEquals(5, array[1]);
++        assertEquals(1, array[2]);
++        assertEquals(2, array[3]);
++        assertEquals(3, array[4]);
+     }
+ 
+     @Test
+diff --git a/src/test/java/org/apache/commons/lang3/BitFieldTest.java b/src/test/java/org/apache/commons/lang3/BitFieldTest.java
+index dd71abda9ce1d232ee2dfd71a73d2548748c62bf..0c80f5a6054ed4e3c3b71cc75e9fa0ed261733e2 100644
+--- a/src/test/java/org/apache/commons/lang3/BitFieldTest.java
++++ b/src/test/java/org/apache/commons/lang3/BitFieldTest.java
+@@ -24,8 +24,6 @@ import org.junit.Test;
+ 
+ /**
+  * Class to test BitField functionality
+- *
+- * @version $Id$
+  */
+ public class BitFieldTest  {
+ 
+diff --git a/src/test/java/org/apache/commons/lang3/BooleanUtilsTest.java b/src/test/java/org/apache/commons/lang3/BooleanUtilsTest.java
+index d3464b7ae1c3fd98add37410a074e37370b07d8a..fb7687e8523075c817e4d7d1ba1b544822bd6008 100644
+--- a/src/test/java/org/apache/commons/lang3/BooleanUtilsTest.java
++++ b/src/test/java/org/apache/commons/lang3/BooleanUtilsTest.java
+@@ -29,8 +29,6 @@ import org.junit.Test;
+ 
+ /**
+  * Unit tests {@link org.apache.commons.lang3.BooleanUtils}.
+- *
+- * @version $Id$
+  */
+ public class BooleanUtilsTest {
+ 
+diff --git a/src/test/java/org/apache/commons/lang3/CharEncodingTest.java b/src/test/java/org/apache/commons/lang3/CharEncodingTest.java
+index b3c92089a232829761f5560da973060aca0e1510..35557f3591c34936408bb531a90d99e0d6bb092f 100644
+--- a/src/test/java/org/apache/commons/lang3/CharEncodingTest.java
++++ b/src/test/java/org/apache/commons/lang3/CharEncodingTest.java
+@@ -29,7 +29,6 @@ import org.junit.Test;
+  * Tests CharEncoding.
+  * 
+  * @see CharEncoding
+- * @version $Id$
+  */
+ public class CharEncodingTest  {
+ 
+diff --git a/src/test/java/org/apache/commons/lang3/CharRangeTest.java b/src/test/java/org/apache/commons/lang3/CharRangeTest.java
+index 301e6f7da7a6c574b95ed6cacb2f3bc78ff4f29c..575d7809f314c9d63acfde0dc30afaa166277e93 100644
+--- a/src/test/java/org/apache/commons/lang3/CharRangeTest.java
++++ b/src/test/java/org/apache/commons/lang3/CharRangeTest.java
+@@ -32,8 +32,6 @@ import org.junit.Test;
+ 
+ /**
+  * Unit tests {@link org.apache.commons.lang3.CharRange}.
+- *
+- * @version $Id$
+  */
+ public class CharRangeTest  {
+ 
+diff --git a/src/test/java/org/apache/commons/lang3/CharSequenceUtilsTest.java b/src/test/java/org/apache/commons/lang3/CharSequenceUtilsTest.java
+index bb76dab6b588313a30c6bdee4ef023b6133df50f..8779aa77734067373ab34e1a93141c91ec8ac124 100644
+--- a/src/test/java/org/apache/commons/lang3/CharSequenceUtilsTest.java
++++ b/src/test/java/org/apache/commons/lang3/CharSequenceUtilsTest.java
+@@ -30,8 +30,6 @@ import org.junit.Test;
+ 
+ /**
+  * Tests CharSequenceUtils
+- *
+- * @version $Id: CharSequenceUtilsTest.java 1066341 2011-02-02 06:21:53Z bayard $
+  */
+ public class CharSequenceUtilsTest {
+ 
+diff --git a/src/test/java/org/apache/commons/lang3/CharSetTest.java b/src/test/java/org/apache/commons/lang3/CharSetTest.java
+index d2144b1ac79e18c5754efb0b1fc6967909dfdb52..2c05e98451722cdcdc7205411afe91f882fc2761 100644
+--- a/src/test/java/org/apache/commons/lang3/CharSetTest.java
++++ b/src/test/java/org/apache/commons/lang3/CharSetTest.java
+@@ -29,8 +29,6 @@ import org.junit.Test;
+ 
+ /**
+  * Unit tests {@link org.apache.commons.lang3.CharSet}.
+- *
+- * @version $Id$
+  */
+ public class CharSetTest  {
+ 
+diff --git a/src/test/java/org/apache/commons/lang3/CharSetUtilsTest.java b/src/test/java/org/apache/commons/lang3/CharSetUtilsTest.java
+index d0df7ad8fe4cb1ba49c77437ff8021a00bd62615..9b74d35978e352469875bc693fb46be246657506 100644
+--- a/src/test/java/org/apache/commons/lang3/CharSetUtilsTest.java
++++ b/src/test/java/org/apache/commons/lang3/CharSetUtilsTest.java
+@@ -28,8 +28,6 @@ import org.junit.Test;
+ 
+ /**
+  * Unit tests {@link org.apache.commons.lang3.CharSetUtils}.
+- *
+- * @version $Id$
+  */
+ public class CharSetUtilsTest  {
+ 
+diff --git a/src/test/java/org/apache/commons/lang3/CharUtilsPerfRun.java b/src/test/java/org/apache/commons/lang3/CharUtilsPerfRun.java
+index d6b54d992775630f15bf9dd65226334277199e9e..2913d11088a61824dae9b55161ebf03ac2536f41 100644
+--- a/src/test/java/org/apache/commons/lang3/CharUtilsPerfRun.java
++++ b/src/test/java/org/apache/commons/lang3/CharUtilsPerfRun.java
+@@ -54,7 +54,6 @@ run_inlined_CharUtils_isAsciiNumeric: 709 milliseconds.
+ run_inlined_CharUtils_isAsciiNumeric: 84,420 milliseconds.
+ 
+ 
+- * @version $Id$
+  */
+ public class CharUtilsPerfRun {
+     final static String VERSION = "$Id$";
+diff --git a/src/test/java/org/apache/commons/lang3/CharUtilsTest.java b/src/test/java/org/apache/commons/lang3/CharUtilsTest.java
+index f6297c60c64f6c230bc503d242da50ba5a193014..988c380b1849c2428193644945e0815728eda3b4 100644
+--- a/src/test/java/org/apache/commons/lang3/CharUtilsTest.java
++++ b/src/test/java/org/apache/commons/lang3/CharUtilsTest.java
+@@ -29,8 +29,6 @@ import org.junit.Test;
+ 
+ /**
+  * Unit tests {@link org.apache.commons.lang3.CharUtils}.
+- *
+- * @version $Id$
+  */
+ public class CharUtilsTest {
+ 
+diff --git a/src/test/java/org/apache/commons/lang3/ClassPathUtilsTest.java b/src/test/java/org/apache/commons/lang3/ClassPathUtilsTest.java
+index d8790f3419a88559e31b1f5986c9217698349741..4dfd5d0c525f340fde0584dd46e7ef58462c1be4 100644
+--- a/src/test/java/org/apache/commons/lang3/ClassPathUtilsTest.java
++++ b/src/test/java/org/apache/commons/lang3/ClassPathUtilsTest.java
+@@ -27,7 +27,6 @@ import java.lang.reflect.Modifier;
+ import org.junit.Test;
+ 
+ /**
+- * @version $Id$
+  */
+ public class ClassPathUtilsTest {
+ 
+diff --git a/src/test/java/org/apache/commons/lang3/ClassUtilsTest.java b/src/test/java/org/apache/commons/lang3/ClassUtilsTest.java
+index 0ee67e8f5d497f30a5c17b72318f9b1b073d4473..9bd2771d5370c2a53f8c17609bb2963f17fbad8d 100644
+--- a/src/test/java/org/apache/commons/lang3/ClassUtilsTest.java
++++ b/src/test/java/org/apache/commons/lang3/ClassUtilsTest.java
+@@ -47,8 +47,6 @@ import org.junit.Test;
+ 
+ /**
+  * Unit tests {@link org.apache.commons.lang3.ClassUtils}.
+- *
+- * @version $Id$
+  */
+ @SuppressWarnings("boxing") // JUnit4 does not support primitive equality testing apart from long
+ public class ClassUtilsTest  {
+diff --git a/src/test/java/org/apache/commons/lang3/ConversionTest.java b/src/test/java/org/apache/commons/lang3/ConversionTest.java
+index 4cf34d42e665b2cb3ed9666dc1d0ea9587c20d77..c9ab1dbcf221b6dd0650e8a1f30e8c3069878a91 100644
+--- a/src/test/java/org/apache/commons/lang3/ConversionTest.java
++++ b/src/test/java/org/apache/commons/lang3/ConversionTest.java
+@@ -29,8 +29,6 @@ import org.junit.Test;
+ 
+ /**
+  * Unit tests {@link Conversion}.
+- * 
+- * @version $Id$
+  */
+ public class ConversionTest {
+ 
+diff --git a/src/test/java/org/apache/commons/lang3/EnumUtilsTest.java b/src/test/java/org/apache/commons/lang3/EnumUtilsTest.java
+index 92995e76e427578627c8610935572630aa17a749..a2d0fb08458d65941d18a71ae2e41f51ba53ac97 100644
+--- a/src/test/java/org/apache/commons/lang3/EnumUtilsTest.java
++++ b/src/test/java/org/apache/commons/lang3/EnumUtilsTest.java
+@@ -33,7 +33,6 @@ import org.junit.Test;
+ 
+ /**
+  * 
+- * @version $Id$
+  */
+ public class EnumUtilsTest {
+ 
+diff --git a/src/test/java/org/apache/commons/lang3/JavaVersionTest.java b/src/test/java/org/apache/commons/lang3/JavaVersionTest.java
+index c8a6c81f312a65cc48769276e42c8dd7da1366f2..8833318363f8c86efb7e64903efb5867da4c299a 100644
+--- a/src/test/java/org/apache/commons/lang3/JavaVersionTest.java
++++ b/src/test/java/org/apache/commons/lang3/JavaVersionTest.java
+@@ -37,8 +37,6 @@ import static org.apache.commons.lang3.JavaVersion.getJavaVersion;
+ 
+ /**
+  * Unit tests {@link org.apache.commons.lang3.JavaVersion}.
+- *
+- * @version $Id$
+  */
+ public class JavaVersionTest {
+ 
+diff --git a/src/test/java/org/apache/commons/lang3/LocaleUtilsTest.java b/src/test/java/org/apache/commons/lang3/LocaleUtilsTest.java
+index ba2cc007a13ed343d4328ec8e19c8bc967054649..b807666901e8114a185a432ec3fd95dba34f4175 100644
+--- a/src/test/java/org/apache/commons/lang3/LocaleUtilsTest.java
++++ b/src/test/java/org/apache/commons/lang3/LocaleUtilsTest.java
+@@ -40,8 +40,6 @@ import org.junit.Test;
+ 
+ /**
+  * Unit tests for {@link LocaleUtils}.
+- *
+- * @version $Id$
+  */
+ public class LocaleUtilsTest  {
+ 
+@@ -589,4 +587,4 @@ public class LocaleUtilsTest  {
+         }
+     }
+ 
+-}
+\ No newline at end of file
++}
+diff --git a/src/test/java/org/apache/commons/lang3/NotImplementedExceptionTest.java b/src/test/java/org/apache/commons/lang3/NotImplementedExceptionTest.java
+index a0b1ade508c128a82f83b814303d006f25b32b3d..ff422ae6131a6d2116c05730a36861b150345f43 100644
+--- a/src/test/java/org/apache/commons/lang3/NotImplementedExceptionTest.java
++++ b/src/test/java/org/apache/commons/lang3/NotImplementedExceptionTest.java
+@@ -22,8 +22,6 @@ import static org.junit.Assert.assertNotNull;
+ 
+ /**
+  * Unit tests {@link org.apache.commons.lang3.NotImplementedException}.
+- * 
+- * @version $Id: NotImplementedExceptionTest.java 905628 2010-02-02 13:29:55Z niallp $
+  */
+ public class NotImplementedExceptionTest {
+ 
+diff --git a/src/test/java/org/apache/commons/lang3/ObjectUtilsTest.java b/src/test/java/org/apache/commons/lang3/ObjectUtilsTest.java
+index 4d48e5af468c44d587949188344cc749f23c65f4..acf30e72efaf896f52b3b24fdf64c8ef531a603c 100644
+--- a/src/test/java/org/apache/commons/lang3/ObjectUtilsTest.java
++++ b/src/test/java/org/apache/commons/lang3/ObjectUtilsTest.java
+@@ -42,8 +42,6 @@ import org.junit.Test;
+ 
+ /**
+  * Unit tests {@link org.apache.commons.lang3.ObjectUtils}.
+- *
+- * @version $Id$
+  */
+ @SuppressWarnings("deprecation") // deliberate use of deprecated code
+ public class ObjectUtilsTest {
+diff --git a/src/test/java/org/apache/commons/lang3/RandomStringUtilsTest.java b/src/test/java/org/apache/commons/lang3/RandomStringUtilsTest.java
+index f9fcd033635217590473fc0af1f9094a6ece400d..d251db4a4e1b6d010175f9de36b957fa7342e7ac 100644
+--- a/src/test/java/org/apache/commons/lang3/RandomStringUtilsTest.java
++++ b/src/test/java/org/apache/commons/lang3/RandomStringUtilsTest.java
+@@ -31,8 +31,6 @@ import org.junit.Test;
+ 
+ /**
+  * Unit tests {@link org.apache.commons.lang3.RandomStringUtils}.
+- *
+- * @version $Id$
+  */
+ public class RandomStringUtilsTest {
+ 
+diff --git a/src/test/java/org/apache/commons/lang3/RandomUtilsTest.java b/src/test/java/org/apache/commons/lang3/RandomUtilsTest.java
+index f1080c94841d00f1e912866a1d9f74dcf9dacde5..a2aa06395c45f1222f94eb442c32286f2d52cf62 100644
+--- a/src/test/java/org/apache/commons/lang3/RandomUtilsTest.java
++++ b/src/test/java/org/apache/commons/lang3/RandomUtilsTest.java
+@@ -24,8 +24,6 @@ import org.junit.Test;
+ 
+ /**
+  * Tests for {@link RandomUtils}
+- *
+- * @version $Id$
+  */
+ public class RandomUtilsTest {
+ 
+diff --git a/src/test/java/org/apache/commons/lang3/RangeTest.java b/src/test/java/org/apache/commons/lang3/RangeTest.java
+index 16d49e2adc006e2036226275b4d431fb2f46e2aa..871f08583fc24a02bdbf984cfb2e8b4399f7fb44 100644
+--- a/src/test/java/org/apache/commons/lang3/RangeTest.java
++++ b/src/test/java/org/apache/commons/lang3/RangeTest.java
+@@ -33,8 +33,6 @@ import org.junit.Test;
+  * <p>
+  * Tests the methods in the {@link org.apache.commons.lang3.Range} class.
+  * </p>
+- * 
+- * @version $Id$
+  */
+ @SuppressWarnings("boxing")
+ public class RangeTest {
+diff --git a/src/test/java/org/apache/commons/lang3/SerializationUtilsTest.java b/src/test/java/org/apache/commons/lang3/SerializationUtilsTest.java
+index 0e82ded6e59d1b16f1cec04fb9dd1a356c53493a..e4159acc0513c365ae6f8d65204587d5afd818ae 100644
+--- a/src/test/java/org/apache/commons/lang3/SerializationUtilsTest.java
++++ b/src/test/java/org/apache/commons/lang3/SerializationUtilsTest.java
+@@ -42,8 +42,6 @@ import org.junit.Test;
+ 
+ /**
+  * Unit tests {@link org.apache.commons.lang3.SerializationUtils}.
+- *
+- * @version $Id$
+  */
+ public class SerializationUtilsTest {
+ 
+diff --git a/src/test/java/org/apache/commons/lang3/StringEscapeUtilsTest.java b/src/test/java/org/apache/commons/lang3/StringEscapeUtilsTest.java
+index 1e31309ebc801c3478158139ce284a841c224b3f..1eff6ed9e7ef7969e9669ef422ee1f9b77416d9c 100644
+--- a/src/test/java/org/apache/commons/lang3/StringEscapeUtilsTest.java
++++ b/src/test/java/org/apache/commons/lang3/StringEscapeUtilsTest.java
+@@ -36,8 +36,6 @@ import org.junit.Test;
+ 
+ /**
+  * Unit tests for {@link StringEscapeUtils}.
+- *
+- * @version $Id$
+  */
+ public class StringEscapeUtilsTest {
+     private final static String FOO = "foo";
+diff --git a/src/test/java/org/apache/commons/lang3/StringUtilsEqualsIndexOfTest.java b/src/test/java/org/apache/commons/lang3/StringUtilsEqualsIndexOfTest.java
+index c4dbcef74b04766ca9f6e6b0e672d8df92744a4c..3a739c18d18e467c074ce0fc71ef192ca715d629 100644
+--- a/src/test/java/org/apache/commons/lang3/StringUtilsEqualsIndexOfTest.java
++++ b/src/test/java/org/apache/commons/lang3/StringUtilsEqualsIndexOfTest.java
+@@ -29,8 +29,6 @@ import org.junit.Test;
+ 
+ /**
+  * Unit tests {@link org.apache.commons.lang3.StringUtils} - Substring methods
+- *
+- * @version $Id$
+  */
+ public class StringUtilsEqualsIndexOfTest  {
+     private static final String BAR = "bar";
+@@ -119,17 +117,18 @@ public class StringUtilsEqualsIndexOfTest  {
+     public void testContainsAny_StringCharArray() {
+         assertFalse(StringUtils.containsAny(null, (char[]) null));
+         assertFalse(StringUtils.containsAny(null, new char[0]));
+-        assertFalse(StringUtils.containsAny(null, new char[] { 'a', 'b' }));
++        assertFalse(StringUtils.containsAny(null, 'a', 'b'));
+ 
+         assertFalse(StringUtils.containsAny("", (char[]) null));
+         assertFalse(StringUtils.containsAny("", new char[0]));
+-        assertFalse(StringUtils.containsAny("", new char[] { 'a', 'b' }));
++        assertFalse(StringUtils.containsAny("", 'a', 'b'));
+ 
+         assertFalse(StringUtils.containsAny("zzabyycdxx", (char[]) null));
+         assertFalse(StringUtils.containsAny("zzabyycdxx", new char[0]));
+-        assertTrue(StringUtils.containsAny("zzabyycdxx", new char[] { 'z', 'a' }));
+-        assertTrue(StringUtils.containsAny("zzabyycdxx", new char[] { 'b', 'y' }));
+-        assertFalse(StringUtils.containsAny("ab", new char[] { 'z' }));
++        assertTrue(StringUtils.containsAny("zzabyycdxx", 'z', 'a'));
++        assertTrue(StringUtils.containsAny("zzabyycdxx", 'b', 'y'));
++        assertTrue(StringUtils.containsAny("zzabyycdxx", 'z', 'y'));
++        assertFalse(StringUtils.containsAny("ab", 'z'));
+     }
+ 
+     /**
+@@ -181,6 +180,7 @@ public class StringUtilsEqualsIndexOfTest  {
+         assertFalse(StringUtils.containsAny("zzabyycdxx", ""));
+         assertTrue(StringUtils.containsAny("zzabyycdxx", "za"));
+         assertTrue(StringUtils.containsAny("zzabyycdxx", "by"));
++        assertTrue(StringUtils.containsAny("zzabyycdxx", "zy"));
+         assertFalse(StringUtils.containsAny("ab", "z"));
+     }
+ 
+@@ -225,9 +225,11 @@ public class StringUtilsEqualsIndexOfTest  {
+         assertFalse(StringUtils.containsAny("", new String[] { "hello" }));
+         assertFalse(StringUtils.containsAny("hello, goodbye", (String[]) null));
+         assertFalse(StringUtils.containsAny("hello, goodbye", new String[0]));
+-        assertTrue(StringUtils.containsAny("hello, goodbye", new String[] { "hello", "goodbye" }));
+-        assertTrue(StringUtils.containsAny("hello, goodbye", new String[] { "hello", "Goodbye" }));
+-        assertFalse(StringUtils.containsAny("hello, goodbye", new String[] { "Hello", "Goodbye" }));
++        assertTrue(StringUtils.containsAny("hello, goodbye", new String[]{"hello", "goodbye"}));
++        assertTrue(StringUtils.containsAny("hello, goodbye", new String[]{"hello", "Goodbye"}));
++        assertFalse(StringUtils.containsAny("hello, goodbye", new String[]{"Hello", "Goodbye"}));
++        assertFalse(StringUtils.containsAny("hello, goodbye", new String[]{"Hello", null}));
++        assertFalse(StringUtils.containsAny("hello, null", new String[] { "Hello", null }));
+     }
+ 
+     @Test
+@@ -647,17 +649,17 @@ public class StringUtilsEqualsIndexOfTest  {
+     public void testIndexOfAny_StringCharArray() {
+         assertEquals(-1, StringUtils.indexOfAny(null, (char[]) null));
+         assertEquals(-1, StringUtils.indexOfAny(null, new char[0]));
+-        assertEquals(-1, StringUtils.indexOfAny(null, new char[] {'a','b'}));
++        assertEquals(-1, StringUtils.indexOfAny(null, 'a','b'));
+ 
+         assertEquals(-1, StringUtils.indexOfAny("", (char[]) null));
+         assertEquals(-1, StringUtils.indexOfAny("", new char[0]));
+-        assertEquals(-1, StringUtils.indexOfAny("", new char[] {'a','b'}));
++        assertEquals(-1, StringUtils.indexOfAny("", 'a','b'));
+ 
+         assertEquals(-1, StringUtils.indexOfAny("zzabyycdxx", (char[]) null));
+         assertEquals(-1, StringUtils.indexOfAny("zzabyycdxx", new char[0]));
+-        assertEquals(0, StringUtils.indexOfAny("zzabyycdxx", new char[] {'z','a'}));
+-        assertEquals(3, StringUtils.indexOfAny("zzabyycdxx", new char[] {'b','y'}));
+-        assertEquals(-1, StringUtils.indexOfAny("ab", new char[] {'z'}));
++        assertEquals(0, StringUtils.indexOfAny("zzabyycdxx", 'z','a'));
++        assertEquals(3, StringUtils.indexOfAny("zzabyycdxx", 'b','y'));
++        assertEquals(-1, StringUtils.indexOfAny("ab", 'z'));
+     }
+ 
+     /**
+@@ -720,19 +722,19 @@ public class StringUtilsEqualsIndexOfTest  {
+     @Test
+     public void testIndexOfAnyBut_StringCharArray() {
+         assertEquals(-1, StringUtils.indexOfAnyBut(null, (char[]) null));
+-        assertEquals(-1, StringUtils.indexOfAnyBut(null, new char[0]));
+-        assertEquals(-1, StringUtils.indexOfAnyBut(null, new char[] {'a','b'}));
++        assertEquals(-1, StringUtils.indexOfAnyBut(null));
++        assertEquals(-1, StringUtils.indexOfAnyBut(null, 'a','b'));
+ 
+         assertEquals(-1, StringUtils.indexOfAnyBut("", (char[]) null));
+-        assertEquals(-1, StringUtils.indexOfAnyBut("", new char[0]));
+-        assertEquals(-1, StringUtils.indexOfAnyBut("", new char[] {'a','b'}));
++        assertEquals(-1, StringUtils.indexOfAnyBut(""));
++        assertEquals(-1, StringUtils.indexOfAnyBut("", 'a','b'));
+ 
+         assertEquals(-1, StringUtils.indexOfAnyBut("zzabyycdxx", (char[]) null));
+-        assertEquals(-1, StringUtils.indexOfAnyBut("zzabyycdxx", new char[0]));
+-        assertEquals(3, StringUtils.indexOfAnyBut("zzabyycdxx", new char[] {'z','a'}));
+-        assertEquals(0, StringUtils.indexOfAnyBut("zzabyycdxx", new char[] {'b','y'}));
+-        assertEquals(-1, StringUtils.indexOfAnyBut("aba", new char[] {'a', 'b'}));
+-        assertEquals(0, StringUtils.indexOfAnyBut("aba", new char[] {'z'}));
++        assertEquals(-1, StringUtils.indexOfAnyBut("zzabyycdxx"));
++        assertEquals(3, StringUtils.indexOfAnyBut("zzabyycdxx", 'z','a'));
++        assertEquals(0, StringUtils.indexOfAnyBut("zzabyycdxx", 'b','y'));
++        assertEquals(-1, StringUtils.indexOfAnyBut("aba", 'a', 'b'));
++        assertEquals(0, StringUtils.indexOfAnyBut("aba", 'z'));
+ 
+     }
+ 
+diff --git a/src/test/java/org/apache/commons/lang3/StringUtilsIsTest.java b/src/test/java/org/apache/commons/lang3/StringUtilsIsTest.java
+index 057aa76fe1646d54eadd4b09a60145e65ec516ca..9f918d1a49f9f89bc1e9ef5abd5606619834fcd0 100644
+--- a/src/test/java/org/apache/commons/lang3/StringUtilsIsTest.java
++++ b/src/test/java/org/apache/commons/lang3/StringUtilsIsTest.java
+@@ -23,8 +23,6 @@ import org.junit.Test;
+ 
+ /**
+  * Unit tests {@link org.apache.commons.lang3.StringUtils} - Substring methods
+- *
+- * @version $Id$
+  */
+ public class StringUtilsIsTest  {
+ 
+diff --git a/src/test/java/org/apache/commons/lang3/StringUtilsStartsEndsWithTest.java b/src/test/java/org/apache/commons/lang3/StringUtilsStartsEndsWithTest.java
+index 440793dba491dc3336d16f03350d7112517ab1f8..2f053d56a12e19ef0ae03621dec5b1851ee1cd33 100644
+--- a/src/test/java/org/apache/commons/lang3/StringUtilsStartsEndsWithTest.java
++++ b/src/test/java/org/apache/commons/lang3/StringUtilsStartsEndsWithTest.java
+@@ -22,8 +22,6 @@ import org.apache.commons.lang3.text.StrBuilder;
+ 
+ /**
+  * Unit tests {@link org.apache.commons.lang3.StringUtils} - StartsWith/EndsWith methods
+- *
+- * @version $Id$
+  */
+ public class StringUtilsStartsEndsWithTest {
+     private static final String foo    = "foo";
+diff --git a/src/test/java/org/apache/commons/lang3/StringUtilsSubstringTest.java b/src/test/java/org/apache/commons/lang3/StringUtilsSubstringTest.java
+index b7e83b608eea066332b3c0e86069cc69cbf67d01..f6986eedb979646b23dcd9efff3e91541ad735d9 100644
+--- a/src/test/java/org/apache/commons/lang3/StringUtilsSubstringTest.java
++++ b/src/test/java/org/apache/commons/lang3/StringUtilsSubstringTest.java
+@@ -24,8 +24,6 @@ import org.junit.Test;
+ 
+ /**
+  * Unit tests {@link org.apache.commons.lang3.StringUtils} - Substring methods
+- *
+- * @version $Id$
+  */
+ public class StringUtilsSubstringTest  {
+     private static final String FOO = "foo";
+diff --git a/src/test/java/org/apache/commons/lang3/StringUtilsTest.java b/src/test/java/org/apache/commons/lang3/StringUtilsTest.java
+index f11ec703daadedc63ad32f74ff8edd668be02ff5..ecc6afca8e4fef8995a81d8a33031371ed0c0ba1 100644
+--- a/src/test/java/org/apache/commons/lang3/StringUtilsTest.java
++++ b/src/test/java/org/apache/commons/lang3/StringUtilsTest.java
+@@ -41,8 +41,6 @@ import org.junit.Test;
+ 
+ /**
+  * Unit tests {@link org.apache.commons.lang3.StringUtils}.
+- *
+- * @version $Id$
+  */
+ @SuppressWarnings("deprecation") // deliberate use of deprecated code
+ public class StringUtilsTest {
+@@ -460,6 +458,24 @@ public class StringUtilsTest {
+         assertEquals(TEXT_LIST, StringUtils.join(Arrays.asList(ARRAY_LIST), SEPARATOR));
+     }
+ 
++    @Test
++    public void testJoinWith() {
++        assertEquals("", StringUtils.joinWith(",", new Object[0]));        // empty array
++        assertEquals("", StringUtils.joinWith(",", (Object[]) NULL_ARRAY_LIST));
++        assertEquals("null", StringUtils.joinWith(",", NULL_TO_STRING_LIST));   //toString method prints 'null'
++
++        assertEquals("a,b,c", StringUtils.joinWith(",", new Object[]{"a", "b", "c"}));
++        assertEquals(",a,", StringUtils.joinWith(",", new Object[]{null, "a", ""}));
++
++        assertEquals("ab", StringUtils.joinWith(null, "a", "b"));
++    }
++
++    @Test(expected = IllegalArgumentException.class)
++    public void testJoinWithThrowsException() {
++        StringUtils.joinWith(",", (Object[]) null);
++    }
++
++
+     @Test
+     public void testSplit_String() {
+         assertNull(StringUtils.split(null));
+diff --git a/src/test/java/org/apache/commons/lang3/StringUtilsTrimEmptyTest.java b/src/test/java/org/apache/commons/lang3/StringUtilsTrimEmptyTest.java
+index e020ee59f5c92b4e87c1fa0dd0be0b15e542d4ec..70895b9183116a21bae4bbf7c94e52995245f815 100644
+--- a/src/test/java/org/apache/commons/lang3/StringUtilsTrimEmptyTest.java
++++ b/src/test/java/org/apache/commons/lang3/StringUtilsTrimEmptyTest.java
+@@ -26,8 +26,6 @@ import org.junit.Test;
+ 
+ /**
+  * Unit tests {@link org.apache.commons.lang3.StringUtils} - Trim/Empty methods
+- *
+- * @version $Id$
+  */
+ public class StringUtilsTrimEmptyTest  {
+     private static final String FOO = "foo";
+diff --git a/src/test/java/org/apache/commons/lang3/SystemUtilsTest.java b/src/test/java/org/apache/commons/lang3/SystemUtilsTest.java
+index 308237042ce356dfde1a7e9ced165c03e7ee27e9..681d6eac10c4c75e89eef59ab22b852f19b24b7b 100644
+--- a/src/test/java/org/apache/commons/lang3/SystemUtilsTest.java
++++ b/src/test/java/org/apache/commons/lang3/SystemUtilsTest.java
+@@ -38,8 +38,6 @@ import org.junit.Test;
+  * Unit tests {@link org.apache.commons.lang3.SystemUtils}.
+  * 
+  * Only limited testing can be performed.
+- * 
+- * @version $Id$
+  */
+ public class SystemUtilsTest {
+ 
+diff --git a/src/test/java/org/apache/commons/lang3/ThreadUtilsTest.java b/src/test/java/org/apache/commons/lang3/ThreadUtilsTest.java
+index 244c77bb0a63c8107f6eeb85a1df4d228a9e4cdc..b0ad3100652950c018dc4fadaa18e6bbfffac5cf 100644
+--- a/src/test/java/org/apache/commons/lang3/ThreadUtilsTest.java
++++ b/src/test/java/org/apache/commons/lang3/ThreadUtilsTest.java
+@@ -29,17 +29,13 @@ import static org.junit.Assert.assertTrue;
+ import java.lang.reflect.Constructor;
+ import java.lang.reflect.Modifier;
+ import java.util.Arrays;
+-import java.util.Iterator;
+ import java.util.List;
+ import java.util.concurrent.CountDownLatch;
+ 
+-//import org.apache.commons.lang3.ThreadUtils.AlwaysTruePredicate;
+ import org.junit.Test;
+ 
+ /**
+  * Unit tests {@link org.apache.commons.lang3.ThreadUtils}.
+- *
+- * @version $Id$
+  */
+ public class ThreadUtilsTest {
+ 
+@@ -178,7 +174,7 @@ public class ThreadUtilsTest {
+         try {
+             t1.start();
+             t2.start();
+-            assertEquals(t1.getName(), ThreadUtils.findThreadById(t1.getId()).getName());
++            assertSame(t1, ThreadUtils.findThreadById(t1.getId()));
+             assertSame(t2, ThreadUtils.findThreadById(t2.getId()));
+         } finally {
+             t1.interrupt();
+@@ -265,8 +261,8 @@ public class ThreadUtilsTest {
+         try {
+             t1.start();
+             t2.start();
+-            assertEquals(t1.getName(), ThreadUtils.findThreadById(t1.getId(),"thread_group_DDZZ99__").getName());
+-            assertEquals(t2.getName(), ThreadUtils.findThreadById(t2.getId(),"thread_group_DDZZ99__").getName());
++            assertSame(t1, ThreadUtils.findThreadById(t1.getId(),"thread_group_DDZZ99__"));
++            assertSame(t2, ThreadUtils.findThreadById(t2.getId(),"thread_group_DDZZ99__"));
+             assertNull(ThreadUtils.findThreadById(nonExistingId,"non_existent_thread_group_JJHHZZ__"));
+             assertNull(ThreadUtils.findThreadById(nonExistingId,"thread_group_DDZZ99__"));
+         } finally {
+@@ -315,8 +311,7 @@ public class ThreadUtilsTest {
+         final List<Thread> threads = Arrays.asList(t1,t2,t3,t4,t5,t6,t7,t8,t9,t10, t11, t11Doubled);
+ 
+         try {
+-            for (final Iterator iterator = threads.iterator(); iterator.hasNext();) {
+-                final Thread thread = (Thread) iterator.next();
++            for (final Thread thread : threads) {
+                 thread.start();
+             }
+             assertTrue(ThreadUtils.getAllThreadGroups().size() >= 7);
+@@ -326,14 +321,12 @@ public class ThreadUtilsTest {
+             assertEquals(0, ThreadUtils.findThreadsByName(t4.getName(), threadGroup2.getName()).size());
+             assertEquals(2, ThreadUtils.findThreadsByName(t11.getName(), threadGroup7.getName()).size());
+         }finally {
+-            for (final Iterator iterator = threads.iterator(); iterator.hasNext();) {
+-                final Thread thread = (Thread) iterator.next();
++            for (final Thread thread : threads) {
+                 thread.interrupt();
+                 thread.join();
+             }
+-            for (final Iterator iterator = threadGroups.iterator(); iterator.hasNext();) {
+-                final ThreadGroup threadGroup = (ThreadGroup) iterator.next();
+-                if(!threadGroup.isDestroyed()) {
++            for (final ThreadGroup threadGroup : threadGroups) {
++                if (!threadGroup.isDestroyed()) {
+                     threadGroup.destroy();
+                 }
+             }
+diff --git a/src/test/java/org/apache/commons/lang3/ValidateTest.java b/src/test/java/org/apache/commons/lang3/ValidateTest.java
+index be4f4d781534accc4ac0dc499b344548d6341c3d..954179c7ed2f05656f240fecd6bf63ef676a6ad6 100644
+--- a/src/test/java/org/apache/commons/lang3/ValidateTest.java
++++ b/src/test/java/org/apache/commons/lang3/ValidateTest.java
+@@ -39,8 +39,6 @@ import org.junit.Test;
+ 
+ /**
+  * Unit tests {@link org.apache.commons.lang3.Validate}.
+- *
+- * @version $Id$
+  */
+ public class ValidateTest  {
+     
+diff --git a/src/test/java/org/apache/commons/lang3/builder/CompareToBuilderTest.java b/src/test/java/org/apache/commons/lang3/builder/CompareToBuilderTest.java
+index 294e50c48608bd444b7fdaa96df9aa2b8c0e2866..77adb75a9827ffb64dcdde9ed039ab6fff838298 100644
+--- a/src/test/java/org/apache/commons/lang3/builder/CompareToBuilderTest.java
++++ b/src/test/java/org/apache/commons/lang3/builder/CompareToBuilderTest.java
+@@ -25,8 +25,6 @@ import org.junit.Test;
+ 
+ /**
+  * Unit tests {@link org.apache.commons.lang3.builder.CompareToBuilder}.
+- *
+- * @version $Id$
+  */
+ public class CompareToBuilderTest {
+ 
+diff --git a/src/test/java/org/apache/commons/lang3/builder/DefaultToStringStyleTest.java b/src/test/java/org/apache/commons/lang3/builder/DefaultToStringStyleTest.java
+index e1511b7b1a2d986798d97f01c62b27ee7bc25547..636d2751f35c2dce5d349b4129ee44f5ecb39450 100644
+--- a/src/test/java/org/apache/commons/lang3/builder/DefaultToStringStyleTest.java
++++ b/src/test/java/org/apache/commons/lang3/builder/DefaultToStringStyleTest.java
+@@ -28,8 +28,6 @@ import org.junit.Test;
+ 
+ /**
+  * Unit tests {@link org.apache.commons.lang3.builder.DefaultToStringStyleTest}.
+- *
+- * @version $Id$
+  */
+ public class DefaultToStringStyleTest {
+ 
+diff --git a/src/test/java/org/apache/commons/lang3/builder/DiffBuilderTest.java b/src/test/java/org/apache/commons/lang3/builder/DiffBuilderTest.java
+index 9d7c3971d642cda8669a9a596c3a35184fa12e41..3a8126b7f5c82682f86db746fc5b2fa00ab2afb8 100644
+--- a/src/test/java/org/apache/commons/lang3/builder/DiffBuilderTest.java
++++ b/src/test/java/org/apache/commons/lang3/builder/DiffBuilderTest.java
+@@ -30,8 +30,6 @@ import org.junit.Test;
+ 
+ /**
+  * Unit tests {@link DiffBuilder}.
+- *
+- * @version $Id$
+  */
+ public class DiffBuilderTest {
+     
+diff --git a/src/test/java/org/apache/commons/lang3/builder/DiffResultTest.java b/src/test/java/org/apache/commons/lang3/builder/DiffResultTest.java
+index a5f42ffc5a1edeba2b1d5c915a81be8cfc1dbdde..e18a7da58ed0b93c517607e7d89dfb4f0f22f5f7 100644
+--- a/src/test/java/org/apache/commons/lang3/builder/DiffResultTest.java
++++ b/src/test/java/org/apache/commons/lang3/builder/DiffResultTest.java
+@@ -26,8 +26,6 @@ import org.junit.Test;
+ 
+ /**
+  * Unit tests {@link DiffResult}.
+- *
+- * @version $Id$
+  */
+ public class DiffResultTest {
+ 
+diff --git a/src/test/java/org/apache/commons/lang3/builder/DiffTest.java b/src/test/java/org/apache/commons/lang3/builder/DiffTest.java
+index 4ae8ff2b17b695145cccd22ea38adaf0fbc862a0..26bf95a0caa3692b2656319f8e32aab23c1e5d28 100644
+--- a/src/test/java/org/apache/commons/lang3/builder/DiffTest.java
++++ b/src/test/java/org/apache/commons/lang3/builder/DiffTest.java
+@@ -23,8 +23,6 @@ import org.junit.Test;
+ 
+ /**
+  * Unit tests {@link Diff}.
+- *
+- * @version $Id$
+  */
+ public class DiffTest {
+ 
+diff --git a/src/test/java/org/apache/commons/lang3/builder/EqualsBuilderTest.java b/src/test/java/org/apache/commons/lang3/builder/EqualsBuilderTest.java
+index 702c5a2c884dd560cc18c852215d7c54225401ab..82aac5ee96f5f93b0af3f9d077fcac5ce396a30b 100644
+--- a/src/test/java/org/apache/commons/lang3/builder/EqualsBuilderTest.java
++++ b/src/test/java/org/apache/commons/lang3/builder/EqualsBuilderTest.java
+@@ -27,8 +27,6 @@ import org.junit.Test;
+ 
+ /**
+  * Unit tests {@link org.apache.commons.lang3.builder.EqualsBuilder}.
+- *
+- * @version $Id$
+  */
+ public class EqualsBuilderTest {
+ 
+diff --git a/src/test/java/org/apache/commons/lang3/builder/HashCodeBuilderAndEqualsBuilderTest.java b/src/test/java/org/apache/commons/lang3/builder/HashCodeBuilderAndEqualsBuilderTest.java
+index 250d49bf6276a7ef4a58db61041d17dd0e6d449f..aa61e022b69ebb773436cf1acec2bb98b79958b8 100644
+--- a/src/test/java/org/apache/commons/lang3/builder/HashCodeBuilderAndEqualsBuilderTest.java
++++ b/src/test/java/org/apache/commons/lang3/builder/HashCodeBuilderAndEqualsBuilderTest.java
+@@ -24,8 +24,6 @@ import org.junit.Test;
+  * Tests {@link org.apache.commons.lang3.builder.HashCodeBuilder} and
+  * {@link org.apache.commons.lang3.builder.EqualsBuilderTest} to insure that equal
+  * objects must have equal hash codes.
+- * 
+- * @version $Id$
+  */
+ public class HashCodeBuilderAndEqualsBuilderTest {
+ 
+diff --git a/src/test/java/org/apache/commons/lang3/builder/HashCodeBuilderTest.java b/src/test/java/org/apache/commons/lang3/builder/HashCodeBuilderTest.java
+index 9009fbde4a9d63cc76df9b3ccd407ab37af32b92..f33bf42de581c82539b789f311a32fc194dc8667 100644
+--- a/src/test/java/org/apache/commons/lang3/builder/HashCodeBuilderTest.java
++++ b/src/test/java/org/apache/commons/lang3/builder/HashCodeBuilderTest.java
+@@ -24,8 +24,6 @@ import org.junit.Test;
+ 
+ /**
+  * Unit tests {@link org.apache.commons.lang3.builder.HashCodeBuilder}.
+- * 
+- * @version $Id$
+  */
+ public class HashCodeBuilderTest {
+ 
+diff --git a/src/test/java/org/apache/commons/lang3/builder/JsonToStringStyleTest.java b/src/test/java/org/apache/commons/lang3/builder/JsonToStringStyleTest.java
+index f5fadace02930fd27a5afac04e232a46aa553710..88d3230b67a7018252d9d8b88202a689b7540427 100644
+--- a/src/test/java/org/apache/commons/lang3/builder/JsonToStringStyleTest.java
++++ b/src/test/java/org/apache/commons/lang3/builder/JsonToStringStyleTest.java
+@@ -31,8 +31,6 @@ import org.junit.Test;
+ 
+ /**
+  * Unit tests {@link org.apache.commons.lang3.builder.JsonToStringStyleTest}.
+- *
+- * @version $Id$
+  */
+ public class JsonToStringStyleTest {
+ 
+diff --git a/src/test/java/org/apache/commons/lang3/builder/MultiLineToStringStyleTest.java b/src/test/java/org/apache/commons/lang3/builder/MultiLineToStringStyleTest.java
+index 3a506a077cc1690aa7a1e3133dca105f1cca83c9..bdfd35d16a7b9c993865a28ed438ec2fff7436ca 100644
+--- a/src/test/java/org/apache/commons/lang3/builder/MultiLineToStringStyleTest.java
++++ b/src/test/java/org/apache/commons/lang3/builder/MultiLineToStringStyleTest.java
+@@ -29,8 +29,6 @@ import org.junit.Test;
+ 
+ /**
+  * Unit tests {@link org.apache.commons.lang3.builder.MultiLineToStringStyleTest}.
+- *
+- * @version $Id$
+  */
+ public class MultiLineToStringStyleTest {
+ 
+diff --git a/src/test/java/org/apache/commons/lang3/builder/MultilineRecursiveToStringStyleTest.java b/src/test/java/org/apache/commons/lang3/builder/MultilineRecursiveToStringStyleTest.java
+index abf64f005c37ce850d637ddccd3aa27054c835e3..274b2f2300b76af2f924f8ef9aa1becd11b6228e 100644
+--- a/src/test/java/org/apache/commons/lang3/builder/MultilineRecursiveToStringStyleTest.java
++++ b/src/test/java/org/apache/commons/lang3/builder/MultilineRecursiveToStringStyleTest.java
+@@ -26,7 +26,6 @@ import org.apache.commons.lang3.SystemUtils;
+ import org.junit.Test;
+ 
+ /**
+- * @version $Id$
+  */
+ public class MultilineRecursiveToStringStyleTest {
+ 
+diff --git a/src/test/java/org/apache/commons/lang3/builder/NoClassNameToStringStyleTest.java b/src/test/java/org/apache/commons/lang3/builder/NoClassNameToStringStyleTest.java
+index 6b09348858f6758822158dc1648b0d031d9c3f75..43f18afdfe7f343abff6f4496a3459d01737aba5 100644
+--- a/src/test/java/org/apache/commons/lang3/builder/NoClassNameToStringStyleTest.java
++++ b/src/test/java/org/apache/commons/lang3/builder/NoClassNameToStringStyleTest.java
+@@ -28,8 +28,6 @@ import static org.junit.Assert.assertEquals;
+ 
+ /**
+  * Unit tests {@link ToStringStyle#NO_CLASS_NAME_STYLE}.
+- *
+- * @version $Id$
+  */
+ public class NoClassNameToStringStyleTest {
+ 
+diff --git a/src/test/java/org/apache/commons/lang3/builder/NoFieldNamesToStringStyleTest.java b/src/test/java/org/apache/commons/lang3/builder/NoFieldNamesToStringStyleTest.java
+index 7d64e8ff617f9bde3fcd2926cbd9105e89dd6d6c..247e22a538e7d92d9f7a6667fdf73c5295837f2e 100644
+--- a/src/test/java/org/apache/commons/lang3/builder/NoFieldNamesToStringStyleTest.java
++++ b/src/test/java/org/apache/commons/lang3/builder/NoFieldNamesToStringStyleTest.java
+@@ -28,8 +28,6 @@ import org.junit.Test;
+ 
+ /**
+  * Unit tests {@link org.apache.commons.lang3.builder.NoFieldNamesToStringStyleTest}.
+- *
+- * @version $Id$
+  */
+ public class NoFieldNamesToStringStyleTest {
+ 
+diff --git a/src/test/java/org/apache/commons/lang3/builder/RecursiveToStringStyleTest.java b/src/test/java/org/apache/commons/lang3/builder/RecursiveToStringStyleTest.java
+index ffaa34913455a99339bfd63f5b69673334a9cea8..fe385e3ec3220dad1d2325547550148bc3d99d2a 100644
+--- a/src/test/java/org/apache/commons/lang3/builder/RecursiveToStringStyleTest.java
++++ b/src/test/java/org/apache/commons/lang3/builder/RecursiveToStringStyleTest.java
+@@ -27,8 +27,6 @@ import org.junit.Test;
+ 
+ /**
+  * Unit tests {@link org.apache.commons.lang3.builder.RecursiveToStringStyleTest}.
+- *
+- * @version $Id$
+  */
+ public class RecursiveToStringStyleTest {
+ 
+diff --git a/src/test/java/org/apache/commons/lang3/builder/ReflectionToStringBuilderConcurrencyTest.java b/src/test/java/org/apache/commons/lang3/builder/ReflectionToStringBuilderConcurrencyTest.java
+index 1ce1cd9de8342f28fd4877a08035dfc1e7bb194d..554ad73e4a4d410047d37c9e1804c5322d73a433 100644
+--- a/src/test/java/org/apache/commons/lang3/builder/ReflectionToStringBuilderConcurrencyTest.java
++++ b/src/test/java/org/apache/commons/lang3/builder/ReflectionToStringBuilderConcurrencyTest.java
+@@ -46,7 +46,6 @@ import org.junit.Test;
+  * @see <a href="https://issues.apache.org/jira/browse/LANG-762">[LANG-762] Handle or document ReflectionToStringBuilder
+  *      and ToStringBuilder for collections that are not thread safe</a>
+  * @since 3.1
+- * @version $Id$
+  */
+ public class ReflectionToStringBuilderConcurrencyTest {
+ 
+diff --git a/src/test/java/org/apache/commons/lang3/builder/ReflectionToStringBuilderExcludeTest.java b/src/test/java/org/apache/commons/lang3/builder/ReflectionToStringBuilderExcludeTest.java
+index 505c1dc08a8dc22b7b37a1f1fa2772469a2d2271..9e7fc0c3a02814a5acb043d613f8c377fef38d82 100644
+--- a/src/test/java/org/apache/commons/lang3/builder/ReflectionToStringBuilderExcludeTest.java
++++ b/src/test/java/org/apache/commons/lang3/builder/ReflectionToStringBuilderExcludeTest.java
+@@ -27,7 +27,6 @@ import org.apache.commons.lang3.ArrayUtils;
+ import org.junit.Test;
+ 
+ /**
+- * @version $Id$
+  */
+ public class ReflectionToStringBuilderExcludeTest {
+ 
+diff --git a/src/test/java/org/apache/commons/lang3/builder/ReflectionToStringBuilderExcludeWithAnnotationTest.java b/src/test/java/org/apache/commons/lang3/builder/ReflectionToStringBuilderExcludeWithAnnotationTest.java
+old mode 100755
+new mode 100644
+index 58946cfb5078838d94f1831f41c4bc8dd60026ac..fb237a5641f227fd857dc9a972338d02f6307e9a
+--- a/src/test/java/org/apache/commons/lang3/builder/ReflectionToStringBuilderExcludeWithAnnotationTest.java
++++ b/src/test/java/org/apache/commons/lang3/builder/ReflectionToStringBuilderExcludeWithAnnotationTest.java
+@@ -25,7 +25,6 @@ import org.junit.Test;
+ 
+ /**
+  * Test class for ToStringExclude annotation
+- * @version $Id$
+  */
+ public class ReflectionToStringBuilderExcludeWithAnnotationTest {
+ 
+diff --git a/src/test/java/org/apache/commons/lang3/builder/ReflectionToStringBuilderMutateInspectConcurrencyTest.java b/src/test/java/org/apache/commons/lang3/builder/ReflectionToStringBuilderMutateInspectConcurrencyTest.java
+index c4899117ef178a6ed81809d9e940663199ae6184..5227b89977a6e0f5f3cc03b29289e8a30ec8c1c4 100644
+--- a/src/test/java/org/apache/commons/lang3/builder/ReflectionToStringBuilderMutateInspectConcurrencyTest.java
++++ b/src/test/java/org/apache/commons/lang3/builder/ReflectionToStringBuilderMutateInspectConcurrencyTest.java
+@@ -33,7 +33,6 @@ import org.junit.Test;
+  * @see <a href="https://issues.apache.org/jira/browse/LANG-762">[LANG-762] Handle or document ReflectionToStringBuilder
+  *      and ToStringBuilder for collections that are not thread safe</a>
+  * @since 3.1
+- * @version $Id$
+  */
+ public class ReflectionToStringBuilderMutateInspectConcurrencyTest {
+ 
+diff --git a/src/test/java/org/apache/commons/lang3/builder/ReflectionToStringBuilderTest.java b/src/test/java/org/apache/commons/lang3/builder/ReflectionToStringBuilderTest.java
+new file mode 100644
+index 0000000000000000000000000000000000000000..2410216711b5821ba9b413ed63c72c800ff1ba79
+--- /dev/null
++++ b/src/test/java/org/apache/commons/lang3/builder/ReflectionToStringBuilderTest.java
+@@ -0,0 +1,12 @@
++package org.apache.commons.lang3.builder;
++
++import org.junit.Test;
++
++public class ReflectionToStringBuilderTest {
++
++    @Test(expected=IllegalArgumentException.class)
++    public void testConstructorWithNullObject() {
++        new ReflectionToStringBuilder(null, ToStringStyle.DEFAULT_STYLE, new StringBuffer());
++    }
++
++}
+diff --git a/src/test/java/org/apache/commons/lang3/builder/ShortPrefixToStringStyleTest.java b/src/test/java/org/apache/commons/lang3/builder/ShortPrefixToStringStyleTest.java
+index 124cb1a1ee6a2b49b650c65bf28796085f1ca78d..f4afd53ef2d44a1293481f54c3755ca83a31487e 100644
+--- a/src/test/java/org/apache/commons/lang3/builder/ShortPrefixToStringStyleTest.java
++++ b/src/test/java/org/apache/commons/lang3/builder/ShortPrefixToStringStyleTest.java
+@@ -28,8 +28,6 @@ import org.junit.Test;
+ 
+ /**
+  * Unit tests {@link org.apache.commons.lang3.builder.ToStringStyle#SHORT_PREFIX_STYLE}.
+- * 
+- * @version $Id$
+  */
+ public class ShortPrefixToStringStyleTest {
+ 
+diff --git a/src/test/java/org/apache/commons/lang3/builder/SimpleToStringStyleTest.java b/src/test/java/org/apache/commons/lang3/builder/SimpleToStringStyleTest.java
+index 93e0b85050148065edd84cc9467225b3d0da6662..63739b31fea3e29dfda9a9a85c44c2316e1c3e9c 100644
+--- a/src/test/java/org/apache/commons/lang3/builder/SimpleToStringStyleTest.java
++++ b/src/test/java/org/apache/commons/lang3/builder/SimpleToStringStyleTest.java
+@@ -28,8 +28,6 @@ import org.junit.Test;
+ 
+ /**
+  * Unit tests {@link org.apache.commons.lang3.builder.SimpleToStringStyleTest}.
+- *
+- * @version $Id$
+  */
+ public class SimpleToStringStyleTest {
+ 
+diff --git a/src/test/java/org/apache/commons/lang3/builder/StandardToStringStyleTest.java b/src/test/java/org/apache/commons/lang3/builder/StandardToStringStyleTest.java
+index 70363951d1c6157c2553ebb273edfee5e87aeeec..3ab17e34e8388a48061a912dc188ac9ee439d319 100644
+--- a/src/test/java/org/apache/commons/lang3/builder/StandardToStringStyleTest.java
++++ b/src/test/java/org/apache/commons/lang3/builder/StandardToStringStyleTest.java
+@@ -28,8 +28,6 @@ import org.junit.Test;
+ 
+ /**
+  * Unit tests {@link org.apache.commons.lang3.builder.ToStringStyle}.
+- *
+- * @version $Id$
+  */
+ public class StandardToStringStyleTest {
+ 
+diff --git a/src/test/java/org/apache/commons/lang3/builder/ToStringBuilderTest.java b/src/test/java/org/apache/commons/lang3/builder/ToStringBuilderTest.java
+index d52dd52665d4dfd65dcfbc9ce848069cb613ab0d..c55fe2f193a5f352d23391da18ef01bdf8f3f5ce 100644
+--- a/src/test/java/org/apache/commons/lang3/builder/ToStringBuilderTest.java
++++ b/src/test/java/org/apache/commons/lang3/builder/ToStringBuilderTest.java
+@@ -32,8 +32,6 @@ import org.junit.Test;
+ 
+ /**
+  * Unit tests for {@link org.apache.commons.lang3.builder.ToStringBuilder}.
+- *
+- * @version $Id$
+  */
+ public class ToStringBuilderTest {
+ 
+@@ -1043,7 +1041,7 @@ public class ToStringBuilderTest {
+         static final int staticInt2 = 67890;
+     }
+ 
+-    @Test
++    @Test(expected=IllegalArgumentException.class)
+     public void testReflectionNull() {
+         assertEquals("<null>", ReflectionToStringBuilder.toString(null));
+     }
+diff --git a/src/test/java/org/apache/commons/lang3/builder/ToStringStyleConcurrencyTest.java b/src/test/java/org/apache/commons/lang3/builder/ToStringStyleConcurrencyTest.java
+index db590e923494b1009f343971db450d25de5f182e..4ab13871bbf9cf1896faeaf5595578f6bb649ed3 100644
+--- a/src/test/java/org/apache/commons/lang3/builder/ToStringStyleConcurrencyTest.java
++++ b/src/test/java/org/apache/commons/lang3/builder/ToStringStyleConcurrencyTest.java
+@@ -44,7 +44,6 @@ import org.junit.Test;
+  * @see <a href="https://issues.apache.org/jira/browse/LANG-762">[LANG-762] Handle or document ReflectionToStringBuilder
+  *      and ToStringBuilder for collections that are not thread safe</a>
+  * @since 3.1
+- * @version $Id$
+  */
+ public class ToStringStyleConcurrencyTest {
+ 
+diff --git a/src/test/java/org/apache/commons/lang3/builder/ToStringStyleTest.java b/src/test/java/org/apache/commons/lang3/builder/ToStringStyleTest.java
+index 2747a7ddf586b4bfe388f5f9f65d061ee2ae7d48..81a8b83c854f63e046c9517c5fdfd2c21725fb86 100644
+--- a/src/test/java/org/apache/commons/lang3/builder/ToStringStyleTest.java
++++ b/src/test/java/org/apache/commons/lang3/builder/ToStringStyleTest.java
+@@ -22,8 +22,6 @@ import org.junit.Test;
+ 
+ /**
+  * Test case for ToStringStyle.
+- * 
+- * @version $Id$
+  */
+ public class ToStringStyleTest {
+ 
+diff --git a/src/test/java/org/apache/commons/lang3/concurrent/AbstractConcurrentInitializerTest.java b/src/test/java/org/apache/commons/lang3/concurrent/AbstractConcurrentInitializerTest.java
+index 6bd8204afb60446f731d939915779b70b1dd560a..b56a41cb8bc59bc6785fe94cb6982c7c1691483d 100644
+--- a/src/test/java/org/apache/commons/lang3/concurrent/AbstractConcurrentInitializerTest.java
++++ b/src/test/java/org/apache/commons/lang3/concurrent/AbstractConcurrentInitializerTest.java
+@@ -33,8 +33,6 @@ import org.junit.Test;
+  * class have to create a {@link ConcurrentInitializer} object on which the
+  * tests are executed.
+  * </p>
+- *
+- * @version $Id$
+  */
+ public abstract class AbstractConcurrentInitializerTest {
+     /**
+diff --git a/src/test/java/org/apache/commons/lang3/concurrent/AtomicInitializerTest.java b/src/test/java/org/apache/commons/lang3/concurrent/AtomicInitializerTest.java
+index 7434bb5dcd3be42bd4f572715aa154196359505f..36f54b912b6d96af6952dafc800ae1338f0eeb90 100644
+--- a/src/test/java/org/apache/commons/lang3/concurrent/AtomicInitializerTest.java
++++ b/src/test/java/org/apache/commons/lang3/concurrent/AtomicInitializerTest.java
+@@ -18,8 +18,6 @@ package org.apache.commons.lang3.concurrent;
+ 
+ /**
+  * Test class for {@code AtomicInitializer}.
+- *
+- * @version $Id$
+  */
+ public class AtomicInitializerTest extends AbstractConcurrentInitializerTest {
+     /**
+diff --git a/src/test/java/org/apache/commons/lang3/concurrent/AtomicSafeInitializerTest.java b/src/test/java/org/apache/commons/lang3/concurrent/AtomicSafeInitializerTest.java
+index bcf1688cbd25d62d1a2c640cc26e4a0d919f228b..6a995c754d32d4800e19f2562252c20c6c82cbd8 100644
+--- a/src/test/java/org/apache/commons/lang3/concurrent/AtomicSafeInitializerTest.java
++++ b/src/test/java/org/apache/commons/lang3/concurrent/AtomicSafeInitializerTest.java
+@@ -25,8 +25,6 @@ import org.junit.Test;
+ 
+ /**
+  * Test class for {@code AtomicSafeInitializer}.
+- *
+- * @version $Id$
+  */
+ public class AtomicSafeInitializerTest extends
+         AbstractConcurrentInitializerTest {
+diff --git a/src/test/java/org/apache/commons/lang3/concurrent/BasicThreadFactoryTest.java b/src/test/java/org/apache/commons/lang3/concurrent/BasicThreadFactoryTest.java
+index 3bf8a867a65b1bf13efc0b53ad3897bc2e0583cc..5aa1833c524625b42724b679e7df6a4da0c7fc74 100644
+--- a/src/test/java/org/apache/commons/lang3/concurrent/BasicThreadFactoryTest.java
++++ b/src/test/java/org/apache/commons/lang3/concurrent/BasicThreadFactoryTest.java
+@@ -32,8 +32,6 @@ import org.junit.Test;
+ 
+ /**
+  * Test class for {@code BasicThreadFactory}.
+- *
+- * @version $Id$
+  */
+ public class BasicThreadFactoryTest {
+     /** Constant for the test naming pattern. */
+diff --git a/src/test/java/org/apache/commons/lang3/concurrent/CallableBackgroundInitializerTest.java b/src/test/java/org/apache/commons/lang3/concurrent/CallableBackgroundInitializerTest.java
+index ac78126f420fdff41234a7f2f4fd726f4889e1e8..0c240d2c371826df579956c3444819ba433dc577 100644
+--- a/src/test/java/org/apache/commons/lang3/concurrent/CallableBackgroundInitializerTest.java
++++ b/src/test/java/org/apache/commons/lang3/concurrent/CallableBackgroundInitializerTest.java
+@@ -27,8 +27,6 @@ import org.junit.Test;
+ 
+ /**
+  * Test class for {@code CallableBackgroundInitializer}
+- *
+- * @version $Id$
+  */
+ public class CallableBackgroundInitializerTest  {
+     /** Constant for the result of the call() invocation. */
+diff --git a/src/test/java/org/apache/commons/lang3/concurrent/ConcurrentUtilsTest.java b/src/test/java/org/apache/commons/lang3/concurrent/ConcurrentUtilsTest.java
+index d23d95475eafcb7d375212c7ebe48a63e2c5a60a..48e445114af4cdf5e29760d910e708f61348e02c 100644
+--- a/src/test/java/org/apache/commons/lang3/concurrent/ConcurrentUtilsTest.java
++++ b/src/test/java/org/apache/commons/lang3/concurrent/ConcurrentUtilsTest.java
+@@ -34,8 +34,6 @@ import org.junit.Test;
+ 
+ /**
+  * Test class for {@link ConcurrentUtils}.
+- *
+- * @version $Id$
+  */
+ public class ConcurrentUtilsTest {
+     /**
+diff --git a/src/test/java/org/apache/commons/lang3/concurrent/ConstantInitializerTest.java b/src/test/java/org/apache/commons/lang3/concurrent/ConstantInitializerTest.java
+index 446089c19589ef9226694288989c451024454971..8c09b50b4f0ba99d68c04f1ab1f60ca9433ccd11 100644
+--- a/src/test/java/org/apache/commons/lang3/concurrent/ConstantInitializerTest.java
++++ b/src/test/java/org/apache/commons/lang3/concurrent/ConstantInitializerTest.java
+@@ -26,8 +26,6 @@ import org.junit.Test;
+ 
+ /**
+  * Test class for {@code ConstantInitializer}.
+- *
+- * @version $Id$
+  */
+ public class ConstantInitializerTest {
+     /** Constant for the object managed by the initializer. */
+diff --git a/src/test/java/org/apache/commons/lang3/concurrent/LazyInitializerTest.java b/src/test/java/org/apache/commons/lang3/concurrent/LazyInitializerTest.java
+index 409234ff1b7cc0328f18856481be6d3506b712d5..57cab8da0b55677b91d4b25054beeb54f0db9c2c 100644
+--- a/src/test/java/org/apache/commons/lang3/concurrent/LazyInitializerTest.java
++++ b/src/test/java/org/apache/commons/lang3/concurrent/LazyInitializerTest.java
+@@ -20,8 +20,6 @@ import org.junit.Before;
+ 
+ /**
+  * Test class for {@code LazyInitializer}.
+- *
+- * @version $Id$
+  */
+ public class LazyInitializerTest extends AbstractConcurrentInitializerTest {
+     /** The initializer to be tested. */
+diff --git a/src/test/java/org/apache/commons/lang3/concurrent/MultiBackgroundInitializerTest.java b/src/test/java/org/apache/commons/lang3/concurrent/MultiBackgroundInitializerTest.java
+index 72183c12ed99ed022e203be95630cd22d64b6b69..72eb65063868874b3b2860a6570eb43aa0b124ee 100644
+--- a/src/test/java/org/apache/commons/lang3/concurrent/MultiBackgroundInitializerTest.java
++++ b/src/test/java/org/apache/commons/lang3/concurrent/MultiBackgroundInitializerTest.java
+@@ -33,8 +33,6 @@ import org.junit.Test;
+ 
+ /**
+  * Test class for {@link MultiBackgroundInitializer}.
+- *
+- * @version $Id$
+  */
+ public class MultiBackgroundInitializerTest {
+     /** Constant for the names of the child initializers. */
+diff --git a/src/test/java/org/apache/commons/lang3/concurrent/TimedSemaphoreTest.java b/src/test/java/org/apache/commons/lang3/concurrent/TimedSemaphoreTest.java
+index 745c712bc4f3ac1bdb173eeb682f15825167deff..067043deb861a4a8f916799ef8e572cb4f522f8b 100644
+--- a/src/test/java/org/apache/commons/lang3/concurrent/TimedSemaphoreTest.java
++++ b/src/test/java/org/apache/commons/lang3/concurrent/TimedSemaphoreTest.java
+@@ -33,8 +33,6 @@ import org.junit.Test;
+ 
+ /**
+  * Test class for TimedSemaphore.
+- *
+- * @version $Id$
+  */
+ public class TimedSemaphoreTest {
+     /** Constant for the time period. */
+diff --git a/src/test/java/org/apache/commons/lang3/event/EventListenerSupportTest.java b/src/test/java/org/apache/commons/lang3/event/EventListenerSupportTest.java
+index 8923b4e06dc3ea1b6abd16459cf626f7c915d7a7..5f65125f61094beeb877ecbd16fe96f6462c5b4d 100644
+--- a/src/test/java/org/apache/commons/lang3/event/EventListenerSupportTest.java
++++ b/src/test/java/org/apache/commons/lang3/event/EventListenerSupportTest.java
+@@ -38,7 +38,6 @@ import org.junit.Test;
+ 
+ /**
+  * @since 3.0
+- * @version $Id$
+  */
+ public class EventListenerSupportTest 
+ {
+diff --git a/src/test/java/org/apache/commons/lang3/event/EventUtilsTest.java b/src/test/java/org/apache/commons/lang3/event/EventUtilsTest.java
+index 2178ea4553e02d8d2c2f1b265896d32d99a0e019..58c5b67e3a5f6c051cd8805f62b6824809be3998 100644
+--- a/src/test/java/org/apache/commons/lang3/event/EventUtilsTest.java
++++ b/src/test/java/org/apache/commons/lang3/event/EventUtilsTest.java
+@@ -40,7 +40,6 @@ import org.junit.Test;
+ 
+ /**
+  * @since 3.0
+- * @version $Id$
+  */
+ public class EventUtilsTest 
+ {
+diff --git a/src/test/java/org/apache/commons/lang3/exception/DefaultExceptionContextTest.java b/src/test/java/org/apache/commons/lang3/exception/DefaultExceptionContextTest.java
+index cbfd95fac50b4e1b84b70f726fe5813e64403783..79bf3328f7817c4e06a820d5daf6f131d1017c8b 100644
+--- a/src/test/java/org/apache/commons/lang3/exception/DefaultExceptionContextTest.java
++++ b/src/test/java/org/apache/commons/lang3/exception/DefaultExceptionContextTest.java
+@@ -21,7 +21,6 @@ import org.junit.Test;
+ 
+ /**
+  * JUnit tests for DefaultExceptionContext.
+- *
+  */
+ public class DefaultExceptionContextTest extends AbstractExceptionContextTest<DefaultExceptionContext> {
+     
+diff --git a/src/test/java/org/apache/commons/lang3/math/FractionTest.java b/src/test/java/org/apache/commons/lang3/math/FractionTest.java
+index b1bca6819835a45e34f6dbf1f3eff89d59cffb56..d55b8d81b12d521f1e9ffe7da79083e2474bf405 100644
+--- a/src/test/java/org/apache/commons/lang3/math/FractionTest.java
++++ b/src/test/java/org/apache/commons/lang3/math/FractionTest.java
+@@ -28,8 +28,6 @@ import org.junit.Test;
+ 
+ /**
+  * Test cases for the {@link Fraction} class
+- *
+- * @version $Id$
+  */
+ public class FractionTest  {
+     
+diff --git a/src/test/java/org/apache/commons/lang3/math/IEEE754rUtilsTest.java b/src/test/java/org/apache/commons/lang3/math/IEEE754rUtilsTest.java
+index c3dc66f24fd09dc7413c76b6f3d777262a029b59..1c98c3ddc5bac20cf69d4232ce50620bb7f6bd02 100644
+--- a/src/test/java/org/apache/commons/lang3/math/IEEE754rUtilsTest.java
++++ b/src/test/java/org/apache/commons/lang3/math/IEEE754rUtilsTest.java
+@@ -24,8 +24,6 @@ import org.junit.Test;
+ 
+ /**
+  * Unit tests {@link org.apache.commons.lang3.math.IEEE754rUtils}.
+- *
+- * @version $Id$
+  */
+ public class IEEE754rUtilsTest  {
+ 
+diff --git a/src/test/java/org/apache/commons/lang3/math/NumberUtilsTest.java b/src/test/java/org/apache/commons/lang3/math/NumberUtilsTest.java
+index 132d71ef9cd2ceff894c2b955d367c52b002ea43..bfa194963c687697dca0c5619ad61bba6286be80 100644
+--- a/src/test/java/org/apache/commons/lang3/math/NumberUtilsTest.java
++++ b/src/test/java/org/apache/commons/lang3/math/NumberUtilsTest.java
+@@ -31,8 +31,6 @@ import org.junit.Test;
+ 
+ /**
+  * Unit tests {@link org.apache.commons.lang3.math.NumberUtils}.
+- *
+- * @version $Id$
+  */
+ public class NumberUtilsTest {
+ 
+diff --git a/src/test/java/org/apache/commons/lang3/mutable/MutableBooleanTest.java b/src/test/java/org/apache/commons/lang3/mutable/MutableBooleanTest.java
+index 8e3e3145a2aa89fba23bcefe1f624c33767a96f0..77db87d3775f7ab4f0a45e146bb2c467068ae430 100644
+--- a/src/test/java/org/apache/commons/lang3/mutable/MutableBooleanTest.java
++++ b/src/test/java/org/apache/commons/lang3/mutable/MutableBooleanTest.java
+@@ -25,7 +25,6 @@ import static org.junit.Assert.*;
+  * 
+  * @since 2.2
+  * @see MutableBoolean
+- * @version $Id$
+  */
+ public class MutableBooleanTest {
+ 
+diff --git a/src/test/java/org/apache/commons/lang3/mutable/MutableByteTest.java b/src/test/java/org/apache/commons/lang3/mutable/MutableByteTest.java
+index 12d328330bf0176a871c447af61b36fcd51d2302..37bddfa6cdedb790e5953790c0d9e39258b55984 100644
+--- a/src/test/java/org/apache/commons/lang3/mutable/MutableByteTest.java
++++ b/src/test/java/org/apache/commons/lang3/mutable/MutableByteTest.java
+@@ -22,7 +22,6 @@ import static org.junit.Assert.*;
+ /**
+  * JUnit tests.
+  * 
+- * @version $Id$
+  * @see MutableByte
+  */
+ public class MutableByteTest {
+diff --git a/src/test/java/org/apache/commons/lang3/mutable/MutableDoubleTest.java b/src/test/java/org/apache/commons/lang3/mutable/MutableDoubleTest.java
+index 1518062c3af55fb471b9963ea0d04073d23bf9d8..af071fc3cfc78fa15ba0df3329d6034e303c13fc 100644
+--- a/src/test/java/org/apache/commons/lang3/mutable/MutableDoubleTest.java
++++ b/src/test/java/org/apache/commons/lang3/mutable/MutableDoubleTest.java
+@@ -22,7 +22,6 @@ import static org.junit.Assert.*;
+ /**
+  * JUnit tests.
+  * 
+- * @version $Id$
+  * @see MutableDouble
+  */
+ public class MutableDoubleTest {
+diff --git a/src/test/java/org/apache/commons/lang3/mutable/MutableFloatTest.java b/src/test/java/org/apache/commons/lang3/mutable/MutableFloatTest.java
+index f4663b19d50f878dcaa3ff6e185f3529dc6021aa..2f67c138b81aa2e926c84bb6f84d4811519bd8ed 100644
+--- a/src/test/java/org/apache/commons/lang3/mutable/MutableFloatTest.java
++++ b/src/test/java/org/apache/commons/lang3/mutable/MutableFloatTest.java
+@@ -22,7 +22,6 @@ import static org.junit.Assert.*;
+ /**
+  * JUnit tests.
+  * 
+- * @version $Id$
+  * @see MutableFloat
+  */
+ public class MutableFloatTest {
+diff --git a/src/test/java/org/apache/commons/lang3/mutable/MutableIntTest.java b/src/test/java/org/apache/commons/lang3/mutable/MutableIntTest.java
+index e68eede87aad6b600798aad4783d2b2567b640f6..e18fd5fc7d85fa9567de3859551185601996e059 100644
+--- a/src/test/java/org/apache/commons/lang3/mutable/MutableIntTest.java
++++ b/src/test/java/org/apache/commons/lang3/mutable/MutableIntTest.java
+@@ -22,7 +22,6 @@ import static org.junit.Assert.*;
+ /**
+  * JUnit tests.
+  * 
+- * @version $Id$
+  * @see MutableInt
+  */
+ public class MutableIntTest {
+diff --git a/src/test/java/org/apache/commons/lang3/mutable/MutableLongTest.java b/src/test/java/org/apache/commons/lang3/mutable/MutableLongTest.java
+index 350c7c0552194bfc744c93b86a70fd2495a9bafb..936c4ef30126fcdac4295865d697203076f7c997 100644
+--- a/src/test/java/org/apache/commons/lang3/mutable/MutableLongTest.java
++++ b/src/test/java/org/apache/commons/lang3/mutable/MutableLongTest.java
+@@ -22,7 +22,6 @@ import static org.junit.Assert.*;
+ /**
+  * JUnit tests.
+  * 
+- * @version $Id$
+  * @see MutableLong
+  */
+ public class MutableLongTest {
+diff --git a/src/test/java/org/apache/commons/lang3/mutable/MutableObjectTest.java b/src/test/java/org/apache/commons/lang3/mutable/MutableObjectTest.java
+index 07c3c1fce879eeb03d0857bc94c5cb35c7b29791..763b244062d746f79da79b3a93a0b24b1f2609ee 100644
+--- a/src/test/java/org/apache/commons/lang3/mutable/MutableObjectTest.java
++++ b/src/test/java/org/apache/commons/lang3/mutable/MutableObjectTest.java
+@@ -22,7 +22,6 @@ import static org.junit.Assert.*;
+ /**
+  * JUnit tests.
+  * 
+- * @version $Id$
+  * @see MutableShort
+  */
+ public class MutableObjectTest {
+diff --git a/src/test/java/org/apache/commons/lang3/mutable/MutableShortTest.java b/src/test/java/org/apache/commons/lang3/mutable/MutableShortTest.java
+index 8384542fdf7ddc0b7975ec93fb10acb7b02aa28e..a177185ef1652780c58f14bc2e7e9ce5302e10c2 100644
+--- a/src/test/java/org/apache/commons/lang3/mutable/MutableShortTest.java
++++ b/src/test/java/org/apache/commons/lang3/mutable/MutableShortTest.java
+@@ -22,7 +22,6 @@ import static org.junit.Assert.*;
+ /**
+  * JUnit tests.
+  * 
+- * @version $Id$
+  * @see MutableShort
+  */
+ public class MutableShortTest {
+diff --git a/src/test/java/org/apache/commons/lang3/reflect/ConstructorUtilsTest.java b/src/test/java/org/apache/commons/lang3/reflect/ConstructorUtilsTest.java
+index ac58ba96176ffd002944a260c1d6a4e6b5f1d7c5..c40f66fc3343c9804dbafd8941273955503a8510 100644
+--- a/src/test/java/org/apache/commons/lang3/reflect/ConstructorUtilsTest.java
++++ b/src/test/java/org/apache/commons/lang3/reflect/ConstructorUtilsTest.java
+@@ -32,7 +32,6 @@ import org.apache.commons.lang3.mutable.MutableObject;
+ 
+ /**
+  * Unit tests ConstructorUtils
+- * @version $Id$
+  */
+ public class ConstructorUtilsTest {
+     public static class TestBean {
+diff --git a/src/test/java/org/apache/commons/lang3/reflect/FieldUtilsTest.java b/src/test/java/org/apache/commons/lang3/reflect/FieldUtilsTest.java
+index 36c232c94d2a08d1278094d0636af805ccd21743..e2957a81e918d7b10bda4cd43b9ef3af4e60fe4a 100644
+--- a/src/test/java/org/apache/commons/lang3/reflect/FieldUtilsTest.java
++++ b/src/test/java/org/apache/commons/lang3/reflect/FieldUtilsTest.java
+@@ -33,8 +33,6 @@ import static org.junit.Assume.assumeNotNull;
+ 
+ /**
+  * Unit tests FieldUtils
+- * 
+- * @version $Id$
+  */
+ public class FieldUtilsTest {
+ 
+diff --git a/src/test/java/org/apache/commons/lang3/reflect/MethodUtilsTest.java b/src/test/java/org/apache/commons/lang3/reflect/MethodUtilsTest.java
+index b056c1467b041207d8464ae06e20caf150290fe2..c30088c4ef1d7cf63ff4ff91125bc9a5e780f2bb 100644
+--- a/src/test/java/org/apache/commons/lang3/reflect/MethodUtilsTest.java
++++ b/src/test/java/org/apache/commons/lang3/reflect/MethodUtilsTest.java
+@@ -51,7 +51,6 @@ import org.junit.Test;
+ 
+ /**
+  * Unit tests MethodUtils
+- * @version $Id$
+  */
+ public class MethodUtilsTest {
+   
+diff --git a/src/test/java/org/apache/commons/lang3/reflect/TypeUtilsTest.java b/src/test/java/org/apache/commons/lang3/reflect/TypeUtilsTest.java
+index 56b23a2411a3fe39cc0c7f35902837af0002890c..9b6ca9b1d573170cbdea0d66f65f3c70859e97f8 100644
+--- a/src/test/java/org/apache/commons/lang3/reflect/TypeUtilsTest.java
++++ b/src/test/java/org/apache/commons/lang3/reflect/TypeUtilsTest.java
+@@ -42,7 +42,6 @@ import org.junit.Test;
+ 
+ /**
+  * Test TypeUtils
+- * @version $Id$
+  */
+ @SuppressWarnings({ "unchecked", "unused" , "rawtypes" })
+ //raw types, where used, are used purposely
+diff --git a/src/test/java/org/apache/commons/lang3/reflect/testbed/Ambig.java b/src/test/java/org/apache/commons/lang3/reflect/testbed/Ambig.java
+index a2c2b61c97c589fa75c5ed4f42d91d1f4123ab52..198a8cf9c2673e6db8dad08c5fa827c5d0ef1cea 100644
+--- a/src/test/java/org/apache/commons/lang3/reflect/testbed/Ambig.java
++++ b/src/test/java/org/apache/commons/lang3/reflect/testbed/Ambig.java
+@@ -17,7 +17,6 @@
+ package org.apache.commons.lang3.reflect.testbed;
+ 
+ /**
+- * @version $Id$
+  */
+ public class Ambig implements Foo, Bar {
+ 
+diff --git a/src/test/java/org/apache/commons/lang3/reflect/testbed/Bar.java b/src/test/java/org/apache/commons/lang3/reflect/testbed/Bar.java
+index ab0bf700cf13fd4769d1eb6adc868de76757b0ba..105dd1defca24507a0346c3641a2319ffbfe0970 100644
+--- a/src/test/java/org/apache/commons/lang3/reflect/testbed/Bar.java
++++ b/src/test/java/org/apache/commons/lang3/reflect/testbed/Bar.java
+@@ -17,7 +17,6 @@
+ package org.apache.commons.lang3.reflect.testbed;
+ 
+ /**
+- * @version $Id$
+  */
+ public interface Bar {
+     public static final String VALUE = "bar";
+diff --git a/src/test/java/org/apache/commons/lang3/reflect/testbed/Foo.java b/src/test/java/org/apache/commons/lang3/reflect/testbed/Foo.java
+index f31756cc61a8dfd54bccc7c321f5668b5e9b685e..551199360ec2298e5271f15503b360c875bfeebf 100644
+--- a/src/test/java/org/apache/commons/lang3/reflect/testbed/Foo.java
++++ b/src/test/java/org/apache/commons/lang3/reflect/testbed/Foo.java
+@@ -17,7 +17,6 @@
+ package org.apache.commons.lang3.reflect.testbed;
+ 
+ /**
+- * @version $Id$
+  */
+ public interface Foo {
+     public static final String VALUE = "foo";
+diff --git a/src/test/java/org/apache/commons/lang3/reflect/testbed/GenericParent.java b/src/test/java/org/apache/commons/lang3/reflect/testbed/GenericParent.java
+index 3f482d92234d416ce545372da481d81c399a1dd3..f848567b9b3cb6ccee26ee39393299e587969d40 100644
+--- a/src/test/java/org/apache/commons/lang3/reflect/testbed/GenericParent.java
++++ b/src/test/java/org/apache/commons/lang3/reflect/testbed/GenericParent.java
+@@ -18,7 +18,6 @@ package org.apache.commons.lang3.reflect.testbed;
+ 
+ /**
+  * Class declaring a parameter variable.
+- * @version $Id$
+  */
+ public class GenericParent<T> implements GenericConsumer<T> {
+ 
+diff --git a/src/test/java/org/apache/commons/lang3/reflect/testbed/GenericTypeHolder.java b/src/test/java/org/apache/commons/lang3/reflect/testbed/GenericTypeHolder.java
+index f69d7545a37b950279d7ab36679551d59ddf9b42..390044cdd0b682c8bb331936ed20a6d0986c26ff 100644
+--- a/src/test/java/org/apache/commons/lang3/reflect/testbed/GenericTypeHolder.java
++++ b/src/test/java/org/apache/commons/lang3/reflect/testbed/GenericTypeHolder.java
+@@ -20,7 +20,6 @@ import java.util.List;
+ 
+ /**
+  * Holds generic testbed types.
+- * @version $Id$
+  */
+ public class GenericTypeHolder {
+     public GenericParent<String> stringParent;
+diff --git a/src/test/java/org/apache/commons/lang3/reflect/testbed/Parent.java b/src/test/java/org/apache/commons/lang3/reflect/testbed/Parent.java
+index 9a95990b742f55f7dcf6a3929de1983a917be515..70447b444c75fdccd8202c8cad6437adc78a725f 100644
+--- a/src/test/java/org/apache/commons/lang3/reflect/testbed/Parent.java
++++ b/src/test/java/org/apache/commons/lang3/reflect/testbed/Parent.java
+@@ -17,7 +17,6 @@
+ package org.apache.commons.lang3.reflect.testbed;
+ 
+ /**
+- * @version $Id$
+  */
+ class Parent implements Foo {
+     public String s = "s";
+diff --git a/src/test/java/org/apache/commons/lang3/reflect/testbed/PrivatelyShadowedChild.java b/src/test/java/org/apache/commons/lang3/reflect/testbed/PrivatelyShadowedChild.java
+index eec45d2b825ee0aa5b03974ca047bef1e6e2a99c..9e9bf9ebafc32a9e1943ca8b0a04f9a0371b72ef 100644
+--- a/src/test/java/org/apache/commons/lang3/reflect/testbed/PrivatelyShadowedChild.java
++++ b/src/test/java/org/apache/commons/lang3/reflect/testbed/PrivatelyShadowedChild.java
+@@ -17,7 +17,6 @@
+ package org.apache.commons.lang3.reflect.testbed;
+ 
+ /**
+- * @version $Id$
+  */
+ @SuppressWarnings({ "unused" }) // deliberate re-use of variable names
+ public class PrivatelyShadowedChild extends Parent {
+diff --git a/src/test/java/org/apache/commons/lang3/reflect/testbed/PublicChild.java b/src/test/java/org/apache/commons/lang3/reflect/testbed/PublicChild.java
+index 359d9ae969e94b3e8cdc18c121fc8bd761068c70..c91a06f5878e2f4717b73f92be0cdb7c979d9433 100644
+--- a/src/test/java/org/apache/commons/lang3/reflect/testbed/PublicChild.java
++++ b/src/test/java/org/apache/commons/lang3/reflect/testbed/PublicChild.java
+@@ -17,7 +17,6 @@
+ package org.apache.commons.lang3.reflect.testbed;
+ 
+ /**
+- * @version $Id$
+  */
+ public class PublicChild extends Parent {
+     static final String VALUE = "child";
+diff --git a/src/test/java/org/apache/commons/lang3/reflect/testbed/PubliclyShadowedChild.java b/src/test/java/org/apache/commons/lang3/reflect/testbed/PubliclyShadowedChild.java
+index 5347bb9b3b0b5a393345db7febd86dbc10226efb..a95ec350f7353d103ed588f3176601b9ffa89afb 100644
+--- a/src/test/java/org/apache/commons/lang3/reflect/testbed/PubliclyShadowedChild.java
++++ b/src/test/java/org/apache/commons/lang3/reflect/testbed/PubliclyShadowedChild.java
+@@ -17,7 +17,6 @@
+ package org.apache.commons.lang3.reflect.testbed;
+ 
+ /**
+- * @version $Id$
+  */
+ public class PubliclyShadowedChild extends Parent {
+     public String s = "ss";
+diff --git a/src/test/java/org/apache/commons/lang3/reflect/testbed/StaticContainer.java b/src/test/java/org/apache/commons/lang3/reflect/testbed/StaticContainer.java
+index d227f7b358b982c4fc0ba39d7580a47a205797ab..75f1ca2036479f885e92b0fde1f81d151234e442 100644
+--- a/src/test/java/org/apache/commons/lang3/reflect/testbed/StaticContainer.java
++++ b/src/test/java/org/apache/commons/lang3/reflect/testbed/StaticContainer.java
+@@ -17,7 +17,6 @@
+ package org.apache.commons.lang3.reflect.testbed;
+ 
+ /**
+- * @version $Id$
+  */
+ public class StaticContainer {
+     public static final Object IMMUTABLE_PUBLIC = "public";
+diff --git a/src/test/java/org/apache/commons/lang3/reflect/testbed/StaticContainerChild.java b/src/test/java/org/apache/commons/lang3/reflect/testbed/StaticContainerChild.java
+index 34ebb0ba496ba338362405c7afccaef75d8d1be2..18af79d7eb67c39565360133b5a21772e5960d9f 100644
+--- a/src/test/java/org/apache/commons/lang3/reflect/testbed/StaticContainerChild.java
++++ b/src/test/java/org/apache/commons/lang3/reflect/testbed/StaticContainerChild.java
+@@ -17,7 +17,6 @@
+ package org.apache.commons.lang3.reflect.testbed;
+ 
+ /**
+- * @version $Id$
+  */
+ public class StaticContainerChild extends StaticContainer {
+ 
+diff --git a/src/test/java/org/apache/commons/lang3/reflect/testbed/StringParameterizedChild.java b/src/test/java/org/apache/commons/lang3/reflect/testbed/StringParameterizedChild.java
+index feed918222b650a0d835aed7dc3992dcd85dae82..dd285bc4fe5c06ffa41df204b3a5732aa3e106ea 100644
+--- a/src/test/java/org/apache/commons/lang3/reflect/testbed/StringParameterizedChild.java
++++ b/src/test/java/org/apache/commons/lang3/reflect/testbed/StringParameterizedChild.java
+@@ -18,7 +18,6 @@ package org.apache.commons.lang3.reflect.testbed;
+ 
+ /**
+  * {@link GenericParent} subclass that explicitly specifies &lt;T&gt; as {@link String}.
+- * @version $Id$
+  */
+ public class StringParameterizedChild extends GenericParent<String> {
+     @Override
+diff --git a/src/test/java/org/apache/commons/lang3/text/ExtendedMessageFormatTest.java b/src/test/java/org/apache/commons/lang3/text/ExtendedMessageFormatTest.java
+index 926019e8d0b09681be8fa493a070e17d1ca65c4e..79ff231bf8c7073f26a417280186513f6fcf88a5 100644
+--- a/src/test/java/org/apache/commons/lang3/text/ExtendedMessageFormatTest.java
++++ b/src/test/java/org/apache/commons/lang3/text/ExtendedMessageFormatTest.java
+@@ -42,7 +42,6 @@ import org.apache.commons.lang3.SystemUtils;
+  * Test case for {@link ExtendedMessageFormat}.
+  *
+  * @since 2.4
+- * @version $Id$
+  */
+ public class ExtendedMessageFormatTest {
+ 
+diff --git a/src/test/java/org/apache/commons/lang3/text/FormattableUtilsTest.java b/src/test/java/org/apache/commons/lang3/text/FormattableUtilsTest.java
+index bb847427a00e9d916a0e6586061b067d4f1c1f90..f628762aaa8a50087a197d3eca30ac1e56deaa26 100644
+--- a/src/test/java/org/apache/commons/lang3/text/FormattableUtilsTest.java
++++ b/src/test/java/org/apache/commons/lang3/text/FormattableUtilsTest.java
+@@ -25,8 +25,6 @@ import org.junit.Test;
+ 
+ /**
+  * Unit tests {@link FormattableUtils}.
+- *
+- * @version $Id$
+  */
+ public class FormattableUtilsTest {
+ 
+diff --git a/src/test/java/org/apache/commons/lang3/text/StrBuilderAppendInsertTest.java b/src/test/java/org/apache/commons/lang3/text/StrBuilderAppendInsertTest.java
+index 3d0ed4b9d0ceb7d7d8507ca75cfaa8bb9afb0dd4..542cddf18c11d1f4fe173e9a231090b7a44aee88 100644
+--- a/src/test/java/org/apache/commons/lang3/text/StrBuilderAppendInsertTest.java
++++ b/src/test/java/org/apache/commons/lang3/text/StrBuilderAppendInsertTest.java
+@@ -30,8 +30,6 @@ import org.apache.commons.lang3.SystemUtils;
+ 
+ /**
+  * Unit tests for {@link org.apache.commons.lang3.text.StrBuilder}.
+- *
+- * @version $Id$
+  */
+ public class StrBuilderAppendInsertTest {
+ 
+diff --git a/src/test/java/org/apache/commons/lang3/text/StrBuilderTest.java b/src/test/java/org/apache/commons/lang3/text/StrBuilderTest.java
+index 2da4cf1efe33e73a73f4e807687f40cd99b65cc3..7fa0579422018893b952f5c9ceee296473c9d012 100644
+--- a/src/test/java/org/apache/commons/lang3/text/StrBuilderTest.java
++++ b/src/test/java/org/apache/commons/lang3/text/StrBuilderTest.java
+@@ -32,8 +32,6 @@ import org.apache.commons.lang3.ArrayUtils;
+ 
+ /**
+  * Unit tests for {@link org.apache.commons.lang3.text.StrBuilder}.
+- * 
+- * @version $Id$
+  */
+ public class StrBuilderTest {
+ 
+@@ -1850,6 +1848,13 @@ public class StrBuilderTest {
+         assertFalse(sb1.equals("abc"));
+     }
+ 
++    @Test
++    public void test_LANG_1131_EqualsWithNullStrBuilder() throws Exception {
++        final StrBuilder sb = new StrBuilder();
++        final StrBuilder other = null;
++        assertFalse(sb.equals(other));
++    }
++
+     //-----------------------------------------------------------------------
+     @Test
+     public void testHashCode() {
+diff --git a/src/test/java/org/apache/commons/lang3/text/StrLookupTest.java b/src/test/java/org/apache/commons/lang3/text/StrLookupTest.java
+index 0f55738b9cbf94024c473165ae36cffa7f168bee..121dbff223d5900afbfaaa36f655d59d315cec25 100644
+--- a/src/test/java/org/apache/commons/lang3/text/StrLookupTest.java
++++ b/src/test/java/org/apache/commons/lang3/text/StrLookupTest.java
+@@ -27,8 +27,6 @@ import org.junit.Test;
+ 
+ /**
+  * Test class for StrLookup.
+- *
+- * @version $Id$
+  */
+ public class StrLookupTest  {
+ 
+diff --git a/src/test/java/org/apache/commons/lang3/text/StrMatcherTest.java b/src/test/java/org/apache/commons/lang3/text/StrMatcherTest.java
+index 89bc3a74177ffba70e344ecc1f00f3229a53a746..8ac35a4c104436242da8565366a8dd6e859bb1b5 100644
+--- a/src/test/java/org/apache/commons/lang3/text/StrMatcherTest.java
++++ b/src/test/java/org/apache/commons/lang3/text/StrMatcherTest.java
+@@ -25,8 +25,6 @@ import org.junit.Test;
+ 
+ /**
+  * Unit tests for {@link org.apache.commons.lang3.text.StrMatcher}.
+- *
+- * @version $Id$
+  */
+ public class StrMatcherTest  {
+ 
+diff --git a/src/test/java/org/apache/commons/lang3/text/StrSubstitutorTest.java b/src/test/java/org/apache/commons/lang3/text/StrSubstitutorTest.java
+index 89ee7b4aa745a1095b2f31beba41e761a0b9d65b..9c96150a2e8cb6131671e07cfca81e00919c0ed0 100644
+--- a/src/test/java/org/apache/commons/lang3/text/StrSubstitutorTest.java
++++ b/src/test/java/org/apache/commons/lang3/text/StrSubstitutorTest.java
+@@ -35,8 +35,6 @@ import org.junit.Test;
+ 
+ /**
+  * Test class for StrSubstitutor.
+- *
+- * @version $Id$
+  */
+ public class StrSubstitutorTest {
+ 
+diff --git a/src/test/java/org/apache/commons/lang3/text/StrTokenizerTest.java b/src/test/java/org/apache/commons/lang3/text/StrTokenizerTest.java
+index 8941fa99502d11b213a24df91385db56e00e9d02..5df08cca247c012a015c7505a8f74333b0d67d80 100644
+--- a/src/test/java/org/apache/commons/lang3/text/StrTokenizerTest.java
++++ b/src/test/java/org/apache/commons/lang3/text/StrTokenizerTest.java
+@@ -30,7 +30,6 @@ import org.apache.commons.lang3.ArrayUtils;
+ 
+ /**
+  * Unit test for Tokenizer.
+- * 
+  */
+ public class StrTokenizerTest {
+ 
+diff --git a/src/test/java/org/apache/commons/lang3/text/WordUtilsTest.java b/src/test/java/org/apache/commons/lang3/text/WordUtilsTest.java
+index 6be8ded7921495305586c6b3ec4103b946880a99..eca0208d20dabf87504561dd5db8fec3585db854 100644
+--- a/src/test/java/org/apache/commons/lang3/text/WordUtilsTest.java
++++ b/src/test/java/org/apache/commons/lang3/text/WordUtilsTest.java
+@@ -28,8 +28,6 @@ import org.junit.Test;
+ 
+ /**
+  * Unit tests for WordUtils class.
+- * 
+- * @version $Id$
+  */
+ public class WordUtilsTest {
+ 
+diff --git a/src/test/java/org/apache/commons/lang3/text/translate/EntityArraysTest.java b/src/test/java/org/apache/commons/lang3/text/translate/EntityArraysTest.java
+index 8d3b3fc3c105fbb7837875fffc0e3d48854980f1..2d33b7bfc683506c6a19fe18b8e624a796b74fc1 100644
+--- a/src/test/java/org/apache/commons/lang3/text/translate/EntityArraysTest.java
++++ b/src/test/java/org/apache/commons/lang3/text/translate/EntityArraysTest.java
+@@ -26,7 +26,6 @@ import org.junit.Test;
+ 
+ /**
+  * Unit tests for {@link org.apache.commons.lang3.text.translate.EntityArrays}.
+- * @version $Id$
+  */
+ public class EntityArraysTest  {
+ 
+diff --git a/src/test/java/org/apache/commons/lang3/text/translate/LookupTranslatorTest.java b/src/test/java/org/apache/commons/lang3/text/translate/LookupTranslatorTest.java
+index 67419f86ecb59244af7e764078d2d649b1c11cf8..4fa526ea7ef45e13c3b9b740dac67bf6c4ec5e90 100644
+--- a/src/test/java/org/apache/commons/lang3/text/translate/LookupTranslatorTest.java
++++ b/src/test/java/org/apache/commons/lang3/text/translate/LookupTranslatorTest.java
+@@ -26,7 +26,6 @@ import org.junit.Test;
+ 
+ /**
+  * Unit tests for {@link org.apache.commons.lang3.text.translate.LookupTranslator}.
+- * @version $Id$
+  */
+ public class LookupTranslatorTest  {
+ 
+diff --git a/src/test/java/org/apache/commons/lang3/text/translate/NumericEntityEscaperTest.java b/src/test/java/org/apache/commons/lang3/text/translate/NumericEntityEscaperTest.java
+index 816d8a8d27fad6fdcbdfe44ed0854d41d2e0b154..6f77d065df76213c6d41a16dd35d053507b23f05 100644
+--- a/src/test/java/org/apache/commons/lang3/text/translate/NumericEntityEscaperTest.java
++++ b/src/test/java/org/apache/commons/lang3/text/translate/NumericEntityEscaperTest.java
+@@ -23,7 +23,6 @@ import org.junit.Test;
+ 
+ /**
+  * Unit tests for {@link org.apache.commons.lang3.text.translate.NumericEntityEscaper}.
+- * @version $Id$
+  */
+ public class NumericEntityEscaperTest  {
+ 
+diff --git a/src/test/java/org/apache/commons/lang3/text/translate/NumericEntityUnescaperTest.java b/src/test/java/org/apache/commons/lang3/text/translate/NumericEntityUnescaperTest.java
+index 4087cb9ed03433402a9601ce38188a1b4c4e2950..b39104168c05693a9b23bca9b9cd9f69cea410a2 100644
+--- a/src/test/java/org/apache/commons/lang3/text/translate/NumericEntityUnescaperTest.java
++++ b/src/test/java/org/apache/commons/lang3/text/translate/NumericEntityUnescaperTest.java
+@@ -24,7 +24,6 @@ import org.junit.Test;
+ 
+ /**
+  * Unit tests for {@link org.apache.commons.lang3.text.translate.NumericEntityUnescaper}.
+- * @version $Id$
+  */
+ public class NumericEntityUnescaperTest  {
+ 
+diff --git a/src/test/java/org/apache/commons/lang3/text/translate/OctalUnescaperTest.java b/src/test/java/org/apache/commons/lang3/text/translate/OctalUnescaperTest.java
+index b100fee8eae02d129dea5192b0b6cb2041f8bdb5..15473a8ab43a41b5cf4bfb85fcb9b18a5c7c4ee9 100644
+--- a/src/test/java/org/apache/commons/lang3/text/translate/OctalUnescaperTest.java
++++ b/src/test/java/org/apache/commons/lang3/text/translate/OctalUnescaperTest.java
+@@ -22,7 +22,6 @@ import static org.junit.Assert.*;
+ 
+ /**
+  * Unit tests for {@link org.apache.commons.lang3.text.translate.OctalUnescaper}.
+- * @version $Id: OctalUnescaperTest.java 979392 2010-07-26 18:09:52Z mbenson $
+  */
+ public class OctalUnescaperTest {
+ 
+diff --git a/src/test/java/org/apache/commons/lang3/text/translate/UnicodeEscaperTest.java b/src/test/java/org/apache/commons/lang3/text/translate/UnicodeEscaperTest.java
+index 61f2a0cc65c54111e2015d48cdce26209803e418..d684604bf8d15cbee8acf612e1c5626bc743c824 100644
+--- a/src/test/java/org/apache/commons/lang3/text/translate/UnicodeEscaperTest.java
++++ b/src/test/java/org/apache/commons/lang3/text/translate/UnicodeEscaperTest.java
+@@ -23,7 +23,6 @@ import org.junit.Test;
+ 
+ /**
+  * Unit tests for {@link org.apache.commons.lang3.text.translate.UnicodeEscaper}.
+- * @version $Id$
+  */
+ public class UnicodeEscaperTest  {
+ 
+diff --git a/src/test/java/org/apache/commons/lang3/text/translate/UnicodeUnescaperTest.java b/src/test/java/org/apache/commons/lang3/text/translate/UnicodeUnescaperTest.java
+index f003011f341b3284c4fb4cf2ee50040631049771..e950f417ff93faa5865baad0056ce4d7aa9672b2 100644
+--- a/src/test/java/org/apache/commons/lang3/text/translate/UnicodeUnescaperTest.java
++++ b/src/test/java/org/apache/commons/lang3/text/translate/UnicodeUnescaperTest.java
+@@ -24,7 +24,6 @@ import org.junit.Test;
+ 
+ /**
+  * Unit tests for {@link org.apache.commons.lang3.text.translate.UnicodeEscaper}.
+- * @version $Id$
+  */
+ public class UnicodeUnescaperTest {
+ 
+diff --git a/src/test/java/org/apache/commons/lang3/text/translate/UnicodeUnpairedSurrogateRemoverTest.java b/src/test/java/org/apache/commons/lang3/text/translate/UnicodeUnpairedSurrogateRemoverTest.java
+index 08e1b1e5b3b320e8c0903fb7cdf279d6c7adabaf..a79205f40bd1d98d2aab954c0bf64c05e8986c60 100644
+--- a/src/test/java/org/apache/commons/lang3/text/translate/UnicodeUnpairedSurrogateRemoverTest.java
++++ b/src/test/java/org/apache/commons/lang3/text/translate/UnicodeUnpairedSurrogateRemoverTest.java
+@@ -24,8 +24,6 @@ import org.junit.Test;
+ 
+ /**
+  * Unit tests for {@link org.apache.commons.lang3.text.translate.UnicodeUnpairedSurrogateRemover}.
+- *
+- * @version $Id$
+  */
+ public class UnicodeUnpairedSurrogateRemoverTest {
+     final UnicodeUnpairedSurrogateRemover subject = new UnicodeUnpairedSurrogateRemover();
+diff --git a/src/test/java/org/apache/commons/lang3/time/DateFormatUtilsTest.java b/src/test/java/org/apache/commons/lang3/time/DateFormatUtilsTest.java
+index 8468feccf683cdc0725a097ff4db2611a9679abf..9d55212ef1d5247da4555281df5d1e3d59a07106 100644
+--- a/src/test/java/org/apache/commons/lang3/time/DateFormatUtilsTest.java
++++ b/src/test/java/org/apache/commons/lang3/time/DateFormatUtilsTest.java
+@@ -35,7 +35,6 @@ import org.junit.Test;
+ 
+ /**
+  * TestCase for DateFormatUtils.
+- *
+  */
+ public class DateFormatUtilsTest {
+ 
+diff --git a/src/test/java/org/apache/commons/lang3/time/DateUtilsRoundingTest.java b/src/test/java/org/apache/commons/lang3/time/DateUtilsRoundingTest.java
+index 29de105b154c7494083b0ff928608209cc0f7ed4..bfe7a125c7484f1d9f9093fbd7477428e62f8df5 100644
+--- a/src/test/java/org/apache/commons/lang3/time/DateUtilsRoundingTest.java
++++ b/src/test/java/org/apache/commons/lang3/time/DateUtilsRoundingTest.java
+@@ -36,7 +36,6 @@ import java.util.Locale;
+  * A month with 31 days will be rounded up from the 17th
+  * 
+  * @since 3.0
+- * @version $Id$
+  */
+ public class DateUtilsRoundingTest {
+ 
+diff --git a/src/test/java/org/apache/commons/lang3/time/DateUtilsTest.java b/src/test/java/org/apache/commons/lang3/time/DateUtilsTest.java
+index a8f2e1a5e7df1a1cae8f39da7259a5c1ee67da6f..d976087046fa86fe77f4ad209b0c76ca2e97ff23 100644
+--- a/src/test/java/org/apache/commons/lang3/time/DateUtilsTest.java
++++ b/src/test/java/org/apache/commons/lang3/time/DateUtilsTest.java
+@@ -45,7 +45,6 @@ import org.junit.Test;
+ 
+ /**
+  * Unit tests {@link org.apache.commons.lang3.time.DateUtils}.
+- *
+  */
+ public class DateUtilsTest {
+ 
+diff --git a/src/test/java/org/apache/commons/lang3/time/DurationFormatUtilsTest.java b/src/test/java/org/apache/commons/lang3/time/DurationFormatUtilsTest.java
+index 6941f42f266cfc5bc7fe3df72b978017576f251d..eb469eaacc366649879f07fcdda8a5c8670feee9 100644
+--- a/src/test/java/org/apache/commons/lang3/time/DurationFormatUtilsTest.java
++++ b/src/test/java/org/apache/commons/lang3/time/DurationFormatUtilsTest.java
+@@ -32,7 +32,6 @@ import org.junit.Test;
+ 
+ /**
+  * TestCase for DurationFormatUtils.
+- * 
+  */
+ public class DurationFormatUtilsTest {
+ 
+diff --git a/src/test/java/org/apache/commons/lang3/time/FastDateFormatTest.java b/src/test/java/org/apache/commons/lang3/time/FastDateFormatTest.java
+index b9e3061bf6b3abf1597f127cb87b82261e8e127a..320d44caaf5856f31229bd333fe00bfdc244d79f 100644
+--- a/src/test/java/org/apache/commons/lang3/time/FastDateFormatTest.java
++++ b/src/test/java/org/apache/commons/lang3/time/FastDateFormatTest.java
+@@ -42,7 +42,6 @@ import org.junit.Test;
+  * Unit tests {@link org.apache.commons.lang3.time.FastDateFormat}.
+  *
+  * @since 2.0
+- * @version $Id$
+  */
+ public class FastDateFormatTest {
+ 
+diff --git a/src/test/java/org/apache/commons/lang3/time/FastDateParserTest.java b/src/test/java/org/apache/commons/lang3/time/FastDateParserTest.java
+index 1d86437555146c9e69bb4511cefcac9a3dd229a2..3c47bd2898c112dc863500708a65e528d2424f9c 100644
+--- a/src/test/java/org/apache/commons/lang3/time/FastDateParserTest.java
++++ b/src/test/java/org/apache/commons/lang3/time/FastDateParserTest.java
+@@ -38,7 +38,6 @@ import org.junit.Test;
+ /**
+  * Unit tests {@link org.apache.commons.lang3.time.FastDateParser}.
+  *
+- * @version $Id$
+  * @since 3.2
+  */
+ public class FastDateParserTest {
+diff --git a/src/test/java/org/apache/commons/lang3/time/FastDatePrinterTest.java b/src/test/java/org/apache/commons/lang3/time/FastDatePrinterTest.java
+index 06155bdcf631aaf2d788e10ba34ebb251af17e71..54acd9f846cdd2333873bb4f5352cd5d23081c1e 100644
+--- a/src/test/java/org/apache/commons/lang3/time/FastDatePrinterTest.java
++++ b/src/test/java/org/apache/commons/lang3/time/FastDatePrinterTest.java
+@@ -36,7 +36,6 @@ import org.junit.Test;
+ /**
+  * Unit tests {@link org.apache.commons.lang3.time.FastDatePrinter}.
+  *
+- * @version $Id$
+  * @since 3.0
+  */
+ public class FastDatePrinterTest {
+diff --git a/src/test/java/org/apache/commons/lang3/time/StopWatchTest.java b/src/test/java/org/apache/commons/lang3/time/StopWatchTest.java
+index 3e464cb66494c47637213fba9ede605bb0eb6bfd..f4ec34780f0c9e6cfb919ee0c8114155a2562560 100644
+--- a/src/test/java/org/apache/commons/lang3/time/StopWatchTest.java
++++ b/src/test/java/org/apache/commons/lang3/time/StopWatchTest.java
+@@ -26,8 +26,6 @@ import org.junit.Test;
+ 
+ /**
+  * TestCase for StopWatch.
+- *
+- * @version $Id$
+  */
+ public class StopWatchTest  {
+ 
+diff --git a/src/test/java/org/apache/commons/lang3/tuple/ImmutablePairTest.java b/src/test/java/org/apache/commons/lang3/tuple/ImmutablePairTest.java
+index 01661042ecf08f08e78622fce4730b0067174cfb..462122ce76b15917cb0826f028a61039a9178948 100644
+--- a/src/test/java/org/apache/commons/lang3/tuple/ImmutablePairTest.java
++++ b/src/test/java/org/apache/commons/lang3/tuple/ImmutablePairTest.java
+@@ -30,7 +30,6 @@ import org.junit.Test;
+ 
+ /**
+  * Test the Pair class.
+- * @version $Id$
+  */
+ public class ImmutablePairTest {
+ 
+diff --git a/src/test/java/org/apache/commons/lang3/tuple/ImmutableTripleTest.java b/src/test/java/org/apache/commons/lang3/tuple/ImmutableTripleTest.java
+index a6e7cf3301615585564e6eb4e5f0ef7c9f829cc9..42b5ed625def07dff4efefdcf2c66bac853e0f4b 100644
+--- a/src/test/java/org/apache/commons/lang3/tuple/ImmutableTripleTest.java
++++ b/src/test/java/org/apache/commons/lang3/tuple/ImmutableTripleTest.java
+@@ -30,7 +30,6 @@ import org.junit.Test;
+ 
+ /**
+  * Test the Triple class.
+- * @version $Id$
+  */
+ public class ImmutableTripleTest {
+ 
+diff --git a/src/test/java/org/apache/commons/lang3/tuple/MutablePairTest.java b/src/test/java/org/apache/commons/lang3/tuple/MutablePairTest.java
+index 0b64004a560dc847ee3802f8afccf91939bd89d9..11daffeef19932f902660059468f987bc7fdfe62 100644
+--- a/src/test/java/org/apache/commons/lang3/tuple/MutablePairTest.java
++++ b/src/test/java/org/apache/commons/lang3/tuple/MutablePairTest.java
+@@ -30,7 +30,6 @@ import org.junit.Test;
+ 
+ /**
+  * Test the MutablePair class.
+- * @version $Id$
+  */
+ public class MutablePairTest {
+ 
+diff --git a/src/test/java/org/apache/commons/lang3/tuple/MutableTripleTest.java b/src/test/java/org/apache/commons/lang3/tuple/MutableTripleTest.java
+index 210a95549963bc8f03a89a3c9112722dac48c89b..002b697e3b3e464675ce416017d71e2545e87e17 100644
+--- a/src/test/java/org/apache/commons/lang3/tuple/MutableTripleTest.java
++++ b/src/test/java/org/apache/commons/lang3/tuple/MutableTripleTest.java
+@@ -30,7 +30,6 @@ import org.junit.Test;
+ 
+ /**
+  * Test the MutableTriple class.
+- * @version $Id$
+  */
+ public class MutableTripleTest {
+ 
+diff --git a/src/test/java/org/apache/commons/lang3/tuple/PairTest.java b/src/test/java/org/apache/commons/lang3/tuple/PairTest.java
+index 365f2abe381d757d616252a0a87c1cc8d9d81e78..4f52a83f52bd816d6b59000e76894b6dfcf84b2c 100644
+--- a/src/test/java/org/apache/commons/lang3/tuple/PairTest.java
++++ b/src/test/java/org/apache/commons/lang3/tuple/PairTest.java
+@@ -30,8 +30,6 @@ import org.junit.Test;
+ 
+ /**
+  * Test the Pair class.
+- * 
+- * @version $Id$
+  */
+ public class PairTest {
+ 
+diff --git a/src/test/java/org/apache/commons/lang3/tuple/TripleTest.java b/src/test/java/org/apache/commons/lang3/tuple/TripleTest.java
+index d9cff33cdef8bbc5d1c9563a19871841c807c0a2..6f915c91decbe79191de034cc56d51ce33dc094f 100644
+--- a/src/test/java/org/apache/commons/lang3/tuple/TripleTest.java
++++ b/src/test/java/org/apache/commons/lang3/tuple/TripleTest.java
+@@ -27,8 +27,6 @@ import org.junit.Test;
+ 
+ /**
+  * Test the Triple class.
+- *
+- * @version $Id$
+  */
+ public class TripleTest {
+ 

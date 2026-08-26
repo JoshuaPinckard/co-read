@@ -1,0 +1,58 @@
+diff --git a/tests/test_shell.py b/tests/test_shell.py
+index b3600a4eaf3a2ee926e3c70e3beabd0afcd1b0a1..3cf7e204eaa60b9c623a4df7af4a9cddf9c394aa 100644
+--- a/tests/test_shell.py
++++ b/tests/test_shell.py
+@@ -142,9 +142,8 @@ def test_end_of_line_nums(lexer_bash):
+ def test_newline_in_echo(lexer_session):
+     fragment = '$ echo \\\nhi\nhi\n'
+     tokens = [
+-        (Token.Text, ''),
+-        (Token.Generic.Prompt, '$'),
+-        (Token.Text, ' '),
++        (Token.Name.Builtin, ''),
++        (Token.Generic.Prompt, '$ '),
+         (Token.Name.Builtin, 'echo'),
+         (Token.Text, ' '),
+         (Token.Literal.String.Escape, '\\\n'),
+@@ -155,6 +154,31 @@ def test_newline_in_echo(lexer_session):
+     assert list(lexer_session.get_tokens(fragment)) == tokens
+ 
+ 
++def test_newline_in_ls(lexer_session):
++    fragment = '$ ls \\\nhi\nhi\n'
++    tokens = [
++        (Token.Text, ''),
++        (Token.Generic.Prompt, '$ '),
++        (Token.Text, 'ls'),
++        (Token.Text, ' '),
++        (Token.Literal.String.Escape, '\\\n'),
++        (Token.Text, 'hi'),
++        (Token.Text, '\n'),
++        (Token.Generic.Output, 'hi\n'),
++    ]
++    assert list(lexer_session.get_tokens(fragment)) == tokens
++
++
++def test_comment_after_prompt(lexer_session):
++    fragment = '$# comment'
++    tokens = [
++        (Token.Comment.Single, ''),
++        (Token.Generic.Prompt, '$'),
++        (Token.Comment.Single, '# comment\n'),
++    ]
++    assert list(lexer_session.get_tokens(fragment)) == tokens
++
++
+ def test_msdos_gt_only(lexer_msdos):
+     fragment = '> py\nhi\n'
+     tokens = [
+@@ -217,8 +241,7 @@ def test_virtualenv(lexer_session):
+         (Token.Text, ''),
+         (Token.Text, ' '),
+         (Token.Text, ''),
+-        (Token.Generic.Prompt, '[~/project]$'),
+-        (Token.Text, ' '),
++        (Token.Generic.Prompt, '[~/project]$ '),
+         (Token.Text, 'foo'),
+         (Token.Text, ' '),
+         (Token.Text, '-h'),

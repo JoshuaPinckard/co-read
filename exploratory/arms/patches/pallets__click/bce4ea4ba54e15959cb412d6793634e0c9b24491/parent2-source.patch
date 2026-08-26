@@ -1,0 +1,134 @@
+diff --git a/CHANGES.rst b/CHANGES.rst
+index 2f160beb9d0ab6fc34bc744409f2465b7a2cf438..273c00f9e44ae8569b6cc936c7b2b7cddf49ba1f 100644
+--- a/CHANGES.rst
++++ b/CHANGES.rst
+@@ -1,5 +1,17 @@
+ .. currentmodule:: click
+ 
++Version 7.1.2
++-------------
++
++Released 2020-04-27
++
++-   Revert applying shell quoting to commands for ``echo_with_pager``
++    and ``edit``. This was intended to allows spaces in commands, but
++    caused issues if the string was actually a command and arguments, or
++    on Windows. Instead, the string must be quoted manually as it should
++    appear on the command line. :issue:`1514`
++
++
+ Version 7.1.1
+ -------------
+ 
+diff --git a/docs/options.rst b/docs/options.rst
+index 4942c8a2b2123723f680df2064f95db671c0298b..ac5aeae27b3c7016d3ff39726a5b953279247371 100644
+--- a/docs/options.rst
++++ b/docs/options.rst
+@@ -383,7 +383,7 @@ Choices should be unique after considering the effects of
+ ``case_sensitive`` and any specified token normalization function.
+ 
+ .. versionchanged:: 7.1
+-    The resulting value from an option will always be on the of the
++    The resulting value from an option will always be one of the
+     originally passed choices regardless of ``case_sensitive``.
+ 
+ .. _option-prompting:
+diff --git a/src/click/__init__.py b/src/click/__init__.py
+index 3910b80323f7b0c79f4161935a1ab7ba33ddd351..2b6008f2dd4176d819f06e0d7e92e43b142d30b0 100644
+--- a/src/click/__init__.py
++++ b/src/click/__init__.py
+@@ -76,4 +76,4 @@ from .utils import open_file
+ # literals.
+ disable_unicode_literals_warning = False
+ 
+-__version__ = "7.1.1"
++__version__ = "7.1.2"
+diff --git a/src/click/_compat.py b/src/click/_compat.py
+index ed57a18f95797da266432fdee5cff8e8f1cd27fc..60cb115bc5091c408f68d2461115d2e35bd47799 100644
+--- a/src/click/_compat.py
++++ b/src/click/_compat.py
+@@ -174,8 +174,6 @@ if PY2:
+     iteritems = lambda x: x.iteritems()
+     range_type = xrange
+ 
+-    from pipes import quote as shlex_quote
+-
+     def is_bytes(x):
+         return isinstance(x, (buffer, bytearray))
+ 
+@@ -284,8 +282,6 @@ else:
+     isidentifier = lambda x: x.isidentifier()
+     iteritems = lambda x: iter(x.items())
+ 
+-    from shlex import quote as shlex_quote
+-
+     def is_bytes(x):
+         return isinstance(x, (bytes, memoryview, bytearray))
+ 
+diff --git a/src/click/_termui_impl.py b/src/click/_termui_impl.py
+index c6e86cc0108790fe063a97cb811611a4ebb88901..88bec37701cf549a7b39c7667a6520930c141a73 100644
+--- a/src/click/_termui_impl.py
++++ b/src/click/_termui_impl.py
+@@ -17,7 +17,6 @@ from ._compat import int_types
+ from ._compat import isatty
+ from ._compat import open_stream
+ from ._compat import range_type
+-from ._compat import shlex_quote
+ from ._compat import strip_ansi
+ from ._compat import term_len
+ from ._compat import WIN
+@@ -346,10 +345,7 @@ def pager(generator, color=None):
+     fd, filename = tempfile.mkstemp()
+     os.close(fd)
+     try:
+-        if (
+-            hasattr(os, "system")
+-            and os.system("more {}".format(shlex_quote(filename))) == 0
+-        ):
++        if hasattr(os, "system") and os.system('more "{}"'.format(filename)) == 0:
+             return _pipepager(generator, "more", color)
+         return _nullpager(stdout, generator, color)
+     finally:
+@@ -418,7 +414,7 @@ def _tempfilepager(generator, cmd, color):
+     with open_stream(filename, "wb")[0] as f:
+         f.write(text.encode(encoding))
+     try:
+-        os.system("{} {}".format(shlex_quote(cmd), shlex_quote(filename)))
++        os.system('{} "{}"'.format(cmd, filename))
+     finally:
+         os.unlink(filename)
+ 
+@@ -463,9 +459,7 @@ class Editor(object):
+             environ = None
+         try:
+             c = subprocess.Popen(
+-                "{} {}".format(shlex_quote(editor), shlex_quote(filename)),
+-                env=environ,
+-                shell=True,
++                '{} "{}"'.format(editor, filename), env=environ, shell=True,
+             )
+             exit_code = c.wait()
+             if exit_code != 0:
+@@ -536,16 +530,18 @@ def open_url(url, wait=False, locate=False):
+     elif WIN:
+         if locate:
+             url = _unquote_file(url)
+-            args = "explorer /select,{}".format(shlex_quote(url))
++            args = 'explorer /select,"{}"'.format(_unquote_file(url.replace('"', "")))
+         else:
+-            args = 'start {} "" {}'.format("/WAIT" if wait else "", shlex_quote(url))
++            args = 'start {} "" "{}"'.format(
++                "/WAIT" if wait else "", url.replace('"', "")
++            )
+         return os.system(args)
+     elif CYGWIN:
+         if locate:
+             url = _unquote_file(url)
+-            args = "cygstart {}".format(shlex_quote(os.path.dirname(url)))
++            args = 'cygstart "{}"'.format(os.path.dirname(url).replace('"', ""))
+         else:
+-            args = "cygstart {} {}".format("-w" if wait else "", shlex_quote(url))
++            args = 'cygstart {} "{}"'.format("-w" if wait else "", url.replace('"', ""))
+         return os.system(args)
+ 
+     try:

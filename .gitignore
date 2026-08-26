@@ -3,9 +3,31 @@ __pycache__/
 *.pyc
 node_modules/
 corpus/_clones/
+corpus/_conflict_mirrors/
 exploratory/hazard/*.ndjson
 exploratory/retrieval/*.jsonl
 exploratory/retrieval/.retrieval-head-*/
 exploratory/**/git-stream/
 *.partial
 error.log
+tools/java/apache-maven-*/
+tools/java/classes/
+instruments/arms/java/.classes/
+tools/java/downloads/
+tools/java/jdks/
+tools/java/maven-user-home/
+tools/maven-repository/
+/tools/go/
+/tools/go-cache/
+# Arms instrument bulk evidence: retained on disk, referenced by hash in the
+# reports, excluded from the repository (pytest temp trees exceed MAX_PATH
+# and the invalidated probe trees are superseded raw runs).
+exploratory/arms/invalidated-*/
+exploratory/arms/raw/
+exploratory/arms/preparations/
+exploratory/arms/shim-gate/
+exploratory/arms/shim-gate-attempt-1-fail/
+exploratory/arms/shim-gate-final/
+exploratory/arms/__pycache__/
+instruments/arms/shim/__pycache__/
+instruments/arms/canary/__pycache__/

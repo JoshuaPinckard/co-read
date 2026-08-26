@@ -1,0 +1,99 @@
+diff --git a/CHANGES.rst b/CHANGES.rst
+index 8c058d56649c048c9aea58957f5311bd45a37f05..80ae396bca5aafab5b3bd74ce7e4a292155fb033 100644
+--- a/CHANGES.rst
++++ b/CHANGES.rst
+@@ -1,5 +1,11 @@
+ .. currentmodule:: click
+ 
++Version 8.5.0
++-------------
++
++Unreleased
++
++
+ Version 8.4.2
+ -------------
+ 
+@@ -19,7 +25,6 @@ Released 2026-05-21
+ -   Fix empty byte-string handling in echo. :issue:`3487`
+ -   Fix closed file error with `echo_via_pager`. :issue:`3449`
+ 
+-
+ Version 8.4.0
+ -------------
+ 
+diff --git a/pyproject.toml b/pyproject.toml
+index e39ef210556f49c680810fe86f9dac9b03a1fc0e..ef9bd712b309c39246c8f1bafbc27080fb3b9398 100644
+--- a/pyproject.toml
++++ b/pyproject.toml
+@@ -1,6 +1,6 @@
+ [project]
+ name = "click"
+-version = "8.4.2.dev"
++version = "8.5.0.dev"
+ description = "Composable command line interface toolkit"
+ readme = "README.md"
+ license = "BSD-3-Clause"
+diff --git a/src/click/shell_completion.py b/src/click/shell_completion.py
+index b01e290a96784495ac1b860b47dde47ef10aca77..d6f0a6c255b4335ad2f188155a1f740f9eab4493 100644
+--- a/src/click/shell_completion.py
++++ b/src/click/shell_completion.py
+@@ -181,18 +181,14 @@ function %(complete_func)s;
+ COMP_CWORD=(commandline -t) %(prog_name)s);
+ 
+     for completion in $response;
+-        set -l metadata (string split \n $completion);
++        set -l metadata (string split "," $completion);
+ 
+         if test $metadata[1] = "dir";
+             __fish_complete_directories $metadata[2];
+         else if test $metadata[1] = "file";
+             __fish_complete_path $metadata[2];
+         else if test $metadata[1] = "plain";
+-            if test $metadata[3] != "_";
+-                echo $metadata[2]\t$metadata[3];
+-            else;
+-                echo $metadata[2];
+-            end;
++            echo $metadata[2];
+         end;
+     end;
+ end;
+@@ -427,15 +423,15 @@ class FishComplete(ShellComplete):
+             Escape newlines in value and help to fix completion errors with
+             multi-line help strings.
+         """
+-        # The fish completion script splits each response line on literal
+-        # newlines, so any newline in the value or help would corrupt the
+-        # frame. Replace them with the two-character escape "\n" so the text
+-        # round-trips through fish without breaking the format. The "_"
+-        # sentinel for missing help mirrors :class:`ZshComplete`.
+-        help_ = item.help or "_"
+-        value = item.value.replace("\n", r"\n")
+-        help_escaped = help_.replace("\n", r"\n")
+-        return f"{item.type}\n{value}\n{help_escaped}"
++        # According to https://fishshell.com/docs/current/cmds/complete.html
++        # Command substitutions found in ARGUMENTS should return a newline-
++        # separated list of arguments, and each argument may optionally have a tab
++        # character followed by the argument description.
++        if item.help:
++            help_ = item.help.replace("\n", "\\n").replace("\t", " ")
++            return f"{item.type},{item.value}\t{help_}"
++
++        return f"{item.type},{item.value}"
+ 
+ 
+ ShellCompleteType = t.TypeVar("ShellCompleteType", bound="type[ShellComplete]")
+diff --git a/uv.lock b/uv.lock
+index 72a4012485538ef9f8e51e762125a9c0ec0ba8f7..80a545d83bf2644f3be9e6d709a73499ebddffb1 100644
+--- a/uv.lock
++++ b/uv.lock
+@@ -173,7 +173,7 @@ wheels = [
+ 
+ [[package]]
+ name = "click"
+-version = "8.4.2.dev0"
++version = "8.5.0.dev0"
+ source = { editable = "." }
+ dependencies = [
+     { name = "colorama", marker = "sys_platform == 'win32'" },

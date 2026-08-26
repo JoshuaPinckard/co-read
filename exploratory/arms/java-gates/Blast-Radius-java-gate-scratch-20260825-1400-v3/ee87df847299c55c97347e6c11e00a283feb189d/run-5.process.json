@@ -1,0 +1,53 @@
+{
+  "command": [
+    "mvn",
+    "-q",
+    "-o",
+    "-s",
+    "<project>/tools/java/maven-settings.xml",
+    "-gs",
+    "<project>/tools/java/maven-settings.xml",
+    "-Dmaven.repo.local=<project>/tools/maven-repository",
+    "test",
+    "-Dtest=ArchUtilsTest,ArrayUtilsTest,BackgroundInitializerTest,CharRangeTest,ConcurrentUtilsTest,DateUtilsTest,EqualsBuilderTest,EventCountCircuitBreakerTest,EventUtilsTest,ExceptionUtilsTest,FastDateParserSDFTest,FastDatePrinterTimeZonesTest,FieldUtilsTest,FunctionsTest,ImmutablePairTest,ImmutableTripleTest,LocaleUtilsTest,MultiBackgroundInitializerTest,MutablePairTest,ObjectUtilsTest,PairTest,RandomStringUtilsTest,ReflectionToStringBuilderSummaryTest,SerializationUtilsTest,StrBuilderTest,StrSubstitutorTest,StreamsTest,StringUtilsTest,ValidateTest,WeekYearTest",
+    "-DfailIfNoTests=false"
+  ],
+  "elapsed_seconds": 52.36,
+  "label": "run-5",
+  "normalized": {
+    "normalized_sha256": "918d1d106266b377871b027845fae0a4389b2ecf4b94072c888189833f15f4b8",
+    "outcome_counts": {
+      "pass": 2829
+    },
+    "parse_errors": [],
+    "path": "exploratory/arms/java-gates/Blast-Radius-java-gate-scratch-20260825-1400-v3/ee87df847299c55c97347e6c11e00a283feb189d/run-5.normalized.json",
+    "sha256": "b3798d9d64d4ad32b635bfa9c99ce125e9dea1be9fc9dce89bf744d7d98446c3",
+    "test_count": 2829
+  },
+  "reports_archive": "exploratory/arms/java-gates/Blast-Radius-java-gate-scratch-20260825-1400-v3/ee87df847299c55c97347e6c11e00a283feb189d/run-5.reports.zip",
+  "reports_archive_sha256": "bd75bb7efb49c63f7c97deb5263eb1d89101bfbbb2fd4cc5934b1e46f6132daa",
+  "returncode": 0,
+  "source_export": {
+    "base": "3ce3b27dbd579a918e97e1fb09e9b0153cc71a60",
+    "clean_including_untracked_before": true,
+    "head_after": "3ce3b27dbd579a918e97e1fb09e9b0153cc71a60",
+    "head_before": "3ce3b27dbd579a918e97e1fb09e9b0153cc71a60",
+    "path": "C:/Users/joshp/Desktop/Blast-Radius-java-gate-scratch-20260825-1400-v3/attempts/focal/ee87df847299c55c97347e6c11e00a283feb189d/3ce3b27dbd57/offline-run-5",
+    "tracked_after": {
+      "tracked_file_count": 412,
+      "tracked_manifest_sha256": "56d0b34a7e9bd2885c623fc8164d4917526cc168c3fab57208c792c701705e50"
+    },
+    "tracked_before": {
+      "tracked_file_count": 412,
+      "tracked_manifest_sha256": "56d0b34a7e9bd2885c623fc8164d4917526cc168c3fab57208c792c701705e50"
+    },
+    "tracked_status_after": "",
+    "tracked_unchanged": true
+  },
+  "stderr": "exploratory/arms/java-gates/Blast-Radius-java-gate-scratch-20260825-1400-v3/ee87df847299c55c97347e6c11e00a283feb189d/run-5.stderr.bin",
+  "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "stdout": "exploratory/arms/java-gates/Blast-Radius-java-gate-scratch-20260825-1400-v3/ee87df847299c55c97347e6c11e00a283feb189d/run-5.stdout.bin",
+  "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "timed_out": false,
+  "timeout_termination": null
+}

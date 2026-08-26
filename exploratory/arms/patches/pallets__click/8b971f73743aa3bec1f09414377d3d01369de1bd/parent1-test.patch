@@ -1,0 +1,190 @@
+diff --git a/tests/test_basic.py b/tests/test_basic.py
+index 8de6301a8cb7c38ae0e973afef2683388b953395..b83d86a14bdc5e3dd9c093e5aefe98c400cac4a8 100644
+--- a/tests/test_basic.py
++++ b/tests/test_basic.py
+@@ -23,6 +23,24 @@ def test_basic_functionality(runner):
+     assert result.exit_code == 0
+ 
+ 
++def test_repr():
++    @click.command()
++    def command():
++        pass
++
++    @click.group()
++    def group():
++        pass
++
++    @group.command()
++    def subcommand():
++        pass
++
++    assert repr(command) == '<Command command>'
++    assert repr(group) == '<Group group>'
++    assert repr(subcommand) == '<Command subcommand>'
++
++
+ def test_return_values():
+     @click.command()
+     def cli():
+@@ -30,7 +48,7 @@ def test_return_values():
+ 
+     with cli.make_context('foo', []) as ctx:
+         rv = cli.invoke(ctx)
+-        assert rv is 42
++        assert rv == 42
+ 
+ 
+ def test_basic_group(runner):
+diff --git a/tests/test_compat.py b/tests/test_compat.py
+index abc733b19289d90096d15cd138b619588a45c29e..674cded9a722d1b244ed6ef89d3a1735a87f137a 100644
+--- a/tests/test_compat.py
++++ b/tests/test_compat.py
+@@ -25,6 +25,14 @@ def test_bash_func_name():
+     assert '_COMPLETE_VAR=complete $1' in script
+ 
+ 
++def test_zsh_func_name():
++    from click._bashcomplete import get_completion_script
++    script = get_completion_script('foo-bar', '_COMPLETE_VAR', 'zsh').strip()
++    assert script.startswith('#compdef foo-bar')
++    assert 'compdef _foo_bar_completion foo-bar;' in script
++    assert '(( ! $+commands[foo-bar] )) && return 1' in script
++
++
+ @pytest.mark.xfail(WIN, reason="Jupyter not tested/supported on Windows")
+ def test_is_jupyter_kernel_output():
+     class JupyterKernelFakeStream(object):
+diff --git a/tests/test_context.py b/tests/test_context.py
+index 35933beba52ef6915c4b8bf37f35fba055c92a9d..6a26b9de290b6107b1ba866cef17abf90f5cb4de 100644
+--- a/tests/test_context.py
++++ b/tests/test_context.py
+@@ -1,6 +1,6 @@
+ # -*- coding: utf-8 -*-
+ import click
+-
++import pytest
+ 
+ def test_ensure_context_objects(runner):
+     class Foo(object):
+@@ -256,3 +256,65 @@ def test_exit_not_standalone():
+         ctx.exit(0)
+ 
+     assert cli.main([], 'test_exit_not_standalone', standalone_mode=False) == 0
++
++
++def test_parameter_source_default(runner):
++    @click.command()
++    @click.pass_context
++    @click.option("-o", "--option", default=1)
++    def cli(ctx, option):
++        click.echo(ctx.get_parameter_source("option"))
++
++    rv = runner.invoke(cli)
++    assert rv.output.rstrip() == click.ParameterSource.DEFAULT
++
++
++def test_parameter_source_default_map(runner):
++    @click.command()
++    @click.pass_context
++    @click.option("-o", "--option", default=1)
++    def cli(ctx, option):
++        click.echo(ctx.get_parameter_source("option"))
++
++    rv = runner.invoke(cli, default_map={"option": 1})
++    assert rv.output.rstrip() == click.ParameterSource.DEFAULT_MAP
++    
++
++def test_parameter_source_commandline(runner):
++    @click.command()
++    @click.pass_context
++    @click.option("-o", "--option", default=1)
++    def cli(ctx, option):
++        click.echo(ctx.get_parameter_source("option"))
++
++    rv = runner.invoke(cli, ["-o", "1"])
++    assert rv.output.rstrip() == click.ParameterSource.COMMANDLINE
++    rv = runner.invoke(cli, ["--option", "1"])
++    assert rv.output.rstrip() == click.ParameterSource.COMMANDLINE
++
++
++def test_parameter_source_environment(runner):
++    @click.command()
++    @click.pass_context
++    @click.option("-o", "--option", default=1)
++    def cli(ctx, option):
++        click.echo(ctx.get_parameter_source("option"))
++
++    rv = runner.invoke(cli, auto_envvar_prefix="TEST", env={"TEST_OPTION": "1"})
++    assert rv.output.rstrip() == click.ParameterSource.ENVIRONMENT
++
++
++def test_parameter_source_environment_variable_specified(runner):
++    @click.command()
++    @click.pass_context
++    @click.option("-o", "--option", default=1, envvar="NAME")
++    def cli(ctx, option):
++        click.echo(ctx.get_parameter_source("option"))
++        
++    rv = runner.invoke(cli, env={"NAME": "1"})
++    assert rv.output.rstrip() == click.ParameterSource.ENVIRONMENT
++
++
++def test_validate_parameter_source():
++    with pytest.raises(ValueError):
++        click.ParameterSource.validate("NOT_A_VALID_PARAMETER_SOURCE")
+diff --git a/tests/test_termui.py b/tests/test_termui.py
+index c6e06b63bf8c8160d2abeb346d2264d605858efd..c5164c05fd4c67705d677a53c415b220367c3d37 100644
+--- a/tests/test_termui.py
++++ b/tests/test_termui.py
+@@ -277,6 +277,50 @@ def test_progressbar_update(runner, monkeypatch):
+     assert '100%          ' in lines[3]
+ 
+ 
++def test_progressbar_item_show_func(runner, monkeypatch):
++    fake_clock = FakeClock()
++
++    @click.command()
++    def cli():
++        with click.progressbar(range(4), item_show_func=lambda x: "Custom {}".format(x)) as progress:
++            for _ in progress:
++                fake_clock.advance_time()
++                print("")
++
++    monkeypatch.setattr(time, 'time', fake_clock.time)
++    monkeypatch.setattr(click._termui_impl, 'isatty', lambda _: True)
++    output = runner.invoke(cli, []).output
++
++    lines = [line for line in output.split('\n') if '[' in line]
++
++    assert 'Custom 0' in lines[0]
++    assert 'Custom 1' in lines[1]
++    assert 'Custom 2' in lines[2]
++    assert 'Custom None' in lines[3]
++
++
++def test_progressbar_update_with_item_show_func(runner, monkeypatch):
++    fake_clock = FakeClock()
++
++    @click.command()
++    def cli():
++        with click.progressbar(length=6, item_show_func=lambda x: "Custom {}".format(x)) as progress:
++            while not progress.finished:
++                fake_clock.advance_time()
++                progress.update(2, progress.pos)
++                print("")
++
++    monkeypatch.setattr(time, 'time', fake_clock.time)
++    monkeypatch.setattr(click._termui_impl, 'isatty', lambda _: True)
++    output = runner.invoke(cli, []).output
++
++    lines = [line for line in output.split('\n') if '[' in line]
++
++    assert 'Custom 0' in lines[0]
++    assert 'Custom 2' in lines[1]
++    assert 'Custom 4' in lines[2]
++
++
+ @pytest.mark.parametrize(
+     'key_char', (u'h', u'H', u'é', u'À', u' ', u'字', u'àH', u'àR')
+ )

@@ -1,0 +1,25 @@
+diff --git a/src/changes/changes.xml b/src/changes/changes.xml
+index 3e25e06945173f38d50b982435a63705073ed153..1a59e4658f9b657f4568ffd2908ac56de8cbdfd8 100644
+--- a/src/changes/changes.xml
++++ b/src/changes/changes.xml
+@@ -22,6 +22,7 @@
+   <body>
+ 
+   <release version="3.5" date="tba" description="tba">
++    <action issue="LANG-1114" type="fix" dev="britter" due-to="Andy Coates">TypeUtils.ParameterizedType#equals doesn't work with wildcard types</action>
+     <action issue="LANG-979" type="update" dev="britter" due-to="Bruno P. Kinoshita">TypeUtils.parameterizeWithOwner - wrong format descriptor for "invalid number of type parameters".</action>
+     <action issue="LANG-1112" type="update" dev="britter">MultilineRecursiveToStringStyle largely unusable due to being package-private.</action>
+     <action issue="LANG-1058" type="update" dev="djones" due-to="Leo Wang">StringUtils.uncapitalize performance improvement</action>
+diff --git a/src/main/java/org/apache/commons/lang3/reflect/TypeUtils.java b/src/main/java/org/apache/commons/lang3/reflect/TypeUtils.java
+index 1a750e97dfb04df4ad1b27e65b81405f28830a46..91313c6a473066bf91b42ab182a12ad494c09d38 100644
+--- a/src/main/java/org/apache/commons/lang3/reflect/TypeUtils.java
++++ b/src/main/java/org/apache/commons/lang3/reflect/TypeUtils.java
+@@ -1626,7 +1626,7 @@ public class TypeUtils {
+             return equals(getImplicitLowerBounds(w), getImplicitLowerBounds(other))
+                 && equals(getImplicitUpperBounds(w), getImplicitUpperBounds(other));
+         }
+-        return true;
++        return false;
+     }
+ 
+     /**

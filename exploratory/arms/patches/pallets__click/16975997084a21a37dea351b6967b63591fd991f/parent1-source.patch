@@ -1,0 +1,1442 @@
+diff --git a/.gitignore b/.gitignore
+index fe7a636b32a58758796d4c9e29a5606d02cb2354..3ec9ade2a069d6afe3cf7d1bebfe29a37375bca6 100644
+--- a/.gitignore
++++ b/.gitignore
+@@ -6,3 +6,5 @@
+ dist
+ build
+ docs/_build
++click.egg-info
++.tox
+diff --git a/CHANGES b/CHANGES
+index f5555787851e2aad419faeaaa48ce01a746c5bcb..597142e3df2af7c2975beb22a2e894be5a206dcc 100644
+--- a/CHANGES
++++ b/CHANGES
+@@ -1,7 +1,26 @@
+ Click Changelog
+ ===============
+ 
+-This contains all major version changes between click releases.
++This contains all major version changes between Click releases.
++
++Version 3.0
++-----------
++
++(codename and release date to be decided)
++
++- formatter now no longer attempts to accomodate for terminals
++  smaller than 50 characters.  If that happens it just assumes
++  a minimal width.
++- added a way to not swallow exceptions in the test system.
++- added better support for colors with pagers and ways to
++  override the autodetection.
++- the CLI runner's result object now has a traceback attached.
++- improved automatic short help detection to work better with
++  dots that do not terminate sentences.
++- when definining options without actual valid option strings
++  now, Click will give an error message instead of silently
++  passing.  This should catch situations where users wanted to
++  created arguments instead of options.
+ 
+ Version 2.2
+ -----------
+diff --git a/click/__init__.py b/click/__init__.py
+index 05f1b52877215f07ab3fd6374b63bcc199f6e871..a72bb881a71c03849f04cdefb59548783e68c0ec 100644
+--- a/click/__init__.py
++++ b/click/__init__.py
+@@ -82,4 +82,4 @@ __all__ = [
+ ]
+ 
+ 
+-__version__ = '2.2'
++__version__ = '3.0-dev'
+diff --git a/click/_termui_impl.py b/click/_termui_impl.py
+index 9454190cb9804f65d96baa4f0385e9777b63449c..93ed78ebfc3fa5d99997cbfc58641f2d09bef4dc 100644
+--- a/click/_termui_impl.py
++++ b/click/_termui_impl.py
+@@ -3,7 +3,7 @@
+     ~~~~~~~~~~~~~~~~~~
+ 
+     This module contains implementations for the termui module.  To keep the
+-    import time of click down, some infrequently used functionality is placed
++    import time of Click down, some infrequently used functionality is placed
+     in this module and only imported as needed.
+ 
+     :copyright: (c) 2014 by Armin Ronacher.
+@@ -248,50 +248,70 @@ class ProgressBar(object):
+         del next
+ 
+ 
+-def pager(text):
++def pager(text, color=None):
+     """Decide what method to use for paging through text."""
+     stdout = _default_text_stdout()
+     if not isatty(sys.stdin) or not isatty(stdout):
+-        return _nullpager(stdout, text)
++        return _nullpager(stdout, text, color)
+     if 'PAGER' in os.environ:
+         if sys.platform == 'win32':
+-            return _tempfilepager(strip_ansi(text), os.environ['PAGER'])
+-        elif os.environ.get('TERM') in ('dumb', 'emacs'):
+-            return _pipepager(strip_ansi(text), os.environ['PAGER'])
+-        else:
+-            return _pipepager(text, os.environ['PAGER'])
++            return _tempfilepager(text, os.environ['PAGER'], color)
++        return _pipepager(text, os.environ['PAGER'], color)
+     if os.environ.get('TERM') in ('dumb', 'emacs'):
+-        return _nullpager(stdout, text)
++        return _nullpager(stdout, text, color)
+     if sys.platform == 'win32' or sys.platform.startswith('os2'):
+-        return _tempfilepager(strip_ansi(text), 'more <')
++        return _tempfilepager(text, 'more <', color)
+     if hasattr(os, 'system') and os.system('(less) 2>/dev/null') == 0:
+-        return _pipepager(text, 'less')
++        return _pipepager(text, 'less', color)
+ 
+     import tempfile
+     fd, filename = tempfile.mkstemp()
+     os.close(fd)
+     try:
+         if hasattr(os, 'system') and os.system('more "%s"' % filename) == 0:
+-            return _pipepager(text, 'more')
+-        return _nullpager(stdout, text)
++            return _pipepager(text, 'more', color)
++        return _nullpager(stdout, text, color)
+     finally:
+         os.unlink(filename)
+ 
+ 
+-def _pipepager(text, cmd):
+-    """Page through text by feeding it to another program."""
+-    pipe = os.popen(cmd, 'w')
++def _pipepager(text, cmd, color):
++    """Page through text by feeding it to another program.  Invoking a
++    pager through this might support colors.
++    """
++    import subprocess
++    env = dict(os.environ)
++
++    # If we're piping to less we might support colors under the
++    # condition that
++    cmd_detail = cmd.rsplit('/', 1)[-1].split()
++    if color is None and cmd_detail[0] == 'less':
++        less_flags = os.environ.get('LESS', '') + ' '.join(cmd_detail[1:])
++        if not less_flags:
++            env['LESS'] = '-R'
++            color = True
++        elif 'r' in less_flags or 'R' in less_flags:
++            color = True
++
++    if not color:
++        text = strip_ansi(text)
++
++    c = subprocess.Popen(cmd, shell=True, stdin=subprocess.PIPE,
++                         env=env)
+     try:
+-        pipe.write(text)
+-        pipe.close()
++        c.stdin.write(text)
++        c.stdin.close()
+     except IOError:
+         pass
++    c.wait()
+ 
+ 
+-def _tempfilepager(text, cmd):
++def _tempfilepager(text, cmd, color):
+     """Page through text by invoking a program on a temporary file."""
+     import tempfile
+     filename = tempfile.mktemp()
++    if not color:
++        text = strip_ansi(text)
+     with open_stream(filename, 'w')[0] as f:
+         f.write(text)
+     try:
+@@ -300,9 +320,11 @@ def _tempfilepager(text, cmd):
+         os.unlink(filename)
+ 
+ 
+-def _nullpager(stream, text):
++def _nullpager(stream, text, color):
+     """Simply print unformatted text.  This is the ultimate fallback."""
+-    stream.write(strip_ansi(text))
++    if not color:
++        text = strip_ansi(text)
++    stream.write(text)
+ 
+ 
+ class Editor(object):
+diff --git a/click/_textwrap.py b/click/_textwrap.py
+index a845df824dfa8b31ea12ecf9a709a315a1c3b212..7e776031eaa92904fc77e934a1125346bc9fed6a 100644
+--- a/click/_textwrap.py
++++ b/click/_textwrap.py
+@@ -1,23 +1,16 @@
+ import textwrap
+ from contextlib import contextmanager
+-from ._compat import term_len
+ 
+ 
+ class TextWrapper(textwrap.TextWrapper):
+ 
+-    def _cutdown(self, ucstr, space_left):
+-        l = 0
+-        for i in xrange(len(ucstr)):
+-            l += term_len(ucstr[i])
+-            if space_left < l:
+-                return (ucstr[:i], ucstr[i:])
+-        return ucstr, ''
+-
+     def _handle_long_word(self, reversed_chunks, cur_line, cur_len, width):
+         space_left = max(width - cur_len, 1)
+ 
+         if self.break_long_words:
+-            cut, res = self._cutdown(reversed_chunks[-1], space_left)
++            last = reversed_chunks[-1]
++            cut = last[:space_left]
++            res = last[space_left:]
+             cur_line.append(cut)
+             reversed_chunks[-1] = res
+         elif not cur_line:
+diff --git a/click/core.py b/click/core.py
+index 7d70d0ba17853d6c79e564ea90e15b10b5a0662c..c9913dc44d15709db7666b106de76115d670935d 100644
+--- a/click/core.py
++++ b/click/core.py
+@@ -38,12 +38,12 @@ def invoke_param_callback(callback, ctx, param, value):
+     args = getattr(code, 'co_argcount', 3)
+ 
+     if args < 3:
+-        # This will become a warning in click 3.0:
+-        ## from warnings import warn
+-        ## warn(Warning('Invoked legacy parameter callback "%s".  The new '
+-        ##              'signature for such callbacks starting with '
+-        ##              'click 2.0 is (ctx, param, value).'
+-        ##              % callback), stacklevel=3)
++        # This will become a warning in Click 3.0:
++        from warnings import warn
++        warn(Warning('Invoked legacy parameter callback "%s".  The new '
++                     'signature for such callbacks starting with '
++                     'click 2.0 is (ctx, param, value).'
++                     % callback), stacklevel=3)
+         return callback(ctx, value)
+     return callback(ctx, param, value)
+ 
+@@ -117,7 +117,7 @@ class Context(object):
+                            inherit from parent context.  If no context
+                            defines the terminal width then auto
+                            detection will be applied.
+-    :param resilient_parsing: if this flag is enabled then click will
++    :param resilient_parsing: if this flag is enabled then Click will
+                               parse without any interactivity or callback
+                               invocation.  This is useful for implementing
+                               things such as completion support.
+@@ -183,7 +183,7 @@ class Context(object):
+         #: options, choices, commands etc.
+         self.token_normalize_func = token_normalize_func
+ 
+-        #: Indicates if resilient parsing is enabled.  In that case click
++        #: Indicates if resilient parsing is enabled.  In that case Click
+         #: will do its best to not cause any failures.
+         self.resilient_parsing = resilient_parsing
+ 
+@@ -348,13 +348,13 @@ class BaseCommand(object):
+     """The base command implements the minimal API contract of commands.
+     Most code will never use this as it does not implement a lot of useful
+     functionality but it can act as the direct subclass of alternative
+-    parsing methods that do not depend on the click parser.
++    parsing methods that do not depend on the Click parser.
+ 
+-    For instance, this can be used to bridge click and other systems like
++    For instance, this can be used to bridge Click and other systems like
+     argparse or docopt.
+ 
+     Because base commands do not implement a lot of the API that other
+-    parts of click take for granted, they are not supported for all
++    parts of Click take for granted, they are not supported for all
+     operations.  For instance, they cannot be used with the decorators
+     usually and they have no built-in callback system.
+ 
+@@ -490,7 +490,7 @@ class BaseCommand(object):
+ 
+ class Command(BaseCommand):
+     """Commands are the basic building block of command line interfaces in
+-    click.  A basic command handles command line parsing and might dispatch
++    Click.  A basic command handles command line parsing and might dispatch
+     more parsing to commands nested below it.
+ 
+     .. versionchanged:: 2.0
+@@ -775,7 +775,7 @@ class MultiCommand(Command):
+ 
+ class Group(MultiCommand):
+     """A group allows a command to have subcommands attached.  This is the
+-    most common way to implement nesting in click.
++    most common way to implement nesting in Click.
+ 
+     :param commands: a dictionary of commands.
+     """
+@@ -864,7 +864,7 @@ class Parameter(object):
+ 
+     .. versionchanged:: 2.0
+        Changed signature for parameter callback to also be passed the
+-       parameter.  In click 2.0, the old callback format will still work,
++       parameter.  In Click 2.0, the old callback format will still work,
+        but it will raise a warning to give you change to migrate the
+        code easier.
+ 
+@@ -880,7 +880,7 @@ class Parameter(object):
+                     without any arguments.
+     :param callback: a callback that should be executed after the parameter
+                      was matched.  This is called as ``fn(ctx, param,
+-                     value)`` and needs to return the value.  Before click
++                     value)`` and needs to return the value.  Before Click
+                      2.0, the signature was ``(ctx, value)``.
+     :param nargs: the number of arguments to match.  If not ``1`` the return
+                   value is a tuple instead of single value.
+@@ -1162,6 +1162,11 @@ class Option(Parameter):
+                 return None, opts, secondary_opts
+             raise TypeError('Could not determine name for option')
+ 
++        if not opts and not secondary_opts:
++            raise TypeError('No options defined but a name was passed (%s). '
++                            'Did you mean to declare an argument instead '
++                            'of an option?' % name)
++
+         return name, opts, secondary_opts
+ 
+     def add_to_parser(self, parser, ctx):
+diff --git a/click/decorators.py b/click/decorators.py
+index 4c36c801391efaf83cee8a9f624a25deac091dac..3811bff8fa9c889596fc6fc40b12194021fdcbeb 100644
+--- a/click/decorators.py
++++ b/click/decorators.py
+@@ -216,7 +216,7 @@ def version_option(version=None, *param_decls, **attrs):
+     printing out the version number.  This is implemented as an eager
+     option that prints the version and exits the program in the callback.
+ 
+-    :param version: the version number to show.  If not provided click
++    :param version: the version number to show.  If not provided Click
+                     attempts an auto discovery via setuptools.
+     :param prog_name: the name of the program (defaults to autodetection)
+     :param message: custom message to show instead of the default
+diff --git a/click/exceptions.py b/click/exceptions.py
+index 058a9ae5fb7a3fa451391573948b362c6abf65d0..4e436bf9da7d07e416c4ec7e06e9700316bb2c49 100644
+--- a/click/exceptions.py
++++ b/click/exceptions.py
+@@ -1,10 +1,9 @@
+-import sys
+ from ._compat import PY2, filename_to_ui, get_text_stderr
+ from .utils import echo
+ 
+ 
+ class ClickException(Exception):
+-    """An exception that click can handle and show to the user."""
++    """An exception that Click can handle and show to the user."""
+ 
+     #: The exit code for this exception
+     exit_code = 1
+@@ -22,7 +21,7 @@ class ClickException(Exception):
+     def show(self, file=None):
+         if file is None:
+             file = get_text_stderr()
+-        echo('Error: %s' % self.format_message())
++        echo('Error: %s' % self.format_message(), file=file)
+ 
+ 
+ class UsageError(ClickException):
+@@ -50,13 +49,13 @@ class UsageError(ClickException):
+ class BadParameter(UsageError):
+     """An exception that formats out a standardized error message for a
+     bad parameter.  This is useful when thrown from a callback or type as
+-    click will attach contextual information to it (for instance, which
++    Click will attach contextual information to it (for instance, which
+     parameter it is).
+ 
+     .. versionadded:: 2.0
+ 
+     :param param: the parameter object that caused this error.  This can
+-                  be left out, and click will attach this info itself
++                  be left out, and Click will attach this info itself
+                   if possible.
+     :param param_hint: a string that shows up as parameter name.  This
+                        can be used as alternative to `param` in cases
+@@ -99,4 +98,4 @@ class FileError(ClickException):
+ 
+ 
+ class Abort(RuntimeError):
+-    """An internal signalling exception that signals click to abort."""
++    """An internal signalling exception that signals Click to abort."""
+diff --git a/click/formatting.py b/click/formatting.py
+index 7b9fa7bc9fb8d6124f456fd9121750d2c710b38d..204c5cfde0ddc492d2d78aa7989c1735fdf69459 100644
+--- a/click/formatting.py
++++ b/click/formatting.py
+@@ -97,7 +97,7 @@ class HelpFormatter(object):
+     def __init__(self, indent_increment=2, width=None):
+         self.indent_increment = indent_increment
+         if width is None:
+-            width = min(get_terminal_size()[0], 80) - 2
++            width = max(min(get_terminal_size()[0], 80) - 2, 50)
+         self.width = width
+         self.current_indent = 0
+         self.buffer = []
+@@ -180,7 +180,7 @@ class HelpFormatter(object):
+                 self.write('\n')
+                 self.write(' ' * (first_col + self.current_indent))
+ 
+-            text_width = self.width - first_col - 2
++            text_width = max(self.width - first_col - 2, 10)
+             lines = iter(wrap_text(second, text_width).splitlines())
+             if lines:
+                 self.write(next(lines) + '\n')
+diff --git a/click/parser.py b/click/parser.py
+index f94ef96c4c665e47dcd300d7670ece8203a125eb..93b38873b0c80a4fd3dfdf2b01d0460296d9786e 100644
+--- a/click/parser.py
++++ b/click/parser.py
+@@ -5,7 +5,7 @@
+ 
+     This module started out as largely a copy paste from the stdlib's
+     optparse module with the features removed that we do not need from
+-    optparse because we implement them in click on a higher level (for
++    optparse because we implement them in Click on a higher level (for
+     instance type handling, help formatting and a lot more).
+ 
+     The plan is to remove more and more from here over time.
+@@ -127,7 +127,7 @@ class OptionParser(object):
+     """The option parser is an internal class that is ultimately used to
+     parse options and arguments.  It's modelled after optparse and brings
+     a similar but vastly simplified API.  It should generally not be used
+-    directly as the high level click classes wrap it for you.
++    directly as the high level Click classes wrap it for you.
+ 
+     It's not nearly as extensible as optparse or argparse as it does not
+     implement features that are implemented on a higher level (such as
+diff --git a/click/termui.py b/click/termui.py
+index 44cfb71c377ba0dcc3ae04a3a7895ef71d8c900c..2c801a27d601227dc99ffc5ff0f54166794bce8f 100644
+--- a/click/termui.py
++++ b/click/termui.py
+@@ -176,16 +176,21 @@ def get_terminal_size():
+     return int(cr[1]), int(cr[0])
+ 
+ 
+-def echo_via_pager(text):
++def echo_via_pager(text, color=None):
+     """This function takes a text and shows it via an environment specific
+     pager on stdout.
+ 
++    .. versionchanged:: 3.0
++       Added the `color` flag.
++
+     :param text: the text to page.
++    :param color: controls if the pager supports ANSI colors or not.  The
++                  default is autodetection.
+     """
+     if not isinstance(text, string_types):
+         text = text_type(text)
+     from ._termui_impl import pager
+-    return pager(text + '\n')
++    return pager(text + '\n', color)
+ 
+ 
+ def progressbar(iterable=None, length=None, label=None, show_eta=True,
+@@ -351,7 +356,7 @@ def style(text, fg=None, bg=None, bold=None, dim=None, underline=None,
+ 
+ def unstyle(text):
+     """Removes ANSI styling information from a string.  Usually it's not
+-    necessary to use this function as click's echo function will
++    necessary to use this function as Click's echo function will
+     automatically remove styling if necessary.
+ 
+     .. versionadded:: 2.0
+diff --git a/click/testing.py b/click/testing.py
+index bf3976134d24ee3af7c2f4671c193cdf4ae666fd..e97ac993dc665ad7e79596d20c9e8a7cfc78f908 100644
+--- a/click/testing.py
++++ b/click/testing.py
+@@ -66,7 +66,8 @@ def make_input_stream(input, charset):
+ class Result(object):
+     """Holds the captured result of an invoked CLI script."""
+ 
+-    def __init__(self, runner, output_bytes, exit_code, exception):
++    def __init__(self, runner, output_bytes, exit_code, exception,
++                 exc_info=None):
+         #: The runner that created the result
+         self.runner = runner
+         #: The output as bytes.
+@@ -75,6 +76,8 @@ class Result(object):
+         self.exit_code = exit_code
+         #: The exception that happend if one did.
+         self.exception = exception
++        #: The traceback
++        self.exc_info = exc_info
+ 
+     @property
+     def output(self):
+@@ -89,14 +92,14 @@ class Result(object):
+ 
+ 
+ class CliRunner(object):
+-    """The CLI runner provides functionality to invoke a click command line
++    """The CLI runner provides functionality to invoke a Click command line
+     script for unittesting purposes in a isolated environment.  This only
+     works in single-threaded systems without any concurrency as it changes the
+     global interpreter state.
+ 
+     :param charset: the character set for the input and output data.  This is
+                     UTF-8 by default and should not be changed currently as
+-                    the reporting to click only works in Python 2 properly.
++                    the reporting to Click only works in Python 2 properly.
+     :param env: a dictionary with environment variables for overriding.
+     :param echo_stdin: if this is set to `True`, then reading from stdin writes
+                        to stdout.  This is useful for showing examples in
+@@ -130,7 +133,7 @@ class CliRunner(object):
+         """A context manager that sets up the isolation for invoking of a
+         command line tool.  This sets up stdin with the given input data
+         and `os.environ` with the overrides from the given dictionary.
+-        This also rebinds some internals in click to be mocked (like the
++        This also rebinds some internals in Click to be mocked (like the
+         prompt functionality).
+ 
+         This is automatically done in the :meth:`invoke` method.
+@@ -214,7 +217,8 @@ class CliRunner(object):
+             click.termui.hidden_prompt_func = old_hidden_prompt_func
+             click.termui._getchar = old__getchar_func
+ 
+-    def invoke(self, cli, args=None, input=None, env=None, **extra):
++    def invoke(self, cli, args=None, input=None, env=None,
++               catch_exceptions=True, **extra):
+         """Invokes a command in an isolated environment.  The arguments are
+         forwarded directly to the command line script, the `extra` keyword
+         arguments are passed to the :meth:`~click.Command.main` function of
+@@ -222,12 +226,22 @@ class CliRunner(object):
+ 
+         This returns a :class:`Result` object.
+ 
++        .. versionadded:: 3.0
++           The ``catch_exceptions`` parameter was added.
++
++        .. versionchanged:: 3.0
++           The result object now has an `exc_info` attribute with the
++           traceback if available.
++
+         :param cli: the command to invoke
+         :param args: the arguments to invoke
+         :param input: the input data for `sys.stdin`.
+         :param env: the environment overrides.
++        :param catch_exceptions: Whether to catch any other exceptions than
++                                 ``SystemExit``.
+         :param extra: the keyword arguments to pass to :meth:`main`.
+         """
++        exc_info = None
+         with self.isolation(input=input, env=env) as out:
+             exception = None
+             exit_code = 0
+@@ -239,16 +253,22 @@ class CliRunner(object):
+                 if e.code != 0:
+                     exception = e
+                 exit_code = e.code
++                exc_info = sys.exc_info()
+             except Exception as e:
++                if not catch_exceptions:
++                    raise
+                 exception = e
+                 exit_code = -1
+-            sys.stdout.flush()
+-            output = out.getvalue()
++                exc_info = sys.exc_info()
++            finally:
++                sys.stdout.flush()
++                output = out.getvalue()
+ 
+         return Result(runner=self,
+                       output_bytes=output,
+                       exit_code=exit_code,
+-                      exception=exception)
++                      exception=exception,
++                      exc_info=exc_info)
+ 
+     @contextlib.contextmanager
+     def isolated_filesystem(self):
+diff --git a/click/types.py b/click/types.py
+index 91d136a84d999363f2b63f8cd758e1741e8bbb8e..55fbf2806ef769ca122fef48225d135e01256b48 100644
+--- a/click/types.py
++++ b/click/types.py
+@@ -107,7 +107,7 @@ class StringParamType(ParamType):
+ 
+ class Choice(ParamType):
+     """The choice type allows a value to checked against a fixed set of
+-    supported values.  All of these values have to be integers.
++    supported values.  All of these values have to be strings.
+ 
+     See :ref:`choice-opts` for an example.
+     """
+@@ -255,7 +255,7 @@ class File(ParamType):
+     upon first IO.  The default is to be non lazy for standard input and
+     output streams as well as files opened for reading, lazy otherwise.
+ 
+-    Starting with click 2.0, files can also be opened atomically in which
++    Starting with Click 2.0, files can also be opened atomically in which
+     case all writes go into a separate file in the same folder and upon
+     completion the file will be moved over to the original location.  This
+     is useful if a file regularly read by other users is modified.
+diff --git a/click/utils.py b/click/utils.py
+index bc3068b1edd0bb553e048037b369ec897b4cba48..94c69963fde7671e2fa90ad12e97c81c76f5f44a 100644
+--- a/click/utils.py
++++ b/click/utils.py
+@@ -103,8 +103,7 @@ def make_default_short_help(help, max_length=45):
+     done = False
+ 
+     for word in words:
+-        if '.' in word:
+-            word = word.split('.', 1)[0] + '.'
++        if word[-1:] == '.':
+             done = True
+         new_length = result and 1 + len(word) or len(word)
+         if total_length + new_length > max_length:
+@@ -159,7 +158,7 @@ class LazyFile(object):
+     def open(self):
+         """Opens the file if it's not yet open.  This call might fail with
+         a :exc:`FileError`.  Not handling this error will produce an error
+-        that click shows.
++        that Click shows.
+         """
+         if self._f is not None:
+             return self._f
+@@ -215,7 +214,7 @@ def echo(message=None, file=None, nl=True):
+     .. _colorama: http://pypi.python.org/pypi/colorama
+ 
+     .. versionchanged:: 2.0
+-       Starting with version 2.0 of click, the echo function will work
++       Starting with version 2.0 of Click, the echo function will work
+        with colorama if it's installed.
+ 
+     :param message: the message to print
+diff --git a/docs/advanced.rst b/docs/advanced.rst
+index 400bcab5826fcdf589a93bad6fa6b2aed644ec2d..a087c1a228c29153a42b34b55010a045b10b8d16 100644
+--- a/docs/advanced.rst
++++ b/docs/advanced.rst
+@@ -5,7 +5,7 @@ Advanced Patterns
+ 
+ In addition to common functionality that is implemented in the library
+ itself, there are countless patterns that can be implemented by extending
+-click.  This page should give some insight into what can be accomplished.
++Click.  This page should give some insight into what can be accomplished.
+ 
+ .. _aliases:
+ 
+@@ -67,7 +67,7 @@ Token Normalization
+ 
+ .. versionadded:: 2.0
+ 
+-Starting with click 2.0, it's possible to provide a function that is used
++Starting with Click 2.0, it's possible to provide a function that is used
+ for normalizing tokens.  Tokens are option names, choice values, or command
+ values.  This can be used to implement case insensitive options, for
+ instance.
+@@ -95,7 +95,7 @@ Invoking Other Commands
+ -----------------------
+ 
+ Sometimes, it might be interesting to invoke one command from another
+-command.  This is a pattern that is generally discouraged with click, but
++command.  This is a pattern that is generally discouraged with Click, but
+ possible nonetheless.  For this, you can use the :func:`Context.invoke`
+ or :func:`Context.forward` methods.
+ 
+@@ -141,12 +141,12 @@ programmer with the order of arguments as defined by the user before
+ invoking any callbacks.
+ 
+ This is an important concept to understand when porting complex
+-patterns to click from optparse or other systems.  A parameter
++patterns to Click from optparse or other systems.  A parameter
+ callback invocation in optparse happens as part of the parsing step,
+-whereas a callback invocation in click happens after the parsing.
++whereas a callback invocation in Click happens after the parsing.
+ 
+ The main difference is that in optparse, callbacks are invoked with the raw
+-value as it happens, whereas a callback in click is invoked after the
++value as it happens, whereas a callback in Click is invoked after the
+ value has been fully converted.
+ 
+ Generally, the order of invocation is driven by the order in which the user
+@@ -174,7 +174,7 @@ Repeated parameters:
+     ``bar``), then the callback for ``include`` will fire with ``baz``
+     only.
+ 
+-    Note that even if a parameter does not allow multiple versions, click
++    Note that even if a parameter does not allow multiple versions, Click
+     will still accept the position of the first, but it will ignore every
+     value except the first.  The reason for this is to allow composability
+     through shell aliases that set defaults.
+diff --git a/docs/arguments.rst b/docs/arguments.rst
+index 1a8dc25cefaaad104b823944d716896793fe867c..4c9cdef88dc8e2a172952bccdbfa4212ca2c7b7c 100644
+--- a/docs/arguments.rst
++++ b/docs/arguments.rst
+@@ -118,7 +118,7 @@ File Path Arguments
+ 
+ In the previous example, the files were opened immediately.  But what if
+ we just want the filename?  The naïve way is to use the default string
+-argument type.  However, remember that click is Unicode-based, so the string
++argument type.  However, remember that Click is Unicode-based, so the string
+ will always be a Unicode value.  Unfortunately, filenames can be Unicode or
+ bytes depending on which operating system is being used.  As such, the type
+ is insufficient.
+@@ -176,7 +176,7 @@ necessary for manually prompting with the :func:`prompt` function as you
+ do not know if a stream like stdout was opened (which was already open
+ before) or a real file that needs closing.
+ 
+-Starting with click 2.0, it is also possible to open files in atomic mode by
++Starting with Click 2.0, it is also possible to open files in atomic mode by
+ passing ``atomic=True``.  In atomic mode, all writes go into a separate
+ file in the same folder, and upon completion, the file will be moved over to
+ the original location.  This is useful if a file regularly read by other
+@@ -218,9 +218,9 @@ Argument-Like Options
+ 
+ Sometimes, you want to process arguments that look like options.  For
+ instance, imagine you have a file named ``-foo.txt``.  If you pass this as
+-an argument in this manner, click will treat it as an option.
++an argument in this manner, Click will treat it as an option.
+ 
+-To solve this, click does what any POSIX style command line script does,
++To solve this, Click does what any POSIX style command line script does,
+ and that is to accept the string ``--`` as a separator for options and
+ arguments.  After the ``--`` marker, all further parameters are accepted as
+ arguments.
+diff --git a/docs/bashcomplete.rst b/docs/bashcomplete.rst
+index bdf14b253b12d50eebc3a8d9cdcd85cb84d0981e..9154dfb01fad6ef37017ae4a1917a9a7e0d8bfb8 100644
+--- a/docs/bashcomplete.rst
++++ b/docs/bashcomplete.rst
+@@ -3,8 +3,8 @@ Bash Complete
+ 
+ .. versionadded:: 2.0
+ 
+-As of click 2.0, there is built-in support for Bash completion for
+-any click script.  There are certain restrictions on when this completion
++As of Click 2.0, there is built-in support for Bash completion for
++any Click script.  There are certain restrictions on when this completion
+ is available, but for the most part it should just work.
+ 
+ Limitations
+@@ -12,7 +12,7 @@ Limitations
+ 
+ Bash completion is only available if a script has been installed properly,
+ and not executed through the ``python`` command.  For information about
+-how to do that, see :ref:`setuptools-integration`.  Also, click currently
++how to do that, see :ref:`setuptools-integration`.  Also, Click currently
+ only supports completion for Bash.
+ 
+ Currently, Bash completion is an internal feature that is not customizable.
+@@ -34,7 +34,7 @@ Activation
+ ----------
+ 
+ In order to activate Bash completion, you need to inform Bash that
+-completion is available for your script, and how.  Any click application
++completion is available for your script, and how.  Any Click application
+ automatically provides support for that.  The general way this works is
+ through a magic environment variable called ``_<PROG_NAME>_COMPLETE``,
+ where ``<PROG_NAME>`` is your application executable name in uppercase
+diff --git a/docs/commands.rst b/docs/commands.rst
+index 838c192f89153a1823954b7f72b67a30fc35cb9e..00de22226c7d651b3bf0d4acf90bdbfad3d57e21 100644
+--- a/docs/commands.rst
++++ b/docs/commands.rst
+@@ -3,7 +3,7 @@ Commands and Groups
+ 
+ .. currentmodule:: click
+ 
+-The most important feature of click is the concept of arbitrarily nesting
++The most important feature of Click is the concept of arbitrarily nesting
+ command line utilities.  This is implemented through the :class:`Command`
+ and :class:`Group` (actually :class:`MultiCommand`).
+ 
+@@ -11,9 +11,9 @@ Callback Invocation
+ -------------------
+ 
+ For a regular command, the callback is executed whenever the command runs.
+-If the script is the only command, it will always fire (unless a
+-parameter callback prevents it).  This for instance happens if someone
+-passes ``--help`` to the script).
++If the script is the only command, it will always fire (unless a parameter
++callback prevents it.  This for instance happens if someone passes
++``--help`` to the script).
+ 
+ For groups and multi commands, the situation looks different.  In this case,
+ the callback fires whenever a subcommand fires (unless this behavior is
+@@ -39,6 +39,26 @@ Here is what this looks like:
+     println()
+     invoke(cli, prog_name='tool.py', args=['--debug', 'sync'])
+ 
++Passing Parameters
++------------------
++
++Click strictly separates parameters between commands and subcommands. What this
++means is that options and arguments for a specific command have to be specified
++*after* the command name itself, but *before* any other command names.
++
++This behavior is already observable with the predefined ``--help`` option.
++Suppose we have a program called ``tool.py``, containing a subcommand called
++``sub``.
++
++- ``tool.py --help`` will return the help for the whole program (listing
++  subcommands).
++
++- ``tool.py sub --help`` will return the help for the ``sub`` subcommand.
++
++- But ``tool.py --help sub`` will treat ``--help`` as an argument for the main
++  program. Click then invokes the callback for ``--help``, which prints the
++  help and aborts the program before click can process the subcommand.
++
+ Nested Handling and Contexts
+ ----------------------------
+ 
+@@ -308,7 +328,7 @@ Context Defaults
+ 
+ .. versionadded:: 2.0
+ 
+-Starting with click 2.0 you can override defaults for contexts not just
++Starting with Click 2.0 you can override defaults for contexts not just
+ when calling your script, but also in the decorator that declares a
+ command.  For instance given the previous example which defines a custom
+ ``default_map`` this can also be accomplished in the decorator now.
+diff --git a/docs/complex.rst b/docs/complex.rst
+index 5f969db82bd1e9b50cf8328ebc9fb682da0b1f37..794de2df1f7cc1f465b555eb0455f44ac3d69fdc 100644
+--- a/docs/complex.rst
++++ b/docs/complex.rst
+@@ -12,7 +12,7 @@ have realized that it provides a command line utility, but so does Celery.
+ When using Celery with Django, there are two tools that need to interact with
+ each other and be cross-configured.
+ 
+-In a theoretical world of two separate click command line utilities, they
++In a theoretical world of two separate Click command line utilities, they
+ could solve this problem by nesting one inside the other.  For instance, the
+ web framework could also load the commands for the message queue framework.
+ 
+@@ -25,7 +25,7 @@ and the calling convention.
+ Contexts
+ ````````
+ 
+-Whenever a click command is executed, a :class:`Context` object is created
++Whenever a Click command is executed, a :class:`Context` object is created
+ which holds state for this particular invocation.  It remembers parsed
+ parameters, what command created it, which resources need to be cleaned up
+ at the end of the function, and so forth.  It can also optionally hold an
+@@ -45,7 +45,7 @@ complex applications it comes in handy.  This brings us to the next point.
+ Calling Convention
+ ``````````````````
+ 
+-When a click command callback is executed, it's passed all the non-hidden
++When a Click command callback is executed, it's passed all the non-hidden
+ parameters as keyword arguments.  Notably absent is the context.  However,
+ a callback can opt into being passed to the context object by marking itself
+ with :func:`pass_context`.
+@@ -69,7 +69,7 @@ The Root Command
+ 
+ At the top level, we need a group that can hold all our commands.  In this
+ case, we use the basic :func:`click.group` which allows us to register
+-other click commands below it.
++other Click commands below it.
+ 
+ For this command, we also want to accept some parameters that configure the
+ state of our tool:
+diff --git a/docs/documentation.rst b/docs/documentation.rst
+index 48c9ba58cb8b536366db1404cb062f77b857f082..13b92f04661ca329b88652cd9433502b39b7a88b 100644
+--- a/docs/documentation.rst
++++ b/docs/documentation.rst
+@@ -40,7 +40,7 @@ by name.
+ Preventing Rewrapping
+ ---------------------
+ 
+-The default behavior of click is to rewrap text based on the width of the
++The default behavior of Click is to rewrap text based on the width of the
+ terminal.  In some circumstances, this can become a problem. The main issue
+ is when showing code examples, where newlines are significant.
+ 
+@@ -136,8 +136,8 @@ Help Parameter Customization
+ 
+ .. versionadded:: 2.0
+ 
+-The help parameter is implemented in click in a very special manner.
+-Unlike regular parameters it's automatically added by click for any
++The help parameter is implemented in Click in a very special manner.
++Unlike regular parameters it's automatically added by Click for any
+ command and it performs automatic conflict resolution.  By default it's
+ called ``--help``, but this can be changed.  If a command itself implements
+ a parameter with the same name, the default help parameter stops accepting
+diff --git a/docs/index.rst b/docs/index.rst
+index e40178b4e5b0e0b136422ab3ed90d70a6e65b71e..35ed80945102f30b9faa3439cfa43a9869e7f561 100644
+--- a/docs/index.rst
++++ b/docs/index.rst
+@@ -16,7 +16,7 @@ Click in three points:
+ -   automatic help page generation
+ -   supports lazy loading of subcommands at runtime
+ 
+-What does it look like?  Here is an example of a simple click program:
++What does it look like?  Here is an example of a simple Click program:
+ 
+ .. click:example::
+ 
+diff --git a/docs/license.rst b/docs/license.rst
+index cfdd8ea4755b2cbd2112c0cafef7f1d1dd9b9266..1f4654a0480e4482ce630b616e89721e7bf21ccf 100644
+--- a/docs/license.rst
++++ b/docs/license.rst
+@@ -2,7 +2,7 @@ License
+ =======
+ 
+ Click is licensed under a three-clause BSD License.  It basically means:
+-do whatever you want with it as long as the copyright in click sticks
++do whatever you want with it as long as the copyright in Click sticks
+ around, the conditions are not modified and the disclaimer is present.
+ Furthermore, you must not use the names of the authors to promote derivatives
+ of the software without written consent.
+diff --git a/docs/options.rst b/docs/options.rst
+index 1557e9116d37fbf88ba65d7c7e553208fed4a8a6..cb079ce89f479e33c167828315e6561a3c8019fc 100644
+--- a/docs/options.rst
++++ b/docs/options.rst
+@@ -102,7 +102,7 @@ Boolean Flags
+ Boolean flags are options that can be enabled or disabled.  This can be
+ accomplished by defining two flags in one go separated by a slash (``/``)
+ for enabling or disabling the option.  (If a slash is in an option string,
+-click automatically knows that it's a boolean flag and will pass
++Click automatically knows that it's a boolean flag and will pass
+ ``is_flag=True`` implicitly.)  Click always wants you to provide an enable
+ and disable flag so that you can change the default later.
+ 
+@@ -128,7 +128,7 @@ And on the command line:
+     invoke(info, args=['--no-shout'])
+ 
+ If you really don't want an off-switch, you can just define one and
+-manually inform click that something is a flag:
++manually inform Click that something is a flag:
+ 
+ .. click:example::
+ 
+@@ -168,7 +168,7 @@ Feature Switches
+ In addition to boolean flags, there are also feature switches.  These are
+ implemented by setting multiple options to the same parameter name and
+ defining a flag value.  Note that by providing the ``flag_value`` parameter,
+-click will implicitly set ``is_flag=True``.
++Click will implicitly set ``is_flag=True``.
+ 
+ To set a default flag, assign a value of `True` to the flag that should be
+ the default.
+@@ -227,7 +227,7 @@ Prompting
+ 
+ In some cases, you want parameters that can be provided from the command line,
+ but if not provided, ask for user input instead.  This can be implemented with
+-click by defining a prompt string.
++Click by defining a prompt string.
+ 
+ Example:
+ 
+@@ -331,8 +331,8 @@ Here an example for a ``--version`` flag:
+ The `expose_value` parameter prevents the pretty pointless ``version``
+ parameter from being passed to the callback.  If that was not specified, a
+ boolean would be passed to the `hello` script.  The `resilient_parsing`
+-flag is applied to the context if click wants to parse the command line
+-without and destructive behavior that would change the execution flow.  In
++flag is applied to the context if Click wants to parse the command line
++without any destructive behavior that would change the execution flow.  In
+ this case, because we would exit the program, we instead do nothing.
+ 
+ What it looks like:
+@@ -344,7 +344,7 @@ What it looks like:
+ 
+ .. admonition:: Callback Signature Changes
+ 
+-    In click 2.0 the signature for callbacks changed.  For more
++    In Click 2.0 the signature for callbacks changed.  For more
+     information about these changes see :ref:`upgrade-to-2.0`.
+ 
+ Yes Parameters
+@@ -387,20 +387,20 @@ replaced with the :func:`confirmation_option` decorator:
+ 
+ .. admonition:: Callback Signature Changes
+ 
+-    In click 2.0 the signature for callbacks changed.  For more
++    In Click 2.0 the signature for callbacks changed.  For more
+     information about these changes see :ref:`upgrade-to-2.0`.
+ 
+ Values from Environment Variables
+ ---------------------------------
+ 
+-A very useful feature of click is the ability to accept parameters from
++A very useful feature of Click is the ability to accept parameters from
+ environment variables in addition to regular parameters.  This allows
+ tools to be automated much easier.  For instance, you might want to pass
+ a configuration file with a ``--config`` parameter but also support exporting
+ a ``TOOL_CONFIG=hello.cfg`` key-value pair for a nicer development
+ experience.
+ 
+-This is supported by click in two ways.  One is to automatically build
++This is supported by Click in two ways.  One is to automatically build
+ environment variables which is supported for options only.  To enable this
+ feature, the ``auto_envvar_prefix`` parameter needs to be passed to the
+ script that is invoked.  Each command and parameter is then added as an
+@@ -456,9 +456,9 @@ Multiple Values from Environment Values
+ 
+ As options can accept multiple values, pulling in such values from
+ environment variables (which are strings) is a bit more complex.  The way
+-click solves this is by leaving it up to the type to customize this
++Click solves this is by leaving it up to the type to customize this
+ behavior.  For both ``multiple`` and ``nargs`` with values other than
+-``1``, click will invoke the :meth:`ParamType.split_envvar_value` method to
++``1``, Click will invoke the :meth:`ParamType.split_envvar_value` method to
+ perform the splitting.
+ 
+ The default implementation for all types is to split on whitespace.  The
+@@ -494,7 +494,7 @@ Other Prefix Characters
+ Click can deal with alternative prefix characters other than ``-`` for
+ options.  This is for instance useful if you want to handle slashes as
+ parameters ``/`` or something similar.  Note that this is strongly
+-discouraged in general because click wants developers to stay close to
++discouraged in general because Click wants developers to stay close to
+ POSIX semantics.  However in certain situations this can be useful:
+ 
+ .. click:example::
+@@ -575,8 +575,8 @@ If you want to apply custom validation logic, you can do this in the
+ parameter callbacks.  These callbacks can both modify values as well as
+ raise errors if the validation does not work.
+ 
+-In click 1.0, you can only raise the :exc:`UsageError` but starting with
+-click 2.0, you can also raise the :exc:`BadParameter` error, which has the
++In Click 1.0, you can only raise the :exc:`UsageError` but starting with
++Click 2.0, you can also raise the :exc:`BadParameter` error, which has the
+ added advantage that it will automatically format the error message to
+ also contain the parameter name.
+ 
+diff --git a/docs/python3.rst b/docs/python3.rst
+index 73958a4b7dcc76337a6d4371c7d2262a3367bc98..7a3b97c1034945fa2da773634b06eeef9494a63a 100644
+--- a/docs/python3.rst
++++ b/docs/python3.rst
+@@ -8,7 +8,7 @@ it suffers from the Unicode text model in Python 3.  All examples in the
+ documentation were written so that they could run on both Python 2.x and
+ Python 3.3 or higher.
+ 
+-At the moment, it is strongly recommended is to use Python 2 for click
++At the moment, it is strongly recommended is to use Python 2 for Click
+ utilities unless Python 3 is a hard requirement.
+ 
+ .. _python3-limitations:
+@@ -16,7 +16,7 @@ utilities unless Python 3 is a hard requirement.
+ Python 3 Limitations
+ --------------------
+ 
+-At the moment, click suffers from a few problems with Python 3:
++At the moment, Click suffers from a few problems with Python 3:
+ 
+ *   The command line in Unix traditionally is in bytes, and not Unicode.
+     While there are encoding hints for all of this, there are generally
+@@ -25,7 +25,7 @@ At the moment, click suffers from a few problems with Python 3:
+ 
+     Misconfigured environments can currently cause a wide range of Unicode
+     problems in Python 3 due to the lack of support for roundtripping
+-    surrogate escapes.  This will not be fixed in click itself!
++    surrogate escapes.  This will not be fixed in Click itself!
+ 
+     For more information see :ref:`python3-surrogates`.
+ 
+@@ -68,23 +68,23 @@ In Python 2, the following is true:
+     input types and convert as necessary.  The :class:`STRING` type
+     automatically will decode properly the input value into a string by
+     trying the most appropriate encodings.
+-*   When dealing with files, click will never go through the Unicode APIs
++*   When dealing with files, Click will never go through the Unicode APIs
+     and will instead use the operating system's byte APIs to open the
+     files.
+ 
+ In Python 3, the following is true:
+ 
+ *   ``sys.stdin``, ``sys.stdout`` and ``sys.stderr`` are by default
+-    text-based.  When click needs a binary stream, it attempts to discover
++    text-based.  When Click needs a binary stream, it attempts to discover
+     the underlying binary stream.  See :ref:`python3-limitations` for how
+     this works.
+ *   ``sys.argv`` is always Unicode-based.  This also means that the native
+-    type for input values to the types in click is Unicode, and not bytes.
++    type for input values to the types in Click is Unicode, and not bytes.
+ 
+     This causes problems when the terminal is incorrectly set and Python
+     does not figure out the encoding.  In that case, the Unicode string
+     will contain error bytes encoded as surrogate escapes.
+-*   When dealing with files, click will always use the Unicode file system
++*   When dealing with files, Click will always use the Unicode file system
+     API calls by using the operating system's reported or guessed
+     filesystem encoding.  Surrogates are supported for filenames, so it
+     should be possible to open files through the :class:`File` type even
+@@ -96,7 +96,7 @@ Python 3 Surrogate Handling
+ ---------------------------
+ 
+ Click in Python 3 does all the Unicode handling in the standard library
+-and is subject to its behavior.  In Python 2, click does all the Unicode
++and is subject to its behavior.  In Python 2, Click does all the Unicode
+ handling itself, which means there are differences in error behavior.
+ 
+ The most glaring difference is that in Python 2, Unicode will "just work",
+@@ -104,13 +104,13 @@ while in Python 3, it requires extra care.  The reason for this is that on
+ Python 3, the encoding detection is done in the interpreter and on Linux
+ and certain other operating systems its encoding handling is problematic.
+ 
+-The biggest source of frustration is that click scripts invoked by
++The biggest source of frustration is that Click scripts invoked by
+ init systems (sysvinit, upstart, systemd, etc.), deployment tools (salt,
+ puppet), or cron jobs (cron) will refuse to work unless a Unicode locale is
+ exported.
+ 
+-If click encounters such an environment it will prevent further execution
+-to force you to set a locale.  This is done because click cannot know
++If Click encounters such an environment it will prevent further execution
++to force you to set a locale.  This is done because Click cannot know
+ about the state of the system once it's invoked and restore the values
+ before Python's Unicode handling kicked in.
+ 
+@@ -150,5 +150,5 @@ Python 3 bug tracker:
+ *   `Python 3 raises Unicode errors in the C locale
+     <http://bugs.python.org/issue19846>`_
+ *   `LC_CTYPE=C:  pydoc leaves terminal in an unusable state
+-    <http://bugs.python.org/issue21398>`_ (this is relevant to click
++    <http://bugs.python.org/issue21398>`_ (this is relevant to Click
+     because the pager support is provided by the stdlib pydoc module)
+diff --git a/docs/quickstart.rst b/docs/quickstart.rst
+index ad09ed7f4cd368faf8c52525ba413df48c584620..6fbf8f53d011e707ab28b98897caee469e178514 100644
+--- a/docs/quickstart.rst
++++ b/docs/quickstart.rst
+@@ -10,14 +10,14 @@ You can get the library directly from PyPI::
+ Screencast and Examples
+ -----------------------
+ 
+-There is a screencast available which shows the basic API of click and
++There is a screencast available which shows the basic API of Click and
+ how to build simple applications with it.  It also explores how to build
+ commands with subcommands.
+ 
+ *   `Building Command Line Applications with Click
+     <https://www.youtube.com/watch?v=kNke39OZ2k0>`_
+ 
+-Examples of click applications can be found in the documentation as well
++Examples of Click applications can be found in the documentation as well
+ as in the GitHub repository together with readme files:
+ 
+ *   ``inout``: `File input and output
+@@ -44,7 +44,7 @@ Click is based on declaring commands through decorators.  Internally, there
+ is a non-decorator interface for advanced use cases, but it's discouraged
+ for high-level usage.
+ 
+-A function becomes a click command line tool by decorating it through
++A function becomes a Click command line tool by decorating it through
+ :func:`click.command`.  At its simplest, just decorating a function
+ with this decorator will make it into a callable script:
+ 
+@@ -78,7 +78,7 @@ Echoing
+ -------
+ 
+ Why does this example use :func:`echo` instead of the regular
+-:func:`print` function?  The answer to this question is that click
++:func:`print` function?  The answer to this question is that Click
+ attempts to support both Python 2 and Python 3 the same way and to be very
+ robust even when the environment is misconfigured.  Click wants to be
+ functional at least on a basic level even if everything is completely
+@@ -88,7 +88,7 @@ What this means is that the :func:`echo` function applies some error
+ correction in case the terminal is misconfigured instead of dying with an
+ :exc:`UnicodeError`.
+ 
+-As an added benefit, starting with click 2.0, the echo function also
++As an added benefit, starting with Click 2.0, the echo function also
+ has good support for ANSI colors.  It will automatically strip ANSI codes
+ if the output stream is a file and if colorama is supported, ANSI colors
+ will also work on Windows.  See :ref:`ansi-colors` for more information.
+diff --git a/docs/setuptools.rst b/docs/setuptools.rst
+index 17ab86706a267ea1a885890751de239af1e186e9..1f4a8ac1ba7b2f22b0340d85d30955ccab7222df 100644
+--- a/docs/setuptools.rst
++++ b/docs/setuptools.rst
+@@ -59,7 +59,7 @@ Contents of ``setup.py``::
+ The magic is in the ``entry_points`` parameter.  Below ``console_scripts``,
+ each line identifies one console script.  The first part before the equals
+ sign (``=``) is the name of the script that should be generated, the second
+-part is the import path followed by a colon (``:``) with the click
++part is the import path followed by a colon (``:``) with the Click
+ command.
+ 
+ That's it.
+diff --git a/docs/testing.rst b/docs/testing.rst
+index 6350499369df385bb72b5e10d0f2aee46e94a5fe..62672fb488532d1c7069127c7b5a4b18c1b9a233 100644
+--- a/docs/testing.rst
++++ b/docs/testing.rst
+@@ -3,7 +3,7 @@ Testing Click Applications
+ 
+ .. currentmodule:: click.testing
+ 
+-For basic testing, click provides the :mod:`click.testing` module which
++For basic testing, Click provides the :mod:`click.testing` module which
+ provides test functionality that helps you invoke command line
+ applications and check their behavior.
+ 
+@@ -14,7 +14,7 @@ thread-safe!
+ Basic Testing
+ -------------
+ 
+-The basic functionality for testing click applications is the
++The basic functionality for testing Click applications is the
+ :class:`CliRunner` which can invoke commands as command line scripts.  The
+ :meth:`CliRunner.invoke` method runs the command line script in isolation
+ and captures the output as both bytes and binary data.
+diff --git a/docs/upgrading.rst b/docs/upgrading.rst
+index 32b6955bb743d95f6a4b4d6798838b6d505bd57b..5ece494e91dbef60c9f5054bf91e3ca91009cb24 100644
+--- a/docs/upgrading.rst
++++ b/docs/upgrading.rst
+@@ -16,11 +16,11 @@ callbacks.  Before 2.0, the callback was invoked with ``(ctx, value)``
+ whereas now it's ``(ctx, param, value)``.  This change was necessary as it
+ otherwise made reusing callbacks too complicated.
+ 
+-To ease the transition click will still accept old callbacks.  Starting
+-with click 3.0 it will start to issue a warning to stderr to encourage you
++To ease the transition Click will still accept old callbacks.  Starting
++with Click 3.0 it will start to issue a warning to stderr to encourage you
+ to upgrade.
+ 
+-In case you want to support both click 1.0 and click 2.0, you can make a
++In case you want to support both Click 1.0 and Click 2.0, you can make a
+ simple decorator that adjusts the signatures::
+ 
+     import click
+@@ -39,6 +39,6 @@ With that helper you can then write something like this::
+     def callback(ctx, param, value):
+         return value.upper()
+ 
+-Note that because click 1.0 did not pass a parameter, the `param` argument
++Note that because Click 1.0 did not pass a parameter, the `param` argument
+ here would be `None`, so a compatibility callback could not use that
+ argument.
+diff --git a/docs/utils.rst b/docs/utils.rst
+index 3635ef1befb761066e940cbf934284d1f3249262..cb9880134b2846eec8f0eb23aad3875be1b417b4 100644
+--- a/docs/utils.rst
++++ b/docs/utils.rst
+@@ -3,7 +3,7 @@ Utilities
+ 
+ .. currentmodule:: click
+ 
+-Besides the functionality that click provides to interface with argument
++Besides the functionality that Click provides to interface with argument
+ parsing and handling, it also provides a bunch of addon functionality that
+ is useful for writing command line utilities.
+ 
+@@ -38,21 +38,21 @@ ANSI Colors
+ 
+ .. versionadded:: 2.0
+ 
+-Starting with click 2.0, the :func:`echo` function gained extra
++Starting with Click 2.0, the :func:`echo` function gained extra
+ functionality to deal with ANSI colors and styles.  Note that on Windows,
+ this functionality is only available if `colorama`_ is installed.  If it
+ is installed, then ANSI codes are intelligently handled.
+ 
+ Primarily this means that:
+ 
+--   click's :func:`echo` function will automatically strip ANSI color codes
++-   Click's :func:`echo` function will automatically strip ANSI color codes
+     if the stream is not connected to a terminal.
+ -   the :func:`echo` function will transparently connect to the terminal on
+     Windows and translate ANSI codes to terminal API calls.  This means
+     that colors will work on Windows the same way they do on other
+     operating systems.
+ 
+-Note for `colorama` support: click will automatically detect when `colorama`
++Note for `colorama` support: Click will automatically detect when `colorama`
+ is available and use it.  Do *not* call ``colorama.init()``!
+ 
+ To install `colorama`, run this command::
+@@ -101,7 +101,7 @@ Screen Clearing
+ .. versionadded:: 2.0
+ 
+ To clear the terminal screen, you can use the :func:`clear` function that
+-is provided starting with click 2.0.  It does what the name suggests: it
++is provided starting with Click 2.0.  It does what the name suggests: it
+ clears the entire visible screen in a platform-agnostic way:
+ 
+ ::
+@@ -120,7 +120,7 @@ standard input.  However, this is buffered input and will not show up until
+ the line has been terminated.  In certain circumstances, you might not want
+ to do that and instead read individual characters as they are being written.
+ 
+-For this, click provides the :func:`getchar` function which reads a single
++For this, Click provides the :func:`getchar` function which reads a single
+ character from the terminal buffer and returns it as a Unicode character.
+ 
+ Note that this function will always read from the terminal, even if stdin
+diff --git a/docs/why.rst b/docs/why.rst
+index a7ef556a2000ca38585247298dd2e6d455360ab9..102ffdd50e02a4fb798446aeda414f9137f87f79 100644
+--- a/docs/why.rst
++++ b/docs/why.rst
+@@ -2,7 +2,7 @@ Why Click?
+ ==========
+ 
+ There are so many libraries out there for writing command line utilities;
+-why does click exist?
++why does Click exist?
+ 
+ This question is easy to answer: because there is not a single command
+ line utility for Python out there which ticks the following boxes:
+@@ -18,7 +18,7 @@ line utility for Python out there which ticks the following boxes:
+     ANSI colors, fetching direct keyboard input, screen clearing,
+     finding config paths, launching apps and editors, etc.)
+ 
+-There are many alternatives to click and you can have a look at them if
++There are many alternatives to Click and you can have a look at them if
+ you enjoy them better.  The obvious ones are ``optparse`` and ``argparse``
+ from the standard library.
+ 
+@@ -31,9 +31,9 @@ POSIX compliant argument handling.
+ Click is designed to be fun to work with and at the same time not stand in
+ your way.  It's not overly flexible either.  Currently, for instance, it
+ does not allow you to customize the help pages too much. This is intentional
+-because click is designed to allow you to nest command line utilities.  The
++because Click is designed to allow you to nest command line utilities.  The
+ idea is that you can have a system that works together with another system by
+-tacking two click instances together and they will continue working as they
++tacking two Click instances together and they will continue working as they
+ should.
+ 
+ Too much customizability would break this promise.
+@@ -42,7 +42,7 @@ Click was written to support the `Flask <http://flask.pocoo.org/>`_
+ microframework ecosystem because no tool could provide it with the
+ functionality it needed.
+ 
+-To get an understanding of what click is all about, I strongly recommend
++To get an understanding of what Click is all about, I strongly recommend
+ looking at the :ref:`complex-guide` chapter to see what it's useful for.
+ 
+ Why not Argparse?
+@@ -50,7 +50,7 @@ Why not Argparse?
+ 
+ Click is internally based on optparse instead of argparse.  This however
+ is an implementation detail that a user does not have to be concerned
+-with.  The reason however click is not using argparse is that it has some
++with.  The reason however Click is not using argparse is that it has some
+ problematic behaviors that make handling arbitrary command line interfaces
+ hard:
+ 
+@@ -58,18 +58,18 @@ hard:
+     argument or an option.  This becomes a problem when dealing with
+     incomplete command lines as it's not possible to know without having a
+     full understanding of the command line how the parser is going to
+-    behave.  This goes against click's ambitions of dispatching to
++    behave.  This goes against Click's ambitions of dispatching to
+     subparsers.
+ *   argparse currently does not support disabling of interspearsed
+     arguments.  Without this feature it's not possible to safely implement
+-    click's nested parsing nature.
++    Click's nested parsing nature.
+ 
+ Why not Docopt etc.?
+ --------------------
+ 
+ Docopt and many tools like it are cool in how they work, but very few of
+ these tools deal with nesting of commands and composability in a way like
+-click.  To the best of the developer's knowledge, click is the first
++Click.  To the best of the developer's knowledge, Click is the first
+ Python library that aims to create a level of composability of applications
+ that goes beyond what the system itself supports.
+ 
+@@ -88,7 +88,7 @@ support dispatching to subcommands, it for instance does not directly
+ support any kind of automatic subcommand enumeration based on what's
+ available or it does not enforce subcommands to work in a consistent way.
+ 
+-This is fine, but it's different from how click wants to work.  Click aims
++This is fine, but it's different from how Click wants to work.  Click aims
+ to support fully composable command line user interfaces by doing the
+ following:
+ 
+@@ -104,11 +104,11 @@ following:
+     different error messsage because it's manually handled.
+ -   Click has enough meta information available for its whole program
+     that it can evolve over time to improve the user experience without
+-    forcing developers to adjust their programs.  For instance, if click
+-    decides to change how help pages are formatted, all click programs
++    forcing developers to adjust their programs.  For instance, if Click
++    decides to change how help pages are formatted, all Click programs
+     will automatically benefit from this.
+ 
+-The aim of click is to make composable systems, whereas the aim of docopt
++The aim of Click is to make composable systems, whereas the aim of docopt
+ is to build the most beautiful and hand-crafted command line interfaces.
+ These two goals conflict with one another in subtle ways.  Click
+ actively prevents people from implementing certain patterns in order to
+@@ -119,7 +119,7 @@ reformatting your help pages for instance.
+ Why Hardcoded Behaviors?
+ ------------------------
+ 
+-The other question is why click goes away from optparse and hardcodes
++The other question is why Click goes away from optparse and hardcodes
+ certain behaviors instead of staying configurable.  There are multiple
+ reasons for this.  The biggest one is that too much configurability makes
+ it hard to achieve a consistent command line experience.
+@@ -129,9 +129,9 @@ accepting arbitrary number of arguments.  Due to syntactical ambiguities
+ on the command line, there is no way to implement fully variadic arguments.
+ There are always tradeoffs that need to be made and in case of
+ ``argparse`` these tradeoffs have been critical enough, that a system like
+-click cannot even be implemented on top of it.
++Click cannot even be implemented on top of it.
+ 
+-In this particular case, click attempts to stay with a handful of accepted
++In this particular case, Click attempts to stay with a handful of accepted
+ paradigms for building command line interfaces that can be well documented
+ and tested.
+ 
+@@ -139,12 +139,12 @@ and tested.
+ Why No Auto Correction?
+ -----------------------
+ 
+-The question came up why click does not auto correct parameters given that
++The question came up why Click does not auto correct parameters given that
+ even optparse and argparse support automatic expansion of long arguments.
+ The reason for this is that it's a liability for backwards compatibility.
+ If people start relying on automatically modified parameters and someone
+ adds a new parameter in the future, the script might stop working.  These
+-kinds of problems are hard to find so click does not attempt to be magical
++kinds of problems are hard to find so Click does not attempt to be magical
+ about this.
+ 
+ This sort of behavior however can be implemented on a higher level to
+diff --git a/examples/README b/examples/README
+index e0def3c93149559a800364f190697f10c84f3a82..24575075546881e08edf99b462700bd196debf45 100644
+--- a/examples/README
++++ b/examples/README
+@@ -1,6 +1,6 @@
+ Click Examples
+ 
+-  This folder contains various click examples.  Note that
++  This folder contains various Click examples.  Note that
+   all of these are not runnable by themselves but should be
+   installed into a virtualenv.
+ 
+diff --git a/examples/aliases/README b/examples/aliases/README
+index f39555d9b6743f952a9f3faef639d319dcabbc76..5a4a0665663b93c02d5ce2e739f413b6b151a973 100644
+--- a/examples/aliases/README
++++ b/examples/aliases/README
+@@ -1,7 +1,7 @@
+ $ aliases_
+ 
+   aliases is a fairly advanced example that shows how
+-  to implement command aliases with click.  It uses a
++  to implement command aliases with Click.  It uses a
+   subclass of the default group to customize how commands
+   are located.
+ 
+diff --git a/examples/complex/README b/examples/complex/README
+index 324984753fef5aad1fd709336a92cac1e1f723d9..7eaac903720753c843f037440f0eb2fc3486497a 100644
+--- a/examples/complex/README
++++ b/examples/complex/README
+@@ -8,7 +8,7 @@ $ complex_
+   `complex.commands` package.  If a python module is
+   placed named "cmd_foo" it will show up as "foo"
+   command and the `cli` object within it will be
+-  loaded as nested click command.
++  loaded as nested Click command.
+ 
+ Usage:
+ 
+diff --git a/examples/termui/README b/examples/termui/README
+index 93d53b0661a8da94a2fd19aad5a1b6bdbeaf2326..2c9d9dd045e9aad50efcdd8f0999fadc5812dbbf 100644
+--- a/examples/termui/README
++++ b/examples/termui/README
+@@ -1,7 +1,7 @@
+ $ termui_
+ 
+   termui showcases the different terminal UI helpers that
+-  click provides.
++  Click provides.
+ 
+ Usage:
+ 

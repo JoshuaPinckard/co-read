@@ -1,0 +1,223 @@
+diff --git a/CHANGES.rst b/CHANGES.rst
+index 24089e1db39ecf8cb374fbed6ef6185bd75037be..0d4f4094123f50422afcb775bcac791588af0e86 100644
+--- a/CHANGES.rst
++++ b/CHANGES.rst
+@@ -18,6 +18,8 @@ Unreleased
+ -   Fix ``OSError`` when running in MSYS2. :issue:`1338`
+ -   Fix ``OSError`` when redirecting to ``NUL`` stream on Windows.
+     :issue:`1065`
++-   Fix memory leak when parsing Unicode arguments on Windows.
++    :issue:`1136`
+ -   Fix error in new AppEngine environments. :issue:`1462`
+ -   Always return one of the passed choices for ``click.Choice``
+     :issue:`1277`, :pr:`1318`
+@@ -53,6 +55,8 @@ Unreleased
+     distinguish it from the next option. :issue:`1075`
+ -   Consider ``sensible-editor`` when determining the editor to use for
+     ``click.edit()``. :pr:`1469`
++-   Arguments to system calls such as the executable path passed to
++    ``click.edit`` can contains spaces. :pr:`1470`
+ 
+ 
+ Version 7.0
+diff --git a/click/_compat.py b/click/_compat.py
+index f8efb2979dc31cd3023d69091ac31414088371ed..676285448345e09c91e0dc49d0b522bc6636e505 100644
+--- a/click/_compat.py
++++ b/click/_compat.py
+@@ -162,6 +162,8 @@ if PY2:
+     iteritems = lambda x: x.iteritems()
+     range_type = xrange
+ 
++    from pipes import quote as shlex_quote
++
+     def is_bytes(x):
+         return isinstance(x, (buffer, bytearray))
+ 
+@@ -268,6 +270,8 @@ else:
+     isidentifier = lambda x: x.isidentifier()
+     iteritems = lambda x: iter(x.items())
+ 
++    from shlex import quote as shlex_quote
++
+     def is_bytes(x):
+         return isinstance(x, (bytes, memoryview, bytearray))
+ 
+diff --git a/click/_termui_impl.py b/click/_termui_impl.py
+index 66668213b480222bd7c1f406487824f64041aec4..09e9fbb12610dfe346f4ba3616531e69b15bb4a2 100644
+--- a/click/_termui_impl.py
++++ b/click/_termui_impl.py
+@@ -16,9 +16,9 @@ import sys
+ import time
+ import math
+ import contextlib
+-from ._compat import _default_text_stdout, range_type, PY2, isatty, \
+-     open_stream, strip_ansi, term_len, get_best_encoding, WIN, int_types, \
+-     CYGWIN
++from ._compat import _default_text_stdout, range_type, isatty, \
++     open_stream, shlex_quote, strip_ansi, term_len, get_best_encoding, WIN, \
++     int_types, CYGWIN
+ from .utils import echo
+ from .exceptions import ClickException
+ 
+@@ -328,7 +328,7 @@ def pager(generator, color=None):
+     fd, filename = tempfile.mkstemp()
+     os.close(fd)
+     try:
+-        if hasattr(os, 'system') and os.system('more "%s"' % filename) == 0:
++        if hasattr(os, 'system') and os.system("more %s" % shlex_quote(filename)) == 0:
+             return _pipepager(generator, 'more', color)
+         return _nullpager(stdout, generator, color)
+     finally:
+@@ -396,7 +396,7 @@ def _tempfilepager(generator, cmd, color):
+     with open_stream(filename, 'wb')[0] as f:
+         f.write(text.encode(encoding))
+     try:
+-        os.system(cmd + ' "' + filename + '"')
++        os.system("%s %s" % (shlex_quote(cmd), shlex_quote(filename)))
+     finally:
+         os.unlink(filename)
+ 
+@@ -441,8 +441,11 @@ class Editor(object):
+         else:
+             environ = None
+         try:
+-            c = subprocess.Popen('%s "%s"' % (editor, filename),
+-                                 env=environ, shell=True)
++            c = subprocess.Popen(
++                "%s %s" % (shlex_quote(editor), shlex_quote(filename)),
++                env=environ,
++                shell=True
++            )
+             exit_code = c.wait()
+             if exit_code != 0:
+                 raise ClickException('%s: Editing failed!' % editor)
+@@ -513,19 +516,16 @@ def open_url(url, wait=False, locate=False):
+     elif WIN:
+         if locate:
+             url = _unquote_file(url)
+-            args = 'explorer /select,"%s"' % _unquote_file(
+-                url.replace('"', ''))
++            args = "explorer /select,%s" % (shlex_quote(url),)
+         else:
+-            args = 'start %s "" "%s"' % (
+-                wait and '/WAIT' or '', url.replace('"', ''))
++            args = 'start %s "" %s' % ("/WAIT" if wait else "", shlex_quote(url))
+         return os.system(args)
+     elif CYGWIN:
+         if locate:
+             url = _unquote_file(url)
+-            args = 'cygstart "%s"' % (os.path.dirname(url).replace('"', ''))
++            args = "cygstart %s" % (shlex_quote(os.path.dirname(url)),)
+         else:
+-            args = 'cygstart %s "%s"' % (
+-                wait and '-w' or '', url.replace('"', ''))
++            args = "cygstart %s %s" % ("-w" if wait else "", shlex_quote(url))
+         return os.system(args)
+ 
+     try:
+diff --git a/click/_winconsole.py b/click/_winconsole.py
+index dc203cc160efacaf1ae05d346ea80a9beac9c88a..5458c3020e9d3b8e673e6f614124a88f504d3ada 100644
+--- a/click/_winconsole.py
++++ b/click/_winconsole.py
+@@ -17,7 +17,8 @@ import ctypes
+ import msvcrt
+ from ._compat import _NonClosingTextIOWrapper, text_type, PY2
+ from ctypes import byref, POINTER, c_int, c_char, c_char_p, \
+-     c_void_p, py_object, c_ssize_t, c_ulong, windll, WINFUNCTYPE
++     c_void_p, py_object, c_ssize_t, c_ulong, windll, WINFUNCTYPE, \
++     WinError
+ try:
+     from ctypes import pythonapi
+     PyObject_GetBuffer = pythonapi.PyObject_GetBuffer
+@@ -40,6 +41,8 @@ GetCommandLineW = WINFUNCTYPE(LPWSTR)(
+ CommandLineToArgvW = WINFUNCTYPE(
+     POINTER(LPWSTR), LPCWSTR, POINTER(c_int))(
+         ('CommandLineToArgvW', windll.shell32))
++LocalFree = WINFUNCTYPE(ctypes.c_void_p, ctypes.c_void_p)(
++    ('LocalFree', windll.kernel32))
+ 
+ 
+ STDIN_HANDLE = GetStdHandle(-10)
+@@ -266,7 +269,13 @@ if PY2:
+     def _get_windows_argv():
+         argc = c_int(0)
+         argv_unicode = CommandLineToArgvW(GetCommandLineW(), byref(argc))
+-        argv = [argv_unicode[i] for i in range(0, argc.value)]
++        if not argv_unicode:
++            raise WinError()
++        try:
++            argv = [argv_unicode[i] for i in range(0, argc.value)]
++        finally:
++            LocalFree(argv_unicode)
++            del argv_unicode
+ 
+         if not hasattr(sys, 'frozen'):
+             argv = argv[1:]
+diff --git a/docs/bashcomplete.rst b/docs/bashcomplete.rst
+index bff38fac6d137f9e284cb960ff00e3e75635aeaf..64eede82cc364fd9192651ab455a9409cdf5b242 100644
+--- a/docs/bashcomplete.rst
++++ b/docs/bashcomplete.rst
+@@ -18,10 +18,10 @@ only supports completion for Bash and Zsh.
+ What it Completes
+ -----------------
+ 
+-Generally, the Bash completion support will complete subcommands, options
+-and any option or argument values where the type is click.Choice.
+-Subcommands and choices are always listed whereas options only if at
+-least a dash has been provided.  Example::
++Generally, the Bash completion support will complete subcommands,
++options, and any option or argument values where the type is
++:class:`click.Choice`. Subcommands and choices are always listed whereas
++options are only listed if at least a dash has been provided. ::
+ 
+     $ repo <TAB><TAB>
+     clone    commit   copy     delete   setuser
+diff --git a/docs/options.rst b/docs/options.rst
+index 29000a161aee83f1bddc4dd9c88bd062927f22a9..c60b45f36a1fe06b2eba21c7a81592f78f83c723 100644
+--- a/docs/options.rst
++++ b/docs/options.rst
+@@ -145,6 +145,8 @@ used.  The above example is thus equivalent to this:
+     def putitem(item):
+         click.echo('name=%s id=%d' % item)
+ 
++.. _multiple-options:
++
+ Multiple Options
+ ----------------
+ 
+diff --git a/docs/parameters.rst b/docs/parameters.rst
+index 856e277b145208823bc28ad2654d7a7acae471ae..7ee145cb7ce68a9be06708ce3e61d0d6176265e5 100644
+--- a/docs/parameters.rst
++++ b/docs/parameters.rst
+@@ -28,7 +28,8 @@ available for options:
+ 
+ On the other hand arguments, unlike options, can accept an arbitrary number
+ of arguments.  Options can strictly ever only accept a fixed number of
+-arguments (defaults to 1).
++arguments (defaults to 1), or they may be specified multiple times using
++:ref:`multiple-options`.
+ 
+ Parameter Types
+ ---------------
+diff --git a/docs/utils.rst b/docs/utils.rst
+index 4ac3374e17c7e5caf53da3859468b73ad2a62686..902e5fde2893bfc97dafcd86cd35d1fc92c86576 100644
+--- a/docs/utils.rst
++++ b/docs/utils.rst
+@@ -33,7 +33,7 @@ suppressed by passing ``nl=False``::
+ Last but not least :func:`echo` uses click's intelligent internal output
+ streams to stdout and stderr which support unicode output on the Windows
+ console.  This means for as long as you are using `click.echo` you can
+-output unicode character (there are some limitations on the default font
++output unicode characters (there are some limitations on the default font
+ with regards to which characters can be displayed).  This functionality is
+ new in Click 6.0.
+ 
+@@ -211,7 +211,7 @@ Click supports launching editors automatically through :func:`edit`.  This
+ is very useful for asking users for multi-line input.  It will
+ automatically open the user's defined editor or fall back to a sensible
+ default.  If the user closes the editor without saving, the return value
+-will be `None` otherwise the entered text.
++will be ``None``, otherwise the entered text.
+ 
+ Example usage::
+ 

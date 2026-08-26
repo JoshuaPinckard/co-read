@@ -1,0 +1,400 @@
+diff --git a/CHANGES b/CHANGES
+new file mode 100644
+index 0000000000000000000000000000000000000000..3f0957d30ae711ca844ad503b7398903eab97383
+--- /dev/null
++++ b/CHANGES
+@@ -0,0 +1,21 @@
++Click Changelog
++===============
++
++This contains all major version changes between click releases.
++
++Version 2.0
++-----------
++
++(codename and release date to be decided)
++
++- added support for opening stdin/stdout on windows in
++  binary mode correctly.
++- added support for atomic writes to files by going through
++  a temporary file.
++
++Version 1.0
++-----------
++
++(no codename, released on May 21st 2014)
++
++- Initial release.
+diff --git a/click/_compat.py b/click/_compat.py
+index 3d1e2f4c9e78910a17e419d101b743305532db55..4e0de6e6c900b2e7dbffc54867de9c3ccf36c793 100644
+--- a/click/_compat.py
++++ b/click/_compat.py
+@@ -1,7 +1,9 @@
+ import re
+ import io
++import os
+ import sys
+ import codecs
++import tempfile
+ 
+ 
+ def _make_text_stream(stream, encoding, errors):
+@@ -104,17 +106,40 @@ if PY2:
+ 
+     _identifier_re = re.compile(r'^[a-zA-Z_][a-zA-Z0-9_]*$')
+ 
++    # For Windows we need to force stdout/stdin/stderr to binary if it's
++    # fetched for that.  This obviously is not the most correct way to do
++    # it as it changes global state.  Unfortunately there does not seem to
++    # be a clear better way to do it as just reopening the file in binary
++    # mode does not change anything.
++    #
++    # An option would be to do what python 3 does and to open the file as
++    # binary only, patch it back to the system and then use a wrapper
++    # stream that converts newlines.  It's not quite clear what's the
++    # correct option here.
++    if sys.platform == 'win32':
++        import msvcrt
++        def set_binary_mode(f):
++            try:
++                fileno = f.fileno()
++            except Exception:
++                pass
++            else:
++                msvcrt.setmode(fileno, os.O_BINARY)
++            return f
++    else:
++        set_binary_mode = lambda x: x
++
+     def isidentifier(x):
+         return _identifier_re.search(x) is not None
+ 
+     def get_binary_stdin():
+-        return sys.stdin
++        return set_binary_mode(sys.stdin)
+ 
+     def get_binary_stdout():
+-        return sys.stdout
++        return set_binary_mode(sys.stdout)
+ 
+     def get_binary_stderr():
+-        return sys.stderr
++        return set_binary_mode(sys.stderr)
+ 
+     def get_text_stdin(encoding=None, errors=None):
+         return _make_text_stream(sys.stdin, encoding, errors)
+@@ -315,19 +340,76 @@ def get_streerror(e, default=None):
+     return msg
+ 
+ 
+-def open_stream(filename, mode='r', encoding=None, errors='strict'):
+-    if filename != '-':
+-        if encoding is not None:
+-            return io.open(filename, mode, encoding=encoding,
+-                           errors=errors), True
+-        return open(filename, mode), True
+-    if 'w' in mode:
++def open_stream(filename, mode='r', encoding=None, errors='strict',
++                atomic=False):
++    # standard streams first.  These are simple because they don't need
++    # special handling for the atomic flag.  It's entirely ignored.
++    if filename == '-':
++        if 'w' in mode:
++            if 'b' in mode:
++                return get_binary_stdout(), False
++            return get_text_stdout(encoding=encoding, errors=errors), False
+         if 'b' in mode:
+-            return get_binary_stdout(), False
+-        return get_text_stdout(encoding=encoding, errors=errors), False
+-    if 'b' in mode:
+-        return get_binary_stdin(), False
+-    return get_text_stdin(encoding=encoding, errors=errors), False
++            return get_binary_stdin(), False
++        return get_text_stdin(encoding=encoding, errors=errors), False
++
++    # Non-atomic writes directly go out through the regular open
++    # functions.
++    if not atomic:
++        if encoding is None:
++            return open(filename, mode), True
++        return io.open(filename, mode, encoding=encoding, errors=errors), True
++
++    # Atomic writes are more complicated.  They work by opening a file
++    # as a proxy in the same folder and then using the fdopen
++    # functionality to wrap it in a python file.  Then we wrap it in an
++    # atomic file that moves the file over on close.
++    fd, tmp_filename = tempfile.mkstemp(dir=os.path.dirname(filename),
++                                        prefix='.__atomic-write')
++
++    if encoding is not None:
++        f = io.open(fd, mode, encoding=encoding, errors=errors)
++    else:
++        f = os.fdopen(fd, mode)
++
++    return _AtomicFile(f, tmp_filename, filename), True
++
++
++# Used in a destructor call, needs extra protection from interpreter
++# cleanup.
++_rename = os.rename
++
++
++class _AtomicFile(object):
++
++    def __init__(self, f, tmp_filename, real_filename):
++        self._f = f
++        self._tmp_filename = tmp_filename
++        self._real_filename = real_filename
++        self.closed = False
++
++    @property
++    def name(self):
++        return self._real_filename
++
++    def close(self, delete=False):
++        if self.closed:
++            return
++        self._f.close()
++        _rename(self._tmp_filename, self._real_filename)
++        self.closed = True
++
++    def __getattr__(self, name):
++        return getattr(self._f, name)
++
++    def __enter__(self):
++        return self
++
++    def __exit__(self, exc_type, exc_value, tb):
++        self.close(delete=exc_type is not None)
++
++    def __repr__(self):
++        return repr(self._f)
+ 
+ 
+ binary_streams = {
+diff --git a/click/types.py b/click/types.py
+index 0c084e9cf28413aca549e07c09cb870774bef2e8..61f203d4d70298ce22a8792c8a14a279f931db3f 100644
+--- a/click/types.py
++++ b/click/types.py
+@@ -27,9 +27,9 @@ class ParamType(object):
+ 
+     #: if a list of this type is expected and the value is pulled from a
+     #: string environment variable, this is what splits it up.  `None`
+-    #: means any whitespace.  For all parameter the general rule is that
++    #: means any whitespace.  For all parameters the general rule is that
+     #: whitespace splits them up.  The exception are paths and files which
+-    #: are split by ``os.path.pathsep`` by default (":" on unix and ";' on
++    #: are split by ``os.path.pathsep`` by default (":" on unix and ";" on
+     #: windows).
+     envvar_list_splitter = None
+ 
+@@ -240,16 +240,23 @@ class File(ParamType):
+     upon first IO.  The default is to be non lazy for standard input and
+     output streams as well as files opened for reading, lazy otherwise.
+ 
++    Starting with Click 2.0 files can also be opened atomically in which
++    case all writes go into a separate file in the same folder and upon
++    completion the file will be moved over to the original location.  This
++    is useful if a file is modified that is regularly read by other users.
++
+     See :ref:`file-args` for more information.
+     """
+     name = 'filename'
+     envvar_list_splitter = os.path.pathsep
+ 
+-    def __init__(self, mode='r', encoding=None, errors='strict', lazy=None):
++    def __init__(self, mode='r', encoding=None, errors='strict', lazy=None,
++                 atomic=False):
+         self.mode = mode
+         self.encoding = encoding
+         self.errors = errors
+         self.lazy = lazy
++        self.atomic = atomic
+ 
+     def resolve_lazy_flag(self, value):
+         if self.lazy is not None:
+@@ -268,13 +275,15 @@ class File(ParamType):
+             lazy = self.resolve_lazy_flag(value)
+ 
+             if lazy:
+-                f = LazyFile(value, self.mode, self.encoding, self.errors)
++                f = LazyFile(value, self.mode, self.encoding, self.errors,
++                             atomic=self.atomic)
+                 if ctx is not None:
+                     ctx.call_on_close(f.close_intelligently)
+                 return f
+ 
+             f, should_close = open_stream(value, self.mode,
+-                                          self.encoding, self.errors)
++                                          self.encoding, self.errors,
++                                          atomic=self.atomic)
+             # If a context is provided we automatically close the file
+             # at the end of the context execution (or flush out).  If a
+             # context does not exist it's the caller's responsibility to
+diff --git a/click/utils.py b/click/utils.py
+index 5386b2717f2d265c486fee3b0eb83ab515e8fe2f..760ddcf5e1c11ef5af05f5fc71496ad10c24ee02 100644
+--- a/click/utils.py
++++ b/click/utils.py
+@@ -122,11 +122,13 @@ class LazyFile(object):
+     files for writing.
+     """
+ 
+-    def __init__(self, filename, mode='r', encoding=None, errors='strict'):
++    def __init__(self, filename, mode='r', encoding=None, errors='strict',
++                 atomic=False):
+         self.name = filename
+         self.mode = mode
+         self.encoding = encoding
+         self.errors = errors
++        self.atomic = atomic
+ 
+         if filename == '-':
+             self._f, self.should_close = open_stream(filename, mode,
+@@ -136,7 +138,7 @@ class LazyFile(object):
+                 # Open and close the file in case we're opening it for
+                 # reading so that we can catch at least some errors in
+                 # some cases early.
+-                open(filename, mode, encoding, errors).close()
++                open(filename, mode).close()
+             self._f = None
+             self.should_close = True
+ 
+@@ -158,7 +160,8 @@ class LazyFile(object):
+         try:
+             rv, self.should_close = open_stream(self.name, self.mode,
+                                                 self.encoding,
+-                                                self.errors)
++                                                self.errors,
++                                                atomic=self.atomic)
+         except (IOError, OSError) as e:
+             from .exceptions import FileError
+             raise FileError(self.name, hint=get_streerror(e))
+diff --git a/docs/arguments.rst b/docs/arguments.rst
+index 2ea0f5259749f8833ac93e70ef4d89870cb6f64d..af43aecef935e3ce7da3b430838106e84c82edd1 100644
+--- a/docs/arguments.rst
++++ b/docs/arguments.rst
+@@ -133,6 +133,12 @@ necessary for manually prompting with the :func:`prompt` function as you
+ do not know if a stream like stdout was openend (which was already open
+ before) or a real file that needs closing.
+ 
++Starting with Click 2.0 it's also possible to open files in atomic mode by
++passing ``atomic=True``.  In atomic mode all writes go into a separate
++file in the same folder and upon completion the file will be moved over to
++the original location.  This is useful if a file is modified that is
++regularly read by other users.
++
+ Environment Variables
+ ---------------------
+ 
+diff --git a/docs/changelog.rst b/docs/changelog.rst
+new file mode 100644
+index 0000000000000000000000000000000000000000..d6c5f48c7917bae3cd89fd14a28922e380380820
+--- /dev/null
++++ b/docs/changelog.rst
+@@ -0,0 +1 @@
++.. include:: ../CHANGES
+diff --git a/docs/index.rst b/docs/index.rst
+index ab81d0eee20eb9fbac7d20fc6c4f2bc7f5afc6e5..55b2773af35c16da719af031edd081753d20c0ce 100644
+--- a/docs/index.rst
++++ b/docs/index.rst
+@@ -83,3 +83,12 @@ method, this part of the documentation is for you.
+    :maxdepth: 2
+ 
+    api
++
++Other Documents
++---------------
++
++.. toctree::
++   :maxdepth: 2
++
++   changelog
++   license
+diff --git a/docs/license.rst b/docs/license.rst
+new file mode 100644
+index 0000000000000000000000000000000000000000..4c989b2ec5e52757b3022fa08f3a52c5106d0a71
+--- /dev/null
++++ b/docs/license.rst
+@@ -0,0 +1,13 @@
++License
++=======
++
++Click is licensed under a three clause BSD License.  It basically means:
++do whatever you want with it as long as the copyright in Click sticks
++around, the conditions are not modified and the disclaimer is present.
++Furthermore you must not use the names of the authors to promote derivatives
++of the software without written consent.
++
++License Text
++------------
++
++.. include:: ../LICENSE
+diff --git a/docs/options.rst b/docs/options.rst
+index 5e2d8eb3b43d6ff17761abdf83f9a592a958d544..d18876b5b5b173d2ba74b6b7c5cb3c30f2ea0caf 100644
+--- a/docs/options.rst
++++ b/docs/options.rst
+@@ -427,15 +427,15 @@ where the first one is picked.
+ Multiple Values from Environment Values
+ ---------------------------------------
+ 
+-As options can accept multiple values pulling in such values from
++As options can accept multiple values, pulling in such values from
+ environment variables (which are strings) is a bit more complex.  The way
+ click solves this is by leaving it up to the type to customize this
+-behavior.  For both ``multiple`` and ``nargs`` with other values than
+-``1`` click will invoke the :meth:`ParamType.split_envvar_value` method to
++behavior.  For both ``multiple`` and ``nargs`` with values other than
++``1``, click will invoke the :meth:`ParamType.split_envvar_value` method to
+ perform the splitting.
+ 
+ The default implementation for all types is to split on whitespace.  The
+-exception to this rules are the :class:`File` and :class:`Path` types
++exceptions to this rule are the :class:`File` and :class:`Path` types
+ which both split according to the operating system's path splitting rules.
+ On UNIX systems like Linux and OS X the splitting happens for those on
+ every colon (``:``) and for Windows on a semicolon (``;``).
+diff --git a/docs/utils.rst b/docs/utils.rst
+index 4ed3f73118cfbac53c7a99fddd1d221df5b9ce4a..4920c91dbc76af0342d7f571be238aa61efd4326 100644
+--- a/docs/utils.rst
++++ b/docs/utils.rst
+@@ -34,10 +34,10 @@ supressed by passing ``nl=False``::
+ Printing Filenames
+ ------------------
+ 
+-Because filenames might not be unicode formatting them can be a bit
+-tricky.  Generally this is easier on Python 2 than 3 as you can just write
+-the bytes to stdout with the print function, but at least on Python 3 you
+-will need to always operate in unicode.
++Because filenames might not be unicode, formatting them can be a bit
++tricky.  Generally this is easier on Python 2 than on 3 as you can just
++write the bytes to stdout with the print function, but at least on Python
++3 you will need to always operate in unicode.
+ 
+ The way this works with click is through the :func:`format_filename`
+ function.  It does a best effort conversion of the filename to Unicode and
+diff --git a/examples/complex/complex/commands/cmd_status.py b/examples/complex/complex/commands/cmd_status.py
+index abf78b690b8b425612cede8cab593580dcd00a4b..99e736eee6cc8cad123f503bd8764c45a60830c8 100644
+--- a/examples/complex/complex/commands/cmd_status.py
++++ b/examples/complex/complex/commands/cmd_status.py
+@@ -2,7 +2,7 @@ import click
+ from complex.cli import pass_context
+ 
+ 
+-@click.command('init', short_help='Shows file changes.')
++@click.command('status', short_help='Shows file changes.')
+ @pass_context
+ def cli(ctx):
+     """Shows file changes in the current working directory."""
+diff --git a/setup.py b/setup.py
+index f26b79af91146dd981368cf67b162aed0318df91..861a9ee9edc50c10ab4591be717d10ab51411432 100644
+--- a/setup.py
++++ b/setup.py
+@@ -5,7 +5,7 @@ setup(
+     name='click',
+     author='Armin Ronacher',
+     author_email='armin.ronacher@active-4.com',
+-    version='0.7',
++    version='2.0-dev',
+     url='http://github.com/mitsuhiko/click',
+     packages=['click'],
+     description='A simple wrapper around optparse for '

@@ -1,0 +1,150 @@
+diff --git a/src/test/java/org/apache/commons/lang3/StringUtilsTest.java b/src/test/java/org/apache/commons/lang3/StringUtilsTest.java
+index 186da6d0caab528e9fc5f1cfc0dfd14d504a9958..d6fc7ae68fda72db0314eff479547718313761df 100644
+--- a/src/test/java/org/apache/commons/lang3/StringUtilsTest.java
++++ b/src/test/java/org/apache/commons/lang3/StringUtilsTest.java
+@@ -1226,7 +1226,7 @@ public class StringUtilsTest {
+     }
+ 
+     @Test
+-    public void testReplaceAll_StringStringString() {
++    public void testReplaceAll() {
+         assertNull(StringUtils.replaceAll(null, "", ""));
+ 
+         assertEquals("any", StringUtils.replaceAll("any", null, ""));
+@@ -1235,6 +1235,7 @@ public class StringUtilsTest {
+         assertEquals("zzz", StringUtils.replaceAll("", "", "zzz"));
+         assertEquals("zzz", StringUtils.replaceAll("", ".*", "zzz"));
+         assertEquals("", StringUtils.replaceAll("", ".+", "zzz"));
++        assertEquals("ZZaZZbZZcZZ", StringUtils.replaceAll("abc", "", "ZZ"));
+ 
+         assertEquals("z\nz", StringUtils.replaceAll("<__>\n<__>", "<.*>", "z"));
+         assertEquals("z", StringUtils.replaceAll("<__>\n<__>", "(?s)<.*>", "z"));
+@@ -1254,7 +1255,7 @@ public class StringUtilsTest {
+     }
+ 
+     @Test
+-    public void testReplaceFirst_StringStringString() {
++    public void testReplaceFirst() {
+         assertNull(StringUtils.replaceFirst(null, "", ""));
+ 
+         assertEquals("any", StringUtils.replaceFirst("any", null, ""));
+@@ -1263,6 +1264,7 @@ public class StringUtilsTest {
+         assertEquals("zzz", StringUtils.replaceFirst("", "", "zzz"));
+         assertEquals("zzz", StringUtils.replaceFirst("", ".*", "zzz"));
+         assertEquals("", StringUtils.replaceFirst("", ".+", "zzz"));
++        assertEquals("ZZabc", StringUtils.replaceFirst("abc", "", "ZZ"));
+ 
+         assertEquals("z\n<__>", StringUtils.replaceFirst("<__>\n<__>", "<.*>", "z"));
+         assertEquals("z", StringUtils.replaceFirst("<__>\n<__>", "(?s)<.*>", "z"));
+@@ -2381,6 +2383,51 @@ public class StringUtilsTest {
+         assertEquals("queued", StringUtils.remove("queued", 'z'));
+     }
+ 
++    @Test
++    public void testRemoveAll() {
++        assertNull(StringUtils.removeAll(null, ""));
++        assertEquals("any", StringUtils.removeAll("any", null));
++
++        assertEquals("any", StringUtils.removeAll("any", ""));
++        assertEquals("", StringUtils.removeAll("any", ".*"));
++        assertEquals("", StringUtils.removeAll("any", ".+"));
++        assertEquals("", StringUtils.removeAll("any", ".?"));
++
++        assertEquals("A\nB", StringUtils.removeAll("A<__>\n<__>B", "<.*>"));
++        assertEquals("AB", StringUtils.removeAll("A<__>\n<__>B", "(?s)<.*>"));
++        assertEquals("ABC123", StringUtils.removeAll("ABCabc123abc", "[a-z]"));
++
++        try {
++            StringUtils.removeAll("any", "{badRegexSyntax}");
++            fail("StringUtils.removeAll expecting PatternSyntaxException");
++        } catch (final PatternSyntaxException ex) {
++            // empty
++        }
++    }
++
++    @Test
++    public void testRemoveFirst() {
++        assertNull(StringUtils.removeFirst(null, ""));
++        assertEquals("any", StringUtils.removeFirst("any", null));
++
++        assertEquals("any", StringUtils.removeFirst("any", ""));
++        assertEquals("", StringUtils.removeFirst("any", ".*"));
++        assertEquals("", StringUtils.removeFirst("any", ".+"));
++        assertEquals("bc", StringUtils.removeFirst("abc", ".?"));
++
++        assertEquals("A\n<__>B", StringUtils.removeFirst("A<__>\n<__>B", "<.*>"));
++        assertEquals("AB", StringUtils.removeFirst("A<__>\n<__>B", "(?s)<.*>"));
++        assertEquals("ABCbc123", StringUtils.removeFirst("ABCabc123", "[a-z]"));
++        assertEquals("ABC123abc", StringUtils.removeFirst("ABCabc123abc", "[a-z]+"));
++
++        try {
++            StringUtils.removeFirst("any", "{badRegexSyntax}");
++            fail("StringUtils.removeFirst expecting PatternSyntaxException");
++        } catch (final PatternSyntaxException ex) {
++            // empty
++        }
++    }
++
+     @Test
+     public void testDifferenceAt_StringArray() {
+         assertEquals(-1, StringUtils.indexOfDifference((String[]) null));
+diff --git a/src/test/java/org/apache/commons/lang3/time/DateFormatUtilsTest.java b/src/test/java/org/apache/commons/lang3/time/DateFormatUtilsTest.java
+index 5300e7b525b673c0fe7bd99a5bb9e27ae6731c5a..a9a4d25266224ffd1d738e28c0f77bc583dfc34f 100644
+--- a/src/test/java/org/apache/commons/lang3/time/DateFormatUtilsTest.java
++++ b/src/test/java/org/apache/commons/lang3/time/DateFormatUtilsTest.java
+@@ -37,6 +37,7 @@ import org.junit.Test;
+ /**
+  * TestCase for DateFormatUtils.
+  */
++@SuppressWarnings("deprecation") // tests lots of deprecated items
+ public class DateFormatUtilsTest {
+ 
+     @Rule
+diff --git a/src/test/java/org/apache/commons/lang3/time/DateUtilsRoundingTest.java b/src/test/java/org/apache/commons/lang3/time/DateUtilsRoundingTest.java
+index bfe7a125c7484f1d9f9093fbd7477428e62f8df5..e5b8ef9846e0eb18f06ed06a96e4b5578b0a807a 100644
+--- a/src/test/java/org/apache/commons/lang3/time/DateUtilsRoundingTest.java
++++ b/src/test/java/org/apache/commons/lang3/time/DateUtilsRoundingTest.java
+@@ -51,6 +51,7 @@ public class DateUtilsRoundingTest {
+     Date targetMilliSecondDate;
+ 
+     Calendar januaryOneCalendar;
++    @SuppressWarnings("deprecation")
+     FastDateFormat fdf = DateFormatUtils.ISO_DATETIME_FORMAT;
+ 
+ 
+diff --git a/src/test/java/org/apache/commons/lang3/time/DateUtilsTest.java b/src/test/java/org/apache/commons/lang3/time/DateUtilsTest.java
+index 7b4b721ed5f1257e18ee5631da2b95085216f29b..ecf4bb6c4ce268041e3694766e53e0f3ed5c4576 100644
+--- a/src/test/java/org/apache/commons/lang3/time/DateUtilsTest.java
++++ b/src/test/java/org/apache/commons/lang3/time/DateUtilsTest.java
+@@ -1203,6 +1203,7 @@ public class DateUtilsTest {
+     }
+ 
+     // http://issues.apache.org/jira/browse/LANG-530
++    @SuppressWarnings("deprecation")
+     @Test
+     public void testLang530() throws ParseException {
+         final Date d = new Date();
+diff --git a/src/test/java/org/apache/commons/lang3/time/DurationFormatUtilsTest.java b/src/test/java/org/apache/commons/lang3/time/DurationFormatUtilsTest.java
+index eb469eaacc366649879f07fcdda8a5c8670feee9..2847c6d405ad78009bf18af64f841b3e4d5f4452 100644
+--- a/src/test/java/org/apache/commons/lang3/time/DurationFormatUtilsTest.java
++++ b/src/test/java/org/apache/commons/lang3/time/DurationFormatUtilsTest.java
+@@ -253,6 +253,7 @@ public class DurationFormatUtilsTest {
+         DurationFormatUtils.formatDuration(-5000, "S", true);
+     }
+ 
++    @SuppressWarnings("deprecation")
+     @Test
+     public void testFormatPeriodISO() {
+         final TimeZone timeZone = TimeZone.getTimeZone("GMT-3");
+diff --git a/src/test/java/org/apache/commons/lang3/time/FastDatePrinterTest.java b/src/test/java/org/apache/commons/lang3/time/FastDatePrinterTest.java
+index 072748698b70aeda4785a8b6beafeb095ffc9611..5de68d65c20877ef6ea88ae68e675bf419758811 100644
+--- a/src/test/java/org/apache/commons/lang3/time/FastDatePrinterTest.java
++++ b/src/test/java/org/apache/commons/lang3/time/FastDatePrinterTest.java
+@@ -382,6 +382,7 @@ public class FastDatePrinterTest {
+         assertEquals("11 23 23 11", printer.format(calendar));
+     }
+ 
++    @SuppressWarnings("deprecation")
+     @Test
+     public void testStringBufferOptions() {
+         final DatePrinter format = getInstance("yyyy-MM-dd HH:mm:ss.SSS Z", TimeZone.getTimeZone("GMT"));

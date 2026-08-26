@@ -1,0 +1,37 @@
+diff --git a/src/test/java/org/apache/commons/lang3/time/DateUtilsTest.java b/src/test/java/org/apache/commons/lang3/time/DateUtilsTest.java
+index 0b80ab6338481c6d3771831e52588354d36723c4..bb6e59f5544857da178970afda1ef6129d28ca68 100644
+--- a/src/test/java/org/apache/commons/lang3/time/DateUtilsTest.java
++++ b/src/test/java/org/apache/commons/lang3/time/DateUtilsTest.java
+@@ -693,6 +693,32 @@ public class DateUtilsTest {
+             // expected
+         }
+     }
++    
++    //-----------------------------------------------------------------------
++    @Test(expected=NullPointerException.class)
++    public void testToCalendarWithDateNull() {
++        DateUtils.toCalendar(null, zone);
++    }
++    
++    //-----------------------------------------------------------------------
++    @Test(expected=NullPointerException.class)
++    public void testToCalendarWithTimeZoneNull() {
++        DateUtils.toCalendar(date1, null);
++    }
++    
++    //-----------------------------------------------------------------------
++    @Test
++    public void testToCalendarWithDateAndTimeZoneNotNull() {
++        Calendar c = DateUtils.toCalendar(date2, defaultZone);
++        assertEquals("Convert Date and TimeZone to a Calendar, but failed to get the Date back", date2, c.getTime());
++        assertEquals("Convert Date and TimeZone to a Calendar, but failed to get the TimeZone back", defaultZone, c.getTimeZone());
++    }
++    
++    //-----------------------------------------------------------------------
++    @Test(expected=NullPointerException.class)
++    public void testToCalendarWithDateAndTimeZoneNull() {
++        DateUtils.toCalendar(null, null);
++    }
+ 
+     //-----------------------------------------------------------------------
+     /**

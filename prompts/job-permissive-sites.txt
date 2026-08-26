@@ -1,0 +1,25 @@
+Mine and validate the PERMISSIVE stratum: arms sites where fine-grained claiming would let both agents write the same file concurrently. This corrects a mis-specified stratum. The prior job sought byte-disjoint CONFLICTED merges (0 validated, exploratory/arms/DISJOINT-SITES.md). The population that actually tests the under-blocking safety question is CLEAN merges with same-file concurrency: both sides edited a common file, the bytes did not overlap, git merged them without conflict, and a byte-granular claim system would therefore have permitted both writes. The question the arms must answer is whether the integrated result is still correct.
+
+## Population
+
+From corpus/conflicts/_all_merges/*.jsonl in the four runnable repositories (pallets/click, pygments/pygments Python; gohugoio/hugo Go; apache/commons-lang Java): every merge whose evaluation status is CLEAN and whose base-to-parent1 and base-to-parent2 diffs share at least one common path. Report the census first, per repository: clean merges, clean merges with same-file concurrency, and of those how many have both sides touching test files.
+
+If the _all_merges rows do not retain per-side changed-path sets (REANALYSIS.md section 3 says the strict common-file conditioning was not recoverable from them), then recover the path sets directly from the task-owned bare mirrors with read-only plumbing (git diff --name-only base..parent, no working tree, no mutation of corpus mirrors) and say explicitly that you did so. Record the exact command form used.
+
+## Validation
+
+For each candidate with both-sides tests, run the EXACT existing gate for its language: the frozen Python site-validation protocol (reuse the validator recorded in SITES.md, do not rewrite it), the Go focal-map plus five-run gate, or the Java compile plus focal plus five-run gate. The green-red-green property is required per side exactly as before: each side's focal tests must fail with its test patch applied and its source patch absent, and pass with both. Rejections are results with their exact failing check.
+
+Target 6 validated sites. Stop mining once 6 validate or the candidate pool is exhausted, and report which.
+
+## The byte-overlap record each validated site must carry
+
+For every validated site, compute and record the base-coordinate changed byte ranges of both sides on each common file, using the same overlap rule as the miner (conflict-byte-overlap-v4-pinned-bounded-linear where applicable). Classify the site: strictly disjoint bytes on every common file, boundary contact only, or partially overlapping. A site whose bytes overlap on a common file yet merged cleanly is interesting and should be recorded rather than discarded, with the reason git accepted it.
+
+This record is what makes the stratum meaningful: it is the evidence that a byte-granular claim would have permitted both writes.
+
+## Output
+
+exploratory/arms/PERMISSIVE-SITES.md: first line X validated / Y attempted / Z census with both-sides tests. Census table per repository. Per-site validation evidence in the SITES.md style. The byte-overlap classification table. Append validated rows to exploratory/arms/sites-permissive.json in the sites.json schema with a stratum field recording the byte classification. Mandatory: "Claims that could NOT be verified", "What would change this verdict", per-claim confidence with reasons.
+
+Read-only on corpus mirrors, scratch copies only. Do not modify fixture/, prompts/, existing results, or instruments/arms/shim/ (a build is in progress there). Do not fabricate.

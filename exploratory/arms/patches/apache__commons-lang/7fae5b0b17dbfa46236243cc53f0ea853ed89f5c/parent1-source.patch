@@ -1,0 +1,68 @@
+diff --git a/src/changes/changes.xml b/src/changes/changes.xml
+index f1517456520151d4af7a0308c9b0276907c49032..3523968677ae5014549f62503029b02c25162a36 100644
+--- a/src/changes/changes.xml
++++ b/src/changes/changes.xml
+@@ -22,6 +22,8 @@
+   <body>
+ 
+   <release version="3.5" date="tba" description="tba">
++    <action issue="LANG-1130" type="fix" dev="britter">Fix critical issues reported by SonarQube</action>
++    <action issue="LANG-1131" type="fix" dev="britter">StrBuilder.equals(StrBuilder) doesn't check for null inputs</action>
+     <action issue="LANG-1105" type="add" dev="britter" due-to="Hendrik Saly">Add ThreadUtils - A utility class which provides helper methods related to java.lang.Thread</action>
+     <action issue="LANG-1031" type="add" dev="britter" due-to="Felipe Adorno">Add annotations to exclude fields from ReflectionEqualsBuilder, ReflectionToStringBuilder and ReflectionHashCodeBuilder</action>
+     <action issue="LANG-1127" type="add" dev="chas">Unit test helpers which set and reset default Locale and TimeZone</action>
+diff --git a/src/main/java/org/apache/commons/lang3/ClassUtils.java b/src/main/java/org/apache/commons/lang3/ClassUtils.java
+index 92ecb155751ea164e976d0081cbb8be00470af1b..c56aeab89059a74bd9acf223353a18025fc9b1d6 100644
+--- a/src/main/java/org/apache/commons/lang3/ClassUtils.java
++++ b/src/main/java/org/apache/commons/lang3/ClassUtils.java
+@@ -94,8 +94,9 @@ public class ClassUtils {
+      */
+     private static final Map<Class<?>, Class<?>> wrapperPrimitiveMap = new HashMap<Class<?>, Class<?>>();
+     static {
+-        for (final Class<?> primitiveClass : primitiveWrapperMap.keySet()) {
+-            final Class<?> wrapperClass = primitiveWrapperMap.get(primitiveClass);
++        for (final Map.Entry<Class<?>, Class<?>> entry : primitiveWrapperMap.entrySet()) {
++            final Class<?> primitiveClass = entry.getKey();
++            final Class<?> wrapperClass = entry.getValue();
+             if (!primitiveClass.equals(wrapperClass)) {
+                 wrapperPrimitiveMap.put(wrapperClass, primitiveClass);
+             }
+diff --git a/src/main/java/org/apache/commons/lang3/reflect/TypeUtils.java b/src/main/java/org/apache/commons/lang3/reflect/TypeUtils.java
+index 91313c6a473066bf91b42ab182a12ad494c09d38..62a238062fc8409f0db5b91eea2edf1a8823efba 100644
+--- a/src/main/java/org/apache/commons/lang3/reflect/TypeUtils.java
++++ b/src/main/java/org/apache/commons/lang3/reflect/TypeUtils.java
+@@ -157,7 +157,7 @@ public class TypeUtils {
+         private ParameterizedTypeImpl(final Class<?> raw, final Type useOwner, final Type[] typeArguments) {
+             this.raw = raw;
+             this.useOwner = useOwner;
+-            this.typeArguments = typeArguments;
++            this.typeArguments = typeArguments.clone();
+         }
+ 
+         /**
+diff --git a/src/main/java/org/apache/commons/lang3/text/StrBuilder.java b/src/main/java/org/apache/commons/lang3/text/StrBuilder.java
+index 103b04035f944bba6aca6dabc862a492450bbee9..7b541a6b278f0a0ccc2a45d3d27b1801fff37e3a 100644
+--- a/src/main/java/org/apache/commons/lang3/text/StrBuilder.java
++++ b/src/main/java/org/apache/commons/lang3/text/StrBuilder.java
+@@ -2819,6 +2819,9 @@ public class StrBuilder implements CharSequence, Appendable, Serializable, Build
+         if (this == other) {
+             return true;
+         }
++        if (other == null) {
++            return false;
++        }
+         if (this.size != other.size) {
+             return false;
+         }
+@@ -2841,10 +2844,7 @@ public class StrBuilder implements CharSequence, Appendable, Serializable, Build
+      */
+     @Override
+     public boolean equals(final Object obj) {
+-        if (obj instanceof StrBuilder) {
+-            return equals((StrBuilder) obj);
+-        }
+-        return false;
++        return obj instanceof StrBuilder && equals((StrBuilder) obj);
+     }
+ 
+     /**

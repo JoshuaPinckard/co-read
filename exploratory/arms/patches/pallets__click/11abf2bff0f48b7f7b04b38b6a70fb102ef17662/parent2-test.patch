@@ -1,0 +1,52 @@
+diff --git a/tests/test_normalization.py b/tests/test_normalization.py
+index 5cc4eeba0d6471eaa53ab4962b2795d0c866551d..4790d32bbaa2e51e4982888dfcbf7486b0b3cba9 100644
+--- a/tests/test_normalization.py
++++ b/tests/test_normalization.py
+@@ -20,7 +20,7 @@ def test_choice_normalization(runner):
+     @click.command(context_settings=CONTEXT_SETTINGS)
+     @click.option('--choice', type=click.Choice(['Foo', 'Bar']))
+     def cli(choice):
+-        click.echo('Foo')
++        click.echo(choice)
+ 
+     result = runner.invoke(cli, ['--CHOICE', 'FOO'])
+     assert result.output == 'Foo\n'
+diff --git a/tests/test_options.py b/tests/test_options.py
+index bd346c2438255e9a112d155430a45b158bbe4d39..14a7a1786cb3bab4ede3ee0d0eaeda2b612e5420 100644
+--- a/tests/test_options.py
++++ b/tests/test_options.py
+@@ -335,12 +335,15 @@ def test_case_insensitive_choice(runner):
+ 
+     result = runner.invoke(cmd, ['--foo', 'apple'])
+     assert result.exit_code == 0
++    assert result.output == 'Apple\n'
+ 
+     result = runner.invoke(cmd, ['--foo', 'oRANGe'])
+     assert result.exit_code == 0
++    assert result.output == 'Orange\n'
+ 
+     result = runner.invoke(cmd, ['--foo', 'Apple'])
+     assert result.exit_code == 0
++    assert result.output == 'Apple\n'
+ 
+     @click.command()
+     @click.option('--foo', type=click.Choice(['Orange', 'Apple']))
+@@ -357,6 +360,18 @@ def test_case_insensitive_choice(runner):
+     assert result.exit_code == 0
+ 
+ 
++def test_case_insensitive_choice_returned_exactly(runner):
++    @click.command()
++    @click.option('--foo', type=click.Choice(
++        ['Orange', 'Apple'], case_sensitive=False))
++    def cmd(foo):
++        click.echo(foo)
++
++    result = runner.invoke(cmd, ['--foo', 'apple'])
++    assert result.exit_code == 0
++    assert result.output == 'Apple\n'
++
++
+ def test_multiline_help(runner):
+     @click.command()
+     @click.option('--foo', help="""

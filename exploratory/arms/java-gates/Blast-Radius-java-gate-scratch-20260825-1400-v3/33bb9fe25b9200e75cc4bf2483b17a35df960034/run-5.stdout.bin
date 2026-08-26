@@ -1,0 +1,54 @@
+
+-------------------------------------------------------
+ T E S T S
+-------------------------------------------------------
+Running org.apache.commons.lang3.CharEncodingTest
+Tests run: 6, Failures: 0, Errors: 3, Skipped: 0, Time elapsed: 0.084 sec <<< FAILURE! - in org.apache.commons.lang3.CharEncodingTest
+testMustBeSupportedJava1_3_1(org.apache.commons.lang3.CharEncodingTest)  Time elapsed: 0.015 sec  <<< ERROR!
+java.lang.NullPointerException
+	at org.apache.commons.lang3.CharEncodingTest.testMustBeSupportedJava1_3_1(CharEncodingTest.java:49)
+
+testWorksOnJava1_1_8(org.apache.commons.lang3.CharEncodingTest)  Time elapsed: 0 sec  <<< ERROR!
+java.lang.NullPointerException
+	at org.apache.commons.lang3.CharEncodingTest.testWorksOnJava1_1_8(CharEncodingTest.java:84)
+
+testWorksOnJava1_2_2(org.apache.commons.lang3.CharEncodingTest)  Time elapsed: 0 sec  <<< ERROR!
+java.lang.NullPointerException
+	at org.apache.commons.lang3.CharEncodingTest.testWorksOnJava1_2_2(CharEncodingTest.java:99)
+
+Running org.apache.commons.lang3.math.NumberUtilsTest
+Tests run: 101, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.033 sec - in org.apache.commons.lang3.math.NumberUtilsTest
+Running org.apache.commons.lang3.StringUtilsTest
+Tests run: 132, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.163 sec - in org.apache.commons.lang3.StringUtilsTest
+Running org.apache.commons.lang3.SystemUtilsTest
+Can't test IS_JAVA value: Java Platform API Specification
+Tests run: 13, Failures: 0, Errors: 1, Skipped: 0, Time elapsed: 0.001 sec <<< FAILURE! - in org.apache.commons.lang3.SystemUtilsTest
+testJavaAwtHeadless(org.apache.commons.lang3.SystemUtilsTest)  Time elapsed: 0 sec  <<< ERROR!
+java.lang.NullPointerException
+	at org.apache.commons.lang3.SystemUtilsTest.testJavaAwtHeadless(SystemUtilsTest.java:514)
+
+Running org.apache.commons.lang3.text.WordUtilsTest
+Tests run: 13, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0 sec - in org.apache.commons.lang3.text.WordUtilsTest
+Running org.apache.commons.lang3.time.DateUtilsTest
+Tests run: 59, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.522 sec - in org.apache.commons.lang3.time.DateUtilsTest
+
+Results :
+
+Tests in error: 
+  CharEncodingTest.testMustBeSupportedJava1_3_1:49 » NullPointer
+  CharEncodingTest.testWorksOnJava1_1_8:84 » NullPointer
+  CharEncodingTest.testWorksOnJava1_2_2:99 » NullPointer
+  SystemUtilsTest.testJavaAwtHeadless:514 » NullPointer
+
+Tests run: 324, Failures: 0, Errors: 4, Skipped: 0
+
+[ERROR] Failed to execute goal org.apache.maven.plugins:maven-surefire-plugin:2.19.1:test (default-test) on project commons-lang3: There are test failures.
+[ERROR] 
+[ERROR] Please refer to C:\Users\joshp\Desktop\Blast-Radius-java-gate-scratch-20260825-1400-v3\attempts\focal\33bb9fe25b9200e75cc4bf2483b17a35df960034\db6f7c1d74ba\offline-run-5\target\surefire-reports for the individual test results.
+[ERROR] -> [Help 1]
+[ERROR] 
+[ERROR] To see the full stack trace of the errors, re-run Maven with the -e switch.
+[ERROR] Re-run Maven using the -X switch to enable full debug logging.
+[ERROR] 
+[ERROR] For more information about the errors and possible solutions, please read the following articles:
+[ERROR] [Help 1] http://cwiki.apache.org/confluence/display/MAVEN/MojoFailureException

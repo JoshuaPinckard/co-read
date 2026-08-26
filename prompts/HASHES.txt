@@ -17,6 +17,7 @@ a05b371c0a6ff769a84aea319f8bb4f2c50ae7feebd629f40f762aec802ddf78  job-hazard-mod
 4244f560e9ca5f0c65a48038be1c64c6480bfdcd1ff8422f506406558a8ccdd1  job-java-runner.txt  2976 bytes
 db4e04ef2020f58480e4a63fca9c622ee261ffc4b6bfc34b53afa51459ab43e3  job-normalization.txt  3067 bytes
 bdf952f5732222652857f34228d045d740b87e89364e64f1f7e5357a1b26c223  job-oscillation.txt  4813 bytes
+cfe267f9c8c7fd408333eff851056c0c37ed33f8a6c544fe86316a93983a3db7  job-permissive-sites.txt  3540 bytes
 87e4397ca45bfed8e77c5577486d665c8bdccde46a112a1bccd643a4ceee6813  job-pygments-fixture-repair.txt  3239 bytes
 ea6e0750731a377dd9fbdc285cdfae2f2d64977089424600b89139cf8970862d  job-recover-tasks.txt  3748 bytes
 f7b108b7e01fb6103177453f406bb47e1e8d65a9e82a2364c79f4b743a39c772  job-retrieval-fix.txt  3689 bytes

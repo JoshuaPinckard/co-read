@@ -1,0 +1,3858 @@
+diff --git a/pom.xml b/pom.xml
+index 4d3110736f9d8f76f1f4a9008483c2518696b13b..ee294398c77aab15b538b4e30ad4658861caba60 100644
+--- a/pom.xml
++++ b/pom.xml
+@@ -191,6 +191,15 @@
+         <role>Java Developer</role>
+       </roles>
+     </developer>
++    <developer>
++      <name>Rob Tompkins</name>
++      <id>chtompki</id>
++      <email>chtompki@apache.org</email>
++      <timezone>-5</timezone>
++      <roles>
++        <role>Java Developer</role>
++      </roles>
++    </developer>
+   </developers>
+   <contributors>
+     <contributor>
+diff --git a/src/changes/changes.xml b/src/changes/changes.xml
+index c038ad8b5e7a67d5ee9ece51cc7de3eb937435e6..4f063620708cc4516e442f147f0a61b135309203 100644
+--- a/src/changes/changes.xml
++++ b/src/changes/changes.xml
+@@ -45,7 +45,10 @@ The <action> type attribute can be add,update,fix,remove.
+   </properties>
+   <body>
+ 
+-  <release version="3.5" date="tba" description="tba">
++  <release version="3.5" date="tba" description="New features including Java 9 detection">
++    <action issue="LANG-1197" type="update" dev="pschumacher" >Prepare Java 9 detection</action>
++    <action issue="LANG-1252" type="fix" dev="chtompki" due-to="Rob Tompkins">Rename NumberUtils.isNumber, isCreatable to better reflect createNumber. Also, accommodated for "+" symbol as prefix in isCreatable and isNumber.</action>
++    <action issue="LANG-1262" type="update" dev="pschumacher" due-to="Ruslan Cheremin">CompareToBuilder.append(Object, Object, Comparator) method is too big to be inlined</action>
+     <action issue="LANG-1230" type="fix" dev="pschumacher" due-to="Philippe Marschall">Remove unnecessary synchronization from registry lookup in EqualsBuilder and HashCodeBuilder</action>
+     <action issue="LANG-1224" type="add" dev="pschumacher" due-to="Caleb Cushing">Extend RandomStringUtils with methods that generate strings between a min and max length</action>
+     <action issue="LANG-1214" type="fix" dev="pschumacher" due-to="Henry Tung">Handle "void" in ClassUtils.getClass()</action>
+@@ -81,8 +84,7 @@ The <action> type attribute can be add,update,fix,remove.
+     <action issue="LANG-1232" type="fix" dev="pschumacher" due-to="Nick Manley">DiffBuilder: Add null check on fieldName when appending Object or Object[]</action>
+     <action issue="LANG-1178" type="fix" dev="pschumacher" due-to="Henri Yandell">ArrayUtils.removeAll(Object array, int... indices) should do the clone, not its callers</action>
+     <action issue="LANG-1151" type="update" dev="pschumacher" due-to="Juan Pablo Santos Rodríguez">Performance improvements for NumberUtils.isParsable</action>
+-    <action issue="LANG-1227" type="fix" dev="pschumacher" due-to="kaching88">StringUtils.stripAccents should remove accents from "Ł" and "ł".</action>
+-    <action issue="LANG-1227" type="new" dev="ggregory" due-to="Gary Gregory">Add XMLCharacter class.</action>
++    <action issue="LANG-1120" type="fix" dev="pschumacher" due-to="kaching88">StringUtils.stripAccents should remove accents from "Ł" and "ł".</action>
+     <action issue="LANG-1218" type="update" dev="ggregory" due-to="Ruslan Cheremin">EqualsBuilder.append(Object,Object) is too big to be inlined, which prevents whole builder to be scalarized</action>
+     <action issue="LANG-1205" type="fix" dev="chas" due-to="pbrose">NumberUtils.createNumber() behaves inconsistently with NumberUtils.isNumber()</action>
+     <action issue="LANG-1115" type="add" dev="chas" due-to="Jim Lloyd, Joe Ferner">Add support for varargs in ConstructorUtils, MemberUtils, and MethodUtils</action>
+@@ -92,7 +94,6 @@ The <action> type attribute can be add,update,fix,remove.
+     <action issue="LANG-1220" type="add" dev="kinow" due-to="Casey Scarborough">Add tests for missed branches in DateUtils</action>
+     <action issue="LANG-1202" type="fix" dev="chas" due-to="Markus Jelsma">parseDateStrictly does't pass specified locale</action>
+     <action issue="LANG-1219" type="fix" dev="chas" due-to="Jarek">FastDateFormat doesn't respect summer daylight in some localized strings</action>
+-    <action issue="LANG-1201" type="add" dev="ggregory" due-to="Gary Gregory">Add a TimeUnit-like classes for base 2 and base 10 digital conversions (bits, bytes, KB, MB, and so on)</action>
+     <action issue="LANG-1146" type="add" dev="ggregory" due-to="Gabor Liptak">z/OS identification in SystemUtils</action>
+     <action issue="LANG-1210" type="update" dev="ggregory" due-to="Matthias Niehoff">StringUtils#startsWithAny has error in Javadoc</action>
+     <action issue="LANG-1208" type="update" dev="bayard" due-to="Samuel Karp">StrSubstitutor can preserve escapes</action>
+diff --git a/src/main/java/org/apache/commons/lang3/ArrayUtils.java b/src/main/java/org/apache/commons/lang3/ArrayUtils.java
+index 1d33fcf130bd0e4f619e4181073b7526a8bcb1f3..9ed6441e7b0ff9d602183b0f52b49be9d17b0e7f 100644
+--- a/src/main/java/org/apache/commons/lang3/ArrayUtils.java
++++ b/src/main/java/org/apache/commons/lang3/ArrayUtils.java
+@@ -1832,12 +1832,11 @@ public class ArrayUtils {
+     // Swap
+     //-----------------------------------------------------------------------
+     /**
+-     * <p>Swaps two elements in the given array.
++     * Swaps two elements in the given array.
+      *
+-     * <p>There is no special handling for multi-dimensional arrays.
+-     *
+-     * <p>This method does nothing for a {@code null} or empty input array or for overflow indices.
+-     * Negative indices are promoted to 0(zero).
++     * <p>There is no special handling for multi-dimensional arrays. This method
++     * does nothing for a {@code null} or empty input array or for overflow indices.
++     * Negative indices are promoted to 0(zero).</p>
+      * 
+      * <p>Examples:
+      *     <ul>
+@@ -1847,10 +1846,12 @@ public class ArrayUtils {
+      *         <li>ArrayUtils.swap(["1", "2", "3"], 0, 5) -&gt; ["1", "2", "3"]</li>
+      *         <li>ArrayUtils.swap(["1", "2", "3"], -1, 1) -&gt; ["2", "1", "3"]</li>
+      *     </ul>
++     * </p>
+      *
+      * @param array the array to swap, may be {@code null}
+      * @param offset1 the index of the first element to swap
+      * @param offset2 the index of the second element to swap
++     * @since 3.5
+      */
+     public static void swap(final Object[] array, int offset1, int offset2) {
+         if (array == null || array.length == 0) {
+@@ -1860,12 +1861,11 @@ public class ArrayUtils {
+     }
+ 
+     /**
+-     * <p>Swaps two elements in the given array.
+-     *
+-     * <p>There is no special handling for multi-dimensional arrays.
++     * <p>Swaps two elements in the given long array.
+      *
+-     * <p>This method does nothing for a {@code null} or empty input array or for overflow indices.
+-     * Negative indices are promoted to 0(zero).
++     * <p>There is no special handling for multi-dimensional arrays. This method
++     * does nothing for a {@code null} or empty input array or for overflow indices.
++     * Negative indices are promoted to 0(zero).</p>
+      *
+      * <p>Examples:
+      *     <ul>
+@@ -1875,10 +1875,12 @@ public class ArrayUtils {
+      *         <li>ArrayUtils.swap([true, false, true], 0, 5) -&gt; [true, false, true]</li>
+      *         <li>ArrayUtils.swap([true, false, true], -1, 1) -&gt; [false, true, true]</li>
+      *     </ul>
+-     * 
++     * </p>
++     *
+      * @param array  the array to swap, may be {@code null}
+      * @param offset1 the index of the first element to swap
+      * @param offset2 the index of the second element to swap
++     * @since 3.5
+      */
+     public static void swap(final long[] array, int offset1, int offset2) {
+         if (array == null || array.length == 0) {
+@@ -1888,10 +1890,11 @@ public class ArrayUtils {
+     }
+ 
+     /**
+-     * <p>Swaps two elements in the given array.
++     * Swaps two elements in the given int array.
+      *
+-     * <p>This method does nothing for a {@code null} or empty input array or for overflow indices.
+-     * Negative indices are promoted to 0(zero).
++     * <p>There is no special handling for multi-dimensional arrays. This method
++     * does nothing for a {@code null} or empty input array or for overflow indices.
++     * Negative indices are promoted to 0(zero).</p>
+      *
+      * <p>Examples:
+      *     <ul>
+@@ -1901,10 +1904,12 @@ public class ArrayUtils {
+      *         <li>ArrayUtils.swap([1, 2, 3], 0, 5) -&gt; [1, 2, 3]</li>
+      *         <li>ArrayUtils.swap([1, 2, 3], -1, 1) -&gt; [2, 1, 3]</li>
+      *     </ul>
++     * </p>
+      *
+      * @param array  the array to swap, may be {@code null}
+      * @param offset1 the index of the first element to swap
+      * @param offset2 the index of the second element to swap
++     * @since 3.5
+      */
+     public static void swap(final int[] array, int offset1, int offset2) {
+         if (array == null || array.length == 0) {
+@@ -1914,10 +1919,11 @@ public class ArrayUtils {
+     }
+ 
+     /**
+-     * <p>Swaps two elements in the given array.
++     * Swaps two elements in the given short array.
+      *
+-     * <p>This method does nothing for a {@code null} or empty input array or for overflow indices.
+-     * Negative indices are promoted to 0(zero).
++     * <p>There is no special handling for multi-dimensional arrays. This method
++     * does nothing for a {@code null} or empty input array or for overflow indices.
++     * Negative indices are promoted to 0(zero).</p>
+      *
+      * <p>Examples:
+      *     <ul>
+@@ -1927,10 +1933,12 @@ public class ArrayUtils {
+      *         <li>ArrayUtils.swap([1, 2, 3], 0, 5) -&gt; [1, 2, 3]</li>
+      *         <li>ArrayUtils.swap([1, 2, 3], -1, 1) -&gt; [2, 1, 3]</li>
+      *     </ul>
++     * </p>
+      * 
+      * @param array  the array to swap, may be {@code null}
+      * @param offset1 the index of the first element to swap
+      * @param offset2 the index of the second element to swap
++     * @since 3.5
+      */
+     public static void swap(final short[] array, int offset1, int offset2) {
+         if (array == null || array.length == 0) {
+@@ -1940,10 +1948,11 @@ public class ArrayUtils {
+     }
+ 
+     /**
+-     * <p>Swaps two elements in the given array.
++     * Swaps two elements in the given char array.
+      *
+-     * <p>This method does nothing for a {@code null} or empty input array or for overflow indices.
+-     * Negative indices are promoted to 0(zero).
++     * <p>There is no special handling for multi-dimensional arrays. This method
++     * does nothing for a {@code null} or empty input array or for overflow indices.
++     * Negative indices are promoted to 0(zero).</p>
+      * 
+      * <p>Examples:
+      *     <ul>
+@@ -1953,10 +1962,12 @@ public class ArrayUtils {
+      *         <li>ArrayUtils.swap([1, 2, 3], 0, 5) -&gt; [1, 2, 3]</li>
+      *         <li>ArrayUtils.swap([1, 2, 3], -1, 1) -&gt; [2, 1, 3]</li>
+      *     </ul>
++     * </p>
+      *
+      * @param array  the array to swap, may be {@code null}
+      * @param offset1 the index of the first element to swap
+      * @param offset2 the index of the second element to swap
++     * @since 3.5
+      */
+     public static void swap(final char[] array, int offset1, int offset2) {
+         if (array == null || array.length == 0) {
+@@ -1966,10 +1977,11 @@ public class ArrayUtils {
+     }
+ 
+     /**
+-     * <p>Swaps two elements in the given array.
++     * Swaps two elements in the given byte array.
+      *
+-     * <p>This method does nothing for a {@code null} or empty input array or for overflow indices.
+-     * Negative indices are promoted to 0(zero).
++     * <p>There is no special handling for multi-dimensional arrays. This method
++     * does nothing for a {@code null} or empty input array or for overflow indices.
++     * Negative indices are promoted to 0(zero).</p>
+      *
+      * <p>Examples:
+      *     <ul>
+@@ -1979,10 +1991,12 @@ public class ArrayUtils {
+      *         <li>ArrayUtils.swap([1, 2, 3], 0, 5) -&gt; [1, 2, 3]</li>
+      *         <li>ArrayUtils.swap([1, 2, 3], -1, 1) -&gt; [2, 1, 3]</li>
+      *     </ul>
+-     * 
++     * </p>
++     *
+      * @param array  the array to swap, may be {@code null}
+      * @param offset1 the index of the first element to swap
+      * @param offset2 the index of the second element to swap
++     * @since 3.5
+      */
+     public static void swap(final byte[] array, int offset1, int offset2) {
+         if (array == null || array.length == 0) {
+@@ -1992,10 +2006,11 @@ public class ArrayUtils {
+     }
+ 
+     /**
+-     * <p>Swaps two elements in the given array.
++     * Swaps two elements in the given double array.
+      *
+-     * <p>This method does nothing for a {@code null} or empty input array or for overflow indices.
+-     * Negative indices are promoted to 0(zero).
++     * <p>There is no special handling for multi-dimensional arrays. This method
++     * does nothing for a {@code null} or empty input array or for overflow indices.
++     * Negative indices are promoted to 0(zero).</p>
+      *
+      * <p>Examples:
+      *     <ul>
+@@ -2005,10 +2020,12 @@ public class ArrayUtils {
+      *         <li>ArrayUtils.swap([1, 2, 3], 0, 5) -&gt; [1, 2, 3]</li>
+      *         <li>ArrayUtils.swap([1, 2, 3], -1, 1) -&gt; [2, 1, 3]</li>
+      *     </ul>
+-     * 
++     * </p>
++     *
+      * @param array  the array to swap, may be {@code null}
+      * @param offset1 the index of the first element to swap
+      * @param offset2 the index of the second element to swap
++     * @since 3.5
+      */
+     public static void swap(final double[] array, int offset1, int offset2) {
+         if (array == null || array.length == 0) {
+@@ -2018,10 +2035,11 @@ public class ArrayUtils {
+     }
+ 
+     /**
+-     * <p>Swaps two elements in the given array.
++     * Swaps two elements in the given float array.
+      *
+-     * <p>This method does nothing for a {@code null} or empty input array or for overflow indices.
+-     * Negative indices are promoted to 0(zero).
++     * <p>There is no special handling for multi-dimensional arrays. This method
++     * does nothing for a {@code null} or empty input array or for overflow indices.
++     * Negative indices are promoted to 0(zero).</p>
+      *
+      * <p>Examples:
+      *     <ul>
+@@ -2031,10 +2049,12 @@ public class ArrayUtils {
+      *         <li>ArrayUtils.swap([1, 2, 3], 0, 5) -&gt; [1, 2, 3]</li>
+      *         <li>ArrayUtils.swap([1, 2, 3], -1, 1) -&gt; [2, 1, 3]</li>
+      *     </ul>
+-     * 
++     * </p>
++     *
+      * @param array  the array to swap, may be {@code null}
+      * @param offset1 the index of the first element to swap
+      * @param offset2 the index of the second element to swap
++     * @since 3.5
+      */
+     public static void swap(final float[] array, int offset1, int offset2) {
+         if (array == null || array.length == 0) {
+@@ -2044,10 +2064,11 @@ public class ArrayUtils {
+     }
+ 
+     /**
+-     * <p>Swaps two elements in the given array.
++     * Swaps two elements in the given boolean array.
+      *
+-     * <p>This method does nothing for a {@code null} or empty input array or for overflow indices.
+-     * Negative indices are promoted to 0(zero).
++     * <p>There is no special handling for multi-dimensional arrays. This method
++     * does nothing for a {@code null} or empty input array or for overflow indices.
++     * Negative indices are promoted to 0(zero).</p>
+      *
+      * <p>Examples:
+      *     <ul>
+@@ -2057,10 +2078,12 @@ public class ArrayUtils {
+      *         <li>ArrayUtils.swap([1, 2, 3], 0, 5) -&gt; [1, 2, 3]</li>
+      *         <li>ArrayUtils.swap([1, 2, 3], -1, 1) -&gt; [2, 1, 3]</li>
+      *     </ul>
+-     * 
++     * </p>
++     *
+      * @param array  the array to swap, may be {@code null}
+      * @param offset1 the index of the first element to swap
+      * @param offset2 the index of the second element to swap
++     * @since 3.5
+      */
+     public static void swap(final boolean[] array, int offset1, int offset2) {
+         if (array == null || array.length == 0) {
+@@ -2070,12 +2093,13 @@ public class ArrayUtils {
+     }
+ 
+     /**
+-     * <p>Swaps a series of elements in the given array.
+-     * 
+-     * <p>This method does nothing for a {@code null} or empty input array or for overflow indices.
+-     * Negative indices are promoted to 0(zero). 
+-     * If any of the sub-arrays to swap falls outside of the given array, 
+-     * then the swap is stopped at the end of the array and as many as possible elements are swapped.
++     * Swaps a series of elements in the given boolean array.
++     *
++     * <p>This method does nothing for a {@code null} or empty input array or
++     * for overflow indices. Negative indices are promoted to 0(zero). If any
++     * of the sub-arrays to swap falls outside of the given array, then the
++     * swap is stopped at the end of the array and as many as possible elements
++     * are swapped.</p>
+      * 
+      * <p>Examples:
+      *     <ul>
+@@ -2085,13 +2109,15 @@ public class ArrayUtils {
+      *         <li>ArrayUtils.swap([true, false, true, false], -3, 2, 2) -&gt; [true, false, true, false]</li>
+      *         <li>ArrayUtils.swap([true, false, true, false], 0, 3, 3) -&gt; [false, false, true, true]</li>
+      *     </ul>
+-     * 
++     * </p>
++     *
+      * @param array the array to swap, may be {@code null}
+      * @param offset1 the index of the first element in the series to swap
+      * @param offset2 the index of the second element in the series to swap
+      * @param len the number of elements to swap starting with the given indices
++     * @since 3.5
+      */
+-    public static void swap(final boolean[] array,  int offset1, int offset2, int len) {
++    public static void swap(final boolean[] array, int offset1, int offset2, int len) {
+         if (array == null || array.length == 0 || offset1 >= array.length || offset2 >= array.length) {
+             return;
+         }
+@@ -2110,13 +2136,14 @@ public class ArrayUtils {
+     }
+ 
+     /**
+-     * <p>Swaps a series of elements in the given array.
+-     * 
+-     * <p>This method does nothing for a {@code null} or empty input array or for overflow indices.
+-     * Negative indices are promoted to 0(zero). 
+-     * If any of the sub-arrays to swap falls outside of the given array, 
+-     * then the swap is stopped at the end of the array and as many as possible elements are swapped.
+-     * 
++     * Swaps a series of elements in the given byte array.
++     *
++     * <p>This method does nothing for a {@code null} or empty input array or
++     * for overflow indices. Negative indices are promoted to 0(zero). If any
++     * of the sub-arrays to swap falls outside of the given array, then the
++     * swap is stopped at the end of the array and as many as possible elements
++     * are swapped.</p>
++     *
+      * <p>Examples:
+      *     <ul>
+      *         <li>ArrayUtils.swap([1, 2, 3, 4], 0, 2, 1) -&gt; [3, 2, 1, 4]</li>
+@@ -2125,14 +2152,15 @@ public class ArrayUtils {
+      *         <li>ArrayUtils.swap([1, 2, 3, 4], -3, 2, 2) -&gt; [3, 4, 1, 2]</li>
+      *         <li>ArrayUtils.swap([1, 2, 3, 4], 0, 3, 3) -&gt; [4, 2, 3, 1]</li>
+      *     </ul>
+-     * 
++     * </p>
++     *
+      * @param array the array to swap, may be {@code null}
+      * @param offset1 the index of the first element in the series to swap
+      * @param offset2 the index of the second element in the series to swap
+      * @param len the number of elements to swap starting with the given indices
++     * @since 3.5
+      */
+-
+-    public static void swap(final byte[] array,  int offset1, int offset2, int len) {
++    public static void swap(final byte[] array, int offset1, int offset2, int len) {
+         if (array == null || array.length == 0 || offset1 >= array.length || offset2 >= array.length) {
+             return;
+         }
+@@ -2151,12 +2179,13 @@ public class ArrayUtils {
+     }
+ 
+     /**
+-     * <p>Swaps a series of elements in the given array.
+-     * 
+-     * <p>This method does nothing for a {@code null} or empty input array or for overflow indices.
+-     * Negative indices are promoted to 0(zero). 
+-     * If any of the sub-arrays to swap falls outside of the given array, 
+-     * then the swap is stopped at the end of the array and as many as possible elements are swapped.
++     * Swaps a series of elements in the given char array.
++     *
++     * <p>This method does nothing for a {@code null} or empty input array or
++     * for overflow indices. Negative indices are promoted to 0(zero). If any
++     * of the sub-arrays to swap falls outside of the given array, then the
++     * swap is stopped at the end of the array and as many as possible elements
++     * are swapped.</p>
+      * 
+      * <p>Examples:
+      *     <ul>
+@@ -2166,13 +2195,15 @@ public class ArrayUtils {
+      *         <li>ArrayUtils.swap([1, 2, 3, 4], -3, 2, 2) -&gt; [3, 4, 1, 2]</li>
+      *         <li>ArrayUtils.swap([1, 2, 3, 4], 0, 3, 3) -&gt; [4, 2, 3, 1]</li>
+      *     </ul>
+-     * 
++     * </p>
++     *
+      * @param array the array to swap, may be {@code null}
+      * @param offset1 the index of the first element in the series to swap
+      * @param offset2 the index of the second element in the series to swap
+      * @param len the number of elements to swap starting with the given indices
++     * @since 3.5
+      */
+-    public static void swap(final char[] array,  int offset1, int offset2, int len) {
++    public static void swap(final char[] array, int offset1, int offset2, int len) {
+         if (array == null || array.length == 0 || offset1 >= array.length || offset2 >= array.length) {
+             return;
+         }
+@@ -2191,12 +2222,13 @@ public class ArrayUtils {
+     }
+ 
+     /**
+-     * <p>Swaps a series of elements in the given array.
+-     * 
+-     * <p>This method does nothing for a {@code null} or empty input array or for overflow indices.
+-     * Negative indices are promoted to 0(zero). 
+-     * If any of the sub-arrays to swap falls outside of the given array, 
+-     * then the swap is stopped at the end of the array and as many as possible elements are swapped.
++     * Swaps a series of elements in the given double array.
++     *
++     * <p>This method does nothing for a {@code null} or empty input array or
++     * for overflow indices. Negative indices are promoted to 0(zero). If any
++     * of the sub-arrays to swap falls outside of the given array, then the
++     * swap is stopped at the end of the array and as many as possible elements
++     * are swapped.</p>
+      * 
+      * <p>Examples:
+      *     <ul>
+@@ -2206,11 +2238,13 @@ public class ArrayUtils {
+      *         <li>ArrayUtils.swap([1, 2, 3, 4], -3, 2, 2) -&gt; [3, 4, 1, 2]</li>
+      *         <li>ArrayUtils.swap([1, 2, 3, 4], 0, 3, 3) -&gt; [4, 2, 3, 1]</li>
+      *     </ul>
+-     * 
++     * </p>
++     *
+      * @param array the array to swap, may be {@code null}
+      * @param offset1 the index of the first element in the series to swap
+      * @param offset2 the index of the second element in the series to swap
+      * @param len the number of elements to swap starting with the given indices
++     * @since 3.5
+      */
+     public static void swap(final double[] array,  int offset1, int offset2, int len) {
+         if (array == null || array.length == 0 || offset1 >= array.length || offset2 >= array.length) {
+@@ -2231,13 +2265,14 @@ public class ArrayUtils {
+     }
+ 
+     /**
+-     * <p>Swaps a series of elements in the given array.
+-     * 
+-     * <p>This method does nothing for a {@code null} or empty input array or for overflow indices.
+-     * Negative indices are promoted to 0(zero). 
+-     * If any of the sub-arrays to swap falls outside of the given array, 
+-     * then the swap is stopped at the end of the array and as many as possible elements are swapped.
+-     * 
++     * Swaps a series of elements in the given float array.
++     *
++     * <p>This method does nothing for a {@code null} or empty input array or
++     * for overflow indices. Negative indices are promoted to 0(zero). If any
++     * of the sub-arrays to swap falls outside of the given array, then the
++     * swap is stopped at the end of the array and as many as possible elements
++     * are swapped.</p>
++     *
+      * <p>Examples:
+      *     <ul>
+      *         <li>ArrayUtils.swap([1, 2, 3, 4], 0, 2, 1) -&gt; [3, 2, 1, 4]</li>
+@@ -2246,13 +2281,15 @@ public class ArrayUtils {
+      *         <li>ArrayUtils.swap([1, 2, 3, 4], -3, 2, 2) -&gt; [3, 4, 1, 2]</li>
+      *         <li>ArrayUtils.swap([1, 2, 3, 4], 0, 3, 3) -&gt; [4, 2, 3, 1]</li>
+      *     </ul>
+-     * 
++     * </p>
++     *
+      * @param array the array to swap, may be {@code null}
+      * @param offset1 the index of the first element in the series to swap
+      * @param offset2 the index of the second element in the series to swap
+      * @param len the number of elements to swap starting with the given indices
++     * @since 3.5
+      */
+-    public static void swap(final float[] array,  int offset1, int offset2, int len) {
++    public static void swap(final float[] array, int offset1, int offset2, int len) {
+         if (array == null || array.length == 0 || offset1 >= array.length || offset2 >= array.length) {
+             return;
+         }
+@@ -2272,13 +2309,14 @@ public class ArrayUtils {
+     }
+ 
+     /**
+-     * <p>Swaps a series of elements in the given array.
+-     * 
+-     * <p>This method does nothing for a {@code null} or empty input array or for overflow indices.
+-     * Negative indices are promoted to 0(zero). 
+-     * If any of the sub-arrays to swap falls outside of the given array, 
+-     * then the swap is stopped at the end of the array and as many as possible elements are swapped.
+-     * 
++     * Swaps a series of elements in the given int array.
++     *
++     * <p>This method does nothing for a {@code null} or empty input array or
++     * for overflow indices. Negative indices are promoted to 0(zero). If any
++     * of the sub-arrays to swap falls outside of the given array, then the
++     * swap is stopped at the end of the array and as many as possible elements
++     * are swapped.</p>
++     *
+      * <p>Examples:
+      *     <ul>
+      *         <li>ArrayUtils.swap([1, 2, 3, 4], 0, 2, 1) -&gt; [3, 2, 1, 4]</li>
+@@ -2287,11 +2325,13 @@ public class ArrayUtils {
+      *         <li>ArrayUtils.swap([1, 2, 3, 4], -3, 2, 2) -&gt; [3, 4, 1, 2]</li>
+      *         <li>ArrayUtils.swap([1, 2, 3, 4], 0, 3, 3) -&gt; [4, 2, 3, 1]</li>
+      *     </ul>
+-     * 
++     * </p>
++     *
+      * @param array the array to swap, may be {@code null}
+      * @param offset1 the index of the first element in the series to swap
+      * @param offset2 the index of the second element in the series to swap
+      * @param len the number of elements to swap starting with the given indices
++     * @since 3.5
+      */
+     public static void swap(final int[] array,  int offset1, int offset2, int len) {
+         if (array == null || array.length == 0 || offset1 >= array.length || offset2 >= array.length) {
+@@ -2312,13 +2352,14 @@ public class ArrayUtils {
+     }
+ 
+     /**
+-     * <p>Swaps a series of elements in the given array.
+-     * 
+-     * <p>This method does nothing for a {@code null} or empty input array or for overflow indices.
+-     * Negative indices are promoted to 0(zero). 
+-     * If any of the sub-arrays to swap falls outside of the given array, 
+-     * then the swap is stopped at the end of the array and as many as possible elements are swapped.
+-     * 
++     * Swaps a series of elements in the given long array.
++     *
++     * <p>This method does nothing for a {@code null} or empty input array or
++     * for overflow indices. Negative indices are promoted to 0(zero). If any
++     * of the sub-arrays to swap falls outside of the given array, then the
++     * swap is stopped at the end of the array and as many as possible elements
++     * are swapped.</p>
++     *
+      * <p>Examples:
+      *     <ul>
+      *         <li>ArrayUtils.swap([1, 2, 3, 4], 0, 2, 1) -&gt; [3, 2, 1, 4]</li>
+@@ -2327,11 +2368,13 @@ public class ArrayUtils {
+      *         <li>ArrayUtils.swap([1, 2, 3, 4], -3, 2, 2) -&gt; [3, 4, 1, 2]</li>
+      *         <li>ArrayUtils.swap([1, 2, 3, 4], 0, 3, 3) -&gt; [4, 2, 3, 1]</li>
+      *     </ul>
+-     * 
++     * </p>
++     *
+      * @param array the array to swap, may be {@code null}
+      * @param offset1 the index of the first element in the series to swap
+      * @param offset2 the index of the second element in the series to swap
+      * @param len the number of elements to swap starting with the given indices
++     * @since 3.5
+      */
+     public static void swap(final long[] array,  int offset1, int offset2, int len) {
+         if (array == null || array.length == 0 || offset1 >= array.length || offset2 >= array.length) {
+@@ -2352,13 +2395,14 @@ public class ArrayUtils {
+     }
+ 
+     /**
+-     * <p>Swaps a series of elements in the given array.
+-     * 
+-     * <p>This method does nothing for a {@code null} or empty input array or for overflow indices.
+-     * Negative indices are promoted to 0(zero). 
+-     * If any of the sub-arrays to swap falls outside of the given array, 
+-     * then the swap is stopped at the end of the array and as many as possible elements are swapped.
+-     * 
++     * Swaps a series of elements in the given array.
++     *
++     * <p>This method does nothing for a {@code null} or empty input array or
++     * for overflow indices. Negative indices are promoted to 0(zero). If any
++     * of the sub-arrays to swap falls outside of the given array, then the
++     * swap is stopped at the end of the array and as many as possible elements
++     * are swapped.</p>
++     *
+      * <p>Examples:
+      *     <ul>
+      *         <li>ArrayUtils.swap(["1", "2", "3", "4"], 0, 2, 1) -&gt; ["3", "2", "1", "4"]</li>
+@@ -2367,13 +2411,15 @@ public class ArrayUtils {
+      *         <li>ArrayUtils.swap(["1", "2", "3", "4"], -3, 2, 2) -&gt; ["3", "4", "1", "2"]</li>
+      *         <li>ArrayUtils.swap(["1", "2", "3", "4"], 0, 3, 3) -&gt; ["4", "2", "3", "1"]</li>
+      *     </ul>
+-     * 
++     * </p>
++     *
+      * @param array the array to swap, may be {@code null}
+      * @param offset1 the index of the first element in the series to swap
+      * @param offset2 the index of the second element in the series to swap
+      * @param len the number of elements to swap starting with the given indices
++     * @since 3.5
+      */
+-   public static void swap(final Object[] array,  int offset1, int offset2, int len) {
++    public static void swap(final Object[] array,  int offset1, int offset2, int len) {
+         if (array == null || array.length == 0 || offset1 >= array.length || offset2 >= array.length) {
+             return;
+         }
+@@ -2392,26 +2438,29 @@ public class ArrayUtils {
+     }
+ 
+    /**
+-    * <p>Swaps a series of elements in the given array.
+-    * 
+-     * <p>This method does nothing for a {@code null} or empty input array or for overflow indices.
+-     * Negative indices are promoted to 0(zero). 
+-     * If any of the sub-arrays to swap falls outside of the given array, 
+-     * then the swap is stopped at the end of the array and as many as possible elements are swapped.
+-     * 
+-     * <p>Examples:
+-     *     <ul>
+-     *         <li>ArrayUtils.swap([1, 2, 3, 4], 0, 2, 1) -&gt; [3, 2, 1, 4]</li>
+-     *         <li>ArrayUtils.swap([1, 2, 3, 4], 0, 0, 1) -&gt; [1, 2, 3, 4]</li>
+-     *         <li>ArrayUtils.swap([1, 2, 3, 4], 2, 0, 2) -&gt; [3, 4, 1, 2]</li>
+-     *         <li>ArrayUtils.swap([1, 2, 3, 4], -3, 2, 2) -&gt; [3, 4, 1, 2]</li>
+-     *         <li>ArrayUtils.swap([1, 2, 3, 4], 0, 3, 3) -&gt; [4, 2, 3, 1]</li>
+-     *     </ul>
+-    * 
++    * Swaps a series of elements in the given short array.
++    *
++    * <p>This method does nothing for a {@code null} or empty input array or
++    * for overflow indices. Negative indices are promoted to 0(zero). If any
++    * of the sub-arrays to swap falls outside of the given array, then the
++    * swap is stopped at the end of the array and as many as possible elements
++    * are swapped.</p>
++    *
++    * <p>Examples:
++    *     <ul>
++    *         <li>ArrayUtils.swap([1, 2, 3, 4], 0, 2, 1) -&gt; [3, 2, 1, 4]</li>
++    *         <li>ArrayUtils.swap([1, 2, 3, 4], 0, 0, 1) -&gt; [1, 2, 3, 4]</li>
++    *         <li>ArrayUtils.swap([1, 2, 3, 4], 2, 0, 2) -&gt; [3, 4, 1, 2]</li>
++    *         <li>ArrayUtils.swap([1, 2, 3, 4], -3, 2, 2) -&gt; [3, 4, 1, 2]</li>
++    *         <li>ArrayUtils.swap([1, 2, 3, 4], 0, 3, 3) -&gt; [4, 2, 3, 1]</li>
++    *     </ul>
++    * </p>
++    *
+     * @param array the array to swap, may be {@code null}
+     * @param offset1 the index of the first element in the series to swap
+     * @param offset2 the index of the second element in the series to swap
+     * @param len the number of elements to swap starting with the given indices
++    * @since 3.5
+     */
+     public static void swap(final short[] array,  int offset1, int offset2, int len) {
+         if (array == null || array.length == 0 || offset1 >= array.length || offset2 >= array.length) {
+@@ -2437,16 +2486,16 @@ public class ArrayUtils {
+     // Shift
+     //-----------------------------------------------------------------------
+     /**
+-     * <p>Shifts the order of the given array.
++     * Shifts the order of the given array.
+      *
+-     * <p>There is no special handling for multi-dimensional arrays.
+-     *
+-     * <p>This method does nothing for a {@code null} input array.
++     * <p>There is no special handling for multi-dimensional arrays. This method
++     * does nothing for {@code null} or empty input arrays.</p>
+      *
+      * @param array  the array to shift, may be {@code null}
+      * @param offset
+      *          The number of positions to rotate the elements.  If the offset is larger than the number of elements to
+      *          rotate, than the effective offset is modulo the number of elements to rotate.
++     * @since 3.5
+      */
+     public static void shift(final Object[] array, int offset) {
+         if (array == null) {
+@@ -2456,14 +2505,16 @@ public class ArrayUtils {
+     }
+ 
+     /**
+-     * <p>Shifts the order of the given array.
++     * Shifts the order of the given long array.
+      *
+-     * <p>This method does nothing for a {@code null} input array.
++     * <p>There is no special handling for multi-dimensional arrays. This method
++     * does nothing for {@code null} or empty input arrays.</p>
+      *
+      * @param array  the array to shift, may be {@code null}
+      * @param offset
+      *          The number of positions to rotate the elements.  If the offset is larger than the number of elements to
+      *          rotate, than the effective offset is modulo the number of elements to rotate.
++     * @since 3.5
+      */
+     public static void shift(final long[] array, int offset) {
+         if (array == null) {
+@@ -2473,14 +2524,16 @@ public class ArrayUtils {
+     }
+ 
+     /**
+-     * <p>Shifts the order of the given array.
++     * Shifts the order of the given int array.
+      *
+-     * <p>This method does nothing for a {@code null} input array.
++     * <p>There is no special handling for multi-dimensional arrays. This method
++     * does nothing for {@code null} or empty input arrays.</p>
+      *
+      * @param array  the array to shift, may be {@code null}
+      * @param offset
+      *          The number of positions to rotate the elements.  If the offset is larger than the number of elements to
+      *          rotate, than the effective offset is modulo the number of elements to rotate.
++     * @since 3.5
+      */
+     public static void shift(final int[] array, int offset) {
+         if (array == null) {
+@@ -2490,14 +2543,16 @@ public class ArrayUtils {
+     }
+ 
+     /**
+-     * <p>Shifts the order of the given array.
++     * Shifts the order of the given short array.
+      *
+-     * <p>This method does nothing for a {@code null} input array.
++     * <p>There is no special handling for multi-dimensional arrays. This method
++     * does nothing for {@code null} or empty input arrays.</p>
+      *
+      * @param array  the array to shift, may be {@code null}
+      * @param offset
+      *          The number of positions to rotate the elements.  If the offset is larger than the number of elements to
+      *          rotate, than the effective offset is modulo the number of elements to rotate.
++     * @since 3.5
+      */
+     public static void shift(final short[] array, int offset) {
+         if (array == null) {
+@@ -2507,14 +2562,16 @@ public class ArrayUtils {
+     }
+ 
+     /**
+-     * <p>Shifts the order of the given array.
++     * Shifts the order of the given char array.
+      *
+-     * <p>This method does nothing for a {@code null} input array.
++     * <p>There is no special handling for multi-dimensional arrays. This method
++     * does nothing for {@code null} or empty input arrays.</p>
+      *
+      * @param array  the array to shift, may be {@code null}
+      * @param offset
+      *          The number of positions to rotate the elements.  If the offset is larger than the number of elements to
+      *          rotate, than the effective offset is modulo the number of elements to rotate.
++     * @since 3.5
+      */
+     public static void shift(final char[] array, int offset) {
+         if (array == null) {
+@@ -2524,14 +2581,16 @@ public class ArrayUtils {
+     }
+ 
+     /**
+-     * <p>Shifts the order of the given array.
++     * Shifts the order of the given byte array.
+      *
+-     * <p>This method does nothing for a {@code null} input array.
++     * <p>There is no special handling for multi-dimensional arrays. This method
++     * does nothing for {@code null} or empty input arrays.</p>
+      *
+      * @param array  the array to shift, may be {@code null}
+      * @param offset
+      *          The number of positions to rotate the elements.  If the offset is larger than the number of elements to
+      *          rotate, than the effective offset is modulo the number of elements to rotate.
++     * @since 3.5
+      */
+     public static void shift(final byte[] array, int offset) {
+         if (array == null) {
+@@ -2541,14 +2600,16 @@ public class ArrayUtils {
+     }
+ 
+     /**
+-     * <p>Shifts the order of the given array.
++     * Shifts the order of the given double array.
+      *
+-     * <p>This method does nothing for a {@code null} input array.
++     * <p>There is no special handling for multi-dimensional arrays. This method
++     * does nothing for {@code null} or empty input arrays.</p>
+      *
+      * @param array  the array to shift, may be {@code null}
+      * @param offset
+      *          The number of positions to rotate the elements.  If the offset is larger than the number of elements to
+      *          rotate, than the effective offset is modulo the number of elements to rotate.
++     * @since 3.5
+      */
+     public static void shift(final double[] array, int offset) {
+         if (array == null) {
+@@ -2558,14 +2619,16 @@ public class ArrayUtils {
+     }
+ 
+     /**
+-     * <p>Shifts the order of the given array.
++     * Shifts the order of the given float array.
+      *
+-     * <p>This method does nothing for a {@code null} input array.
++     * <p>There is no special handling for multi-dimensional arrays. This method
++     * does nothing for {@code null} or empty input arrays.</p>
+      *
+      * @param array  the array to shift, may be {@code null}
+      * @param offset
+      *          The number of positions to rotate the elements.  If the offset is larger than the number of elements to
+      *          rotate, than the effective offset is modulo the number of elements to rotate.
++     * @since 3.5
+      */
+     public static void shift(final float[] array, int offset) {
+         if (array == null) {
+@@ -2575,14 +2638,16 @@ public class ArrayUtils {
+     }
+ 
+     /**
+-     * <p>Shifts the order of the given array.
++     * Shifts the order of the given boolean array.
+      *
+-     * <p>This method does nothing for a {@code null} input array.
++     * <p>There is no special handling for multi-dimensional arrays. This method
++     * does nothing for {@code null} or empty input arrays.</p>
+      *
+      * @param array  the array to shift, may be {@code null}
+      * @param offset
+      *          The number of positions to rotate the elements.  If the offset is larger than the number of elements to
+      *          rotate, than the effective offset is modulo the number of elements to rotate.
++     * @since 3.5
+      */
+     public static void shift(final boolean[] array, int offset) {
+         if (array == null) {
+@@ -2592,11 +2657,10 @@ public class ArrayUtils {
+     }
+ 
+     /**
+-     * <p>
+-     * Shifts the order of the given array in the given range.
+-     * 
+-     * <p>
+-     * This method does nothing for a {@code null} input array.
++     * Shifts the order of a series of elements in the given boolean array.
++     *
++     * <p>There is no special handling for multi-dimensional arrays. This method
++     * does nothing for {@code null} or empty input arrays.</p>
+      * 
+      * @param array
+      *            the array to shift, may be {@code null}
+@@ -2609,7 +2673,7 @@ public class ArrayUtils {
+      * @param offset
+      *          The number of positions to rotate the elements.  If the offset is larger than the number of elements to
+      *          rotate, than the effective offset is modulo the number of elements to rotate.
+-     * @since 3.2
++     * @since 3.5
+      */
+     public static void shift(final boolean[] array, int startIndexInclusive, int endIndexExclusive, int offset) {
+         if (array == null) {
+@@ -2653,11 +2717,10 @@ public class ArrayUtils {
+     }
+ 
+     /**
+-     * <p>
+-     * Shifts the order of the given array in the given range.
+-     * 
+-     * <p>
+-     * This method does nothing for a {@code null} input array.
++     * Shifts the order of a series of elements in the given byte array.
++     *
++     * <p>There is no special handling for multi-dimensional arrays. This method
++     * does nothing for {@code null} or empty input arrays.</p>
+      * 
+      * @param array
+      *            the array to shift, may be {@code null}
+@@ -2670,7 +2733,7 @@ public class ArrayUtils {
+      * @param offset
+      *          The number of positions to rotate the elements.  If the offset is larger than the number of elements to
+      *          rotate, than the effective offset is modulo the number of elements to rotate.
+-     * @since 3.2
++     * @since 3.5
+      */
+     public static void shift(final byte[] array, int startIndexInclusive, int endIndexExclusive, int offset) {
+         if (array == null) {
+@@ -2714,12 +2777,11 @@ public class ArrayUtils {
+     }
+ 
+     /**
+-     * <p>
+-     * Shifts the order of the given array in the given range.
+-     * 
+-     * <p>
+-     * This method does nothing for a {@code null} input array.
+-     * 
++     * Shifts the order of a series of elements in the given char array.
++     *
++     * <p>There is no special handling for multi-dimensional arrays. This method
++     * does nothing for {@code null} or empty input arrays.</p>
++     *
+      * @param array
+      *            the array to shift, may be {@code null}
+      * @param startIndexInclusive
+@@ -2731,7 +2793,7 @@ public class ArrayUtils {
+      * @param offset
+      *          The number of positions to rotate the elements.  If the offset is larger than the number of elements to
+      *          rotate, than the effective offset is modulo the number of elements to rotate.
+-     * @since 3.2
++     * @since 3.5
+      */
+     public static void shift(final char[] array, int startIndexInclusive, int endIndexExclusive, int offset) {
+         if (array == null) {
+@@ -2775,12 +2837,11 @@ public class ArrayUtils {
+     }
+ 
+     /**
+-     * <p>
+-     * Shifts the order of the given array in the given range.
+-     * 
+-     * <p>
+-     * This method does nothing for a {@code null} input array.
+-     * 
++     * Shifts the order of a series of elements in the given double array.
++     *
++     * <p>There is no special handling for multi-dimensional arrays. This method
++     * does nothing for {@code null} or empty input arrays.</p>
++     *
+      * @param array
+      *            the array to shift, may be {@code null}
+      * @param startIndexInclusive
+@@ -2792,7 +2853,7 @@ public class ArrayUtils {
+      * @param offset
+      *          The number of positions to rotate the elements.  If the offset is larger than the number of elements to
+      *          rotate, than the effective offset is modulo the number of elements to rotate.
+-     * @since 3.2
++     * @since 3.5
+      */
+     public static void shift(final double[] array, int startIndexInclusive, int endIndexExclusive, int offset) {
+         if (array == null) {
+@@ -2836,12 +2897,11 @@ public class ArrayUtils {
+     }
+ 
+     /**
+-     * <p>
+-     * Shifts the order of the given array in the given range.
+-     * 
+-     * <p>
+-     * This method does nothing for a {@code null} input array.
+-     * 
++     * Shifts the order of a series of elements in the given float array.
++     *
++     * <p>There is no special handling for multi-dimensional arrays. This method
++     * does nothing for {@code null} or empty input arrays.</p>
++     *
+      * @param array
+      *            the array to shift, may be {@code null}
+      * @param startIndexInclusive
+@@ -2853,7 +2913,7 @@ public class ArrayUtils {
+      * @param offset
+      *          The number of positions to rotate the elements.  If the offset is larger than the number of elements to
+      *          rotate, than the effective offset is modulo the number of elements to rotate.
+-     * @since 3.2
++     * @since 3.5
+      */
+     public static void shift(final float[] array, int startIndexInclusive, int endIndexExclusive, int offset) {
+         if (array == null) {
+@@ -2897,12 +2957,11 @@ public class ArrayUtils {
+     }
+ 
+     /**
+-     * <p>
+-     * Shifts the order of the given array in the given range.
+-     * 
+-     * <p>
+-     * This method does nothing for a {@code null} input array.
+-     * 
++     * Shifts the order of a series of elements in the given int array.
++     *
++     * <p>There is no special handling for multi-dimensional arrays. This method
++     * does nothing for {@code null} or empty input arrays.</p>
++     *
+      * @param array
+      *            the array to shift, may be {@code null}
+      * @param startIndexInclusive
+@@ -2914,7 +2973,7 @@ public class ArrayUtils {
+      * @param offset
+      *          The number of positions to rotate the elements.  If the offset is larger than the number of elements to
+      *          rotate, than the effective offset is modulo the number of elements to rotate.
+-     * @since 3.2
++     * @since 3.5
+      */
+     public static void shift(final int[] array, int startIndexInclusive, int endIndexExclusive, int offset) {
+         if (array == null) {
+@@ -2958,12 +3017,11 @@ public class ArrayUtils {
+     }
+ 
+     /**
+-     * <p>
+-     * Shifts the order of the given array in the given range.
+-     * 
+-     * <p>
+-     * This method does nothing for a {@code null} input array.
+-     * 
++     * Shifts the order of a series of elements in the given long array.
++     *
++     * <p>There is no special handling for multi-dimensional arrays. This method
++     * does nothing for {@code null} or empty input arrays.</p>
++     *
+      * @param array
+      *            the array to shift, may be {@code null}
+      * @param startIndexInclusive
+@@ -2975,6 +3033,7 @@ public class ArrayUtils {
+      * @param offset
+      *          The number of positions to rotate the elements.  If the offset is larger than the number of elements to
+      *          rotate, than the effective offset is modulo the number of elements to rotate.
++     * @since 3.5
+      */
+     public static void shift(final long[] array, int startIndexInclusive, int endIndexExclusive, int offset) {
+         if (array == null) {
+@@ -3018,12 +3077,11 @@ public class ArrayUtils {
+     }
+ 
+     /**
+-     * <p>
+-     * Shifts the order of the given array in the given range.
+-     * 
+-     * <p>
+-     * This method does nothing for a {@code null} input array.
+-     * 
++     * Shifts the order of a series of elements in the given array.
++     *
++     * <p>There is no special handling for multi-dimensional arrays. This method
++     * does nothing for {@code null} or empty input arrays.</p>
++     *
+      * @param array
+      *            the array to shift, may be {@code null}
+      * @param startIndexInclusive
+@@ -3035,6 +3093,7 @@ public class ArrayUtils {
+      * @param offset
+      *          The number of positions to rotate the elements.  If the offset is larger than the number of elements to
+      *          rotate, than the effective offset is modulo the number of elements to rotate.
++     * @since 3.5
+      */
+     public static void shift(final Object[] array, int startIndexInclusive, int endIndexExclusive, int offset) {
+         if (array == null) {
+@@ -3078,12 +3137,11 @@ public class ArrayUtils {
+     }
+ 
+     /**
+-     * <p>
+-     * Rotate the elements of the given array in the given range.
+-     * 
+-     * <p>
+-     * This method does nothing for a {@code null} input array.
+-     * 
++     * Shifts the order of a series of elements in the given short array.
++     *
++     * <p>There is no special handling for multi-dimensional arrays. This method
++     * does nothing for {@code null} or empty input arrays.</p>
++     *
+      * @param array
+      *            the array to shift, may be {@code null}
+      * @param startIndexInclusive
+@@ -3095,7 +3153,7 @@ public class ArrayUtils {
+      * @param offset
+      *          The number of positions to rotate the elements.  If the offset is larger than the number of elements to
+      *          rotate, than the effective offset is modulo the number of elements to rotate.
+-     * @since 3.2
++     * @since 3.5
+      */
+     public static void shift(final short[] array, int startIndexInclusive, int endIndexExclusive, int offset) {
+         if (array == null) {
+@@ -7639,14 +7697,17 @@ public class ArrayUtils {
+     }
+ 
+     /**
++     * Removes the occurrences of the specified element from the specified boolean array.
++     *
+      * <p>
+-     * Removes the occurrences of the specified element from the specified array. All subsequent elements are shifted to
+-     * the left (subtracts one from their indices). If the array doesn't contains such an element, no elements are
+-     * removed from the array. <code>null</code> will be returned if the input array is <code>null</code>
+-     * 
++     * All subsequent elements are shifted to the left (subtracts one from their indices).
++     * If the array doesn't contains such an element, no elements are removed from the array.
++     * <code>null</code> will be returned if the input array is <code>null</code>.
++     * </p>
++     *
+      * @param element the element to remove
+      * @param array the input array
+-     * 
++     *
+      * @return A new array containing the existing elements except the occurrences of the specified element.
+      * @since 3.5
+      */
+@@ -7655,27 +7716,30 @@ public class ArrayUtils {
+         if (index == INDEX_NOT_FOUND) {
+             return clone(array);
+         }
+-        
++
+         int[] indices = new int[array.length - index];
+         indices[0] = index;
+         int count = 1;
+-        
++
+         while ((index = indexOf(array, element, indices[count - 1] + 1)) != INDEX_NOT_FOUND) {
+             indices[count++] = index;
+         }
+-        
+-        return removeAll(array, Arrays.copyOf(indices, count));        
++
++        return removeAll(array, Arrays.copyOf(indices, count));
+     }
+ 
+     /**
++     * Removes the occurrences of the specified element from the specified char array.
++     *
+      * <p>
+-     * Removes the occurrences of the specified element from the specified array. All subsequent elements are shifted to
+-     * the left (subtracts one from their indices). If the array doesn't contains such an element, no elements are
+-     * removed from the array. <code>null</code> will be returned if the input array is <code>null</code>
+-     * 
++     * All subsequent elements are shifted to the left (subtracts one from their indices).
++     * If the array doesn't contains such an element, no elements are removed from the array.
++     * <code>null</code> will be returned if the input array is <code>null</code>.
++     * </p>
++     *
+      * @param element the element to remove
+      * @param array the input array
+-     * 
++     *
+      * @return A new array containing the existing elements except the occurrences of the specified element.
+      * @since 3.5
+      */
+@@ -7684,27 +7748,30 @@ public class ArrayUtils {
+         if (index == INDEX_NOT_FOUND) {
+             return clone(array);
+         }
+-        
++
+         int[] indices = new int[array.length - index];
+         indices[0] = index;
+         int count = 1;
+-        
++
+         while ((index = indexOf(array, element, indices[count - 1] + 1)) != INDEX_NOT_FOUND) {
+             indices[count++] = index;
+         }
+-        
+-        return removeAll(array, Arrays.copyOf(indices, count));        
++
++        return removeAll(array, Arrays.copyOf(indices, count));
+     }
+ 
+     /**
++     * Removes the occurrences of the specified element from the specified byte array.
++     *
+      * <p>
+-     * Removes the occurrences of the specified element from the specified array. All subsequent elements are shifted to
+-     * the left (subtracts one from their indices). If the array doesn't contains such an element, no elements are
+-     * removed from the array. <code>null</code> will be returned if the input array is <code>null</code>
+-     * 
++     * All subsequent elements are shifted to the left (subtracts one from their indices).
++     * If the array doesn't contains such an element, no elements are removed from the array.
++     * <code>null</code> will be returned if the input array is <code>null</code>.
++     * </p>
++     *
+      * @param element the element to remove
+      * @param array the input array
+-     * 
++     *
+      * @return A new array containing the existing elements except the occurrences of the specified element.
+      * @since 3.5
+      */
+@@ -7713,27 +7780,30 @@ public class ArrayUtils {
+         if (index == INDEX_NOT_FOUND) {
+             return clone(array);
+         }
+-        
++
+         int[] indices = new int[array.length - index];
+         indices[0] = index;
+         int count = 1;
+-        
++
+         while ((index = indexOf(array, element, indices[count - 1] + 1)) != INDEX_NOT_FOUND) {
+             indices[count++] = index;
+         }
+-        
++
+         return removeAll(array, Arrays.copyOf(indices, count));
+     }
+ 
+     /**
++     * Removes the occurrences of the specified element from the specified short array.
++     *
+      * <p>
+-     * Removes the occurrences of the specified element from the specified array. All subsequent elements are shifted to
+-     * the left (subtracts one from their indices). If the array doesn't contains such an element, no elements are
+-     * removed from the array. <code>null</code> will be returned if the input array is <code>null</code>
+-     * 
++     * All subsequent elements are shifted to the left (subtracts one from their indices).
++     * If the array doesn't contains such an element, no elements are removed from the array.
++     * <code>null</code> will be returned if the input array is <code>null</code>.
++     * </p>
++     *
+      * @param element the element to remove
+      * @param array the input array
+-     * 
++     *
+      * @return A new array containing the existing elements except the occurrences of the specified element.
+      * @since 3.5
+      */
+@@ -7742,27 +7812,30 @@ public class ArrayUtils {
+         if (index == INDEX_NOT_FOUND) {
+             return clone(array);
+         }
+-        
++
+         int[] indices = new int[array.length - index];
+         indices[0] = index;
+         int count = 1;
+-        
++
+         while ((index = indexOf(array, element, indices[count - 1] + 1)) != INDEX_NOT_FOUND) {
+             indices[count++] = index;
+         }
+-        
++
+         return removeAll(array, Arrays.copyOf(indices, count));
+     }
+ 
+     /**
++     * Removes the occurrences of the specified element from the specified int array.
++     *
+      * <p>
+-     * Removes the occurrences of the specified element from the specified array. All subsequent elements are shifted to
+-     * the left (subtracts one from their indices). If the array doesn't contains such an element, no elements are
+-     * removed from the array. <code>null</code> will be returned if the input array is <code>null</code>
+-     * 
++     * All subsequent elements are shifted to the left (subtracts one from their indices).
++     * If the array doesn't contains such an element, no elements are removed from the array.
++     * <code>null</code> will be returned if the input array is <code>null</code>.
++     * </p>
++     *
+      * @param element the element to remove
+      * @param array the input array
+-     * 
++     *
+      * @return A new array containing the existing elements except the occurrences of the specified element.
+      * @since 3.5
+      */
+@@ -7771,27 +7844,30 @@ public class ArrayUtils {
+         if (index == INDEX_NOT_FOUND) {
+             return clone(array);
+         }
+-        
++
+         int[] indices = new int[array.length - index];
+         indices[0] = index;
+         int count = 1;
+-        
++
+         while ((index = indexOf(array, element, indices[count - 1] + 1)) != INDEX_NOT_FOUND) {
+             indices[count++] = index;
+         }
+-        
++
+         return removeAll(array, Arrays.copyOf(indices, count));
+     }
+ 
+     /**
++     * Removes the occurrences of the specified element from the specified long array.
++     *
+      * <p>
+-     * Removes the occurrences of the specified element from the specified array. All subsequent elements are shifted to
+-     * the left (subtracts one from their indices). If the array doesn't contains such an element, no elements are
+-     * removed from the array. <code>null</code> will be returned if the input array is <code>null</code>
+-     * 
++     * All subsequent elements are shifted to the left (subtracts one from their indices).
++     * If the array doesn't contains such an element, no elements are removed from the array.
++     * <code>null</code> will be returned if the input array is <code>null</code>.
++     * </p>
++     *
+      * @param element the element to remove
+      * @param array the input array
+-     * 
++     *
+      * @return A new array containing the existing elements except the occurrences of the specified element.
+      * @since 3.5
+      */
+@@ -7800,27 +7876,30 @@ public class ArrayUtils {
+         if (index == INDEX_NOT_FOUND) {
+             return clone(array);
+         }
+-        
++
+         int[] indices = new int[array.length - index];
+         indices[0] = index;
+         int count = 1;
+-        
++
+         while ((index = indexOf(array, element, indices[count - 1] + 1)) != INDEX_NOT_FOUND) {
+             indices[count++] = index;
+         }
+-        
++
+         return removeAll(array, Arrays.copyOf(indices, count));
+     }
+ 
+     /**
++     * Removes the occurrences of the specified element from the specified float array.
++     *
+      * <p>
+-     * Removes the occurrences of the specified element from the specified array. All subsequent elements are shifted to
+-     * the left (subtracts one from their indices). If the array doesn't contains such an element, no elements are
+-     * removed from the array. <code>null</code> will be returned if the input array is <code>null</code>
+-     * 
++     * All subsequent elements are shifted to the left (subtracts one from their indices).
++     * If the array doesn't contains such an element, no elements are removed from the array.
++     * <code>null</code> will be returned if the input array is <code>null</code>.
++     * </p>
++     *
+      * @param element the element to remove
+      * @param array the input array
+-     * 
++     *
+      * @return A new array containing the existing elements except the occurrences of the specified element.
+      * @since 3.5
+      */
+@@ -7829,27 +7908,30 @@ public class ArrayUtils {
+         if (index == INDEX_NOT_FOUND) {
+             return clone(array);
+         }
+-        
++
+         int[] indices = new int[array.length - index];
+         indices[0] = index;
+         int count = 1;
+-        
++
+         while ((index = indexOf(array, element, indices[count - 1] + 1)) != INDEX_NOT_FOUND) {
+             indices[count++] = index;
+         }
+-        
++
+         return removeAll(array, Arrays.copyOf(indices, count));
+     }
+ 
+     /**
++     * Removes the occurrences of the specified element from the specified double array.
++     *
+      * <p>
+-     * Removes the occurrences of the specified element from the specified array. All subsequent elements are shifted to
+-     * the left (subtracts one from their indices). If the array doesn't contains such an element, no elements are
+-     * removed from the array. <code>null</code> will be returned if the input array is <code>null</code>
+-     * 
++     * All subsequent elements are shifted to the left (subtracts one from their indices).
++     * If the array doesn't contains such an element, no elements are removed from the array.
++     * <code>null</code> will be returned if the input array is <code>null</code>.
++     * </p>
++     *
+      * @param element the element to remove
+      * @param array the input array
+-     * 
++     *
+      * @return A new array containing the existing elements except the occurrences of the specified element.
+      * @since 3.5
+      */
+@@ -7858,28 +7940,31 @@ public class ArrayUtils {
+         if (index == INDEX_NOT_FOUND) {
+             return clone(array);
+         }
+-        
++
+         int[] indices = new int[array.length - index];
+         indices[0] = index;
+         int count = 1;
+-        
++
+         while ((index = indexOf(array, element, indices[count - 1] + 1)) != INDEX_NOT_FOUND) {
+             indices[count++] = index;
+         }
+-        
++
+         return removeAll(array, Arrays.copyOf(indices, count));
+     }
+ 
+     /**
++     * Removes the occurrences of the specified element from the specified array.
++     *
+      * <p>
+-     * Removes the occurrences of the specified element from the specified array. All subsequent elements are shifted to
+-     * the left (subtracts one from their indices). If the array doesn't contains such an element, no elements are
+-     * removed from the array. <code>null</code> will be returned if the input array is <code>null</code>
+-     * 
++     * All subsequent elements are shifted to the left (subtracts one from their indices).
++     * If the array doesn't contains such an element, no elements are removed from the array.
++     * <code>null</code> will be returned if the input array is <code>null</code>.
++     * </p>
++     *
+      * @param <T> the type of object in the array
+      * @param element the element to remove
+      * @param array the input array
+-     * 
++     *
+      * @return A new array containing the existing elements except the occurrences of the specified element.
+      * @since 3.5
+      */
+@@ -7888,15 +7973,15 @@ public class ArrayUtils {
+         if (index == INDEX_NOT_FOUND) {
+             return clone(array);
+         }
+-        
++
+         int[] indices = new int[array.length - index];
+         indices[0] = index;
+         int count = 1;
+-        
++
+         while ((index = indexOf(array, element, indices[count - 1] + 1)) != INDEX_NOT_FOUND) {
+             indices[count++] = index;
+         }
+-        
++
+         return removeAll(array, Arrays.copyOf(indices, count));
+     }
+ }
+diff --git a/src/main/java/org/apache/commons/lang3/DigitalBase10SizeUnit.java b/src/main/java/org/apache/commons/lang3/DigitalBase10SizeUnit.java
+deleted file mode 100644
+index 02c041599e850a4821d0a2f2404408ac2c91cb39..0000000000000000000000000000000000000000
+--- a/src/main/java/org/apache/commons/lang3/DigitalBase10SizeUnit.java
++++ /dev/null
+@@ -1,393 +0,0 @@
+-/*
+- * Licensed to the Apache Software Foundation (ASF) under one or more
+- * contributor license agreements.  See the NOTICE file distributed with
+- * this work for additional information regarding copyright ownership.
+- * The ASF licenses this file to You under the Apache License, Version 2.0
+- * (the "License"); you may not use this file except in compliance with
+- * the License.  You may obtain a copy of the License at
+- *
+- *      http://www.apache.org/licenses/LICENSE-2.0
+- *
+- * Unless required by applicable law or agreed to in writing, software
+- * distributed under the License is distributed on an "AS IS" BASIS,
+- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+- * See the License for the specific language governing permissions and
+- * limitations under the License.
+- */
+-
+-package org.apache.commons.lang3;
+-
+-/**
+- * A {@code DigitalBase10SizeUnit} represents digital size at a given unit of granularity and provides utility methods
+- * to convert across units, and to perform sizing operations in these units. A {@code DigitalBase10SizeUnit} does not
+- * maintain size information, but only helps organize and use size representations that may be maintained separately
+- * across various contexts.
+- * <p>
+- * A bit is defined as one eighth (8) of a byte, a byte as one thousandth (1000) of a kilobyte, a kilobyte as as one
+- * thousandth (1000) of a megabyte, a megabyte as one thousandth (1000) of a terabyte.
+- * </p>
+- *
+- * @since 3.5
+- * @see <a href="https://en.wikipedia.org/wiki/Binary_prefix">Binary prefix</a>
+- * @see DigitalBase2SizeUnit
+- */
+-public enum DigitalBase10SizeUnit {
+-
+-    /**
+-     * Bits.
+-     */
+-    BITS("b", "bit") {
+-        @Override
+-        public long convert(final long s, final DigitalBase10SizeUnit u) {
+-            return u.toBytes(s);
+-        }
+-
+-        @Override
+-        public long toBits(final long size) {
+-            return size;
+-        }
+-
+-        @Override
+-        public long toBytes(final long size) {
+-            return size / K1;
+-        }
+-
+-        @Override
+-        public long toGigabytes(final long size) {
+-            return size / K4;
+-        }
+-
+-        @Override
+-        public long toKilobytes(final long size) {
+-            return size / K2;
+-        }
+-
+-        @Override
+-        public long toMegabytes(final long size) {
+-            return size / K3;
+-        }
+-
+-        @Override
+-        public long toTerabytes(final long size) {
+-            return size / K5;
+-        }
+-    },
+-
+-    /**
+-     * Bytes.
+-     */
+-    BYTES("B", "byte") {
+-        @Override
+-        public long convert(final long s, final DigitalBase10SizeUnit u) {
+-            return u.toBytes(s);
+-        }
+-
+-        @Override
+-        public long toBits(long size) {
+-            return x(size, MULB, Long.MAX_VALUE / (K1 / K0));
+-        }
+-
+-        @Override
+-        public long toBytes(final long size) {
+-            return size;
+-        }
+-
+-        @Override
+-        public long toGigabytes(final long size) {
+-            return size / K3;
+-        }
+-
+-        @Override
+-        public long toKilobytes(final long size) {
+-            return size / K1;
+-        }
+-
+-        @Override
+-        public long toMegabytes(final long size) {
+-            return size / K2;
+-        }
+-
+-        @Override
+-        public long toTerabytes(final long size) {
+-            return size / K4;
+-        }
+-    },
+-
+-    /**
+-     * Gigbytes (Gigabytes).
+-     */
+-    GIGABYTES("gigabyte", "G") {
+-        @Override
+-        public long convert(final long s, final DigitalBase10SizeUnit u) {
+-            return u.toGigabytes(s);
+-        }
+-
+-        @Override
+-        public long toBits(long size) {
+-            return x(size, K3, Long.MAX_VALUE / K2);
+-        }
+-
+-        @Override
+-        public long toBytes(final long size) {
+-            return x(size, K3, Long.MAX_VALUE / K3);
+-        }
+-
+-        @Override
+-        public long toGigabytes(final long size) {
+-            return size;
+-        }
+-
+-        @Override
+-        public long toKilobytes(final long size) {
+-            return x(size, K3 / K1, Long.MAX_VALUE / (K3 / K1));
+-        }
+-
+-        @Override
+-        public long toMegabytes(final long size) {
+-            return x(size, K3 / K2, Long.MAX_VALUE / (K3 / K2));
+-        }
+-
+-        @Override
+-        public long toTerabytes(final long size) {
+-            return size / (K4 / K3);
+-        }
+-    },
+-
+-    /**
+-     * Kibibytes (Kilobytes)
+-     */
+-    KILOBYTES("kilobytes", "K") {
+-        @Override
+-        public long convert(final long s, final DigitalBase10SizeUnit u) {
+-            return u.toKilobytes(s);
+-        }
+-
+-        @Override
+-        public long toBits(long size) {
+-            return x(size, K1, Long.MAX_VALUE / K1);
+-        }
+-
+-        @Override
+-        public long toBytes(final long size) {
+-            return x(size, K1, Long.MAX_VALUE / K1);
+-        }
+-
+-        @Override
+-        public long toGigabytes(final long size) {
+-            return size / (K3 / K1);
+-        }
+-
+-        @Override
+-        public long toKilobytes(final long size) {
+-            return size;
+-        }
+-
+-        @Override
+-        public long toMegabytes(final long size) {
+-            return size / (K2 / K1);
+-        }
+-
+-        @Override
+-        public long toTerabytes(final long size) {
+-            return size / (K4 / K1);
+-        }
+-    },
+-
+-    /**
+-     * Mebibytes (Megabytes)
+-     */
+-    MEGABYTES("megabytes", "M") {
+-        @Override
+-        public long convert(final long s, final DigitalBase10SizeUnit u) {
+-            return u.toMegabytes(s);
+-        }
+-
+-        @Override
+-        public long toBits(long size) {
+-            return x(size, K2, Long.MAX_VALUE / K1);
+-        }
+-
+-        @Override
+-        public long toBytes(final long size) {
+-            return x(size, K2, Long.MAX_VALUE / K2);
+-        }
+-
+-        @Override
+-        public long toGigabytes(final long size) {
+-            return size / (K3 / K2);
+-        }
+-
+-        @Override
+-        public long toKilobytes(final long size) {
+-            return x(size, K2 / K1, Long.MAX_VALUE / (K2 / K1));
+-        }
+-
+-        @Override
+-        public long toMegabytes(final long size) {
+-            return size;
+-        }
+-
+-        @Override
+-        public long toTerabytes(final long size) {
+-            return size / (K4 / K2);
+-        }
+-    },
+-
+-    /**
+-     * Tebibytes (Terabytes)
+-     */
+-    TERABYTES("terabyte", "T") {
+-        @Override
+-        public long convert(final long s, final DigitalBase10SizeUnit u) {
+-            return u.toTerabytes(s);
+-        }
+-
+-        @Override
+-        public long toBits(long size) {
+-            return x(size, K4, Long.MAX_VALUE / K3);
+-        }
+-
+-        @Override
+-        public long toBytes(final long size) {
+-            return x(size, K4, Long.MAX_VALUE / K4);
+-        }
+-
+-        @Override
+-        public long toGigabytes(final long size) {
+-            return x(size, K4 / K3, Long.MAX_VALUE / (K4 / K3));
+-        }
+-
+-        @Override
+-        public long toKilobytes(final long size) {
+-            return x(size, K4 / K1, Long.MAX_VALUE / (K4 / K1));
+-        }
+-
+-        @Override
+-        public long toMegabytes(final long size) {
+-            return x(size, K4 / K2, Long.MAX_VALUE / (K4 / K2));
+-        }
+-
+-        @Override
+-        public long toTerabytes(final long size) {
+-            return size;
+-        }
+-    };
+-
+-    private static final long MULB = 8L;
+-    private static final long MULK = 1000L;
+-    private static final long K0 = 1L;
+-    private static final long K1 = K0 * MULK;
+-    private static final long K2 = K1 * MULK;
+-    private static final long K3 = K2 * MULK;
+-    private static final long K4 = K3 * MULK;
+-    private static final long K5 = K4 * MULK;
+-
+-    private static long x(final long d, final long m, final long over) {
+-        if (d > over) {
+-            return Long.MAX_VALUE;
+-        }
+-        if (d < -over) {
+-            return Long.MIN_VALUE;
+-        }
+-        return d * m;
+-    }
+-
+-    private final String name;
+-    private final String symbol;
+-
+-    /**
+-     * Creates a new enum with SI symbol and name.
+-     * 
+-     * @param symbol
+-     *            customary symbol
+-     * @param name
+-     *            customary name
+-     * 
+-     * @see <a href="https://en.wikipedia.org/wiki/Metric_prefix">SI</a>
+-     */
+-    private DigitalBase10SizeUnit(String symbol, String name) {
+-        this.name = symbol;
+-        this.symbol = name;
+-    }
+-
+-    protected abstract long convert(final long sourceSize, final DigitalBase10SizeUnit sourceUnit);
+-
+-    /**
+-     * Gets the name.
+-     * 
+-     * @return the name.
+-     */
+-    public String getName() {
+-        return name;
+-    }
+-
+-    /**
+-     * Gets the symbol.
+-     * 
+-     * @return the symbol.
+-     */
+-    public String getSymbol() {
+-        return symbol;
+-    }
+-
+-    /**
+-     * Equivalent to {@code BITS.convert(size, this)}.
+-     * 
+-     * @param size
+-     *            the size
+-     * @return the converted size
+-     * @see #convert
+-     */
+-    public abstract long toBits(final long size);
+-
+-    /**
+-     * Equivalent to {@code BYTES.convert(size, this)}.
+-     * 
+-     * @param size
+-     *            the size
+-     * @return the converted size
+-     * @see #convert
+-     */
+-    public abstract long toBytes(final long size);
+-
+-    /**
+-     * Equivalent to {@code GIGABYTES.convert(size, this)}.
+-     * 
+-     * @param size
+-     *            the size
+-     * @return the converted size
+-     * @see #convert
+-     */
+-    public abstract long toGigabytes(final long size);
+-
+-    /**
+-     * Equivalent to {@code KILOBYTES.convert(size, this)}.
+-     * 
+-     * @param size
+-     *            the size
+-     * @return the converted size
+-     * @see #convert
+-     */
+-    public abstract long toKilobytes(final long size);
+-
+-    /**
+-     * Equivalent to {@code MEGABYTES.convert(size, this)}.
+-     * 
+-     * @param size
+-     *            the size
+-     * @return the converted size
+-     * @see #convert
+-     */
+-    public abstract long toMegabytes(final long size);
+-
+-    /**
+-     * Equivalent to {@code TERABYTES.convert(size, this)}.
+-     * 
+-     * @param size
+-     *            the size
+-     * @return the converted size
+-     * @see #convert
+-     */
+-    public abstract long toTerabytes(final long size);
+-
+-}
+\ No newline at end of file
+diff --git a/src/main/java/org/apache/commons/lang3/DigitalBase2SizeUnit.java b/src/main/java/org/apache/commons/lang3/DigitalBase2SizeUnit.java
+deleted file mode 100644
+index 39152a0ecaad96f05c07d80b22fe7c6c7fe69917..0000000000000000000000000000000000000000
+--- a/src/main/java/org/apache/commons/lang3/DigitalBase2SizeUnit.java
++++ /dev/null
+@@ -1,434 +0,0 @@
+-/*
+- * Licensed to the Apache Software Foundation (ASF) under one or more
+- * contributor license agreements.  See the NOTICE file distributed with
+- * this work for additional information regarding copyright ownership.
+- * The ASF licenses this file to You under the Apache License, Version 2.0
+- * (the "License"); you may not use this file except in compliance with
+- * the License.  You may obtain a copy of the License at
+- *
+- *      http://www.apache.org/licenses/LICENSE-2.0
+- *
+- * Unless required by applicable law or agreed to in writing, software
+- * distributed under the License is distributed on an "AS IS" BASIS,
+- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+- * See the License for the specific language governing permissions and
+- * limitations under the License.
+- */
+-
+-package org.apache.commons.lang3;
+-
+-/**
+- * A {@code DigitalBase2SizeUnit} represents digital size at a given unit of granularity and provides utility methods to
+- * convert across units, and to perform sizing operations in these units. A {@code DigitalBase2SizeUnit} does not
+- * maintain size information, but only helps organize and use size representations that may be maintained separately
+- * across various contexts.
+- * <p>
+- * A bit is defined as one eighth (8) of a byte, a byte as one thousand twenty fourth (1024) of a kilobyte, a kilobyte
+- * as as one thousand twenty fourth (1024) of a megabyte, a megabyte as one thousand twenty fourth (1024) of a terabyte.
+- * </p>
+- *
+- * @since 3.5
+- * @see <a href="https://en.wikipedia.org/wiki/Binary_prefix">Binary prefix</a>
+- * @see DigitalBase10SizeUnit
+- */
+-public enum DigitalBase2SizeUnit {
+-
+-    /**
+-     * Bits.
+-     */
+-    BITS("b", "bit") {
+-        @Override
+-        public long convert(final long s, final DigitalBase2SizeUnit u) {
+-            return u.toBytes(s);
+-        }
+-
+-        @Override
+-        public long toBits(final long size) {
+-            return size;
+-        }
+-
+-        @Override
+-        public long toBytes(final long size) {
+-            return size / K1;
+-        }
+-
+-        @Override
+-        public long toGigabytes(final long size) {
+-            return size / K4;
+-        }
+-
+-        @Override
+-        public long toKilobytes(final long size) {
+-            return size / K2;
+-        }
+-
+-        @Override
+-        public long toMegabytes(final long size) {
+-            return size / K3;
+-        }
+-
+-        @Override
+-        public long toTerabytes(final long size) {
+-            return size / K5;
+-        }
+-    },
+-
+-    /**
+-     * Bytes.
+-     */
+-    BYTES("B", "byte") {
+-        @Override
+-        public long convert(final long s, final DigitalBase2SizeUnit u) {
+-            return u.toBytes(s);
+-        }
+-
+-        @Override
+-        public long toBits(long size) {
+-            return x(size, MULB, Long.MAX_VALUE / (K1 / K0));
+-        }
+-
+-        @Override
+-        public long toBytes(final long size) {
+-            return size;
+-        }
+-
+-        @Override
+-        public long toGigabytes(final long size) {
+-            return size / K3;
+-        }
+-
+-        @Override
+-        public long toKilobytes(final long size) {
+-            return size / K1;
+-        }
+-
+-        @Override
+-        public long toMegabytes(final long size) {
+-            return size / K2;
+-        }
+-
+-        @Override
+-        public long toTerabytes(final long size) {
+-            return size / K4;
+-        }
+-    },
+-
+-    /**
+-     * Gigbytes (Gigabytes).
+-     */
+-    GIGABYTES("Gi", "gibibyte", "gigabyte", "G") {
+-        @Override
+-        public long convert(final long s, final DigitalBase2SizeUnit u) {
+-            return u.toGigabytes(s);
+-        }
+-
+-        @Override
+-        public long toBits(long size) {
+-            return x(size, K3, Long.MAX_VALUE / K2);
+-        }
+-
+-        @Override
+-        public long toBytes(final long size) {
+-            return x(size, K3, Long.MAX_VALUE / K3);
+-        }
+-
+-        @Override
+-        public long toGigabytes(final long size) {
+-            return size;
+-        }
+-
+-        @Override
+-        public long toKilobytes(final long size) {
+-            return x(size, K3 / K1, Long.MAX_VALUE / (K3 / K1));
+-        }
+-
+-        @Override
+-        public long toMegabytes(final long size) {
+-            return x(size, K3 / K2, Long.MAX_VALUE / (K3 / K2));
+-        }
+-
+-        @Override
+-        public long toTerabytes(final long size) {
+-            return size / (K4 / K3);
+-        }
+-    },
+-
+-    /**
+-     * Kibibytes (Kilobytes)
+-     */
+-    KILOBYTES("Ki", "kibibyte", "kilobytes", "K") {
+-        @Override
+-        public long convert(final long s, final DigitalBase2SizeUnit u) {
+-            return u.toKilobytes(s);
+-        }
+-
+-        @Override
+-        public long toBits(long size) {
+-            return x(size, K1, Long.MAX_VALUE / K1);
+-        }
+-
+-        @Override
+-        public long toBytes(final long size) {
+-            return x(size, K1, Long.MAX_VALUE / K1);
+-        }
+-
+-        @Override
+-        public long toGigabytes(final long size) {
+-            return size / (K3 / K1);
+-        }
+-
+-        @Override
+-        public long toKilobytes(final long size) {
+-            return size;
+-        }
+-
+-        @Override
+-        public long toMegabytes(final long size) {
+-            return size / (K2 / K1);
+-        }
+-
+-        @Override
+-        public long toTerabytes(final long size) {
+-            return size / (K4 / K1);
+-        }
+-    },
+-
+-    /**
+-     * Mebibytes (Megabytes)
+-     */
+-    MEGABYTES("Mi", "mebibyte", "megabytes", "M") {
+-        @Override
+-        public long convert(final long s, final DigitalBase2SizeUnit u) {
+-            return u.toMegabytes(s);
+-        }
+-
+-        @Override
+-        public long toBits(long size) {
+-            return x(size, K2, Long.MAX_VALUE / K1);
+-        }
+-
+-        @Override
+-        public long toBytes(final long size) {
+-            return x(size, K2, Long.MAX_VALUE / K2);
+-        }
+-
+-        @Override
+-        public long toGigabytes(final long size) {
+-            return size / (K3 / K2);
+-        }
+-
+-        @Override
+-        public long toKilobytes(final long size) {
+-            return x(size, K2 / K1, Long.MAX_VALUE / (K2 / K1));
+-        }
+-
+-        @Override
+-        public long toMegabytes(final long size) {
+-            return size;
+-        }
+-
+-        @Override
+-        public long toTerabytes(final long size) {
+-            return size / (K4 / K2);
+-        }
+-    },
+-
+-    /**
+-     * Tebibytes (Terabytes)
+-     */
+-    TERABYTES("Ti", "tebibyte", "terabyte", "T") {
+-        @Override
+-        public long convert(final long s, final DigitalBase2SizeUnit u) {
+-            return u.toTerabytes(s);
+-        }
+-
+-        @Override
+-        public long toBits(long size) {
+-            return x(size, K4, Long.MAX_VALUE / K3);
+-        }
+-
+-        @Override
+-        public long toBytes(final long size) {
+-            return x(size, K4, Long.MAX_VALUE / K4);
+-        }
+-
+-        @Override
+-        public long toGigabytes(final long size) {
+-            return x(size, K4 / K3, Long.MAX_VALUE / (K4 / K3));
+-        }
+-
+-        @Override
+-        public long toKilobytes(final long size) {
+-            return x(size, K4 / K1, Long.MAX_VALUE / (K4 / K1));
+-        }
+-
+-        @Override
+-        public long toMegabytes(final long size) {
+-            return x(size, K4 / K2, Long.MAX_VALUE / (K4 / K2));
+-        }
+-
+-        @Override
+-        public long toTerabytes(final long size) {
+-            return size;
+-        }
+-    };
+-
+-    private static final long MULB = 8L;
+-    private static final long MULK = 1024L;
+-    private static final long K0 = 1L;
+-    private static final long K1 = K0 * MULK;
+-    private static final long K2 = K1 * MULK;
+-    private static final long K3 = K2 * MULK;
+-    private static final long K4 = K3 * MULK;
+-    private static final long K5 = K4 * MULK;
+-
+-    private static long x(final long d, final long m, final long over) {
+-        if (d > over) {
+-            return Long.MAX_VALUE;
+-        }
+-        if (d < -over) {
+-            return Long.MIN_VALUE;
+-        }
+-        return d * m;
+-    }
+-
+-    private final String name;
+-    private final String symbol;
+-    private final String customarySymbol;
+-    private final String customaryName;
+-
+-    /**
+-     * Creates a new enum with IEC symbol and name
+-     * 
+-     * @param iecSymbol
+-     *            IEC symbol
+-     * @param iecName
+-     *            IEC name
+-     * @see <a href="https://en.wikipedia.org/wiki/IEC_80000-13">IEC 80000-13</a>
+-     */
+-    private DigitalBase2SizeUnit(String iecSymbol, String iecName) {
+-        this.name = iecName;
+-        this.symbol = iecName;
+-        this.customarySymbol = iecSymbol;
+-        this.customaryName = iecName;
+-    }
+-
+-    /**
+-     * Creates a new enum with IEC symbol and name
+-     * 
+-     * @param iecSymbol
+-     *            IEC symbol
+-     * @param iecName
+-     *            IEC name
+-     * @param customarySymbol
+-     *            customary symbol
+-     * @param customaryName
+-     *            customary name
+-     * @see <a href="https://en.wikipedia.org/wiki/IEC_80000-13">IEC 80000-13</a>
+-     */
+-    private DigitalBase2SizeUnit(String iecSymbol, String iecName, String customarySymbol, String customaryName) {
+-        this.name = iecName;
+-        this.symbol = iecName;
+-        this.customarySymbol = customarySymbol;
+-        this.customaryName = customaryName;
+-    }
+-
+-    protected abstract long convert(final long sourceSize, final DigitalBase2SizeUnit sourceUnit);
+-
+-    /**
+-     * Gets the customary name.
+-     * 
+-     * @return the customary name.
+-     */
+-    public String getCustomaryName() {
+-        return customaryName;
+-    }
+-
+-    /**
+-     * Gets the customary symbol.
+-     * 
+-     * @return the customary symbol.
+-     */
+-    public String getCustomarySymbol() {
+-        return customarySymbol;
+-    }
+-
+-    /**
+-     * Gets the name.
+-     * 
+-     * @return the name.
+-     */
+-    public String getName() {
+-        return name;
+-    }
+-
+-    /**
+-     * Gets the symbol.
+-     * 
+-     * @return the symbol.
+-     */
+-    public String getSymbol() {
+-        return symbol;
+-    }
+-
+-    /**
+-     * Equivalent to {@code BITS.convert(size, this)}.
+-     * 
+-     * @param size
+-     *            the size
+-     * @return the converted size
+-     * @see #convert
+-     */
+-    public abstract long toBits(final long size);
+-
+-    /**
+-     * Equivalent to {@code BYTES.convert(size, this)}.
+-     * 
+-     * @param size
+-     *            the size
+-     * @return the converted size
+-     * @see #convert
+-     */
+-    public abstract long toBytes(final long size);
+-
+-    /**
+-     * Equivalent to {@code GIGABYTES.convert(size, this)}.
+-     * 
+-     * @param size
+-     *            the size
+-     * @return the converted size
+-     * @see #convert
+-     */
+-    public abstract long toGigabytes(final long size);
+-
+-    /**
+-     * Equivalent to {@code KILOBYTES.convert(size, this)}.
+-     * 
+-     * @param size
+-     *            the size
+-     * @return the converted size
+-     * @see #convert
+-     */
+-    public abstract long toKilobytes(final long size);
+-
+-    /**
+-     * Equivalent to {@code MEGABYTES.convert(size, this)}.
+-     * 
+-     * @param size
+-     *            the size
+-     * @return the converted size
+-     * @see #convert
+-     */
+-    public abstract long toMegabytes(final long size);
+-
+-    /**
+-     * Equivalent to {@code TERABYTES.convert(size, this)}.
+-     * 
+-     * @param size
+-     *            the size
+-     * @return the converted size
+-     * @see #convert
+-     */
+-    public abstract long toTerabytes(final long size);
+-
+-}
+\ No newline at end of file
+diff --git a/src/main/java/org/apache/commons/lang3/JavaVersion.java b/src/main/java/org/apache/commons/lang3/JavaVersion.java
+index e37d5ba9cefb365157abdad6500eb937348fb0d7..4dd7e46afd9838cd3899317dcdcae918cdee7a26 100644
+--- a/src/main/java/org/apache/commons/lang3/JavaVersion.java
++++ b/src/main/java/org/apache/commons/lang3/JavaVersion.java
+@@ -16,6 +16,8 @@
+  */
+ package org.apache.commons.lang3;
+ 
++import org.apache.commons.lang3.math.NumberUtils;
++
+ /**
+  * <p>An enum representing all the versions of the Java specification.
+  * This is intended to mirror available values from the
+@@ -72,11 +74,18 @@ public enum JavaVersion {
+ 
+     /**
+      * Java 1.9.
++     * 
++     * @deprecated As of release 3.5, replaced by {@link #JAVA_9}
++     */
++    JAVA_1_9(9.0f, "9"),
++
++    /**
++     * Java 9
+      */
+-    JAVA_1_9(1.9f, "1.9"),
++    JAVA_9(9.0f, "9"),
+ 
+     /**
+-     * Java 1.x, x &gt; 9. Mainly introduced to avoid to break when a new version of Java is used.
++     * The most recent java version. Mainly introduced to avoid to break when a new version of Java is used.
+      */
+     JAVA_RECENT(maxVersion(), Float.toString(maxVersion()));
+ 
+@@ -156,8 +165,8 @@ public enum JavaVersion {
+             return JAVA_1_7;
+         } else if ("1.8".equals(nom)) {
+             return JAVA_1_8;
+-        } else if ("1.9".equals(nom)) {
+-            return JAVA_1_9;
++        } else if ("9".equals(nom)) {
++            return JAVA_9;
+         }
+         if (nom == null) {
+             return null;
+@@ -187,33 +196,34 @@ public enum JavaVersion {
+     }
+ 
+     /**
+-     * Gets the Java Version from the system or 2.0 if the {@code java.version} system property is not set.
++     * Gets the Java Version from the system or 99.0 if the {@code java.specification.version} system property is not set.
+      * 
+-     * @return the value of {@code java.version} system property or 2.0 if it is not set.
++     * @return the value of {@code java.specification.version} system property or 99.0 if it is not set.
+      */
+     private static float maxVersion() {
+-        final float v = toFloatVersion(System.getProperty("java.version", "2.0"));
++        final float v = toFloatVersion(System.getProperty("java.specification.version", "99.0"));
+         if (v > 0) {
+             return v;
+         }
+-        return 2f;
++        return 99f;
+     }
+ 
+     /**
+      * Parses a float value from a String.
+      * 
+      * @param value the String to parse.
+-     * @return the float value represented by teh string or -1 if the given String can not be parsed.
++     * @return the float value represented by the string or -1 if the given String can not be parsed.
+      */
+     private static float toFloatVersion(final String value) {
+-        final String[] toParse = value.split("\\.");
+-        if (toParse.length >= 2) {
+-            try {
+-                return Float.parseFloat(toParse[0] + '.' + toParse[1]);
+-            } catch (final NumberFormatException nfe) {
+-                // no-op, let use default
++        final int defaultReturnValue = -1;
++        if (value.contains(".")) {
++            final String[] toParse = value.split("\\.");
++            if (toParse.length >= 2) {
++                return NumberUtils.toFloat(toParse[0] + '.' + toParse[1], defaultReturnValue);
+             }
++        } else {
++            return NumberUtils.toFloat(value, defaultReturnValue);
+         }
+-        return -1;
++        return defaultReturnValue;
+     }
+ }
+diff --git a/src/main/java/org/apache/commons/lang3/ObjectUtils.java b/src/main/java/org/apache/commons/lang3/ObjectUtils.java
+index 8f1478f66f2441197b8df403ac10313c7b4a6e47..d328105e0e870beb12e990596b0f16e97fc6b61c 100644
+--- a/src/main/java/org/apache/commons/lang3/ObjectUtils.java
++++ b/src/main/java/org/apache/commons/lang3/ObjectUtils.java
+@@ -129,9 +129,12 @@ public class ObjectUtils {
+     }
+ 
+     /**
+-     * <p>Checks if any value in the array is not {@code null}.
++     * Checks if any value in the given array is not {@code null}.
++     *
++     * <p>
+      * If all the values are {@code null} or the array is {@code null}
+-     * or empty then {@code false} is returned. Otherwise {@code true} is returned.</p>
++     * or empty then {@code false} is returned. Otherwise {@code true} is returned.
++     * </p>
+      *
+      * <pre>
+      * ObjectUtils.anyNotNull(*)                = true
+@@ -153,11 +156,14 @@ public class ObjectUtils {
+     }
+ 
+     /**
+-     * <p>Checks if all values in the array are not {@code null}s.
+-     * If any value is {@code null} or the array is {@code null}
+-     * then {@code false} is returned.
+-     * If all elements in array are not {@code null} or the array is empty (contains no elements)
+-     * {@code true} is returned.</p>
++     * Checks if all values in the array are not {@code nulls}.
++     *
++     * <p>
++     * If any value is {@code null} or the array is {@code null} then
++     * {@code false} is returned. If all elements in array are not
++     * {@code null} or the array is empty (contains no elements) {@code true}
++     * is returned.
++     * </p>
+      * 
+      * <pre>
+      * ObjectUtils.allNotNull(*)             = true
+diff --git a/src/main/java/org/apache/commons/lang3/RandomUtils.java b/src/main/java/org/apache/commons/lang3/RandomUtils.java
+index a1fad2a3bb6853aaa9aaee4b6d8df1c227a15404..3ea44938a251ee24e22e1ee31071722395ec8195 100644
+--- a/src/main/java/org/apache/commons/lang3/RandomUtils.java
++++ b/src/main/java/org/apache/commons/lang3/RandomUtils.java
+@@ -51,8 +51,9 @@ public class RandomUtils {
+      * <p>
+      * Returns a random boolean value
+      * </p>
+-     * 
++     *
+      * @return the random boolean
++     * @since 3.5
+      */
+     public static boolean nextBoolean() {
+         return RANDOM.nextBoolean();
+diff --git a/src/main/java/org/apache/commons/lang3/StringUtils.java b/src/main/java/org/apache/commons/lang3/StringUtils.java
+index 7fbddb122d4214551a7ed517c8ffd84a40595dc8..02c7106a4ba473d9cfb27ebec88c81557d91593c 100644
+--- a/src/main/java/org/apache/commons/lang3/StringUtils.java
++++ b/src/main/java/org/apache/commons/lang3/StringUtils.java
+@@ -4589,6 +4589,7 @@ public class StringUtils {
+      * @param objects the varargs providing the values to join together. {@code null} elements are treated as ""
+      * @return the joined String.
+      * @throws java.lang.IllegalArgumentException if a null varargs is provided
++     * @since 3.5
+      */
+     public static String joinWith(final String separator, final Object... objects) {
+         if (objects == null) {
+@@ -7042,6 +7043,7 @@ public class StringUtils {
+      * @return the rotated String,
+      *          or the original String if {@code shift == 0},
+      *          or {@code null} if null String input
++     * @since 3.5
+      */
+     public static String rotate(String str, int shift) {
+         if (str == null) {
+diff --git a/src/main/java/org/apache/commons/lang3/SystemUtils.java b/src/main/java/org/apache/commons/lang3/SystemUtils.java
+index ef1d43a381ecc584dfedfaaaded0e53f37c32bac..a8d860d270fcf794884a4bdd42058320ca26c966 100644
+--- a/src/main/java/org/apache/commons/lang3/SystemUtils.java
++++ b/src/main/java/org/apache/commons/lang3/SystemUtils.java
+@@ -953,8 +953,23 @@ public class SystemUtils {
+      * </p>
+      *
+      * @since 3.4
++     * 
++     * @deprecated As of release 3.5, replaced by {@link #IS_JAVA_9}
+      */
+-    public static final boolean IS_JAVA_1_9 = getJavaVersionMatches("1.9");
++    @Deprecated
++    public static final boolean IS_JAVA_1_9 = getJavaVersionMatches("9");
++
++    /**
++     * <p>
++     * Is {@code true} if this is Java version 9 (also 9.x versions).
++     * </p>
++     * <p>
++     * The field will return {@code false} if {@link #JAVA_VERSION} is {@code null}.
++     * </p>
++     *
++     * @since 3.5
++     */
++    public static final boolean IS_JAVA_9 = getJavaVersionMatches("9");
+ 
+     // Operating system checks
+     // -----------------------------------------------------------------------
+@@ -1589,7 +1604,7 @@ public class SystemUtils {
+      * @since Java 1.4
+      */
+     public static boolean isJavaAwtHeadless() {
+-        return JAVA_AWT_HEADLESS != null ? JAVA_AWT_HEADLESS.equals(Boolean.TRUE.toString()) : false;
++        return Boolean.TRUE.toString().equals(JAVA_AWT_HEADLESS);
+     }
+ 
+     /**
+diff --git a/src/main/java/org/apache/commons/lang3/Validate.java b/src/main/java/org/apache/commons/lang3/Validate.java
+index 5794560b7c283198a3bb7ec14eb3ff1689981563..b70ddd5cfe4935d3613fcdd070c6404cf4541535 100644
+--- a/src/main/java/org/apache/commons/lang3/Validate.java
++++ b/src/main/java/org/apache/commons/lang3/Validate.java
+@@ -979,7 +979,7 @@ public class Validate {
+      * <p>Validates that the specified argument is strictly greater than a given
+      * reference; otherwise throwing an exception.</p>
+      *
+-     * <pre>Validate.greaterObj(myObject, refObject);</pre>
++     * <pre>Validate.greaterObject(myObject, refObject);</pre>
+      *
+      * <p>The message of the exception is &quot;The value {@code value} is not
+      * greater than {@code min}&quot;.</p>
+@@ -988,19 +988,19 @@ public class Validate {
+      * @param value  the object to validate
+      * @param min  the reference value
+      * @throws IllegalArgumentException if {@code value} is smaller than or equal to {@code min}
+-     * @see #greaterObj(java.lang.Comparable, java.lang.Object, java.lang.String, java.lang.Object...)
+-     *
++     * @see #greaterObject(java.lang.Object, java.lang.Comparable, java.lang.String, java.lang.Object...) 
++     * 
+      * @since 3.5
+      */
+-    public static <T> void greaterObj(final Comparable<T> value, final T min) {
+-        greaterObj(value, min, DEFAULT_GREATER_EX_MESSAGE, value, min);
++    public static <T> void greaterObject(final Comparable<T> value, final T min) {
++        greaterObject(value, min, DEFAULT_GREATER_EX_MESSAGE, value, min);
+     }
+ 
+     /**
+      * <p>Validates that the specified argument is strictly greater than a given
+      * reference; otherwise throwing an exception with the specified message.</p>
+      *
+-     * <pre>Validate.greaterObj(myObject, refObject, "The value must be greater than the reference");</pre>
++     * <pre>Validate.greaterObject(myObject, refObject, "The value must be greater than the reference");</pre>
+      *
+      * @param <T>  the type of the argument object
+      * @param value  the object to validate
+@@ -1008,11 +1008,11 @@ public class Validate {
+      * @param message  the {@link String#format(String, Object...)} exception message if invalid, not null
+      * @param values  the optional values for the formatted exception message
+      * @throws IllegalArgumentException if {@code value} is smaller than or equal to {@code min}
+-     * @see #greaterObj(java.lang.Comparable, java.lang.Object)
+-     *
++     * @see #greaterObject(java.lang.Object, java.lang.Comparable) 
++     * 
+      * @since 3.5
+      */
+-    public static <T> void greaterObj(final Comparable<T> value, final T min, final String message, final Object... values) {
++    public static <T> void greaterObject(final Comparable<T> value, final T min, final String message, final Object... values) {
+         if (value.compareTo(min) <= 0) {
+             throw new IllegalArgumentException(String.format(message, values));
+         }
+@@ -1113,7 +1113,7 @@ public class Validate {
+      * <p>Validates that the specified argument is greater than, or equal to, a
+      * given reference; otherwise throwing an exception.</p>
+      *
+-     * <pre>Validate.greaterOrEqualObj(myObject, refObject);</pre>
++     * <pre>Validate.greaterOrEqualObject(myObject, refObject);</pre>
+      *
+      * <p>The message of the exception is &quot;The value {@code value} is not
+      * greater than or equal to {@code min}&quot;.</p>
+@@ -1122,19 +1122,19 @@ public class Validate {
+      * @param value  the object to validate
+      * @param min  the reference value
+      * @throws IllegalArgumentException if {@code value} is smaller than {@code min}
+-     * @see #greaterOrEqualObj(java.lang.Comparable, java.lang.Object, java.lang.String, java.lang.Object...)
+-     *
++     * @see #greaterOrEqualObject(java.lang.Object, java.lang.Comparable, java.lang.String, java.lang.Object...) 
++     * 
+      * @since 3.5
+      */
+-    public static <T> void greaterOrEqualObj(final Comparable<T> value, final T min) {
+-        greaterOrEqualObj(value, min, DEFAULT_GREATER_OR_EQUAL_EX_MESSAGE, value, min);
++    public static <T> void greaterOrEqualObject(final Comparable<T> value, final T min) {
++        greaterOrEqualObject(value, min, DEFAULT_GREATER_OR_EQUAL_EX_MESSAGE, value, min);
+     }
+ 
+     /**
+      * <p>Validates that the specified argument is greater than, or equal to, a
+      * given reference; otherwise throwing an exception.</p>
+      *
+-     * <pre>Validate.greaterOrEqualObj(myObject, refObject, "The value must be greater than the reference");</pre>
++     * <pre>Validate.greaterOrEqualObject(myObject, refObject, "The value must be greater than the reference");</pre>
+      *
+      * @param <T>  the type of the argument object
+      * @param value  the object to validate
+@@ -1142,11 +1142,11 @@ public class Validate {
+      * @param message  the {@link String#format(String, Object...)} exception message if invalid, not null
+      * @param values  the optional values for the formatted exception message
+      * @throws IllegalArgumentException if {@code value} is smaller than {@code min}
+-     * @see #greaterOrEqualObj(java.lang.Comparable, java.lang.Object)
+-     *
++     * @see #greaterOrEqualObject(java.lang.Object, java.lang.Comparable) 
++     * 
+      * @since 3.5
+      */
+-    public static <T> void greaterOrEqualObj(final Comparable<T> value, final T min, final String message, final Object... values) {
++    public static <T> void greaterOrEqualObject(final Comparable<T> value, final T min, final String message, final Object... values) {
+         if (value.compareTo(min) < 0) {
+             throw new IllegalArgumentException(String.format(message, values));
+         }
+@@ -1247,7 +1247,7 @@ public class Validate {
+      * <p>Validates that the specified argument is strictly smaller than a given
+      * reference; otherwise throwing an exception.</p>
+      *
+-     * <pre>Validate.smallerObj(myObject, refObject);</pre>
++     * <pre>Validate.smallerObject(myObject, refObject);</pre>
+      *
+      * <p>The message of the exception is &quot;The value {@code value} is not
+      * smaller than {@code max}&quot;.</p>
+@@ -1256,19 +1256,19 @@ public class Validate {
+      * @param value  the object to validate
+      * @param max  the reference value
+      * @throws IllegalArgumentException if {@code value} is greater than or equal to {@code max}
+-     * @see #smallerObj(java.lang.Comparable, java.lang.Object, java.lang.String, java.lang.Object...)
+-     *
++     * @see #smallerObject(java.lang.Object, java.lang.Comparable, java.lang.String, java.lang.Object...) 
++     * 
+      * @since 3.5
+      */
+-    public static <T> void smallerObj(final Comparable<T> value, final T max) {
+-        smallerObj(value, max, DEFAULT_SMALLER_EX_MESSAGE, value, max);
++    public static <T> void smallerObject(final Comparable<T> value, final T max) {
++        smallerObject(value, max, DEFAULT_SMALLER_EX_MESSAGE, value, max);
+     }
+ 
+     /**
+      * <p>Validates that the specified argument is strictly smaller than a given
+      * reference; otherwise throwing an exception with the specified message.</p>
+      *
+-     * <pre>Validate.smallerObj(myObject, refObject, "The value must be greater than the reference");</pre>
++     * <pre>Validate.smallerObject(myObject, refObject, "The value must be greater than the reference");</pre>
+      *
+      * @param <T>  the type of the argument object
+      * @param value  the object to validate
+@@ -1276,11 +1276,11 @@ public class Validate {
+      * @param message  the {@link String#format(String, Object...)} exception message if invalid, not null
+      * @param values  the optional values for the formatted exception message
+      * @throws IllegalArgumentException if {@code value} is greater than or equal to {@code max}
+-     * @see #smallerObj(java.lang.Comparable, java.lang.Object)
+-     *
++     * @see #smallerObject(java.lang.Object, java.lang.Comparable) 
++     * 
+      * @since 3.5
+      */
+-    public static <T> void smallerObj(final Comparable<T> value, final T max, final String message, final Object... values) {
++    public static <T> void smallerObject(final Comparable<T> value, final T max, final String message, final Object... values) {
+         if (value.compareTo(max) >= 0) {
+             throw new IllegalArgumentException(String.format(message, values));
+         }
+@@ -1381,7 +1381,7 @@ public class Validate {
+      * <p>Validates that the specified argument is smaller than, or equal to, a
+      * given reference; otherwise throwing an exception.</p>
+      *
+-     * <pre>Validate.smallerOrEqualObj(myObject, refObject);</pre>
++     * <pre>Validate.smallerOrEqualObject(myObject, refObject);</pre>
+      *
+      * <p>The message of the exception is &quot;The value {@code value} is not
+      * smaller than or equal to {@code max}&quot;.</p>
+@@ -1390,19 +1390,19 @@ public class Validate {
+      * @param value  the object to validate
+      * @param max  the reference value
+      * @throws IllegalArgumentException if {@code value} is greater than {@code max}
+-     * @see #smallerOrEqualObj(java.lang.Comparable, java.lang.Object, java.lang.String, java.lang.Object...)
+-     *
++     * @see #smallerOrEqualObject(java.lang.Object, java.lang.Comparable, java.lang.String, java.lang.Object...) 
++     * 
+      * @since 3.5
+      */
+-    public static <T> void smallerOrEqualObj(final Comparable<T> value, final T max) {
+-        smallerOrEqualObj(value, max, DEFAULT_SMALLER_OR_EQUAL_EX_MESSAGE, value, max);
++    public static <T> void smallerOrEqualObject(final Comparable<T> value, final T max) {
++        smallerOrEqualObject(value, max, DEFAULT_SMALLER_OR_EQUAL_EX_MESSAGE, value, max);
+     }
+ 
+     /**
+      * <p>Validates that the specified argument is smaller than, or equal to, a
+      * given reference; otherwise throwing an exception with the specified message.</p>
+      *
+-     * <pre>Validate.smallerOrEqualObj(myObject, refObject, "The value must be greater than the reference");</pre>
++     * <pre>Validate.smallerOrEqualObject(myObject, refObject, "The value must be greater than the reference");</pre>
+      *
+      * @param <T>  the type of the argument object
+      * @param value  the object to validate
+@@ -1410,11 +1410,11 @@ public class Validate {
+      * @param message  the {@link String#format(String, Object...)} exception message if invalid, not null
+      * @param values  the optional values for the formatted exception message
+      * @throws IllegalArgumentException if {@code value} is greater than {@code max}
+-     * @see #smallerOrEqualObj(java.lang.Comparable, java.lang.Object)
+-     *
++     * @see #smallerOrEqualObject(java.lang.Object, java.lang.Comparable) 
++     * 
+      * @since 3.5
+      */
+-    public static <T> void smallerOrEqualObj(final Comparable<T> value, final T max, final String message, final Object... values) {
++    public static <T> void smallerOrEqualObject(final Comparable<T> value, final T max, final String message, final Object... values) {
+         if (value.compareTo(max) > 0) {
+             throw new IllegalArgumentException(String.format(message, values));
+         }
+@@ -1516,9 +1516,9 @@ public class Validate {
+      * (reference); otherwise throwing an exception.</p>
+      *
+      * <p>Two objects are considered different if
+-     * {@code value.compareTo(reference) != 0}</p>
++     * {@code value.equals(reference) == false}</p>
+      *
+-     * <pre>Validate.differentObj(myObject, refObject);</pre>
++     * <pre>Validate.differentObject(myObject, refObject);</pre>
+      *
+      * <p>The message of the exception is &quot;The value {@code value} is
+      * invalid&quot;.</p>
+@@ -1530,8 +1530,8 @@ public class Validate {
+      *
+      * @since 3.5
+      */
+-    public static <T> void differentObj(final Comparable<T> value, final T reference) {
+-        differentObj(value, reference, DEFAULT_DIFFERENT_EX_MESSAGE, value);
++    public static <T> void differentObject(final T value, final T reference) {
++        differentObject(value, reference, DEFAULT_DIFFERENT_EX_MESSAGE, value);
+     }
+ 
+     /**
+@@ -1539,9 +1539,9 @@ public class Validate {
+      * (reference); otherwise throwing an exception with the specified message.</p>
+      *
+      * <p>Two objects are considered different if
+-     * {@code value.compareTo(reference) != 0}</p>
++     * {@code value.equals(reference) == false}</p>
+      *
+-     * <pre>Validate.differentObj(myObject, refObject, "The value is invalid");</pre>
++     * <pre>Validate.differentObject(myObject, refObject, "The value is invalid");</pre>
+      *
+      * @param <T>  the type of the argument object
+      * @param value  the object to validate
+@@ -1552,8 +1552,8 @@ public class Validate {
+      *
+      * @since 3.5
+      */
+-    public static <T> void differentObj(final Comparable<T> value, final T reference, final String message, final Object... values) {
+-        if (value.compareTo(reference) == 0) {
++    public static <T> void differentObject(final T value, final T reference, final String message, final Object... values) {
++        if (value.equals(reference)) {
+             throw new IllegalArgumentException(String.format(message, values));
+         }
+     }
+diff --git a/src/main/java/org/apache/commons/lang3/XMLCharacter.java b/src/main/java/org/apache/commons/lang3/XMLCharacter.java
+deleted file mode 100644
+index ec42b2ada65b2fab911b167dd8e08964cd0e256a..0000000000000000000000000000000000000000
+--- a/src/main/java/org/apache/commons/lang3/XMLCharacter.java
++++ /dev/null
+@@ -1,84 +0,0 @@
+-/*
+- * Licensed to the Apache Software Foundation (ASF) under one
+- * or more contributor license agreements. See the NOTICE file
+- * distributed with this work for additional information
+- * regarding copyright ownership. The ASF licenses this file
+- * to you under the Apache License, Version 2.0 (the  "License");
+- * you may not use this file except in compliance with the License.
+- * You may obtain a copy of the License at
+- *
+- *     http://www.apache.org/licenses/LICENSE-2.0
+- *
+- * Unless required by applicable law or agreed to in writing, software
+- * distributed under the License is distributed on an "AS IS" BASIS,
+- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+- * See the License for the specific language governing permissions and
+- * limitations under the License.
+- */
+-/*
+- * From Apache Xalan XMLCharacterRecognizer.
+- */
+-package org.apache.commons.lang3;
+-
+-/**
+- * Verifies whether specified primitives and objects conforms to the XML 1.0 definition of whitespace.
+- * 
+- * <p>
+- * Copied and tweaked from Apache Xalan {@code XMLCharacterRecognizer}
+- * </p>
+- *
+- * @since 3.5
+- */
+-public class XMLCharacter {
+-
+-    /**
+-     * Returns whether the specified {@code ch} conforms to the XML 1.0 definition of whitespace. Refer to
+-     * <a href="http://www.w3.org/TR/1998/REC-xml-19980210#NT-S"> the definition of <CODE>S</CODE></a> for details.
+-     *
+-     * @param ch
+-     *            Character to check as XML whitespace.
+-     * @return true if {@code ch} is XML whitespace; otherwise false.
+-     */
+-    public static boolean isWhitespace(final char ch) {
+-        return ch == 0x20 || ch == 0x09 || ch == 0xD || ch == 0xA;
+-    }
+-
+-    /**
+-     * Detects if the string is whitespace.
+-     *
+-     * @param ch
+-     *            Character array to check as XML whitespace.
+-     * @param start
+-     *            Start index of characters in the array
+-     * @param length
+-     *            Number of characters in the array
+-     * @return true if the characters in the array are XML whitespace; otherwise, false.
+-     */
+-    public static boolean isWhitespace(final char ch[], final int start, final int length) {
+-        final int end = start + length;
+-        for (int s = start; s < end; s++) {
+-            if (!isWhitespace(ch[s])) {
+-                return false;
+-            }
+-        }
+-        return length > 0;
+-    }
+-
+-    /**
+-     * Detects if the string is whitespace.
+-     *
+-     * @param charSequence
+-     *            StringBuffer to check as XML whitespace.
+-     * @return True if characters in buffer are XML whitespace, false otherwise
+-     */
+-    public static boolean isWhitespace(final CharSequence charSequence) {
+-        final int length = charSequence.length();
+-        for (int i = 0; i < length; i++) {
+-            if (!isWhitespace(charSequence.charAt(i))) {
+-                return false;
+-            }
+-        }
+-        return length > 0;
+-    }
+-
+-}
+diff --git a/src/main/java/org/apache/commons/lang3/builder/CompareToBuilder.java b/src/main/java/org/apache/commons/lang3/builder/CompareToBuilder.java
+index 56d2fcd912aede8e359494c53b571c0749b81ba3..e79a1c915b5ea80d2fe90e0f74e4fc58cc577587 100644
+--- a/src/main/java/org/apache/commons/lang3/builder/CompareToBuilder.java
++++ b/src/main/java/org/apache/commons/lang3/builder/CompareToBuilder.java
+@@ -418,30 +418,8 @@ public class CompareToBuilder implements Builder<Integer> {
+             return this;
+         }
+         if (lhs.getClass().isArray()) {
+-            // switch on type of array, to dispatch to the correct handler
+-            // handles multi dimensional arrays
+-            // throws a ClassCastException if rhs is not the correct array type
+-            if (lhs instanceof long[]) {
+-                append((long[]) lhs, (long[]) rhs);
+-            } else if (lhs instanceof int[]) {
+-                append((int[]) lhs, (int[]) rhs);
+-            } else if (lhs instanceof short[]) {
+-                append((short[]) lhs, (short[]) rhs);
+-            } else if (lhs instanceof char[]) {
+-                append((char[]) lhs, (char[]) rhs);
+-            } else if (lhs instanceof byte[]) {
+-                append((byte[]) lhs, (byte[]) rhs);
+-            } else if (lhs instanceof double[]) {
+-                append((double[]) lhs, (double[]) rhs);
+-            } else if (lhs instanceof float[]) {
+-                append((float[]) lhs, (float[]) rhs);
+-            } else if (lhs instanceof boolean[]) {
+-                append((boolean[]) lhs, (boolean[]) rhs);
+-            } else {
+-                // not an array of primitives
+-                // throws a ClassCastException if rhs is not an array
+-                append((Object[]) lhs, (Object[]) rhs, comparator);
+-            }
++            // factor out array case in order to keep method small enough to be inlined
++            appendArray(lhs, rhs, comparator);
+         } else {
+             // the simple case, not an array, just test the element
+             if (comparator == null) {
+@@ -457,6 +435,33 @@ public class CompareToBuilder implements Builder<Integer> {
+         return this;
+     }
+ 
++    private void appendArray(final Object lhs, final Object rhs, final Comparator<?> comparator) {
++        // switch on type of array, to dispatch to the correct handler
++        // handles multi dimensional arrays
++        // throws a ClassCastException if rhs is not the correct array type
++        if (lhs instanceof long[]) {
++            append((long[]) lhs, (long[]) rhs);
++        } else if (lhs instanceof int[]) {
++            append((int[]) lhs, (int[]) rhs);
++        } else if (lhs instanceof short[]) {
++            append((short[]) lhs, (short[]) rhs);
++        } else if (lhs instanceof char[]) {
++            append((char[]) lhs, (char[]) rhs);
++        } else if (lhs instanceof byte[]) {
++            append((byte[]) lhs, (byte[]) rhs);
++        } else if (lhs instanceof double[]) {
++            append((double[]) lhs, (double[]) rhs);
++        } else if (lhs instanceof float[]) {
++            append((float[]) lhs, (float[]) rhs);
++        } else if (lhs instanceof boolean[]) {
++            append((boolean[]) lhs, (boolean[]) rhs);
++        } else {
++            // not an array of primitives
++            // throws a ClassCastException if rhs is not an array
++            append((Object[]) lhs, (Object[]) rhs, comparator);
++        }
++    }
++
+     //-------------------------------------------------------------------------
+     /**
+      * Appends to the <code>builder</code> the comparison of
+diff --git a/src/main/java/org/apache/commons/lang3/builder/EqualsExclude.java b/src/main/java/org/apache/commons/lang3/builder/EqualsExclude.java
+index 1ed29f05d033f5e74b355220fc86a3b470e0789e..fe09f815eafb31702650a3122d254b1dbf732fb4 100755
+--- a/src/main/java/org/apache/commons/lang3/builder/EqualsExclude.java
++++ b/src/main/java/org/apache/commons/lang3/builder/EqualsExclude.java
+@@ -26,6 +26,8 @@ import java.lang.annotation.Target;
+  * Use this annotation to exclude a field from being being used by
+  * the various <code>reflectionEquals</code> methods defined on
+  * {@link EqualsBuilder}.
++ *
++ * @since 3.5
+  */
+ @Retention(RetentionPolicy.RUNTIME)
+ @Target(ElementType.FIELD)
+diff --git a/src/main/java/org/apache/commons/lang3/builder/HashCodeExclude.java b/src/main/java/org/apache/commons/lang3/builder/HashCodeExclude.java
+index 25bac4c20fd9e0b6f0e2f36c0a32b4b40870f4b8..65d9bef422b20946132c650c3d9e2cf78fdc5d0a 100755
+--- a/src/main/java/org/apache/commons/lang3/builder/HashCodeExclude.java
++++ b/src/main/java/org/apache/commons/lang3/builder/HashCodeExclude.java
+@@ -26,6 +26,8 @@ import java.lang.annotation.Target;
+  * Use this annotation to exclude a field from being being used by
+  * the various <code>reflectionHashcode</code> methods defined on
+  * {@link HashCodeBuilder}.
++ *
++ * @since 3.5
+  */
+ @Retention(RetentionPolicy.RUNTIME)
+ @Target(ElementType.FIELD)
+diff --git a/src/main/java/org/apache/commons/lang3/builder/ReflectionToStringBuilder.java b/src/main/java/org/apache/commons/lang3/builder/ReflectionToStringBuilder.java
+index b2b63a65d74ef6c587898c9d27e41e08583d2781..61ce6660b9071d868f409642eaf215cc5784c279 100644
+--- a/src/main/java/org/apache/commons/lang3/builder/ReflectionToStringBuilder.java
++++ b/src/main/java/org/apache/commons/lang3/builder/ReflectionToStringBuilder.java
+@@ -233,7 +233,7 @@ public class ReflectionToStringBuilder extends ToStringBuilder {
+      * @param outputTransients
+      *            whether to include transient fields
+      * @param outputStatics
+-     *            whether to include transient fields
++     *            whether to include static fields
+      * @return the String result
+      * @throws IllegalArgumentException
+      *             if the Object is <code>null</code>
+diff --git a/src/main/java/org/apache/commons/lang3/builder/ToStringExclude.java b/src/main/java/org/apache/commons/lang3/builder/ToStringExclude.java
+index c080e317aab8d723caee24a10911c0dfd25e7dd4..4cd31cc1f355925927b327fe385b1f9079bff47c 100755
+--- a/src/main/java/org/apache/commons/lang3/builder/ToStringExclude.java
++++ b/src/main/java/org/apache/commons/lang3/builder/ToStringExclude.java
+@@ -25,6 +25,8 @@ import java.lang.annotation.RetentionPolicy;
+ /**
+  * Use this annotation to exclude a field from being being used by
+  * the {@link ReflectionToStringBuilder}.
++ *
++ * @since 3.5
+  */
+ @Retention(RetentionPolicy.RUNTIME)
+ @Target(ElementType.FIELD)
+diff --git a/src/main/java/org/apache/commons/lang3/event/EventListenerSupport.java b/src/main/java/org/apache/commons/lang3/event/EventListenerSupport.java
+index 475af1b2729d825d06b537183989f86f5ae41ded..8ad04ccec5b3d29a2890fe5db9a64d088c1ff5a2 100644
+--- a/src/main/java/org/apache/commons/lang3/event/EventListenerSupport.java
++++ b/src/main/java/org/apache/commons/lang3/event/EventListenerSupport.java
+@@ -190,8 +190,8 @@ public class EventListenerSupport<L> implements Serializable {
+      * @param allowDuplicate the flag for determining if duplicate listener
+      * objects are allowed to be registered.
+      *
+-     * @throws NullPointerException if <code>listener</code> is
+-     * <code>null</code>.
++     * @throws NullPointerException if <code>listener</code> is <code>null</code>.
++     * @since 3.5
+      */
+     public void addListener(final L listener, boolean allowDuplicate) {
+         Validate.notNull(listener, "Listener object cannot be null.");
+diff --git a/src/main/java/org/apache/commons/lang3/exception/ExceptionUtils.java b/src/main/java/org/apache/commons/lang3/exception/ExceptionUtils.java
+index 9a5f5a89fe07f2f8ea712f028be69920e4c5e636..4fc6774f48f3c4035a5ed4d9ccd574445e681cb9 100644
+--- a/src/main/java/org/apache/commons/lang3/exception/ExceptionUtils.java
++++ b/src/main/java/org/apache/commons/lang3/exception/ExceptionUtils.java
+@@ -743,9 +743,6 @@ public class ExceptionUtils {
+      * techniques are required when interacting with non-java jvm code such as
+      * Jyton, Scala, or Groovy, since these languages do not consider any
+      * exceptions as checked.
+-     * 
+-     * @since 3.5
+-     * @see #wrapAndThrow(Throwable)
+      *
+      * @param throwable
+      *            The throwable to rethrow.
+@@ -754,6 +751,8 @@ public class ExceptionUtils {
+      *         which the calling site requires. "Returning" the results of this
+      *         method, as done in the propagateExample above, will satisfy the
+      *         java compiler requirement that all code paths return a value.
++     * @since 3.5
++     * @see #wrapAndThrow(Throwable)
+      */
+     public static <R> R rethrow(Throwable throwable) {
+         // claim that the typeErasure invocation throws a RuntimeException
+@@ -780,11 +779,7 @@ public class ExceptionUtils {
+      * The downside to using this approach is that invoking code which needs to
+      * handle specific checked exceptions must sniff up the exception chain to
+      * determine if the caught exception was caused by the checked exception.
+-     * 
+-     * @since 3.5
+-     * @see #rethrow(Throwable)
+-     * @see #hasCause(Throwable, Class)
+-     * 
++     *
+      * @param throwable
+      *            The throwable to rethrow.
+      * @param <R> The type of the returned value.
+@@ -792,6 +787,9 @@ public class ExceptionUtils {
+      *         which the calling site requires. "Returning" the results of this
+      *         method will satisfy the java compiler requirement that all code
+      *         paths return a value.
++     * @since 3.5
++     * @see #rethrow(Throwable)
++     * @see #hasCause(Throwable, Class)
+      */
+     public static <R> R wrapAndThrow(Throwable throwable) {
+         if (throwable instanceof RuntimeException) {
+@@ -806,16 +804,15 @@ public class ExceptionUtils {
+     /**
+      * Does the throwable's causal chain have an immediate or wrapped exception
+      * of the given type?
+-     * 
+-     * @since 3.5
+-     * @see #wrapAndThrow(Throwable)
+-     * 
++     *
+      * @param chain
+      *            The root of a Throwable causal chain.
+      * @param type
+      *            The exception type to test.
+      * @return true, if chain is an instance of type or is an
+      *         UndeclaredThrowableException wrapping a cause.
++     * @since 3.5
++     * @see #wrapAndThrow(Throwable)
+      */
+     public static boolean hasCause(Throwable chain,
+             Class<? extends Throwable> type) {
+diff --git a/src/main/java/org/apache/commons/lang3/math/NumberUtils.java b/src/main/java/org/apache/commons/lang3/math/NumberUtils.java
+index 3d590576f154752ab5a852e6c1567021d20bb4ef..7d582de9eaa7894a4d76e36e828aeee0d7aa153a 100644
+--- a/src/main/java/org/apache/commons/lang3/math/NumberUtils.java
++++ b/src/main/java/org/apache/commons/lang3/math/NumberUtils.java
+@@ -21,6 +21,7 @@ import java.math.BigDecimal;
+ import java.math.BigInteger;
+ 
+ import org.apache.commons.lang3.StringUtils;
++import org.apache.commons.lang3.SystemUtils;
+ import org.apache.commons.lang3.Validate;
+ 
+ /**
+@@ -1349,9 +1350,9 @@ public class NumberUtils {
+      * <p>Checks whether the String a valid Java number.</p>
+      *
+      * <p>Valid numbers include hexadecimal marked with the <code>0x</code> or
+-     * <code>0X</code> qualifier, octal numbers, scientific notation and numbers 
+-     * marked with a type qualifier (e.g. 123L).</p>
+-     * 
++     * <code>0X</code> qualifier, octal numbers, scientific notation and
++     * numbers marked with a type qualifier (e.g. 123L).</p>
++     *
+      * <p>Non-hexadecimal strings beginning with a leading zero are
+      * treated as octal values. Thus the string <code>09</code> will return
+      * <code>false</code>, since <code>9</code> is not a valid octal value.
+@@ -1360,11 +1361,44 @@ public class NumberUtils {
+      * <p><code>null</code> and empty/blank {@code String} will return
+      * <code>false</code>.</p>
+      *
++     * <p>Note, {@link #createNumber(String)} should return a number for every
++     * input resuling in <code>true</code>.</p>
++     *
+      * @param str  the <code>String</code> to check
+      * @return <code>true</code> if the string is a correctly formatted number
+-     * @since 3.3 the code supports hex {@code 0Xhhh} and octal {@code 0ddd} validation
++     * @since 3.3 the code supports hex {@code 0Xhhh} an
++     *        octal {@code 0ddd} validation
++     * @deprecated This feature will be removed in Lang 4.0,
++     *             use {@link NumberUtils#isCreatable(String)} instead
+      */
++    @Deprecated
+     public static boolean isNumber(final String str) {
++        return isCreatable(str);
++    }
++
++    /**
++     * <p>Checks whether the String a valid Java number.</p>
++     *
++     * <p>Valid numbers include hexadecimal marked with the <code>0x</code> or
++     * <code>0X</code> qualifier, octal numbers, scientific notation and
++     * numbers marked with a type qualifier (e.g. 123L).</p>
++     *
++     * <p>Non-hexadecimal strings beginning with a leading zero are
++     * treated as octal values. Thus the string <code>09</code> will return
++     * <code>false</code>, since <code>9</code> is not a valid octal value.
++     * However, numbers beginning with {@code 0.} are treated as decimal.</p>
++     *
++     * <p><code>null</code> and empty/blank {@code String} will return
++     * <code>false</code>.</p>
++     *
++     * <p>Note, {@link #createNumber(String)} should return a number for every
++     * input resuling in <code>true</code>.</p>
++     *
++     * @param str  the <code>String</code> to check
++     * @return <code>true</code> if the string is a correctly formatted number
++     * @since 3.5 the code supports the "+" suffix on numbers except for integers in Java 1.6
++     */
++    public static boolean isCreatable(final String str) {
+         if (StringUtils.isEmpty(str)) {
+             return false;
+         }
+@@ -1375,7 +1409,8 @@ public class NumberUtils {
+         boolean allowSigns = false;
+         boolean foundDigit = false;
+         // deal with any possible sign up front
+-        final int start = (chars[0] == '-') ? 1 : 0;
++        final int start = (chars[0] == '-' || chars[0] == '+') ? 1 : 0;
++        final boolean hasLeadingPlusSign = (start == 1 && chars[0] == '+');
+         if (sz > start + 1 && chars[start] == '0') { // leading 0
+             if (
+                  (chars[start + 1] == 'x') || 
+@@ -1445,6 +1480,9 @@ public class NumberUtils {
+         }
+         if (i < chars.length) {
+             if (chars[i] >= '0' && chars[i] <= '9') {
++                if (SystemUtils.IS_JAVA_1_6 && hasLeadingPlusSign && !hasDecPoint) {
++                    return false;
++                }
+                 // no type qualifier, OK
+                 return true;
+             }
+@@ -1489,7 +1527,7 @@ public class NumberUtils {
+      * when calling one of those methods.</p>
+      *
+      * <p>Hexadecimal and scientific notations are <strong>not</strong> considered parsable.
+-     * See {@link #isNumber(String)} on those cases.</p>
++     * See {@link #isCreatable(String)} on those cases.</p>
+      *
+      * <p>{@code Null} and empty String will return <code>false</code>.</p>
+      *
+diff --git a/src/main/java/org/apache/commons/lang3/math/package-info.java b/src/main/java/org/apache/commons/lang3/math/package-info.java
+index fd6f8623d683df00f315dd8dd87effa8f4937396..16ca5b250713712a6fe71a7ebd06bc7ddeffa05b 100644
+--- a/src/main/java/org/apache/commons/lang3/math/package-info.java
++++ b/src/main/java/org/apache/commons/lang3/math/package-info.java
+@@ -26,7 +26,7 @@
+  * <p>There are two aspects of this package that should be highlighted.
+  * The first is {@link org.apache.commons.lang3.math.NumberUtils#createNumber(String)}, a method which does its best to convert a String into a {@link java.lang.Number} object.
+  * You have no idea what type of Number it will return, so you should call the relevant <code>xxxValue</code> method when you reach the point of needing a number.
+- * NumberUtils also has a related {@link org.apache.commons.lang3.math.NumberUtils#isNumber(String) isNumber(String)} method.</p>
++ * NumberUtils also has a related {@link org.apache.commons.lang3.math.NumberUtils#isCreatable(String)} method.</p>
+  *
+  * @since 2.0
+  */
+diff --git a/src/main/java/org/apache/commons/lang3/mutable/MutableByte.java b/src/main/java/org/apache/commons/lang3/mutable/MutableByte.java
+index efe6dd1f0d9d62b72413dd2720f98167dc016233..61a175a8ef01cb490b5f413f672586661636bc76 100644
+--- a/src/main/java/org/apache/commons/lang3/mutable/MutableByte.java
++++ b/src/main/java/org/apache/commons/lang3/mutable/MutableByte.java
+@@ -227,6 +227,7 @@ public class MutableByte extends Number implements Comparable<MutableByte>, Muta
+      *
+      * @param operand the quantity to add, not null
+      * @return the value associated with this instance after adding the operand
++     * @since 3.5
+      */
+     public byte addAndGet(final byte operand) {
+         this.value += operand;
+@@ -240,6 +241,7 @@ public class MutableByte extends Number implements Comparable<MutableByte>, Muta
+      * @param operand the quantity to add, not null
+      * @throws NullPointerException if {@code operand} is null
+      * @return the value associated with this instance after adding the operand
++     * @since 3.5
+      */
+     public byte addAndGet(final Number operand) {
+         this.value += operand.byteValue();
+@@ -252,6 +254,7 @@ public class MutableByte extends Number implements Comparable<MutableByte>, Muta
+      *
+      * @param operand the quantity to add, not null
+      * @return the value associated with this instance immediately before the operand was added
++     * @since 3.5
+      */
+     public byte getAndAdd(final byte operand) {
+         byte last = value;
+@@ -266,6 +269,7 @@ public class MutableByte extends Number implements Comparable<MutableByte>, Muta
+      * @param operand the quantity to add, not null
+      * @throws NullPointerException if {@code operand} is null
+      * @return the value associated with this instance immediately before the operand was added
++     * @since 3.5
+      */
+     public byte getAndAdd(final Number operand) {
+         byte last = value;
+diff --git a/src/main/java/org/apache/commons/lang3/mutable/MutableDouble.java b/src/main/java/org/apache/commons/lang3/mutable/MutableDouble.java
+index aa089fe70f7551f6c6df24a0d96c947cb3608a72..657886ece1395aa7b651b73017f891b79c6ad5f9 100644
+--- a/src/main/java/org/apache/commons/lang3/mutable/MutableDouble.java
++++ b/src/main/java/org/apache/commons/lang3/mutable/MutableDouble.java
+@@ -244,6 +244,7 @@ public class MutableDouble extends Number implements Comparable<MutableDouble>,
+      *
+      * @param operand the quantity to add, not null
+      * @return the value associated with this instance after adding the operand
++     * @since 3.5
+      */
+     public double addAndGet(final double operand) {
+         this.value += operand;
+@@ -257,6 +258,7 @@ public class MutableDouble extends Number implements Comparable<MutableDouble>,
+      * @param operand the quantity to add, not null
+      * @throws NullPointerException if {@code operand} is null
+      * @return the value associated with this instance after adding the operand
++     * @since 3.5
+      */
+     public double addAndGet(final Number operand) {
+         this.value += operand.doubleValue();
+@@ -269,6 +271,7 @@ public class MutableDouble extends Number implements Comparable<MutableDouble>,
+      *
+      * @param operand the quantity to add, not null
+      * @return the value associated with this instance immediately before the operand was added
++     * @since 3.5
+      */
+     public double getAndAdd(final double operand) {
+         double last = value;
+@@ -283,6 +286,7 @@ public class MutableDouble extends Number implements Comparable<MutableDouble>,
+      * @param operand the quantity to add, not null
+      * @throws NullPointerException if {@code operand} is null
+      * @return the value associated with this instance immediately before the operand was added
++     * @since 3.5
+      */
+     public double getAndAdd(final Number operand) {
+         double last = value;
+diff --git a/src/main/java/org/apache/commons/lang3/mutable/MutableFloat.java b/src/main/java/org/apache/commons/lang3/mutable/MutableFloat.java
+index 9893c031a5a757c331ef60f35b77ab7c2853391d..00a50006262512df0b52a76bd94d4e7df919ebb3 100644
+--- a/src/main/java/org/apache/commons/lang3/mutable/MutableFloat.java
++++ b/src/main/java/org/apache/commons/lang3/mutable/MutableFloat.java
+@@ -244,6 +244,7 @@ public class MutableFloat extends Number implements Comparable<MutableFloat>, Mu
+      *
+      * @param operand the quantity to add, not null
+      * @return the value associated with this instance after adding the operand
++     * @since 3.5
+      */
+     public float addAndGet(final float operand) {
+         this.value += operand;
+@@ -257,6 +258,7 @@ public class MutableFloat extends Number implements Comparable<MutableFloat>, Mu
+      * @param operand the quantity to add, not null
+      * @throws NullPointerException if {@code operand} is null
+      * @return the value associated with this instance after adding the operand
++     * @since 3.5
+      */
+     public float addAndGet(final Number operand) {
+         this.value += operand.floatValue();
+@@ -269,6 +271,7 @@ public class MutableFloat extends Number implements Comparable<MutableFloat>, Mu
+      *
+      * @param operand the quantity to add, not null
+      * @return the value associated with this instance immediately before the operand was added
++     * @since 3.5
+      */
+     public float getAndAdd(final float operand) {
+         float last = value;
+@@ -283,6 +286,7 @@ public class MutableFloat extends Number implements Comparable<MutableFloat>, Mu
+      * @param operand the quantity to add, not null
+      * @throws NullPointerException if {@code operand} is null
+      * @return the value associated with this instance immediately before the operand was added
++     * @since 3.5
+      */
+     public float getAndAdd(final Number operand) {
+         float last = value;
+diff --git a/src/main/java/org/apache/commons/lang3/mutable/MutableInt.java b/src/main/java/org/apache/commons/lang3/mutable/MutableInt.java
+index 25bc5b98fadeb422ac3a69563a36edea98071997..a25be7c7878778a76a6dd277264a505b07d6eaf8 100644
+--- a/src/main/java/org/apache/commons/lang3/mutable/MutableInt.java
++++ b/src/main/java/org/apache/commons/lang3/mutable/MutableInt.java
+@@ -227,6 +227,7 @@ public class MutableInt extends Number implements Comparable<MutableInt>, Mutabl
+      *
+      * @param operand the quantity to add, not null
+      * @return the value associated with this instance after adding the operand
++     * @since 3.5
+      */
+     public int addAndGet(final int operand) {
+         this.value += operand;
+@@ -240,6 +241,7 @@ public class MutableInt extends Number implements Comparable<MutableInt>, Mutabl
+      * @param operand the quantity to add, not null
+      * @throws NullPointerException if {@code operand} is null
+      * @return the value associated with this instance after adding the operand
++     * @since 3.5
+      */
+     public int addAndGet(final Number operand) {
+         this.value += operand.intValue();
+@@ -252,6 +254,7 @@ public class MutableInt extends Number implements Comparable<MutableInt>, Mutabl
+      *
+      * @param operand the quantity to add, not null
+      * @return the value associated with this instance immediately before the operand was added
++     * @since 3.5
+      */
+     public int getAndAdd(final int operand) {
+         int last = value;
+@@ -266,6 +269,7 @@ public class MutableInt extends Number implements Comparable<MutableInt>, Mutabl
+      * @param operand the quantity to add, not null
+      * @throws NullPointerException if {@code operand} is null
+      * @return the value associated with this instance immediately before the operand was added
++     * @since 3.5
+      */
+     public int getAndAdd(final Number operand) {
+         int last = value;
+diff --git a/src/main/java/org/apache/commons/lang3/mutable/MutableLong.java b/src/main/java/org/apache/commons/lang3/mutable/MutableLong.java
+index 51d14c7907fa9571f90044155b013793022f5e2a..bbb7b02c7f81daa570d06232334d9be3c8882508 100644
+--- a/src/main/java/org/apache/commons/lang3/mutable/MutableLong.java
++++ b/src/main/java/org/apache/commons/lang3/mutable/MutableLong.java
+@@ -227,6 +227,7 @@ public class MutableLong extends Number implements Comparable<MutableLong>, Muta
+      *
+      * @param operand the quantity to add, not null
+      * @return the value associated with this instance after adding the operand
++     * @since 3.5
+      */
+     public long addAndGet(final long operand) {
+         this.value += operand;
+@@ -240,6 +241,7 @@ public class MutableLong extends Number implements Comparable<MutableLong>, Muta
+      * @param operand the quantity to add, not null
+      * @throws NullPointerException if {@code operand} is null
+      * @return the value associated with this instance after adding the operand
++     * @since 3.5
+      */
+     public long addAndGet(final Number operand) {
+         this.value += operand.longValue();
+@@ -252,6 +254,7 @@ public class MutableLong extends Number implements Comparable<MutableLong>, Muta
+      *
+      * @param operand the quantity to add, not null
+      * @return the value associated with this instance immediately before the operand was added
++     * @since 3.5
+      */
+     public long getAndAdd(final long operand) {
+         long last = value;
+@@ -266,6 +269,7 @@ public class MutableLong extends Number implements Comparable<MutableLong>, Muta
+      * @param operand the quantity to add, not null
+      * @throws NullPointerException if {@code operand} is null
+      * @return the value associated with this instance immediately before the operand was added
++     * @since 3.5
+      */
+     public long getAndAdd(final Number operand) {
+         long last = value;
+diff --git a/src/main/java/org/apache/commons/lang3/mutable/MutableShort.java b/src/main/java/org/apache/commons/lang3/mutable/MutableShort.java
+index 25cea60b68da2c49046a08947148ce83f748ac52..a37949c3b89628cb1b94951c2fe76b26123c9bbe 100644
+--- a/src/main/java/org/apache/commons/lang3/mutable/MutableShort.java
++++ b/src/main/java/org/apache/commons/lang3/mutable/MutableShort.java
+@@ -227,6 +227,7 @@ public class MutableShort extends Number implements Comparable<MutableShort>, Mu
+      *
+      * @param operand the quantity to add, not null
+      * @return the value associated with this instance after adding the operand
++     * @since 3.5
+      */
+     public short addAndGet(final short operand) {
+         this.value += operand;
+@@ -240,6 +241,7 @@ public class MutableShort extends Number implements Comparable<MutableShort>, Mu
+      * @param operand the quantity to add, not null
+      * @throws NullPointerException if {@code operand} is null
+      * @return the value associated with this instance after adding the operand
++     * @since 3.5
+      */
+     public short addAndGet(final Number operand) {
+         this.value += operand.shortValue();
+@@ -252,6 +254,7 @@ public class MutableShort extends Number implements Comparable<MutableShort>, Mu
+      *
+      * @param operand the quantity to add, not null
+      * @return the value associated with this instance immediately before the operand was added
++     * @since 3.5
+      */
+     public short getAndAdd(final short operand) {
+         short last = value;
+@@ -266,6 +269,7 @@ public class MutableShort extends Number implements Comparable<MutableShort>, Mu
+      * @param operand the quantity to add, not null
+      * @throws NullPointerException if {@code operand} is null
+      * @return the value associated with this instance immediately before the operand was added
++     * @since 3.5
+      */
+     public short getAndAdd(final Number operand) {
+         short last = value;
+diff --git a/src/main/java/org/apache/commons/lang3/reflect/MethodUtils.java b/src/main/java/org/apache/commons/lang3/reflect/MethodUtils.java
+index 296a2db38d05dc41ef6a15ebe81c1c94a878532a..28bae668864ba59a4bb962898e246a4bc88f99c6 100644
+--- a/src/main/java/org/apache/commons/lang3/reflect/MethodUtils.java
++++ b/src/main/java/org/apache/commons/lang3/reflect/MethodUtils.java
+@@ -109,11 +109,11 @@ public class MethodUtils {
+      * @throws NoSuchMethodException if there is no such accessible method
+      * @throws InvocationTargetException wraps an exception thrown by the method invoked
+      * @throws IllegalAccessException if the requested method is not accessible via reflection
+-     *  
++     *
+      * @since 3.5
+      */
+-    public static Object invokeMethod(final Object object, final boolean forceAccess, final String methodName) 
+-    		throws NoSuchMethodException, IllegalAccessException, InvocationTargetException {
++    public static Object invokeMethod(final Object object, final boolean forceAccess, final String methodName)
++            throws NoSuchMethodException, IllegalAccessException, InvocationTargetException {
+         return invokeMethod(object, forceAccess, methodName, ArrayUtils.EMPTY_OBJECT_ARRAY, null);
+     }
+ 
+@@ -166,7 +166,7 @@ public class MethodUtils {
+      * @throws NoSuchMethodException if there is no such accessible method
+      * @throws InvocationTargetException wraps an exception thrown by the method invoked
+      * @throws IllegalAccessException if the requested method is not accessible via reflection
+-     * 
++     *
+      * @since 3.5
+      */
+     public static Object invokeMethod(final Object object, final boolean forceAccess, final String methodName,
+@@ -194,6 +194,7 @@ public class MethodUtils {
+      * @throws NoSuchMethodException if there is no such accessible method
+      * @throws InvocationTargetException wraps an exception thrown by the method invoked
+      * @throws IllegalAccessException if the requested method is not accessible via reflection
++     * @since 3.5
+      */
+     public static Object invokeMethod(final Object object, final boolean forceAccess, final String methodName,
+             Object[] args, Class<?>[] parameterTypes)
+@@ -201,36 +202,36 @@ public class MethodUtils {
+             InvocationTargetException {
+         parameterTypes = ArrayUtils.nullToEmpty(parameterTypes);
+         args = ArrayUtils.nullToEmpty(args);
+-        
++
+         final String messagePrefix;
+         Method method = null;
+         boolean isOriginallyAccessible = false;
+         Object result = null;
+-        
++
+         try {
+             if (forceAccess) {
+-            	messagePrefix = "No such method: ";
+-            	method = getMatchingMethod(object.getClass(),
++                messagePrefix = "No such method: ";
++                method = getMatchingMethod(object.getClass(),
+                         methodName, parameterTypes);
+-            	if (method != null) {
+-            	    isOriginallyAccessible = method.isAccessible();
+-            	    if (!isOriginallyAccessible) {
+-            	        method.setAccessible(true);
+-            	    }
+-            	}
+-            }  else {
+-            	messagePrefix = "No such accessible method: ";
+-            	method = getMatchingAccessibleMethod(object.getClass(),
++                if (method != null) {
++                    isOriginallyAccessible = method.isAccessible();
++                    if (!isOriginallyAccessible) {
++                        method.setAccessible(true);
++                    }
++                }
++            } else {
++                messagePrefix = "No such accessible method: ";
++                method = getMatchingAccessibleMethod(object.getClass(),
+                         methodName, parameterTypes);
+             }
+-            
++
+             if (method == null) {
+                 throw new NoSuchMethodException(messagePrefix
+                         + methodName + "() on object: "
+                         + object.getClass().getName());
+             }
+             args = toVarArgs(method, args);
+-            
++
+             result = method.invoke(object, args);
+         }
+         finally {
+@@ -238,10 +239,10 @@ public class MethodUtils {
+                 method.setAccessible(isOriginallyAccessible);
+             }
+         }
+-        
++
+         return result;
+     }
+-    
++
+     /**
+      * <p>Invokes a named method whose parameter type matches the object type.</p>
+      *
+@@ -265,7 +266,7 @@ public class MethodUtils {
+             Object[] args, Class<?>[] parameterTypes)
+             throws NoSuchMethodException, IllegalAccessException,
+             InvocationTargetException {
+-    	return invokeMethod(object, false, methodName, args, parameterTypes);
++        return invokeMethod(object, false, methodName, args, parameterTypes);
+     }
+ 
+     /**
+@@ -284,8 +285,8 @@ public class MethodUtils {
+      *  method invoked
+      * @throws IllegalAccessException if the requested method is not accessible
+      *  via reflection
+-     *  
+-     *  @since 3.4
++     *
++     * @since 3.4
+      */
+     public static Object invokeExactMethod(final Object object, final String methodName) throws NoSuchMethodException,
+             IllegalAccessException, InvocationTargetException {
+@@ -725,33 +726,33 @@ public class MethodUtils {
+      */
+     public static Method getMatchingMethod(final Class<?> cls, final String methodName,
+             final Class<?>... parameterTypes) {
+-    	Validate.notNull(cls, "Null class not allowed.");
+-    	Validate.notEmpty(methodName, "Null or blank methodName not allowed.");
+-    	
+-    	// Address methods in superclasses
+-    	Method[] methodArray = cls.getDeclaredMethods();
+-    	List<Class<?>> superclassList = ClassUtils.getAllSuperclasses(cls);
+-    	for (Class<?> klass: superclassList) {
+-    		methodArray = ArrayUtils.addAll(methodArray, klass.getDeclaredMethods());
+-    	}
+-    	
+-    	Method inexactMatch = null;
+-    	for (Method method: methodArray) {
+-    		if (methodName.equals(method.getName()) && 
+-    				ArrayUtils.isEquals(parameterTypes, method.getParameterTypes())) {
+-    			return method;
+-    		} else if (methodName.equals(method.getName()) &&  
+-    				ClassUtils.isAssignable(parameterTypes, method.getParameterTypes(), true)) {
+-    			if (inexactMatch == null) {
+-    				inexactMatch = method;
+-    			} else if (distance(parameterTypes, method.getParameterTypes()) 
+-    					< distance(parameterTypes, inexactMatch.getParameterTypes())) {
+-    				inexactMatch = method;
+-    			}
+-    		}
+-    		
+-    	}
+-    	return inexactMatch;
++        Validate.notNull(cls, "Null class not allowed.");
++        Validate.notEmpty(methodName, "Null or blank methodName not allowed.");
++
++        // Address methods in superclasses
++        Method[] methodArray = cls.getDeclaredMethods();
++        List<Class<?>> superclassList = ClassUtils.getAllSuperclasses(cls);
++        for (Class<?> klass : superclassList) {
++            methodArray = ArrayUtils.addAll(methodArray, klass.getDeclaredMethods());
++        }
++
++        Method inexactMatch = null;
++        for (Method method : methodArray) {
++            if (methodName.equals(method.getName()) &&
++                    ArrayUtils.isEquals(parameterTypes, method.getParameterTypes())) {
++                return method;
++            } else if (methodName.equals(method.getName()) &&
++                    ClassUtils.isAssignable(parameterTypes, method.getParameterTypes(), true)) {
++                if (inexactMatch == null) {
++                    inexactMatch = method;
++                } else if (distance(parameterTypes, method.getParameterTypes())
++                        < distance(parameterTypes, inexactMatch.getParameterTypes())) {
++                    inexactMatch = method;
++                }
++            }
++
++        }
++        return inexactMatch;
+     }
+     
+     /**
+diff --git a/src/main/java/org/apache/commons/lang3/text/StrSubstitutor.java b/src/main/java/org/apache/commons/lang3/text/StrSubstitutor.java
+index abc7f3e547f294501e16166d1d0b48dd293b66f6..126af84cc162445267de1e6397581b062d4661ab 100644
+--- a/src/main/java/org/apache/commons/lang3/text/StrSubstitutor.java
++++ b/src/main/java/org/apache/commons/lang3/text/StrSubstitutor.java
+@@ -1206,6 +1206,7 @@ public class StrSubstitutor {
+      * substitution.
+      * 
+      * @return the preserve escape flag
++     * @since 3.5
+      */
+     public boolean isPreserveEscapes() {
+         return preserveEscapes;
+@@ -1221,6 +1222,7 @@ public class StrSubstitutor {
+      * <code>${this-is-escaped}</code>).  The default value is <b>false</b>
+      * 
+      * @param preserveEscapes true if escapes are to be preserved
++     * @since 3.5
+      */
+     public void setPreserveEscapes(final boolean preserveEscapes) {
+         this.preserveEscapes = preserveEscapes;
+diff --git a/src/main/java/org/apache/commons/lang3/text/WordUtils.java b/src/main/java/org/apache/commons/lang3/text/WordUtils.java
+index da9285688b41dd0fa6d6863661f90e52eb07268a..b46b72cad4378d113197cca0410c938a9e74927f 100644
+--- a/src/main/java/org/apache/commons/lang3/text/WordUtils.java
++++ b/src/main/java/org/apache/commons/lang3/text/WordUtils.java
+@@ -584,6 +584,7 @@ public class WordUtils {
+      * @param word The CharSequence to check, may be null
+      * @param words The array of String words to search for, may be null
+      * @return {@code true} if all search words are found, {@code false} otherwise
++     * @since 3.5
+      */
+     public static boolean containsAllWords(CharSequence word, CharSequence... words) {
+         if (StringUtils.isEmpty(word) || ArrayUtils.isEmpty(words)) {
+diff --git a/src/main/java/org/apache/commons/lang3/time/DateFormatUtils.java b/src/main/java/org/apache/commons/lang3/time/DateFormatUtils.java
+index 45e2d32006218a44bcbb8ecf6999950c6bd8fe9b..3f78753eb7c70f6788b48e6781535fe0e59425fb 100644
+--- a/src/main/java/org/apache/commons/lang3/time/DateFormatUtils.java
++++ b/src/main/java/org/apache/commons/lang3/time/DateFormatUtils.java
+@@ -42,8 +42,12 @@ public class DateFormatUtils {
+ 
+     /**
+      * ISO 8601 formatter for date-time without time zone.
+-     * The format used is {@code yyyy-MM-dd'T'HH:mm:ss}.
+-     * This format uses the default TimeZone in effect at the time of loading DateFormatUtils class.
++     *
++     * <p>
++     * The format used is {@code yyyy-MM-dd'T'HH:mm:ss}. This format uses the
++     * default TimeZone in effect at the time of loading DateFormatUtils class.
++     * </p>
++     *
+      * @since 3.5
+      */
+     public static final FastDateFormat ISO_8601_EXTENDED_DATETIME_FORMAT
+@@ -57,8 +61,12 @@ public class DateFormatUtils {
+ 
+     /**
+      * ISO 8601 formatter for date-time with time zone.
+-     * The format used is {@code yyyy-MM-dd'T'HH:mm:ssZZ}.
+-     * This format uses the default TimeZone in effect at the time of loading DateFormatUtils class.
++     *
++     * <p>
++     * The format used is {@code yyyy-MM-dd'T'HH:mm:ssZZ}. This format uses the
++     * default TimeZone in effect at the time of loading DateFormatUtils class.
++     * </p>
++     *
+      * @since 3.5
+      */
+     public static final FastDateFormat ISO_8601_EXTENDED_DATETIME_TIME_ZONE_FORMAT
+@@ -72,8 +80,12 @@ public class DateFormatUtils {
+ 
+     /**
+      * ISO 8601 formatter for date without time zone.
+-     * The format used is {@code yyyy-MM-dd}.
+-     * This format uses the default TimeZone in effect at the time of loading DateFormatUtils class.
++     *
++     * <p>
++     * The format used is {@code yyyy-MM-dd}. This format uses the
++     * default TimeZone in effect at the time of loading DateFormatUtils class.
++     * </p>
++     *
+      * @since 3.5
+      */
+     public static final FastDateFormat ISO_8601_EXTENDED_DATE_FORMAT
+@@ -87,11 +99,14 @@ public class DateFormatUtils {
+ 
+     /**
+      * ISO 8601-like formatter for date with time zone.
+-     * The format used is {@code yyyy-MM-ddZZ}.
+-     * This pattern does not comply with the formal ISO 8601 specification
+-     * as the standard does not allow a time zone  without a time.
+-     * This format uses the default TimeZone in effect at the time of loading DateFormatUtils class.
+-     * 
++     *
++     * <p>
++     * The format used is {@code yyyy-MM-ddZZ}. This pattern does not comply
++     * with the formal ISO 8601 specification as the standard does not allow
++     * a time zone  without a time. This format uses the default TimeZone in
++     * effect at the time of loading DateFormatUtils class.
++     * </p>
++     *
+      * @deprecated - as of 4.0, ISO_DATE_TIME_ZONE_FORMAT will be removed.
+      */
+     @Deprecated
+@@ -99,10 +114,14 @@ public class DateFormatUtils {
+             = FastDateFormat.getInstance("yyyy-MM-ddZZ");
+ 
+     /**
+-     * Non-compliant formatter for time without time zone. (ISO 8601 does not prefix 'T' for standalone time value)
+-     * The format used is {@code 'T'HH:mm:ss}.
+-     * This format uses the default TimeZone in effect at the time of loading DateFormatUtils class.
+-     * 
++     * Non-compliant formatter for time without time zone (ISO 8601 does not
++     * prefix 'T' for standalone time value).
++     *
++     * <p>
++     * The format used is {@code 'T'HH:mm:ss}. This format uses the default
++     * TimeZone in effect at the time of loading DateFormatUtils class.
++     * </p>
++     *
+      * @deprecated - as of 4.0, ISO_TIME_FORMAT will be removed.
+      */
+     @Deprecated
+@@ -110,10 +129,14 @@ public class DateFormatUtils {
+             = FastDateFormat.getInstance("'T'HH:mm:ss");
+ 
+     /**
+-     * Non-compliant formatter for time with time zone. (ISO 8601 does not prefix 'T' for standalone time value)
+-     * The format used is {@code 'T'HH:mm:ssZZ}.
+-     * This format uses the default TimeZone in effect at the time of loading DateFormatUtils class.
+-     * 
++     * Non-compliant formatter for time with time zone (ISO 8601 does not
++     * prefix 'T' for standalone time value).
++     *
++     * <p>
++     * The format used is {@code 'T'HH:mm:ssZZ}. This format uses the default
++     * TimeZone in effect at the time of loading DateFormatUtils class.
++     * </p>
++     *
+      * @deprecated - as of 4.0, ISO_TIME_TIME_ZONE_FORMAT will be removed.
+      */
+     @Deprecated
+@@ -122,8 +145,12 @@ public class DateFormatUtils {
+ 
+     /**
+      * ISO 8601 formatter for time without time zone.
+-     * The format used is {@code HH:mm:ss}.
+-     * This format uses the default TimeZone in effect at the time of loading DateFormatUtils class.
++     *
++     * <p>
++     * The format used is {@code HH:mm:ss}. This format uses the default
++     * TimeZone in effect at the time of loading DateFormatUtils class.
++     * </p>
++     *
+      * @since 3.5
+      */
+     public static final FastDateFormat ISO_8601_EXTENDED_TIME_FORMAT
+@@ -137,8 +164,12 @@ public class DateFormatUtils {
+ 
+     /**
+      * ISO 8601 formatter for time with time zone.
+-     * The format used is {@code HH:mm:ssZZ}.
+-     * This format uses the default TimeZone in effect at the time of loading DateFormatUtils class.
++     *
++     * <p>
++     * The format used is {@code HH:mm:ssZZ}. This format uses the default
++     * TimeZone in effect at the time of loading DateFormatUtils class.
++     * </p>
++     *
+      * @since 3.5
+      */
+     public static final FastDateFormat ISO_8601_EXTENDED_TIME_TIME_ZONE_FORMAT
+@@ -152,8 +183,12 @@ public class DateFormatUtils {
+ 
+     /**
+      * SMTP (and probably other) date headers.
++     *
++     * <p>
+      * The format used is {@code EEE, dd MMM yyyy HH:mm:ss Z} in US locale.
+-     * This format uses the default TimeZone in effect at the time of loading DateFormatUtils class.
++     * This format uses the default TimeZone in effect at the time of loading
++     * DateFormatUtils class.
++     * </p>
+      */
+     public static final FastDateFormat SMTP_DATETIME_FORMAT
+             = FastDateFormat.getInstance("EEE, dd MMM yyyy HH:mm:ss Z", Locale.US);
+diff --git a/src/main/java/org/apache/commons/lang3/time/DatePrinter.java b/src/main/java/org/apache/commons/lang3/time/DatePrinter.java
+index 5bf393b5bfdd6eafecb9ecf3001759ab0314cecb..342405af5c1261da0434fa4a3e482e0d5d36fa44 100644
+--- a/src/main/java/org/apache/commons/lang3/time/DatePrinter.java
++++ b/src/main/java/org/apache/commons/lang3/time/DatePrinter.java
+@@ -65,11 +65,11 @@ public interface DatePrinter {
+     /**
+      * <p>Formats a millisecond {@code long} value into the
+      * supplied {@code StringBuffer}.</p>
+-     * @deprecated Use {{@link #format(long, Appendable)}.
+      *
+      * @param millis  the millisecond value to format
+      * @param buf  the buffer to format into
+      * @return the specified string buffer
++     * @deprecated Use {{@link #format(long, Appendable)}.
+      */
+     @Deprecated
+     StringBuffer format(long millis, StringBuffer buf);
+@@ -77,11 +77,11 @@ public interface DatePrinter {
+     /**
+      * <p>Formats a {@code Date} object into the
+      * supplied {@code StringBuffer} using a {@code GregorianCalendar}.</p>
+-     * @deprecated Use {{@link #format(Date, Appendable)}.
+      *
+      * @param date  the date to format
+      * @param buf  the buffer to format into
+      * @return the specified string buffer
++     * @deprecated Use {{@link #format(Date, Appendable)}.
+      */
+     @Deprecated
+     StringBuffer format(Date date, StringBuffer buf);
+@@ -91,11 +91,11 @@ public interface DatePrinter {
+      * The TimeZone set on the Calendar is only used to adjust the time offset.
+      * The TimeZone specified during the construction of the Parser will determine the TimeZone
+      * used in the formatted string.
+-     * @deprecated Use {{@link #format(Calendar, Appendable)}.
+      *
+      * @param calendar  the calendar to format
+      * @param buf  the buffer to format into
+      * @return the specified string buffer
++     * @deprecated Use {{@link #format(Calendar, Appendable)}.
+      */
+     @Deprecated
+     StringBuffer format(Calendar calendar, StringBuffer buf);
+@@ -167,13 +167,12 @@ public interface DatePrinter {
+     /**
+      * <p>Formats a {@code Date}, {@code Calendar} or
+      * {@code Long} (milliseconds) object.</p>
+-     * 
+-     * See {@link java.text.DateFormat#format(Object, StringBuffer, FieldPosition)}
+-     * 
++     *
+      * @param obj  the object to format
+      * @param toAppendTo  the buffer to append to
+      * @param pos  the position - ignored
+      * @return the buffer passed in
++     * @see java.text.DateFormat#format(Object, StringBuffer, FieldPosition)
+      */
+     StringBuffer format(Object obj, StringBuffer toAppendTo, FieldPosition pos);
+ }
+diff --git a/src/main/java/org/apache/commons/lang3/time/FastDateFormat.java b/src/main/java/org/apache/commons/lang3/time/FastDateFormat.java
+index 15dab8d8f53040727a2d3b52fc72cb4e8a876ad9..688830cf8c436243ea1dd8cd11a436f7afcc867f 100644
+--- a/src/main/java/org/apache/commons/lang3/time/FastDateFormat.java
++++ b/src/main/java/org/apache/commons/lang3/time/FastDateFormat.java
+@@ -448,12 +448,12 @@ public class FastDateFormat extends Format implements DateParser, DatePrinter {
+     /**
+      * <p>Formats a millisecond {@code long} value into the
+      * supplied {@code StringBuffer}.</p>
+-     * @deprecated Use {{@link #format(long, Appendable)}.
+      *
+      * @param millis  the millisecond value to format
+      * @param buf  the buffer to format into
+      * @return the specified string buffer
+      * @since 2.1
++     * @deprecated Use {{@link #format(long, Appendable)}.
+      */
+     @Deprecated
+     @Override
+@@ -464,11 +464,11 @@ public class FastDateFormat extends Format implements DateParser, DatePrinter {
+     /**
+      * <p>Formats a {@code Date} object into the
+      * supplied {@code StringBuffer} using a {@code GregorianCalendar}.</p>
+-     * @deprecated Use {{@link #format(Date, Appendable)}.
+      *
+      * @param date  the date to format
+      * @param buf  the buffer to format into
+      * @return the specified string buffer
++     * @deprecated Use {{@link #format(Date, Appendable)}.
+      */
+     @Deprecated
+     @Override
+@@ -479,11 +479,11 @@ public class FastDateFormat extends Format implements DateParser, DatePrinter {
+     /**
+      * <p>Formats a {@code Calendar} object into the
+      * supplied {@code StringBuffer}.</p>
+-     * @deprecated Use {{@link #format(Calendar, Appendable)}.
+      *
+      * @param calendar  the calendar to format
+      * @param buf  the buffer to format into
+      * @return the specified string buffer
++     * @deprecated Use {{@link #format(Calendar, Appendable)}.
+      */
+     @Deprecated
+     @Override
+@@ -658,11 +658,11 @@ public class FastDateFormat extends Format implements DateParser, DatePrinter {
+     /**
+      * <p>Performs the formatting by applying the rules to the
+      * specified calendar.</p>
+-     * @deprecated Use {@link #format(Calendar, Appendable)}
+      *
+      * @param calendar the calendar to format
+      * @param buf  the buffer to format into
+      * @return the specified string buffer
++     * @deprecated Use {@link #format(Calendar, Appendable)}
+      */
+     @Deprecated
+     protected StringBuffer applyRules(final Calendar calendar, final StringBuffer buf) {
+diff --git a/src/main/java/org/apache/commons/lang3/time/FastDateParser.java b/src/main/java/org/apache/commons/lang3/time/FastDateParser.java
+index e454354a7ebf8b48b9e0819b03d052cd88b8d2c5..8275ddfd2b5eade34a4a19048c1b0b869d8f1eda 100644
+--- a/src/main/java/org/apache/commons/lang3/time/FastDateParser.java
++++ b/src/main/java/org/apache/commons/lang3/time/FastDateParser.java
+@@ -637,7 +637,7 @@ public class FastDateParser implements DateParser, Serializable {
+         Strategy strategy = cache.get(locale);
+         if (strategy == null) {
+             strategy = field == Calendar.ZONE_OFFSET 
+-                    ? new TimeZoneStrategy(definingCalendar, locale)
++                    ? new TimeZoneStrategy(locale)
+                     : new CaseInsensitiveTextStrategy(field, definingCalendar, locale);
+             final Strategy inCache = cache.putIfAbsent(locale, strategy);
+             if (inCache != null) {
+@@ -836,10 +836,9 @@ public class FastDateParser implements DateParser, Serializable {
+ 
+         /**
+          * Construct a Strategy that parses a TimeZone
+-         * @param cal TODO
+          * @param locale The Locale
+          */
+-        TimeZoneStrategy(Calendar cal, final Locale locale) {
++        TimeZoneStrategy(final Locale locale) {
+             this.locale = locale;
+ 
+             final StringBuilder sb = new StringBuilder();

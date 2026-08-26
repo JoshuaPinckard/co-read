@@ -1,0 +1,1525 @@
+diff --git a/.github/workflows/publish.yaml b/.github/workflows/publish.yaml
+index 0ed495591672e9e0a68988dafefbebf9044adc24..3c8db0e0a2a3964d667989e65fbf8d175e2de2c1 100644
+--- a/.github/workflows/publish.yaml
++++ b/.github/workflows/publish.yaml
+@@ -9,8 +9,8 @@ jobs:
+     outputs:
+       hash: ${{ steps.hash.outputs.hash }}
+     steps:
+-      - uses: actions/checkout@ac593985615ec2ede58e132d2e21d2b1cbd6127c
+-      - uses: actions/setup-python@5ccb29d8773c3f3f653e1705f474dfaa8a06a912
++      - uses: actions/checkout@8f4b7f84864484a7bf31766abe9204da3cbe65b3
++      - uses: actions/setup-python@d27e3f3d7c64b4bbf8e4abfb9b63b83e846e0435
+         with:
+           python-version: '3.x'
+           cache: 'pip'
+@@ -33,7 +33,7 @@ jobs:
+       id-token: write
+       contents: write
+     # Can't pin with hash due to how this workflow works.
+-    uses: slsa-framework/slsa-github-generator/.github/workflows/generator_generic_slsa3.yml@v1.4.0
++    uses: slsa-framework/slsa-github-generator/.github/workflows/generator_generic_slsa3.yml@v1.7.0
+     with:
+       base64-subjects: ${{ needs.build.outputs.hash }}
+   create-release:
+@@ -58,15 +58,15 @@ jobs:
+     # files in the draft release.
+     environment: 'publish'
+     runs-on: ubuntu-latest
++    permissions:
++      id-token: write
+     steps:
+       - uses: actions/download-artifact@9bc31d5ccc31df68ecc42ccf4149144866c47d8a
+       # Try uploading to Test PyPI first, in case something fails.
+-      - uses: pypa/gh-action-pypi-publish@c7f29f7adef1a245bd91520e94867e5c6eedddcc
++      - uses: pypa/gh-action-pypi-publish@29930c9cf57955dc1b98162d0d8bc3ec80d9e75c
+         with:
+-          password: ${{ secrets.TEST_PYPI_TOKEN }}
+-          repository_url: https://test.pypi.org/legacy/
+-          packages_dir: artifact/
+-      - uses: pypa/gh-action-pypi-publish@c7f29f7adef1a245bd91520e94867e5c6eedddcc
++          repository-url: https://test.pypi.org/legacy/
++          packages-dir: artifact/
++      - uses: pypa/gh-action-pypi-publish@29930c9cf57955dc1b98162d0d8bc3ec80d9e75c
+         with:
+-          password: ${{ secrets.PYPI_TOKEN }}
+-          packages_dir: artifact/
++          packages-dir: artifact/
+diff --git a/.pre-commit-config.yaml b/.pre-commit-config.yaml
+index 23df1fe380860ec69b26bba90976b94107401fb6..277a0a5092df365bf31e5bfb2c97219fe5f06cb1 100644
+--- a/.pre-commit-config.yaml
++++ b/.pre-commit-config.yaml
+@@ -3,7 +3,7 @@ ci:
+   autoupdate_schedule: monthly
+ repos:
+   - repo: https://github.com/asottile/pyupgrade
+-    rev: v3.7.0
++    rev: v3.8.0
+     hooks:
+       - id: pyupgrade
+         args: ["--py37-plus"]
+diff --git a/CHANGES.rst b/CHANGES.rst
+index 2d560885d15c2f55fe3015f546133a074070bae0..ce98025a67074f0e7e6bdb3984ed8987546d0734 100644
+--- a/CHANGES.rst
++++ b/CHANGES.rst
+@@ -3,13 +3,36 @@
+ Version 8.1.4
+ -------------
+ 
+-Unreleased
++Released 2023-07-06
+ 
+ -   Replace all ``typing.Dict`` occurrences to ``typing.MutableMapping`` for
+-    parameter hints.  :issue:`2255`
++    parameter hints. :issue:`2255`
+ -   Improve type hinting for decorators and give all generic types parameters.
+     :issue:`2398`
+--   Fix return value and type signature of `shell_completion.add_completion_class` function. :pr:`2421`
++-   Fix return value and type signature of `shell_completion.add_completion_class`
++    function. :pr:`2421`
++-   Bash version detection doesn't fail on Windows. :issue:`2461`
++-   Completion works if there is a dot (``.``) in the program name. :issue:`2166`
++-   Improve type annotations for pyright type checker. :issue:`2268`
++-   Improve responsiveness of ``click.clear()``. :issue:`2284`
++-   Improve command name detection when using Shiv or PEX. :issue:`2332`
++-   Avoid showing empty lines if command help text is empty. :issue:`2368`
++-   ZSH completion script works when loaded from ``fpath``. :issue:`2344`.
++-   ``EOFError`` and ``KeyboardInterrupt`` tracebacks are not suppressed when
++    ``standalone_mode`` is disabled. :issue:`2380`
++-   ``@group.command`` does not fail if the group was created with a custom
++    ``command_class``. :issue:`2416`
++-   ``multiple=True`` is allowed for flag options again and does not require
++    setting ``default=()``. :issue:`2246, 2292, 2295`
++-   Make the decorators returned by ``@argument()`` and ``@option()`` reusable when the
++    ``cls`` parameter is used. :issue:`2294`
++-   Don't fail when writing filenames to streams with strict errors. Replace invalid
++    bytes with the replacement character (``�``). :issue:`2395`
++-   Remove unnecessary attempt to detect MSYS2 environment. :issue:`2355`
++-   Remove outdated and unnecessary detection of App Engine environment. :pr:`2554`
++-   ``echo()`` does not fail when no streams are attached, such as with ``pythonw`` on
++    Windows. :issue:`2415`
++-   Argument with ``expose_value=False`` do not cause completion to fail. :issue:`2336`
+ 
+ 
+ Version 8.1.3
+diff --git a/docs/arguments.rst b/docs/arguments.rst
+index e5765c9405c533aaaa79e3eff6c220bd3d4227ed..60b53c558a63783f71079590e6bd9bce9c8228ee 100644
+--- a/docs/arguments.rst
++++ b/docs/arguments.rst
+@@ -124,15 +124,9 @@ File Path Arguments
+ 
+ In the previous example, the files were opened immediately.  But what if
+ we just want the filename?  The naïve way is to use the default string
+-argument type.  However, remember that Click is Unicode-based, so the string
+-will always be a Unicode value.  Unfortunately, filenames can be Unicode or
+-bytes depending on which operating system is being used.  As such, the type
+-is insufficient.
+-
+-Instead, you should be using the :class:`Path` type, which automatically
+-handles this ambiguity.  Not only will it return either bytes or Unicode
+-depending on what makes more sense, but it will also be able to do some
+-basic checks for you such as existence checks.
++argument type. The :class:`Path` type has several checks available which raise nice
++errors if they fail, such as existence. Filenames in these error messages are formatted
++with :func:`format_filename`, so any undecodable bytes will be printed nicely.
+ 
+ Example:
+ 
+diff --git a/docs/complex.rst b/docs/complex.rst
+index e9cefb5def064a293f9631a3f3916fd425e9f520..f24b0fe842adbc23bd4c15702779ad31ec4b45b3 100644
+--- a/docs/complex.rst
++++ b/docs/complex.rst
+@@ -218,3 +218,166 @@ As you can see:
+ .. click:run::
+ 
+     invoke(cp, [])
++
++Lazily Loading Subcommands
++--------------------------
++
++Large CLIs and CLIs with slow imports may benefit from deferring the loading of
++subcommands. The interfaces which support this mode of use are
++:meth:`MultiCommand.list_commands` and :meth:`MultiCommand.get_command`. A custom
++:class:`MultiCommand` subclass can implement a lazy loader by storing extra data such
++that :meth:`MultiCommand.get_command` is responsible for running imports.
++
++Since the primary case for this is a :class:`Group` which loads its subcommands lazily,
++the following example shows a lazy-group implementation.
++
++.. warning::
++
++   Lazy loading of python code can result in hard to track down bugs, circular imports
++   in order-dependent codebases, and other surprising behaviors. It is recommended that
++   this technique only be used in concert with testing which will at least run the
++   ``--help`` on each subcommand. That will guarantee that each subcommand can be loaded
++   successfully.
++
++Defining the Lazy Group
++```````````````````````
++
++The following :class:`Group` subclass adds an attribute, ``lazy_subcommands``, which
++stores a mapping from subcommand names to the information for importing them.
++
++.. code-block:: python
++
++    # in lazy_group.py
++    import importlib
++    import click
++
++    class LazyGroup(click.Group):
++        def __init__(self, *args, lazy_subcommands=None, **kwargs):
++            super().__init__(*args, **kwargs)
++            # lazy_subcommands is a map of the form:
++            #
++            #   {command-name} -> {module-name}.{command-object-name}
++            #
++            self.lazy_subcommands = lazy_subcommands or {}
++
++        def list_commands(self, ctx):
++            base = super().list_commands(ctx)
++            lazy = sorted(self.lazy_subcommands.keys())
++            return base + lazy
++
++        def get_command(self, ctx, cmd_name):
++            if cmd_name in self.lazy_subcommands:
++                return self._lazy_load(cmd_name)
++            return super().get_command(ctx, cmd_name)
++
++        def _lazy_load(self, cmd_name):
++            # lazily loading a command, first get the module name and attribute name
++            import_path = self.lazy_subcommands[cmd_name]
++            modname, cmd_object_name = import_path.rsplit(".", 1)
++            # do the import
++            mod = importlib.import_module(modname)
++            # get the Command object from that module
++            cmd_object = getattr(mod, cmd_object_name)
++            # check the result to make debugging easier
++            if not isinstance(cmd_object, click.BaseCommand):
++                raise ValueError(
++                    f"Lazy loading of {import_path} failed by returning "
++                    "a non-command object"
++                )
++            return cmd_object
++
++Using LazyGroup To Define a CLI
++```````````````````````````````
++
++With ``LazyGroup`` defined, it's now possible to write a group which lazily loads its
++subcommands like so:
++
++.. code-block:: python
++
++    # in main.py
++    import click
++    from lazy_group import LazyGroup
++
++    @click.group(
++        cls=LazyGroup,
++        lazy_subcommands={"foo": "foo.cli", "bar": "bar.cli"},
++        help="main CLI command for lazy example",
++    )
++    def cli():
++        pass
++
++    # in foo.py
++    import click
++
++    @click.group(help="foo command for lazy example")
++    def cli():
++        pass
++
++    # in bar.py
++    import click
++    from lazy_group import LazyGroup
++
++    @click.group(
++        cls=LazyGroup,
++        lazy_subcommands={"baz": "baz.cli"},
++        help="bar command for lazy example",
++    )
++    def cli():
++        pass
++
++    # in baz.py
++    import click
++
++    @click.group(help="baz command for lazy example")
++    def cli():
++        pass
++
++
++What triggers Lazy Loading?
++```````````````````````````
++
++There are several events which may trigger lazy loading by running the
++:meth:`MultiCommand.get_command` function.
++Some are intuititve, and some are less so.
++
++All cases are described with respect to the above example, assuming the main program
++name is ``cli``.
++
++1. Command resolution. If a user runs ``cli bar baz``, this must first resolve ``bar``,
++   and then resolve ``baz``. Each subcommand resolution step does a lazy load.
++2. Helptext rendering. In order to get the short help description of subcommands,
++   ``cli --help`` will load ``foo`` and ``bar``. Note that it will still not load
++   ``baz``.
++3. Shell completion. In order to get the subcommands of a lazy command, ``cli <TAB>``
++   will need to resolve the subcommands of ``cli``. This process will trigger the lazy
++   loads.
++
++Further Deferring Imports
++`````````````````````````
++
++It is possible to make the process even lazier, but it is generally more difficult the
++more you want to defer work.
++
++For example, subcommands could be represented as a custom :class:`BaseCommand` subclass
++which defers importing the command until it is invoked, but which provides
++:meth:`BaseCommand.get_short_help_str` in order to support completions and helptext.
++More simply, commands can be constructed whose callback functions defer any actual work
++until after an import.
++
++This command definition provides ``foo``, but any of the work associated with importing
++the "real" callback function is deferred until invocation time:
++
++.. click:example::
++
++    @click.command()
++    @click.option("-n", type=int)
++    @click.option("-w", type=str)
++    def foo(n, w):
++        from mylibrary import foo_concrete
++
++        foo_concrete(n, w)
++
++Because ``click`` builds helptext and usage info from options, arguments, and command
++attributes, it has no awareness that the underlying function is in any way handling a
++deferred import. Therefore, all ``click``-provided utilities and functionality will work
++as normal on such a command.
+diff --git a/docs/conf.py b/docs/conf.py
+index 668b8383b80dcd02779ae62cabf81a033daca62b..db71e395df74503547e0d1ee0c816377e46b7076 100644
+--- a/docs/conf.py
++++ b/docs/conf.py
+@@ -1,11 +1,6 @@
+ from pallets_sphinx_themes import get_version
+ from pallets_sphinx_themes import ProjectLink
+ 
+-import click._compat
+-
+-# compat until pallets-sphinx-themes is updated
+-click._compat.text_type = str
+-
+ # Project --------------------------------------------------------------
+ 
+ project = "Click"
+diff --git a/docs/contrib.rst b/docs/contrib.rst
+index b9a2a013df3634430480167d43a4816182d78202..287862ce0f58635fe412dfc3b2c00dab21aae713 100644
+--- a/docs/contrib.rst
++++ b/docs/contrib.rst
+@@ -4,22 +4,18 @@
+ click-contrib
+ =============
+ 
+-As the userbase of Click grows, more and more major feature requests pop up in
+-Click's bugtracker. As reasonable as it may be for those features to be bundled
+-with Click instead of being a standalone project, many of those requested
+-features are either highly experimental or have unproven practical use, while
+-potentially being a burden to maintain.
++As the number of users of Click grows, more and more major feature requests are
++made. To users it may seem reasonable to include those features with Click;
++however, many of them are experimental or aren't practical to support
++generically. Maintainers have to choose what is reasonable to maintain in Click
++core.
+ 
+-This is why click-contrib_ exists. The GitHub organization is a collection of
+-possibly experimental third-party packages whose featureset does not belong
+-into Click, but also a playground for major features that may be added to Click
+-in the future. It is also meant to coordinate and concentrate effort on writing
+-third-party extensions for Click, and to ease the effort of searching for such
+-extensions. In that sense it could be described as a low-maintenance
+-alternative to extension repositories of other frameworks.
++The click-contrib_ GitHub organization exists as a place to collect third-party
++packages that extend Click's features. It is also meant to ease the effort of
++searching for such extensions.
+ 
+ Please note that the quality and stability of those packages may be different
+-than what you expect from Click itself. While published under a common
+-organization, they are still projects separate from Click.
++than Click itself. While published under a common organization, they are still
++separate from Click and the Pallets maintainers.
+ 
+ .. _click-contrib: https://github.com/click-contrib/
+diff --git a/docs/documentation.rst b/docs/documentation.rst
+index 181c5b3b705a0ec26e6d4c925db0268d3ff7d297..349acfb835faa7f55828962eda24275e5cd6e006 100644
+--- a/docs/documentation.rst
++++ b/docs/documentation.rst
+@@ -85,8 +85,9 @@ Preventing Rewrapping
+ ---------------------
+ 
+ The default behavior of Click is to rewrap text based on the width of the
+-terminal.  In some circumstances, this can become a problem. The main issue
+-is when showing code examples, where newlines are significant.
++terminal, to a maximum 80 characters. In some circumstances, this can become
++a problem. The main issue is when showing code examples, where newlines are
++significant.
+ 
+ Rewrapping can be disabled on a per-paragraph basis by adding a line with
+ solely the ``\b`` escape marker in it.  This line will be removed from the
+@@ -120,6 +121,13 @@ And what it looks like:
+ 
+     invoke(cli, args=['--help'])
+ 
++To change the maximum width, pass ``max_content_width`` when calling the command.
++
++.. code-block:: python
++
++    cli(max_content_width=120)
++
++
+ .. _doc-meta-variables:
+ 
+ Truncating Help Texts
+@@ -209,6 +217,24 @@ And what it looks like:
+ 
+     invoke(cli, prog_name='repo.py')
+ 
++Command Epilog Help
++-------------------
++
++The help epilog is like the help string but it's printed at the end of the help
++page after everything else. Useful for showing example command usages or
++referencing additional help resources.
++
++.. click:example::
++
++    @click.command(epilog='Check out our docs at https://click.palletsprojects.com/ for more details')
++    def init():
++        """Initializes the repository."""
++
++And what it looks like:
++
++.. click:run::
++
++    invoke(init, prog_name='repo.py', args=['--help'])
+ 
+ Help Parameter Customization
+ ----------------------------
+diff --git a/docs/quickstart.rst b/docs/quickstart.rst
+index 17606bcdd04cb56a74ce23804f63465c9453a285..7cd26ca0620ec9792e94f94688a920b7fb16b6e2 100644
+--- a/docs/quickstart.rst
++++ b/docs/quickstart.rst
+@@ -29,48 +29,29 @@ conflicting dependencies?
+ Virtualenv to the rescue!  Virtualenv enables multiple side-by-side
+ installations of Python, one for each project.  It doesn't actually
+ install separate copies of Python, but it does provide a clever way to
+-keep different project environments isolated.  Let's see how virtualenv
+-works.
++keep different project environments isolated.
+ 
+-If you are on Mac OS X or Linux::
+-
+-    $ pip install virtualenv --user
+-
+-One of these will probably install virtualenv on your system.  Maybe it's even
+-in your package manager.  If you use Ubuntu, try::
+-
+-    $ sudo apt-get install python-virtualenv
+-
+-If you are on Windows (or none of the above methods worked) you must install
+-``pip`` first.  For more information about this, see `installing pip`_.
+-Once you have it installed, run the ``pip`` command from above, but without
+-the `sudo` prefix.
+-
+-.. _installing pip: https://pip.readthedocs.io/en/latest/installing/
+-
+-Once you have virtualenv installed, just fire up a shell and create
+-your own environment.  I usually create a project folder and a `venv`
+-folder within::
++Create your project folder, then a virtualenv within it::
+ 
+     $ mkdir myproject
+     $ cd myproject
+-    $ virtualenv venv
+-    New python executable in venv/bin/python
+-    Installing setuptools, pip............done.
++    $ python3 -m venv .venv
+ 
+ Now, whenever you want to work on a project, you only have to activate the
+ corresponding environment.  On OS X and Linux, do the following::
+ 
+-    $ . venv/bin/activate
++    $ . .venv/bin/activate
++    (venv) $
+ 
+ If you are a Windows user, the following command is for you::
+ 
+-    $ venv\scripts\activate
++    > .venv\scripts\activate
++    (venv) >
+ 
+ Either way, you should now be using your virtualenv (notice how the prompt of
+ your shell has changed to show the active environment).
+ 
+-And if you want to go back to the real world, use the following command::
++And if you want to stop using the virtualenv, use the following command::
+ 
+     $ deactivate
+ 
+diff --git a/docs/setuptools.rst b/docs/setuptools.rst
+index 62999d731cbf4961c78afceec4b5ec1d6028997e..7c60c7d3e7327a77eadfa352678ba3fa8b8f05a2 100644
+--- a/docs/setuptools.rst
++++ b/docs/setuptools.rst
+@@ -97,8 +97,8 @@ package:
+ 
+ .. code-block:: console
+ 
+-    $ virtualenv venv
+-    $ . venv/bin/activate
++    $ python3 -m venv .venv
++    $ . .venv/bin/activate
+     $ pip install --editable .
+ 
+ Afterwards, your command should be available:
+diff --git a/src/click/__init__.py b/src/click/__init__.py
+index ea214e32071069b6d432b30a204ad95d39e5e444..4704758b2a7184dc887e998c7e946682ac3a593b 100644
+--- a/src/click/__init__.py
++++ b/src/click/__init__.py
+@@ -70,4 +70,4 @@ from .utils import get_binary_stream as get_binary_stream
+ from .utils import get_text_stream as get_text_stream
+ from .utils import open_file as open_file
+ 
+-__version__ = "8.1.4.dev0"
++__version__ = "8.1.4"
+diff --git a/src/click/_compat.py b/src/click/_compat.py
+index e55a713028b3dee82103e552f00f624d218192af..9153d150ce67a708f920fcf9c606970fc061f816 100644
+--- a/src/click/_compat.py
++++ b/src/click/_compat.py
+@@ -7,20 +7,11 @@ import typing as t
+ from weakref import WeakKeyDictionary
+ 
+ CYGWIN = sys.platform.startswith("cygwin")
+-MSYS2 = sys.platform.startswith("win") and ("GCC" in sys.version)
+-# Determine local App Engine environment, per Google's own suggestion
+-APP_ENGINE = "APPENGINE_RUNTIME" in os.environ and "Development/" in os.environ.get(
+-    "SERVER_SOFTWARE", ""
+-)
+-WIN = sys.platform.startswith("win") and not APP_ENGINE and not MSYS2
++WIN = sys.platform.startswith("win")
+ auto_wrap_for_ansi: t.Optional[t.Callable[[t.TextIO], t.TextIO]] = None
+ _ansi_re = re.compile(r"\033\[[;?0-9]*[a-zA-Z]")
+ 
+ 
+-def get_filesystem_encoding() -> str:
+-    return sys.getfilesystemencoding() or sys.getdefaultencoding()
+-
+-
+ def _make_text_stream(
+     stream: t.BinaryIO,
+     encoding: t.Optional[str],
+@@ -367,7 +358,7 @@ def get_text_stderr(
+ 
+ 
+ def _wrap_io_open(
+-    file: t.Union[str, "os.PathLike[t.AnyStr]", int],
++    file: t.Union[str, "os.PathLike[str]", int],
+     mode: str,
+     encoding: t.Optional[str],
+     errors: t.Optional[str],
+@@ -380,13 +371,14 @@ def _wrap_io_open(
+ 
+ 
+ def open_stream(
+-    filename: str,
++    filename: "t.Union[str, os.PathLike[str]]",
+     mode: str = "r",
+     encoding: t.Optional[str] = None,
+     errors: t.Optional[str] = "strict",
+     atomic: bool = False,
+ ) -> t.Tuple[t.IO[t.Any], bool]:
+     binary = "b" in mode
++    filename = os.fspath(filename)
+ 
+     # Standard streams first. These are simple because they ignore the
+     # atomic flag. Use fsdecode to handle Path("-").
+@@ -564,7 +556,7 @@ if sys.platform.startswith("win") and WIN:
+ else:
+ 
+     def _get_argv_encoding() -> str:
+-        return getattr(sys.stdin, "encoding", None) or get_filesystem_encoding()
++        return getattr(sys.stdin, "encoding", None) or sys.getfilesystemencoding()
+ 
+     def _get_windows_console_stream(
+         f: t.TextIO, encoding: t.Optional[str], errors: t.Optional[str]
+@@ -584,12 +576,17 @@ def isatty(stream: t.IO[t.Any]) -> bool:
+ 
+ 
+ def _make_cached_stream_func(
+-    src_func: t.Callable[[], t.TextIO], wrapper_func: t.Callable[[], t.TextIO]
+-) -> t.Callable[[], t.TextIO]:
++    src_func: t.Callable[[], t.Optional[t.TextIO]],
++    wrapper_func: t.Callable[[], t.TextIO],
++) -> t.Callable[[], t.Optional[t.TextIO]]:
+     cache: t.MutableMapping[t.TextIO, t.TextIO] = WeakKeyDictionary()
+ 
+-    def func() -> t.TextIO:
++    def func() -> t.Optional[t.TextIO]:
+         stream = src_func()
++
++        if stream is None:
++            return None
++
+         try:
+             rv = cache.get(stream)
+         except Exception:
+diff --git a/src/click/_termui_impl.py b/src/click/_termui_impl.py
+index a050471f20c82cb03b10455a4d560c05f66e5fc5..f744657753caa6cdef1dcc41a4f0b5e3e9503ab8 100644
+--- a/src/click/_termui_impl.py
++++ b/src/click/_termui_impl.py
+@@ -10,6 +10,8 @@ import sys
+ import time
+ import typing as t
+ from gettext import gettext as _
++from io import StringIO
++from types import TracebackType
+ 
+ from ._compat import _default_text_stdout
+ from ._compat import CYGWIN
+@@ -59,15 +61,22 @@ class ProgressBar(t.Generic[V]):
+         self.show_percent = show_percent
+         self.show_pos = show_pos
+         self.item_show_func = item_show_func
+-        self.label = label or ""
++        self.label: str = label or ""
++
+         if file is None:
+             file = _default_text_stdout()
++
++            # There are no standard streams attached to write to. For example,
++            # pythonw on Windows.
++            if file is None:
++                file = StringIO()
++
+         self.file = file
+         self.color = color
+         self.update_min_steps = update_min_steps
+         self._completed_intervals = 0
+-        self.width = width
+-        self.autowidth = width == 0
++        self.width: int = width
++        self.autowidth: bool = width == 0
+ 
+         if length is None:
+             from operator import length_hint
+@@ -80,17 +89,19 @@ class ProgressBar(t.Generic[V]):
+             if length is None:
+                 raise TypeError("iterable or length is required")
+             iterable = t.cast(t.Iterable[V], range(length))
+-        self.iter = iter(iterable)
++        self.iter: t.Iterable[V] = iter(iterable)
+         self.length = length
+         self.pos = 0
+         self.avg: t.List[float] = []
++        self.last_eta: float
++        self.start: float
+         self.start = self.last_eta = time.time()
+-        self.eta_known = False
+-        self.finished = False
++        self.eta_known: bool = False
++        self.finished: bool = False
+         self.max_width: t.Optional[int] = None
+-        self.entered = False
++        self.entered: bool = False
+         self.current_item: t.Optional[V] = None
+-        self.is_hidden = not isatty(self.file)
++        self.is_hidden: bool = not isatty(self.file)
+         self._last_line: t.Optional[str] = None
+ 
+     def __enter__(self) -> "ProgressBar[V]":
+@@ -98,7 +109,12 @@ class ProgressBar(t.Generic[V]):
+         self.render_progress()
+         return self
+ 
+-    def __exit__(self, *_: t.Any) -> None:
++    def __exit__(
++        self,
++        exc_type: t.Optional[t.Type[BaseException]],
++        exc_value: t.Optional[BaseException],
++        tb: t.Optional[TracebackType],
++    ) -> None:
+         self.render_finish()
+ 
+     def __iter__(self) -> t.Iterator[V]:
+@@ -344,6 +360,12 @@ class ProgressBar(t.Generic[V]):
+ def pager(generator: t.Iterable[str], color: t.Optional[bool] = None) -> None:
+     """Decide what method to use for paging through text."""
+     stdout = _default_text_stdout()
++
++    # There are no standard streams attached to write to. For example,
++    # pythonw on Windows.
++    if stdout is None:
++        stdout = StringIO()
++
+     if not isatty(sys.stdin) or not isatty(stdout):
+         return _nullpager(stdout, generator, color)
+     pager_cmd = (os.environ.get("PAGER", None) or "").strip()
+diff --git a/src/click/core.py b/src/click/core.py
+index 5b6cb765461582f56a943dfddb02acd359c527e6..cc65e896bf2d754d74b54a84ac501b80127f83ca 100644
+--- a/src/click/core.py
++++ b/src/click/core.py
+@@ -7,11 +7,11 @@ import typing as t
+ from collections import abc
+ from contextlib import contextmanager
+ from contextlib import ExitStack
+-from functools import partial
+ from functools import update_wrapper
+ from gettext import gettext as _
+ from gettext import ngettext
+ from itertools import repeat
++from types import TracebackType
+ 
+ from . import types
+ from .exceptions import Abort
+@@ -455,7 +455,12 @@ class Context:
+         push_context(self)
+         return self
+ 
+-    def __exit__(self, *_: t.Any) -> None:
++    def __exit__(
++        self,
++        exc_type: t.Optional[t.Type[BaseException]],
++        exc_value: t.Optional[BaseException],
++        tb: t.Optional[TracebackType],
++    ) -> None:
+         self._depth -= 1
+         if self._depth == 0:
+             self.close()
+@@ -1081,9 +1086,9 @@ class BaseCommand:
+                     # even always obvious that `rv` indicates success/failure
+                     # by its truthiness/falsiness
+                     ctx.exit()
+-            except (EOFError, KeyboardInterrupt):
++            except (EOFError, KeyboardInterrupt) as e:
+                 echo(file=sys.stderr)
+-                raise Abort() from None
++                raise Abort() from e
+             except ClickException as e:
+                 if not standalone_mode:
+                     raise
+@@ -1129,9 +1134,13 @@ class BaseCommand:
+         :param complete_var: Name of the environment variable that holds
+             the completion instruction. Defaults to
+             ``_{PROG_NAME}_COMPLETE``.
++
++        .. versionchanged:: 8.2.0
++            Dots (``.``) in ``prog_name`` are replaced with underscores (``_``).
+         """
+         if complete_var is None:
+-            complete_var = f"_{prog_name}_COMPLETE".replace("-", "_").upper()
++            complete_name = prog_name.replace("-", "_").replace(".", "_")
++            complete_var = f"_{complete_name}_COMPLETE".upper()
+ 
+         instruction = os.environ.get(complete_var)
+ 
+@@ -1351,13 +1360,16 @@ class Command(BaseCommand):
+ 
+     def format_help_text(self, ctx: Context, formatter: HelpFormatter) -> None:
+         """Writes the help text to the formatter if it exists."""
+-        text = self.help if self.help is not None else ""
++        if self.help is not None:
++            # truncate the help text to the first form feed
++            text = inspect.cleandoc(self.help).partition("\f")[0]
++        else:
++            text = ""
+ 
+         if self.deprecated:
+             text = _("(Deprecated) {text}").format(text=text)
+ 
+         if text:
+-            text = inspect.cleandoc(text).partition("\f")[0]
+             formatter.write_paragraph()
+ 
+             with formatter.indentation():
+@@ -1859,9 +1871,6 @@ class Group(MultiCommand):
+         """
+         from .decorators import command
+ 
+-        if self.command_class and kwargs.get("cls") is None:
+-            kwargs["cls"] = self.command_class
+-
+         func: t.Optional[t.Callable[..., t.Any]] = None
+ 
+         if args and callable(args[0]):
+@@ -1871,6 +1880,9 @@ class Group(MultiCommand):
+             (func,) = args
+             args = ()
+ 
++        if self.command_class and kwargs.get("cls") is None:
++            kwargs["cls"] = self.command_class
++
+         def decorator(f: t.Callable[..., t.Any]) -> Command:
+             cmd: Command = command(*args, **kwargs)(f)
+             self.add_command(cmd)
+@@ -2093,10 +2105,13 @@ class Parameter:
+             ]
+         ] = None,
+     ) -> None:
++        self.name: t.Optional[str]
++        self.opts: t.List[str]
++        self.secondary_opts: t.List[str]
+         self.name, self.opts, self.secondary_opts = self._parse_decls(
+             param_decls or (), expose_value
+         )
+-        self.type = types.convert_type(type, default)
++        self.type: types.ParamType = types.convert_type(type, default)
+ 
+         # Default nargs to what the type tells us if we have that
+         # information available.
+@@ -2296,17 +2311,18 @@ class Parameter:
+                 ) from None
+ 
+         if self.nargs == 1 or self.type.is_composite:
+-            convert: t.Callable[[t.Any], t.Any] = partial(
+-                self.type, param=self, ctx=ctx
+-            )
++
++            def convert(value: t.Any) -> t.Any:
++                return self.type(value, param=self, ctx=ctx)
++
+         elif self.nargs == -1:
+ 
+-            def convert(value: t.Any) -> t.Tuple[t.Any, ...]:
++            def convert(value: t.Any) -> t.Any:  # t.Tuple[t.Any, ...]
+                 return tuple(self.type(x, self, ctx) for x in check_iter(value))
+ 
+         else:  # nargs > 1
+ 
+-            def convert(value: t.Any) -> t.Tuple[t.Any, ...]:
++            def convert(value: t.Any) -> t.Any:  # t.Tuple[t.Any, ...]
+                 value = tuple(check_iter(value))
+ 
+                 if len(value) != self.nargs:
+@@ -2554,19 +2570,25 @@ class Option(Parameter):
+             # flag if flag_value is set.
+             self._flag_needs_value = flag_value is not None
+ 
++        self.default: t.Union[t.Any, t.Callable[[], t.Any]]
++
+         if is_flag and default_is_missing and not self.required:
+-            self.default: t.Union[t.Any, t.Callable[[], t.Any]] = False
++            if multiple:
++                self.default = ()
++            else:
++                self.default = False
+ 
+         if flag_value is None:
+             flag_value = not self.default
+ 
++        self.type: types.ParamType
+         if is_flag and type is None:
+             # Re-guess the type from the flag value instead of the
+             # default.
+             self.type = types.convert_type(None, flag_value)
+ 
+         self.is_flag: bool = is_flag
+-        self.is_bool_flag = is_flag and isinstance(self.type, types.BoolParamType)
++        self.is_bool_flag: bool = is_flag and isinstance(self.type, types.BoolParamType)
+         self.flag_value: t.Any = flag_value
+ 
+         # Counting
+@@ -2605,9 +2627,6 @@ class Option(Parameter):
+                 if self.is_flag:
+                     raise TypeError("'count' is not valid with 'is_flag'.")
+ 
+-            if self.multiple and self.is_flag:
+-                raise TypeError("'multiple' is not valid with 'is_flag', use 'count'.")
+-
+     def to_info_dict(self) -> t.Dict[str, t.Any]:
+         info_dict = super().to_info_dict()
+         info_dict.update(
+diff --git a/src/click/decorators.py b/src/click/decorators.py
+index 9205aa7a0a14f8f970558204da24bb9d9f6ceaba..797449d630d60e4f997312151e99c5fc429dfbda 100644
+--- a/src/click/decorators.py
++++ b/src/click/decorators.py
+@@ -329,7 +329,9 @@ def _param_memo(f: t.Callable[..., t.Any], param: Parameter) -> None:
+         f.__click_params__.append(param)  # type: ignore
+ 
+ 
+-def argument(*param_decls: str, **attrs: t.Any) -> _Decorator[FC]:
++def argument(
++    *param_decls: str, cls: t.Optional[t.Type[Argument]] = None, **attrs: t.Any
++) -> _Decorator[FC]:
+     """Attaches an argument to the command.  All positional arguments are
+     passed as parameter declarations to :class:`Argument`; all keyword
+     arguments are forwarded unchanged (except ``cls``).
+@@ -345,16 +347,19 @@ def argument(*param_decls: str, **attrs: t.Any) -> _Decorator[FC]:
+         ``cls``.
+     :param attrs: Passed as keyword arguments to the constructor of ``cls``.
+     """
++    if cls is None:
++        cls = Argument
+ 
+     def decorator(f: FC) -> FC:
+-        ArgumentClass = attrs.pop("cls", None) or Argument
+-        _param_memo(f, ArgumentClass(param_decls, **attrs))
++        _param_memo(f, cls(param_decls, **attrs))
+         return f
+ 
+     return decorator
+ 
+ 
+-def option(*param_decls: str, **attrs: t.Any) -> _Decorator[FC]:
++def option(
++    *param_decls: str, cls: t.Optional[t.Type[Option]] = None, **attrs: t.Any
++) -> _Decorator[FC]:
+     """Attaches an option to the command.  All positional arguments are
+     passed as parameter declarations to :class:`Option`; all keyword
+     arguments are forwarded unchanged (except ``cls``).
+@@ -370,12 +375,11 @@ def option(*param_decls: str, **attrs: t.Any) -> _Decorator[FC]:
+         ``cls``.
+     :param attrs: Passed as keyword arguments to the constructor of ``cls``.
+     """
++    if cls is None:
++        cls = Option
+ 
+     def decorator(f: FC) -> FC:
+-        # Issue 926, copy attrs, so pre-defined options can re-use the same cls=
+-        option_attrs = attrs.copy()
+-        OptionClass = option_attrs.pop("cls", None) or Option
+-        _param_memo(f, OptionClass(param_decls, **option_attrs))
++        _param_memo(f, cls(param_decls, **attrs))
+         return f
+ 
+     return decorator
+diff --git a/src/click/exceptions.py b/src/click/exceptions.py
+index 59b18c6cbbe99a4c2ec2c0f2f2b134991a530144..fe68a3613f74e5e82da4e3eedc7d9451977838dd 100644
+--- a/src/click/exceptions.py
++++ b/src/click/exceptions.py
+@@ -1,12 +1,13 @@
+-import os
+ import typing as t
+ from gettext import gettext as _
+ from gettext import ngettext
+ 
+ from ._compat import get_text_stderr
+ from .utils import echo
++from .utils import format_filename
+ 
+ if t.TYPE_CHECKING:
++    from .core import Command
+     from .core import Context
+     from .core import Parameter
+ 
+@@ -57,7 +58,7 @@ class UsageError(ClickException):
+     def __init__(self, message: str, ctx: t.Optional["Context"] = None) -> None:
+         super().__init__(message)
+         self.ctx = ctx
+-        self.cmd = self.ctx.command if self.ctx else None
++        self.cmd: t.Optional["Command"] = self.ctx.command if self.ctx else None
+ 
+     def show(self, file: t.Optional[t.IO[t.Any]] = None) -> None:
+         if file is None:
+@@ -261,7 +262,7 @@ class FileError(ClickException):
+             hint = _("unknown error")
+ 
+         super().__init__(hint)
+-        self.ui_filename = os.fsdecode(filename)
++        self.ui_filename: str = format_filename(filename)
+         self.filename = filename
+ 
+     def format_message(self) -> str:
+@@ -284,4 +285,4 @@ class Exit(RuntimeError):
+     __slots__ = ("exit_code",)
+ 
+     def __init__(self, code: int = 0) -> None:
+-        self.exit_code = code
++        self.exit_code: int = code
+diff --git a/src/click/parser.py b/src/click/parser.py
+index a9db242c1a96ed5f516a72cac3dc79cbae9fc53e..5fa7adfac842bfa5689fd1a41ae4017be1ebff6f 100644
+--- a/src/click/parser.py
++++ b/src/click/parser.py
+@@ -168,7 +168,7 @@ class Option:
+     ):
+         self._short_opts = []
+         self._long_opts = []
+-        self.prefixes = set()
++        self.prefixes: t.Set[str] = set()
+ 
+         for opt in opts:
+             prefix, value = split_opt(opt)
+@@ -194,7 +194,7 @@ class Option:
+     def takes_value(self) -> bool:
+         return self.action in ("store", "append")
+ 
+-    def process(self, value: str, state: "ParsingState") -> None:
++    def process(self, value: t.Any, state: "ParsingState") -> None:
+         if self.action == "store":
+             state.opts[self.dest] = value  # type: ignore
+         elif self.action == "store_const":
+@@ -272,12 +272,12 @@ class OptionParser:
+         #: If this is set to `False`, the parser will stop on the first
+         #: non-option.  Click uses this to implement nested subcommands
+         #: safely.
+-        self.allow_interspersed_args = True
++        self.allow_interspersed_args: bool = True
+         #: This tells the parser how to deal with unknown options.  By
+         #: default it will error out (which is sensible), but there is a
+         #: second mode where it will ignore it and continue processing
+         #: after shifting all the unknown options into the resulting args.
+-        self.ignore_unknown_options = False
++        self.ignore_unknown_options: bool = False
+ 
+         if ctx is not None:
+             self.allow_interspersed_args = ctx.allow_interspersed_args
+diff --git a/src/click/shell_completion.py b/src/click/shell_completion.py
+index f93256e70822dbfbed9e45a4d92124fc4da17a10..5de124702ec711c7fc7e8244d95812aee41747a0 100644
+--- a/src/click/shell_completion.py
++++ b/src/click/shell_completion.py
+@@ -80,9 +80,9 @@ class CompletionItem:
+         help: t.Optional[str] = None,
+         **kwargs: t.Any,
+     ) -> None:
+-        self.value = value
+-        self.type = type
+-        self.help = help
++        self.value: t.Any = value
++        self.type: str = type
++        self.help: t.Optional[str] = help
+         self._info = kwargs
+ 
+     def __getattr__(self, name: str) -> t.Any:
+@@ -157,33 +157,35 @@ _SOURCE_ZSH = """\
+     fi
+ }
+ 
+-compdef %(complete_func)s %(prog_name)s;
++if [[ $zsh_eval_context[-1] == loadautofunc ]]; then
++    # autoload from fpath, call function directly
++    %(complete_func)s "$@"
++else
++    # eval/source/. command, register function for later
++    compdef %(complete_func)s %(prog_name)s
++fi
+ """
+ 
+ _SOURCE_FISH = """\
+-function %(complete_func)s;
+-    set -l response;
+-
+-    for value in (env %(complete_var)s=fish_complete COMP_WORDS=(commandline -cp) \
+-COMP_CWORD=(commandline -t) %(prog_name)s);
+-        set response $response $value;
+-    end;
+-
+-    for completion in $response;
+-        set -l metadata (string split "," $completion);
+-
+-        if test $metadata[1] = "dir";
+-            __fish_complete_directories $metadata[2];
+-        else if test $metadata[1] = "file";
+-            __fish_complete_path $metadata[2];
+-        else if test $metadata[1] = "plain";
+-            echo $metadata[2];
+-        end;
+-    end;
+-end;
++function %(complete_func)s
++    set -l response (env %(complete_var)s=fish_complete COMP_WORDS=(commandline -cp) \
++COMP_CWORD=(commandline -t) %(prog_name)s)
++
++    for completion in $response
++        set -l metadata (string split "," $completion)
++
++        if test $metadata[1] = "dir"
++            __fish_complete_directories $metadata[2]
++        else if test $metadata[1] = "file"
++            __fish_complete_path $metadata[2]
++        else if test $metadata[1] = "plain"
++            echo $metadata[2]
++        end
++    end
++end
+ 
+ complete --no-files --command %(prog_name)s --arguments \
+-"(%(complete_func)s)";
++"(%(complete_func)s)"
+ """
+ 
+ 
+@@ -303,7 +305,7 @@ class BashComplete(ShellComplete):
+         import subprocess
+ 
+         output = subprocess.run(
+-            ["bash", "-c", "echo ${BASH_VERSION}"], stdout=subprocess.PIPE
++            ["bash", "-c", 'echo "${BASH_VERSION}"'], stdout=subprocess.PIPE
+         )
+         match = re.search(r"^(\d+)\.(\d+)\.\d+", output.stdout.decode())
+ 
+@@ -441,7 +443,8 @@ def _is_incomplete_argument(ctx: Context, param: Parameter) -> bool:
+         return False
+ 
+     assert param.name is not None
+-    value = ctx.params[param.name]
++    # Will be None if expose_value is False.
++    value = ctx.params.get(param.name)
+     return (
+         param.nargs == -1
+         or ctx.get_parameter_source(param.name) is not ParameterSource.COMMANDLINE
+@@ -517,6 +520,8 @@ def _resolve_context(
+                 ctx = cmd.make_context(name, args, parent=ctx, resilient_parsing=True)
+                 args = ctx.protected_args + ctx.args
+             else:
++                sub_ctx = ctx
++
+                 while args:
+                     name, cmd, args = command.resolve_command(ctx, args)
+ 
+diff --git a/src/click/termui.py b/src/click/termui.py
+index f3ad4ca9febfcffad2e1dae43f4e84c68212cedd..db7a4b286174fdf26f3251631a2066eda2fa5bea 100644
+--- a/src/click/termui.py
++++ b/src/click/termui.py
+@@ -1,14 +1,12 @@
+ import inspect
+ import io
+ import itertools
+-import os
+ import sys
+ import typing as t
+ from gettext import gettext as _
+ 
+ from ._compat import isatty
+ from ._compat import strip_ansi
+-from ._compat import WIN
+ from .exceptions import Abort
+ from .exceptions import UsageError
+ from .globals import resolve_color_default
+@@ -443,10 +441,9 @@ def clear() -> None:
+     """
+     if not isatty(sys.stdout):
+         return
+-    if WIN:
+-        os.system("cls")
+-    else:
+-        sys.stdout.write("\033[2J\033[1;1H")
++
++    # ANSI escape \033[2J clears the screen, \033[1;1H moves the cursor
++    echo("\033[2J\033[1;1H", nl=False)
+ 
+ 
+ def _interpret_color(
+diff --git a/src/click/testing.py b/src/click/testing.py
+index 7b6dd7f1c47fce8dd07eab2df7ed80a5d0c6c50f..e0df0d2a657fe19523957b85964b9956e5c78a30 100644
+--- a/src/click/testing.py
++++ b/src/click/testing.py
+@@ -183,7 +183,7 @@ class CliRunner:
+         mix_stderr: bool = True,
+     ) -> None:
+         self.charset = charset
+-        self.env = env or {}
++        self.env: t.Mapping[str, t.Optional[str]] = env or {}
+         self.echo_stdin = echo_stdin
+         self.mix_stderr = mix_stderr
+ 
+diff --git a/src/click/types.py b/src/click/types.py
+index 57866ec1952df2d92657650364a9df06447556b7..2b1d1797f2e115e9bc976bcaf7d8e1884a91e91c 100644
+--- a/src/click/types.py
++++ b/src/click/types.py
+@@ -1,14 +1,15 @@
+ import os
+ import stat
++import sys
+ import typing as t
+ from datetime import datetime
+ from gettext import gettext as _
+ from gettext import ngettext
+ 
+ from ._compat import _get_argv_encoding
+-from ._compat import get_filesystem_encoding
+ from ._compat import open_stream
+ from .exceptions import BadParameter
++from .utils import format_filename
+ from .utils import LazyFile
+ from .utils import safecall
+ 
+@@ -162,7 +163,7 @@ class CompositeParamType(ParamType):
+ 
+ class FuncParamType(ParamType):
+     def __init__(self, func: t.Callable[[t.Any], t.Any]) -> None:
+-        self.name = func.__name__
++        self.name: str = func.__name__
+         self.func = func
+ 
+     def to_info_dict(self) -> t.Dict[str, t.Any]:
+@@ -207,7 +208,7 @@ class StringParamType(ParamType):
+             try:
+                 value = value.decode(enc)
+             except UnicodeError:
+-                fs_enc = get_filesystem_encoding()
++                fs_enc = sys.getfilesystemencoding()
+                 if fs_enc != enc:
+                     try:
+                         value = value.decode(fs_enc)
+@@ -353,7 +354,11 @@ class DateTime(ParamType):
+     name = "datetime"
+ 
+     def __init__(self, formats: t.Optional[t.Sequence[str]] = None):
+-        self.formats = formats or ["%Y-%m-%d", "%Y-%m-%dT%H:%M:%S", "%Y-%m-%d %H:%M:%S"]
++        self.formats: t.Sequence[str] = formats or [
++            "%Y-%m-%d",
++            "%Y-%m-%dT%H:%M:%S",
++            "%Y-%m-%d %H:%M:%S",
++        ]
+ 
+     def to_info_dict(self) -> t.Dict[str, t.Any]:
+         info_dict = super().to_info_dict()
+@@ -662,7 +667,7 @@ class File(ParamType):
+     """
+ 
+     name = "filename"
+-    envvar_list_splitter = os.path.pathsep
++    envvar_list_splitter: t.ClassVar[str] = os.path.pathsep
+ 
+     def __init__(
+         self,
+@@ -683,22 +688,27 @@ class File(ParamType):
+         info_dict.update(mode=self.mode, encoding=self.encoding)
+         return info_dict
+ 
+-    def resolve_lazy_flag(self, value: t.Any) -> bool:
++    def resolve_lazy_flag(self, value: "t.Union[str, os.PathLike[str]]") -> bool:
+         if self.lazy is not None:
+             return self.lazy
+-        if value == "-":
++        if os.fspath(value) == "-":
+             return False
+         elif "w" in self.mode:
+             return True
+         return False
+ 
+     def convert(
+-        self, value: t.Any, param: t.Optional["Parameter"], ctx: t.Optional["Context"]
+-    ) -> t.Any:
+-        try:
+-            if hasattr(value, "read") or hasattr(value, "write"):
+-                return value
++        self,
++        value: t.Union[str, "os.PathLike[str]", t.IO[t.Any]],
++        param: t.Optional["Parameter"],
++        ctx: t.Optional["Context"],
++    ) -> t.IO[t.Any]:
++        if _is_file_like(value):
++            return value
++
++        value = t.cast("t.Union[str, os.PathLike[str]]", value)
+ 
++        try:
+             lazy = self.resolve_lazy_flag(value)
+ 
+             if lazy:
+@@ -728,7 +738,7 @@ class File(ParamType):
+ 
+             return f
+         except OSError as e:  # noqa: B014
+-            self.fail(f"'{os.fsdecode(value)}': {e.strerror}", param, ctx)
++            self.fail(f"'{format_filename(value)}': {e.strerror}", param, ctx)
+ 
+     def shell_complete(
+         self, ctx: "Context", param: "Parameter", incomplete: str
+@@ -747,6 +757,10 @@ class File(ParamType):
+         return [CompletionItem(incomplete, type="file")]
+ 
+ 
++def _is_file_like(value: t.Any) -> "te.TypeGuard[t.IO[t.Any]]":
++    return hasattr(value, "read") or hasattr(value, "write")
++
++
+ class Path(ParamType):
+     """The ``Path`` type is similar to the :class:`File` type, but
+     returns the filename instead of an open file. Various checks can be
+@@ -780,7 +794,7 @@ class Path(ParamType):
+         Added the ``allow_dash`` parameter.
+     """
+ 
+-    envvar_list_splitter = os.path.pathsep
++    envvar_list_splitter: t.ClassVar[str] = os.path.pathsep
+ 
+     def __init__(
+         self,
+@@ -805,7 +819,7 @@ class Path(ParamType):
+         self.type = path_type
+ 
+         if self.file_okay and not self.dir_okay:
+-            self.name = _("file")
++            self.name: str = _("file")
+         elif self.dir_okay and not self.file_okay:
+             self.name = _("directory")
+         else:
+@@ -823,20 +837,25 @@ class Path(ParamType):
+         )
+         return info_dict
+ 
+-    def coerce_path_result(self, rv: t.Any) -> t.Any:
+-        if self.type is not None and not isinstance(rv, self.type):
++    def coerce_path_result(
++        self, value: "t.Union[str, os.PathLike[str]]"
++    ) -> "t.Union[str, bytes, os.PathLike[str]]":
++        if self.type is not None and not isinstance(value, self.type):
+             if self.type is str:
+-                rv = os.fsdecode(rv)
++                return os.fsdecode(value)
+             elif self.type is bytes:
+-                rv = os.fsencode(rv)
++                return os.fsencode(value)
+             else:
+-                rv = self.type(rv)
++                return t.cast("os.PathLike[str]", self.type(value))
+ 
+-        return rv
++        return value
+ 
+     def convert(
+-        self, value: t.Any, param: t.Optional["Parameter"], ctx: t.Optional["Context"]
+-    ) -> t.Any:
++        self,
++        value: "t.Union[str, os.PathLike[str]]",
++        param: t.Optional["Parameter"],
++        ctx: t.Optional["Context"],
++    ) -> "t.Union[str, bytes, os.PathLike[str]]":
+         rv = value
+ 
+         is_dash = self.file_okay and self.allow_dash and rv in (b"-", "-")
+@@ -856,7 +875,7 @@ class Path(ParamType):
+                     return self.coerce_path_result(rv)
+                 self.fail(
+                     _("{name} {filename!r} does not exist.").format(
+-                        name=self.name.title(), filename=os.fsdecode(value)
++                        name=self.name.title(), filename=format_filename(value)
+                     ),
+                     param,
+                     ctx,
+@@ -865,7 +884,7 @@ class Path(ParamType):
+             if not self.file_okay and stat.S_ISREG(st.st_mode):
+                 self.fail(
+                     _("{name} {filename!r} is a file.").format(
+-                        name=self.name.title(), filename=os.fsdecode(value)
++                        name=self.name.title(), filename=format_filename(value)
+                     ),
+                     param,
+                     ctx,
+@@ -873,7 +892,7 @@ class Path(ParamType):
+             if not self.dir_okay and stat.S_ISDIR(st.st_mode):
+                 self.fail(
+                     _("{name} '{filename}' is a directory.").format(
+-                        name=self.name.title(), filename=os.fsdecode(value)
++                        name=self.name.title(), filename=format_filename(value)
+                     ),
+                     param,
+                     ctx,
+@@ -882,7 +901,7 @@ class Path(ParamType):
+             if self.readable and not os.access(rv, os.R_OK):
+                 self.fail(
+                     _("{name} {filename!r} is not readable.").format(
+-                        name=self.name.title(), filename=os.fsdecode(value)
++                        name=self.name.title(), filename=format_filename(value)
+                     ),
+                     param,
+                     ctx,
+@@ -891,7 +910,7 @@ class Path(ParamType):
+             if self.writable and not os.access(rv, os.W_OK):
+                 self.fail(
+                     _("{name} {filename!r} is not writable.").format(
+-                        name=self.name.title(), filename=os.fsdecode(value)
++                        name=self.name.title(), filename=format_filename(value)
+                     ),
+                     param,
+                     ctx,
+@@ -900,7 +919,7 @@ class Path(ParamType):
+             if self.executable and not os.access(value, os.X_OK):
+                 self.fail(
+                     _("{name} {filename!r} is not executable.").format(
+-                        name=self.name.title(), filename=os.fsdecode(value)
++                        name=self.name.title(), filename=format_filename(value)
+                     ),
+                     param,
+                     ctx,
+@@ -942,7 +961,7 @@ class Tuple(CompositeParamType):
+     """
+ 
+     def __init__(self, types: t.Sequence[t.Union[t.Type[t.Any], ParamType]]) -> None:
+-        self.types = [convert_type(ty) for ty in types]
++        self.types: t.Sequence[ParamType] = [convert_type(ty) for ty in types]
+ 
+     def to_info_dict(self) -> t.Dict[str, t.Any]:
+         info_dict = super().to_info_dict()
+diff --git a/src/click/utils.py b/src/click/utils.py
+index 670bf05b80147aaf04527d05a2eb28699e7edd20..d536434f0bd00cd6fd910c506f5b85a8e485b964 100644
+--- a/src/click/utils.py
++++ b/src/click/utils.py
+@@ -4,13 +4,13 @@ import sys
+ import typing as t
+ from functools import update_wrapper
+ from types import ModuleType
++from types import TracebackType
+ 
+ from ._compat import _default_text_stderr
+ from ._compat import _default_text_stdout
+ from ._compat import _find_binary_writer
+ from ._compat import auto_wrap_for_ansi
+ from ._compat import binary_streams
+-from ._compat import get_filesystem_encoding
+ from ._compat import open_stream
+ from ._compat import should_strip_ansi
+ from ._compat import strip_ansi
+@@ -47,7 +47,7 @@ def make_str(value: t.Any) -> str:
+     """Converts a value into a valid string."""
+     if isinstance(value, bytes):
+         try:
+-            return value.decode(get_filesystem_encoding())
++            return value.decode(sys.getfilesystemencoding())
+         except UnicodeError:
+             return value.decode("utf-8", "replace")
+     return str(value)
+@@ -112,20 +112,21 @@ class LazyFile:
+ 
+     def __init__(
+         self,
+-        filename: str,
++        filename: t.Union[str, "os.PathLike[str]"],
+         mode: str = "r",
+         encoding: t.Optional[str] = None,
+         errors: t.Optional[str] = "strict",
+         atomic: bool = False,
+     ):
+-        self.name = filename
++        self.name: str = os.fspath(filename)
+         self.mode = mode
+         self.encoding = encoding
+         self.errors = errors
+         self.atomic = atomic
+         self._f: t.Optional[t.IO[t.Any]]
++        self.should_close: bool
+ 
+-        if filename == "-":
++        if self.name == "-":
+             self._f, self.should_close = open_stream(filename, mode, encoding, errors)
+         else:
+             if "r" in mode:
+@@ -142,7 +143,7 @@ class LazyFile:
+     def __repr__(self) -> str:
+         if self._f is not None:
+             return repr(self._f)
+-        return f"<unopened file '{self.name}' {self.mode}>"
++        return f"<unopened file '{format_filename(self.name)}' {self.mode}>"
+ 
+     def open(self) -> t.IO[t.Any]:
+         """Opens the file if it's not yet open.  This call might fail with
+@@ -177,7 +178,12 @@ class LazyFile:
+     def __enter__(self) -> "LazyFile":
+         return self
+ 
+-    def __exit__(self, *_: t.Any) -> None:
++    def __exit__(
++        self,
++        exc_type: t.Optional[t.Type[BaseException]],
++        exc_value: t.Optional[BaseException],
++        tb: t.Optional[TracebackType],
++    ) -> None:
+         self.close_intelligently()
+ 
+     def __iter__(self) -> t.Iterator[t.AnyStr]:
+@@ -187,7 +193,7 @@ class LazyFile:
+ 
+ class KeepOpenFile:
+     def __init__(self, file: t.IO[t.Any]) -> None:
+-        self._file = file
++        self._file: t.IO[t.Any] = file
+ 
+     def __getattr__(self, name: str) -> t.Any:
+         return getattr(self._file, name)
+@@ -195,7 +201,12 @@ class KeepOpenFile:
+     def __enter__(self) -> "KeepOpenFile":
+         return self
+ 
+-    def __exit__(self, *_: t.Any) -> None:
++    def __exit__(
++        self,
++        exc_type: t.Optional[t.Type[BaseException]],
++        exc_value: t.Optional[BaseException],
++        tb: t.Optional[TracebackType],
++    ) -> None:
+         pass
+ 
+     def __repr__(self) -> str:
+@@ -256,6 +267,11 @@ def echo(
+         else:
+             file = _default_text_stdout()
+ 
++        # There are no standard streams attached to write to. For example,
++        # pythonw on Windows.
++        if file is None:
++            return
++
+     # Convert non bytes/text into the native string type.
+     if message is not None and not isinstance(message, (str, bytes, bytearray)):
+         out: t.Optional[t.Union[str, bytes]] = str(message)
+@@ -386,13 +402,26 @@ def open_file(
+ 
+ 
+ def format_filename(
+-    filename: t.Union[str, bytes, "os.PathLike[t.AnyStr]"], shorten: bool = False
++    filename: "t.Union[str, bytes, os.PathLike[str], os.PathLike[bytes]]",
++    shorten: bool = False,
+ ) -> str:
+-    """Formats a filename for user display.  The main purpose of this
+-    function is to ensure that the filename can be displayed at all.  This
+-    will decode the filename to unicode if necessary in a way that it will
+-    not fail.  Optionally, it can shorten the filename to not include the
+-    full path to the filename.
++    """Format a filename as a string for display. Ensures the filename can be
++    displayed by replacing any invalid bytes or surrogate escapes in the name
++    with the replacement character ``�``.
++
++    Invalid bytes or surrogate escapes will raise an error when written to a
++    stream with ``errors="strict". This will typically happen with ``stdout``
++    when the locale is something like ``en_GB.UTF-8``.
++
++    Many scenarios *are* safe to write surrogates though, due to PEP 538 and
++    PEP 540, including:
++
++    -   Writing to ``stderr``, which uses ``errors="backslashreplace"``.
++    -   The system has ``LANG=C.UTF-8``, ``C``, or ``POSIX``. Python opens
++        stdout and stderr with ``errors="surrogateescape"``.
++    -   None of ``LANG/LC_*`` are set. Python assumes ``LANG=C.UTF-8``.
++    -   Python is started in UTF-8 mode  with  ``PYTHONUTF8=1`` or ``-X utf8``.
++        Python opens stdout and stderr with ``errors="surrogateescape"``.
+ 
+     :param filename: formats a filename for UI display.  This will also convert
+                      the filename into unicode without failing.
+@@ -401,8 +430,17 @@ def format_filename(
+     """
+     if shorten:
+         filename = os.path.basename(filename)
++    else:
++        filename = os.fspath(filename)
++
++    if isinstance(filename, bytes):
++        filename = filename.decode(sys.getfilesystemencoding(), "replace")
++    else:
++        filename = filename.encode("utf-8", "surrogateescape").decode(
++            "utf-8", "replace"
++        )
+ 
+-    return os.fsdecode(filename)
++    return filename
+ 
+ 
+ def get_app_dir(app_name: str, roaming: bool = True, force_posix: bool = False) -> str:
+@@ -511,7 +549,8 @@ def _detect_program_name(
+     # The value of __package__ indicates how Python was called. It may
+     # not exist if a setuptools script is installed as an egg. It may be
+     # set incorrectly for entry points created with pip on Windows.
+-    if getattr(_main, "__package__", None) is None or (
++    # It is set to "" inside a Shiv or PEX zipapp.
++    if getattr(_main, "__package__", None) in {None, ""} or (
+         os.name == "nt"
+         and _main.__package__ == ""
+         and not os.path.exists(path)

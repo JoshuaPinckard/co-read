@@ -1,0 +1,22 @@
+
+-------------------------------------------------------
+ T E S T S
+-------------------------------------------------------
+Running org.apache.commons.lang3.EnumUtilsTest
+Tests run: 34, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.009 sec - in org.apache.commons.lang3.EnumUtilsTest
+Running org.apache.commons.lang3.StringUtilsTest
+Tests run: 128, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.082 sec - in org.apache.commons.lang3.StringUtilsTest
+Running org.apache.commons.lang3.text.StrLookupTest
+Tests run: 5, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0 sec - in org.apache.commons.lang3.text.StrLookupTest
+Running org.apache.commons.lang3.text.WordUtilsTest
+Tests run: 13, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0 sec - in org.apache.commons.lang3.text.WordUtilsTest
+Running org.apache.commons.lang3.time.FastDateParser_TimeZoneStrategyTest
+Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 28.028 sec - in org.apache.commons.lang3.time.FastDateParser_TimeZoneStrategyTest
+
+Results :
+
+
+
+
+Tests run: 181, Failures: 0, Errors: 0, Skipped: 0
+

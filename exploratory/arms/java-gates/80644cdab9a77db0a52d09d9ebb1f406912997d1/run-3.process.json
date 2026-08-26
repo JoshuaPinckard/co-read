@@ -1,0 +1,35 @@
+{
+  "command": [
+    "mvn",
+    "-q",
+    "-o",
+    "-s",
+    "<project>/tools/java/maven-settings.xml",
+    "-gs",
+    "<project>/tools/java/maven-settings.xml",
+    "-Dmaven.repo.local=<project>/tools/maven-repository",
+    "test",
+    "-Dtest=EnumUtilsTest,FastDateParser_TimeZoneStrategyTest,StrLookupTest,StringUtilsTest,WordUtilsTest",
+    "-DfailIfNoTests=false"
+  ],
+  "elapsed_seconds": 67.469,
+  "label": "run-3",
+  "normalized": {
+    "normalized_sha256": "fe84e3e38a4ac6946aaf61b419e6d7ec1d741b3e17f356db2c8fb3f4c1883789",
+    "outcome_counts": {
+      "pass": 181
+    },
+    "parse_errors": [],
+    "path": "exploratory/arms/java-gates/80644cdab9a77db0a52d09d9ebb1f406912997d1/run-3.normalized.json",
+    "sha256": "21203694eaad1cddf4f50dc7e92cbc44f0a15ec6cbbddfc94802f14d4964542d",
+    "test_count": 181
+  },
+  "reports_archive": "exploratory/arms/java-gates/80644cdab9a77db0a52d09d9ebb1f406912997d1/run-3.reports.zip",
+  "reports_archive_sha256": "70e8f6fcf166a3a4728db7fcedb1eaf3401a6d4593b70a9a6404ed54b2aa94da",
+  "returncode": 0,
+  "stderr": "exploratory/arms/java-gates/80644cdab9a77db0a52d09d9ebb1f406912997d1/run-3.stderr.bin",
+  "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "stdout": "exploratory/arms/java-gates/80644cdab9a77db0a52d09d9ebb1f406912997d1/run-3.stdout.bin",
+  "stdout_sha256": "cca00e8e3997baadbbcd547e79bde1b692f9bfa202ba498230299e9dec2ac8d2",
+  "timed_out": false
+}

@@ -1,0 +1,191 @@
+{
+  "ineligible_before_apply": [],
+  "passed": 20,
+  "planned_before_apply": 20,
+  "required": 20,
+  "rule": "read-only JavaParser plan excludes generated/package/module and zero-concrete-body sources; freeze one eligible preferred core source per base, then relative path/base fill; no apply-outcome replacement",
+  "samples": [
+    {
+      "base": "0343b4fda87161265acf30d5ee61e525e751358d",
+      "file": "src/main/java/org/apache/commons/lang3/StringUtils.java",
+      "injected_method_bodies": 202,
+      "original_sha256": "6e475252ba831c673399c9434269514baa2057ba69ce387f0630491145c13062",
+      "perturbed_sha256": "ff1f05ad4cbc861c615cde1862fc76c7f51f76771ffe03a1d9b6e4e1d25df8db",
+      "restored_sha256": "6e475252ba831c673399c9434269514baa2057ba69ce387f0630491145c13062",
+      "status": "passed"
+    },
+    {
+      "base": "102b75cd923c30fb81047211ea1eb0b12cfe1a43",
+      "file": "src/main/java/org/apache/commons/lang3/StringUtils.java",
+      "injected_method_bodies": 201,
+      "original_sha256": "6d2ff1682106d35b1c851193dc09a17109a09685e64ac14c5b1b498911e66bed",
+      "perturbed_sha256": "fb46897ae189b120a70bcac706cd67aba0ed6e6b357114d1638bbf084f1ae872",
+      "restored_sha256": "6d2ff1682106d35b1c851193dc09a17109a09685e64ac14c5b1b498911e66bed",
+      "status": "passed"
+    },
+    {
+      "base": "1a1fc65b04bcbe2e95d0fa300fce110e1224906e",
+      "file": "src/main/java/org/apache/commons/lang3/StringUtils.java",
+      "injected_method_bodies": 212,
+      "original_sha256": "20aafae033782a6c2832b08c7b36f767d213ea17734c2c1f9bc26ae9eb91503c",
+      "perturbed_sha256": "684ea1b6d817af79791ce83152ffddcb1bcd6c11646c1b3d2ef5f9473df5df55",
+      "restored_sha256": "20aafae033782a6c2832b08c7b36f767d213ea17734c2c1f9bc26ae9eb91503c",
+      "status": "passed"
+    },
+    {
+      "base": "1cb5573ada7dc7ec240fca6afe4eeb6e2c793d8e",
+      "file": "src/main/java/org/apache/commons/lang3/StringUtils.java",
+      "injected_method_bodies": 201,
+      "original_sha256": "6d2ff1682106d35b1c851193dc09a17109a09685e64ac14c5b1b498911e66bed",
+      "perturbed_sha256": "fb46897ae189b120a70bcac706cd67aba0ed6e6b357114d1638bbf084f1ae872",
+      "restored_sha256": "6d2ff1682106d35b1c851193dc09a17109a09685e64ac14c5b1b498911e66bed",
+      "status": "passed"
+    },
+    {
+      "base": "1e4a4906776f7300a9639a7599fccc545791583d",
+      "file": "src/main/java/org/apache/commons/lang3/StringUtils.java",
+      "injected_method_bodies": 213,
+      "original_sha256": "b4cca5aeadcb2621e7e2f92d2e56c84f3753dfd7cea8556d1cbf4ee933bd0669",
+      "perturbed_sha256": "3605c022041fb18e22ab5ce4e009a4f4f132b1171c3c1d5fb5fb0cdea8506b3c",
+      "restored_sha256": "b4cca5aeadcb2621e7e2f92d2e56c84f3753dfd7cea8556d1cbf4ee933bd0669",
+      "status": "passed"
+    },
+    {
+      "base": "3ce3b27dbd579a918e97e1fb09e9b0153cc71a60",
+      "file": "src/main/java/org/apache/commons/lang3/StringUtils.java",
+      "injected_method_bodies": 240,
+      "original_sha256": "9a789dbbdebb94e53a0c8ba5c94743de7fbcd253fe073bdee941d3824317cbe7",
+      "perturbed_sha256": "6f09ee3d4cc67d0dd156252a61fcc64f709f34d1c8734bfadd4d6df057b96acd",
+      "restored_sha256": "9a789dbbdebb94e53a0c8ba5c94743de7fbcd253fe073bdee941d3824317cbe7",
+      "status": "passed"
+    },
+    {
+      "base": "47c186298927e373b31fe26444b9dbc313cccce6",
+      "file": "src/main/java/org/apache/commons/lang3/StringUtils.java",
+      "injected_method_bodies": 208,
+      "original_sha256": "e231d54317973d0d2d7fe66591c8ef27aeb13223aad739c2454d15bb35ae2eab",
+      "perturbed_sha256": "094b16574dbb499d3bff4b3f3ee36bb767641f9df154df99a5c11bfefb021d08",
+      "restored_sha256": "e231d54317973d0d2d7fe66591c8ef27aeb13223aad739c2454d15bb35ae2eab",
+      "status": "passed"
+    },
+    {
+      "base": "63d8a025e6f38ddfc966c4104ac783bcb59031e0",
+      "file": "src/main/java/org/apache/commons/lang3/StringUtils.java",
+      "injected_method_bodies": 200,
+      "original_sha256": "ddcfee24763963cf5f1eff017d2cc40d2094adfeb948e7f754cd7b7d9414e2ce",
+      "perturbed_sha256": "817fcae6d236f9fb60d0d58febedc8b509f7b743236f40fa2bd7d42215b1355a",
+      "restored_sha256": "ddcfee24763963cf5f1eff017d2cc40d2094adfeb948e7f754cd7b7d9414e2ce",
+      "status": "passed"
+    },
+    {
+      "base": "702c6c29a01cb28254490804d3a46f39c4410c20",
+      "file": "src/main/java/org/apache/commons/lang3/StringUtils.java",
+      "injected_method_bodies": 242,
+      "original_sha256": "3bb869fbe3c4fc81a3409115da99d5ebf8b17ef9a63e854646c888794c3e2776",
+      "perturbed_sha256": "7dcedaebe20cc1e93d4ef1222241f17ba7f359ac3c560ea28e2c7bf7c98819ca",
+      "restored_sha256": "3bb869fbe3c4fc81a3409115da99d5ebf8b17ef9a63e854646c888794c3e2776",
+      "status": "passed"
+    },
+    {
+      "base": "8e7ea70a33ecb8db5207849ea6371b4a5a8ffd26",
+      "file": "src/main/java/org/apache/commons/lang3/StringUtils.java",
+      "injected_method_bodies": 201,
+      "original_sha256": "6d2ff1682106d35b1c851193dc09a17109a09685e64ac14c5b1b498911e66bed",
+      "perturbed_sha256": "fb46897ae189b120a70bcac706cd67aba0ed6e6b357114d1638bbf084f1ae872",
+      "restored_sha256": "6d2ff1682106d35b1c851193dc09a17109a09685e64ac14c5b1b498911e66bed",
+      "status": "passed"
+    },
+    {
+      "base": "abb5a409f71d8f920bb178ea3f839d42c551dd69",
+      "file": "src/main/java/org/apache/commons/lang3/StringUtils.java",
+      "injected_method_bodies": 249,
+      "original_sha256": "4eb5c6d227ca5ba809681e2af422846dc40142daa44721cf29f9d462d3b6a6db",
+      "perturbed_sha256": "51606bcfe40bfb3d0657a41f288cf4de8a1e733fbb5e008d764c09855aa0b536",
+      "restored_sha256": "4eb5c6d227ca5ba809681e2af422846dc40142daa44721cf29f9d462d3b6a6db",
+      "status": "passed"
+    },
+    {
+      "base": "afedbae8aca69a092d65766640361801bf2b5d9b",
+      "file": "src/main/java/org/apache/commons/lang3/StringUtils.java",
+      "injected_method_bodies": 213,
+      "original_sha256": "d27288e0b2b85cf97801f92e70b9513acdbb0194c9343e9d326170e356ebef89",
+      "perturbed_sha256": "062421ce2cf4b836ce20ea6c78971cb8d0cdb1fa9daf9c1fb4c6efcdcd8c5251",
+      "restored_sha256": "d27288e0b2b85cf97801f92e70b9513acdbb0194c9343e9d326170e356ebef89",
+      "status": "passed"
+    },
+    {
+      "base": "b37837ce638048384756850a3a6892519ddbc743",
+      "file": "src/main/java/org/apache/commons/lang3/StringUtils.java",
+      "injected_method_bodies": 201,
+      "original_sha256": "6d2ff1682106d35b1c851193dc09a17109a09685e64ac14c5b1b498911e66bed",
+      "perturbed_sha256": "fb46897ae189b120a70bcac706cd67aba0ed6e6b357114d1638bbf084f1ae872",
+      "restored_sha256": "6d2ff1682106d35b1c851193dc09a17109a09685e64ac14c5b1b498911e66bed",
+      "status": "passed"
+    },
+    {
+      "base": "bd9adbb637a8a4aa5eb61c6fde2c576d0ab3c4fa",
+      "file": "src/main/java/org/apache/commons/lang3/StringUtils.java",
+      "injected_method_bodies": 212,
+      "original_sha256": "20aafae033782a6c2832b08c7b36f767d213ea17734c2c1f9bc26ae9eb91503c",
+      "perturbed_sha256": "684ea1b6d817af79791ce83152ffddcb1bcd6c11646c1b3d2ef5f9473df5df55",
+      "restored_sha256": "20aafae033782a6c2832b08c7b36f767d213ea17734c2c1f9bc26ae9eb91503c",
+      "status": "passed"
+    },
+    {
+      "base": "d6dd2b4cd4a337c5517952680c3714e5d08e9cb8",
+      "file": "src/main/java/org/apache/commons/lang3/StringUtils.java",
+      "injected_method_bodies": 202,
+      "original_sha256": "bbc1999cd865c6db5aa5346d1c0fe7855ae2ab34f808b3a9298867cc6a43fcca",
+      "perturbed_sha256": "ae8652cb02bb6d3f24284547248b9c65338c749038ff1fec1342132445d6e856",
+      "restored_sha256": "bbc1999cd865c6db5aa5346d1c0fe7855ae2ab34f808b3a9298867cc6a43fcca",
+      "status": "passed"
+    },
+    {
+      "base": "db6f7c1d74ba64211221a69cfa9fe7171a9199e8",
+      "file": "src/main/java/org/apache/commons/lang3/StringUtils.java",
+      "injected_method_bodies": 214,
+      "original_sha256": "510356f4147a8bad33ab20922b088473328a930b477a9dd302a5590beb7a05fb",
+      "perturbed_sha256": "2a442e7487ba8e65eb4f095a6487dfa5481395e1506f9d202f6769752f84b9b3",
+      "restored_sha256": "510356f4147a8bad33ab20922b088473328a930b477a9dd302a5590beb7a05fb",
+      "status": "passed"
+    },
+    {
+      "base": "f30c4607a2b6dcc7dc4476d321fc1de32ce9b780",
+      "file": "src/main/java/org/apache/commons/lang3/StringUtils.java",
+      "injected_method_bodies": 214,
+      "original_sha256": "01e087cc89e1713635a0f8c3291fe897e51f7f0625759c858327dc6d275a74cb",
+      "perturbed_sha256": "db832128e3a38e6bf6429621bb97d821f193eb4b8b75b56435c9302c102e8a32",
+      "restored_sha256": "01e087cc89e1713635a0f8c3291fe897e51f7f0625759c858327dc6d275a74cb",
+      "status": "passed"
+    },
+    {
+      "base": "f431270c59b6d4558da8dff625a7738591a0d541",
+      "file": "src/main/java/org/apache/commons/lang3/StringUtils.java",
+      "injected_method_bodies": 201,
+      "original_sha256": "6d2ff1682106d35b1c851193dc09a17109a09685e64ac14c5b1b498911e66bed",
+      "perturbed_sha256": "fb46897ae189b120a70bcac706cd67aba0ed6e6b357114d1638bbf084f1ae872",
+      "restored_sha256": "6d2ff1682106d35b1c851193dc09a17109a09685e64ac14c5b1b498911e66bed",
+      "status": "passed"
+    },
+    {
+      "base": "0343b4fda87161265acf30d5ee61e525e751358d",
+      "file": "src/main/java/org/apache/commons/lang3/ArrayUtils.java",
+      "injected_method_bodies": 289,
+      "original_sha256": "73390d7f47cce2fafa4d1b44a79feb84be58b3c47dc4842ad464562fe14846e5",
+      "perturbed_sha256": "34131e7f434bf7625da48a5b6120f62cb05608e789fd2c68cd1bbc40cf7f703b",
+      "restored_sha256": "73390d7f47cce2fafa4d1b44a79feb84be58b3c47dc4842ad464562fe14846e5",
+      "status": "passed"
+    },
+    {
+      "base": "102b75cd923c30fb81047211ea1eb0b12cfe1a43",
+      "file": "src/main/java/org/apache/commons/lang3/ArrayUtils.java",
+      "injected_method_bodies": 289,
+      "original_sha256": "be042909eb7192effb94127ab92860f0e300f51dcff47752d4c12e5e3523ab65",
+      "perturbed_sha256": "01fbace45980adbe6a1c9f87abcd71778a11f23dea0ea02657555c98ba12b733",
+      "restored_sha256": "be042909eb7192effb94127ab92860f0e300f51dcff47752d4c12e5e3523ab65",
+      "status": "passed"
+    }
+  ],
+  "selection_frozen_before_apply": true,
+  "status": "passed"
+}

@@ -1,0 +1,433 @@
+{
+  "calibration_day": {
+    "basis": "calibration-host local calendar day with fixed UTC offset",
+    "date": "2026-08-25",
+    "utc_offset": "-07:00"
+  },
+  "certified_surfaces": [
+    "claude"
+  ],
+  "completed_at": "2026-08-26T02:22:52.662Z",
+  "evidence_root": "C:\\Users\\joshp\\Desktop\\Blast-Radius\\instruments\\arms\\canary\\certificates\\evidence\\20260826T022151Z-e983b0a8f209",
+  "generated_at": "2026-08-26T02:21:51.443Z",
+  "probe_budget": {
+    "actual_model_calls": 4,
+    "maximum_model_calls": 8,
+    "planned_model_calls": 4,
+    "version_queries_not_model_calls": 2
+  },
+  "room_root": "C:\\arms-canary-rooms\\20260826T022151Z-e983b0a8f209",
+  "run_id": "20260826T022151Z-e983b0a8f209",
+  "schema_version": "arms-planted-marker-certificate/v1",
+  "selected_surfaces": [
+    "codex",
+    "claude"
+  ],
+  "surface_results": [
+    {
+      "certified": false,
+      "clean_ack_sha256": "0de43791cd663dd510e5d93917a4058bf8a9c3290113061731a766ea40b6cbb9",
+      "clean_probe": {
+        "command": [
+          "C:\\Users\\joshp\\AppData\\Roaming\\npm\\codex.cmd",
+          "exec",
+          "--skip-git-repo-check",
+          "--ephemeral",
+          "--sandbox",
+          "read-only",
+          "--json",
+          "--output-last-message",
+          "C:\\arms-canary-rooms\\20260826T022151Z-e983b0a8f209\\codex\\clean-room\\workspace\\.canary-last-message.txt",
+          "--model",
+          "gpt-5.6-terra",
+          "-",
+          "<PROMPT_ON_STDIN>"
+        ],
+        "elapsed_seconds": 14.172,
+        "evaluation": {
+          "clean_ack_seen": false,
+          "leaked_markers": [],
+          "marker_absent": false,
+          "process_ok": true,
+          "substantive_response": true
+        },
+        "exit_code": 0,
+        "finished_at": "2026-08-26T02:22:19.875Z",
+        "launch_error": null,
+        "response": {
+          "path": "C:\\Users\\joshp\\Desktop\\Blast-Radius\\instruments\\arms\\canary\\certificates\\evidence\\20260826T022151Z-e983b0a8f209\\codex\\clean.model-response.txt",
+          "sha256": "f1dfec0555d6628fd0871ed680fee7e996edf31a17dde45e94f4d8af6047d36f",
+          "size_bytes": 54
+        },
+        "response_sha256": "f1dfec0555d6628fd0871ed680fee7e996edf31a17dde45e94f4d8af6047d36f",
+        "started_at": "2026-08-26T02:22:05.696Z",
+        "stderr": {
+          "path": "C:\\Users\\joshp\\Desktop\\Blast-Radius\\instruments\\arms\\canary\\certificates\\evidence\\20260826T022151Z-e983b0a8f209\\codex\\clean.stderr.txt",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "size_bytes": 0
+        },
+        "stdout": {
+          "path": "C:\\Users\\joshp\\Desktop\\Blast-Radius\\instruments\\arms\\canary\\certificates\\evidence\\20260826T022151Z-e983b0a8f209\\codex\\clean.stdout.txt",
+          "sha256": "4717bc1c1b84d5344080a11eaa26c133afb05f1175d6c5eb75e5e0a0e96bb5e7",
+          "size_bytes": 398
+        },
+        "timed_out": false
+      },
+      "credential_cleanup": {
+        "completed_at": "2026-08-26T02:22:19.898Z",
+        "errors": [],
+        "required": true,
+        "success": true
+      },
+      "credential_copies": [
+        {
+          "destination_path": "C:\\arms-canary-rooms\\20260826T022151Z-e983b0a8f209\\codex\\planted-room\\config\\codex\\auth.json",
+          "exists_after_cleanup": false,
+          "removed_at": "2026-08-26T02:22:19.898Z",
+          "sha256": "e95edb3284f2100805fb53f79818d7f7b256ffb7df013fb598bdec9bc2472454",
+          "size_bytes": 3973,
+          "source_path": "C:\\Users\\joshp\\.codex\\auth.json"
+        },
+        {
+          "destination_path": "C:\\arms-canary-rooms\\20260826T022151Z-e983b0a8f209\\codex\\clean-room\\config\\codex\\auth.json",
+          "exists_after_cleanup": false,
+          "removed_at": "2026-08-26T02:22:19.898Z",
+          "sha256": "e95edb3284f2100805fb53f79818d7f7b256ffb7df013fb598bdec9bc2472454",
+          "size_bytes": 3973,
+          "source_path": "C:\\Users\\joshp\\.codex\\auth.json"
+        }
+      ],
+      "environment_manifests": {
+        "clean": {
+          "path": "C:\\Users\\joshp\\Desktop\\Blast-Radius\\instruments\\arms\\canary\\certificates\\evidence\\20260826T022151Z-e983b0a8f209\\codex\\clean.environment-manifest.json",
+          "sha256": "a9f0cf39356b70a3d2b48ab6aeddb5e5d02d514e6ea7bb735e3fd6852a3f89b4",
+          "size_bytes": 9304
+        },
+        "clean_pre_version": {
+          "path": "C:\\Users\\joshp\\Desktop\\Blast-Radius\\instruments\\arms\\canary\\certificates\\evidence\\20260826T022151Z-e983b0a8f209\\codex\\clean.environment-manifest.pre-version.json",
+          "sha256": "8b516a363d274543377ed39271da82fddcd8110194e6d490c69cc94c5fadf6e4",
+          "size_bytes": 9289
+        },
+        "planted": {
+          "path": "C:\\Users\\joshp\\Desktop\\Blast-Radius\\instruments\\arms\\canary\\certificates\\evidence\\20260826T022151Z-e983b0a8f209\\codex\\planted.environment-manifest.json",
+          "sha256": "c52826c966bdbbe4de8cf6329d66154697ce29fd46ccae5f5441e53c700b3e90",
+          "size_bytes": 9720
+        },
+        "planted_pre_version": {
+          "path": "C:\\Users\\joshp\\Desktop\\Blast-Radius\\instruments\\arms\\canary\\certificates\\evidence\\20260826T022151Z-e983b0a8f209\\codex\\planted.environment-manifest.pre-version.json",
+          "sha256": "ebe0ff1bb108b57d011a5665d9728f008fc7d2d6b53682924883636699b1a34b",
+          "size_bytes": 9705
+        }
+      },
+      "marker_absent": false,
+      "marker_fired": true,
+      "planted_probe": {
+        "command": [
+          "C:\\Users\\joshp\\AppData\\Roaming\\npm\\codex.cmd",
+          "exec",
+          "--skip-git-repo-check",
+          "--ephemeral",
+          "--sandbox",
+          "read-only",
+          "--json",
+          "--output-last-message",
+          "C:\\arms-canary-rooms\\20260826T022151Z-e983b0a8f209\\codex\\planted-room\\workspace\\.canary-last-message.txt",
+          "--model",
+          "gpt-5.6-terra",
+          "-",
+          "<PROMPT_ON_STDIN>"
+        ],
+        "elapsed_seconds": 10.328,
+        "evaluation": {
+          "expected_marker_count": 2,
+          "marker_fired": true,
+          "missing_markers": [],
+          "process_ok": true,
+          "seen_markers": [
+            "ARMSCANARY_CODEX_GLOBAL_06C6E98FBC6952129D62A4C2",
+            "ARMSCANARY_CODEX_WORKSPACE_06C6E98FBC6952129D62A4C2"
+          ],
+          "substantive_response": true
+        },
+        "exit_code": 0,
+        "finished_at": "2026-08-26T02:22:05.673Z",
+        "launch_error": null,
+        "response": {
+          "path": "C:\\Users\\joshp\\Desktop\\Blast-Radius\\instruments\\arms\\canary\\certificates\\evidence\\20260826T022151Z-e983b0a8f209\\codex\\planted.model-response.txt",
+          "sha256": "4ad9470b29ba5a384720c775a5e1ee395e75b3aa569c625b4b02e5c823c6628d",
+          "size_bytes": 100
+        },
+        "response_sha256": "4ad9470b29ba5a384720c775a5e1ee395e75b3aa569c625b4b02e5c823c6628d",
+        "started_at": "2026-08-26T02:21:55.332Z",
+        "stderr": {
+          "path": "C:\\Users\\joshp\\Desktop\\Blast-Radius\\instruments\\arms\\canary\\certificates\\evidence\\20260826T022151Z-e983b0a8f209\\codex\\planted.stderr.txt",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "size_bytes": 0
+        },
+        "stdout": {
+          "path": "C:\\Users\\joshp\\Desktop\\Blast-Radius\\instruments\\arms\\canary\\certificates\\evidence\\20260826T022151Z-e983b0a8f209\\codex\\planted.stdout.txt",
+          "sha256": "80390e7ea48abadecee85c99de1c892fb59af1442cf45584438e424bcf9d026b",
+          "size_bytes": 446
+        },
+        "timed_out": false
+      },
+      "plants": [
+        {
+          "file_sha256": "d97e6af55278251458970c79f810b18089bf4e8145c7aa1d7c0366a62f61e9b9",
+          "marker": "ARMSCANARY_CODEX_GLOBAL_06C6E98FBC6952129D62A4C2",
+          "marker_sha256": "e0e73afd3e1e03e3e664b8263c6beedbbfe16b8954057e42222a04734dfacda3",
+          "path": "C:\\arms-canary-rooms\\20260826T022151Z-e983b0a8f209\\codex\\planted-room\\config\\codex\\AGENTS.md",
+          "scope": "global",
+          "size_bytes": 302
+        },
+        {
+          "file_sha256": "ecf7b12241d0dec09e4791246b494425d46783500f814016d6c870448a1c429f",
+          "marker": "ARMSCANARY_CODEX_WORKSPACE_06C6E98FBC6952129D62A4C2",
+          "marker_sha256": "a27ff5dccd0561040e90e33e91a4bfba64092d9228e2187bc5f059274b19a8cc",
+          "path": "C:\\arms-canary-rooms\\20260826T022151Z-e983b0a8f209\\codex\\planted-room\\workspace\\AGENTS.md",
+          "scope": "workspace",
+          "size_bytes": 305
+        }
+      ],
+      "preflight_errors": [],
+      "subject": {
+        "cli": "codex",
+        "detected_version": "codex-cli 0.146.0",
+        "executable": "C:\\Users\\joshp\\AppData\\Roaming\\npm\\codex.cmd",
+        "executable_kind": "windows-cmd-wrapper",
+        "requested_model_identifier": "gpt-5.6-terra"
+      },
+      "surface": "codex",
+      "version_query": {
+        "command": [
+          "C:\\Users\\joshp\\AppData\\Roaming\\npm\\codex.cmd",
+          "--version"
+        ],
+        "detected_version": "codex-cli 0.146.0",
+        "elapsed_seconds": 3.156,
+        "exit_code": 0,
+        "finished_at": "2026-08-26T02:21:55.260Z",
+        "launch_error": null,
+        "started_at": "2026-08-26T02:21:52.108Z",
+        "stderr": {
+          "path": "C:\\Users\\joshp\\Desktop\\Blast-Radius\\instruments\\arms\\canary\\certificates\\evidence\\20260826T022151Z-e983b0a8f209\\codex\\version.stderr.txt",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "size_bytes": 0
+        },
+        "stdout": {
+          "path": "C:\\Users\\joshp\\Desktop\\Blast-Radius\\instruments\\arms\\canary\\certificates\\evidence\\20260826T022151Z-e983b0a8f209\\codex\\version.stdout.txt",
+          "sha256": "446dce03fa8317c76f51ca91da1f075e192a75cf86c889c594034ef9ec2fcc52",
+          "size_bytes": 18
+        },
+        "success": true,
+        "timed_out": false
+      }
+    },
+    {
+      "certified": true,
+      "clean_ack_sha256": "953a770d405ab550cdfb3f3ffff4341e503105d54c331604faff51a9ca4c275a",
+      "clean_probe": {
+        "command": [
+          "C:\\Users\\joshp\\AppData\\Roaming\\npm\\claude.cmd",
+          "-p",
+          "--permission-mode",
+          "acceptEdits",
+          "--strict-mcp-config",
+          "--tools",
+          "",
+          "--disable-slash-commands",
+          "--output-format",
+          "json",
+          "--no-session-persistence",
+          "--max-turns",
+          "1",
+          "--model",
+          "claude-sonnet-4-6",
+          "<PROMPT_ON_STDIN>"
+        ],
+        "elapsed_seconds": 11.188,
+        "evaluation": {
+          "clean_ack_seen": true,
+          "leaked_markers": [],
+          "marker_absent": true,
+          "process_ok": true,
+          "substantive_response": true
+        },
+        "exit_code": 0,
+        "finished_at": "2026-08-26T02:22:52.645Z",
+        "launch_error": null,
+        "response": {
+          "path": "C:\\Users\\joshp\\Desktop\\Blast-Radius\\instruments\\arms\\canary\\certificates\\evidence\\20260826T022151Z-e983b0a8f209\\claude\\clean.model-response.txt",
+          "sha256": "953a770d405ab550cdfb3f3ffff4341e503105d54c331604faff51a9ca4c275a",
+          "size_bytes": 47
+        },
+        "response_sha256": "953a770d405ab550cdfb3f3ffff4341e503105d54c331604faff51a9ca4c275a",
+        "started_at": "2026-08-26T02:22:41.465Z",
+        "stderr": {
+          "path": "C:\\Users\\joshp\\Desktop\\Blast-Radius\\instruments\\arms\\canary\\certificates\\evidence\\20260826T022151Z-e983b0a8f209\\claude\\clean.stderr.txt",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "size_bytes": 0
+        },
+        "stdout": {
+          "path": "C:\\Users\\joshp\\Desktop\\Blast-Radius\\instruments\\arms\\canary\\certificates\\evidence\\20260826T022151Z-e983b0a8f209\\claude\\clean.stdout.txt",
+          "sha256": "6158dabff1dd8f447dd7e918a8a8893921385ca999b562e8ad01693272e5286b",
+          "size_bytes": 1077
+        },
+        "timed_out": false
+      },
+      "credential_cleanup": {
+        "completed_at": "2026-08-26T02:22:52.662Z",
+        "errors": [],
+        "required": true,
+        "success": true
+      },
+      "credential_copies": [
+        {
+          "destination_path": "C:\\arms-canary-rooms\\20260826T022151Z-e983b0a8f209\\claude\\planted-room\\config\\claude\\.credentials.json",
+          "exists_after_cleanup": false,
+          "removed_at": "2026-08-26T02:22:52.662Z",
+          "sha256": "53324b114cbd1ecaaf90aa7fb880547e5f955b7714cc7c943ad09f6c513f46fa",
+          "size_bytes": 509,
+          "source_path": "C:\\Users\\joshp\\.claude\\.credentials.json"
+        },
+        {
+          "destination_path": "C:\\arms-canary-rooms\\20260826T022151Z-e983b0a8f209\\claude\\clean-room\\config\\claude\\.credentials.json",
+          "exists_after_cleanup": false,
+          "removed_at": "2026-08-26T02:22:52.662Z",
+          "sha256": "53324b114cbd1ecaaf90aa7fb880547e5f955b7714cc7c943ad09f6c513f46fa",
+          "size_bytes": 509,
+          "source_path": "C:\\Users\\joshp\\.claude\\.credentials.json"
+        }
+      ],
+      "environment_manifests": {
+        "clean": {
+          "path": "C:\\Users\\joshp\\Desktop\\Blast-Radius\\instruments\\arms\\canary\\certificates\\evidence\\20260826T022151Z-e983b0a8f209\\claude\\clean.environment-manifest.json",
+          "sha256": "d962543957ac614fbe26bc600c8d0268beb4de0a606b66f5f7ffdd4662c2ddc0",
+          "size_bytes": 23730
+        },
+        "clean_pre_version": {
+          "path": "C:\\Users\\joshp\\Desktop\\Blast-Radius\\instruments\\arms\\canary\\certificates\\evidence\\20260826T022151Z-e983b0a8f209\\claude\\clean.environment-manifest.pre-version.json",
+          "sha256": "a28a2df87997660a3bbe54f3fdbdb1d5e7df193686daf95b9a972503ea09cb26",
+          "size_bytes": 23711
+        },
+        "planted": {
+          "path": "C:\\Users\\joshp\\Desktop\\Blast-Radius\\instruments\\arms\\canary\\certificates\\evidence\\20260826T022151Z-e983b0a8f209\\claude\\planted.environment-manifest.json",
+          "sha256": "a7407bde901ae906c3b3ea9b87c49648e41c60dd67306b9c713bcce4f98b004a",
+          "size_bytes": 24173
+        },
+        "planted_pre_version": {
+          "path": "C:\\Users\\joshp\\Desktop\\Blast-Radius\\instruments\\arms\\canary\\certificates\\evidence\\20260826T022151Z-e983b0a8f209\\claude\\planted.environment-manifest.pre-version.json",
+          "sha256": "e008db080901dc3748c6101a234d3e6a6b7a9c13d7236b26ea78d4fb0cf3472e",
+          "size_bytes": 24154
+        }
+      },
+      "marker_absent": true,
+      "marker_fired": true,
+      "planted_probe": {
+        "command": [
+          "C:\\Users\\joshp\\AppData\\Roaming\\npm\\claude.cmd",
+          "-p",
+          "--permission-mode",
+          "acceptEdits",
+          "--strict-mcp-config",
+          "--tools",
+          "",
+          "--disable-slash-commands",
+          "--output-format",
+          "json",
+          "--no-session-persistence",
+          "--max-turns",
+          "1",
+          "--model",
+          "claude-sonnet-4-6",
+          "<PROMPT_ON_STDIN>"
+        ],
+        "elapsed_seconds": 18.828,
+        "evaluation": {
+          "expected_marker_count": 2,
+          "marker_fired": true,
+          "missing_markers": [],
+          "process_ok": true,
+          "seen_markers": [
+            "ARMSCANARY_CLAUDE_GLOBAL_04133353FFAC916902A47685",
+            "ARMSCANARY_CLAUDE_WORKSPACE_04133353FFAC916902A47685"
+          ],
+          "substantive_response": true
+        },
+        "exit_code": 0,
+        "finished_at": "2026-08-26T02:22:41.448Z",
+        "launch_error": null,
+        "response": {
+          "path": "C:\\Users\\joshp\\Desktop\\Blast-Radius\\instruments\\arms\\canary\\certificates\\evidence\\20260826T022151Z-e983b0a8f209\\claude\\planted.model-response.txt",
+          "sha256": "b25de53dda012e7032383e2b6240ee7182a9e126f8fc87d64e4f41b8f9fe0feb",
+          "size_bytes": 102
+        },
+        "response_sha256": "b25de53dda012e7032383e2b6240ee7182a9e126f8fc87d64e4f41b8f9fe0feb",
+        "started_at": "2026-08-26T02:22:22.618Z",
+        "stderr": {
+          "path": "C:\\Users\\joshp\\Desktop\\Blast-Radius\\instruments\\arms\\canary\\certificates\\evidence\\20260826T022151Z-e983b0a8f209\\claude\\planted.stderr.txt",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "size_bytes": 0
+        },
+        "stdout": {
+          "path": "C:\\Users\\joshp\\Desktop\\Blast-Radius\\instruments\\arms\\canary\\certificates\\evidence\\20260826T022151Z-e983b0a8f209\\claude\\planted.stdout.txt",
+          "sha256": "3a87590ddbf5869df4f1b194fbc417eaddf7855a1254dc7e42e5cdadd224f290",
+          "size_bytes": 1136
+        },
+        "timed_out": false
+      },
+      "plants": [
+        {
+          "file_sha256": "948ebf8031756877f87998266a64efc8596aac188c3d1333e948d6df1b8e4770",
+          "marker": "ARMSCANARY_CLAUDE_GLOBAL_04133353FFAC916902A47685",
+          "marker_sha256": "6686a145d687d19497d5e3a1eeac9425d9cb16202e8ab5e1c4f9ad2ec8fe2432",
+          "path": "C:\\arms-canary-rooms\\20260826T022151Z-e983b0a8f209\\claude\\planted-room\\config\\claude\\CLAUDE.md",
+          "scope": "global",
+          "size_bytes": 303
+        },
+        {
+          "file_sha256": "e3d30a95b5ce5ba82ddd165c8e0ccaada8e5dbf05952575725236d3b3bb13c55",
+          "marker": "ARMSCANARY_CLAUDE_WORKSPACE_04133353FFAC916902A47685",
+          "marker_sha256": "662dec1f0ffceeaabef1db5657477501418d3ed33c2ea6dc4a826ab3703b983b",
+          "path": "C:\\arms-canary-rooms\\20260826T022151Z-e983b0a8f209\\claude\\planted-room\\workspace\\CLAUDE.md",
+          "scope": "workspace",
+          "size_bytes": 306
+        }
+      ],
+      "preflight_errors": [],
+      "subject": {
+        "cli": "claude",
+        "detected_version": "2.1.186 (Claude Code)",
+        "executable": "C:\\Users\\joshp\\AppData\\Roaming\\npm\\claude.cmd",
+        "executable_kind": "windows-cmd-wrapper",
+        "requested_model_identifier": "claude-sonnet-4-6"
+      },
+      "surface": "claude",
+      "version_query": {
+        "command": [
+          "C:\\Users\\joshp\\AppData\\Roaming\\npm\\claude.cmd",
+          "--version"
+        ],
+        "detected_version": "2.1.186 (Claude Code)",
+        "elapsed_seconds": 2.516,
+        "exit_code": 0,
+        "finished_at": "2026-08-26T02:22:22.526Z",
+        "launch_error": null,
+        "started_at": "2026-08-26T02:22:20.008Z",
+        "stderr": {
+          "path": "C:\\Users\\joshp\\Desktop\\Blast-Radius\\instruments\\arms\\canary\\certificates\\evidence\\20260826T022151Z-e983b0a8f209\\claude\\version.stderr.txt",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "size_bytes": 0
+        },
+        "stdout": {
+          "path": "C:\\Users\\joshp\\Desktop\\Blast-Radius\\instruments\\arms\\canary\\certificates\\evidence\\20260826T022151Z-e983b0a8f209\\claude\\version.stdout.txt",
+          "sha256": "0e44c1fa674ddf799abb97791312f9a9529fc1040787059c1da8cb7250209571",
+          "size_bytes": 22
+        },
+        "success": true,
+        "timed_out": false
+      }
+    }
+  ],
+  "verdict": "FAIL"
+}

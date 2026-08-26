@@ -1,0 +1,52 @@
+diff --git a/CHANGES.rst b/CHANGES.rst
+index 273c00f9e44ae8569b6cc936c7b2b7cddf49ba1f..7b0434cd7f826f71440ad81dbc67164dba48911a 100644
+--- a/CHANGES.rst
++++ b/CHANGES.rst
+@@ -1,5 +1,11 @@
+ .. currentmodule:: click
+ 
++Version 7.2
++-----------
++
++-   Include ``--help`` option in completion. :pr:`1504`
++
++
+ Version 7.1.2
+ -------------
+ 
+@@ -90,6 +96,8 @@ Released 2020-03-09
+ -   Make the warning about old 2-arg parameter callbacks a deprecation
+     warning, to be removed in 8.0. This has been a warning since Click
+     2.0. :pr:`1492`
++-   Adjust error messages to standardize the types of quotes used so
++    they match error messages from Python.
+ 
+ 
+ Version 7.0
+diff --git a/src/click/_bashcomplete.py b/src/click/_bashcomplete.py
+index 8bca24480f751e0471a625bc36c05a61d49add87..63a9a6dc5f98647cc124fdc3a6d5d4bed5c2c71c 100644
+--- a/src/click/_bashcomplete.py
++++ b/src/click/_bashcomplete.py
+@@ -297,7 +297,7 @@ def get_choices(cli, prog_name, args, incomplete):
+     completions = []
+     if not has_double_dash and start_of_option(incomplete):
+         # completions for partial options
+-        for param in ctx.command.params:
++        for param in ctx.command.get_params(ctx):
+             if isinstance(param, Option) and not param.hidden:
+                 param_opts = [
+                     param_opt
+@@ -309,11 +309,11 @@ def get_choices(cli, prog_name, args, incomplete):
+                 )
+         return completions
+     # completion for option values from user supplied values
+-    for param in ctx.command.params:
++    for param in ctx.command.get_params(ctx):
+         if is_incomplete_option(all_args, param):
+             return get_user_autocompletions(ctx, all_args, incomplete, param)
+     # completion for argument values from user supplied values
+-    for param in ctx.command.params:
++    for param in ctx.command.get_params(ctx):
+         if is_incomplete_argument(ctx.params, param):
+             return get_user_autocompletions(ctx, all_args, incomplete, param)
+ 

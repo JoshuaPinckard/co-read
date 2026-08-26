@@ -1,0 +1,18 @@
+diff --git a/src/test/java/org/apache/commons/lang3/text/StrBuilderTest.java b/src/test/java/org/apache/commons/lang3/text/StrBuilderTest.java
+index 2da4cf1efe33e73a73f4e807687f40cd99b65cc3..a9c614570667241be4cb765adbf8827ee7873b26 100644
+--- a/src/test/java/org/apache/commons/lang3/text/StrBuilderTest.java
++++ b/src/test/java/org/apache/commons/lang3/text/StrBuilderTest.java
+@@ -1850,6 +1850,13 @@ public class StrBuilderTest {
+         assertFalse(sb1.equals("abc"));
+     }
+ 
++    @Test
++    public void test_LANG_1131_EqualsWithNullStrBuilder() throws Exception {
++        final StrBuilder sb = new StrBuilder();
++        final StrBuilder other = null;
++        assertFalse(sb.equals(other));
++    }
++
+     //-----------------------------------------------------------------------
+     @Test
+     public void testHashCode() {

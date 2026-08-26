@@ -1,0 +1,29 @@
+diff --git a/src/test/java/org/apache/commons/lang3/ArrayUtilsTest.java b/src/test/java/org/apache/commons/lang3/ArrayUtilsTest.java
+index a50ed1ab20f9b243b40404beb0ab46339e556c55..2d137c8224d418a86df4402f98a46256a05711d4 100644
+--- a/src/test/java/org/apache/commons/lang3/ArrayUtilsTest.java
++++ b/src/test/java/org/apache/commons/lang3/ArrayUtilsTest.java
+@@ -2953,7 +2953,23 @@ public class ArrayUtilsTest  {
+         assertTrue(ArrayUtils.contains(array, null));
+         assertFalse(ArrayUtils.contains(array, "notInArray"));
+     }
+-    
++
++    @Test
++    public void testContains_LANG_1261() {
++        class LANG1261ParentObject {
++            @Override
++            public boolean equals(Object o) {
++                return true;
++            }
++        }
++        class LANG1261ChildObject extends LANG1261ParentObject {
++        }
++
++        Object[] array = new LANG1261ChildObject[] { new LANG1261ChildObject() };
++
++        assertTrue(ArrayUtils.contains(array, new LANG1261ParentObject()));
++    }
++
+     //-----------------------------------------------------------------------
+     @Test
+     public void testIndexOfLong() {

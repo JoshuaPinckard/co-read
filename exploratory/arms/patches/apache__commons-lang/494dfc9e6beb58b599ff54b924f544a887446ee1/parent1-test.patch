@@ -1,0 +1,108 @@
+diff --git a/src/test/java/org/apache/commons/lang3/ValidateTest.java b/src/test/java/org/apache/commons/lang3/ValidateTest.java
+index 51ce1f15366a874e7c1976e4751004c235deee43..ff1a99a0e9fd23b840baf15b94979e5457c0f0cd 100644
+--- a/src/test/java/org/apache/commons/lang3/ValidateTest.java
++++ b/src/test/java/org/apache/commons/lang3/ValidateTest.java
+@@ -650,7 +650,7 @@ class ValidateTest {
+                             NullPointerException.class,
+                             () -> Validate.noNullElements((Object[]) null));
+ 
+-                    assertEquals("The validated object is null", ex.getMessage());
++                    assertEquals("array", ex.getMessage());
+                 }
+ 
+                 @Test
+@@ -685,7 +685,7 @@ class ValidateTest {
+                             NullPointerException.class,
+                             () -> Validate.noNullElements((Object[]) null, "MSG"));
+ 
+-                    assertEquals("The validated object is null", ex.getMessage());
++                    assertEquals("array", ex.getMessage());
+                 }
+ 
+                 @Test
+@@ -724,7 +724,7 @@ class ValidateTest {
+                             NullPointerException.class,
+                             () -> Validate.noNullElements((Collection<?>) null));
+ 
+-                    assertEquals("The validated object is null", ex.getMessage());
++                    assertEquals("iterable", ex.getMessage());
+                 }
+ 
+                 @Test
+@@ -759,7 +759,7 @@ class ValidateTest {
+                             NullPointerException.class,
+                             () -> Validate.noNullElements((Collection<?>) null, "MSG"));
+ 
+-                    assertEquals("The validated object is null", ex.getMessage());
++                    assertEquals("iterable", ex.getMessage());
+                 }
+ 
+                 @Test
+@@ -802,7 +802,7 @@ class ValidateTest {
+                             NullPointerException.class,
+                             () -> Validate.validIndex((Object[]) null, 1));
+ 
+-                    assertEquals("The validated object is null", ex.getMessage());
++                    assertEquals("array", ex.getMessage());
+                 }
+ 
+                 @Test
+@@ -846,7 +846,7 @@ class ValidateTest {
+                             NullPointerException.class,
+                             () -> Validate.validIndex((Object[]) null, 1, "MSG"));
+ 
+-                    assertEquals("The validated object is null", ex.getMessage());
++                    assertEquals("array", ex.getMessage());
+                 }
+ 
+                 @Test
+@@ -894,7 +894,7 @@ class ValidateTest {
+                             NullPointerException.class,
+                             () -> Validate.validIndex((Collection<?>) null, 1));
+ 
+-                    assertEquals("The validated object is null", ex.getMessage());
++                    assertEquals("collection", ex.getMessage());
+                 }
+ 
+                 @Test
+@@ -938,7 +938,7 @@ class ValidateTest {
+                             NullPointerException.class,
+                             () -> Validate.validIndex((Collection<?>) null, 1, "MSG"));
+ 
+-                    assertEquals("The validated object is null", ex.getMessage());
++                    assertEquals("collection", ex.getMessage());
+                 }
+ 
+                 @Test
+@@ -986,7 +986,7 @@ class ValidateTest {
+                             NullPointerException.class,
+                             () -> Validate.validIndex((String) null, 1));
+ 
+-                    assertEquals("The validated object is null", ex.getMessage());
++                    assertEquals("chars", ex.getMessage());
+                 }
+ 
+                 @Test
+@@ -1030,7 +1030,7 @@ class ValidateTest {
+                             NullPointerException.class,
+                             () -> Validate.validIndex((String) null, 1, "MSG"));
+ 
+-                    assertEquals("The validated object is null", ex.getMessage());
++                    assertEquals("chars", ex.getMessage());
+                 }
+ 
+                 @Test
+diff --git a/src/test/java/org/apache/commons/lang3/tuple/ImmutablePairTest.java b/src/test/java/org/apache/commons/lang3/tuple/ImmutablePairTest.java
+index 2bfa17e91be20b6947e4db5acf393fe1f6d685a2..59a79a61323c3376f29c26cfeff5581e2a8a4aa7 100644
+--- a/src/test/java/org/apache/commons/lang3/tuple/ImmutablePairTest.java
++++ b/src/test/java/org/apache/commons/lang3/tuple/ImmutablePairTest.java
+@@ -21,8 +21,8 @@ import static org.junit.jupiter.api.Assertions.assertNotEquals;
+ import static org.junit.jupiter.api.Assertions.assertNotNull;
+ import static org.junit.jupiter.api.Assertions.assertNull;
+ import static org.junit.jupiter.api.Assertions.assertSame;
+-import static org.junit.jupiter.api.Assertions.assertTrue;
+ import static org.junit.jupiter.api.Assertions.assertThrows;
++import static org.junit.jupiter.api.Assertions.assertTrue;
+ 
+ import java.util.ArrayList;
+ import java.util.HashMap;

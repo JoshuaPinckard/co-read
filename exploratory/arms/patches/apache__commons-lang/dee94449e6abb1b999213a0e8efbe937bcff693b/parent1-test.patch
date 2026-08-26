@@ -1,0 +1,395 @@
+diff --git a/src/test/java/org/apache/commons/lang3/ArrayUtilsTest.java b/src/test/java/org/apache/commons/lang3/ArrayUtilsTest.java
+index 9e1c592ed43d5a6e0249e8ed71eb37ad98088389..588068e7585239c98472b6a1dfe5762e8c5a7796 100644
+--- a/src/test/java/org/apache/commons/lang3/ArrayUtilsTest.java
++++ b/src/test/java/org/apache/commons/lang3/ArrayUtilsTest.java
+@@ -2140,18 +2140,18 @@ public class ArrayUtilsTest  {
+         assertEquals(4, array[1]);
+         assertEquals(1, array[2]);
+         assertEquals(2, array[3]);
+-    }
+ 
+-    @Test(expected = ArrayIndexOutOfBoundsException.class)
+-    public void testSwapCharOutOfRange() {
+-        char[] array = new char[] {1, 2, 3};
++        array = new char[] {1, 2, 3};
+         ArrayUtils.swap(array, 0, 3);
+-    }
+-
+-    @Test(expected = ArrayIndexOutOfBoundsException.class)
+-    public void testSwapCharOutOfRangeLen() {
+-        char[] array = new char[] {1, 2, 3};
++        assertEquals(1, array[0]);
++        assertEquals(2, array[1]);
++        assertEquals(3, array[2]);
++        
++        array = new char[] {1, 2, 3};
+         ArrayUtils.swap(array, 0, 2, 2);
++        assertEquals(3, array[0]);
++        assertEquals(2, array[1]);
++        assertEquals(1, array[2]);
+     }
+     
+     @Test
+@@ -2171,18 +2171,18 @@ public class ArrayUtilsTest  {
+         assertEquals(4, array[1], 0);
+         assertEquals(1, array[2], 0);
+         assertEquals(2, array[3], 0);
+-    }
+ 
+-    @Test(expected = ArrayIndexOutOfBoundsException.class)
+-    public void testSwapFloatOutOfRange() {
+-        float[] array = new float[] {1, 2, 3};
++        array = new float[] {1, 2, 3};
+         ArrayUtils.swap(array, 0, 3);
+-    }
+-
+-    @Test(expected = ArrayIndexOutOfBoundsException.class)
+-    public void testSwapFloatOutOfRangeLen() {
+-        float[] array = new float[] {1, 2, 3};
++        assertEquals(1, array[0], 0);
++        assertEquals(2, array[1], 0);
++        assertEquals(3, array[2], 0);
++        
++        array = new float[] {1, 2, 3};
+         ArrayUtils.swap(array, 0, 2, 2);
++        assertEquals(3, array[0], 0);
++        assertEquals(2, array[1], 0);
++        assertEquals(1, array[2], 0);
+     }
+     
+     @Test
+@@ -2202,18 +2202,18 @@ public class ArrayUtilsTest  {
+         assertEquals(4, array[1], 0);
+         assertEquals(1, array[2], 0);
+         assertEquals(2, array[3], 0);
+-    }
+ 
+-    @Test(expected = ArrayIndexOutOfBoundsException.class)
+-    public void testSwapDoubleOutOfRange() {
+-        double[] array = new double[] {1, 2, 3};
++        array = new double[] {1, 2, 3};
+         ArrayUtils.swap(array, 0, 3);
+-    }
+-
+-    @Test(expected = ArrayIndexOutOfBoundsException.class)
+-    public void testSwapDoubleOutOfRangeLen() {
+-        double[] array = new double[] {1, 2, 3};
++        assertEquals(1, array[0], 0);
++        assertEquals(2, array[1], 0);
++        assertEquals(3, array[2], 0);
++        
++        array = new double[] {1, 2, 3};
+         ArrayUtils.swap(array, 0, 2, 2);
++        assertEquals(3, array[0], 0);
++        assertEquals(2, array[1], 0);
++        assertEquals(1, array[2], 0);
+     }
+     
+     @Test
+@@ -2233,6 +2233,18 @@ public class ArrayUtilsTest  {
+         assertEquals(4, array[1]);
+         assertEquals(1, array[2]);
+         assertEquals(2, array[3]);
++        
++        array = new int[] {1, 2, 3};
++        ArrayUtils.swap(array, 3, 0);
++        assertEquals(1, array[0]);
++        assertEquals(2, array[1]);
++        assertEquals(3, array[2]);
++        
++        array = new int[] {1, 2, 3};
++        ArrayUtils.swap(array, 0, 2, 2);
++        assertEquals(3, array[0]);
++        assertEquals(2, array[1]);
++        assertEquals(1, array[2]);
+     }
+     
+     @Test
+@@ -2247,18 +2259,6 @@ public class ArrayUtilsTest  {
+         assertArrayEquals(new int[] {2, 3, 1}, array);
+     }
+ 
+-    @Test(expected = ArrayIndexOutOfBoundsException.class)
+-    public void testSwapIntOutOfRange() {
+-        int[] array = new int[] {1, 2, 3};
+-        ArrayUtils.swap(array, 0, 3);
+-    }
+-
+-    @Test(expected = ArrayIndexOutOfBoundsException.class)
+-    public void testSwapIntOutOfRangeLen() {
+-        int[] array = new int[] {1, 2, 3};
+-        ArrayUtils.swap(array, 0, 2, 2);
+-    }
+-    
+     @Test
+     public void testSwapLong() {
+         long[] array = new long[] {1, 2, 3};
+@@ -2276,18 +2276,18 @@ public class ArrayUtilsTest  {
+         assertEquals(4, array[1]);
+         assertEquals(1, array[2]);
+         assertEquals(2, array[3]);
+-    }
+-
+-    @Test(expected = ArrayIndexOutOfBoundsException.class)
+-    public void testSwapLongOutOfRange() {
+-        long[] array = new long[] {1, 2, 3};
++        
++        array = new long[] {1, 2, 3};
+         ArrayUtils.swap(array, 0, 3);
+-    }
+-
+-    @Test(expected = ArrayIndexOutOfBoundsException.class)
+-    public void testSwapLongOutOfRangeLen() {
+-        long[] array = new long[] {1, 2, 3};
++        assertEquals(1, array[0]);
++        assertEquals(2, array[1]);
++        assertEquals(3, array[2]);
++        
++        array = new long[] {1, 2, 3};
+         ArrayUtils.swap(array, 0, 2, 2);
++        assertEquals(3, array[0]);
++        assertEquals(2, array[1]);
++        assertEquals(1, array[2]);
+     }
+ 
+     @Test
+@@ -2307,18 +2307,21 @@ public class ArrayUtilsTest  {
+         assertEquals("4", array[1]);
+         assertEquals("1", array[2]);
+         assertEquals("2", array[3]);
+-    }
+ 
+-    @Test(expected = ArrayIndexOutOfBoundsException.class)
+-    public void testSwapObjectOutOfRange() {
+-        String[] array = new String[] {"1", "2", "3"};
+-        ArrayUtils.swap(array, 0, 3);
+-    }
++        array = new String[] {"1", "2", "3", "4"};
++        ArrayUtils.swap(array, -1, 2, 3);
++        assertEquals("3", array[0]);
++        assertEquals("4", array[1]);
++        assertEquals("1", array[2]);
++        assertEquals("2", array[3]);
+ 
+-    @Test(expected = ArrayIndexOutOfBoundsException.class)
+-    public void testSwapObjectOutOfRangeLen() {
+-        String[] array = new String[] {"1", "2", "3"};
+-        ArrayUtils.swap(array, 0, 2, 2);
++        array = new String[] {"1", "2", "3", "4", "5"};
++        ArrayUtils.swap(array, -3, 2, 3);
++        assertEquals("3", array[0]);
++        assertEquals("4", array[1]);
++        assertEquals("5", array[2]);
++        assertEquals("2", array[3]);
++        assertEquals("1", array[4]);
+     }
+ 
+     //-----------------------------------------------------------------------
+@@ -2479,6 +2482,13 @@ public class ArrayUtilsTest  {
+         assertEquals(4, array[1]);
+         assertEquals(1, array[2]);
+         assertEquals(2, array[3]);
++        array = new short[] {1, 2, 3, 4, 5};
++        ArrayUtils.shift(array, 2);
++        assertEquals(4, array[0]);
++        assertEquals(5, array[1]);
++        assertEquals(1, array[2]);
++        assertEquals(2, array[3]);
++        assertEquals(3, array[4]);
+     }
+ 
+     @Test
+diff --git a/src/test/java/org/apache/commons/lang3/StringUtilsEqualsIndexOfTest.java b/src/test/java/org/apache/commons/lang3/StringUtilsEqualsIndexOfTest.java
+index 1a1f37ad3c53d14f5bfdceb0bd0193d3c7047ee1..3a739c18d18e467c074ce0fc71ef192ca715d629 100644
+--- a/src/test/java/org/apache/commons/lang3/StringUtilsEqualsIndexOfTest.java
++++ b/src/test/java/org/apache/commons/lang3/StringUtilsEqualsIndexOfTest.java
+@@ -117,17 +117,18 @@ public class StringUtilsEqualsIndexOfTest  {
+     public void testContainsAny_StringCharArray() {
+         assertFalse(StringUtils.containsAny(null, (char[]) null));
+         assertFalse(StringUtils.containsAny(null, new char[0]));
+-        assertFalse(StringUtils.containsAny(null, new char[] { 'a', 'b' }));
++        assertFalse(StringUtils.containsAny(null, 'a', 'b'));
+ 
+         assertFalse(StringUtils.containsAny("", (char[]) null));
+         assertFalse(StringUtils.containsAny("", new char[0]));
+-        assertFalse(StringUtils.containsAny("", new char[] { 'a', 'b' }));
++        assertFalse(StringUtils.containsAny("", 'a', 'b'));
+ 
+         assertFalse(StringUtils.containsAny("zzabyycdxx", (char[]) null));
+         assertFalse(StringUtils.containsAny("zzabyycdxx", new char[0]));
+-        assertTrue(StringUtils.containsAny("zzabyycdxx", new char[] { 'z', 'a' }));
+-        assertTrue(StringUtils.containsAny("zzabyycdxx", new char[] { 'b', 'y' }));
+-        assertFalse(StringUtils.containsAny("ab", new char[] { 'z' }));
++        assertTrue(StringUtils.containsAny("zzabyycdxx", 'z', 'a'));
++        assertTrue(StringUtils.containsAny("zzabyycdxx", 'b', 'y'));
++        assertTrue(StringUtils.containsAny("zzabyycdxx", 'z', 'y'));
++        assertFalse(StringUtils.containsAny("ab", 'z'));
+     }
+ 
+     /**
+@@ -179,6 +180,7 @@ public class StringUtilsEqualsIndexOfTest  {
+         assertFalse(StringUtils.containsAny("zzabyycdxx", ""));
+         assertTrue(StringUtils.containsAny("zzabyycdxx", "za"));
+         assertTrue(StringUtils.containsAny("zzabyycdxx", "by"));
++        assertTrue(StringUtils.containsAny("zzabyycdxx", "zy"));
+         assertFalse(StringUtils.containsAny("ab", "z"));
+     }
+ 
+@@ -223,9 +225,11 @@ public class StringUtilsEqualsIndexOfTest  {
+         assertFalse(StringUtils.containsAny("", new String[] { "hello" }));
+         assertFalse(StringUtils.containsAny("hello, goodbye", (String[]) null));
+         assertFalse(StringUtils.containsAny("hello, goodbye", new String[0]));
+-        assertTrue(StringUtils.containsAny("hello, goodbye", new String[] { "hello", "goodbye" }));
+-        assertTrue(StringUtils.containsAny("hello, goodbye", new String[] { "hello", "Goodbye" }));
+-        assertFalse(StringUtils.containsAny("hello, goodbye", new String[] { "Hello", "Goodbye" }));
++        assertTrue(StringUtils.containsAny("hello, goodbye", new String[]{"hello", "goodbye"}));
++        assertTrue(StringUtils.containsAny("hello, goodbye", new String[]{"hello", "Goodbye"}));
++        assertFalse(StringUtils.containsAny("hello, goodbye", new String[]{"Hello", "Goodbye"}));
++        assertFalse(StringUtils.containsAny("hello, goodbye", new String[]{"Hello", null}));
++        assertFalse(StringUtils.containsAny("hello, null", new String[] { "Hello", null }));
+     }
+ 
+     @Test
+@@ -645,17 +649,17 @@ public class StringUtilsEqualsIndexOfTest  {
+     public void testIndexOfAny_StringCharArray() {
+         assertEquals(-1, StringUtils.indexOfAny(null, (char[]) null));
+         assertEquals(-1, StringUtils.indexOfAny(null, new char[0]));
+-        assertEquals(-1, StringUtils.indexOfAny(null, new char[] {'a','b'}));
++        assertEquals(-1, StringUtils.indexOfAny(null, 'a','b'));
+ 
+         assertEquals(-1, StringUtils.indexOfAny("", (char[]) null));
+         assertEquals(-1, StringUtils.indexOfAny("", new char[0]));
+-        assertEquals(-1, StringUtils.indexOfAny("", new char[] {'a','b'}));
++        assertEquals(-1, StringUtils.indexOfAny("", 'a','b'));
+ 
+         assertEquals(-1, StringUtils.indexOfAny("zzabyycdxx", (char[]) null));
+         assertEquals(-1, StringUtils.indexOfAny("zzabyycdxx", new char[0]));
+-        assertEquals(0, StringUtils.indexOfAny("zzabyycdxx", new char[] {'z','a'}));
+-        assertEquals(3, StringUtils.indexOfAny("zzabyycdxx", new char[] {'b','y'}));
+-        assertEquals(-1, StringUtils.indexOfAny("ab", new char[] {'z'}));
++        assertEquals(0, StringUtils.indexOfAny("zzabyycdxx", 'z','a'));
++        assertEquals(3, StringUtils.indexOfAny("zzabyycdxx", 'b','y'));
++        assertEquals(-1, StringUtils.indexOfAny("ab", 'z'));
+     }
+ 
+     /**
+@@ -718,19 +722,19 @@ public class StringUtilsEqualsIndexOfTest  {
+     @Test
+     public void testIndexOfAnyBut_StringCharArray() {
+         assertEquals(-1, StringUtils.indexOfAnyBut(null, (char[]) null));
+-        assertEquals(-1, StringUtils.indexOfAnyBut(null, new char[0]));
+-        assertEquals(-1, StringUtils.indexOfAnyBut(null, new char[] {'a','b'}));
++        assertEquals(-1, StringUtils.indexOfAnyBut(null));
++        assertEquals(-1, StringUtils.indexOfAnyBut(null, 'a','b'));
+ 
+         assertEquals(-1, StringUtils.indexOfAnyBut("", (char[]) null));
+-        assertEquals(-1, StringUtils.indexOfAnyBut("", new char[0]));
+-        assertEquals(-1, StringUtils.indexOfAnyBut("", new char[] {'a','b'}));
++        assertEquals(-1, StringUtils.indexOfAnyBut(""));
++        assertEquals(-1, StringUtils.indexOfAnyBut("", 'a','b'));
+ 
+         assertEquals(-1, StringUtils.indexOfAnyBut("zzabyycdxx", (char[]) null));
+-        assertEquals(-1, StringUtils.indexOfAnyBut("zzabyycdxx", new char[0]));
+-        assertEquals(3, StringUtils.indexOfAnyBut("zzabyycdxx", new char[] {'z','a'}));
+-        assertEquals(0, StringUtils.indexOfAnyBut("zzabyycdxx", new char[] {'b','y'}));
+-        assertEquals(-1, StringUtils.indexOfAnyBut("aba", new char[] {'a', 'b'}));
+-        assertEquals(0, StringUtils.indexOfAnyBut("aba", new char[] {'z'}));
++        assertEquals(-1, StringUtils.indexOfAnyBut("zzabyycdxx"));
++        assertEquals(3, StringUtils.indexOfAnyBut("zzabyycdxx", 'z','a'));
++        assertEquals(0, StringUtils.indexOfAnyBut("zzabyycdxx", 'b','y'));
++        assertEquals(-1, StringUtils.indexOfAnyBut("aba", 'a', 'b'));
++        assertEquals(0, StringUtils.indexOfAnyBut("aba", 'z'));
+ 
+     }
+ 
+diff --git a/src/test/java/org/apache/commons/lang3/StringUtilsTest.java b/src/test/java/org/apache/commons/lang3/StringUtilsTest.java
+index 52909c5ba2d290ff14064b8c27ad7b4ccb5cdd12..ecc6afca8e4fef8995a81d8a33031371ed0c0ba1 100644
+--- a/src/test/java/org/apache/commons/lang3/StringUtilsTest.java
++++ b/src/test/java/org/apache/commons/lang3/StringUtilsTest.java
+@@ -461,18 +461,18 @@ public class StringUtilsTest {
+     @Test
+     public void testJoinWith() {
+         assertEquals("", StringUtils.joinWith(",", new Object[0]));        // empty array
+-        assertEquals("", StringUtils.joinWith(",", NULL_ARRAY_LIST));
++        assertEquals("", StringUtils.joinWith(",", (Object[]) NULL_ARRAY_LIST));
+         assertEquals("null", StringUtils.joinWith(",", NULL_TO_STRING_LIST));   //toString method prints 'null'
+ 
+-        assertEquals("a,b,c", StringUtils.joinWith(",", new String[]{"a", "b", "c"}));
+-        assertEquals(",a,", StringUtils.joinWith(",", new String[]{null, "a", ""}));
++        assertEquals("a,b,c", StringUtils.joinWith(",", new Object[]{"a", "b", "c"}));
++        assertEquals(",a,", StringUtils.joinWith(",", new Object[]{null, "a", ""}));
+ 
+         assertEquals("ab", StringUtils.joinWith(null, "a", "b"));
+     }
+ 
+     @Test(expected = IllegalArgumentException.class)
+     public void testJoinWithThrowsException() {
+-        StringUtils.joinWith(",", null);
++        StringUtils.joinWith(",", (Object[]) null);
+     }
+ 
+ 
+diff --git a/src/test/java/org/apache/commons/lang3/ThreadUtilsTest.java b/src/test/java/org/apache/commons/lang3/ThreadUtilsTest.java
+index 88f5e47a20ea0a6f9b72308528af3c67c59fe469..b0ad3100652950c018dc4fadaa18e6bbfffac5cf 100644
+--- a/src/test/java/org/apache/commons/lang3/ThreadUtilsTest.java
++++ b/src/test/java/org/apache/commons/lang3/ThreadUtilsTest.java
+@@ -29,11 +29,9 @@ import static org.junit.Assert.assertTrue;
+ import java.lang.reflect.Constructor;
+ import java.lang.reflect.Modifier;
+ import java.util.Arrays;
+-import java.util.Iterator;
+ import java.util.List;
+ import java.util.concurrent.CountDownLatch;
+ 
+-//import org.apache.commons.lang3.ThreadUtils.AlwaysTruePredicate;
+ import org.junit.Test;
+ 
+ /**
+@@ -176,7 +174,7 @@ public class ThreadUtilsTest {
+         try {
+             t1.start();
+             t2.start();
+-            assertEquals(t1.getName(), ThreadUtils.findThreadById(t1.getId()).getName());
++            assertSame(t1, ThreadUtils.findThreadById(t1.getId()));
+             assertSame(t2, ThreadUtils.findThreadById(t2.getId()));
+         } finally {
+             t1.interrupt();
+@@ -263,8 +261,8 @@ public class ThreadUtilsTest {
+         try {
+             t1.start();
+             t2.start();
+-            assertEquals(t1.getName(), ThreadUtils.findThreadById(t1.getId(),"thread_group_DDZZ99__").getName());
+-            assertEquals(t2.getName(), ThreadUtils.findThreadById(t2.getId(),"thread_group_DDZZ99__").getName());
++            assertSame(t1, ThreadUtils.findThreadById(t1.getId(),"thread_group_DDZZ99__"));
++            assertSame(t2, ThreadUtils.findThreadById(t2.getId(),"thread_group_DDZZ99__"));
+             assertNull(ThreadUtils.findThreadById(nonExistingId,"non_existent_thread_group_JJHHZZ__"));
+             assertNull(ThreadUtils.findThreadById(nonExistingId,"thread_group_DDZZ99__"));
+         } finally {
+@@ -313,8 +311,7 @@ public class ThreadUtilsTest {
+         final List<Thread> threads = Arrays.asList(t1,t2,t3,t4,t5,t6,t7,t8,t9,t10, t11, t11Doubled);
+ 
+         try {
+-            for (final Iterator iterator = threads.iterator(); iterator.hasNext();) {
+-                final Thread thread = (Thread) iterator.next();
++            for (final Thread thread : threads) {
+                 thread.start();
+             }
+             assertTrue(ThreadUtils.getAllThreadGroups().size() >= 7);
+@@ -324,14 +321,12 @@ public class ThreadUtilsTest {
+             assertEquals(0, ThreadUtils.findThreadsByName(t4.getName(), threadGroup2.getName()).size());
+             assertEquals(2, ThreadUtils.findThreadsByName(t11.getName(), threadGroup7.getName()).size());
+         }finally {
+-            for (final Iterator iterator = threads.iterator(); iterator.hasNext();) {
+-                final Thread thread = (Thread) iterator.next();
++            for (final Thread thread : threads) {
+                 thread.interrupt();
+                 thread.join();
+             }
+-            for (final Iterator iterator = threadGroups.iterator(); iterator.hasNext();) {
+-                final ThreadGroup threadGroup = (ThreadGroup) iterator.next();
+-                if(!threadGroup.isDestroyed()) {
++            for (final ThreadGroup threadGroup : threadGroups) {
++                if (!threadGroup.isDestroyed()) {
+                     threadGroup.destroy();
+                 }
+             }

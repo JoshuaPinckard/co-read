@@ -1,0 +1,974 @@
+[
+  {
+    "base": "63d8a025e6f38ddfc966c4104ac783bcb59031e0",
+    "merge": "640953167adf3580a2c21077d78e7e7ce84ead03",
+    "repo": "apache/commons-lang",
+    "sides": {
+      "parent1": {
+        "focal_node_ids": [
+          "org.apache.commons.lang3.ArrayUtilsTest",
+          "org.apache.commons.lang3.StringUtilsTest"
+        ],
+        "parent": "6965455f8a90474c656e68031c780e9531cea21f",
+        "source_patch": "exploratory/arms/patches/apache__commons-lang/640953167adf3580a2c21077d78e7e7ce84ead03/parent1-source.patch",
+        "test_patch": "exploratory/arms/patches/apache__commons-lang/640953167adf3580a2c21077d78e7e7ce84ead03/parent1-test.patch"
+      },
+      "parent2": {
+        "focal_node_ids": [
+          "org.apache.commons.lang3.reflect.TypeUtilsTest"
+        ],
+        "parent": "6271c5015feecc22b9197ef07170fa15f311aad1",
+        "source_patch": "exploratory/arms/patches/apache__commons-lang/640953167adf3580a2c21077d78e7e7ce84ead03/parent2-source.patch",
+        "test_patch": "exploratory/arms/patches/apache__commons-lang/640953167adf3580a2c21077d78e7e7ce84ead03/parent2-test.patch"
+      }
+    },
+    "verdict": "passed"
+  },
+  {
+    "base": "102b75cd923c30fb81047211ea1eb0b12cfe1a43",
+    "merge": "4a882e76d9c9940ac561e8f17ede77c85e3dbeda",
+    "repo": "apache/commons-lang",
+    "sides": {
+      "parent1": {
+        "focal_node_ids": [
+          "org.apache.commons.lang3.builder.HashCodeBuilderTest",
+          "org.apache.commons.lang3.reflect.TypeUtilsTest",
+          "org.apache.commons.lang3.time.DateFormatUtilsTest",
+          "org.apache.commons.lang3.time.DateUtilsTest",
+          "org.apache.commons.lang3.time.DurationFormatUtilsTest",
+          "org.apache.commons.lang3.time.FastDateParserTest",
+          "org.apache.commons.lang3.time.FastDatePrinterTest",
+          "org.apache.commons.lang3.time.FastDatePrinterTimeZonesTest"
+        ],
+        "parent": "1cf8af4b235eff25b9ddae22c477c5bdfba9dc67",
+        "source_patch": "exploratory/arms/patches/apache__commons-lang/4a882e76d9c9940ac561e8f17ede77c85e3dbeda/parent1-source.patch",
+        "test_patch": "exploratory/arms/patches/apache__commons-lang/4a882e76d9c9940ac561e8f17ede77c85e3dbeda/parent1-test.patch"
+      },
+      "parent2": {
+        "focal_node_ids": [
+          "org.apache.commons.lang3.builder.JsonToStringStyleTest"
+        ],
+        "parent": "e8db7237a9c347d2225fce9b49ff92bb741adffa",
+        "source_patch": "exploratory/arms/patches/apache__commons-lang/4a882e76d9c9940ac561e8f17ede77c85e3dbeda/parent2-source.patch",
+        "test_patch": "exploratory/arms/patches/apache__commons-lang/4a882e76d9c9940ac561e8f17ede77c85e3dbeda/parent2-test.patch"
+      }
+    },
+    "verdict": "rejected"
+  },
+  {
+    "base": "8e7ea70a33ecb8db5207849ea6371b4a5a8ffd26",
+    "merge": "1cb5573ada7dc7ec240fca6afe4eeb6e2c793d8e",
+    "repo": "apache/commons-lang",
+    "sides": {
+      "parent1": {
+        "focal_node_ids": [
+          "org.apache.commons.lang3.builder.EqualsBuilderTest",
+          "org.apache.commons.lang3.builder.HashCodeBuilderTest",
+          "org.apache.commons.lang3.builder.ReflectionToStringBuilderExcludeWithAnnotationTest"
+        ],
+        "parent": "d2b1e522bffbfd983ea0061f1d5408fc98ebd8a5",
+        "source_patch": "exploratory/arms/patches/apache__commons-lang/1cb5573ada7dc7ec240fca6afe4eeb6e2c793d8e/parent1-source.patch",
+        "test_patch": "exploratory/arms/patches/apache__commons-lang/1cb5573ada7dc7ec240fca6afe4eeb6e2c793d8e/parent1-test.patch"
+      },
+      "parent2": {
+        "focal_node_ids": [
+          "org.apache.commons.lang3.ThreadUtilsTest"
+        ],
+        "parent": "afab3b02554e0efe0a4dc482bdbb20d985c02653",
+        "source_patch": "exploratory/arms/patches/apache__commons-lang/1cb5573ada7dc7ec240fca6afe4eeb6e2c793d8e/parent2-source.patch",
+        "test_patch": "exploratory/arms/patches/apache__commons-lang/1cb5573ada7dc7ec240fca6afe4eeb6e2c793d8e/parent2-test.patch"
+      }
+    },
+    "verdict": "rejected"
+  },
+  {
+    "base": "1cb5573ada7dc7ec240fca6afe4eeb6e2c793d8e",
+    "merge": "7fae5b0b17dbfa46236243cc53f0ea853ed89f5c",
+    "repo": "apache/commons-lang",
+    "sides": {
+      "parent1": {
+        "focal_node_ids": [
+          "org.apache.commons.lang3.text.StrBuilderTest"
+        ],
+        "parent": "98220ad03e4b620a98ca355317c9da6c6ac765d1",
+        "source_patch": "exploratory/arms/patches/apache__commons-lang/7fae5b0b17dbfa46236243cc53f0ea853ed89f5c/parent1-source.patch",
+        "test_patch": "exploratory/arms/patches/apache__commons-lang/7fae5b0b17dbfa46236243cc53f0ea853ed89f5c/parent1-test.patch"
+      },
+      "parent2": {
+        "focal_node_ids": [
+          "org.apache.commons.lang3.StringUtilsTest"
+        ],
+        "parent": "9752bbc299a880745e02df8f920e076a0fae86bd",
+        "source_patch": "exploratory/arms/patches/apache__commons-lang/7fae5b0b17dbfa46236243cc53f0ea853ed89f5c/parent2-source.patch",
+        "test_patch": "exploratory/arms/patches/apache__commons-lang/7fae5b0b17dbfa46236243cc53f0ea853ed89f5c/parent2-test.patch"
+      }
+    },
+    "verdict": "passed"
+  },
+  {
+    "base": "f431270c59b6d4558da8dff625a7738591a0d541",
+    "merge": "13d7ce9fb65e8f05014daf4ee6cebc76f4781e6c",
+    "repo": "apache/commons-lang",
+    "sides": {
+      "parent1": {
+        "focal_node_ids": [
+          "org.apache.commons.lang3.AnnotationUtilsTest",
+          "org.apache.commons.lang3.ArrayUtilsAddTest",
+          "org.apache.commons.lang3.ArrayUtilsRemoveMultipleTest",
+          "org.apache.commons.lang3.ArrayUtilsRemoveTest",
+          "org.apache.commons.lang3.ArrayUtilsTest",
+          "org.apache.commons.lang3.BitFieldTest",
+          "org.apache.commons.lang3.BooleanUtilsTest",
+          "org.apache.commons.lang3.CharEncodingTest",
+          "org.apache.commons.lang3.CharRangeTest",
+          "org.apache.commons.lang3.CharSequenceUtilsTest",
+          "org.apache.commons.lang3.CharSetTest",
+          "org.apache.commons.lang3.CharSetUtilsTest",
+          "org.apache.commons.lang3.CharUtilsTest",
+          "org.apache.commons.lang3.ClassPathUtilsTest",
+          "org.apache.commons.lang3.ClassUtilsTest",
+          "org.apache.commons.lang3.ConversionTest",
+          "org.apache.commons.lang3.EnumUtilsTest",
+          "org.apache.commons.lang3.JavaVersionTest",
+          "org.apache.commons.lang3.LocaleUtilsTest",
+          "org.apache.commons.lang3.NotImplementedExceptionTest",
+          "org.apache.commons.lang3.ObjectUtilsTest",
+          "org.apache.commons.lang3.RandomStringUtilsTest",
+          "org.apache.commons.lang3.RandomUtilsTest",
+          "org.apache.commons.lang3.RangeTest",
+          "org.apache.commons.lang3.SerializationUtilsTest",
+          "org.apache.commons.lang3.StringEscapeUtilsTest",
+          "org.apache.commons.lang3.StringUtilsEqualsIndexOfTest",
+          "org.apache.commons.lang3.StringUtilsIsTest",
+          "org.apache.commons.lang3.StringUtilsStartsEndsWithTest",
+          "org.apache.commons.lang3.StringUtilsSubstringTest",
+          "org.apache.commons.lang3.StringUtilsTest",
+          "org.apache.commons.lang3.StringUtilsTrimEmptyTest",
+          "org.apache.commons.lang3.SystemUtilsTest",
+          "org.apache.commons.lang3.ThreadUtilsTest",
+          "org.apache.commons.lang3.ValidateTest",
+          "org.apache.commons.lang3.builder.CompareToBuilderTest",
+          "org.apache.commons.lang3.builder.DefaultToStringStyleTest",
+          "org.apache.commons.lang3.builder.DiffBuilderTest",
+          "org.apache.commons.lang3.builder.DiffResultTest",
+          "org.apache.commons.lang3.builder.DiffTest",
+          "org.apache.commons.lang3.builder.EqualsBuilderTest",
+          "org.apache.commons.lang3.builder.HashCodeBuilderAndEqualsBuilderTest",
+          "org.apache.commons.lang3.builder.HashCodeBuilderTest",
+          "org.apache.commons.lang3.builder.JsonToStringStyleTest",
+          "org.apache.commons.lang3.builder.MultiLineToStringStyleTest",
+          "org.apache.commons.lang3.builder.MultilineRecursiveToStringStyleTest",
+          "org.apache.commons.lang3.builder.NoClassNameToStringStyleTest",
+          "org.apache.commons.lang3.builder.NoFieldNamesToStringStyleTest",
+          "org.apache.commons.lang3.builder.RecursiveToStringStyleTest",
+          "org.apache.commons.lang3.builder.ReflectionToStringBuilderConcurrencyTest",
+          "org.apache.commons.lang3.builder.ReflectionToStringBuilderExcludeTest",
+          "org.apache.commons.lang3.builder.ReflectionToStringBuilderExcludeWithAnnotationTest",
+          "org.apache.commons.lang3.builder.ReflectionToStringBuilderMutateInspectConcurrencyTest",
+          "org.apache.commons.lang3.builder.ShortPrefixToStringStyleTest",
+          "org.apache.commons.lang3.builder.SimpleToStringStyleTest",
+          "org.apache.commons.lang3.builder.StandardToStringStyleTest",
+          "org.apache.commons.lang3.builder.ToStringBuilderTest",
+          "org.apache.commons.lang3.builder.ToStringStyleConcurrencyTest",
+          "org.apache.commons.lang3.builder.ToStringStyleTest",
+          "org.apache.commons.lang3.concurrent.AbstractConcurrentInitializerTest",
+          "org.apache.commons.lang3.concurrent.AtomicInitializerTest",
+          "org.apache.commons.lang3.concurrent.AtomicSafeInitializerTest",
+          "org.apache.commons.lang3.concurrent.BasicThreadFactoryTest",
+          "org.apache.commons.lang3.concurrent.CallableBackgroundInitializerTest",
+          "org.apache.commons.lang3.concurrent.ConcurrentUtilsTest",
+          "org.apache.commons.lang3.concurrent.ConstantInitializerTest",
+          "org.apache.commons.lang3.concurrent.LazyInitializerTest",
+          "org.apache.commons.lang3.concurrent.MultiBackgroundInitializerTest",
+          "org.apache.commons.lang3.concurrent.TimedSemaphoreTest",
+          "org.apache.commons.lang3.event.EventListenerSupportTest",
+          "org.apache.commons.lang3.event.EventUtilsTest",
+          "org.apache.commons.lang3.exception.DefaultExceptionContextTest",
+          "org.apache.commons.lang3.math.FractionTest",
+          "org.apache.commons.lang3.math.IEEE754rUtilsTest",
+          "org.apache.commons.lang3.math.NumberUtilsTest",
+          "org.apache.commons.lang3.mutable.MutableBooleanTest",
+          "org.apache.commons.lang3.mutable.MutableByteTest",
+          "org.apache.commons.lang3.mutable.MutableDoubleTest",
+          "org.apache.commons.lang3.mutable.MutableFloatTest",
+          "org.apache.commons.lang3.mutable.MutableIntTest",
+          "org.apache.commons.lang3.mutable.MutableLongTest",
+          "org.apache.commons.lang3.mutable.MutableObjectTest",
+          "org.apache.commons.lang3.mutable.MutableShortTest",
+          "org.apache.commons.lang3.reflect.ConstructorUtilsTest",
+          "org.apache.commons.lang3.reflect.FieldUtilsTest",
+          "org.apache.commons.lang3.reflect.MethodUtilsTest",
+          "org.apache.commons.lang3.reflect.TypeUtilsTest",
+          "org.apache.commons.lang3.text.ExtendedMessageFormatTest",
+          "org.apache.commons.lang3.text.FormattableUtilsTest",
+          "org.apache.commons.lang3.text.StrBuilderAppendInsertTest",
+          "org.apache.commons.lang3.text.StrBuilderTest",
+          "org.apache.commons.lang3.text.StrLookupTest",
+          "org.apache.commons.lang3.text.StrMatcherTest",
+          "org.apache.commons.lang3.text.StrSubstitutorTest",
+          "org.apache.commons.lang3.text.StrTokenizerTest",
+          "org.apache.commons.lang3.text.WordUtilsTest",
+          "org.apache.commons.lang3.text.translate.EntityArraysTest",
+          "org.apache.commons.lang3.text.translate.LookupTranslatorTest",
+          "org.apache.commons.lang3.text.translate.NumericEntityEscaperTest",
+          "org.apache.commons.lang3.text.translate.NumericEntityUnescaperTest",
+          "org.apache.commons.lang3.text.translate.OctalUnescaperTest",
+          "org.apache.commons.lang3.text.translate.UnicodeEscaperTest",
+          "org.apache.commons.lang3.text.translate.UnicodeUnescaperTest",
+          "org.apache.commons.lang3.text.translate.UnicodeUnpairedSurrogateRemoverTest",
+          "org.apache.commons.lang3.time.DateFormatUtilsTest",
+          "org.apache.commons.lang3.time.DateUtilsRoundingTest",
+          "org.apache.commons.lang3.time.DateUtilsTest",
+          "org.apache.commons.lang3.time.DurationFormatUtilsTest",
+          "org.apache.commons.lang3.time.FastDateFormatTest",
+          "org.apache.commons.lang3.time.FastDateParserTest",
+          "org.apache.commons.lang3.time.FastDatePrinterTest",
+          "org.apache.commons.lang3.time.FastDatePrinterTimeZonesTest",
+          "org.apache.commons.lang3.time.StopWatchTest",
+          "org.apache.commons.lang3.tuple.ImmutablePairTest",
+          "org.apache.commons.lang3.tuple.ImmutableTripleTest",
+          "org.apache.commons.lang3.tuple.MutablePairTest",
+          "org.apache.commons.lang3.tuple.MutableTripleTest",
+          "org.apache.commons.lang3.tuple.PairTest",
+          "org.apache.commons.lang3.tuple.TripleTest"
+        ],
+        "parent": "48d142dc3bf2ef6d9a27c4138f9f1f9c7afd70ed",
+        "source_patch": "exploratory/arms/patches/apache__commons-lang/13d7ce9fb65e8f05014daf4ee6cebc76f4781e6c/parent1-source.patch",
+        "test_patch": "exploratory/arms/patches/apache__commons-lang/13d7ce9fb65e8f05014daf4ee6cebc76f4781e6c/parent1-test.patch"
+      },
+      "parent2": {
+        "focal_node_ids": [
+          "org.apache.commons.lang3.ArrayUtilsTest"
+        ],
+        "parent": "35096beed02221413948ed840bdd33c8e3c921d1",
+        "source_patch": "exploratory/arms/patches/apache__commons-lang/13d7ce9fb65e8f05014daf4ee6cebc76f4781e6c/parent2-source.patch",
+        "test_patch": "exploratory/arms/patches/apache__commons-lang/13d7ce9fb65e8f05014daf4ee6cebc76f4781e6c/parent2-test.patch"
+      }
+    },
+    "verdict": "rejected"
+  },
+  {
+    "base": "d6dd2b4cd4a337c5517952680c3714e5d08e9cb8",
+    "merge": "dee94449e6abb1b999213a0e8efbe937bcff693b",
+    "repo": "apache/commons-lang",
+    "sides": {
+      "parent1": {
+        "focal_node_ids": [
+          "org.apache.commons.lang3.ArrayUtilsTest",
+          "org.apache.commons.lang3.StringUtilsEqualsIndexOfTest",
+          "org.apache.commons.lang3.StringUtilsTest",
+          "org.apache.commons.lang3.ThreadUtilsTest"
+        ],
+        "parent": "0e96d84e230628229d7f84c8f21936a3c975eda4",
+        "source_patch": "exploratory/arms/patches/apache__commons-lang/dee94449e6abb1b999213a0e8efbe937bcff693b/parent1-source.patch",
+        "test_patch": "exploratory/arms/patches/apache__commons-lang/dee94449e6abb1b999213a0e8efbe937bcff693b/parent1-test.patch"
+      },
+      "parent2": {
+        "focal_node_ids": [
+          "org.apache.commons.lang3.builder.ReflectionToStringBuilderTest",
+          "org.apache.commons.lang3.builder.ToStringBuilderTest"
+        ],
+        "parent": "d282015e73ffce5b6d08a5244e890c7ea1a73400",
+        "source_patch": "exploratory/arms/patches/apache__commons-lang/dee94449e6abb1b999213a0e8efbe937bcff693b/parent2-source.patch",
+        "test_patch": "exploratory/arms/patches/apache__commons-lang/dee94449e6abb1b999213a0e8efbe937bcff693b/parent2-test.patch"
+      }
+    },
+    "verdict": "rejected"
+  },
+  {
+    "base": "1cb5573ada7dc7ec240fca6afe4eeb6e2c793d8e",
+    "merge": "9604c853069562e8c4219ae27eaa4b2bad59eabc",
+    "repo": "apache/commons-lang",
+    "sides": {
+      "parent1": {
+        "focal_node_ids": [
+          "org.apache.commons.lang3.AnnotationUtilsTest",
+          "org.apache.commons.lang3.ArrayUtilsAddTest",
+          "org.apache.commons.lang3.ArrayUtilsRemoveMultipleTest",
+          "org.apache.commons.lang3.ArrayUtilsRemoveTest",
+          "org.apache.commons.lang3.ArrayUtilsTest",
+          "org.apache.commons.lang3.BitFieldTest",
+          "org.apache.commons.lang3.BooleanUtilsTest",
+          "org.apache.commons.lang3.CharEncodingTest",
+          "org.apache.commons.lang3.CharRangeTest",
+          "org.apache.commons.lang3.CharSequenceUtilsTest",
+          "org.apache.commons.lang3.CharSetTest",
+          "org.apache.commons.lang3.CharSetUtilsTest",
+          "org.apache.commons.lang3.CharUtilsTest",
+          "org.apache.commons.lang3.ClassPathUtilsTest",
+          "org.apache.commons.lang3.ClassUtilsTest",
+          "org.apache.commons.lang3.ConversionTest",
+          "org.apache.commons.lang3.EnumUtilsTest",
+          "org.apache.commons.lang3.JavaVersionTest",
+          "org.apache.commons.lang3.LocaleUtilsTest",
+          "org.apache.commons.lang3.NotImplementedExceptionTest",
+          "org.apache.commons.lang3.ObjectUtilsTest",
+          "org.apache.commons.lang3.RandomStringUtilsTest",
+          "org.apache.commons.lang3.RandomUtilsTest",
+          "org.apache.commons.lang3.RangeTest",
+          "org.apache.commons.lang3.SerializationUtilsTest",
+          "org.apache.commons.lang3.StringEscapeUtilsTest",
+          "org.apache.commons.lang3.StringUtilsEqualsIndexOfTest",
+          "org.apache.commons.lang3.StringUtilsIsTest",
+          "org.apache.commons.lang3.StringUtilsStartsEndsWithTest",
+          "org.apache.commons.lang3.StringUtilsSubstringTest",
+          "org.apache.commons.lang3.StringUtilsTest",
+          "org.apache.commons.lang3.StringUtilsTrimEmptyTest",
+          "org.apache.commons.lang3.SystemUtilsTest",
+          "org.apache.commons.lang3.ThreadUtilsTest",
+          "org.apache.commons.lang3.ValidateTest",
+          "org.apache.commons.lang3.builder.CompareToBuilderTest",
+          "org.apache.commons.lang3.builder.DefaultToStringStyleTest",
+          "org.apache.commons.lang3.builder.DiffBuilderTest",
+          "org.apache.commons.lang3.builder.DiffResultTest",
+          "org.apache.commons.lang3.builder.DiffTest",
+          "org.apache.commons.lang3.builder.EqualsBuilderTest",
+          "org.apache.commons.lang3.builder.HashCodeBuilderAndEqualsBuilderTest",
+          "org.apache.commons.lang3.builder.HashCodeBuilderTest",
+          "org.apache.commons.lang3.builder.JsonToStringStyleTest",
+          "org.apache.commons.lang3.builder.MultiLineToStringStyleTest",
+          "org.apache.commons.lang3.builder.MultilineRecursiveToStringStyleTest",
+          "org.apache.commons.lang3.builder.NoClassNameToStringStyleTest",
+          "org.apache.commons.lang3.builder.NoFieldNamesToStringStyleTest",
+          "org.apache.commons.lang3.builder.RecursiveToStringStyleTest",
+          "org.apache.commons.lang3.builder.ReflectionToStringBuilderConcurrencyTest",
+          "org.apache.commons.lang3.builder.ReflectionToStringBuilderExcludeTest",
+          "org.apache.commons.lang3.builder.ReflectionToStringBuilderExcludeWithAnnotationTest",
+          "org.apache.commons.lang3.builder.ReflectionToStringBuilderMutateInspectConcurrencyTest",
+          "org.apache.commons.lang3.builder.ReflectionToStringBuilderTest",
+          "org.apache.commons.lang3.builder.ShortPrefixToStringStyleTest",
+          "org.apache.commons.lang3.builder.SimpleToStringStyleTest",
+          "org.apache.commons.lang3.builder.StandardToStringStyleTest",
+          "org.apache.commons.lang3.builder.ToStringBuilderTest",
+          "org.apache.commons.lang3.builder.ToStringStyleConcurrencyTest",
+          "org.apache.commons.lang3.builder.ToStringStyleTest",
+          "org.apache.commons.lang3.concurrent.AbstractConcurrentInitializerTest",
+          "org.apache.commons.lang3.concurrent.AtomicInitializerTest",
+          "org.apache.commons.lang3.concurrent.AtomicSafeInitializerTest",
+          "org.apache.commons.lang3.concurrent.BasicThreadFactoryTest",
+          "org.apache.commons.lang3.concurrent.CallableBackgroundInitializerTest",
+          "org.apache.commons.lang3.concurrent.ConcurrentUtilsTest",
+          "org.apache.commons.lang3.concurrent.ConstantInitializerTest",
+          "org.apache.commons.lang3.concurrent.LazyInitializerTest",
+          "org.apache.commons.lang3.concurrent.MultiBackgroundInitializerTest",
+          "org.apache.commons.lang3.concurrent.TimedSemaphoreTest",
+          "org.apache.commons.lang3.event.EventListenerSupportTest",
+          "org.apache.commons.lang3.event.EventUtilsTest",
+          "org.apache.commons.lang3.exception.DefaultExceptionContextTest",
+          "org.apache.commons.lang3.math.FractionTest",
+          "org.apache.commons.lang3.math.IEEE754rUtilsTest",
+          "org.apache.commons.lang3.math.NumberUtilsTest",
+          "org.apache.commons.lang3.mutable.MutableBooleanTest",
+          "org.apache.commons.lang3.mutable.MutableByteTest",
+          "org.apache.commons.lang3.mutable.MutableDoubleTest",
+          "org.apache.commons.lang3.mutable.MutableFloatTest",
+          "org.apache.commons.lang3.mutable.MutableIntTest",
+          "org.apache.commons.lang3.mutable.MutableLongTest",
+          "org.apache.commons.lang3.mutable.MutableObjectTest",
+          "org.apache.commons.lang3.mutable.MutableShortTest",
+          "org.apache.commons.lang3.reflect.ConstructorUtilsTest",
+          "org.apache.commons.lang3.reflect.FieldUtilsTest",
+          "org.apache.commons.lang3.reflect.MethodUtilsTest",
+          "org.apache.commons.lang3.reflect.TypeUtilsTest",
+          "org.apache.commons.lang3.text.ExtendedMessageFormatTest",
+          "org.apache.commons.lang3.text.FormattableUtilsTest",
+          "org.apache.commons.lang3.text.StrBuilderAppendInsertTest",
+          "org.apache.commons.lang3.text.StrBuilderTest",
+          "org.apache.commons.lang3.text.StrLookupTest",
+          "org.apache.commons.lang3.text.StrMatcherTest",
+          "org.apache.commons.lang3.text.StrSubstitutorTest",
+          "org.apache.commons.lang3.text.StrTokenizerTest",
+          "org.apache.commons.lang3.text.WordUtilsTest",
+          "org.apache.commons.lang3.text.translate.EntityArraysTest",
+          "org.apache.commons.lang3.text.translate.LookupTranslatorTest",
+          "org.apache.commons.lang3.text.translate.NumericEntityEscaperTest",
+          "org.apache.commons.lang3.text.translate.NumericEntityUnescaperTest",
+          "org.apache.commons.lang3.text.translate.OctalUnescaperTest",
+          "org.apache.commons.lang3.text.translate.UnicodeEscaperTest",
+          "org.apache.commons.lang3.text.translate.UnicodeUnescaperTest",
+          "org.apache.commons.lang3.text.translate.UnicodeUnpairedSurrogateRemoverTest",
+          "org.apache.commons.lang3.time.DateFormatUtilsTest",
+          "org.apache.commons.lang3.time.DateUtilsRoundingTest",
+          "org.apache.commons.lang3.time.DateUtilsTest",
+          "org.apache.commons.lang3.time.DurationFormatUtilsTest",
+          "org.apache.commons.lang3.time.FastDateFormatTest",
+          "org.apache.commons.lang3.time.FastDateParserTest",
+          "org.apache.commons.lang3.time.FastDatePrinterTest",
+          "org.apache.commons.lang3.time.StopWatchTest",
+          "org.apache.commons.lang3.tuple.ImmutablePairTest",
+          "org.apache.commons.lang3.tuple.ImmutableTripleTest",
+          "org.apache.commons.lang3.tuple.MutablePairTest",
+          "org.apache.commons.lang3.tuple.MutableTripleTest",
+          "org.apache.commons.lang3.tuple.PairTest",
+          "org.apache.commons.lang3.tuple.TripleTest"
+        ],
+        "parent": "dee94449e6abb1b999213a0e8efbe937bcff693b",
+        "source_patch": "exploratory/arms/patches/apache__commons-lang/9604c853069562e8c4219ae27eaa4b2bad59eabc/parent1-source.patch",
+        "test_patch": "exploratory/arms/patches/apache__commons-lang/9604c853069562e8c4219ae27eaa4b2bad59eabc/parent1-test.patch"
+      },
+      "parent2": {
+        "focal_node_ids": [
+          "org.apache.commons.lang3.text.WordUtilsTest"
+        ],
+        "parent": "1182950a8860efcb59e2fc09f89ab7c0400c45ba",
+        "source_patch": "exploratory/arms/patches/apache__commons-lang/9604c853069562e8c4219ae27eaa4b2bad59eabc/parent2-source.patch",
+        "test_patch": "exploratory/arms/patches/apache__commons-lang/9604c853069562e8c4219ae27eaa4b2bad59eabc/parent2-test.patch"
+      }
+    },
+    "verdict": "rejected"
+  },
+  {
+    "base": "b37837ce638048384756850a3a6892519ddbc743",
+    "merge": "cfe63beeacf30e78c0fccb89132d6e50f650fa2f",
+    "repo": "apache/commons-lang",
+    "sides": {
+      "parent1": {
+        "focal_node_ids": [
+          "org.apache.commons.lang3.AnnotationUtilsTest",
+          "org.apache.commons.lang3.ArrayUtilsAddTest",
+          "org.apache.commons.lang3.ArrayUtilsRemoveMultipleTest",
+          "org.apache.commons.lang3.ArrayUtilsRemoveTest",
+          "org.apache.commons.lang3.ArrayUtilsTest",
+          "org.apache.commons.lang3.BitFieldTest",
+          "org.apache.commons.lang3.BooleanUtilsTest",
+          "org.apache.commons.lang3.CharEncodingTest",
+          "org.apache.commons.lang3.CharRangeTest",
+          "org.apache.commons.lang3.CharSequenceUtilsTest",
+          "org.apache.commons.lang3.CharSetTest",
+          "org.apache.commons.lang3.CharSetUtilsTest",
+          "org.apache.commons.lang3.CharUtilsTest",
+          "org.apache.commons.lang3.ClassPathUtilsTest",
+          "org.apache.commons.lang3.ClassUtilsTest",
+          "org.apache.commons.lang3.ConversionTest",
+          "org.apache.commons.lang3.EnumUtilsTest",
+          "org.apache.commons.lang3.JavaVersionTest",
+          "org.apache.commons.lang3.LocaleUtilsTest",
+          "org.apache.commons.lang3.NotImplementedExceptionTest",
+          "org.apache.commons.lang3.ObjectUtilsTest",
+          "org.apache.commons.lang3.RandomStringUtilsTest",
+          "org.apache.commons.lang3.RandomUtilsTest",
+          "org.apache.commons.lang3.RangeTest",
+          "org.apache.commons.lang3.SerializationUtilsTest",
+          "org.apache.commons.lang3.StringEscapeUtilsTest",
+          "org.apache.commons.lang3.StringUtilsEqualsIndexOfTest",
+          "org.apache.commons.lang3.StringUtilsIsTest",
+          "org.apache.commons.lang3.StringUtilsStartsEndsWithTest",
+          "org.apache.commons.lang3.StringUtilsSubstringTest",
+          "org.apache.commons.lang3.StringUtilsTest",
+          "org.apache.commons.lang3.StringUtilsTrimEmptyTest",
+          "org.apache.commons.lang3.SystemUtilsTest",
+          "org.apache.commons.lang3.ThreadUtilsTest",
+          "org.apache.commons.lang3.ValidateTest",
+          "org.apache.commons.lang3.builder.CompareToBuilderTest",
+          "org.apache.commons.lang3.builder.DefaultToStringStyleTest",
+          "org.apache.commons.lang3.builder.DiffBuilderTest",
+          "org.apache.commons.lang3.builder.DiffResultTest",
+          "org.apache.commons.lang3.builder.DiffTest",
+          "org.apache.commons.lang3.builder.EqualsBuilderTest",
+          "org.apache.commons.lang3.builder.HashCodeBuilderAndEqualsBuilderTest",
+          "org.apache.commons.lang3.builder.HashCodeBuilderTest",
+          "org.apache.commons.lang3.builder.JsonToStringStyleTest",
+          "org.apache.commons.lang3.builder.MultiLineToStringStyleTest",
+          "org.apache.commons.lang3.builder.MultilineRecursiveToStringStyleTest",
+          "org.apache.commons.lang3.builder.NoClassNameToStringStyleTest",
+          "org.apache.commons.lang3.builder.NoFieldNamesToStringStyleTest",
+          "org.apache.commons.lang3.builder.RecursiveToStringStyleTest",
+          "org.apache.commons.lang3.builder.ReflectionToStringBuilderConcurrencyTest",
+          "org.apache.commons.lang3.builder.ReflectionToStringBuilderExcludeTest",
+          "org.apache.commons.lang3.builder.ReflectionToStringBuilderExcludeWithAnnotationTest",
+          "org.apache.commons.lang3.builder.ReflectionToStringBuilderMutateInspectConcurrencyTest",
+          "org.apache.commons.lang3.builder.ReflectionToStringBuilderTest",
+          "org.apache.commons.lang3.builder.ShortPrefixToStringStyleTest",
+          "org.apache.commons.lang3.builder.SimpleToStringStyleTest",
+          "org.apache.commons.lang3.builder.StandardToStringStyleTest",
+          "org.apache.commons.lang3.builder.ToStringBuilderTest",
+          "org.apache.commons.lang3.builder.ToStringStyleConcurrencyTest",
+          "org.apache.commons.lang3.builder.ToStringStyleTest",
+          "org.apache.commons.lang3.concurrent.AbstractConcurrentInitializerTest",
+          "org.apache.commons.lang3.concurrent.AtomicInitializerTest",
+          "org.apache.commons.lang3.concurrent.AtomicSafeInitializerTest",
+          "org.apache.commons.lang3.concurrent.BasicThreadFactoryTest",
+          "org.apache.commons.lang3.concurrent.CallableBackgroundInitializerTest",
+          "org.apache.commons.lang3.concurrent.ConcurrentUtilsTest",
+          "org.apache.commons.lang3.concurrent.ConstantInitializerTest",
+          "org.apache.commons.lang3.concurrent.LazyInitializerTest",
+          "org.apache.commons.lang3.concurrent.MultiBackgroundInitializerTest",
+          "org.apache.commons.lang3.concurrent.TimedSemaphoreTest",
+          "org.apache.commons.lang3.event.EventListenerSupportTest",
+          "org.apache.commons.lang3.event.EventUtilsTest",
+          "org.apache.commons.lang3.exception.DefaultExceptionContextTest",
+          "org.apache.commons.lang3.math.FractionTest",
+          "org.apache.commons.lang3.math.IEEE754rUtilsTest",
+          "org.apache.commons.lang3.math.NumberUtilsTest",
+          "org.apache.commons.lang3.mutable.MutableBooleanTest",
+          "org.apache.commons.lang3.mutable.MutableByteTest",
+          "org.apache.commons.lang3.mutable.MutableDoubleTest",
+          "org.apache.commons.lang3.mutable.MutableFloatTest",
+          "org.apache.commons.lang3.mutable.MutableIntTest",
+          "org.apache.commons.lang3.mutable.MutableLongTest",
+          "org.apache.commons.lang3.mutable.MutableObjectTest",
+          "org.apache.commons.lang3.mutable.MutableShortTest",
+          "org.apache.commons.lang3.reflect.ConstructorUtilsTest",
+          "org.apache.commons.lang3.reflect.FieldUtilsTest",
+          "org.apache.commons.lang3.reflect.MethodUtilsTest",
+          "org.apache.commons.lang3.reflect.TypeUtilsTest",
+          "org.apache.commons.lang3.text.ExtendedMessageFormatTest",
+          "org.apache.commons.lang3.text.FormattableUtilsTest",
+          "org.apache.commons.lang3.text.StrBuilderAppendInsertTest",
+          "org.apache.commons.lang3.text.StrBuilderTest",
+          "org.apache.commons.lang3.text.StrLookupTest",
+          "org.apache.commons.lang3.text.StrMatcherTest",
+          "org.apache.commons.lang3.text.StrSubstitutorTest",
+          "org.apache.commons.lang3.text.StrTokenizerTest",
+          "org.apache.commons.lang3.text.WordUtilsTest",
+          "org.apache.commons.lang3.text.translate.EntityArraysTest",
+          "org.apache.commons.lang3.text.translate.LookupTranslatorTest",
+          "org.apache.commons.lang3.text.translate.NumericEntityEscaperTest",
+          "org.apache.commons.lang3.text.translate.NumericEntityUnescaperTest",
+          "org.apache.commons.lang3.text.translate.OctalUnescaperTest",
+          "org.apache.commons.lang3.text.translate.UnicodeEscaperTest",
+          "org.apache.commons.lang3.text.translate.UnicodeUnescaperTest",
+          "org.apache.commons.lang3.text.translate.UnicodeUnpairedSurrogateRemoverTest",
+          "org.apache.commons.lang3.time.DateFormatUtilsTest",
+          "org.apache.commons.lang3.time.DateUtilsRoundingTest",
+          "org.apache.commons.lang3.time.DateUtilsTest",
+          "org.apache.commons.lang3.time.DurationFormatUtilsTest",
+          "org.apache.commons.lang3.time.FastDateFormatTest",
+          "org.apache.commons.lang3.time.FastDateParserTest",
+          "org.apache.commons.lang3.time.FastDatePrinterTest",
+          "org.apache.commons.lang3.time.StopWatchTest",
+          "org.apache.commons.lang3.tuple.ImmutablePairTest",
+          "org.apache.commons.lang3.tuple.ImmutableTripleTest",
+          "org.apache.commons.lang3.tuple.MutablePairTest",
+          "org.apache.commons.lang3.tuple.MutableTripleTest",
+          "org.apache.commons.lang3.tuple.PairTest",
+          "org.apache.commons.lang3.tuple.TripleTest"
+        ],
+        "parent": "9604c853069562e8c4219ae27eaa4b2bad59eabc",
+        "source_patch": "exploratory/arms/patches/apache__commons-lang/cfe63beeacf30e78c0fccb89132d6e50f650fa2f/parent1-source.patch",
+        "test_patch": "exploratory/arms/patches/apache__commons-lang/cfe63beeacf30e78c0fccb89132d6e50f650fa2f/parent1-test.patch"
+      },
+      "parent2": {
+        "focal_node_ids": [
+          "org.apache.commons.lang3.StringUtilsEqualsIndexOfTest",
+          "org.apache.commons.lang3.test.SystemDefaultsSwitchTest",
+          "org.apache.commons.lang3.time.DateFormatUtilsTest",
+          "org.apache.commons.lang3.time.DateUtilsTest",
+          "org.apache.commons.lang3.time.FastDateFormatTest",
+          "org.apache.commons.lang3.time.FastDatePrinterTest"
+        ],
+        "parent": "9efa153e441eb67526bf33200445095b30956ac4",
+        "source_patch": "exploratory/arms/patches/apache__commons-lang/cfe63beeacf30e78c0fccb89132d6e50f650fa2f/parent2-source.patch",
+        "test_patch": "exploratory/arms/patches/apache__commons-lang/cfe63beeacf30e78c0fccb89132d6e50f650fa2f/parent2-test.patch"
+      }
+    },
+    "verdict": "rejected"
+  },
+  {
+    "base": "0343b4fda87161265acf30d5ee61e525e751358d",
+    "merge": "80644cdab9a77db0a52d09d9ebb1f406912997d1",
+    "repo": "apache/commons-lang",
+    "sides": {
+      "parent1": {
+        "focal_node_ids": [
+          "org.apache.commons.lang3.text.StrLookupTest"
+        ],
+        "parent": "305d5eb8969285dbec10d888186c6f2ee447c142",
+        "source_patch": "exploratory/arms/patches/apache__commons-lang/80644cdab9a77db0a52d09d9ebb1f406912997d1/parent1-source.patch",
+        "test_patch": "exploratory/arms/patches/apache__commons-lang/80644cdab9a77db0a52d09d9ebb1f406912997d1/parent1-test.patch"
+      },
+      "parent2": {
+        "focal_node_ids": [
+          "org.apache.commons.lang3.EnumUtilsTest",
+          "org.apache.commons.lang3.StringUtilsTest",
+          "org.apache.commons.lang3.text.WordUtilsTest",
+          "org.apache.commons.lang3.time.FastDateParser_TimeZoneStrategyTest"
+        ],
+        "parent": "04b55bc7ca0b0ac444fdc8ad01acef8172852a8f",
+        "source_patch": "exploratory/arms/patches/apache__commons-lang/80644cdab9a77db0a52d09d9ebb1f406912997d1/parent2-source.patch",
+        "test_patch": "exploratory/arms/patches/apache__commons-lang/80644cdab9a77db0a52d09d9ebb1f406912997d1/parent2-test.patch"
+      }
+    },
+    "verdict": "passed"
+  },
+  {
+    "base": "47c186298927e373b31fe26444b9dbc313cccce6",
+    "merge": "481137553f878e2f69ce05129d4aecbf016a1756",
+    "repo": "apache/commons-lang",
+    "sides": {
+      "parent1": {
+        "focal_node_ids": [
+          "org.apache.commons.lang3.StringUtilsTest",
+          "org.apache.commons.lang3.time.DateFormatUtilsTest",
+          "org.apache.commons.lang3.time.DateUtilsRoundingTest",
+          "org.apache.commons.lang3.time.DateUtilsTest",
+          "org.apache.commons.lang3.time.DurationFormatUtilsTest",
+          "org.apache.commons.lang3.time.FastDatePrinterTest"
+        ],
+        "parent": "a5650a16717962d88f037d15aa52fe62d6943901",
+        "source_patch": "exploratory/arms/patches/apache__commons-lang/481137553f878e2f69ce05129d4aecbf016a1756/parent1-source.patch",
+        "test_patch": "exploratory/arms/patches/apache__commons-lang/481137553f878e2f69ce05129d4aecbf016a1756/parent1-test.patch"
+      },
+      "parent2": {
+        "focal_node_ids": [
+          "org.apache.commons.lang3.StringUtilsEqualsIndexOfTest"
+        ],
+        "parent": "2c790ccc312535e679bd4a24e2065d0b7119e014",
+        "source_patch": "exploratory/arms/patches/apache__commons-lang/481137553f878e2f69ce05129d4aecbf016a1756/parent2-source.patch",
+        "test_patch": "exploratory/arms/patches/apache__commons-lang/481137553f878e2f69ce05129d4aecbf016a1756/parent2-test.patch"
+      }
+    },
+    "verdict": "passed"
+  },
+  {
+    "base": "1a1fc65b04bcbe2e95d0fa300fce110e1224906e",
+    "merge": "dad86bc0a29689fd29bf03b382a39621718e8b05",
+    "repo": "apache/commons-lang",
+    "sides": {
+      "parent1": {
+        "focal_node_ids": [
+          "org.apache.commons.lang3.math.NumberUtilsTest"
+        ],
+        "parent": "e64b51c70fa9f5e2795e91e6729ebd895f7f3c01",
+        "source_patch": "exploratory/arms/patches/apache__commons-lang/dad86bc0a29689fd29bf03b382a39621718e8b05/parent1-source.patch",
+        "test_patch": "exploratory/arms/patches/apache__commons-lang/dad86bc0a29689fd29bf03b382a39621718e8b05/parent1-test.patch"
+      },
+      "parent2": {
+        "focal_node_ids": [
+          "org.apache.commons.lang3.ClassUtilsTest",
+          "org.apache.commons.lang3.DigitalBase10SizeUnitTest",
+          "org.apache.commons.lang3.DigitalBase2SizeUnitTest",
+          "org.apache.commons.lang3.RandomStringUtilsTest",
+          "org.apache.commons.lang3.StringUtilsContainsTest",
+          "org.apache.commons.lang3.StringUtilsEmptyBlankTest",
+          "org.apache.commons.lang3.StringUtilsEqualsIndexOfTest",
+          "org.apache.commons.lang3.StringUtilsIsTest",
+          "org.apache.commons.lang3.StringUtilsTest",
+          "org.apache.commons.lang3.StringUtilsTrimEmptyTest",
+          "org.apache.commons.lang3.StringUtilsTrimStripTest",
+          "org.apache.commons.lang3.XMLCharacterTest",
+          "org.apache.commons.lang3.reflect.TypeUtilsTest"
+        ],
+        "parent": "05a6beba76b3195b26f2b15919d4f3a95b22c580",
+        "source_patch": "exploratory/arms/patches/apache__commons-lang/dad86bc0a29689fd29bf03b382a39621718e8b05/parent2-source.patch",
+        "test_patch": "exploratory/arms/patches/apache__commons-lang/dad86bc0a29689fd29bf03b382a39621718e8b05/parent2-test.patch"
+      }
+    },
+    "verdict": "rejected"
+  },
+  {
+    "base": "afedbae8aca69a092d65766640361801bf2b5d9b",
+    "merge": "ad1b72b7ece0166c5fbe0c6136213589eeed9945",
+    "repo": "apache/commons-lang",
+    "sides": {
+      "parent1": {
+        "focal_node_ids": [
+          "org.apache.commons.lang3.ClassUtilsTest",
+          "org.apache.commons.lang3.DigitalBase10SizeUnitTest",
+          "org.apache.commons.lang3.DigitalBase2SizeUnitTest",
+          "org.apache.commons.lang3.RandomStringUtilsTest",
+          "org.apache.commons.lang3.StringUtilsContainsTest",
+          "org.apache.commons.lang3.StringUtilsEmptyBlankTest",
+          "org.apache.commons.lang3.StringUtilsEqualsIndexOfTest",
+          "org.apache.commons.lang3.StringUtilsIsTest",
+          "org.apache.commons.lang3.StringUtilsTest",
+          "org.apache.commons.lang3.StringUtilsTrimEmptyTest",
+          "org.apache.commons.lang3.StringUtilsTrimStripTest",
+          "org.apache.commons.lang3.ValidateTest",
+          "org.apache.commons.lang3.XMLCharacterTest",
+          "org.apache.commons.lang3.builder.HashCodeBuilderTest",
+          "org.apache.commons.lang3.builder.ReflectionToStringBuilderTest",
+          "org.apache.commons.lang3.concurrent.EventCountCircuitBreakerTest",
+          "org.apache.commons.lang3.concurrent.ThresholdCircuitBreakerTest",
+          "org.apache.commons.lang3.math.NumberUtilsTest",
+          "org.apache.commons.lang3.mutable.MutableByteTest",
+          "org.apache.commons.lang3.mutable.MutableDoubleTest",
+          "org.apache.commons.lang3.mutable.MutableFloatTest",
+          "org.apache.commons.lang3.mutable.MutableIntTest",
+          "org.apache.commons.lang3.mutable.MutableLongTest",
+          "org.apache.commons.lang3.mutable.MutableShortTest",
+          "org.apache.commons.lang3.reflect.MethodUtilsTest",
+          "org.apache.commons.lang3.reflect.TypeUtilsTest",
+          "org.apache.commons.lang3.text.StrTokenizerTest"
+        ],
+        "parent": "9c506279188a90dbbe124386cc52016682d17b5c",
+        "source_patch": "exploratory/arms/patches/apache__commons-lang/ad1b72b7ece0166c5fbe0c6136213589eeed9945/parent1-source.patch",
+        "test_patch": "exploratory/arms/patches/apache__commons-lang/ad1b72b7ece0166c5fbe0c6136213589eeed9945/parent1-test.patch"
+      },
+      "parent2": {
+        "focal_node_ids": [
+          "org.apache.commons.lang3.JavaVersionTest",
+          "org.apache.commons.lang3.SystemUtilsTest"
+        ],
+        "parent": "69da8cece06b96ea8b1b40c5ccafbd4f284e52b5",
+        "source_patch": "exploratory/arms/patches/apache__commons-lang/ad1b72b7ece0166c5fbe0c6136213589eeed9945/parent2-source.patch",
+        "test_patch": "exploratory/arms/patches/apache__commons-lang/ad1b72b7ece0166c5fbe0c6136213589eeed9945/parent2-test.patch"
+      }
+    },
+    "verdict": "rejected"
+  },
+  {
+    "base": "f30c4607a2b6dcc7dc4476d321fc1de32ce9b780",
+    "merge": "42f2058c83f256d8654b349d5249d6f59920f88b",
+    "repo": "apache/commons-lang",
+    "sides": {
+      "parent1": {
+        "focal_node_ids": [
+          "org.apache.commons.lang3.ClassUtilsTest",
+          "org.apache.commons.lang3.DigitalBase10SizeUnitTest",
+          "org.apache.commons.lang3.DigitalBase2SizeUnitTest",
+          "org.apache.commons.lang3.JavaVersionTest",
+          "org.apache.commons.lang3.SystemUtilsTest",
+          "org.apache.commons.lang3.ValidateTest",
+          "org.apache.commons.lang3.XMLCharacterTest",
+          "org.apache.commons.lang3.math.NumberUtilsTest"
+        ],
+        "parent": "72bbbbc559992e5e6bf17279d8194aaa80c62e85",
+        "source_patch": "exploratory/arms/patches/apache__commons-lang/42f2058c83f256d8654b349d5249d6f59920f88b/parent1-source.patch",
+        "test_patch": "exploratory/arms/patches/apache__commons-lang/42f2058c83f256d8654b349d5249d6f59920f88b/parent1-test.patch"
+      },
+      "parent2": {
+        "focal_node_ids": [
+          "org.apache.commons.lang3.ArrayUtilsTest"
+        ],
+        "parent": "556d0fe10ff9d2ffd75185866dc78e259b71d035",
+        "source_patch": "exploratory/arms/patches/apache__commons-lang/42f2058c83f256d8654b349d5249d6f59920f88b/parent2-source.patch",
+        "test_patch": "exploratory/arms/patches/apache__commons-lang/42f2058c83f256d8654b349d5249d6f59920f88b/parent2-test.patch"
+      }
+    },
+    "verdict": "passed"
+  },
+  {
+    "base": "1e4a4906776f7300a9639a7599fccc545791583d",
+    "merge": "cac7a60abf0a4451a5c80ef57343a14ea1ba443f",
+    "repo": "apache/commons-lang",
+    "sides": {
+      "parent1": {
+        "focal_node_ids": [
+          "org.apache.commons.lang3.ArrayUtilsTest",
+          "org.apache.commons.lang3.ClassUtilsTest",
+          "org.apache.commons.lang3.DigitalBase10SizeUnitTest",
+          "org.apache.commons.lang3.DigitalBase2SizeUnitTest",
+          "org.apache.commons.lang3.JavaVersionTest",
+          "org.apache.commons.lang3.ObjectUtilsTest",
+          "org.apache.commons.lang3.RandomStringUtilsTest",
+          "org.apache.commons.lang3.StringUtilsContainsTest",
+          "org.apache.commons.lang3.StringUtilsEmptyBlankTest",
+          "org.apache.commons.lang3.StringUtilsEqualsIndexOfTest",
+          "org.apache.commons.lang3.StringUtilsIsTest",
+          "org.apache.commons.lang3.StringUtilsStartsEndsWithTest",
+          "org.apache.commons.lang3.StringUtilsTest",
+          "org.apache.commons.lang3.StringUtilsTrimEmptyTest",
+          "org.apache.commons.lang3.StringUtilsTrimStripTest",
+          "org.apache.commons.lang3.SystemUtilsTest",
+          "org.apache.commons.lang3.ValidateTest",
+          "org.apache.commons.lang3.XMLCharacterTest",
+          "org.apache.commons.lang3.builder.DiffBuilderTest",
+          "org.apache.commons.lang3.builder.HashCodeBuilderTest",
+          "org.apache.commons.lang3.builder.ReflectionToStringBuilderTest",
+          "org.apache.commons.lang3.concurrent.EventCountCircuitBreakerTest",
+          "org.apache.commons.lang3.concurrent.ThresholdCircuitBreakerTest",
+          "org.apache.commons.lang3.exception.ExceptionUtilsTest",
+          "org.apache.commons.lang3.math.NumberUtilsTest",
+          "org.apache.commons.lang3.mutable.MutableByteTest",
+          "org.apache.commons.lang3.mutable.MutableDoubleTest",
+          "org.apache.commons.lang3.mutable.MutableFloatTest",
+          "org.apache.commons.lang3.mutable.MutableIntTest",
+          "org.apache.commons.lang3.mutable.MutableLongTest",
+          "org.apache.commons.lang3.mutable.MutableShortTest",
+          "org.apache.commons.lang3.reflect.ConstructorUtilsTest",
+          "org.apache.commons.lang3.reflect.MethodUtilsTest",
+          "org.apache.commons.lang3.reflect.TypeUtilsTest",
+          "org.apache.commons.lang3.text.StrTokenizerTest",
+          "org.apache.commons.lang3.time.FastDateFormatTest",
+          "org.apache.commons.lang3.time.StopWatchTest"
+        ],
+        "parent": "db6f7c1d74ba64211221a69cfa9fe7171a9199e8",
+        "source_patch": "exploratory/arms/patches/apache__commons-lang/cac7a60abf0a4451a5c80ef57343a14ea1ba443f/parent1-source.patch",
+        "test_patch": "exploratory/arms/patches/apache__commons-lang/cac7a60abf0a4451a5c80ef57343a14ea1ba443f/parent1-test.patch"
+      },
+      "parent2": {
+        "focal_node_ids": [
+          "org.apache.commons.lang3.StringUtilsTest"
+        ],
+        "parent": "a27c02f809b8f2d23ad157f36420b3f5c45d7568",
+        "source_patch": "exploratory/arms/patches/apache__commons-lang/cac7a60abf0a4451a5c80ef57343a14ea1ba443f/parent2-source.patch",
+        "test_patch": "exploratory/arms/patches/apache__commons-lang/cac7a60abf0a4451a5c80ef57343a14ea1ba443f/parent2-test.patch"
+      }
+    },
+    "verdict": "rejected"
+  },
+  {
+    "base": "bd9adbb637a8a4aa5eb61c6fde2c576d0ab3c4fa",
+    "merge": "a3b74d9c230a85df8ebeef3169fc1cd0439c9a87",
+    "repo": "apache/commons-lang",
+    "sides": {
+      "parent1": {
+        "focal_node_ids": [
+          "org.apache.commons.lang3.ArrayUtilsTest",
+          "org.apache.commons.lang3.ClassUtilsTest",
+          "org.apache.commons.lang3.DigitalBase10SizeUnitTest",
+          "org.apache.commons.lang3.DigitalBase2SizeUnitTest",
+          "org.apache.commons.lang3.JavaVersionTest",
+          "org.apache.commons.lang3.RandomStringUtilsTest",
+          "org.apache.commons.lang3.StringUtilsContainsTest",
+          "org.apache.commons.lang3.StringUtilsEmptyBlankTest",
+          "org.apache.commons.lang3.StringUtilsEqualsIndexOfTest",
+          "org.apache.commons.lang3.StringUtilsIsTest",
+          "org.apache.commons.lang3.StringUtilsTest",
+          "org.apache.commons.lang3.StringUtilsTrimEmptyTest",
+          "org.apache.commons.lang3.StringUtilsTrimStripTest",
+          "org.apache.commons.lang3.SystemUtilsTest",
+          "org.apache.commons.lang3.ValidateTest",
+          "org.apache.commons.lang3.XMLCharacterTest",
+          "org.apache.commons.lang3.math.NumberUtilsTest",
+          "org.apache.commons.lang3.reflect.TypeUtilsTest",
+          "org.apache.commons.lang3.time.FastDateFormatTest"
+        ],
+        "parent": "cac7a60abf0a4451a5c80ef57343a14ea1ba443f",
+        "source_patch": "exploratory/arms/patches/apache__commons-lang/a3b74d9c230a85df8ebeef3169fc1cd0439c9a87/parent1-source.patch",
+        "test_patch": "exploratory/arms/patches/apache__commons-lang/a3b74d9c230a85df8ebeef3169fc1cd0439c9a87/parent1-test.patch"
+      },
+      "parent2": {
+        "focal_node_ids": [
+          "org.apache.commons.lang3.text.WordUtilsTest"
+        ],
+        "parent": "2b36e25f6699d3bcf5fd2762c824aefb40c424c5",
+        "source_patch": "exploratory/arms/patches/apache__commons-lang/a3b74d9c230a85df8ebeef3169fc1cd0439c9a87/parent2-source.patch",
+        "test_patch": "exploratory/arms/patches/apache__commons-lang/a3b74d9c230a85df8ebeef3169fc1cd0439c9a87/parent2-test.patch"
+      }
+    },
+    "verdict": "rejected"
+  },
+  {
+    "base": "db6f7c1d74ba64211221a69cfa9fe7171a9199e8",
+    "merge": "33bb9fe25b9200e75cc4bf2483b17a35df960034",
+    "repo": "apache/commons-lang",
+    "sides": {
+      "parent1": {
+        "focal_node_ids": [
+          "org.apache.commons.lang3.CharEncodingTest",
+          "org.apache.commons.lang3.StringUtilsTest",
+          "org.apache.commons.lang3.SystemUtilsTest",
+          "org.apache.commons.lang3.math.NumberUtilsTest",
+          "org.apache.commons.lang3.text.WordUtilsTest"
+        ],
+        "parent": "86a59601b570585dcb7a1ce3d1ccc8e16008f53a",
+        "source_patch": "exploratory/arms/patches/apache__commons-lang/33bb9fe25b9200e75cc4bf2483b17a35df960034/parent1-source.patch",
+        "test_patch": "exploratory/arms/patches/apache__commons-lang/33bb9fe25b9200e75cc4bf2483b17a35df960034/parent1-test.patch"
+      },
+      "parent2": {
+        "focal_node_ids": [
+          "org.apache.commons.lang3.time.DateUtilsTest"
+        ],
+        "parent": "9209e235a57d1b801b5da527b298f6387e311b34",
+        "source_patch": "exploratory/arms/patches/apache__commons-lang/33bb9fe25b9200e75cc4bf2483b17a35df960034/parent2-source.patch",
+        "test_patch": "exploratory/arms/patches/apache__commons-lang/33bb9fe25b9200e75cc4bf2483b17a35df960034/parent2-test.patch"
+      }
+    },
+    "verdict": "rejected"
+  },
+  {
+    "base": "3ce3b27dbd579a918e97e1fb09e9b0153cc71a60",
+    "merge": "ee87df847299c55c97347e6c11e00a283feb189d",
+    "repo": "apache/commons-lang",
+    "sides": {
+      "parent1": {
+        "focal_node_ids": [
+          "org.apache.commons.lang3.StreamsTest"
+        ],
+        "parent": "83dd32b901dea25a571adcd6a976464c8a36601c",
+        "source_patch": "exploratory/arms/patches/apache__commons-lang/ee87df847299c55c97347e6c11e00a283feb189d/parent1-source.patch",
+        "test_patch": "exploratory/arms/patches/apache__commons-lang/ee87df847299c55c97347e6c11e00a283feb189d/parent1-test.patch"
+      },
+      "parent2": {
+        "focal_node_ids": [
+          "org.apache.commons.lang3.ArchUtilsTest",
+          "org.apache.commons.lang3.ArrayUtilsTest",
+          "org.apache.commons.lang3.CharRangeTest",
+          "org.apache.commons.lang3.FunctionsTest",
+          "org.apache.commons.lang3.LocaleUtilsTest",
+          "org.apache.commons.lang3.ObjectUtilsTest",
+          "org.apache.commons.lang3.RandomStringUtilsTest",
+          "org.apache.commons.lang3.SerializationUtilsTest",
+          "org.apache.commons.lang3.StreamsTest",
+          "org.apache.commons.lang3.StringUtilsTest",
+          "org.apache.commons.lang3.ValidateTest",
+          "org.apache.commons.lang3.builder.EqualsBuilderTest",
+          "org.apache.commons.lang3.builder.ReflectionToStringBuilderSummaryTest",
+          "org.apache.commons.lang3.concurrent.BackgroundInitializerTest",
+          "org.apache.commons.lang3.concurrent.ConcurrentUtilsTest",
+          "org.apache.commons.lang3.concurrent.EventCountCircuitBreakerTest",
+          "org.apache.commons.lang3.concurrent.MultiBackgroundInitializerTest",
+          "org.apache.commons.lang3.event.EventUtilsTest",
+          "org.apache.commons.lang3.exception.ExceptionUtilsTest",
+          "org.apache.commons.lang3.reflect.FieldUtilsTest",
+          "org.apache.commons.lang3.text.StrBuilderTest",
+          "org.apache.commons.lang3.text.StrSubstitutorTest",
+          "org.apache.commons.lang3.time.DateUtilsTest",
+          "org.apache.commons.lang3.time.FastDateParserSDFTest",
+          "org.apache.commons.lang3.time.FastDatePrinterTimeZonesTest",
+          "org.apache.commons.lang3.time.WeekYearTest",
+          "org.apache.commons.lang3.tuple.ImmutablePairTest",
+          "org.apache.commons.lang3.tuple.ImmutableTripleTest",
+          "org.apache.commons.lang3.tuple.MutablePairTest",
+          "org.apache.commons.lang3.tuple.PairTest"
+        ],
+        "parent": "b19b2d37dafb1f26360ee5e8ac6fa297e9ae86ab",
+        "source_patch": "exploratory/arms/patches/apache__commons-lang/ee87df847299c55c97347e6c11e00a283feb189d/parent2-source.patch",
+        "test_patch": "exploratory/arms/patches/apache__commons-lang/ee87df847299c55c97347e6c11e00a283feb189d/parent2-test.patch"
+      }
+    },
+    "verdict": "rejected"
+  },
+  {
+    "base": "abb5a409f71d8f920bb178ea3f839d42c551dd69",
+    "merge": "494dfc9e6beb58b599ff54b924f544a887446ee1",
+    "repo": "apache/commons-lang",
+    "sides": {
+      "parent1": {
+        "focal_node_ids": [
+          "org.apache.commons.lang3.ValidateTest",
+          "org.apache.commons.lang3.tuple.ImmutablePairTest"
+        ],
+        "parent": "0babc7a071af536ef76fb8ecad4ae32b02fad608",
+        "source_patch": "exploratory/arms/patches/apache__commons-lang/494dfc9e6beb58b599ff54b924f544a887446ee1/parent1-source.patch",
+        "test_patch": "exploratory/arms/patches/apache__commons-lang/494dfc9e6beb58b599ff54b924f544a887446ee1/parent1-test.patch"
+      },
+      "parent2": {
+        "focal_node_ids": [
+          "org.apache.commons.lang3.LocaleUtilsTest"
+        ],
+        "parent": "5aa058c9d1d57547200b9f90285278fa1914e372",
+        "source_patch": "exploratory/arms/patches/apache__commons-lang/494dfc9e6beb58b599ff54b924f544a887446ee1/parent2-source.patch",
+        "test_patch": "exploratory/arms/patches/apache__commons-lang/494dfc9e6beb58b599ff54b924f544a887446ee1/parent2-test.patch"
+      }
+    },
+    "verdict": "rejected"
+  },
+  {
+    "base": "702c6c29a01cb28254490804d3a46f39c4410c20",
+    "merge": "6681a34d25b63a47c2d619ae0466825304ea9b1f",
+    "repo": "apache/commons-lang",
+    "sides": {
+      "parent1": {
+        "focal_node_ids": [
+          "org.apache.commons.lang3.reflect.MethodUtilsTest"
+        ],
+        "parent": "af1598229fca5808042ed20f50c36a4fe923c915",
+        "source_patch": "exploratory/arms/patches/apache__commons-lang/6681a34d25b63a47c2d619ae0466825304ea9b1f/parent1-source.patch",
+        "test_patch": "exploratory/arms/patches/apache__commons-lang/6681a34d25b63a47c2d619ae0466825304ea9b1f/parent1-test.patch"
+      },
+      "parent2": {
+        "focal_node_ids": [
+          "org.apache.commons.lang3.ArrayUtilsTest",
+          "org.apache.commons.lang3.stream.IntStreamsTest"
+        ],
+        "parent": "fb45bd7f2c1a8097eadb6b4a6bc9f16c03422a5b",
+        "source_patch": "exploratory/arms/patches/apache__commons-lang/6681a34d25b63a47c2d619ae0466825304ea9b1f/parent2-source.patch",
+        "test_patch": "exploratory/arms/patches/apache__commons-lang/6681a34d25b63a47c2d619ae0466825304ea9b1f/parent2-test.patch"
+      }
+    },
+    "verdict": "passed"
+  }
+]

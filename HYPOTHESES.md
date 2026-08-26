@@ -233,6 +233,21 @@ an agents paper. This amendment precedes the first draw.**
   strict-disjoint result stands as a recorded negative, and boundary-only
   Click sites (2 validated) remain available as a labeled sensitivity class.
   No draw has run under either definition.
+
+  **Permissive mining result, 2026-08-26, before any draw
+  (`exploratory/arms/PERMISSIVE-SITES.md`).** 6 permissive sites validated
+  of 14 attempted from a 77-candidate both-tests census (all 6 in Click,
+  all strictly byte-disjoint on every common file). Integrated sources are
+  jointly satisfiable in 5 of 6. The sixth is a **wild counterexample for
+  P1(c)**: byte-disjoint on all common files, git merges cleanly, a
+  byte-exclusive claim would permit every write, and the integrated sources
+  fail one side's focal test in both reruns. Focal-scoped; whether the
+  historical recorded merge shows the same failure is an open check. P1(c)'s
+  gate condition is therefore demonstrated by instance, not only priced by
+  rate, and the arms population becomes 25 sites (16 intersecting, 2
+  boundary, 1 unclassifiable, 6 permissive of which 1 is also
+  contradictory at integration). All permissive sites are Click, a stated
+  single-repository limit of that stratum.
 - **Environment pinning and interleaving**: subject model identifiers and
   CLI versions are recorded per draw, and arm order is randomized and
   interleaved across sites so provider-side model drift spreads across arms

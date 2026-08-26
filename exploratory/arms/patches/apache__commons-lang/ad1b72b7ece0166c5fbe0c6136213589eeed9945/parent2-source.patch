@@ -1,0 +1,133 @@
+diff --git a/src/changes/changes.xml b/src/changes/changes.xml
+index a03b992f7df8e3fda231558293bacfeca96a0651..884dd8bd61e1652dac9e6771e78b2a4d067dfbe3 100644
+--- a/src/changes/changes.xml
++++ b/src/changes/changes.xml
+@@ -22,6 +22,7 @@
+   <body>
+ 
+   <release version="3.5" date="tba" description="tba">
++    <action issue="LANG-1197" type="update" dev="pschumacher" >Prepare Java 9 detection</action>
+     <action issue="LANG-1206" type="update" dev="pschumacher" due-to="Mohammed Alfallaj">Improve CharSetUtils.squeeze() performance</action>
+     <action issue="LANG-1225" type="add" dev="pschumacher" due-to="Caleb Cushing">Add RandomStringUtils#randomGraph and #randomPrint which match corresponding regular expression class</action>
+     <action issue="LANG-901" type="fix" dev="pschumacher" due-to="Matthew Bartenschlag">StringUtils#startsWithAny/endsWithAny is case sensitive - documented as case insensitive</action>
+diff --git a/src/main/java/org/apache/commons/lang3/JavaVersion.java b/src/main/java/org/apache/commons/lang3/JavaVersion.java
+index e37d5ba9cefb365157abdad6500eb937348fb0d7..4dd7e46afd9838cd3899317dcdcae918cdee7a26 100644
+--- a/src/main/java/org/apache/commons/lang3/JavaVersion.java
++++ b/src/main/java/org/apache/commons/lang3/JavaVersion.java
+@@ -16,6 +16,8 @@
+  */
+ package org.apache.commons.lang3;
+ 
++import org.apache.commons.lang3.math.NumberUtils;
++
+ /**
+  * <p>An enum representing all the versions of the Java specification.
+  * This is intended to mirror available values from the
+@@ -72,11 +74,18 @@ public enum JavaVersion {
+ 
+     /**
+      * Java 1.9.
++     * 
++     * @deprecated As of release 3.5, replaced by {@link #JAVA_9}
++     */
++    JAVA_1_9(9.0f, "9"),
++
++    /**
++     * Java 9
+      */
+-    JAVA_1_9(1.9f, "1.9"),
++    JAVA_9(9.0f, "9"),
+ 
+     /**
+-     * Java 1.x, x &gt; 9. Mainly introduced to avoid to break when a new version of Java is used.
++     * The most recent java version. Mainly introduced to avoid to break when a new version of Java is used.
+      */
+     JAVA_RECENT(maxVersion(), Float.toString(maxVersion()));
+ 
+@@ -156,8 +165,8 @@ public enum JavaVersion {
+             return JAVA_1_7;
+         } else if ("1.8".equals(nom)) {
+             return JAVA_1_8;
+-        } else if ("1.9".equals(nom)) {
+-            return JAVA_1_9;
++        } else if ("9".equals(nom)) {
++            return JAVA_9;
+         }
+         if (nom == null) {
+             return null;
+@@ -187,33 +196,34 @@ public enum JavaVersion {
+     }
+ 
+     /**
+-     * Gets the Java Version from the system or 2.0 if the {@code java.version} system property is not set.
++     * Gets the Java Version from the system or 99.0 if the {@code java.specification.version} system property is not set.
+      * 
+-     * @return the value of {@code java.version} system property or 2.0 if it is not set.
++     * @return the value of {@code java.specification.version} system property or 99.0 if it is not set.
+      */
+     private static float maxVersion() {
+-        final float v = toFloatVersion(System.getProperty("java.version", "2.0"));
++        final float v = toFloatVersion(System.getProperty("java.specification.version", "99.0"));
+         if (v > 0) {
+             return v;
+         }
+-        return 2f;
++        return 99f;
+     }
+ 
+     /**
+      * Parses a float value from a String.
+      * 
+      * @param value the String to parse.
+-     * @return the float value represented by teh string or -1 if the given String can not be parsed.
++     * @return the float value represented by the string or -1 if the given String can not be parsed.
+      */
+     private static float toFloatVersion(final String value) {
+-        final String[] toParse = value.split("\\.");
+-        if (toParse.length >= 2) {
+-            try {
+-                return Float.parseFloat(toParse[0] + '.' + toParse[1]);
+-            } catch (final NumberFormatException nfe) {
+-                // no-op, let use default
++        final int defaultReturnValue = -1;
++        if (value.contains(".")) {
++            final String[] toParse = value.split("\\.");
++            if (toParse.length >= 2) {
++                return NumberUtils.toFloat(toParse[0] + '.' + toParse[1], defaultReturnValue);
+             }
++        } else {
++            return NumberUtils.toFloat(value, defaultReturnValue);
+         }
+-        return -1;
++        return defaultReturnValue;
+     }
+ }
+diff --git a/src/main/java/org/apache/commons/lang3/SystemUtils.java b/src/main/java/org/apache/commons/lang3/SystemUtils.java
+index ef1d43a381ecc584dfedfaaaded0e53f37c32bac..e89e647e41feeab668b850978c8cc88c8adc8438 100644
+--- a/src/main/java/org/apache/commons/lang3/SystemUtils.java
++++ b/src/main/java/org/apache/commons/lang3/SystemUtils.java
+@@ -953,8 +953,23 @@ public class SystemUtils {
+      * </p>
+      *
+      * @since 3.4
++     * 
++     * @deprecated As of release 3.5, replaced by {@link #IS_JAVA_9}
+      */
+-    public static final boolean IS_JAVA_1_9 = getJavaVersionMatches("1.9");
++    @Deprecated
++    public static final boolean IS_JAVA_1_9 = getJavaVersionMatches("9");
++
++    /**
++     * <p>
++     * Is {@code true} if this is Java version 9 (also 9.x versions).
++     * </p>
++     * <p>
++     * The field will return {@code false} if {@link #JAVA_VERSION} is {@code null}.
++     * </p>
++     *
++     * @since 3.5
++     */
++    public static final boolean IS_JAVA_9 = getJavaVersionMatches("9");
+ 
+     // Operating system checks
+     // -----------------------------------------------------------------------

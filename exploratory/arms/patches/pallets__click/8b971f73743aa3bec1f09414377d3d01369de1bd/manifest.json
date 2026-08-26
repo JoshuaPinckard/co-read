@@ -1,0 +1,163 @@
+{
+  "base": "93d947c2e3c5584729d7de35644f778c0e8e147e",
+  "canonical_merge_tree": {
+    "exit_code": 1,
+    "matches_canonical_row": true,
+    "result_tree": "4fa050a673c5e06c67678939b6b8338cc6cbab7f",
+    "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "stdout_sha256": "ba91e0970c13c200c8b6d029b0343aed9793c1781f82fd1285629df5494c5969"
+  },
+  "conflicted_paths": [
+    "CHANGES.rst"
+  ],
+  "corpus_line": 41,
+  "joint_source": {
+    "constructible": false,
+    "patch": null,
+    "reason": "canonical textual conflict intersects source union",
+    "source_conflict_paths": [
+      "CHANGES.rst"
+    ],
+    "source_paths": [
+      "CHANGES.rst",
+      "CODE_OF_CONDUCT.md",
+      "LICENSE.rst",
+      "click/__init__.py",
+      "click/_bashcomplete.py",
+      "click/_compat.py",
+      "click/_termui_impl.py",
+      "click/_winconsole.py",
+      "click/core.py",
+      "click/formatting.py",
+      "click/parser.py",
+      "click/termui.py",
+      "docs/advanced.rst",
+      "docs/bashcomplete.rst",
+      "docs/commands.rst",
+      "docs/options.rst",
+      "docs/quickstart.rst",
+      "docs/setuptools.rst",
+      "docs/upgrading.rst",
+      "examples/aliases/aliases.py",
+      "examples/imagepipe/imagepipe.py",
+      "setup.py"
+    ]
+  },
+  "merge": "8b971f73743aa3bec1f09414377d3d01369de1bd",
+  "parents": [
+    "f800a6f69e668f5bca874c2ad065d6b12bc450b4",
+    "17cc8d76f93791de70bf0e2f0379ee6e1feefea1"
+  ],
+  "prepared_at_utc": "2026-08-25T16:23:31.305+00:00",
+  "protocol_sha256": "fb1c0a9f9c7b48c30178d8a7e737250e18535ada63959c49c73c180505c69828",
+  "repo_slug": "pallets__click",
+  "repository": "pallets/click",
+  "result_tree": "4fa050a673c5e06c67678939b6b8338cc6cbab7f",
+  "runner_sha256": "e04bc99409e584636ce8cb81cc22f6a7ca9c917f9ec9e46ab68a4c2328b6b6c6",
+  "schema_version": 1,
+  "sides": {
+    "parent1": {
+      "changed_paths": [
+        "CHANGES.rst",
+        "CODE_OF_CONDUCT.md",
+        "LICENSE.rst",
+        "click/__init__.py",
+        "click/_bashcomplete.py",
+        "click/_compat.py",
+        "click/_termui_impl.py",
+        "click/_winconsole.py",
+        "click/core.py",
+        "click/parser.py",
+        "click/termui.py",
+        "docs/advanced.rst",
+        "docs/bashcomplete.rst",
+        "docs/commands.rst",
+        "docs/quickstart.rst",
+        "docs/setuptools.rst",
+        "examples/aliases/aliases.py",
+        "examples/imagepipe/imagepipe.py",
+        "setup.py",
+        "tests/test_basic.py",
+        "tests/test_compat.py",
+        "tests/test_context.py",
+        "tests/test_termui.py"
+      ],
+      "parent": "f800a6f69e668f5bca874c2ad065d6b12bc450b4",
+      "reconstructed_parent_tree": "35297e00994d4e7968ed113d4368a3f68d78c307",
+      "source_patch": {
+        "bytes": 30789,
+        "path": "exploratory/arms/patches/pallets__click/8b971f73743aa3bec1f09414377d3d01369de1bd/parent1-source.patch",
+        "sha256": "d4468f9711323347ec86fceb72a42fd4c07a317f09025a3367a0d5e1831aad50"
+      },
+      "source_paths": [
+        "CHANGES.rst",
+        "CODE_OF_CONDUCT.md",
+        "LICENSE.rst",
+        "click/__init__.py",
+        "click/_bashcomplete.py",
+        "click/_compat.py",
+        "click/_termui_impl.py",
+        "click/_winconsole.py",
+        "click/core.py",
+        "click/parser.py",
+        "click/termui.py",
+        "docs/advanced.rst",
+        "docs/bashcomplete.rst",
+        "docs/commands.rst",
+        "docs/quickstart.rst",
+        "docs/setuptools.rst",
+        "examples/aliases/aliases.py",
+        "examples/imagepipe/imagepipe.py",
+        "setup.py"
+      ],
+      "test_patch": {
+        "bytes": 6200,
+        "path": "exploratory/arms/patches/pallets__click/8b971f73743aa3bec1f09414377d3d01369de1bd/parent1-test.patch",
+        "sha256": "2fa65b6e52b9cd8f30ab14789f431ea39955766308e9731336cee263bb29798b"
+      },
+      "test_paths": [
+        "tests/test_basic.py",
+        "tests/test_compat.py",
+        "tests/test_context.py",
+        "tests/test_termui.py"
+      ]
+    },
+    "parent2": {
+      "changed_paths": [
+        "CHANGES.rst",
+        "click/_termui_impl.py",
+        "click/core.py",
+        "click/formatting.py",
+        "docs/options.rst",
+        "docs/upgrading.rst",
+        "tests/test_formatting.py",
+        "tests/test_options.py"
+      ],
+      "parent": "17cc8d76f93791de70bf0e2f0379ee6e1feefea1",
+      "reconstructed_parent_tree": "4392d471142e25fd3a02b8aa234301d8eb586b50",
+      "source_patch": {
+        "bytes": 6423,
+        "path": "exploratory/arms/patches/pallets__click/8b971f73743aa3bec1f09414377d3d01369de1bd/parent2-source.patch",
+        "sha256": "b0a7704a81773c046912c8aa460c3944aecaa1de3cd3f607e8a500aafd7d490c"
+      },
+      "source_paths": [
+        "CHANGES.rst",
+        "click/_termui_impl.py",
+        "click/core.py",
+        "click/formatting.py",
+        "docs/options.rst",
+        "docs/upgrading.rst"
+      ],
+      "test_patch": {
+        "bytes": 3793,
+        "path": "exploratory/arms/patches/pallets__click/8b971f73743aa3bec1f09414377d3d01369de1bd/parent2-test.patch",
+        "sha256": "2fe486e80e89ed13d83ab22354b0dff6399076009f63f785aec140114f8679af"
+      },
+      "test_paths": [
+        "tests/test_formatting.py",
+        "tests/test_options.py"
+      ]
+    }
+  },
+  "site_index": 7
+}

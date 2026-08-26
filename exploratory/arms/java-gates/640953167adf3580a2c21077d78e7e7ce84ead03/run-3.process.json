@@ -1,0 +1,35 @@
+{
+  "command": [
+    "mvn",
+    "-q",
+    "-o",
+    "-s",
+    "<project>/tools/java/maven-settings.xml",
+    "-gs",
+    "<project>/tools/java/maven-settings.xml",
+    "-Dmaven.repo.local=<project>/tools/maven-repository",
+    "test",
+    "-Dtest=ArrayUtilsTest,StringUtilsTest,TypeUtilsTest",
+    "-DfailIfNoTests=false"
+  ],
+  "elapsed_seconds": 64.891,
+  "label": "run-3",
+  "normalized": {
+    "normalized_sha256": "98e76c3c96d304fa98a0c3f91e90ae2ab89ecb10a3d96be6b5bebf4c261cfc46",
+    "outcome_counts": {
+      "pass": 352
+    },
+    "parse_errors": [],
+    "path": "exploratory/arms/java-gates/640953167adf3580a2c21077d78e7e7ce84ead03/run-3.normalized.json",
+    "sha256": "5a964323589097485afa2b15139ff8b9fce662778b4698b65e2a8ed7564ffdad",
+    "test_count": 352
+  },
+  "reports_archive": "exploratory/arms/java-gates/640953167adf3580a2c21077d78e7e7ce84ead03/run-3.reports.zip",
+  "reports_archive_sha256": "121862436c1f7b9b7de787a04075a8703fb0854f6b6520c913403034068f42a6",
+  "returncode": 0,
+  "stderr": "exploratory/arms/java-gates/640953167adf3580a2c21077d78e7e7ce84ead03/run-3.stderr.bin",
+  "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "stdout": "exploratory/arms/java-gates/640953167adf3580a2c21077d78e7e7ce84ead03/run-3.stdout.bin",
+  "stdout_sha256": "0e2fe2b562d49a10442b3336589f79f993bbd02b824fde020cb33e3d030ced22",
+  "timed_out": false
+}

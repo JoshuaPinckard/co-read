@@ -1,0 +1,498 @@
+diff --git a/.gitignore b/.gitignore
+index 338a65bd6b25e2fc0d65391bd136a5c5074897c1..8f8fd6aafb1e6a4c0d565e34e4aa2e8663f02827 100644
+--- a/.gitignore
++++ b/.gitignore
+@@ -15,3 +15,4 @@ site-content
+ .settings
+ .classpath
+ .project
++.externalToolBuilders
+\ No newline at end of file
+diff --git a/src/changes/changes.xml b/src/changes/changes.xml
+index 785a3b2866586dd590c7d3914774a698d332485d..1ecfd8fc0b65ba63c46339d3b16d3a91b861600d 100644
+--- a/src/changes/changes.xml
++++ b/src/changes/changes.xml
+@@ -22,6 +22,12 @@
+   <body>
+ 
+   <release version="3.5" date="tba" description="tba">
++    <action issue="LANG-456" type="fix" dev="britter" due-to="Bob Fields, Woosan Ko, Bruno P. Kinoshita">HashCodeBuilder throws StackOverflowError in bidirectional navigable association</action>
++    <action issue="LANG-1126" type="fix" dev="britter">DateFormatUtilsTest.testSMTP depends on the default Locale</action>
++    <action issue="LANG-1123" type="fix" dev="chas" due-to="Christian P. Momon">Unit test FastDatePrinterTimeZonesTest needs a timezone set</action>
++    <action issue="LANG-916" type="fix" dev="chas" due-to="Christian P. Momon">CLONE - DateFormatUtils.format does not correctly change Calendar TimeZone in certain situations</action>
++    <action issue="LANG-1116" type="fix" dev="chas" due-to="Aaron Sheldon">DateUtilsTest.testLang530 fails for some timezones</action>
++    <action issue="LANG-1114" type="fix" dev="britter" due-to="Andy Coates">TypeUtils.ParameterizedType#equals doesn't work with wildcard types</action>
+     <action issue="LANG-1119" type="add" dev="britter" due-to="Loic Guibert">Add rotate(string, int) method to StringUtils</action>
+     <action issue="LANG-1118" type="fix" dev="britter" due-to="Loic Guibert">StringUtils.repeat('z', -1) throws NegativeArraySizeException</action>
+     <action issue="LANG-1099" type="add" dev="britter" due-to="Adrian Ber">Add swap and shift operations for arrays to ArrayUtils</action>
+diff --git a/src/main/java/org/apache/commons/lang3/builder/HashCodeBuilder.java b/src/main/java/org/apache/commons/lang3/builder/HashCodeBuilder.java
+index c2d865a5594f555e7c9f9c198fc3c7489d71106d..537b9f57959c99be495618cf586bb630e6fee307 100644
+--- a/src/main/java/org/apache/commons/lang3/builder/HashCodeBuilder.java
++++ b/src/main/java/org/apache/commons/lang3/builder/HashCodeBuilder.java
+@@ -856,7 +856,35 @@ public class HashCodeBuilder implements Builder<Integer> {
+                     append((Object[]) object);
+                 }
+             } else {
+-                iTotal = iTotal * iConstant + object.hashCode();
++                if (object instanceof Long) {
++                    append(((Long) object).longValue());
++                } else if (object instanceof Integer) {
++                    append(((Integer) object).intValue());
++                } else if (object instanceof Short) {
++                    append(((Short) object).shortValue());
++                } else if (object instanceof Character) {
++                    append(((Character) object).charValue());
++                } else if (object instanceof Byte) {
++                    append(((Byte) object).byteValue());
++                } else if (object instanceof Double) {
++                    append(((Double) object).doubleValue());
++                } else if (object instanceof Float) {
++                    append(((Float) object).floatValue());
++                } else if (object instanceof Boolean) {
++                    append(((Boolean) object).booleanValue());
++                } else if (object instanceof String) {
++                    iTotal = iTotal * iConstant + object.hashCode();
++                } else {
++                    if (isRegistered(object)) {
++                        return this;
++                    }
++                    try {
++                        register(object);
++                        iTotal = iTotal * iConstant + object.hashCode();
++                    } finally {
++                        unregister(object);
++                    }
++                }
+             }
+         }
+         return this;
+diff --git a/src/main/java/org/apache/commons/lang3/reflect/TypeUtils.java b/src/main/java/org/apache/commons/lang3/reflect/TypeUtils.java
+index 1a750e97dfb04df4ad1b27e65b81405f28830a46..91313c6a473066bf91b42ab182a12ad494c09d38 100644
+--- a/src/main/java/org/apache/commons/lang3/reflect/TypeUtils.java
++++ b/src/main/java/org/apache/commons/lang3/reflect/TypeUtils.java
+@@ -1626,7 +1626,7 @@ public class TypeUtils {
+             return equals(getImplicitLowerBounds(w), getImplicitLowerBounds(other))
+                 && equals(getImplicitUpperBounds(w), getImplicitUpperBounds(other));
+         }
+-        return true;
++        return false;
+     }
+ 
+     /**
+diff --git a/src/main/java/org/apache/commons/lang3/time/DateFormatUtils.java b/src/main/java/org/apache/commons/lang3/time/DateFormatUtils.java
+index 4315e4742a1e6aa8d495bf6d816083e23353578c..17cd6e60a60d1d48c1ea015e6eb6a29bad5fccf0 100644
+--- a/src/main/java/org/apache/commons/lang3/time/DateFormatUtils.java
++++ b/src/main/java/org/apache/commons/lang3/time/DateFormatUtils.java
+@@ -43,6 +43,7 @@ public class DateFormatUtils {
+     /**
+      * ISO 8601 formatter for date-time without time zone.
+      * The format used is {@code yyyy-MM-dd'T'HH:mm:ss}.
++     * This format uses the default TimeZone in effect at the time of loading DateFormatUtils class.
+      */
+     public static final FastDateFormat ISO_DATETIME_FORMAT
+             = FastDateFormat.getInstance("yyyy-MM-dd'T'HH:mm:ss");
+@@ -50,6 +51,7 @@ public class DateFormatUtils {
+     /**
+      * ISO 8601 formatter for date-time with time zone.
+      * The format used is {@code yyyy-MM-dd'T'HH:mm:ssZZ}.
++     * This format uses the default TimeZone in effect at the time of loading DateFormatUtils class.
+      */
+     public static final FastDateFormat ISO_DATETIME_TIME_ZONE_FORMAT
+             = FastDateFormat.getInstance("yyyy-MM-dd'T'HH:mm:ssZZ");
+@@ -57,6 +59,7 @@ public class DateFormatUtils {
+     /**
+      * ISO 8601 formatter for date without time zone.
+      * The format used is {@code yyyy-MM-dd}.
++     * This format uses the default TimeZone in effect at the time of loading DateFormatUtils class.
+      */
+     public static final FastDateFormat ISO_DATE_FORMAT
+             = FastDateFormat.getInstance("yyyy-MM-dd");
+@@ -66,6 +69,7 @@ public class DateFormatUtils {
+      * The format used is {@code yyyy-MM-ddZZ}.
+      * This pattern does not comply with the formal ISO 8601 specification
+      * as the standard does not allow a time zone  without a time.
++     * This format uses the default TimeZone in effect at the time of loading DateFormatUtils class.
+      */
+     public static final FastDateFormat ISO_DATE_TIME_ZONE_FORMAT
+             = FastDateFormat.getInstance("yyyy-MM-ddZZ");
+@@ -73,6 +77,7 @@ public class DateFormatUtils {
+     /**
+      * ISO 8601 formatter for time without time zone.
+      * The format used is {@code 'T'HH:mm:ss}.
++     * This format uses the default TimeZone in effect at the time of loading DateFormatUtils class.
+      */
+     public static final FastDateFormat ISO_TIME_FORMAT
+             = FastDateFormat.getInstance("'T'HH:mm:ss");
+@@ -80,6 +85,7 @@ public class DateFormatUtils {
+     /**
+      * ISO 8601 formatter for time with time zone.
+      * The format used is {@code 'T'HH:mm:ssZZ}.
++     * This format uses the default TimeZone in effect at the time of loading DateFormatUtils class.
+      */
+     public static final FastDateFormat ISO_TIME_TIME_ZONE_FORMAT
+             = FastDateFormat.getInstance("'T'HH:mm:ssZZ");
+@@ -89,6 +95,7 @@ public class DateFormatUtils {
+      * The format used is {@code HH:mm:ss}.
+      * This pattern does not comply with the formal ISO 8601 specification
+      * as the standard requires the 'T' prefix for times.
++     * This format uses the default TimeZone in effect at the time of loading DateFormatUtils class.
+      */
+     public static final FastDateFormat ISO_TIME_NO_T_FORMAT
+             = FastDateFormat.getInstance("HH:mm:ss");
+@@ -98,6 +105,7 @@ public class DateFormatUtils {
+      * The format used is {@code HH:mm:ssZZ}.
+      * This pattern does not comply with the formal ISO 8601 specification
+      * as the standard requires the 'T' prefix for times.
++     * This format uses the default TimeZone in effect at the time of loading DateFormatUtils class.
+      */
+     public static final FastDateFormat ISO_TIME_NO_T_TIME_ZONE_FORMAT
+             = FastDateFormat.getInstance("HH:mm:ssZZ");
+@@ -105,6 +113,7 @@ public class DateFormatUtils {
+     /**
+      * SMTP (and probably other) date headers.
+      * The format used is {@code EEE, dd MMM yyyy HH:mm:ss Z} in US locale.
++     * This format uses the default TimeZone in effect at the time of loading DateFormatUtils class.
+      */
+     public static final FastDateFormat SMTP_DATETIME_FORMAT
+             = FastDateFormat.getInstance("EEE, dd MMM yyyy HH:mm:ss Z", Locale.US);
+diff --git a/src/main/java/org/apache/commons/lang3/time/DatePrinter.java b/src/main/java/org/apache/commons/lang3/time/DatePrinter.java
+index d1bfb91b9ef91ae041a1e1f3927d0e2abd41b883..68086285d705215d0df4f32e5695925511b83499 100644
+--- a/src/main/java/org/apache/commons/lang3/time/DatePrinter.java
++++ b/src/main/java/org/apache/commons/lang3/time/DatePrinter.java
+@@ -49,8 +49,11 @@ public interface DatePrinter {
+ 
+     /**
+      * <p>Formats a {@code Calendar} object.</p>
++     * The TimeZone set on the Calendar is only used to adjust the time offset.
++     * The TimeZone specified during the construction of the Parser will determine the TimeZone
++     * used in the formatted string.
+      *
+-     * @param calendar  the calendar to format
++     * @param calendar  the calendar to format.
+      * @return the formatted string
+      */
+     String format(Calendar calendar);
+@@ -76,8 +79,10 @@ public interface DatePrinter {
+     StringBuffer format(Date date, StringBuffer buf);
+ 
+     /**
+-     * <p>Formats a {@code Calendar} object into the
+-     * supplied {@code StringBuffer}.</p>
++     * <p>Formats a {@code Calendar} object into the supplied {@code StringBuffer}.</p>
++     * The TimeZone set on the Calendar is only used to adjust the time offset.
++     * The TimeZone specified during the construction of the Parser will determine the TimeZone
++     * used in the formatted string.
+      *
+      * @param calendar  the calendar to format
+      * @param buf  the buffer to format into
+diff --git a/src/main/java/org/apache/commons/lang3/time/DateUtils.java b/src/main/java/org/apache/commons/lang3/time/DateUtils.java
+index 74da2b61f9c203cf4bb29cb3d1391cbe84b28486..096107365af7e4fc54d441b2649cbaf21504d9af 100644
+--- a/src/main/java/org/apache/commons/lang3/time/DateUtils.java
++++ b/src/main/java/org/apache/commons/lang3/time/DateUtils.java
+@@ -18,12 +18,12 @@ package org.apache.commons.lang3.time;
+ 
+ import java.text.ParseException;
+ import java.text.ParsePosition;
+-import java.text.SimpleDateFormat;
+ import java.util.Calendar;
+ import java.util.Date;
+ import java.util.Iterator;
+ import java.util.Locale;
+ import java.util.NoSuchElementException;
++import java.util.TimeZone;
+ import java.util.concurrent.TimeUnit;
+ 
+ /**
+@@ -365,37 +365,21 @@ public class DateUtils {
+         if (str == null || parsePatterns == null) {
+             throw new IllegalArgumentException("Date and Patterns must not be null");
+         }
+-        
+-        SimpleDateFormat parser;
+-        if (locale == null) {
+-            parser = new SimpleDateFormat();
+-        } else {
+-            parser = new SimpleDateFormat("", locale);
+-        }
+-        
+-        parser.setLenient(lenient);
+-        final ParsePosition pos = new ParsePosition(0);
+-        for (final String parsePattern : parsePatterns) {
+-
+-            String pattern = parsePattern;
+ 
+-            // LANG-530 - need to make sure 'ZZ' output doesn't get passed to SimpleDateFormat
+-            if (parsePattern.endsWith("ZZ")) {
+-                pattern = pattern.substring(0, pattern.length() - 1);
+-            }
+-            
+-            parser.applyPattern(pattern);
+-            pos.setIndex(0);
++        final TimeZone tz = TimeZone.getDefault();
++        final Locale lcl = locale==null ?Locale.getDefault() : locale;
++        final ParsePosition pos = new ParsePosition(0);
+ 
+-            String str2 = str;
+-            // LANG-530 - need to make sure 'ZZ' output doesn't hit SimpleDateFormat as it will ParseException
+-            if (parsePattern.endsWith("ZZ")) {
+-                str2 = str.replaceAll("([-+][0-9][0-9]):([0-9][0-9])$", "$1$2"); 
++        for (final String parsePattern : parsePatterns) {
++            FastDateParser fdp = new FastDateParser(parsePattern, tz, lcl, null, lenient);
++            try {
++                Date date = fdp.parse(str, pos);
++                if (pos.getIndex() == str.length()) {
++                    return date;
++                }
++                pos.setIndex(0);
+             }
+-
+-            final Date date = parser.parse(str2, pos);
+-            if (date != null && pos.getIndex() == str2.length()) {
+-                return date;
++            catch(IllegalArgumentException iae) {
+             }
+         }
+         throw new ParseException("Unable to parse the date: " + str, -1);
+diff --git a/src/main/java/org/apache/commons/lang3/time/FastDateParser.java b/src/main/java/org/apache/commons/lang3/time/FastDateParser.java
+index 2d469a6b3e4c434c4b866ec335b78ef30024a0f0..3f8d02119a80e2062c60b8759cdd1412647fa7e1 100644
+--- a/src/main/java/org/apache/commons/lang3/time/FastDateParser.java
++++ b/src/main/java/org/apache/commons/lang3/time/FastDateParser.java
+@@ -75,7 +75,7 @@ public class FastDateParser implements DateParser, Serializable {
+      *
+      * @see java.io.Serializable
+      */
+-    private static final long serialVersionUID = 2L;
++    private static final long serialVersionUID = 3L;
+ 
+     static final Locale JAPANESE_IMPERIAL = new Locale("ja","JP","JP");
+ 
+@@ -85,6 +85,7 @@ public class FastDateParser implements DateParser, Serializable {
+     private final Locale locale;
+     private final int century;
+     private final int startYear;
++    private final boolean lenient;
+ 
+     // derived fields
+     private transient Pattern parsePattern;
+@@ -106,7 +107,7 @@ public class FastDateParser implements DateParser, Serializable {
+      * @param locale non-null locale
+      */
+     protected FastDateParser(final String pattern, final TimeZone timeZone, final Locale locale) {
+-        this(pattern, timeZone, locale, null);
++        this(pattern, timeZone, locale, null, true);
+     }
+ 
+     /**
+@@ -121,11 +122,31 @@ public class FastDateParser implements DateParser, Serializable {
+      * @since 3.3
+      */
+     protected FastDateParser(final String pattern, final TimeZone timeZone, final Locale locale, final Date centuryStart) {
++        this(pattern, timeZone, locale, centuryStart, true);
++    }
++
++    /**
++     * <p>Constructs a new FastDateParser.</p>
++     *
++     * @param pattern non-null {@link java.text.SimpleDateFormat} compatible
++     *  pattern
++     * @param timeZone non-null time zone to use
++     * @param locale non-null locale
++     * @param centuryStart The start of the century for 2 digit year parsing
++     * @param lenient if true, non-standard values for Calendar fields should be accepted;
++     * if false, non-standard values will cause a ParseException to be thrown {@link CalendaretLenient(boolean)}
++     *
++     * @since 3.5
++     */
++    protected FastDateParser(final String pattern, final TimeZone timeZone, final Locale locale,
++            final Date centuryStart, final boolean lenient) {
+         this.pattern = pattern;
+         this.timeZone = timeZone;
+         this.locale = locale;
++        this.lenient = lenient;
+ 
+         final Calendar definingCalendar = Calendar.getInstance(timeZone, locale);
++
+         int centuryStartYear;
+         if(centuryStart!=null) {
+             definingCalendar.setTime(centuryStart);
+@@ -336,6 +357,7 @@ public class FastDateParser implements DateParser, Serializable {
+         // timing tests indicate getting new instance is 19% faster than cloning
+         final Calendar cal= Calendar.getInstance(timeZone, locale);
+         cal.clear();
++        cal.setLenient(lenient);
+ 
+         for(int i=0; i<strategies.length;) {
+             final Strategy strategy= strategies[i++];
+diff --git a/src/main/java/org/apache/commons/lang3/time/FastDatePrinter.java b/src/main/java/org/apache/commons/lang3/time/FastDatePrinter.java
+index ac73646a9847be2a7478f1c02095a7637632e1c4..4a20333ae5d2a870baf1a6b5be725b31d8b7e3b5 100644
+--- a/src/main/java/org/apache/commons/lang3/time/FastDatePrinter.java
++++ b/src/main/java/org/apache/commons/lang3/time/FastDatePrinter.java
+@@ -477,7 +477,8 @@ public class FastDatePrinter implements DatePrinter, Serializable {
+      */
+     @Override
+     public StringBuffer format(final Calendar calendar, final StringBuffer buf) {
+-        return applyRules(calendar, buf);
++        // do not pass in calendar directly, this will cause TimeZone of FastDatePrinter to be ignored
++        return format(calendar.getTime(), buf);
+     }
+ 
+     /**
+diff --git a/src/site/xdoc/release-history.xml b/src/site/xdoc/release-history.xml
+index 48690cfd24571425947fe56e9234a6629cfe4ad1..2fe467961093549a3b1b4e41c0ca58d93d5cca53 100644
+--- a/src/site/xdoc/release-history.xml
++++ b/src/site/xdoc/release-history.xml
+@@ -17,72 +17,94 @@ limitations under the License.
+ -->
+ <document>
+  <properties>
+-  <title>Home</title>
++  <title>Release History</title>
+   <author email="dev@commons.apache.org">Commons Documentation Team</author>
+  </properties>
+ <body>
+ <!-- ================================================== -->
+-<section name="Commons Lang Release History">
++  <section name="Release History">
+ 
+-<table>
+-<tr><th>Version</th><th>Release date</th><th>Required Java Version</th><th>Javadoc</th><th>Release notes</th></tr>
+-<tr>
+-  <td>3.4</td><td>2014-04-06</td><td>6.0</td><td><a href="javadocs/api-3.4/">api-3.4</a></td><td><a href="release-notes/RELEASE-NOTES-3.4.txt">release notes for 3.4</a></td>
+-</tr>
+-<tr>
+-  <td>3.3.2</td><td>2014-04-09</td><td>6.0</td><td><a href="javadocs/api-3.3.2/">api-3.3.2</a></td><td><a href="release-notes/RELEASE-NOTES-3.3.2.txt">release notes for 3.3.2</a></td>
+-</tr>
+-<tr>
+-  <td>3.3.1</td><td>2014-03-18</td><td>6.0</td><td><a href="javadocs/api-3.3.1/">api-3.3.1</a></td><td><a href="release-notes/RELEASE-NOTES-3.3.1.txt">release notes for 3.3.1</a></td>
+-</tr>
+-<tr>
+-  <td>3.3</td><td>2014-03-04</td><td>6.0</td><td><a href="javadocs/api-3.3/">api-3.3</a></td><td><a href="release-notes/RELEASE-NOTES-3.3.txt">release notes for 3.3</a></td>
+-</tr>
+-<tr>
+-  <td>3.2.1</td><td>2014-01-05</td><td>6.0</td><td><a href="javadocs/api-3.2.1/">api-3.2.1</a></td><td><a href="release-notes/RELEASE-NOTES-3.2.1.txt">release notes for 3.2.1</a></td>
+-</tr>
+-<tr>
+-  <td>3.2</td><td>2014-01-01</td><td>6.0</td><td><a href="javadocs/api-3.2/">api-3.2</a></td><td><a href="release-notes/RELEASE-NOTES-3.2.txt">release notes for 3.2</a></td>
+-</tr>
+-<tr>
+-  <td>3.1</td><td>2011-11-14</td><td>5.0</td><td><a href="javadocs/api-3.1/">api-3.1</a></td><td><a href="release-notes/RELEASE-NOTES-3.1.txt">release notes for 3.1</a></td>
+-</tr>
+-<tr>
+-  <td>3.0.1</td><td>2011-08-9</td><td>5.0</td><td><a href="javadocs/api-3.0.1/">api-3.0.1</a></td><td><a href="release-notes/RELEASE-NOTES-3.0.1.txt">release notes for 3.0.1</a></td>
+-</tr>
+-<tr>
+-  <td>3.0</td><td>2011-07-18</td><td>5.0</td><td><a href="javadocs/api-3.0/">api-3.0</a></td><td><a href="release-notes/RELEASE-NOTES-3.0.txt">release notes for 3.0</a></td>
+-</tr>
+-<tr>
+-  <td>2.6</td><td>2011-01-16</td><td>1.3</td><td><a href="javadocs/api-2.6/">api-2.6</a></td><td><a href="release-notes/RELEASE-NOTES-2.6.txt">release notes for 2.6</a></td>
+-</tr>
+-<tr>
+-  <td>2.5</td><td>2010-02-23</td><td>1.3</td><td><a href="javadocs/api-2.5/">api-2.5</a></td><td><a href="release-notes/RELEASE-NOTES-2.5.txt">release notes for 2.5</a></td>
+-</tr>
+-<tr>
+-  <td>2.4</td><td>2008-03-18</td><td>1.2</td><td><a href="javadocs/api-2.4/">api-2.4</a></td><td><a href="release-notes/RELEASE-NOTES-2.4.txt">release notes for 2.4</a></td>
+-</tr>
+-<tr>
+-  <td>2.3</td><td>2007-02-13</td><td>1.1</td><td><a href="javadocs/api-2.3/">api-2.3</a></td><td><a href="release-notes/RELEASE-NOTES-2.3.txt">release notes for 2.3</a></td>
+-</tr>
+-<tr>
+-  <td>2.2</td><td>2006-10-04</td><td>1.1</td><td><a href="javadocs/api-2.2/">api-2.2</a></td><td><a href="release-notes/RELEASE-NOTES-2.2.txt">release notes for 2.2</a></td>
+-</tr>
+-<tr>
+-  <td>2.1</td><td>2006-06-13</td><td>1.1</td><td><a href="javadocs/api-2.1/">api-2.1</a></td><td><a href="release-notes/RELEASE-NOTES-2.1.txt">release notes for 2.1</a></td>
+-</tr>
+-<tr>
+-  <td>2.0</td><td>2003-09-02</td><td>1.1</td><td><a href="javadocs/api-2.0/">api-2.0</a></td><td><a href="release-notes/RELEASE-NOTES-2.0.txt">release notes for 2.0</a></td>
+-</tr>
+-<tr>
+-  <td>1.0.1</td><td>2002-11-25</td><td>1.1</td><td><a href="javadocs/api-1.0.1/">api-1.0.1</a></td><td><a href="release-notes/RELEASE-NOTES-1.0.1.txt">release notes for 1.0.1</a></td>
+-</tr>
+-<tr>
+-  <td>1.0</td><td>2002-10-04</td><td>1.1</td><td><a href="javadocs/api-1.0/">api-1.0</a></td><td><a href="release-notes/RELEASE-NOTES-1.0.txt">release notes for 1.0</a></td>
+-</tr>
+-</table>
++  This page contains information about all Apache Commons Lang releases.
+ 
+-</section>
++    <subsection name="org.apache.commons:commons-lang3:3.x">
++      <table>
++        <tr>
++          <th>Version</th><th>Release date</th><th>Required Java Version</th><th>Javadoc</th><th>Release notes</th>
++        </tr>
++        <tr>
++          <td>3.4</td><td>2014-04-06</td><td>6.0</td><td><a href="javadocs/api-3.4/">api-3.4</a></td><td><a href="release-notes/RELEASE-NOTES-3.4.txt">release notes for 3.4</a></td>
++        </tr>
++        <tr>
++          <td>3.3.2</td><td>2014-04-09</td><td>6.0</td><td><a href="javadocs/api-3.3.2/">api-3.3.2</a></td><td><a href="release-notes/RELEASE-NOTES-3.3.2.txt">release notes for 3.3.2</a></td>
++        </tr>
++        <tr>
++          <td>3.3.1</td><td>2014-03-18</td><td>6.0</td><td><a href="javadocs/api-3.3.1/">api-3.3.1</a></td><td><a href="release-notes/RELEASE-NOTES-3.3.1.txt">release notes for 3.3.1</a></td>
++        </tr>
++        <tr>
++          <td>3.3</td><td>2014-03-04</td><td>6.0</td><td><a href="javadocs/api-3.3/">api-3.3</a></td><td><a href="release-notes/RELEASE-NOTES-3.3.txt">release notes for 3.3</a></td>
++        </tr>
++        <tr>
++          <td>3.2.1</td><td>2014-01-05</td><td>6.0</td><td><a href="javadocs/api-3.2.1/">api-3.2.1</a></td><td><a href="release-notes/RELEASE-NOTES-3.2.1.txt">release notes for 3.2.1</a></td>
++        </tr>
++        <tr>
++          <td>3.2</td><td>2014-01-01</td><td>6.0</td><td><a href="javadocs/api-3.2/">api-3.2</a></td><td><a href="release-notes/RELEASE-NOTES-3.2.txt">release notes for 3.2</a></td>
++        </tr>
++        <tr>
++          <td>3.1</td><td>2011-11-14</td><td>5.0</td><td><a href="javadocs/api-3.1/">api-3.1</a></td><td><a href="release-notes/RELEASE-NOTES-3.1.txt">release notes for 3.1</a></td>
++        </tr>
++        <tr>
++          <td>3.0.1</td><td>2011-08-09</td><td>5.0</td><td><a href="javadocs/api-3.0.1/">api-3.0.1</a></td><td><a href="release-notes/RELEASE-NOTES-3.0.1.txt">release notes for 3.0.1</a></td>
++        </tr>
++        <tr>
++          <td>3.0</td><td>2011-07-18</td><td>5.0</td><td><a href="javadocs/api-3.0/">api-3.0</a></td><td><a href="release-notes/RELEASE-NOTES-3.0.txt">release notes for 3.0</a></td>
++        </tr>
++      </table>
++    </subsection>
++
++    <subsection name="commons-lang:commons-lang:2.x">
++      <table>
++        <tr>
++          <th>Version</th><th>Release date</th><th>Required Java Version</th><th>Javadoc</th><th>Release notes</th>
++        </tr>
++        <tr>
++          <td>2.6</td><td>2011-01-16</td><td>1.3</td><td><a href="javadocs/api-2.6/">api-2.6</a></td><td><a href="release-notes/RELEASE-NOTES-2.6.txt">release notes for 2.6</a></td>
++        </tr>
++        <tr>
++          <td>2.5</td><td>2010-02-23</td><td>1.3</td><td><a href="javadocs/api-2.5/">api-2.5</a></td><td><a href="release-notes/RELEASE-NOTES-2.5.txt">release notes for 2.5</a></td>
++        </tr>
++        <tr>
++          <td>2.4</td><td>2008-03-18</td><td>1.2</td><td><a href="javadocs/api-2.4/">api-2.4</a></td><td><a href="release-notes/RELEASE-NOTES-2.4.txt">release notes for 2.4</a></td>
++        </tr>
++        <tr>
++          <td>2.3</td><td>2007-02-13</td><td>1.1</td><td><a href="javadocs/api-2.3/">api-2.3</a></td><td><a href="release-notes/RELEASE-NOTES-2.3.txt">release notes for 2.3</a></td>
++        </tr>
++        <tr>
++          <td>2.2</td><td>2006-10-04</td><td>1.1</td><td><a href="javadocs/api-2.2/">api-2.2</a></td><td><a href="release-notes/RELEASE-NOTES-2.2.txt">release notes for 2.2</a></td>
++        </tr>
++        <tr>
++          <td>2.1</td><td>2006-06-13</td><td>1.1</td><td><a href="javadocs/api-2.1/">api-2.1</a></td><td><a href="release-notes/RELEASE-NOTES-2.1.txt">release notes for 2.1</a></td>
++        </tr>
++        <tr>
++          <td>2.0</td><td>2003-09-02</td><td>1.1</td><td><a href="javadocs/api-2.0/">api-2.0</a></td><td><a href="release-notes/RELEASE-NOTES-2.0.txt">release notes for 2.0</a></td>
++        </tr>
++      </table>
++    </subsection>
++
++    <subsection name="commons-lang:commons-lang:1.x">
++      <table>
++        <tr>
++          <th>Version</th><th>Release date</th><th>Required Java Version</th><th>Javadoc</th><th>Release notes</th>
++        </tr>
++        <tr>
++          <td>1.0.1</td><td>2002-11-25</td><td>1.1</td><td><a href="javadocs/api-1.0.1/">api-1.0.1</a></td><td><a href="release-notes/RELEASE-NOTES-1.0.1.txt">release notes for 1.0.1</a></td>
++        </tr>
++        <tr>
++          <td>1.0</td><td>2002-10-04</td><td>1.1</td><td><a href="javadocs/api-1.0/">api-1.0</a></td><td><a href="release-notes/RELEASE-NOTES-1.0.txt">release notes for 1.0</a></td>
++        </tr>
++      </table>
++    </subsection>
++
++  </section>
+ <!-- ================================================== -->
+ </body>
+ </document>

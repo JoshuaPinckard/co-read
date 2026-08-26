@@ -1,0 +1,26 @@
+diff --git a/src/changes/changes.xml b/src/changes/changes.xml
+index e3a149a22eb167dfb5ea0fe8a68ff98216c598e5..324720d816496b15eeebfb60deec21760406774c 100644
+--- a/src/changes/changes.xml
++++ b/src/changes/changes.xml
+@@ -61,6 +61,7 @@ The <action> type attribute can be add,update,fix,remove.
+     <action issue="LANG-1753" type="fix" dev="ggregory" due-to="Capt. Cutlass">StringUtils.replaceEachRepeatedly regression in 3.11+ #1297.</action>
+     <action                   type="fix" dev="ggregory" due-to="Capt. Cutlass">Use simplified JUnit assertion methods #1298.</action>
+     <action issue="LANG-1682" type="fix" dev="ggregory" due-to="Capt. Cutlass">Javadoc and test: Use Strings.CI.startsWithAny method instead #1299.</action>
++    <action issue="LANG-1757" type="fix" dev="ggregory" due-to="Gary Gregory">Fix NullPointerException in MethodUtils.getMatchingAccessibleMethod((Class, String, Class...)).</action>
+     <!-- ADD -->
+     <action                   type="add" dev="ggregory" due-to="Gary Gregory">Add Strings and refactor StringUtils.</action>
+     <action issue="LANG-1747" type="add" dev="ggregory" due-to="Oliver B. Fischer, Gary Gregory">Add StopWatch.run([Failable]Runnable) and get([Failable]Supplier).</action>
+diff --git a/src/main/java/org/apache/commons/lang3/reflect/MethodUtils.java b/src/main/java/org/apache/commons/lang3/reflect/MethodUtils.java
+index 8db0bd5a9b2167f1e2e25a5dff7eba84a53bd748..86594fd7712c41ecde51fe071b647aa4d50baa8f 100644
+--- a/src/main/java/org/apache/commons/lang3/reflect/MethodUtils.java
++++ b/src/main/java/org/apache/commons/lang3/reflect/MethodUtils.java
+@@ -349,7 +349,8 @@ public class MethodUtils {
+ 
+             final Class<?> lastParameterType = parameterTypes[parameterTypes.length - 1];
+             final String parameterTypeName = lastParameterType == null ? null : lastParameterType.getName();
+-            final String parameterTypeSuperClassName = lastParameterType == null ? null : lastParameterType.getSuperclass().getName();
++            final String parameterTypeSuperClassName = lastParameterType == null ? null
++                    : lastParameterType.getSuperclass() != null ? lastParameterType.getSuperclass().getName() : null;
+ 
+             if (parameterTypeName != null && parameterTypeSuperClassName != null && !methodParameterComponentTypeName.equals(parameterTypeName)
+                 && !methodParameterComponentTypeName.equals(parameterTypeSuperClassName)) {

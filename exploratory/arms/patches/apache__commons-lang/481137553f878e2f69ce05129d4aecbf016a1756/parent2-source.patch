@@ -1,0 +1,84 @@
+diff --git a/src/changes/changes.xml b/src/changes/changes.xml
+index 432c77ce48b11fcb797b8f2bccba31ac29750e02..96f610820468437f199cfb2a30e3e4e15e5b3188 100644
+--- a/src/changes/changes.xml
++++ b/src/changes/changes.xml
+@@ -22,6 +22,7 @@
+   <body>
+ 
+   <release version="3.5" date="tba" description="tba">
++    <action issue="LANG-1169" type="add" dev="lguibert" due-to="Rafal Glowinski, Robert Parr, Arman Sharif">Add StringUtils methods to compare a string to multiple strings</action>
+     <action issue="LANG-1183" type="update" dev="lguibert">Making replacePattern/removePattern methods null safe in StringUtils</action>
+     <action issue="LANG-1139" type="add" dev="lguibert">Add replace by regular expression methods in StringUtils</action>
+     <action issue="LANG-1171" type="add" dev="lguibert">Add compare methods in StringUtils</action>
+diff --git a/src/main/java/org/apache/commons/lang3/StringUtils.java b/src/main/java/org/apache/commons/lang3/StringUtils.java
+index 7bf62d11d3ad707d15af97839ab827d2af0e97eb..cb3579640a40da584fe975b8404b6cd0a17c1325 100644
+--- a/src/main/java/org/apache/commons/lang3/StringUtils.java
++++ b/src/main/java/org/apache/commons/lang3/StringUtils.java
+@@ -1008,6 +1008,67 @@ public class StringUtils {
+         return str1.compareToIgnoreCase(str2);
+     }
+ 
++    /**
++     * <p>Compares given <code>string</code> to a CharSequences vararg of <code>searchStrings</code>,
++     * returning {@code true} if the <code>string</code> is equal to any of the <code>searchStrings</code>.</p>
++     *
++     * <pre>
++     * StringUtils.equalsAny(null, (CharSequence[]) null) = false
++     * StringUtils.equalsAny(null, null, null)    = true
++     * StringUtils.equalsAny(null, "abc", "def")  = false
++     * StringUtils.equalsAny("abc", null, "def")  = false
++     * StringUtils.equalsAny("abc", "abc", "def") = true
++     * StringUtils.equalsAny("abc", "ABC", "DEF") = false
++     * </pre>
++     *
++     * @param string to compare, may be {@code null}.
++     * @param searchStrings a vararg of strings, may be {@code null}.
++     * @return {@code true} if the string is equal (case-sensitive) to any other element of <code>searchStrings</code>;
++     * {@code false} if <code>searchStrings</code> is null or contains no matches.
++     * @since 3.5
++     */
++    public static boolean equalsAny(final CharSequence string, final CharSequence... searchStrings) {
++        if (ArrayUtils.isNotEmpty(searchStrings)) {
++            for (CharSequence next : searchStrings) {
++                if (equals(string, next)) {
++                    return true;
++                }
++            }
++        }
++        return false;
++    }
++
++
++    /**
++     * <p>Compares given <code>string</code> to a CharSequences vararg of <code>searchStrings</code>,
++     * returning {@code true} if the <code>string</code> is equal to any of the <code>searchStrings</code>, ignoring case.</p>
++     *
++     * <pre>
++     * StringUtils.equalsAnyIgnoreCase(null, (CharSequence[]) null) = false
++     * StringUtils.equalsAnyIgnoreCase(null, null, null)    = true
++     * StringUtils.equalsAnyIgnoreCase(null, "abc", "def")  = false
++     * StringUtils.equalsAnyIgnoreCase("abc", null, "def")  = false
++     * StringUtils.equalsAnyIgnoreCase("abc", "abc", "def") = true
++     * StringUtils.equalsAnyIgnoreCase("abc", "ABC", "DEF") = true
++     * </pre>
++     *
++     * @param string to compare, may be {@code null}.
++     * @param searchStrings a vararg of strings, may be {@code null}.
++     * @return {@code true} if the string is equal (case-insensitive) to any other element of <code>searchStrings</code>;
++     * {@code false} if <code>searchStrings</code> is null or contains no matches.
++     * @since 3.5
++     */
++    public static boolean equalsAnyIgnoreCase(final CharSequence string, final CharSequence...searchStrings) {
++        if (ArrayUtils.isNotEmpty(searchStrings)) {
++            for (CharSequence next : searchStrings) {
++                if (equalsIgnoreCase(string, next)) {
++                    return true;
++                }
++            }
++        }
++        return false;
++    }
++
+     // IndexOf
+     //-----------------------------------------------------------------------
+     /**

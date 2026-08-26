@@ -1,0 +1,39 @@
+diff --git a/src/test/java/org/apache/commons/lang3/text/WordUtilsTest.java b/src/test/java/org/apache/commons/lang3/text/WordUtilsTest.java
+index 0da57dd58cd24c6576b425cb9af9e533013bc61c..8275768121b05d7a85dc921c630d3043c6fa0991 100644
+--- a/src/test/java/org/apache/commons/lang3/text/WordUtilsTest.java
++++ b/src/test/java/org/apache/commons/lang3/text/WordUtilsTest.java
+@@ -154,7 +154,33 @@ public class WordUtilsTest {
+         expected = "Click here,\nhttp://commons.apach\ne.org, to jump to\nthe commons website";
+         assertEquals(expected, WordUtils.wrap(input, 20, "\n", true));
+     }
+-    
++
++    @Test
++    public void testWrap_StringIntStringBooleanString() {
++
++        //no changes test
++        String input = "flammable/inflammable";
++        String expected = "flammable/inflammable";
++        assertEquals(expected, WordUtils.wrap(input, 30, "\n", false, "/"));
++
++        // wrap on / and small width
++        expected = "flammable\ninflammable";
++        assertEquals(expected, WordUtils.wrap(input, 2, "\n", false, "/"));
++
++        // wrap long words on / 1
++        expected = "flammable\ninflammab\nle";
++        assertEquals(expected, WordUtils.wrap(input, 9, "\n", true, "/"));
++
++        // wrap long words on / 2
++        expected = "flammable\ninflammable";
++        assertEquals(expected, WordUtils.wrap(input, 15, "\n", true, "/"));
++
++        // wrap long words on / 3
++        input = "flammableinflammable";
++        expected = "flammableinflam\nmable";
++        assertEquals(expected, WordUtils.wrap(input, 15, "\n", true, "/"));
++    }
++
+     //-----------------------------------------------------------------------
+     @Test
+     public void testCapitalize_String() {

@@ -1,0 +1,29 @@
+diff --git a/src/test/java/org/apache/commons/lang3/reflect/TypeUtilsTest.java b/src/test/java/org/apache/commons/lang3/reflect/TypeUtilsTest.java
+index 60c8b4897b5f5a23da284613837492b7d3d6f0bd..56b23a2411a3fe39cc0c7f35902837af0002890c 100644
+--- a/src/test/java/org/apache/commons/lang3/reflect/TypeUtilsTest.java
++++ b/src/test/java/org/apache/commons/lang3/reflect/TypeUtilsTest.java
+@@ -97,6 +97,8 @@ public class TypeUtilsTest<B> {
+ 
+     public static Comparable<Long> longComparable;
+ 
++    public static Comparable<?> wildcardComparable;
++
+     public static URI uri;
+ 
+     public void dummyMethod(final List list0, final List<Object> list1, final List<?> list2,
+@@ -722,6 +724,15 @@ public class TypeUtilsTest<B> {
+        Assert.assertEquals(String.format("? super %s", iterableT0.getName()), lowerTypeVariable.toString());
+     }
+ 
++    @Test
++    public void testLang1114() throws Exception {
++        final Type nonWildcardType = getClass().getDeclaredField("wildcardComparable").getGenericType();
++        final Type wildcardType = ((ParameterizedType)nonWildcardType).getActualTypeArguments()[0];
++
++        Assert.assertFalse(TypeUtils.equals(wildcardType, nonWildcardType));
++        Assert.assertFalse(TypeUtils.equals(nonWildcardType, wildcardType));
++    }
++
+     @Test
+     public void testGenericArrayType() throws Exception {
+         final Type expected = getClass().getField("intWildcardComparable").getGenericType();

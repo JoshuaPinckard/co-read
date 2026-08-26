@@ -1,0 +1,4 @@
+{"type":"thread.started","thread_id":"01a03be9-6b86-7a23-92ac-f72ad642a145"}
+{"type":"turn.started"}
+{"type":"item.completed","item":{"id":"item_0","type":"agent_message","text":"ARMSCANARY_CODEX_GLOBAL_DEF08AA568CE06806AC75F33\nARMSCANARY_CODEX_WORKSPACE_DEF08AA568CE06806AC75F33"}}
+{"type":"turn.completed","usage":{"input_tokens":14317,"cached_input_tokens":9984,"cache_write_input_tokens":0,"output_tokens":97,"reasoning_output_tokens":53}}

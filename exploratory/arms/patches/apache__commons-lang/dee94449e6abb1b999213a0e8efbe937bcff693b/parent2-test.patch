@@ -1,0 +1,31 @@
+diff --git a/src/test/java/org/apache/commons/lang3/builder/ReflectionToStringBuilderTest.java b/src/test/java/org/apache/commons/lang3/builder/ReflectionToStringBuilderTest.java
+new file mode 100644
+index 0000000000000000000000000000000000000000..2410216711b5821ba9b413ed63c72c800ff1ba79
+--- /dev/null
++++ b/src/test/java/org/apache/commons/lang3/builder/ReflectionToStringBuilderTest.java
+@@ -0,0 +1,12 @@
++package org.apache.commons.lang3.builder;
++
++import org.junit.Test;
++
++public class ReflectionToStringBuilderTest {
++
++    @Test(expected=IllegalArgumentException.class)
++    public void testConstructorWithNullObject() {
++        new ReflectionToStringBuilder(null, ToStringStyle.DEFAULT_STYLE, new StringBuffer());
++    }
++
++}
+diff --git a/src/test/java/org/apache/commons/lang3/builder/ToStringBuilderTest.java b/src/test/java/org/apache/commons/lang3/builder/ToStringBuilderTest.java
+index 31010715cca3411f559e35ce054c0e5a2bb5c5b4..c55fe2f193a5f352d23391da18ef01bdf8f3f5ce 100644
+--- a/src/test/java/org/apache/commons/lang3/builder/ToStringBuilderTest.java
++++ b/src/test/java/org/apache/commons/lang3/builder/ToStringBuilderTest.java
+@@ -1041,7 +1041,7 @@ public class ToStringBuilderTest {
+         static final int staticInt2 = 67890;
+     }
+ 
+-    @Test
++    @Test(expected=IllegalArgumentException.class)
+     public void testReflectionNull() {
+         assertEquals("<null>", ReflectionToStringBuilder.toString(null));
+     }

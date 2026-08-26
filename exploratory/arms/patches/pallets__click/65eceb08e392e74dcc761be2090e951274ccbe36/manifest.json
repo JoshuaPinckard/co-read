@@ -1,0 +1,129 @@
+{
+  "base": "96146c9d0b25d700d00b65c916739bd491dd15e0",
+  "canonical_merge_tree": {
+    "exit_code": 1,
+    "matches_canonical_row": true,
+    "result_tree": "a992a3953cf43019dadd7774e21d8f65763edd64",
+    "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "stdout_sha256": "5f087af09659f2000ef21f83b9195cb9eba2166997acdd133eb07c35de10a468"
+  },
+  "conflicted_paths": [
+    "CHANGES.rst",
+    "src/click/__init__.py"
+  ],
+  "corpus_line": 51,
+  "joint_source": {
+    "constructible": false,
+    "patch": null,
+    "reason": "canonical textual conflict intersects source union",
+    "source_conflict_paths": [
+      "CHANGES.rst",
+      "src/click/__init__.py"
+    ],
+    "source_paths": [
+      ".gitignore",
+      "CHANGES.rst",
+      "docs/.DS_Store",
+      "docs/options.rst",
+      "examples/README",
+      "setup.cfg",
+      "src/click/__init__.py",
+      "src/click/core.py",
+      "src/click/termui.py",
+      "src/click/types.py"
+    ]
+  },
+  "merge": "65eceb08e392e74dcc761be2090e951274ccbe36",
+  "parents": [
+    "0a81393fdf41edb0ab9d2f527eccdc8ce38d7d42",
+    "41f5b7a7967bb65910e8837bd4e8542a18feec6c"
+  ],
+  "prepared_at_utc": "2026-08-25T16:24:47.202+00:00",
+  "protocol_sha256": "fb1c0a9f9c7b48c30178d8a7e737250e18535ada63959c49c73c180505c69828",
+  "repo_slug": "pallets__click",
+  "repository": "pallets/click",
+  "result_tree": "a992a3953cf43019dadd7774e21d8f65763edd64",
+  "runner_sha256": "e04bc99409e584636ce8cb81cc22f6a7ca9c917f9ec9e46ab68a4c2328b6b6c6",
+  "schema_version": 1,
+  "sides": {
+    "parent1": {
+      "changed_paths": [
+        ".gitignore",
+        "CHANGES.rst",
+        "docs/.DS_Store",
+        "docs/options.rst",
+        "examples/README",
+        "setup.cfg",
+        "src/click/__init__.py",
+        "src/click/core.py",
+        "tests/test_formatting.py",
+        "tests/test_options.py"
+      ],
+      "parent": "0a81393fdf41edb0ab9d2f527eccdc8ce38d7d42",
+      "reconstructed_parent_tree": "8ccab429eec551ec0278f61236e7fc0c07dc868b",
+      "source_patch": {
+        "bytes": 7642,
+        "path": "exploratory/arms/patches/pallets__click/65eceb08e392e74dcc761be2090e951274ccbe36/parent1-source.patch",
+        "sha256": "62c5045f2d4aede330d7f47749edb8549ca0c581da1463ab6a7810a75b041223"
+      },
+      "source_paths": [
+        ".gitignore",
+        "CHANGES.rst",
+        "docs/.DS_Store",
+        "docs/options.rst",
+        "examples/README",
+        "setup.cfg",
+        "src/click/__init__.py",
+        "src/click/core.py"
+      ],
+      "test_patch": {
+        "bytes": 2405,
+        "path": "exploratory/arms/patches/pallets__click/65eceb08e392e74dcc761be2090e951274ccbe36/parent1-test.patch",
+        "sha256": "4abb98cc27b9cd59fa0c893304448c4bdbdccc1e9cb9b0c734e29c6bb8e5a1a9"
+      },
+      "test_paths": [
+        "tests/test_formatting.py",
+        "tests/test_options.py"
+      ]
+    },
+    "parent2": {
+      "changed_paths": [
+        "CHANGES.rst",
+        "src/click/__init__.py",
+        "src/click/core.py",
+        "src/click/termui.py",
+        "src/click/types.py",
+        "tests/conftest.py",
+        "tests/test_commands.py",
+        "tests/test_types.py",
+        "tests/test_utils.py"
+      ],
+      "parent": "41f5b7a7967bb65910e8837bd4e8542a18feec6c",
+      "reconstructed_parent_tree": "a19acc3d2dfc20be0247d5df124fc31eebe4c405",
+      "source_patch": {
+        "bytes": 3910,
+        "path": "exploratory/arms/patches/pallets__click/65eceb08e392e74dcc761be2090e951274ccbe36/parent2-source.patch",
+        "sha256": "b8e3e75c7ff3aa42fd00f25b59417a99ced568890e23092de863d3dfac0c9800"
+      },
+      "source_paths": [
+        "CHANGES.rst",
+        "src/click/__init__.py",
+        "src/click/core.py",
+        "src/click/termui.py",
+        "src/click/types.py"
+      ],
+      "test_patch": {
+        "bytes": 5809,
+        "path": "exploratory/arms/patches/pallets__click/65eceb08e392e74dcc761be2090e951274ccbe36/parent2-test.patch",
+        "sha256": "e5f41848500b41b26c014f629028fa7ae6b90db562a833f7b779948415d3c2ba"
+      },
+      "test_paths": [
+        "tests/conftest.py",
+        "tests/test_commands.py",
+        "tests/test_types.py",
+        "tests/test_utils.py"
+      ]
+    }
+  },
+  "site_index": 15
+}

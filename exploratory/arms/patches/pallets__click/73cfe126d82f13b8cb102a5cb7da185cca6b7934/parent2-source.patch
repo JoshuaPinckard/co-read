@@ -1,0 +1,1563 @@
+diff --git a/.devcontainer/devcontainer.json b/.devcontainer/devcontainer.json
+new file mode 100644
+index 0000000000000000000000000000000000000000..677d72affdcd3d26d915011aa988e7fc9497dbb7
+--- /dev/null
++++ b/.devcontainer/devcontainer.json
+@@ -0,0 +1,17 @@
++{
++  "name": "pallets/click",
++  "image": "mcr.microsoft.com/devcontainers/python:3",
++  "customizations": {
++    "vscode": {
++      "settings": {
++        "python.defaultInterpreterPath": "${workspaceFolder}/.venv",
++        "python.terminal.activateEnvInCurrentTerminal": true,
++        "python.terminal.launchArgs": [
++          "-X",
++          "dev"
++        ]
++      }
++    }
++  },
++  "onCreateCommand": ".devcontainer/on-create-command.sh"
++}
+diff --git a/.devcontainer/on-create-command.sh b/.devcontainer/on-create-command.sh
+new file mode 100755
+index 0000000000000000000000000000000000000000..eaebea61856f7f6bde03a0deb1c7098fb085ca29
+--- /dev/null
++++ b/.devcontainer/on-create-command.sh
+@@ -0,0 +1,7 @@
++#!/bin/bash
++set -e
++python3 -m venv --upgrade-deps .venv
++. .venv/bin/activate
++pip install -r requirements/dev.txt
++pip install -e .
++pre-commit install --install-hooks
+diff --git a/.editorconfig b/.editorconfig
+index e32c8029d1860bf40125d8458db3bd1c4d3f4058..2ff985a67af35fdfd1076354b771c425867cdab4 100644
+--- a/.editorconfig
++++ b/.editorconfig
+@@ -9,5 +9,5 @@ end_of_line = lf
+ charset = utf-8
+ max_line_length = 88
+ 
+-[*.{yml,yaml,json,js,css,html}]
++[*.{css,html,js,json,jsx,scss,ts,tsx,yaml,yml}]
+ indent_size = 2
+diff --git a/.github/ISSUE_TEMPLATE/bug-report.md b/.github/ISSUE_TEMPLATE/bug-report.md
+index 09535a68570b08d9a5dfef2d5a5397d9a299bf62..7a42e5f37733ccf1ca52d7807241c634c9676ec3 100644
+--- a/.github/ISSUE_TEMPLATE/bug-report.md
++++ b/.github/ISSUE_TEMPLATE/bug-report.md
+@@ -5,7 +5,7 @@ about: Report a bug in Click (not other projects which depend on Click)
+ 
+ <!--
+ This issue tracker is a tool to address bugs in Click itself. Please use
+-Pallets Discord or Stack Overflow for questions about your own code.
++GitHub Discussions or the Pallets Discord for questions about your own code.
+ 
+ Replace this comment with a clear outline of what the bug is.
+ -->
+diff --git a/.github/ISSUE_TEMPLATE/config.yml b/.github/ISSUE_TEMPLATE/config.yml
+index 8d8c9b74784fc9a318d11678db7c555207f88e3d..9d26be19bac721cb977d68806e9832fef8c0f604 100644
+--- a/.github/ISSUE_TEMPLATE/config.yml
++++ b/.github/ISSUE_TEMPLATE/config.yml
+@@ -1,11 +1,8 @@
+ blank_issues_enabled: false
+ contact_links:
+-  - name: Security issue
+-    url: security@palletsprojects.com
+-    about: Do not report security issues publicly. Email our security contact.
+-  - name: Questions
+-    url: https://stackoverflow.com/questions/tagged/python-click?tab=Frequent
+-    about: Search for and ask questions about your code on Stack Overflow.
+-  - name: Questions and discussions
++  - name: Questions on Discussions
++    url: https://github.com/pallets/click/discussions/
++    about: Ask questions about your own code on the Discussions tab.
++  - name: Questions on Chat
+     url: https://discord.gg/pallets
+-    about: Discuss questions about your code on our Discord chat.
++    about: Ask questions about your own code on our Discord chat.
+diff --git a/.github/ISSUE_TEMPLATE/feature-request.md b/.github/ISSUE_TEMPLATE/feature-request.md
+index 3dce4a42e9516af7a2f734470b5d361c7100e1a5..3932f5e1d02bd33fb005cd6ab040807ef645f4cf 100644
+--- a/.github/ISSUE_TEMPLATE/feature-request.md
++++ b/.github/ISSUE_TEMPLATE/feature-request.md
+@@ -5,11 +5,11 @@ about: Suggest a new feature for Click
+ 
+ <!--
+ Replace this comment with a description of what the feature should do.
+-Include details such as links relevant specs or previous discussions.
++Include details such as links to relevant specs or previous discussions.
+ -->
+ 
+ <!--
+ Replace this comment with an example of the problem which this feature
+-would resolve. Is this problem solvable without changes to Click,
+-such as by subclassing or using an extension?
++would resolve. Is this problem solvable without changes to Click, such
++as by subclassing or using an extension?
+ -->
+diff --git a/.github/dependabot.yml b/.github/dependabot.yml
+index 90f94bc32b917f4902e37ebf40553590c3b3a521..1f47f125e5c06e827ba4df75cffd838547a4163a 100644
+--- a/.github/dependabot.yml
++++ b/.github/dependabot.yml
+@@ -1,9 +1,18 @@
+ version: 2
+ updates:
+-- package-ecosystem: "github-actions"
+-  directory: "/"
+-  schedule:
+-    interval: "monthly"
+-    day: "monday"
+-    time: "16:00"
+-    timezone: "UTC"
++  - package-ecosystem: github-actions
++    directory: /
++    schedule:
++      interval: monthly
++    groups:
++      github-actions:
++        patterns:
++          - '*'
++  - package-ecosystem: pip
++    directory: /requirements/
++    schedule:
++      interval: monthly
++    groups:
++      python-requirements:
++        patterns:
++          - '*'
+diff --git a/.github/pull_request_template.md b/.github/pull_request_template.md
+index 29fd35f8557158826f728f846f4c631a18469400..eb124d251a733352fc4e867844072e876d1a8508 100644
+--- a/.github/pull_request_template.md
++++ b/.github/pull_request_template.md
+@@ -1,6 +1,7 @@
+ <!--
+ Before opening a PR, open a ticket describing the issue or feature the
+-PR will address. Follow the steps in CONTRIBUTING.rst.
++PR will address. An issue is not required for fixing typos in
++documentation, or other simple non-code changes.
+ 
+ Replace this comment with a description of the change. Describe how it
+ addresses the linked ticket.
+@@ -9,22 +10,16 @@ addresses the linked ticket.
+ <!--
+ Link to relevant issues or previous PRs, one per line. Use "fixes" to
+ automatically close an issue.
+--->
+ 
+-- fixes #<issue number>
++fixes #<issue number>
++-->
+ 
+ <!--
+-Ensure each step in CONTRIBUTING.rst is complete by adding an "x" to
+-each box below.
++Ensure each step in CONTRIBUTING.rst is complete, especially the following:
+ 
+-If only docs were changed, these aren't relevant and can be removed.
++- Add tests that demonstrate the correct behavior of the change. Tests
++  should fail without the change.
++- Add or update relevant docs, in the docs folder and in code.
++- Add an entry in CHANGES.rst summarizing the change and linking to the issue.
++- Add `.. versionchanged::` entries in any relevant code docs.
+ -->
+-
+-Checklist:
+-
+-- [ ] Add tests that demonstrate the correct behavior of the change. Tests should fail without the change.
+-- [ ] Add or update relevant docs, in the docs folder and in code.
+-- [ ] Add an entry in `CHANGES.rst` summarizing the change and linking to the issue.
+-- [ ] Add `.. versionchanged::` entries in any relevant code docs.
+-- [ ] Run `pre-commit` hooks and fix any issues.
+-- [ ] Run `pytest` and `tox`, no tests failed.
+diff --git a/.github/workflows/lock.yaml b/.github/workflows/lock.yaml
+index c790fae5cb82c522b0c9142e5c41e0971634ab46..22228a1cd2fd561782e0fc49bbbe17d61007f4d8 100644
+--- a/.github/workflows/lock.yaml
++++ b/.github/workflows/lock.yaml
+@@ -1,25 +1,23 @@
+-name: 'Lock threads'
+-# Lock closed issues that have not received any further activity for
+-# two weeks. This does not close open issues, only humans may do that.
+-# We find that it is easier to respond to new issues with fresh examples
+-# rather than continuing discussions on old issues.
++name: Lock inactive closed issues
++# Lock closed issues that have not received any further activity for two weeks.
++# This does not close open issues, only humans may do that. It is easier to
++# respond to new issues with fresh examples rather than continuing discussions
++# on old issues.
+ 
+ on:
+   schedule:
+     - cron: '0 0 * * *'
+-
+ permissions:
+   issues: write
+   pull-requests: write
+-
+ concurrency:
+   group: lock
+-
+ jobs:
+   lock:
+     runs-on: ubuntu-latest
+     steps:
+-      - uses: dessant/lock-threads@c1b35aecc5cdb1a34539d14196df55838bb2f836
++      - uses: dessant/lock-threads@1bf7ec25051fe7c00bdd17e6a7cf3d7bfb7dc771 # v5.0.1
+         with:
+           issue-inactive-days: 14
+           pr-inactive-days: 14
++          discussion-inactive-days: 14
+diff --git a/.github/workflows/publish.yaml b/.github/workflows/publish.yaml
+index 3c8db0e0a2a3964d667989e65fbf8d175e2de2c1..951781073fe93b014b83100c8d2446b621cc588d 100644
+--- a/.github/workflows/publish.yaml
++++ b/.github/workflows/publish.yaml
+@@ -9,12 +9,12 @@ jobs:
+     outputs:
+       hash: ${{ steps.hash.outputs.hash }}
+     steps:
+-      - uses: actions/checkout@8f4b7f84864484a7bf31766abe9204da3cbe65b3
+-      - uses: actions/setup-python@d27e3f3d7c64b4bbf8e4abfb9b63b83e846e0435
++      - uses: actions/checkout@9bb56186c3b09b4f86b1c65136769dd318469633 # v4.1.2
++      - uses: actions/setup-python@82c7e631bb3cdc910f68e0081d67478d79c6982d # v5.1.0
+         with:
+           python-version: '3.x'
+-          cache: 'pip'
+-          cache-dependency-path: 'requirements/*.txt'
++          cache: pip
++          cache-dependency-path: requirements*/*.txt
+       - run: pip install -r requirements/build.txt
+       # Use the commit date instead of the current date during the build.
+       - run: echo "SOURCE_DATE_EPOCH=$(git log -1 --pretty=%ct)" >> $GITHUB_ENV
+@@ -23,28 +23,28 @@ jobs:
+       - name: generate hash
+         id: hash
+         run: cd dist && echo "hash=$(sha256sum * | base64 -w0)" >> $GITHUB_OUTPUT
+-      - uses: actions/upload-artifact@0b7f8abb1508181956e8e162db84b466c27e18ce
++      - uses: actions/upload-artifact@a8a3f3ad30e3422c9c7b888a15615d19a852ae32 # v3.1.3
+         with:
+           path: ./dist
+   provenance:
+-    needs: ['build']
++    needs: [build]
+     permissions:
+       actions: read
+       id-token: write
+       contents: write
+     # Can't pin with hash due to how this workflow works.
+-    uses: slsa-framework/slsa-github-generator/.github/workflows/generator_generic_slsa3.yml@v1.7.0
++    uses: slsa-framework/slsa-github-generator/.github/workflows/generator_generic_slsa3.yml@v1.10.0
+     with:
+       base64-subjects: ${{ needs.build.outputs.hash }}
+   create-release:
+     # Upload the sdist, wheels, and provenance to a GitHub release. They remain
+     # available as build artifacts for a while as well.
+-    needs: ['provenance']
++    needs: [provenance]
+     runs-on: ubuntu-latest
+     permissions:
+       contents: write
+     steps:
+-      - uses: actions/download-artifact@9bc31d5ccc31df68ecc42ccf4149144866c47d8a
++      - uses: actions/download-artifact@9bc31d5ccc31df68ecc42ccf4149144866c47d8a # v3.0.2
+       - name: create release
+         run: >
+           gh release create --draft --repo ${{ github.repository }}
+@@ -53,20 +53,21 @@ jobs:
+         env:
+           GH_TOKEN: ${{ github.token }}
+   publish-pypi:
+-    needs: ['provenance']
++    needs: [provenance]
+     # Wait for approval before attempting to upload to PyPI. This allows reviewing the
+     # files in the draft release.
+-    environment: 'publish'
++    environment:
++      name: publish
++      url: https://pypi.org/project/click/${{ github.ref_name }}
+     runs-on: ubuntu-latest
+     permissions:
+       id-token: write
+     steps:
+-      - uses: actions/download-artifact@9bc31d5ccc31df68ecc42ccf4149144866c47d8a
+-      # Try uploading to Test PyPI first, in case something fails.
+-      - uses: pypa/gh-action-pypi-publish@29930c9cf57955dc1b98162d0d8bc3ec80d9e75c
++      - uses: actions/download-artifact@9bc31d5ccc31df68ecc42ccf4149144866c47d8a # v3.0.2
++      - uses: pypa/gh-action-pypi-publish@81e9d935c883d0b210363ab89cf05f3894778450 # v1.8.14
+         with:
+           repository-url: https://test.pypi.org/legacy/
+           packages-dir: artifact/
+-      - uses: pypa/gh-action-pypi-publish@29930c9cf57955dc1b98162d0d8bc3ec80d9e75c
++      - uses: pypa/gh-action-pypi-publish@81e9d935c883d0b210363ab89cf05f3894778450 # v1.8.14
+         with:
+           packages-dir: artifact/
+diff --git a/.github/workflows/tests.yaml b/.github/workflows/tests.yaml
+index 0a839517dfa084e8a21670750335e526ebfc1f66..5e58d558e040d97fbe9ee61710a4f16a1d15f3a1 100644
+--- a/.github/workflows/tests.yaml
++++ b/.github/workflows/tests.yaml
+@@ -9,48 +9,52 @@ on:
+       - '*.md'
+       - '*.rst'
+   pull_request:
+-    branches:
+-      - main
+-      - '*.x'
+     paths-ignore:
+       - 'docs/**'
+       - '*.md'
+       - '*.rst'
+ jobs:
+   tests:
+-    name: ${{ matrix.name }}
+-    runs-on: ${{ matrix.os }}
++    name: ${{ matrix.name || matrix.python }}
++    runs-on: ${{ matrix.os || 'ubuntu-latest' }}
+     strategy:
+       fail-fast: false
+       matrix:
+         include:
+-          - {name: Linux, python: '3.11', os: ubuntu-latest, tox: py311}
+-          - {name: Windows, python: '3.11', os: windows-latest, tox: py311}
+-          - {name: Mac, python: '3.11', os: macos-latest, tox: py311}
+-          - {name: '3.12-dev', python: '3.12-dev', os: ubuntu-latest, tox: py312}
+-          - {name: '3.10', python: '3.10', os: ubuntu-latest, tox: py310}
+-          - {name: '3.9', python: '3.9', os: ubuntu-latest, tox: py39}
+-          - {name: '3.8', python: '3.8', os: ubuntu-latest, tox: py38}
+-          - {name: '3.7', python: '3.7', os: ubuntu-latest, tox: py37}
+-          - {name: 'PyPy', python: 'pypy-3.10', os: ubuntu-latest, tox: pypy310}
+-          - {name: Typing, python: '3.11', os: ubuntu-latest, tox: typing}
++          - {python: '3.12'}
++          - {name: Windows, python: '3.12', os: windows-latest}
++          - {name: Mac, python: '3.12', os: macos-latest}
++          - {python: '3.11'}
++          - {python: '3.10'}
++          - {python: '3.9'}
++          - {python: '3.8'}
++          - {python: '3.7'}
++          - {name: PyPy, python: 'pypy-3.10', tox: pypy310}
++          - {name: Minimum Versions, python: '3.12', tox: py-min}
++          - {name: Development Versions, python: '3.8', tox: py-dev}
+     steps:
+-      - uses: actions/checkout@ac593985615ec2ede58e132d2e21d2b1cbd6127c
+-      - uses: actions/setup-python@5ccb29d8773c3f3f653e1705f474dfaa8a06a912
++      - uses: actions/checkout@9bb56186c3b09b4f86b1c65136769dd318469633 # v4.1.2
++      - uses: actions/setup-python@82c7e631bb3cdc910f68e0081d67478d79c6982d # v5.1.0
+         with:
+           python-version: ${{ matrix.python }}
+-          cache: 'pip'
+-          cache-dependency-path: 'requirements/*.txt'
+-      - name: update pip
+-        run: |
+-          pip install -U wheel
+-          pip install -U setuptools
+-          python -m pip install -U pip
++          allow-prereleases: true
++          cache: pip
++          cache-dependency-path: requirements*/*.txt
++      - run: pip install tox
++      - run: tox run -e ${{ matrix.tox || format('py{0}', matrix.python) }}
++  typing:
++    runs-on: ubuntu-latest
++    steps:
++      - uses: actions/checkout@9bb56186c3b09b4f86b1c65136769dd318469633 # v4.1.2
++      - uses: actions/setup-python@82c7e631bb3cdc910f68e0081d67478d79c6982d # v5.1.0
++        with:
++          python-version: '3.x'
++          cache: pip
++          cache-dependency-path: requirements*/*.txt
+       - name: cache mypy
+-        uses: actions/cache@58c146cc91c5b9e778e71775dfe9bf1442ad9a12
++        uses: actions/cache@0c45773b623bea8c8e75f6c82b208c3cf94ea4f9 # v4.0.2
+         with:
+           path: ./.mypy_cache
+-          key: mypy|${{ matrix.python }}|${{ hashFiles('setup.cfg') }}
+-        if: matrix.tox == 'typing'
++          key: mypy|${{ hashFiles('pyproject.toml') }}
+       - run: pip install tox
+-      - run: tox run -e ${{ matrix.tox }}
++      - run: tox run -e typing
+diff --git a/.gitignore b/.gitignore
+index c1a1723d470beff99526e17e18b9987ee3ef9a82..62c1b887d73cc6325731f0c9c97927df23a42d1d 100644
+--- a/.gitignore
++++ b/.gitignore
+@@ -1,16 +1,10 @@
+-/.idea/
+-/.vscode/
+-.DS_Store/
+-/env/
+-/venv/
++.idea/
++.vscode/
++.venv*/
++venv*/
+ __pycache__/
+-*.pyc
+-*.egg-info/
+-/build/
+-/dist/
+-/.pytest_cache/
+-/.tox/
+-.coverage
+-.coverage.*
+-/htmlcov/
+-/docs/_build/
++dist/
++.coverage*
++htmlcov/
++.tox/
++docs/_build/
+diff --git a/.pre-commit-config.yaml b/.pre-commit-config.yaml
+index 810f3f39e280b6a0db49a92ade822de98c36e123..dd86089b880c348c37b656e73d287f500c2f1477 100644
+--- a/.pre-commit-config.yaml
++++ b/.pre-commit-config.yaml
+@@ -1,31 +1,16 @@
+ ci:
+-  autoupdate_branch: "8.1.x"
+   autoupdate_schedule: monthly
+ repos:
+-  - repo: https://github.com/asottile/pyupgrade
+-    rev: v3.15.0
++  - repo: https://github.com/astral-sh/ruff-pre-commit
++    rev: v0.4.1
+     hooks:
+-      - id: pyupgrade
+-        args: ["--py37-plus"]
+-  - repo: https://github.com/asottile/reorder-python-imports
+-    rev: v3.12.0
+-    hooks:
+-      - id: reorder-python-imports
+-        args: ["--application-directories", "src"]
+-  - repo: https://github.com/psf/black
+-    rev: 23.11.0
+-    hooks:
+-      - id: black
+-  - repo: https://github.com/PyCQA/flake8
+-    rev: 6.1.0
+-    hooks:
+-      - id: flake8
+-        additional_dependencies:
+-          - flake8-bugbear
+-          - flake8-implicit-str-concat
++      - id: ruff
++      - id: ruff-format
+   - repo: https://github.com/pre-commit/pre-commit-hooks
+-    rev: v4.5.0
++    rev: v4.6.0
+     hooks:
++      - id: check-merge-conflict
++      - id: debug-statements
+       - id: fix-byte-order-marker
+       - id: trailing-whitespace
+       - id: end-of-file-fixer
+diff --git a/.readthedocs.yaml b/.readthedocs.yaml
+index 346900b20057ec00e57daea6fe05344254f1c168..865c68597994a02456d113489a5d931464d2b9c5 100644
+--- a/.readthedocs.yaml
++++ b/.readthedocs.yaml
+@@ -1,8 +1,8 @@
+ version: 2
+ build:
+-  os: ubuntu-20.04
++  os: ubuntu-22.04
+   tools:
+-    python: "3.10"
++    python: '3.12'
+ python:
+   install:
+     - requirements: requirements/docs.txt
+diff --git a/CODE_OF_CONDUCT.md b/CODE_OF_CONDUCT.md
+deleted file mode 100644
+index f4ba197dec599c24887a90b70d54ee41fb7cf79d..0000000000000000000000000000000000000000
+--- a/CODE_OF_CONDUCT.md
++++ /dev/null
+@@ -1,76 +0,0 @@
+-# Contributor Covenant Code of Conduct
+-
+-## Our Pledge
+-
+-In the interest of fostering an open and welcoming environment, we as
+-contributors and maintainers pledge to making participation in our project and
+-our community a harassment-free experience for everyone, regardless of age, body
+-size, disability, ethnicity, sex characteristics, gender identity and expression,
+-level of experience, education, socio-economic status, nationality, personal
+-appearance, race, religion, or sexual identity and orientation.
+-
+-## Our Standards
+-
+-Examples of behavior that contributes to creating a positive environment
+-include:
+-
+-* Using welcoming and inclusive language
+-* Being respectful of differing viewpoints and experiences
+-* Gracefully accepting constructive criticism
+-* Focusing on what is best for the community
+-* Showing empathy towards other community members
+-
+-Examples of unacceptable behavior by participants include:
+-
+-* The use of sexualized language or imagery and unwelcome sexual attention or
+- advances
+-* Trolling, insulting/derogatory comments, and personal or political attacks
+-* Public or private harassment
+-* Publishing others' private information, such as a physical or electronic
+- address, without explicit permission
+-* Other conduct which could reasonably be considered inappropriate in a
+- professional setting
+-
+-## Our Responsibilities
+-
+-Project maintainers are responsible for clarifying the standards of acceptable
+-behavior and are expected to take appropriate and fair corrective action in
+-response to any instances of unacceptable behavior.
+-
+-Project maintainers have the right and responsibility to remove, edit, or
+-reject comments, commits, code, wiki edits, issues, and other contributions
+-that are not aligned to this Code of Conduct, or to ban temporarily or
+-permanently any contributor for other behaviors that they deem inappropriate,
+-threatening, offensive, or harmful.
+-
+-## Scope
+-
+-This Code of Conduct applies both within project spaces and in public spaces
+-when an individual is representing the project or its community. Examples of
+-representing a project or community include using an official project e-mail
+-address, posting via an official social media account, or acting as an appointed
+-representative at an online or offline event. Representation of a project may be
+-further defined and clarified by project maintainers.
+-
+-## Enforcement
+-
+-Instances of abusive, harassing, or otherwise unacceptable behavior may be
+-reported by contacting the project team at report@palletsprojects.com. All
+-complaints will be reviewed and investigated and will result in a response that
+-is deemed necessary and appropriate to the circumstances. The project team is
+-obligated to maintain confidentiality with regard to the reporter of an incident.
+-Further details of specific enforcement policies may be posted separately.
+-
+-Project maintainers who do not follow or enforce the Code of Conduct in good
+-faith may face temporary or permanent repercussions as determined by other
+-members of the project's leadership.
+-
+-## Attribution
+-
+-This Code of Conduct is adapted from the [Contributor Covenant][homepage], version 1.4,
+-available at https://www.contributor-covenant.org/version/1/4/code-of-conduct.html
+-
+-[homepage]: https://www.contributor-covenant.org
+-
+-For answers to common questions about this code of conduct, see
+-https://www.contributor-covenant.org/faq
+diff --git a/LICENSE.rst b/LICENSE.rst
+deleted file mode 100644
+index d12a849186982399c537c5b9a8fd77bf2edd5eab..0000000000000000000000000000000000000000
+--- a/LICENSE.rst
++++ /dev/null
+@@ -1,28 +0,0 @@
+-Copyright 2014 Pallets
+-
+-Redistribution and use in source and binary forms, with or without
+-modification, are permitted provided that the following conditions are
+-met:
+-
+-1.  Redistributions of source code must retain the above copyright
+-    notice, this list of conditions and the following disclaimer.
+-
+-2.  Redistributions in binary form must reproduce the above copyright
+-    notice, this list of conditions and the following disclaimer in the
+-    documentation and/or other materials provided with the distribution.
+-
+-3.  Neither the name of the copyright holder nor the names of its
+-    contributors may be used to endorse or promote products derived from
+-    this software without specific prior written permission.
+-
+-THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
+-"AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
+-LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A
+-PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
+-HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
+-SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED
+-TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR
+-PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF
+-LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING
+-NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
+-SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+diff --git a/LICENSE.txt b/LICENSE.txt
+new file mode 100644
+index 0000000000000000000000000000000000000000..d12a849186982399c537c5b9a8fd77bf2edd5eab
+--- /dev/null
++++ b/LICENSE.txt
+@@ -0,0 +1,28 @@
++Copyright 2014 Pallets
++
++Redistribution and use in source and binary forms, with or without
++modification, are permitted provided that the following conditions are
++met:
++
++1.  Redistributions of source code must retain the above copyright
++    notice, this list of conditions and the following disclaimer.
++
++2.  Redistributions in binary form must reproduce the above copyright
++    notice, this list of conditions and the following disclaimer in the
++    documentation and/or other materials provided with the distribution.
++
++3.  Neither the name of the copyright holder nor the names of its
++    contributors may be used to endorse or promote products derived from
++    this software without specific prior written permission.
++
++THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
++"AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
++LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A
++PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
++HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
++SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED
++TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR
++PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF
++LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING
++NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
++SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+diff --git a/MANIFEST.in b/MANIFEST.in
+deleted file mode 100644
+index e5b231d397182c14435d8dfeeb4b40569a7ebf7b..0000000000000000000000000000000000000000
+--- a/MANIFEST.in
++++ /dev/null
+@@ -1,10 +0,0 @@
+-include CHANGES.rst
+-include tox.ini
+-include requirements/*.txt
+-graft artwork
+-graft docs
+-prune docs/_build
+-graft examples
+-graft tests
+-include src/click/py.typed
+-global-exclude *.pyc
+diff --git a/README.md b/README.md
+new file mode 100644
+index 0000000000000000000000000000000000000000..1aa055dc046b665e3a962a576c5dc4d598ceadb2
+--- /dev/null
++++ b/README.md
+@@ -0,0 +1,52 @@
++# $ click_
++
++Click is a Python package for creating beautiful command line interfaces
++in a composable way with as little code as necessary. It's the "Command
++Line Interface Creation Kit". It's highly configurable but comes with
++sensible defaults out of the box.
++
++It aims to make the process of writing command line tools quick and fun
++while also preventing any frustration caused by the inability to
++implement an intended CLI API.
++
++Click in three points:
++
++-   Arbitrary nesting of commands
++-   Automatic help page generation
++-   Supports lazy loading of subcommands at runtime
++
++
++## A Simple Example
++
++```python
++import click
++
++@click.command()
++@click.option("--count", default=1, help="Number of greetings.")
++@click.option("--name", prompt="Your name", help="The person to greet.")
++def hello(count, name):
++    """Simple program that greets NAME for a total of COUNT times."""
++    for _ in range(count):
++        click.echo(f"Hello, {name}!")
++
++if __name__ == '__main__':
++    hello()
++```
++
++```
++$ python hello.py --count=3
++Your name: Click
++Hello, Click!
++Hello, Click!
++Hello, Click!
++```
++
++
++## Donate
++
++The Pallets organization develops and supports Click and other popular
++packages. In order to grow the community of contributors and users, and
++allow the maintainers to devote more time to the projects, [please
++donate today][].
++
++[please donate today]: https://palletsprojects.com/donate
+diff --git a/README.rst b/README.rst
+deleted file mode 100644
+index 76f26978a6d3a5e445950d26bfb4a9ff0af33433..0000000000000000000000000000000000000000
+--- a/README.rst
++++ /dev/null
+@@ -1,78 +0,0 @@
+-\$ click\_
+-==========
+-
+-Click is a Python package for creating beautiful command line interfaces
+-in a composable way with as little code as necessary. It's the "Command
+-Line Interface Creation Kit". It's highly configurable but comes with
+-sensible defaults out of the box.
+-
+-It aims to make the process of writing command line tools quick and fun
+-while also preventing any frustration caused by the inability to
+-implement an intended CLI API.
+-
+-Click in three points:
+-
+--   Arbitrary nesting of commands
+--   Automatic help page generation
+--   Supports lazy loading of subcommands at runtime
+-
+-
+-Installing
+-----------
+-
+-Install and update using `pip`_:
+-
+-.. code-block:: text
+-
+-    $ pip install -U click
+-
+-.. _pip: https://pip.pypa.io/en/stable/getting-started/
+-
+-
+-A Simple Example
+-----------------
+-
+-.. code-block:: python
+-
+-    import click
+-
+-    @click.command()
+-    @click.option("--count", default=1, help="Number of greetings.")
+-    @click.option("--name", prompt="Your name", help="The person to greet.")
+-    def hello(count, name):
+-        """Simple program that greets NAME for a total of COUNT times."""
+-        for _ in range(count):
+-            click.echo(f"Hello, {name}!")
+-
+-    if __name__ == '__main__':
+-        hello()
+-
+-.. code-block:: text
+-
+-    $ python hello.py --count=3
+-    Your name: Click
+-    Hello, Click!
+-    Hello, Click!
+-    Hello, Click!
+-
+-
+-Donate
+-------
+-
+-The Pallets organization develops and supports Click and other popular
+-packages. In order to grow the community of contributors and users, and
+-allow the maintainers to devote more time to the projects, `please
+-donate today`_.
+-
+-.. _please donate today: https://palletsprojects.com/donate
+-
+-
+-Links
+------
+-
+--   Documentation: https://click.palletsprojects.com/
+--   Changes: https://click.palletsprojects.com/changes/
+--   PyPI Releases: https://pypi.org/project/click/
+--   Source Code: https://github.com/pallets/click
+--   Issue Tracker: https://github.com/pallets/click/issues
+--   Chat: https://discord.gg/pallets
+diff --git a/docs/conf.py b/docs/conf.py
+index db71e395df74503547e0d1ee0c816377e46b7076..c579af52da2c10380d5314a5a9c1c6da38bbd395 100644
+--- a/docs/conf.py
++++ b/docs/conf.py
+@@ -10,18 +10,25 @@ release, version = get_version("Click")
+ 
+ # General --------------------------------------------------------------
+ 
+-master_doc = "index"
++default_role = "code"
+ extensions = [
+     "sphinx.ext.autodoc",
++    "sphinx.ext.extlinks",
+     "sphinx.ext.intersphinx",
++    "sphinx_tabs.tabs",
+     "sphinxcontrib.log_cabinet",
+     "pallets_sphinx_themes",
+-    "sphinx_issues",
+-    "sphinx_tabs.tabs",
+ ]
++autodoc_member_order = "bysource"
+ autodoc_typehints = "description"
+-intersphinx_mapping = {"python": ("https://docs.python.org/3/", None)}
+-issues_github_path = "pallets/click"
++autodoc_preserve_defaults = True
++extlinks = {
++    "issue": ("https://github.com/pallets/flask/issues/%s", "#%s"),
++    "pr": ("https://github.com/pallets/flask/pull/%s", "#%s"),
++}
++intersphinx_mapping = {
++    "python": ("https://docs.python.org/3/", None),
++}
+ 
+ # HTML -----------------------------------------------------------------
+ 
+@@ -46,7 +53,3 @@ html_favicon = "_static/click-icon.png"
+ html_logo = "_static/click-logo-sidebar.png"
+ html_title = f"Click Documentation ({version})"
+ html_show_sourcelink = False
+-
+-# LaTeX ----------------------------------------------------------------
+-
+-latex_documents = [(master_doc, f"Click-{version}.tex", html_title, author, "manual")]
+diff --git a/docs/license.rst b/docs/license.rst
+index a53a98cf3d4b093c6696becd3df4e1c6c0660fc9..2a445f9c62843f5205e3e4a920fd49c1808a399e 100644
+--- a/docs/license.rst
++++ b/docs/license.rst
+@@ -1,4 +1,5 @@
+ BSD-3-Clause License
+ ====================
+ 
+-.. include:: ../LICENSE.rst
++.. literalinclude:: ../LICENSE.txt
++    :language: text
+diff --git a/pyproject.toml b/pyproject.toml
+new file mode 100644
+index 0000000000000000000000000000000000000000..cc996618c9c61062286e3793372730c42e5b4805
+--- /dev/null
++++ b/pyproject.toml
+@@ -0,0 +1,99 @@
++[project]
++name = "click"
++description = "Composable command line interface toolkit"
++readme = "README.md"
++license = {file = "LICENSE.txt"}
++maintainers = [{name = "Pallets", email = "contact@palletsprojects.com"}]
++classifiers = [
++    "Development Status :: 5 - Production/Stable",
++    "Intended Audience :: Developers",
++    "License :: OSI Approved :: BSD License",
++    "Operating System :: OS Independent",
++    "Programming Language :: Python",
++    "Typing :: Typed",
++]
++requires-python = ">=3.7"
++dependencies = [
++    "colorama; platform_system == 'Windows'",
++    "importlib-metadata; python_version < '3.8'",
++]
++dynamic = ["version"]
++
++[project.urls]
++Donate = "https://palletsprojects.com/donate"
++Documentation = "https://click.palletsprojects.com/"
++Changes = "https://click.palletsprojects.com/changes/"
++Source = "https://github.com/pallets/click/"
++Chat = "https://discord.gg/pallets"
++
++[build-system]
++requires = ["flit_core<4"]
++build-backend = "flit_core.buildapi"
++
++[tool.flit.module]
++name = "click"
++
++[tool.flit.sdist]
++include = [
++    "docs/",
++    "requirements/",
++    "tests/",
++    "CHANGES.rst",
++    "tox.ini",
++]
++exclude = [
++    "docs/_build/",
++]
++
++[tool.pytest.ini_options]
++testpaths = ["tests"]
++filterwarnings = [
++    "error",
++]
++
++[tool.coverage.run]
++branch = true
++source = ["click", "tests"]
++
++[tool.coverage.paths]
++source = ["src", "*/site-packages"]
++
++[tool.mypy]
++python_version = "3.8"
++files = ["src/click", "tests/typing"]
++show_error_codes = true
++pretty = true
++strict = true
++
++[[tool.mypy.overrides]]
++module = [
++    "colorama.*",
++]
++ignore_missing_imports = true
++
++[tool.pyright]
++pythonVersion = "3.8"
++include = ["src/click", "tests/typing"]
++typeCheckingMode = "basic"
++
++[tool.ruff]
++extend-exclude = ["examples/"]
++src = ["src"]
++fix = true
++show-fixes = true
++output-format = "full"
++
++[tool.ruff.lint]
++select = [
++    "B",  # flake8-bugbear
++    "E",  # pycodestyle error
++    "F",  # pyflakes
++    "I",  # isort
++    "UP",  # pyupgrade
++    "W",  # pycodestyle warning
++]
++ignore-init-module-imports = true
++
++[tool.ruff.lint.isort]
++force-single-line = true
++order-by-type = false
+diff --git a/requirements/dev.txt b/requirements/dev.txt
+index 1a4ecc7b57452831655fa1d4f1a5d08324ecbb83..c35708d30121e5796e7123297a3311b99f979758 100644
+--- a/requirements/dev.txt
++++ b/requirements/dev.txt
+@@ -44,7 +44,7 @@ pyproject-api==1.5.2
+     # via tox
+ pyproject-hooks==1.0.0
+     # via build
+-pyyaml==6.0
++pyyaml==6.0.1
+     # via pre-commit
+ toposort==1.10
+     # via pip-compile-multi
+diff --git a/requirements/docs.txt b/requirements/docs.txt
+index 26922dd7f65a99646c82cc9ff7f1d781457e3dd0..c2d790ef1c246a809c8a736bd82bb48e9505fcbc 100644
+--- a/requirements/docs.txt
++++ b/requirements/docs.txt
+@@ -48,7 +48,7 @@ sphinx==7.0.1
+     #   sphinxcontrib-log-cabinet
+ sphinx-issues==3.0.1
+     # via -r requirements/docs.in
+-sphinx-tabs==3.4.1
++sphinx-tabs==3.4.5
+     # via -r requirements/docs.in
+ sphinxcontrib-applehelp==1.0.4
+     # via sphinx
+diff --git a/setup.cfg b/setup.cfg
+deleted file mode 100644
+index d5fcdcf0113a057c4ace31f9aa8e95cd2b37bcee..0000000000000000000000000000000000000000
+--- a/setup.cfg
++++ /dev/null
+@@ -1,104 +0,0 @@
+-[metadata]
+-name = click
+-version = attr: click.__version__
+-url = https://palletsprojects.com/p/click/
+-project_urls =
+-    Donate = https://palletsprojects.com/donate
+-    Documentation = https://click.palletsprojects.com/
+-    Changes = https://click.palletsprojects.com/changes/
+-    Source Code = https://github.com/pallets/click/
+-    Issue Tracker = https://github.com/pallets/click/issues/
+-    Chat = https://discord.gg/pallets
+-license = BSD-3-Clause
+-license_files = LICENSE.rst
+-maintainer = Pallets
+-maintainer_email = contact@palletsprojects.com
+-description = Composable command line interface toolkit
+-long_description = file: README.rst
+-long_description_content_type = text/x-rst
+-classifiers =
+-    Development Status :: 5 - Production/Stable
+-    Intended Audience :: Developers
+-    License :: OSI Approved :: BSD License
+-    Operating System :: OS Independent
+-    Programming Language :: Python
+-
+-[options]
+-packages = find:
+-package_dir = = src
+-include_package_data = True
+-python_requires = >= 3.7
+-# Dependencies are in setup.py for GitHub's dependency graph.
+-
+-[options.packages.find]
+-where = src
+-
+-[tool:pytest]
+-testpaths = tests
+-filterwarnings =
+-    error
+-
+-[coverage:run]
+-branch = True
+-source =
+-    click
+-    tests
+-
+-[coverage:paths]
+-source =
+-    src
+-    */site-packages
+-
+-[flake8]
+-# B = bugbear
+-# E = pycodestyle errors
+-# F = flake8 pyflakes
+-# W = pycodestyle warnings
+-# B9 = bugbear opinions
+-# ISC = implicit str concat
+-select = B, E, F, W, B9, ISC
+-ignore =
+-    # slice notation whitespace, invalid
+-    E203
+-    # line length, handled by bugbear B950
+-    E501
+-    # bare except, handled by bugbear B001
+-    E722
+-    # bin op line break, invalid
+-    W503
+-    # zip with strict=, requires python >= 3.10
+-    B905
+-    # string formatting opinion, B028 renamed to B907
+-    B028
+-    B907
+-# up to 88 allowed by bugbear B950
+-max-line-length = 80
+-per-file-ignores =
+-    # __init__ exports names
+-    src/click/__init__.py: F401
+-
+-[mypy]
+-files = src/click, tests/typing
+-python_version = 3.7
+-show_error_codes = True
+-disallow_subclassing_any = True
+-disallow_untyped_calls = True
+-disallow_untyped_defs = True
+-disallow_incomplete_defs = True
+-disallow_any_generics = True
+-check_untyped_defs = True
+-no_implicit_optional = True
+-local_partial_types = True
+-no_implicit_reexport = True
+-strict_equality = True
+-warn_redundant_casts = True
+-warn_unused_configs = True
+-warn_unused_ignores = True
+-warn_return_any = True
+-warn_unreachable = True
+-
+-[mypy-colorama.*]
+-ignore_missing_imports = True
+-
+-[mypy-importlib_metadata.*]
+-ignore_missing_imports = True
+diff --git a/setup.py b/setup.py
+deleted file mode 100644
+index 0a74d4144abfd4ecfe747bd1ea0780c4979fd07f..0000000000000000000000000000000000000000
+--- a/setup.py
++++ /dev/null
+@@ -1,9 +0,0 @@
+-from setuptools import setup
+-
+-setup(
+-    name="click",
+-    install_requires=[
+-        "colorama; platform_system == 'Windows'",
+-        "importlib-metadata; python_version < '3.8'",
+-    ],
+-)
+diff --git a/src/click/__init__.py b/src/click/__init__.py
+index 9a1dab048917edc420af440c73bd1d689de6b3fa..cfef88ea84608d13de4ffc71f27aa6e6ac49015e 100644
+--- a/src/click/__init__.py
++++ b/src/click/__init__.py
+@@ -4,6 +4,7 @@ writing command line scripts fun. Unlike other modules, it's based
+ around a simple API that does not come with too much magic and is
+ composable.
+ """
++
+ from .core import Argument as Argument
+ from .core import BaseCommand as BaseCommand
+ from .core import Command as Command
+diff --git a/src/click/_compat.py b/src/click/_compat.py
+index 23f8866598b4b4eb836b9d9b210ebd395fd0c557..9153d150ce67a708f920fcf9c606970fc061f816 100644
+--- a/src/click/_compat.py
++++ b/src/click/_compat.py
+@@ -516,7 +516,7 @@ if sys.platform.startswith("win") and WIN:
+ 
+     _ansi_stream_wrappers: t.MutableMapping[t.TextIO, t.TextIO] = WeakKeyDictionary()
+ 
+-    def auto_wrap_for_ansi(  # noqa: F811
++    def auto_wrap_for_ansi(
+         stream: t.TextIO, color: t.Optional[bool] = None
+     ) -> t.TextIO:
+         """Support ANSI color and style codes on Windows by wrapping a
+diff --git a/src/click/_termui_impl.py b/src/click/_termui_impl.py
+index f744657753caa6cdef1dcc41a4f0b5e3e9503ab8..f59bc94104ab9c6b0781c31c795bf9143c795b32 100644
+--- a/src/click/_termui_impl.py
++++ b/src/click/_termui_impl.py
+@@ -3,6 +3,7 @@ This module contains implementations for the termui module. To keep the
+ import time of Click down, some infrequently used functionality is
+ placed in this module and only imported as needed.
+ """
++
+ import contextlib
+ import math
+ import os
+@@ -698,8 +699,8 @@ if WIN:
+         return rv
+ 
+ else:
+-    import tty
+     import termios
++    import tty
+ 
+     @contextlib.contextmanager
+     def raw_terminal() -> t.Iterator[int]:
+diff --git a/src/click/core.py b/src/click/core.py
+index cc65e896bf2d754d74b54a84ac501b80127f83ca..f205c79c638d6c3cf309b7f8489fd9c5db01117f 100644
+--- a/src/click/core.py
++++ b/src/click/core.py
+@@ -39,6 +39,7 @@ from .utils import PacifyFlushWrapper
+ 
+ if t.TYPE_CHECKING:
+     import typing_extensions as te
++
+     from .shell_completion import CompletionItem
+ 
+ F = t.TypeVar("F", bound=t.Callable[..., t.Any])
+@@ -383,9 +384,9 @@ class Context:
+ 
+         #: An optional normalization function for tokens.  This is
+         #: options, choices, commands etc.
+-        self.token_normalize_func: t.Optional[
+-            t.Callable[[str], str]
+-        ] = token_normalize_func
++        self.token_normalize_func: t.Optional[t.Callable[[str], str]] = (
++            token_normalize_func
++        )
+ 
+         #: Indicates if resilient parsing is enabled.  In that case Click
+         #: will do its best to not cause any failures and default values
+@@ -646,14 +647,12 @@ class Context:
+     @t.overload
+     def lookup_default(
+         self, name: str, call: "te.Literal[True]" = True
+-    ) -> t.Optional[t.Any]:
+-        ...
++    ) -> t.Optional[t.Any]: ...
+ 
+     @t.overload
+     def lookup_default(
+         self, name: str, call: "te.Literal[False]" = ...
+-    ) -> t.Optional[t.Union[t.Any, t.Callable[[], t.Any]]]:
+-        ...
++    ) -> t.Optional[t.Union[t.Any, t.Callable[[], t.Any]]]: ...
+ 
+     def lookup_default(self, name: str, call: bool = True) -> t.Optional[t.Any]:
+         """Get the default for a parameter from :attr:`default_map`.
+@@ -713,24 +712,22 @@ class Context:
+ 
+     @t.overload
+     def invoke(
+-        __self,  # noqa: B902
++        __self,
+         __callback: "t.Callable[..., V]",
+         *args: t.Any,
+         **kwargs: t.Any,
+-    ) -> V:
+-        ...
++    ) -> V: ...
+ 
+     @t.overload
+     def invoke(
+-        __self,  # noqa: B902
++        __self,
+         __callback: "Command",
+         *args: t.Any,
+         **kwargs: t.Any,
+-    ) -> t.Any:
+-        ...
++    ) -> t.Any: ...
+ 
+     def invoke(
+-        __self,  # noqa: B902
++        __self,
+         __callback: t.Union["Command", "t.Callable[..., V]"],
+         *args: t.Any,
+         **kwargs: t.Any,
+@@ -782,9 +779,7 @@ class Context:
+             with ctx:
+                 return __callback(*args, **kwargs)
+ 
+-    def forward(
+-        __self, __cmd: "Command", *args: t.Any, **kwargs: t.Any  # noqa: B902
+-    ) -> t.Any:
++    def forward(__self, __cmd: "Command", *args: t.Any, **kwargs: t.Any) -> t.Any:
+         """Similar to :meth:`invoke` but fills in default keyword
+         arguments from the current context if the other command expects
+         it.  This cannot invoke callbacks directly, only other commands.
+@@ -936,7 +931,10 @@ class BaseCommand:
+                 extra[key] = value
+ 
+         ctx = self.context_class(
+-            self, info_name=info_name, parent=parent, **extra  # type: ignore
++            self,  # type: ignore[arg-type]
++            info_name=info_name,
++            parent=parent,
++            **extra,
+         )
+ 
+         with ctx.scope(cleanup=False):
+@@ -993,8 +991,7 @@ class BaseCommand:
+         complete_var: t.Optional[str] = None,
+         standalone_mode: "te.Literal[True]" = True,
+         **extra: t.Any,
+-    ) -> "te.NoReturn":
+-        ...
++    ) -> "te.NoReturn": ...
+ 
+     @t.overload
+     def main(
+@@ -1004,8 +1001,7 @@ class BaseCommand:
+         complete_var: t.Optional[str] = None,
+         standalone_mode: bool = ...,
+         **extra: t.Any,
+-    ) -> t.Any:
+-        ...
++    ) -> t.Any: ...
+ 
+     def main(
+         self,
+@@ -1843,14 +1839,12 @@ class Group(MultiCommand):
+         self.commands[name] = cmd
+ 
+     @t.overload
+-    def command(self, __func: t.Callable[..., t.Any]) -> Command:
+-        ...
++    def command(self, __func: t.Callable[..., t.Any]) -> Command: ...
+ 
+     @t.overload
+     def command(
+         self, *args: t.Any, **kwargs: t.Any
+-    ) -> t.Callable[[t.Callable[..., t.Any]], Command]:
+-        ...
++    ) -> t.Callable[[t.Callable[..., t.Any]], Command]: ...
+ 
+     def command(
+         self, *args: t.Any, **kwargs: t.Any
+@@ -1894,14 +1888,12 @@ class Group(MultiCommand):
+         return decorator
+ 
+     @t.overload
+-    def group(self, __func: t.Callable[..., t.Any]) -> "Group":
+-        ...
++    def group(self, __func: t.Callable[..., t.Any]) -> "Group": ...
+ 
+     @t.overload
+     def group(
+         self, *args: t.Any, **kwargs: t.Any
+-    ) -> t.Callable[[t.Callable[..., t.Any]], "Group"]:
+-        ...
++    ) -> t.Callable[[t.Callable[..., t.Any]], "Group"]: ...
+ 
+     def group(
+         self, *args: t.Any, **kwargs: t.Any
+@@ -2227,14 +2219,12 @@ class Parameter:
+     @t.overload
+     def get_default(
+         self, ctx: Context, call: "te.Literal[True]" = True
+-    ) -> t.Optional[t.Any]:
+-        ...
++    ) -> t.Optional[t.Any]: ...
+ 
+     @t.overload
+     def get_default(
+         self, ctx: Context, call: bool = ...
+-    ) -> t.Optional[t.Union[t.Any, t.Callable[[], t.Any]]]:
+-        ...
++    ) -> t.Optional[t.Union[t.Any, t.Callable[[], t.Any]]]: ...
+ 
+     def get_default(
+         self, ctx: Context, call: bool = True
+@@ -2842,14 +2832,12 @@ class Option(Parameter):
+     @t.overload
+     def get_default(
+         self, ctx: Context, call: "te.Literal[True]" = True
+-    ) -> t.Optional[t.Any]:
+-        ...
++    ) -> t.Optional[t.Any]: ...
+ 
+     @t.overload
+     def get_default(
+         self, ctx: Context, call: bool = ...
+-    ) -> t.Optional[t.Union[t.Any, t.Callable[[], t.Any]]]:
+-        ...
++    ) -> t.Optional[t.Union[t.Any, t.Callable[[], t.Any]]]: ...
+ 
+     def get_default(
+         self, ctx: Context, call: bool = True
+diff --git a/src/click/decorators.py b/src/click/decorators.py
+index d9bba9502ca353bca5136f43c92436ff584f06e1..a1ec90628de1d382b0eb9dda984045bafab9faa5 100644
+--- a/src/click/decorators.py
++++ b/src/click/decorators.py
+@@ -134,8 +134,7 @@ CmdType = t.TypeVar("CmdType", bound=Command)
+ 
+ # variant: no call, directly as decorator for a function.
+ @t.overload
+-def command(name: _AnyCallable) -> Command:
+-    ...
++def command(name: _AnyCallable) -> Command: ...
+ 
+ 
+ # variant: with positional name and with positional or keyword cls argument:
+@@ -145,8 +144,7 @@ def command(
+     name: t.Optional[str],
+     cls: t.Type[CmdType],
+     **attrs: t.Any,
+-) -> t.Callable[[_AnyCallable], CmdType]:
+-    ...
++) -> t.Callable[[_AnyCallable], CmdType]: ...
+ 
+ 
+ # variant: name omitted, cls _must_ be a keyword argument, @command(cls=CommandCls, ...)
+@@ -156,16 +154,14 @@ def command(
+     *,
+     cls: t.Type[CmdType],
+     **attrs: t.Any,
+-) -> t.Callable[[_AnyCallable], CmdType]:
+-    ...
++) -> t.Callable[[_AnyCallable], CmdType]: ...
+ 
+ 
+ # variant: with optional string name, no cls argument provided.
+ @t.overload
+ def command(
+     name: t.Optional[str] = ..., cls: None = None, **attrs: t.Any
+-) -> t.Callable[[_AnyCallable], Command]:
+-    ...
++) -> t.Callable[[_AnyCallable], Command]: ...
+ 
+ 
+ def command(
+@@ -255,8 +251,7 @@ GrpType = t.TypeVar("GrpType", bound=Group)
+ 
+ # variant: no call, directly as decorator for a function.
+ @t.overload
+-def group(name: _AnyCallable) -> Group:
+-    ...
++def group(name: _AnyCallable) -> Group: ...
+ 
+ 
+ # variant: with positional name and with positional or keyword cls argument:
+@@ -266,8 +261,7 @@ def group(
+     name: t.Optional[str],
+     cls: t.Type[GrpType],
+     **attrs: t.Any,
+-) -> t.Callable[[_AnyCallable], GrpType]:
+-    ...
++) -> t.Callable[[_AnyCallable], GrpType]: ...
+ 
+ 
+ # variant: name omitted, cls _must_ be a keyword argument, @group(cmd=GroupCls, ...)
+@@ -277,16 +271,14 @@ def group(
+     *,
+     cls: t.Type[GrpType],
+     **attrs: t.Any,
+-) -> t.Callable[[_AnyCallable], GrpType]:
+-    ...
++) -> t.Callable[[_AnyCallable], GrpType]: ...
+ 
+ 
+ # variant: with optional string name, no cls argument provided.
+ @t.overload
+ def group(
+     name: t.Optional[str] = ..., cls: None = None, **attrs: t.Any
+-) -> t.Callable[[_AnyCallable], Group]:
+-    ...
++) -> t.Callable[[_AnyCallable], Group]: ...
+ 
+ 
+ def group(
+@@ -495,7 +487,7 @@ def version_option(
+             metadata: t.Optional[types.ModuleType]
+ 
+             try:
+-                from importlib import metadata  # type: ignore
++                from importlib import metadata
+             except ImportError:
+                 # Python < 3.8
+                 import importlib_metadata as metadata  # type: ignore
+diff --git a/src/click/exceptions.py b/src/click/exceptions.py
+index fe68a3613f74e5e82da4e3eedc7d9451977838dd..c5edb6a02648886e0f6a12d325067240ab7288c4 100644
+--- a/src/click/exceptions.py
++++ b/src/click/exceptions.py
+@@ -13,7 +13,7 @@ if t.TYPE_CHECKING:
+ 
+ 
+ def _join_param_hints(
+-    param_hint: t.Optional[t.Union[t.Sequence[str], str]]
++    param_hint: t.Optional[t.Union[t.Sequence[str], str]],
+ ) -> t.Optional[str]:
+     if param_hint is not None and not isinstance(param_hint, str):
+         return " / ".join(repr(x) for x in param_hint)
+diff --git a/src/click/globals.py b/src/click/globals.py
+index 480058f10dd6a8205d1bff0b94de7ae347a7629a..191e712dbddc442d18c8addbaf6fff74ad9055e7 100644
+--- a/src/click/globals.py
++++ b/src/click/globals.py
+@@ -3,19 +3,18 @@ from threading import local
+ 
+ if t.TYPE_CHECKING:
+     import typing_extensions as te
++
+     from .core import Context
+ 
+ _local = local()
+ 
+ 
+ @t.overload
+-def get_current_context(silent: "te.Literal[False]" = False) -> "Context":
+-    ...
++def get_current_context(silent: "te.Literal[False]" = False) -> "Context": ...
+ 
+ 
+ @t.overload
+-def get_current_context(silent: bool = ...) -> t.Optional["Context"]:
+-    ...
++def get_current_context(silent: bool = ...) -> t.Optional["Context"]: ...
+ 
+ 
+ def get_current_context(silent: bool = False) -> t.Optional["Context"]:
+diff --git a/src/click/parser.py b/src/click/parser.py
+index 5fa7adfac842bfa5689fd1a41ae4017be1ebff6f..e7b7c499c8962f6a38a6042d4dde2eff3ba10e77 100644
+--- a/src/click/parser.py
++++ b/src/click/parser.py
+@@ -17,6 +17,7 @@ by the Python Software Foundation. This is limited to code in parser.py.
+ Copyright 2001-2006 Gregory P. Ward. All rights reserved.
+ Copyright 2002-2006 Python Software Foundation. All rights reserved.
+ """
++
+ # This code uses parts of optparse written by Gregory P. Ward and
+ # maintained by the Python Software Foundation.
+ # Copyright 2001-2006 Gregory P. Ward
+@@ -33,6 +34,7 @@ from .exceptions import UsageError
+ 
+ if t.TYPE_CHECKING:
+     import typing_extensions as te
++
+     from .core import Argument as CoreArgument
+     from .core import Context
+     from .core import Option as CoreOption
+diff --git a/src/click/termui.py b/src/click/termui.py
+index db7a4b286174fdf26f3251631a2066eda2fa5bea..c084f196525c9985084b631504586f23b18e8635 100644
+--- a/src/click/termui.py
++++ b/src/click/termui.py
+@@ -173,7 +173,7 @@ def prompt(
+             if hide_input:
+                 echo(_("Error: The value you entered was invalid."), err=err)
+             else:
+-                echo(_("Error: {e.message}").format(e=e), err=err)  # noqa: B306
++                echo(_("Error: {e.message}").format(e=e), err=err)
+             continue
+         if not confirmation_prompt:
+             return result
+diff --git a/src/click/testing.py b/src/click/testing.py
+index e0df0d2a657fe19523957b85964b9956e5c78a30..7a3bec6c63e6cdaaed7eefd2b05ba4ad85bcc069 100644
+--- a/src/click/testing.py
++++ b/src/click/testing.py
+@@ -475,5 +475,5 @@ class CliRunner:
+             if temp_dir is None:
+                 try:
+                     shutil.rmtree(dt)
+-                except OSError:  # noqa: B014
++                except OSError:
+                     pass
+diff --git a/src/click/types.py b/src/click/types.py
+index 2b1d1797f2e115e9bc976bcaf7d8e1884a91e91c..dc52bac3d49c4c562f5c10d565bfbdd917a7ee5c 100644
+--- a/src/click/types.py
++++ b/src/click/types.py
+@@ -15,6 +15,7 @@ from .utils import safecall
+ 
+ if t.TYPE_CHECKING:
+     import typing_extensions as te
++
+     from .core import Context
+     from .core import Parameter
+     from .shell_completion import CompletionItem
+@@ -737,7 +738,7 @@ class File(ParamType):
+                     ctx.call_on_close(safecall(f.flush))
+ 
+             return f
+-        except OSError as e:  # noqa: B014
++        except OSError as e:
+             self.fail(f"'{format_filename(value)}': {e.strerror}", param, ctx)
+ 
+     def shell_complete(
+diff --git a/src/click/utils.py b/src/click/utils.py
+index d536434f0bd00cd6fd910c506f5b85a8e485b964..88d0b9258041cbe37f00b6763c9afaeaaa9f2807 100644
+--- a/src/click/utils.py
++++ b/src/click/utils.py
+@@ -156,7 +156,7 @@ class LazyFile:
+             rv, self.should_close = open_stream(
+                 self.name, self.mode, self.encoding, self.errors, atomic=self.atomic
+             )
+-        except OSError as e:  # noqa: E402
++        except OSError as e:
+             from .exceptions import FileError
+ 
+             raise FileError(self.name, hint=e.strerror) from e
+diff --git a/tox.ini b/tox.ini
+index df53602287a45afa39bada0ab67cd5899cbb911d..77506a4fb8d3a5155629c4f76207553f10945a82 100644
+--- a/tox.ini
++++ b/tox.ini
+@@ -10,6 +10,8 @@ skip_missing_interpreters = true
+ [testenv]
+ package = wheel
+ wheel_build_env = .pkg
++constrain_package_deps = true
++use_frozen_constraints = true
+ deps = -r requirements/tests.txt
+ commands = pytest -v --tb=short --basetemp={envtmpdir} {posargs}
+ 
+@@ -22,9 +24,23 @@ commands = pre-commit run --all-files
+ deps = -r requirements/typing.txt
+ commands =
+     mypy
+-    pyright --verifytypes click
+     pyright tests/typing
++    pyright --verifytypes click --ignoreexternal
+ 
+ [testenv:docs]
+ deps = -r requirements/docs.txt
+-commands = sphinx-build -W -b html -d {envtmpdir}/doctrees docs {envtmpdir}/html
++commands = sphinx-build -E -W -b dirhtml docs docs/_build/dirhtml
++
++[testenv:update-requirements]
++deps =
++    pip-tools
++    pre-commit
++skip_install = true
++change_dir = requirements
++commands =
++    pre-commit autoupdate -j4
++    pip-compile -U build.in
++    pip-compile -U docs.in
++    pip-compile -U tests.in
++    pip-compile -U typing.in
++    pip-compile -U dev.in

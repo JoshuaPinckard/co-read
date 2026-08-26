@@ -1,0 +1,195 @@
+{
+  "base": "d93cc094564cb81c4572b1acc0d4d9ce8dcec50d",
+  "canonical_merge_tree": {
+    "exit_code": 1,
+    "matches_canonical_row": true,
+    "result_tree": "2a64342511c51782a149710c4114d01a8193ab03",
+    "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "stdout_sha256": "08ed599e6d195362491b4749f87cab0cbcc228e637aa71feace20fad07ed9e76"
+  },
+  "conflicted_paths": [
+    "click/__init__.py"
+  ],
+  "corpus_line": 8,
+  "joint_source": {
+    "constructible": false,
+    "patch": null,
+    "reason": "canonical textual conflict intersects source union",
+    "source_conflict_paths": [
+      "click/__init__.py"
+    ],
+    "source_paths": [
+      ".gitignore",
+      "CHANGES",
+      "click/__init__.py",
+      "click/_termui_impl.py",
+      "click/_textwrap.py",
+      "click/core.py",
+      "click/decorators.py",
+      "click/exceptions.py",
+      "click/formatting.py",
+      "click/parser.py",
+      "click/termui.py",
+      "click/testing.py",
+      "click/types.py",
+      "click/utils.py",
+      "docs/advanced.rst",
+      "docs/arguments.rst",
+      "docs/bashcomplete.rst",
+      "docs/commands.rst",
+      "docs/complex.rst",
+      "docs/documentation.rst",
+      "docs/index.rst",
+      "docs/license.rst",
+      "docs/options.rst",
+      "docs/python3.rst",
+      "docs/quickstart.rst",
+      "docs/setuptools.rst",
+      "docs/testing.rst",
+      "docs/upgrading.rst",
+      "docs/utils.rst",
+      "docs/why.rst",
+      "examples/README",
+      "examples/aliases/README",
+      "examples/complex/README",
+      "examples/termui/README"
+    ]
+  },
+  "merge": "16975997084a21a37dea351b6967b63591fd991f",
+  "parents": [
+    "98ccc9d40a892d3343aae990ddf82ea3599f1a19",
+    "bb7b2df4d67bcd02a044d21c5ee3c7acb51f5d88"
+  ],
+  "prepared_at_utc": "2026-08-25T16:20:45.901+00:00",
+  "protocol_sha256": "fb1c0a9f9c7b48c30178d8a7e737250e18535ada63959c49c73c180505c69828",
+  "repo_slug": "pallets__click",
+  "repository": "pallets/click",
+  "result_tree": "2a64342511c51782a149710c4114d01a8193ab03",
+  "runner_sha256": "e04bc99409e584636ce8cb81cc22f6a7ca9c917f9ec9e46ab68a4c2328b6b6c6",
+  "schema_version": 1,
+  "sides": {
+    "parent1": {
+      "changed_paths": [
+        ".gitignore",
+        "CHANGES",
+        "click/__init__.py",
+        "click/_termui_impl.py",
+        "click/_textwrap.py",
+        "click/core.py",
+        "click/decorators.py",
+        "click/exceptions.py",
+        "click/formatting.py",
+        "click/parser.py",
+        "click/termui.py",
+        "click/testing.py",
+        "click/types.py",
+        "click/utils.py",
+        "docs/advanced.rst",
+        "docs/arguments.rst",
+        "docs/bashcomplete.rst",
+        "docs/commands.rst",
+        "docs/complex.rst",
+        "docs/documentation.rst",
+        "docs/index.rst",
+        "docs/license.rst",
+        "docs/options.rst",
+        "docs/python3.rst",
+        "docs/quickstart.rst",
+        "docs/setuptools.rst",
+        "docs/testing.rst",
+        "docs/upgrading.rst",
+        "docs/utils.rst",
+        "docs/why.rst",
+        "examples/README",
+        "examples/aliases/README",
+        "examples/complex/README",
+        "examples/termui/README",
+        "tests/test_commands.py",
+        "tests/test_options.py",
+        "tests/test_testing.py"
+      ],
+      "parent": "98ccc9d40a892d3343aae990ddf82ea3599f1a19",
+      "reconstructed_parent_tree": "7bea207c44d689faf5acc44899898428aceed0e3",
+      "source_patch": {
+        "bytes": 65239,
+        "path": "exploratory/arms/patches/pallets__click/16975997084a21a37dea351b6967b63591fd991f/parent1-source.patch",
+        "sha256": "09aa1575680ecfea0b5f45f74e24b706947f4d0f3b125388ca1c0b19397fa3a0"
+      },
+      "source_paths": [
+        ".gitignore",
+        "CHANGES",
+        "click/__init__.py",
+        "click/_termui_impl.py",
+        "click/_textwrap.py",
+        "click/core.py",
+        "click/decorators.py",
+        "click/exceptions.py",
+        "click/formatting.py",
+        "click/parser.py",
+        "click/termui.py",
+        "click/testing.py",
+        "click/types.py",
+        "click/utils.py",
+        "docs/advanced.rst",
+        "docs/arguments.rst",
+        "docs/bashcomplete.rst",
+        "docs/commands.rst",
+        "docs/complex.rst",
+        "docs/documentation.rst",
+        "docs/index.rst",
+        "docs/license.rst",
+        "docs/options.rst",
+        "docs/python3.rst",
+        "docs/quickstart.rst",
+        "docs/setuptools.rst",
+        "docs/testing.rst",
+        "docs/upgrading.rst",
+        "docs/utils.rst",
+        "docs/why.rst",
+        "examples/README",
+        "examples/aliases/README",
+        "examples/complex/README",
+        "examples/termui/README"
+      ],
+      "test_patch": {
+        "bytes": 2758,
+        "path": "exploratory/arms/patches/pallets__click/16975997084a21a37dea351b6967b63591fd991f/parent1-test.patch",
+        "sha256": "acb4e97e5c6599aa219f3eae473e7723bcf952d39b1725bc2ff38bd7634947ed"
+      },
+      "test_paths": [
+        "tests/test_commands.py",
+        "tests/test_options.py",
+        "tests/test_testing.py"
+      ]
+    },
+    "parent2": {
+      "changed_paths": [
+        "CHANGES",
+        "click/__init__.py",
+        "click/core.py",
+        "tests/test_options.py"
+      ],
+      "parent": "bb7b2df4d67bcd02a044d21c5ee3c7acb51f5d88",
+      "reconstructed_parent_tree": "f9d7da28876d4ea1dd46461d91b2eeea3c71245e",
+      "source_patch": {
+        "bytes": 1222,
+        "path": "exploratory/arms/patches/pallets__click/16975997084a21a37dea351b6967b63591fd991f/parent2-source.patch",
+        "sha256": "69f09be4a76dfa48f6fb14a62889d1c070eec4a41b4120efd18a2151974438dd"
+      },
+      "source_paths": [
+        "CHANGES",
+        "click/__init__.py",
+        "click/core.py"
+      ],
+      "test_patch": {
+        "bytes": 560,
+        "path": "exploratory/arms/patches/pallets__click/16975997084a21a37dea351b6967b63591fd991f/parent2-test.patch",
+        "sha256": "b646fe257ccfa1de68a04f18c2e7b74bdda44e6702d0bfa1d2d54e55738b6cce"
+      },
+      "test_paths": [
+        "tests/test_options.py"
+      ]
+    }
+  },
+  "site_index": 1
+}

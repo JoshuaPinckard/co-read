@@ -1,0 +1,779 @@
+diff --git a/RELEASE-NOTES.txt b/RELEASE-NOTES.txt
+index dc3f520e1236a2c6dc98e5512ac4343c7769030c..eb149d77599d738aa109a68e28e05903fdefb3e6 100644
+--- a/RELEASE-NOTES.txt
++++ b/RELEASE-NOTES.txt
+@@ -42,13 +42,13 @@ o LANG-1080: Add NoClassNameToStringStyle implementation of ToStringStyle.
+              Thanks to Innokenty Shuvalov.
+ o LANG-883:  Add StringUtils.containsAny(CharSequence, CharSequence...) method.
+              Thanks to Daniel Stewart.
+-o LANG-1052: Multiline recursive to string style. Thanks to Jan MatËrne.
++o LANG-1052: Multiline recursive to string style. Thanks to Jan Mat√®rne.
+ o LANG-536:  Add isSorted() to ArrayUtils. Thanks to James Sawle.
+ o LANG-1033: Add StringUtils.countMatches(CharSequence, char)
+ o LANG-1021: Provide methods to retrieve all fields/methods annotated with a
+-             specific type. Thanks to Alexander M¸ller.
++             specific type. Thanks to Alexander M√ºller.
+ o LANG-1016: NumberUtils#isParsable method(s). Thanks to
+-             Juan Pablo Santos RodrÌguez.
++             Juan Pablo Santos Rodr√≠guez.
+ o LANG-999:  Add fuzzy String matching logic to StringUtils. Thanks to
+              Ben Ripkens.
+ o LANG-994:  Add zero copy read method to StrBuilder. Thanks to
+@@ -217,12 +217,12 @@ o LANG-943:  Test DurationFormatUtilsTest.testEdgeDuration fails in
+ o LANG-613:  ConstructorUtils.getAccessibleConstructor() Does Not Check the
+              Accessibility of Enclosing Classes
+ o LANG-951:  Fragments are wrong by 1 day when using fragment YEAR or MONTH.
+-             Thanks to Sebastian Gˆtz.
++             Thanks to Sebastian G√∂tz.
+ o LANG-950:  FastDateParser does not handle two digit year parsing like
+              SimpleDateFormat
+ o LANG-949:  FastDateParserTest.testParses does not test FastDateParser
+ o LANG-915:  Wrong locale handling in LocaleUtils.toLocale().
+-             Thanks to Sergio Fern·ndez.
++             Thanks to Sergio Fern√°ndez.
+ 
+ CHANGES
+ =========
+@@ -317,7 +317,7 @@ o LANG-462:  FastDateFormat supports parse methods.
+ BUG FIXES
+ ===========
+ 
+-o LANG-932:  Spelling fixes. Thanks to Ville Skytt‰.
++o LANG-932:  Spelling fixes. Thanks to Ville Skytt√§.
+ o LANG-929:  OctalUnescaper tried to parse all of \279.
+ o LANG-928:  OctalUnescaper had bugs when parsing octals starting with a zero.
+ o LANG-905:  EqualsBuilder returned true when comparing arrays, even when the
+diff --git a/pom.xml b/pom.xml
+index 516a40ce76f4741aafd36f04d25e54db768c5a86..d6213eebc366e11a00a9a5aa4778342a2363ea50 100644
+--- a/pom.xml
++++ b/pom.xml
+@@ -572,6 +572,7 @@
+     <commons.site.path>lang</commons.site.path>
+     <commons.scmPubUrl>https://svn.apache.org/repos/infra/websites/production/commons/content/proper/commons-lang</commons.scmPubUrl>
+     <commons.scmPubCheckoutDirectory>site-content</commons.scmPubCheckoutDirectory>
++    <commons.encoding>utf-8</commons.encoding>
+   </properties>
+ 
+ 
+@@ -741,7 +742,6 @@
+           <plugin>
+             <groupId>org.apache.maven.plugins</groupId>
+             <artifactId>maven-antrun-plugin</artifactId>
+-            <version>1.8</version>
+             <executions>
+               <execution>
+                 <id>prepare-checkout</id>
+diff --git a/src/changes/changes.xml b/src/changes/changes.xml
+index bc720f7596aaa1d39fcfbd1d31559591f25b1546..dde81f6977c4f86be24d1dbf09fd551ddfb4dfd6 100644
+--- a/src/changes/changes.xml
++++ b/src/changes/changes.xml
+@@ -46,6 +46,8 @@ The <action> type attribute can be add,update,fix,remove.
+   <body>
+ 
+   <release version="3.5" date="tba" description="New features including Java 9 detection">
++    <action issue="LANG-1023" type="add" dev="britter" due-to="Marko Bekhta">Add WordUtils.wrap overload with customizable breakable character</action>
++    <action issue="LANG-787" type="add" dev="pschumacher" due-to="Gokul Nanthakumar C">Add method removeIgnoreCase(String, String) to StringUtils</action>
+     <action issue="LANG-1261" type="fix" dev="pschumacher" >ArrayUtils.contains returns false for instances of subtypes</action>
+     <action issue="LANG-1197" type="update" dev="pschumacher" >Prepare Java 9 detection</action>
+     <action issue="LANG-1252" type="fix" dev="chtompki" due-to="Rob Tompkins">Rename NumberUtils.isNumber, isCreatable to better reflect createNumber. Also, accommodated for "+" symbol as prefix in isCreatable and isNumber.</action>
+@@ -60,6 +62,7 @@ The <action> type attribute can be add,update,fix,remove.
+     <action issue="LANG-1226" type="fix" dev="pschumacher" due-to="pschumacher">StringUtils#normalizeSpace does not trim the string anymore</action>
+     <action issue="LANG-1251" type="fix" dev="pschumacher" due-to="Takuya Ueshin">SerializationUtils.ClassLoaderAwareObjectInputStream should use static initializer to initialize primitiveTypes map</action>
+     <action issue="LANG-1253" type="add" dev="ggregory" due-to="adilek">[GitHub issue #170] Add RandomUtils#nextBoolean() method</action>
++    <action issue="LANG-1248" type="fix" dev="chas" due-to="Benoit Wiart">FastDatePrinter Memory allocation regression</action>
+     <action issue="LANG-1247" type="update" dev="chas" due-to="Benoit Wiart">FastDatePrinter generates extra Date objects</action>
+     <action issue="LANG-1018" type="fix" dev="pschumacher" due-to="Nick Manley">Fix precision loss on NumberUtils.createNumber(String)</action>
+     <action issue="LANG-1229" type="update" dev="pschumacher" due-to="Ruslan Cheremin">HashCodeBuilder.append(Object,Object) is too big to be inlined, which prevents whole builder to be scalarized</action>
+diff --git a/src/main/java/org/apache/commons/lang3/CharEncoding.java b/src/main/java/org/apache/commons/lang3/CharEncoding.java
+index ea682847c901d2b00b181ece6c814fe9ded6cbdc..7fe9296a377f14771e233d58c4e9eb721dd8ce3c 100644
+--- a/src/main/java/org/apache/commons/lang3/CharEncoding.java
++++ b/src/main/java/org/apache/commons/lang3/CharEncoding.java
+@@ -30,7 +30,7 @@ import java.nio.charset.IllegalCharsetNameException;
+  * Consult the release documentation for your implementation to see if any other encodings are supported.
+  * </cite></p>
+  *
+- * @see <a href="http://download.oracle.com/javase/1.3/docs/guide/intl/encoding.doc.html">JRE character encoding names</a>
++ * @see <a href="http://docs.oracle.com/javase/6/docs/technotes/guides/intl/encoding.doc.html">JRE character encoding names</a>
+  * @since 2.1
+  */
+ public class CharEncoding {
+@@ -79,12 +79,11 @@ public class CharEncoding {
+      */
+     public static final String UTF_8 = "UTF-8";
+ 
+-    //-----------------------------------------------------------------------
+     /**
+      * <p>Returns whether the named charset is supported.</p>
+      *
+      * <p>This is similar to <a
+-     * href="http://download.oracle.com/javase/1.4.2/docs/api/java/nio/charset/Charset.html#isSupported%28java.lang.String%29">
++     * href="http://docs.oracle.com/javase/6/docs/api/java/nio/charset/Charset.html#isSupported%28java.lang.String%29">
+      * java.nio.charset.Charset.isSupported(String)</a> but handles more formats</p>
+      *
+      * @param name  the name of the requested charset; may be either a canonical name or an alias, null returns false
+diff --git a/src/main/java/org/apache/commons/lang3/StringEscapeUtils.java b/src/main/java/org/apache/commons/lang3/StringEscapeUtils.java
+index 28ee0866a24c4071fe31590353c3e0d169f46cb8..a244847f44e8209143eb623f59cc2d72d85c9baa 100644
+--- a/src/main/java/org/apache/commons/lang3/StringEscapeUtils.java
++++ b/src/main/java/org/apache/commons/lang3/StringEscapeUtils.java
+@@ -611,7 +611,7 @@ public class StringEscapeUtils {
+      * escapes. Supports HTML 4.0 entities.</p>
+      *
+      * <p>For example, the string {@code "&lt;Fran&ccedil;ais&gt;"}
+-     * will become {@code "<FranÁais>"}</p>
++     * will become {@code "<Fran√ßais>"}</p>
+      *
+      * <p>If an entity is unrecognized, it is left alone, and inserted
+      * verbatim into the result string. e.g. {@code "&gt;&zzzz;x"} will
+diff --git a/src/main/java/org/apache/commons/lang3/StringUtils.java b/src/main/java/org/apache/commons/lang3/StringUtils.java
+index 02c7106a4ba473d9cfb27ebec88c81557d91593c..8791394238a3957fa0eeb7fbb94fb2aa0c52b125 100644
+--- a/src/main/java/org/apache/commons/lang3/StringUtils.java
++++ b/src/main/java/org/apache/commons/lang3/StringUtils.java
+@@ -4819,6 +4819,46 @@ public class StringUtils {
+         return replace(str, remove, EMPTY, -1);
+     }
+ 
++    /**
++     * <p>
++     * Case insensitive removal of all occurrences of a substring from within
++     * the source string.
++     * </p>
++     *
++     * <p>
++     * A {@code null} source string will return {@code null}. An empty ("")
++     * source string will return the empty string. A {@code null} remove string
++     * will return the source string. An empty ("") remove string will return
++     * the source string.
++     * </p>
++     *
++     * <pre>
++     * StringUtils.removeIgnoreCase(null, *)        = null
++     * StringUtils.removeIgnoreCase("", *)          = ""
++     * StringUtils.removeIgnoreCase(*, null)        = *
++     * StringUtils.removeIgnoreCase(*, "")          = *
++     * StringUtils.removeIgnoreCase("queued", "ue") = "qd"
++     * StringUtils.removeIgnoreCase("queued", "zz") = "queued"
++     * StringUtils.removeIgnoreCase("quEUed", "UE") = "qd"
++     * StringUtils.removeIgnoreCase("queued", "zZ") = "queued"
++     * </pre>
++     *
++     * @param str
++     *            the source String to search, may be null
++     * @param remove
++     *            the String to search for (case insensitive) and remove, may be
++     *            null
++     * @return the substring with the string removed if found, {@code null} if
++     *         null String input
++     * @since 3.5
++     */
++    public static String removeIgnoreCase(String str, String remove) {
++        if (isEmpty(str) || isEmpty(remove)) {
++            return str;
++        }
++        return replaceIgnoreCase(str, remove, EMPTY, -1);
++    }
++
+     /**
+      * <p>Removes all occurrences of a character from within the source string.</p>
+      *
+@@ -4974,6 +5014,35 @@ public class StringUtils {
+         return replace(text, searchString, replacement, 1);
+     }
+ 
++    /**
++     * <p>Case insensitively replaces a String with another String inside a larger String, once.</p>
++     *
++     * <p>A {@code null} reference passed to this method is a no-op.</p>
++     *
++     * <pre>
++     * StringUtils.replaceOnceIgnoreCase(null, *, *)        = null
++     * StringUtils.replaceOnceIgnoreCase("", *, *)          = ""
++     * StringUtils.replaceOnceIgnoreCase("any", null, *)    = "any"
++     * StringUtils.replaceOnceIgnoreCase("any", *, null)    = "any"
++     * StringUtils.replaceOnceIgnoreCase("any", "", *)      = "any"
++     * StringUtils.replaceOnceIgnoreCase("aba", "a", null)  = "aba"
++     * StringUtils.replaceOnceIgnoreCase("aba", "a", "")    = "ba"
++     * StringUtils.replaceOnceIgnoreCase("aba", "a", "z")   = "zba"
++     * StringUtils.replaceOnceIgnoreCase("FoOFoofoo", "foo", "") = "Foofoo"
++     * </pre>
++     *
++     * @see #replaceIgnoreCase(String text, String searchString, String replacement, int max)
++     * @param text  text to search and replace in, may be null
++     * @param searchString  the String to search for (case insensitive), may be null
++     * @param replacement  the String to replace with, may be null
++     * @return the text with any replacements processed,
++     *  {@code null} if null String input
++     * @since 3.5
++     */
++    public static String replaceOnceIgnoreCase(String text, String searchString, String replacement) {
++        return replaceIgnoreCase(text, searchString, replacement, 1);
++    }
++
+     /**
+      * <p>Replaces each substring of the source String that matches the given regular expression with the given
+      * replacement using the {@link Pattern#DOTALL} option. DOTALL is also know as single-line mode in Perl.</p>
+@@ -5189,6 +5258,34 @@ public class StringUtils {
+         return replace(text, searchString, replacement, -1);
+     }
+ 
++    /**
++    * <p>Case insensitively replaces all occurrences of a String within another String.</p>
++    *
++    * <p>A {@code null} reference passed to this method is a no-op.</p>
++    *
++    * <pre>
++    * StringUtils.replaceIgnoreCase(null, *, *)        = null
++    * StringUtils.replaceIgnoreCase("", *, *)          = ""
++    * StringUtils.replaceIgnoreCase("any", null, *)    = "any"
++    * StringUtils.replaceIgnoreCase("any", *, null)    = "any"
++    * StringUtils.replaceIgnoreCase("any", "", *)      = "any"
++    * StringUtils.replaceIgnoreCase("aba", "a", null)  = "aba"
++    * StringUtils.replaceIgnoreCase("abA", "A", "")    = "b"
++    * StringUtils.replaceIgnoreCase("aba", "A", "z")   = "zbz"
++    * </pre>
++    *
++    * @see #replaceIgnoreCase(String text, String searchString, String replacement, int max)
++    * @param text  text to search and replace in, may be null
++    * @param searchString  the String to search for (case insensitive), may be null
++    * @param replacement  the String to replace it with, may be null
++    * @return the text with any replacements processed,
++    *  {@code null} if null String input
++    * @since 3.5
++    */
++   public static String replaceIgnoreCase(String text, String searchString, String replacement) {
++       return replaceIgnoreCase(text, searchString, replacement, -1);
++   }
++
+     /**
+      * <p>Replaces a String with another String inside a larger String,
+      * for the first {@code max} values of the search String.</p>
+@@ -5218,29 +5315,102 @@ public class StringUtils {
+      *  {@code null} if null String input
+      */
+     public static String replace(final String text, final String searchString, final String replacement, int max) {
+-        if (isEmpty(text) || isEmpty(searchString) || replacement == null || max == 0) {
+-            return text;
+-        }
+-        int start = 0;
+-        int end = text.indexOf(searchString, start);
+-        if (end == INDEX_NOT_FOUND) {
+-            return text;
+-        }
+-        final int replLength = searchString.length();
+-        int increase = replacement.length() - replLength;
+-        increase = increase < 0 ? 0 : increase;
+-        increase *= max < 0 ? 16 : max > 64 ? 64 : max;
+-        final StringBuilder buf = new StringBuilder(text.length() + increase);
+-        while (end != INDEX_NOT_FOUND) {
+-            buf.append(text.substring(start, end)).append(replacement);
+-            start = end + replLength;
+-            if (--max == 0) {
+-                break;
+-            }
+-            end = text.indexOf(searchString, start);
+-        }
+-        buf.append(text.substring(start));
+-        return buf.toString();
++        return replace(text, searchString, replacement, max, false);
++    }
++
++    /**
++     * <p>Replaces a String with another String inside a larger String,
++     * for the first {@code max} values of the search String, 
++     * case sensitively/insensisitively based on {@code ignoreCase} value.</p>
++     *
++     * <p>A {@code null} reference passed to this method is a no-op.</p>
++     *
++     * <pre>
++     * StringUtils.replace(null, *, *, *, false)         = null
++     * StringUtils.replace("", *, *, *, false)           = ""
++     * StringUtils.replace("any", null, *, *, false)     = "any"
++     * StringUtils.replace("any", *, null, *, false)     = "any"
++     * StringUtils.replace("any", "", *, *, false)       = "any"
++     * StringUtils.replace("any", *, *, 0, false)        = "any"
++     * StringUtils.replace("abaa", "a", null, -1, false) = "abaa"
++     * StringUtils.replace("abaa", "a", "", -1, false)   = "b"
++     * StringUtils.replace("abaa", "a", "z", 0, false)   = "abaa"
++     * StringUtils.replace("abaa", "A", "z", 1, false)   = "abaa"
++     * StringUtils.replace("abaa", "A", "z", 1, true)   = "zbaa"
++     * StringUtils.replace("abAa", "a", "z", 2, true)   = "zbza"
++     * StringUtils.replace("abAa", "a", "z", -1, true)  = "zbzz"
++     * </pre>
++     *
++     * @param text  text to search and replace in, may be null
++     * @param searchString  the String to search for (case insensitive), may be null
++     * @param replacement  the String to replace it with, may be null
++     * @param max  maximum number of values to replace, or {@code -1} if no maximum
++     * @param ignoreCase if true replace is case insensitive, otherwise case sensitive
++     * @return the text with any replacements processed,
++     *  {@code null} if null String input
++     */
++     private static String replace(String text, String searchString, String replacement, int max, boolean ignoreCase) {
++         if (isEmpty(text) || isEmpty(searchString) || replacement == null || max == 0) {
++             return text;
++         }
++         String searchText = text;
++         if (ignoreCase) {
++             searchText = text.toLowerCase();
++             searchString = searchString.toLowerCase();
++         }
++         int start = 0;
++         int end = searchText.indexOf(searchString, start);
++         if (end == INDEX_NOT_FOUND) {
++             return text;
++         }
++         final int replLength = searchString.length();
++         int increase = replacement.length() - replLength;
++         increase = increase < 0 ? 0 : increase;
++         increase *= max < 0 ? 16 : max > 64 ? 64 : max;
++         final StringBuilder buf = new StringBuilder(text.length() + increase);
++         while (end != INDEX_NOT_FOUND) {
++             buf.append(text.substring(start, end)).append(replacement);
++             start = end + replLength;
++             if (--max == 0) {
++                 break;
++             }
++             end = searchText.indexOf(searchString, start);
++         }
++         buf.append(text.substring(start));
++         return buf.toString();
++     }
++
++    /**
++     * <p>Case insensitively replaces a String with another String inside a larger String,
++     * for the first {@code max} values of the search String.</p>
++     *
++     * <p>A {@code null} reference passed to this method is a no-op.</p>
++     *
++     * <pre>
++     * StringUtils.replaceIgnoreCase(null, *, *, *)         = null
++     * StringUtils.replaceIgnoreCase("", *, *, *)           = ""
++     * StringUtils.replaceIgnoreCase("any", null, *, *)     = "any"
++     * StringUtils.replaceIgnoreCase("any", *, null, *)     = "any"
++     * StringUtils.replaceIgnoreCase("any", "", *, *)       = "any"
++     * StringUtils.replaceIgnoreCase("any", *, *, 0)        = "any"
++     * StringUtils.replaceIgnoreCase("abaa", "a", null, -1) = "abaa"
++     * StringUtils.replaceIgnoreCase("abaa", "a", "", -1)   = "b"
++     * StringUtils.replaceIgnoreCase("abaa", "a", "z", 0)   = "abaa"
++     * StringUtils.replaceIgnoreCase("abaa", "A", "z", 1)   = "zbaa"
++     * StringUtils.replaceIgnoreCase("abAa", "a", "z", 2)   = "zbza"
++     * StringUtils.replaceIgnoreCase("abAa", "a", "z", -1)  = "zbzz"
++     * </pre>
++     *
++     * @param text  text to search and replace in, may be null
++     * @param searchString  the String to search for (case insensitive), may be null
++     * @param replacement  the String to replace it with, may be null
++     * @param max  maximum number of values to replace, or {@code -1} if no maximum
++     * @return the text with any replacements processed,
++     *  {@code null} if null String input
++     * @since 3.5
++     */
++    public static String replaceIgnoreCase(String text, String searchString, String replacement, int max) {
++        return replace(text, searchString, replacement, max, true);
+     }
+ 
+     /**
+diff --git a/src/main/java/org/apache/commons/lang3/text/WordUtils.java b/src/main/java/org/apache/commons/lang3/text/WordUtils.java
+index b46b72cad4378d113197cca0410c938a9e74927f..69f5a7eedddfe28110d8c0b719331c2c2b85f238 100644
+--- a/src/main/java/org/apache/commons/lang3/text/WordUtils.java
++++ b/src/main/java/org/apache/commons/lang3/text/WordUtils.java
+@@ -16,6 +16,7 @@
+  */
+ package org.apache.commons.lang3.text;
+ 
++import java.util.regex.Matcher;
+ import java.util.regex.Pattern;
+ 
+ import org.apache.commons.lang3.ArrayUtils;
+@@ -172,6 +173,99 @@ public class WordUtils {
+      * @return a line with newlines inserted, <code>null</code> if null input
+      */
+     public static String wrap(final String str, int wrapLength, String newLineStr, final boolean wrapLongWords) {
++        return wrap(str, wrapLength, newLineStr, wrapLongWords, " ");
++    }
++
++    /**
++     * <p>Wraps a single line of text, identifying words by <code>wrapOn</code>.</p>
++     *
++     * <p>Leading spaces on a new line are stripped.
++     * Trailing spaces are not stripped.</p>
++     *
++     * <table border="1" summary="Wrap Results">
++     *  <tr>
++     *   <th>input</th>
++     *   <th>wrapLenght</th>
++     *   <th>newLineString</th>
++     *   <th>wrapLongWords</th>
++     *   <th>wrapOn</th>
++     *   <th>result</th>
++     *  </tr>
++     *  <tr>
++     *   <td>null</td>
++     *   <td>*</td>
++     *   <td>*</td>
++     *   <td>true/false</td>
++     *   <td>*</td>
++     *   <td>null</td>
++     *  </tr>
++     *  <tr>
++     *   <td>""</td>
++     *   <td>*</td>
++     *   <td>*</td>
++     *   <td>true/false</td>
++     *   <td>*</td>
++     *   <td>""</td>
++     *  </tr>
++     *  <tr>
++     *   <td>"Here is one line of text that is going to be wrapped after 20 columns."</td>
++     *   <td>20</td>
++     *   <td>"\n"</td>
++     *   <td>true/false</td>
++     *   <td>" "</td>
++     *   <td>"Here is one line of\ntext that is going\nto be wrapped after\n20 columns."</td>
++     *  </tr>
++     *  <tr>
++     *   <td>"Here is one line of text that is going to be wrapped after 20 columns."</td>
++     *   <td>20</td>
++     *   <td>"&lt;br /&gt;"</td>
++     *   <td>true/false</td>
++     *   <td>" "</td>
++     *   <td>"Here is one line of&lt;br /&gt;text that is going&lt;br /&gt;to be wrapped after&lt;br /&gt;20 columns."</td>
++     *  </tr>
++     *  <tr>
++     *   <td>"Here is one line of text that is going to be wrapped after 20 columns."</td>
++     *   <td>20</td>
++     *   <td>null</td>
++     *   <td>true/false</td>
++     *   <td>" "</td>
++     *   <td>"Here is one line of" + systemNewLine + "text that is going" + systemNewLine + "to be wrapped after" + systemNewLine + "20 columns."</td>
++     *  </tr>
++     *  <tr>
++     *   <td>"Click here to jump to the commons website - http://commons.apache.org"</td>
++     *   <td>20</td>
++     *   <td>"\n"</td>
++     *   <td>false</td>
++     *   <td>" "</td>
++     *   <td>"Click here to jump\nto the commons\nwebsite -\nhttp://commons.apache.org"</td>
++     *  </tr>
++     *  <tr>
++     *   <td>"Click here to jump to the commons website - http://commons.apache.org"</td>
++     *   <td>20</td>
++     *   <td>"\n"</td>
++     *   <td>true</td>
++     *   <td>" "</td>
++     *   <td>"Click here to jump\nto the commons\nwebsite -\nhttp://commons.apach\ne.org"</td>
++     *  </tr>
++     *  <tr>
++     *   <td>"flammable/inflammable"</td>
++     *   <td>20</td>
++     *   <td>"\n"</td>
++     *   <td>true</td>
++     *   <td>"/"</td>
++     *   <td>"flammable\ninflammable"</td>
++     *  </tr>
++     * </table>
++     * @param str  the String to be word wrapped, may be null
++     * @param wrapLength  the column to wrap the words at, less than 1 is treated as 1
++     * @param newLineStr  the string to insert for a new line,
++     *  <code>null</code> uses the system property line separator
++     * @param wrapLongWords  true if long words (such as URLs) should be wrapped
++     * @param wrapOn regex expression to be used as a breakable characters,
++     *               if blank string is provided a space character will be used
++     * @return a line with newlines inserted, <code>null</code> if null input
++     */
++    public static String wrap(final String str, int wrapLength, String newLineStr, final boolean wrapLongWords, String wrapOn) {
+         if (str == null) {
+             return null;
+         }
+@@ -181,27 +275,41 @@ public class WordUtils {
+         if (wrapLength < 1) {
+             wrapLength = 1;
+         }
++        if (StringUtils.isBlank(wrapOn)) {
++            wrapOn = " ";
++        }
++        Pattern patternToWrapOn = Pattern.compile(wrapOn);
+         final int inputLineLength = str.length();
+         int offset = 0;
+         final StringBuilder wrappedLine = new StringBuilder(inputLineLength + 32);
+-        
++
+         while (offset < inputLineLength) {
+-            if (str.charAt(offset) == ' ') {
+-                offset++;
+-                continue;
++            int spaceToWrapAt = -1;
++            Matcher matcher = patternToWrapOn.matcher(str.substring(offset, Math.min(offset + wrapLength + 1, inputLineLength)));
++            if (matcher.find()) {
++                if (matcher.start() == 0) {
++                    offset += matcher.end();
++                    continue;
++                }else {
++                    spaceToWrapAt = matcher.start();
++                }
+             }
++
+             // only last line without leading spaces is left
+             if(inputLineLength - offset <= wrapLength) {
+                 break;
+             }
+-            int spaceToWrapAt = str.lastIndexOf(' ', wrapLength + offset);
++
++            while(matcher.find()){
++                spaceToWrapAt = matcher.start() + offset;
++            }
+ 
+             if (spaceToWrapAt >= offset) {
+                 // normal case
+                 wrappedLine.append(str.substring(offset, spaceToWrapAt));
+                 wrappedLine.append(newLineStr);
+                 offset = spaceToWrapAt + 1;
+-                
++
+             } else {
+                 // really long word or URL
+                 if (wrapLongWords) {
+@@ -211,7 +319,11 @@ public class WordUtils {
+                     offset += wrapLength;
+                 } else {
+                     // do not wrap really long word, just extend beyond limit
+-                    spaceToWrapAt = str.indexOf(' ', wrapLength + offset);
++                    matcher = patternToWrapOn.matcher(str.substring(offset + wrapLength));
++                    if (matcher.find()) {
++                        spaceToWrapAt = matcher.start() + offset + wrapLength;
++                    }
++
+                     if (spaceToWrapAt >= 0) {
+                         wrappedLine.append(str.substring(offset, spaceToWrapAt));
+                         wrappedLine.append(newLineStr);
+diff --git a/src/main/java/org/apache/commons/lang3/text/translate/EntityArrays.java b/src/main/java/org/apache/commons/lang3/text/translate/EntityArrays.java
+index d8f754cf93c542bc59e1cc5f71c85fe4edbb3131..2c19402d79b5c0b1468e13a892cf07eef07e4dd9 100644
+--- a/src/main/java/org/apache/commons/lang3/text/translate/EntityArrays.java
++++ b/src/main/java/org/apache/commons/lang3/text/translate/EntityArrays.java
+@@ -41,12 +41,12 @@ public class EntityArrays {
+         {"\u00A6", "&brvbar;"}, // broken bar = broken vertical bar
+         {"\u00A7", "&sect;"}, // section sign
+         {"\u00A8", "&uml;"}, // diaeresis = spacing diaeresis
+-        {"\u00A9", "&copy;"}, // © - copyright sign
++        {"\u00A9", "&copy;"}, // ¬© - copyright sign
+         {"\u00AA", "&ordf;"}, // feminine ordinal indicator
+         {"\u00AB", "&laquo;"}, // left-pointing double angle quotation mark = left pointing guillemet
+         {"\u00AC", "&not;"}, // not sign
+         {"\u00AD", "&shy;"}, // soft hyphen = discretionary hyphen
+-        {"\u00AE", "&reg;"}, // Æ - registered trademark sign
++        {"\u00AE", "&reg;"}, // ¬Æ - registered trademark sign
+         {"\u00AF", "&macr;"}, // macron = spacing macron = overline = APL overbar
+         {"\u00B0", "&deg;"}, // degree sign
+         {"\u00B1", "&plusmn;"}, // plus-minus sign = plus-or-minus sign
+@@ -64,70 +64,70 @@ public class EntityArrays {
+         {"\u00BD", "&frac12;"}, // vulgar fraction one half = fraction one half
+         {"\u00BE", "&frac34;"}, // vulgar fraction three quarters = fraction three quarters
+         {"\u00BF", "&iquest;"}, // inverted question mark = turned question mark
+-        {"\u00C0", "&Agrave;"}, // ¿ - uppercase A, grave accent
+-        {"\u00C1", "&Aacute;"}, // ¡ - uppercase A, acute accent
+-        {"\u00C2", "&Acirc;"}, // ¬ - uppercase A, circumflex accent
+-        {"\u00C3", "&Atilde;"}, // √ - uppercase A, tilde
+-        {"\u00C4", "&Auml;"}, // ƒ - uppercase A, umlaut
+-        {"\u00C5", "&Aring;"}, // ≈ - uppercase A, ring
+-        {"\u00C6", "&AElig;"}, // ∆ - uppercase AE
+-        {"\u00C7", "&Ccedil;"}, // « - uppercase C, cedilla
+-        {"\u00C8", "&Egrave;"}, // » - uppercase E, grave accent
+-        {"\u00C9", "&Eacute;"}, // … - uppercase E, acute accent
+-        {"\u00CA", "&Ecirc;"}, //   - uppercase E, circumflex accent
+-        {"\u00CB", "&Euml;"}, // À - uppercase E, umlaut
+-        {"\u00CC", "&Igrave;"}, // Ã - uppercase I, grave accent
+-        {"\u00CD", "&Iacute;"}, // Õ - uppercase I, acute accent
+-        {"\u00CE", "&Icirc;"}, // Œ - uppercase I, circumflex accent
+-        {"\u00CF", "&Iuml;"}, // œ - uppercase I, umlaut
+-        {"\u00D0", "&ETH;"}, // – - uppercase Eth, Icelandic
+-        {"\u00D1", "&Ntilde;"}, // — - uppercase N, tilde
+-        {"\u00D2", "&Ograve;"}, // “ - uppercase O, grave accent
+-        {"\u00D3", "&Oacute;"}, // ” - uppercase O, acute accent
+-        {"\u00D4", "&Ocirc;"}, // ‘ - uppercase O, circumflex accent
+-        {"\u00D5", "&Otilde;"}, // ’ - uppercase O, tilde
+-        {"\u00D6", "&Ouml;"}, // ÷ - uppercase O, umlaut
++        {"\u00C0", "&Agrave;"}, // √Ä - uppercase A, grave accent
++        {"\u00C1", "&Aacute;"}, // √Å - uppercase A, acute accent
++        {"\u00C2", "&Acirc;"}, // √Ç - uppercase A, circumflex accent
++        {"\u00C3", "&Atilde;"}, // √É - uppercase A, tilde
++        {"\u00C4", "&Auml;"}, // √Ñ - uppercase A, umlaut
++        {"\u00C5", "&Aring;"}, // √Ö - uppercase A, ring
++        {"\u00C6", "&AElig;"}, // √Ü - uppercase AE
++        {"\u00C7", "&Ccedil;"}, // √á - uppercase C, cedilla
++        {"\u00C8", "&Egrave;"}, // √à - uppercase E, grave accent
++        {"\u00C9", "&Eacute;"}, // √â - uppercase E, acute accent
++        {"\u00CA", "&Ecirc;"}, // √ä - uppercase E, circumflex accent
++        {"\u00CB", "&Euml;"}, // √ã - uppercase E, umlaut
++        {"\u00CC", "&Igrave;"}, // √å - uppercase I, grave accent
++        {"\u00CD", "&Iacute;"}, // √ç - uppercase I, acute accent
++        {"\u00CE", "&Icirc;"}, // √é - uppercase I, circumflex accent
++        {"\u00CF", "&Iuml;"}, // √è - uppercase I, umlaut
++        {"\u00D0", "&ETH;"}, // √ê - uppercase Eth, Icelandic
++        {"\u00D1", "&Ntilde;"}, // √ë - uppercase N, tilde
++        {"\u00D2", "&Ograve;"}, // √í - uppercase O, grave accent
++        {"\u00D3", "&Oacute;"}, // √ì - uppercase O, acute accent
++        {"\u00D4", "&Ocirc;"}, // √î - uppercase O, circumflex accent
++        {"\u00D5", "&Otilde;"}, // √ï - uppercase O, tilde
++        {"\u00D6", "&Ouml;"}, // √ñ - uppercase O, umlaut
+         {"\u00D7", "&times;"}, // multiplication sign
+-        {"\u00D8", "&Oslash;"}, // ÿ - uppercase O, slash
+-        {"\u00D9", "&Ugrave;"}, // Ÿ - uppercase U, grave accent
+-        {"\u00DA", "&Uacute;"}, // ⁄ - uppercase U, acute accent
+-        {"\u00DB", "&Ucirc;"}, // € - uppercase U, circumflex accent
+-        {"\u00DC", "&Uuml;"}, // ‹ - uppercase U, umlaut
+-        {"\u00DD", "&Yacute;"}, // › - uppercase Y, acute accent
+-        {"\u00DE", "&THORN;"}, // ﬁ - uppercase THORN, Icelandic
+-        {"\u00DF", "&szlig;"}, // ﬂ - lowercase sharps, German
+-        {"\u00E0", "&agrave;"}, // ‡ - lowercase a, grave accent
+-        {"\u00E1", "&aacute;"}, // · - lowercase a, acute accent
+-        {"\u00E2", "&acirc;"}, // ‚ - lowercase a, circumflex accent
+-        {"\u00E3", "&atilde;"}, // „ - lowercase a, tilde
+-        {"\u00E4", "&auml;"}, // ‰ - lowercase a, umlaut
+-        {"\u00E5", "&aring;"}, // Â - lowercase a, ring
+-        {"\u00E6", "&aelig;"}, // Ê - lowercase ae
+-        {"\u00E7", "&ccedil;"}, // Á - lowercase c, cedilla
+-        {"\u00E8", "&egrave;"}, // Ë - lowercase e, grave accent
+-        {"\u00E9", "&eacute;"}, // È - lowercase e, acute accent
+-        {"\u00EA", "&ecirc;"}, // Í - lowercase e, circumflex accent
+-        {"\u00EB", "&euml;"}, // Î - lowercase e, umlaut
+-        {"\u00EC", "&igrave;"}, // Ï - lowercase i, grave accent
+-        {"\u00ED", "&iacute;"}, // Ì - lowercase i, acute accent
+-        {"\u00EE", "&icirc;"}, // Ó - lowercase i, circumflex accent
+-        {"\u00EF", "&iuml;"}, // Ô - lowercase i, umlaut
+-        {"\u00F0", "&eth;"}, //  - lowercase eth, Icelandic
+-        {"\u00F1", "&ntilde;"}, // Ò - lowercase n, tilde
+-        {"\u00F2", "&ograve;"}, // Ú - lowercase o, grave accent
+-        {"\u00F3", "&oacute;"}, // Û - lowercase o, acute accent
+-        {"\u00F4", "&ocirc;"}, // Ù - lowercase o, circumflex accent
+-        {"\u00F5", "&otilde;"}, // ı - lowercase o, tilde
+-        {"\u00F6", "&ouml;"}, // ˆ - lowercase o, umlaut
++        {"\u00D8", "&Oslash;"}, // √ò - uppercase O, slash
++        {"\u00D9", "&Ugrave;"}, // √ô - uppercase U, grave accent
++        {"\u00DA", "&Uacute;"}, // √ö - uppercase U, acute accent
++        {"\u00DB", "&Ucirc;"}, // √õ - uppercase U, circumflex accent
++        {"\u00DC", "&Uuml;"}, // √ú - uppercase U, umlaut
++        {"\u00DD", "&Yacute;"}, // √ù - uppercase Y, acute accent
++        {"\u00DE", "&THORN;"}, // √û - uppercase THORN, Icelandic
++        {"\u00DF", "&szlig;"}, // √ü - lowercase sharps, German
++        {"\u00E0", "&agrave;"}, // √† - lowercase a, grave accent
++        {"\u00E1", "&aacute;"}, // √° - lowercase a, acute accent
++        {"\u00E2", "&acirc;"}, // √¢ - lowercase a, circumflex accent
++        {"\u00E3", "&atilde;"}, // √£ - lowercase a, tilde
++        {"\u00E4", "&auml;"}, // √§ - lowercase a, umlaut
++        {"\u00E5", "&aring;"}, // √• - lowercase a, ring
++        {"\u00E6", "&aelig;"}, // √¶ - lowercase ae
++        {"\u00E7", "&ccedil;"}, // √ß - lowercase c, cedilla
++        {"\u00E8", "&egrave;"}, // √® - lowercase e, grave accent
++        {"\u00E9", "&eacute;"}, // √© - lowercase e, acute accent
++        {"\u00EA", "&ecirc;"}, // √™ - lowercase e, circumflex accent
++        {"\u00EB", "&euml;"}, // √´ - lowercase e, umlaut
++        {"\u00EC", "&igrave;"}, // √¨ - lowercase i, grave accent
++        {"\u00ED", "&iacute;"}, // √≠ - lowercase i, acute accent
++        {"\u00EE", "&icirc;"}, // √Æ - lowercase i, circumflex accent
++        {"\u00EF", "&iuml;"}, // √Ø - lowercase i, umlaut
++        {"\u00F0", "&eth;"}, // √∞ - lowercase eth, Icelandic
++        {"\u00F1", "&ntilde;"}, // √± - lowercase n, tilde
++        {"\u00F2", "&ograve;"}, // √≤ - lowercase o, grave accent
++        {"\u00F3", "&oacute;"}, // √≥ - lowercase o, acute accent
++        {"\u00F4", "&ocirc;"}, // √¥ - lowercase o, circumflex accent
++        {"\u00F5", "&otilde;"}, // √µ - lowercase o, tilde
++        {"\u00F6", "&ouml;"}, // √∂ - lowercase o, umlaut
+         {"\u00F7", "&divide;"}, // division sign
+-        {"\u00F8", "&oslash;"}, // ¯ - lowercase o, slash
+-        {"\u00F9", "&ugrave;"}, // ˘ - lowercase u, grave accent
+-        {"\u00FA", "&uacute;"}, // ˙ - lowercase u, acute accent
+-        {"\u00FB", "&ucirc;"}, // ˚ - lowercase u, circumflex accent
+-        {"\u00FC", "&uuml;"}, // ¸ - lowercase u, umlaut
+-        {"\u00FD", "&yacute;"}, // ˝ - lowercase y, acute accent
+-        {"\u00FE", "&thorn;"}, // ˛ - lowercase thorn, Icelandic
+-        {"\u00FF", "&yuml;"}, // ˇ - lowercase y, umlaut
++        {"\u00F8", "&oslash;"}, // √∏ - lowercase o, slash
++        {"\u00F9", "&ugrave;"}, // √π - lowercase u, grave accent
++        {"\u00FA", "&uacute;"}, // √∫ - lowercase u, acute accent
++        {"\u00FB", "&ucirc;"}, // √ª - lowercase u, circumflex accent
++        {"\u00FC", "&uuml;"}, // √º - lowercase u, umlaut
++        {"\u00FD", "&yacute;"}, // √Ω - lowercase y, acute accent
++        {"\u00FE", "&thorn;"}, // √æ - lowercase thorn, Icelandic
++        {"\u00FF", "&yuml;"}, // √ø - lowercase y, umlaut
+     };
+ 
+     /**
+diff --git a/src/site/resources/.htaccess b/src/site/resources/.htaccess
+new file mode 100644
+index 0000000000000000000000000000000000000000..069b878328ea670b13d925ce9942c23e679f7fb2
+--- /dev/null
++++ b/src/site/resources/.htaccess
+@@ -0,0 +1 @@
++AddCharset utf-8 .txt .html
+diff --git a/src/site/resources/release-notes/RELEASE-NOTES-3.3.2.txt b/src/site/resources/release-notes/RELEASE-NOTES-3.3.2.txt
+index a0923ed4b52e46b521873e373b1713a3bac2f15b..1ad880a361d0cf6756f501e88fe35fc7a6a4b3e7 100644
+--- a/src/site/resources/release-notes/RELEASE-NOTES-3.3.2.txt
++++ b/src/site/resources/release-notes/RELEASE-NOTES-3.3.2.txt
+@@ -84,12 +84,12 @@ o LANG-943:  Test DurationFormatUtilsTest.testEdgeDuration fails in
+ o LANG-613:  ConstructorUtils.getAccessibleConstructor() Does Not Check the
+              Accessibility of Enclosing Classes
+ o LANG-951:  Fragments are wrong by 1 day when using fragment YEAR or MONTH.
+-             Thanks to Sebastian Gˆtz.
++             Thanks to Sebastian G√∂tz.
+ o LANG-950:  FastDateParser does not handle two digit year parsing like
+              SimpleDateFormat
+ o LANG-949:  FastDateParserTest.testParses does not test FastDateParser
+ o LANG-915:  Wrong locale handling in LocaleUtils.toLocale().
+-             Thanks to Sergio Fern·ndez.
++             Thanks to Sergio Fern√°ndez.
+ 
+ CHANGES
+ =========
+@@ -184,7 +184,7 @@ o LANG-462:  FastDateFormat supports parse methods.
+ BUG FIXES
+ ===========
+ 
+-o LANG-932:  Spelling fixes. Thanks to Ville Skytt‰.
++o LANG-932:  Spelling fixes. Thanks to Ville Skytt√§.
+ o LANG-929:  OctalUnescaper tried to parse all of \279.
+ o LANG-928:  OctalUnescaper had bugs when parsing octals starting with a zero.
+ o LANG-905:  EqualsBuilder returned true when comparing arrays, even when the
+diff --git a/src/site/resources/release-notes/RELEASE-NOTES-3.4.txt b/src/site/resources/release-notes/RELEASE-NOTES-3.4.txt
+index dc3f520e1236a2c6dc98e5512ac4343c7769030c..eb149d77599d738aa109a68e28e05903fdefb3e6 100644
+--- a/src/site/resources/release-notes/RELEASE-NOTES-3.4.txt
++++ b/src/site/resources/release-notes/RELEASE-NOTES-3.4.txt
+@@ -42,13 +42,13 @@ o LANG-1080: Add NoClassNameToStringStyle implementation of ToStringStyle.
+              Thanks to Innokenty Shuvalov.
+ o LANG-883:  Add StringUtils.containsAny(CharSequence, CharSequence...) method.
+              Thanks to Daniel Stewart.
+-o LANG-1052: Multiline recursive to string style. Thanks to Jan MatËrne.
++o LANG-1052: Multiline recursive to string style. Thanks to Jan Mat√®rne.
+ o LANG-536:  Add isSorted() to ArrayUtils. Thanks to James Sawle.
+ o LANG-1033: Add StringUtils.countMatches(CharSequence, char)
+ o LANG-1021: Provide methods to retrieve all fields/methods annotated with a
+-             specific type. Thanks to Alexander M¸ller.
++             specific type. Thanks to Alexander M√ºller.
+ o LANG-1016: NumberUtils#isParsable method(s). Thanks to
+-             Juan Pablo Santos RodrÌguez.
++             Juan Pablo Santos Rodr√≠guez.
+ o LANG-999:  Add fuzzy String matching logic to StringUtils. Thanks to
+              Ben Ripkens.
+ o LANG-994:  Add zero copy read method to StrBuilder. Thanks to
+@@ -217,12 +217,12 @@ o LANG-943:  Test DurationFormatUtilsTest.testEdgeDuration fails in
+ o LANG-613:  ConstructorUtils.getAccessibleConstructor() Does Not Check the
+              Accessibility of Enclosing Classes
+ o LANG-951:  Fragments are wrong by 1 day when using fragment YEAR or MONTH.
+-             Thanks to Sebastian Gˆtz.
++             Thanks to Sebastian G√∂tz.
+ o LANG-950:  FastDateParser does not handle two digit year parsing like
+              SimpleDateFormat
+ o LANG-949:  FastDateParserTest.testParses does not test FastDateParser
+ o LANG-915:  Wrong locale handling in LocaleUtils.toLocale().
+-             Thanks to Sergio Fern·ndez.
++             Thanks to Sergio Fern√°ndez.
+ 
+ CHANGES
+ =========
+@@ -317,7 +317,7 @@ o LANG-462:  FastDateFormat supports parse methods.
+ BUG FIXES
+ ===========
+ 
+-o LANG-932:  Spelling fixes. Thanks to Ville Skytt‰.
++o LANG-932:  Spelling fixes. Thanks to Ville Skytt√§.
+ o LANG-929:  OctalUnescaper tried to parse all of \279.
+ o LANG-928:  OctalUnescaper had bugs when parsing octals starting with a zero.
+ o LANG-905:  EqualsBuilder returned true when comparing arrays, even when the

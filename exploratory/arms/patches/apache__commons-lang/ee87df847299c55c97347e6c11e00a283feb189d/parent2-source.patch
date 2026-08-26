@@ -1,0 +1,1175 @@
+diff --git a/NOTICE.txt b/NOTICE.txt
+index 13a314089747237859a1c2be823503f84eba1d67..f223e8f63ac85161fe854ee367668549aa32ad8c 100644
+--- a/NOTICE.txt
++++ b/NOTICE.txt
+@@ -1,5 +1,5 @@
+ Apache Commons Lang
+-Copyright 2001-2019 The Apache Software Foundation
++Copyright 2001-2020 The Apache Software Foundation
+ 
+ This product includes software developed at
+ The Apache Software Foundation (http://www.apache.org/).
+diff --git a/pom.xml b/pom.xml
+index 1505a02856c8a2dc8755e5148d1236d5472885e0..b2503f1c98c5cd14bc13373b1e14e0586607f628 100644
+--- a/pom.xml
++++ b/pom.xml
+@@ -516,13 +516,13 @@
+     <dependency>
+       <groupId>org.junit.jupiter</groupId>
+       <artifactId>junit-jupiter</artifactId>
+-      <version>5.5.2</version>
++      <version>5.6.0</version>
+       <scope>test</scope>
+     </dependency>
+     <dependency>
+       <groupId>org.junit-pioneer</groupId>
+       <artifactId>junit-pioneer</artifactId>
+-      <version>0.4.2</version>
++      <version>0.5.3</version>
+       <scope>test</scope>
+     </dependency>
+     <dependency>
+@@ -535,7 +535,7 @@
+     <dependency>
+       <groupId>org.easymock</groupId>
+       <artifactId>easymock</artifactId>
+-      <version>4.1</version>
++      <version>4.2</version>
+       <scope>test</scope>
+     </dependency>
+ 
+@@ -764,7 +764,7 @@
+           <dependency>
+             <groupId>com.github.spotbugs</groupId>
+             <artifactId>spotbugs</artifactId>
+-            <version>4.0.0-beta4</version>
++            <version>4.0.0-RC3</version>
+          </dependency>
+         </dependencies>        
+         <configuration>
+diff --git a/src/changes/changes.xml b/src/changes/changes.xml
+index c5516d5f222c3f512853cb7dea2ff9bd08290250..66c37836d7661afd5f8ea72b03f64be65319a593 100644
+--- a/src/changes/changes.xml
++++ b/src/changes/changes.xml
+@@ -46,6 +46,7 @@ The <action> type attribute can be add,update,fix,remove.
+   <body>
+ 
+   <release version="3.10" date="YYYY-MM-DD" description="New features and bug fixes. Requires Java 8, supports Java 9, 10, 11.">
++    <action issue="LANG-1514" type="fix" dev="kinow" due-to="contextshuffling">Make test more stable by wrapping assertions in hashset.</action>
+     <action issue="LANG-1450" type="fix" dev="chtompki">Generate Javadoc jar on build.</action>
+     <action issue="LANG-1457" type="add" dev="ggregory">Add ExceptionUtils.throwableOfType(Throwable, Class) and friends.</action>
+     <action issue="LANG-1458" type="add" dev="ggregory">Add EMPTY_ARRAY constants to classes in org.apache.commons.lang3.tuple.</action>
+@@ -96,6 +97,9 @@ The <action> type attribute can be add,update,fix,remove.
+     <action issue="LANG-1512" type="add" dev="ggregory" due-to="Gary Gregory">Add IS_JAVA_14 and IS_JAVA_15 to org.apache.commons.lang3.SystemUtils.</action>
+     <action issue="LANG-1513" type="add" dev="ggregory" due-to="Bernhard Bonigl, Gary Gregory">ObjectUtils: Get first non-null supplier value.</action>
+     <action                   type="add" dev="jochen">Added the Streams class, and Functions.stream() as an accessor thereof.</action>
++    <action                   type="update" dev="ggregory" due-to="Gary Gregory">org.easymock:easymock 4.1 -> 4.2.</action>
++    <action                   type="update" dev="ggregory" due-to="Gary Gregory">org.junit-pioneer:junit-pioneer 0.4.2 -> 0.5.3.</action>
++    <action                   type="update" dev="ggregory" due-to="Gary Gregory">org.junit.jupiter:junit-jupiter 5.5.2 -> 5.6.0.</action>
+   </release>
+ 
+   <release version="3.9" date="2019-04-09" description="New features and bug fixes. Requires Java 8, supports Java 9, 10, 11.">
+diff --git a/src/main/java/org/apache/commons/lang3/ArrayUtils.java b/src/main/java/org/apache/commons/lang3/ArrayUtils.java
+index 3cfe46ea9933a628726d806a9558bb5ef0757430..1485e0c558590c14d8d2a7434f50adc8ed82ce48 100644
+--- a/src/main/java/org/apache/commons/lang3/ArrayUtils.java
++++ b/src/main/java/org/apache/commons/lang3/ArrayUtils.java
+@@ -1727,7 +1727,7 @@ public class ArrayUtils {
+      * @since 3.10
+      */
+     public static BitSet indexesOf(final boolean[] array, final boolean valueToFind, int startIndex) {
+-        BitSet bitSet = new BitSet();
++        final BitSet bitSet = new BitSet();
+ 
+         if (array == null) {
+             return bitSet;
+@@ -1778,7 +1778,7 @@ public class ArrayUtils {
+      * @since 3.10
+      */
+     public static BitSet indexesOf(final byte[] array, final byte valueToFind, int startIndex) {
+-        BitSet bitSet = new BitSet();
++        final BitSet bitSet = new BitSet();
+ 
+         if (array == null) {
+             return bitSet;
+@@ -1829,7 +1829,7 @@ public class ArrayUtils {
+      * @since 3.10
+      */
+     public static BitSet indexesOf(final char[] array, final char valueToFind, int startIndex) {
+-        BitSet bitSet = new BitSet();
++        final BitSet bitSet = new BitSet();
+ 
+         if (array == null) {
+             return bitSet;
+@@ -1901,7 +1901,7 @@ public class ArrayUtils {
+      * @since 3.10
+      */
+     public static BitSet indexesOf(final double[] array, final double valueToFind, int startIndex) {
+-        BitSet bitSet = new BitSet();
++        final BitSet bitSet = new BitSet();
+ 
+         if (array == null) {
+             return bitSet;
+@@ -1943,7 +1943,7 @@ public class ArrayUtils {
+      * @since 3.10
+      */
+     public static BitSet indexesOf(final double[] array, final double valueToFind, int startIndex, final double tolerance) {
+-        BitSet bitSet = new BitSet();
++        final BitSet bitSet = new BitSet();
+ 
+         if (array == null) {
+             return bitSet;
+@@ -1994,7 +1994,7 @@ public class ArrayUtils {
+      * @since 3.10
+      */
+     public static BitSet indexesOf(final float[] array, final float valueToFind, int startIndex) {
+-        BitSet bitSet = new BitSet();
++        final BitSet bitSet = new BitSet();
+ 
+         if (array == null) {
+             return bitSet;
+@@ -2045,7 +2045,7 @@ public class ArrayUtils {
+      * @since 3.10
+      */
+     public static BitSet indexesOf(final int[] array, final int valueToFind, int startIndex) {
+-        BitSet bitSet = new BitSet();
++        final BitSet bitSet = new BitSet();
+ 
+         if (array == null) {
+             return bitSet;
+@@ -2096,7 +2096,7 @@ public class ArrayUtils {
+      * @since 3.10
+      */
+     public static BitSet indexesOf(final long[] array, final long valueToFind, int startIndex) {
+-        BitSet bitSet = new BitSet();
++        final BitSet bitSet = new BitSet();
+ 
+         if (array == null) {
+             return bitSet;
+@@ -2147,7 +2147,7 @@ public class ArrayUtils {
+      * @since 3.10
+      */
+     public static BitSet indexesOf(final Object[] array, final Object objectToFind, int startIndex) {
+-        BitSet bitSet = new BitSet();
++        final BitSet bitSet = new BitSet();
+ 
+         if (array == null) {
+             return bitSet;
+@@ -2198,7 +2198,7 @@ public class ArrayUtils {
+      * @since 3.10
+      */
+     public static BitSet indexesOf(final short[] array, final short valueToFind, int startIndex) {
+-        BitSet bitSet = new BitSet();
++        final BitSet bitSet = new BitSet();
+ 
+         if (array == null) {
+             return bitSet;
+@@ -3084,7 +3084,7 @@ public static int indexOf(final int[] array, final int valueToFind) {
+      * @return Whether the given index is safely-accessible in the given array
+      * @since 3.8
+      */
+-    public static <T> boolean isArrayIndexValid(T[] array, int index) {
++    public static <T> boolean isArrayIndexValid(final T[] array, final int index) {
+         if (getLength(array) == 0 || array.length <= index) {
+             return false;
+         }
+diff --git a/src/main/java/org/apache/commons/lang3/CharRange.java b/src/main/java/org/apache/commons/lang3/CharRange.java
+index 6a416bb632a27f503d405f95ca90e291e965613c..be656d2a5312ff5bd4a6e54d50fb07b43b46fa32 100644
+--- a/src/main/java/org/apache/commons/lang3/CharRange.java
++++ b/src/main/java/org/apache/commons/lang3/CharRange.java
+@@ -271,7 +271,7 @@ final class CharRange implements Iterable<Character>, Serializable {
+         private boolean hasNext;
+ 
+         /**
+-         * Construct a new iterator for the character range.
++         * Constructs a new iterator for the character range.
+          *
+          * @param r The character range
+          */
+@@ -296,7 +296,7 @@ final class CharRange implements Iterable<Character>, Serializable {
+         }
+ 
+         /**
+-         * Prepare the next character in the range.
++         * Prepares the next character in the range.
+          */
+         private void prepareNext() {
+             if (range.negated) {
+@@ -329,7 +329,7 @@ final class CharRange implements Iterable<Character>, Serializable {
+         }
+ 
+         /**
+-         * Return the next character in the iteration
++         * Returns the next character in the iteration
+          *
+          * @return {@code Character} for the next character
+          */
+@@ -346,7 +346,7 @@ final class CharRange implements Iterable<Character>, Serializable {
+         /**
+          * Always throws UnsupportedOperationException.
+          *
+-         * @throws UnsupportedOperationException
++         * @throws UnsupportedOperationException Always thrown.
+          * @see java.util.Iterator#remove()
+          */
+         @Override
+diff --git a/src/main/java/org/apache/commons/lang3/ClassUtils.java b/src/main/java/org/apache/commons/lang3/ClassUtils.java
+index 4b90ab2973e4dde4cbd4512f31af7dab1d83fda0..d0891ddd791a302e55d37c5b6444e4e6fde6cce0 100644
+--- a/src/main/java/org/apache/commons/lang3/ClassUtils.java
++++ b/src/main/java/org/apache/commons/lang3/ClassUtils.java
+@@ -50,7 +50,12 @@ public class ClassUtils {
+      * @since 3.2
+      */
+     public enum Interfaces {
+-        INCLUDE, EXCLUDE
++
++        /** Includes interfaces. */
++        INCLUDE,
++
++        /** Excludes interfaces. */
++        EXCLUDE
+     }
+ 
+     /**
+@@ -277,7 +282,7 @@ public class ClassUtils {
+      * @since 3.0
+      * @see Class#getSimpleName()
+      */
+-    public static String getSimpleName(final Class<?> cls, String valueIfNull) {
++    public static String getSimpleName(final Class<?> cls, final String valueIfNull) {
+         return cls == null ? valueIfNull : cls.getSimpleName();
+     }
+ 
+@@ -598,7 +603,7 @@ public class ClassUtils {
+     }
+ 
+     /**
+-     * Get the interfaces for the specified class.
++     * Gets the interfaces for the specified class.
+      *
+      * @param cls  the class to look up, may be {@code null}
+      * @param interfacesFound the {@code Set} of interfaces for the class
+@@ -1468,7 +1473,7 @@ public class ClassUtils {
+     }
+ 
+     /**
+-     * Get an {@link Iterable} that can iterate over a class hierarchy in ascending (subclass to superclass) order,
++     * Gets an {@link Iterable} that can iterate over a class hierarchy in ascending (subclass to superclass) order,
+      * excluding interfaces.
+      *
+      * @param type the type to get the class hierarchy from
+@@ -1480,7 +1485,7 @@ public class ClassUtils {
+     }
+ 
+     /**
+-     * Get an {@link Iterable} that can iterate over a class hierarchy in ascending (subclass to superclass) order.
++     * Gets an {@link Iterable} that can iterate over a class hierarchy in ascending (subclass to superclass) order.
+      *
+      * @param type the type to get the class hierarchy from
+      * @param interfacesBehavior switch indicating whether to include or exclude interfaces
+diff --git a/src/main/java/org/apache/commons/lang3/Functions.java b/src/main/java/org/apache/commons/lang3/Functions.java
+index ef9c45d909bfdd9e35b09d2a25c78e0773f284c5..91b4c9a08ce3c51f8b0d0537b3a6a18897ca1809 100644
+--- a/src/main/java/org/apache/commons/lang3/Functions.java
++++ b/src/main/java/org/apache/commons/lang3/Functions.java
+@@ -162,7 +162,7 @@ public class Functions {
+      * @param pRunnable a {@code FailableRunnable}
+      * @return a standard {@code Runnable}
+      */
+-    public static Runnable asRunnable(FailableRunnable<?> pRunnable) {
++    public static Runnable asRunnable(final FailableRunnable<?> pRunnable) {
+         return () -> run(pRunnable);
+     }
+ 
+@@ -173,7 +173,7 @@ public class Functions {
+      * @param pConsumer a {@code FailableConsumer}
+      * @return a standard {@code Consumer}
+      */
+-    public static <I> Consumer<I> asConsumer(FailableConsumer<I, ?> pConsumer) {
++    public static <I> Consumer<I> asConsumer(final FailableConsumer<I, ?> pConsumer) {
+         return (pInput) -> accept(pConsumer, pInput);
+     }
+ 
+@@ -184,7 +184,7 @@ public class Functions {
+      * @param pCallable a {@code FailableCallable}
+      * @return a standard {@code Callable}
+      */
+-    public static <O> Callable<O> asCallable(FailableCallable<O, ?> pCallable) {
++    public static <O> Callable<O> asCallable(final FailableCallable<O, ?> pCallable) {
+         return () -> call(pCallable);
+     }
+ 
+@@ -196,7 +196,7 @@ public class Functions {
+      * @param pConsumer a failable {@code BiConsumer}
+      * @return a standard {@code BiConsumer}
+      */
+-    public static <I1, I2> BiConsumer<I1, I2> asBiConsumer(FailableBiConsumer<I1, I2, ?> pConsumer) {
++    public static <I1, I2> BiConsumer<I1, I2> asBiConsumer(final FailableBiConsumer<I1, I2, ?> pConsumer) {
+         return (pInput1, pInput2) -> accept(pConsumer, pInput1, pInput2);
+     }
+ 
+@@ -208,7 +208,7 @@ public class Functions {
+      * @param pFunction a {code FailableFunction}
+      * @return a standard {@code Function}
+      */
+-    public static <I, O> Function<I, O> asFunction(FailableFunction<I, O, ?> pFunction) {
++    public static <I, O> Function<I, O> asFunction(final FailableFunction<I, O, ?> pFunction) {
+         return (pInput) -> apply(pFunction, pInput);
+     }
+ 
+@@ -221,7 +221,7 @@ public class Functions {
+      * @param pFunction a {@code FailableBiFunction}
+      * @return a standard {@code BiFunction}
+      */
+-    public static <I1, I2, O> BiFunction<I1, I2, O> asBiFunction(FailableBiFunction<I1, I2, O, ?> pFunction) {
++    public static <I1, I2, O> BiFunction<I1, I2, O> asBiFunction(final FailableBiFunction<I1, I2, O, ?> pFunction) {
+         return (pInput1, pInput2) -> apply(pFunction, pInput1, pInput2);
+     }
+ 
+@@ -232,7 +232,7 @@ public class Functions {
+      * @param pPredicate a {@code FailablePredicate}
+      * @return a standard {@code Predicate}
+      */
+-    public static <I> Predicate<I> asPredicate(FailablePredicate<I, ?> pPredicate) {
++    public static <I> Predicate<I> asPredicate(final FailablePredicate<I, ?> pPredicate) {
+         return (pInput) -> test(pPredicate, pInput);
+     }
+ 
+@@ -244,7 +244,7 @@ public class Functions {
+      * @param pPredicate a {@code FailableBiPredicate}
+      * @return a standard {@code BiPredicate}
+      */
+-    public static <I1, I2> BiPredicate<I1, I2> asBiPredicate(FailableBiPredicate<I1, I2, ?> pPredicate) {
++    public static <I1, I2> BiPredicate<I1, I2> asBiPredicate(final FailableBiPredicate<I1, I2, ?> pPredicate) {
+         return (pInput1, pInput2) -> test(pPredicate, pInput1, pInput2);
+     }
+ 
+@@ -255,7 +255,7 @@ public class Functions {
+      * @param pSupplier a {@code FailableSupplier}
+      * @return a standard {@code Supplier}
+      */
+-    public static <O> Supplier<O> asSupplier(FailableSupplier<O, ?> pSupplier) {
++    public static <O> Supplier<O> asSupplier(final FailableSupplier<O, ?> pSupplier) {
+         return () -> get(pSupplier);
+     }
+ 
+@@ -264,10 +264,10 @@ public class Functions {
+      * @param pRunnable The runnable to run
+      * @param <T> the type of checked exception the runnable may throw
+      */
+-    public static <T extends Throwable> void run(FailableRunnable<T> pRunnable) {
++    public static <T extends Throwable> void run(final FailableRunnable<T> pRunnable) {
+         try {
+             pRunnable.run();
+-        } catch (Throwable t) {
++        } catch (final Throwable t) {
+             throw rethrow(t);
+         }
+     }
+@@ -279,10 +279,10 @@ public class Functions {
+      * @param <T> the type of checked exception the callable may throw
+      * @return the value returned from the callable
+      */
+-    public static <O, T extends Throwable> O call(FailableCallable<O, T> pCallable) {
++    public static <O, T extends Throwable> O call(final FailableCallable<O, T> pCallable) {
+         try {
+             return pCallable.call();
+-        } catch (Throwable t) {
++        } catch (final Throwable t) {
+             throw rethrow(t);
+         }
+     }
+@@ -294,10 +294,10 @@ public class Functions {
+      * @param <O> the type the consumer accepts
+      * @param <T> the type of checked exception the consumer may throw
+      */
+-    public static <O, T extends Throwable> void accept(FailableConsumer<O, T> pConsumer, O pObject) {
++    public static <O, T extends Throwable> void accept(final FailableConsumer<O, T> pConsumer, final O pObject) {
+         try {
+             pConsumer.accept(pObject);
+-        } catch (Throwable t) {
++        } catch (final Throwable t) {
+             throw rethrow(t);
+         }
+     }
+@@ -311,10 +311,10 @@ public class Functions {
+      * @param <O2> the type of the second argument the consumer accepts
+      * @param <T> the type of checked exception the consumer may throw
+      */
+-    public static <O1, O2, T extends Throwable> void accept(FailableBiConsumer<O1, O2, T> pConsumer, O1 pObject1, O2 pObject2) {
++    public static <O1, O2, T extends Throwable> void accept(final FailableBiConsumer<O1, O2, T> pConsumer, final O1 pObject1, final O2 pObject2) {
+         try {
+             pConsumer.accept(pObject1, pObject2);
+-        } catch (Throwable t) {
++        } catch (final Throwable t) {
+             throw rethrow(t);
+         }
+     }
+@@ -328,10 +328,10 @@ public class Functions {
+      * @param <T> the type of checked exception the function may throw
+      * @return the value returned from the function
+      */
+-    public static <I, O, T extends Throwable> O apply(FailableFunction<I, O, T> pFunction, I pInput) {
++    public static <I, O, T extends Throwable> O apply(final FailableFunction<I, O, T> pFunction, final I pInput) {
+         try {
+             return pFunction.apply(pInput);
+-        } catch (Throwable t) {
++        } catch (final Throwable t) {
+             throw rethrow(t);
+         }
+     }
+@@ -347,10 +347,10 @@ public class Functions {
+      * @param <T> the type of checked exception the function may throw
+      * @return the value returned from the function
+      */
+-    public static <I1, I2, O, T extends Throwable> O apply(FailableBiFunction<I1, I2, O, T> pFunction, I1 pInput1, I2 pInput2) {
++    public static <I1, I2, O, T extends Throwable> O apply(final FailableBiFunction<I1, I2, O, T> pFunction, final I1 pInput1, final I2 pInput2) {
+         try {
+             return pFunction.apply(pInput1, pInput2);
+-        } catch (Throwable t) {
++        } catch (final Throwable t) {
+             throw rethrow(t);
+         }
+     }
+@@ -363,10 +363,10 @@ public class Functions {
+      * @param <T> the type of checked exception the predicate may throw
+      * @return the boolean value returned by the predicate
+      */
+-    public static <O, T extends Throwable> boolean test(FailablePredicate<O, T> pPredicate, O pObject) {
++    public static <O, T extends Throwable> boolean test(final FailablePredicate<O, T> pPredicate, final O pObject) {
+         try {
+             return pPredicate.test(pObject);
+-        } catch (Throwable t) {
++        } catch (final Throwable t) {
+             throw rethrow(t);
+         }
+     }
+@@ -381,10 +381,10 @@ public class Functions {
+      * @param <T> the type of checked exception the predicate may throw
+      * @return the boolean value returned by the predicate
+      */
+-    public static <O1, O2, T extends Throwable> boolean test(FailableBiPredicate<O1, O2, T> pPredicate, O1 pObject1, O2 pObject2) {
++    public static <O1, O2, T extends Throwable> boolean test(final FailableBiPredicate<O1, O2, T> pPredicate, final O1 pObject1, final O2 pObject2) {
+         try {
+             return pPredicate.test(pObject1, pObject2);
+-        } catch (Throwable t) {
++        } catch (final Throwable t) {
+             throw rethrow(t);
+         }
+     }
+@@ -396,10 +396,10 @@ public class Functions {
+      * @param <T> The type of checked exception, which the supplier can throw.
+      * @return The object, which has been created by the supplier
+      */
+-    public static <O, T extends Throwable> O get(FailableSupplier<O, T> pSupplier) {
++    public static <O, T extends Throwable> O get(final FailableSupplier<O, T> pSupplier) {
+         try {
+             return pSupplier.get();
+-        } catch (Throwable t) {
++        } catch (final Throwable t) {
+             throw rethrow(t);
+         }
+     }
+@@ -416,8 +416,8 @@ public class Functions {
+      * @param <O> The streams element type.
+      * @return The created {@link FailableStream}.
+      */
+-    public static <O> FailableStream<O> stream(Stream<O> pStream) {
+-        return new FailableStream<O>(pStream);
++    public static <O> FailableStream<O> stream(final Stream<O> pStream) {
++        return new FailableStream<>(pStream);
+     }
+ 
+     /**
+@@ -433,8 +433,8 @@ public class Functions {
+      *   streams element type.)
+      * @return The created {@link FailableStream}.
+      */
+-    public static <O> FailableStream<O> stream(Collection<O> pCollection) {
+-        return new FailableStream<O>(pCollection.stream());
++    public static <O> FailableStream<O> stream(final Collection<O> pCollection) {
++        return new FailableStream<>(pCollection.stream());
+     }
+ 
+ 
+@@ -461,9 +461,9 @@ public class Functions {
+      * @see #tryWithResources(FailableRunnable, FailableRunnable...)
+      */
+     @SafeVarargs
+-    public static void tryWithResources(FailableRunnable<? extends Throwable> pAction,
+-                                            FailableConsumer<Throwable, ? extends Throwable> pErrorHandler,
+-                                            FailableRunnable<? extends Throwable>... pResources) {
++    public static void tryWithResources(final FailableRunnable<? extends Throwable> pAction,
++                                            final FailableConsumer<Throwable, ? extends Throwable> pErrorHandler,
++                                            final FailableRunnable<? extends Throwable>... pResources) {
+         final FailableConsumer<Throwable, ? extends Throwable> errorHandler;
+         if (pErrorHandler == null) {
+             errorHandler = (t) -> rethrow(t);
+@@ -471,21 +471,21 @@ public class Functions {
+             errorHandler = pErrorHandler;
+         }
+         if (pResources != null) {
+-            for (FailableRunnable<? extends Throwable> failableRunnable : pResources) {
++            for (final FailableRunnable<? extends Throwable> failableRunnable : pResources) {
+                 Objects.requireNonNull(failableRunnable, "runnable");
+             }
+         }
+         Throwable th = null;
+         try {
+             pAction.run();
+-        } catch (Throwable t) {
++        } catch (final Throwable t) {
+             th = t;
+         }
+         if (pResources != null) {
+-            for (FailableRunnable<? extends Object> runnable : pResources) {
++            for (final FailableRunnable<? extends Object> runnable : pResources) {
+                 try {
+                     runnable.run();
+-                } catch (Throwable t) {
++                } catch (final Throwable t) {
+                     if (th == null) {
+                         th = t;
+                     }
+@@ -495,7 +495,7 @@ public class Functions {
+         if (th != null) {
+             try {
+                 errorHandler.accept(th);
+-            } catch (Throwable t) {
++            } catch (final Throwable t) {
+                 throw rethrow(t);
+             }
+         }
+@@ -521,8 +521,8 @@ public class Functions {
+      * @see #tryWithResources(FailableRunnable, FailableConsumer, FailableRunnable...)
+      */
+     @SafeVarargs
+-    public static void tryWithResources(FailableRunnable<? extends Throwable> pAction,
+-                                            FailableRunnable<? extends Throwable>... pResources) {
++    public static void tryWithResources(final FailableRunnable<? extends Throwable> pAction,
++                                            final FailableRunnable<? extends Throwable>... pResources) {
+         tryWithResources(pAction, null, pResources);
+     }
+ 
+@@ -549,7 +549,7 @@ public class Functions {
+      * @param pThrowable The throwable to rethrow possibly wrapped into an unchecked exception
+      * @return Never returns anything, this method never terminates normally.
+      */
+-    public static RuntimeException rethrow(Throwable pThrowable) {
++    public static RuntimeException rethrow(final Throwable pThrowable) {
+         Objects.requireNonNull(pThrowable, "pThrowable");
+         if (pThrowable instanceof RuntimeException) {
+             throw (RuntimeException) pThrowable;
+diff --git a/src/main/java/org/apache/commons/lang3/ObjectUtils.java b/src/main/java/org/apache/commons/lang3/ObjectUtils.java
+index b647c1a4a60c19893782eff91080478ed7cdc497..b94c2ae74b3856cd733836c2914d07d557517777 100644
+--- a/src/main/java/org/apache/commons/lang3/ObjectUtils.java
++++ b/src/main/java/org/apache/commons/lang3/ObjectUtils.java
+@@ -238,7 +238,7 @@ public class ObjectUtils {
+         if (suppliers != null) {
+             for (final Supplier<T> supplier : suppliers) {
+                 if (supplier != null) {
+-                    T value = supplier.get();
++                    final T value = supplier.get();
+                     if (value != null) {
+                         return value;
+                     }
+diff --git a/src/main/java/org/apache/commons/lang3/Streams.java b/src/main/java/org/apache/commons/lang3/Streams.java
+index c097d76f3718f1547607f7a5c832cce605baf306..9898d06706307974ca18cba522f940c92b6fea15 100644
+--- a/src/main/java/org/apache/commons/lang3/Streams.java
++++ b/src/main/java/org/apache/commons/lang3/Streams.java
+@@ -32,10 +32,10 @@ import org.apache.commons.lang3.Functions.FailableFunction;
+ import org.apache.commons.lang3.Functions.FailablePredicate;
+ 
+ /**
+- * This class provides utility functions, and classes for working with the
+- * java.util.stream package, or more generally, with Java 8 lambdas. More
++ * Provides utility functions, and classes for working with the
++ * {@code java.util.stream} package, or more generally, with Java 8 lambdas. More
+  * specifically, it attempts to address the fact that lambdas are supposed
+- * not to throw Exceptions, at least not checked Exceptions, aka instances
++ * not to throw Exceptions, at least not checked Exceptions, AKA instances
+  * of {@link Exception}. This enforces the use of constructs like
+  * <pre>
+  *     Consumer&lt;java.lang.reflect.Method&gt; consumer = (m) -&gt; {
+@@ -53,20 +53,29 @@ import org.apache.commons.lang3.Functions.FailablePredicate;
+  * </pre>
+  * Obviously, the second version is much more concise and the spirit of
+  * Lambda expressions is met better than in the first version.
++ *
+  * @see Stream
+  * @see Functions
++ * @since 3.10
+  */
+ public class Streams {
+-   /** A reduced, and simplified version of a {@link Stream} with
+-     * failable method signatures.
+-     * @param <O> The streams element type.
+-     */
++
++   /**
++    * A reduced, and simplified version of a {@link Stream} with
++    * failable method signatures.
++    * @param <O> The streams element type.
++    */
+     public static class FailableStream<O extends Object> {
++
+         private Stream<O> stream;
+         private boolean terminated;
+ 
+-        public FailableStream(Stream<O> pStream) {
+-            stream = pStream;
++        /**
++         * Constructs a new instance with the given {@code stream}.
++         * @param stream The stream.
++         */
++        public FailableStream(final Stream<O> stream) {
++            this.stream = stream;
+         }
+ 
+         protected void assertNotTerminated() {
+@@ -86,13 +95,13 @@ public class Streams {
+          *
+          * <p>This is an intermediate operation.
+          *
+-         * @param pPredicate a non-interfering, stateless predicate to apply to each
++         * @param predicate a non-interfering, stateless predicate to apply to each
+          * element to determine if it should be included.
+          * @return the new stream
+          */
+-        public FailableStream<O> filter(FailablePredicate<O, ?> pPredicate){
++        public FailableStream<O> filter(final FailablePredicate<O, ?> predicate){
+             assertNotTerminated();
+-            stream = stream.filter(Functions.asPredicate(pPredicate));
++            stream = stream.filter(Functions.asPredicate(predicate));
+             return this;
+         }
+ 
+@@ -109,11 +118,11 @@ public class Streams {
+          * library chooses.  If the action accesses shared state, it is
+          * responsible for providing the required synchronization.
+          *
+-         * @param pAction a non-interfering action to perform on the elements
++         * @param action a non-interfering action to perform on the elements
+          */
+-        public void forEach(FailableConsumer<O, ?> pAction) {
++        public void forEach(final FailableConsumer<O, ?> action) {
+             makeTerminated();
+-            stream().forEach(Functions.asConsumer(pAction));
++            stream().forEach(Functions.asConsumer(action));
+         }
+ 
+         /**
+@@ -159,14 +168,14 @@ public class Streams {
+          *
+          * @param <R> the type of the result
+          * @param <A> the intermediate accumulation type of the {@code Collector}
+-         * @param pCollector the {@code Collector} describing the reduction
++         * @param collector the {@code Collector} describing the reduction
+          * @return the result of the reduction
+          * @see #collect(Supplier, BiConsumer, BiConsumer)
+          * @see Collectors
+          */
+-        public <A, R> R collect(Collector<? super O, A, R> pCollector) {
++        public <A, R> R collect(final Collector<? super O, A, R> collector) {
+             makeTerminated();
+-            return stream().collect(pCollector);
++            return stream().collect(collector);
+         }
+ 
+         /**
+@@ -204,19 +213,19 @@ public class Streams {
+          *
+          * @param <R> type of the result
+          * @param <A> Type of the accumulator.
+-         * @param pSupplier a function that creates a new result container. For a
++         * @param pupplier a function that creates a new result container. For a
+          *                 parallel execution, this function may be called
+          *                 multiple times and must return a fresh value each time.
+-         * @param pAccumulator An associative, non-interfering, stateless function for
++         * @param accumulator An associative, non-interfering, stateless function for
+          *   incorporating an additional element into a result
+-         * @param pCombiner An associative, non-interfering, stateless
++         * @param combiner An associative, non-interfering, stateless
+          *   function for combining two values, which must be compatible with the
+          *   accumulator function
+          * @return The result of the reduction
+          */
+-        public <A, R> R collect(Supplier<R> pSupplier, BiConsumer<R, ? super O> pAccumulator, BiConsumer<R, R> pCombiner) {
++        public <A, R> R collect(final Supplier<R> pupplier, final BiConsumer<R, ? super O> accumulator, final BiConsumer<R, R> combiner) {
+             makeTerminated();
+-            return stream().collect(pSupplier, pAccumulator, pCombiner);
++            return stream().collect(pupplier, accumulator, combiner);
+         }
+ 
+         /**
+@@ -257,14 +266,14 @@ public class Streams {
+          * operations parallelize more gracefully, without needing additional
+          * synchronization and with greatly reduced risk of data races.
+          *
+-         * @param pIdentity the identity value for the accumulating function
+-         * @param pAccumulator an associative, non-interfering, stateless
++         * @param identity the identity value for the accumulating function
++         * @param accumulator an associative, non-interfering, stateless
+          *                    function for combining two values
+          * @return the result of the reduction
+          */
+-        public O reduce(O pIdentity, BinaryOperator<O> pAccumulator) {
++        public O reduce(final O identity, final BinaryOperator<O> accumulator) {
+             makeTerminated();
+-            return stream().reduce(pIdentity, pAccumulator);
++            return stream().reduce(identity, accumulator);
+         }
+ 
+         /**
+@@ -274,12 +283,12 @@ public class Streams {
+          * <p>This is an intermediate operation.
+          *
+          * @param <R> The element type of the new stream
+-         * @param pMapper A non-interfering, stateless function to apply to each element
++         * @param mapper A non-interfering, stateless function to apply to each element
+          * @return the new stream
+          */
+-        public <R> FailableStream<R> map(FailableFunction<O, R, ?> pMapper) {
++        public <R> FailableStream<R> map(final FailableFunction<O, R, ?> mapper) {
+             assertNotTerminated();
+-            return new FailableStream<R>(stream.map(Functions.asFunction(pMapper)));
++            return new FailableStream<>(stream.map(Functions.asFunction(mapper)));
+         }
+ 
+         /**
+@@ -304,14 +313,14 @@ public class Streams {
+          * stream is empty, the quantification is said to be <em>vacuously
+          * satisfied</em> and is always {@code true} (regardless of P(x)).
+          *
+-         * @param pPredicate A non-interfering, stateless predicate to apply to
++         * @param predicate A non-interfering, stateless predicate to apply to
+          * elements of this stream
+          * @return {@code true} If either all elements of the stream match the
+          * provided predicate or the stream is empty, otherwise {@code false}.
+          */
+-        public boolean allMatch(FailablePredicate<O, ?> pPredicate) {
++        public boolean allMatch(final FailablePredicate<O, ?> predicate) {
+             assertNotTerminated();
+-            return stream().allMatch(Functions.asPredicate(pPredicate));
++            return stream().allMatch(Functions.asPredicate(predicate));
+         }
+ 
+         /**
+@@ -326,14 +335,14 @@ public class Streams {
+          * This method evaluates the <em>existential quantification</em> of the
+          * predicate over the elements of the stream (for some x P(x)).
+          *
+-         * @param pPredicate A non-interfering, stateless predicate to apply to
++         * @param predicate A non-interfering, stateless predicate to apply to
+          * elements of this stream
+          * @return {@code true} if any elements of the stream match the provided
+          * predicate, otherwise {@code false}
+          */
+-        public boolean anyMatch(FailablePredicate<O, ?> pPredicate) {
++        public boolean anyMatch(final FailablePredicate<O, ?> predicate) {
+             assertNotTerminated();
+-            return stream().anyMatch(Functions.asPredicate(pPredicate));
++            return stream().anyMatch(Functions.asPredicate(predicate));
+         }
+     }
+ 
+@@ -371,12 +380,12 @@ public class Streams {
+      *  concise, and readable, and meets the spirit of Lambdas better
+      *  than the first version.
+      * @param <O> The streams element type.
+-     * @param pStream The stream, which is being converted.
++     * @param stream The stream, which is being converted.
+      * @return The {@link FailableStream}, which has been created by
+      *   converting the stream.
+      */
+-    public static <O> FailableStream<O> stream(Stream<O> pStream) {
+-        return new FailableStream<O>(pStream);
++    public static <O> FailableStream<O> stream(final Stream<O> stream) {
++        return new FailableStream<>(stream);
+     }
+ 
+     /**
+@@ -413,11 +422,11 @@ public class Streams {
+      *  concise, and readable, and meets the spirit of Lambdas better
+      *  than the first version.
+      * @param <O> The streams element type.
+-     * @param pStream The stream, which is being converted.
++     * @param stream The stream, which is being converted.
+      * @return The {@link FailableStream}, which has been created by
+      *   converting the stream.
+      */
+-    public static <O> FailableStream<O> stream(Collection<O> pStream) {
+-        return stream(pStream.stream());
++    public static <O> FailableStream<O> stream(final Collection<O> stream) {
++        return stream(stream.stream());
+     }
+ }
+diff --git a/src/main/java/org/apache/commons/lang3/StringUtils.java b/src/main/java/org/apache/commons/lang3/StringUtils.java
+index 44fba32dc13a4b5ada9fabf3ec0ead51f14b883f..2668731eb182cbddacaffe3a3931957c5a34977b 100644
+--- a/src/main/java/org/apache/commons/lang3/StringUtils.java
++++ b/src/main/java/org/apache/commons/lang3/StringUtils.java
+@@ -535,7 +535,7 @@ public class StringUtils {
+      * @since 2.0
+      */
+     public static String capitalize(final String str) {
+-        int strLen = length(str);
++        final int strLen = length(str);
+         if (strLen == 0) {
+             return str;
+         }
+@@ -3546,7 +3546,7 @@ public class StringUtils {
+      * @since 3.0 Changed signature from isBlank(String) to isBlank(CharSequence)
+      */
+     public static boolean isBlank(final CharSequence cs) {
+-        int strLen = length(cs);
++        final int strLen = length(cs);
+         if (strLen == 0) {
+             return true;
+         }
+@@ -8355,7 +8355,7 @@ public class StringUtils {
+      * @return the stripped String, {@code null} if null String input
+      */
+     public static String stripStart(final String str, final String stripChars) {
+-        int strLen = length(str);
++        final int strLen = length(str);
+         if (strLen == 0) {
+             return str;
+         }
+@@ -9203,7 +9203,7 @@ public class StringUtils {
+      * @since 2.0
+      */
+     public static String uncapitalize(final String str) {
+-        int strLen = length(str);
++        final int strLen = length(str);
+         if (strLen == 0) {
+             return str;
+         }
+diff --git a/src/main/java/org/apache/commons/lang3/ThreadUtils.java b/src/main/java/org/apache/commons/lang3/ThreadUtils.java
+index 16986e0de9d846922ba75896c7e37b1e159d1121..5534194fa98ca1286e9507b157c6776ef41066dc 100644
+--- a/src/main/java/org/apache/commons/lang3/ThreadUtils.java
++++ b/src/main/java/org/apache/commons/lang3/ThreadUtils.java
+@@ -36,7 +36,7 @@ import java.util.List;
+ public class ThreadUtils {
+ 
+     /**
+-     * Return the active thread with the specified id if it belongs to the specified thread group.
++     * Finds the active thread with the specified id if it belongs to the specified thread group.
+      *
+      * @param threadId The thread id
+      * @param threadGroup The thread group
+@@ -59,7 +59,7 @@ public class ThreadUtils {
+     }
+ 
+     /**
+-     * Return the active thread with the specified id if it belongs to a thread group with the specified group name.
++     * Finds the active thread with the specified id if it belongs to a thread group with the specified group name.
+      *
+      * @param threadId The thread id
+      * @param threadGroupName The thread group name
+@@ -82,7 +82,7 @@ public class ThreadUtils {
+     }
+ 
+     /**
+-     * Return active threads with the specified name if they belong to a specified thread group.
++     * Finds active threads with the specified name if they belong to a specified thread group.
+      *
+      * @param threadName The thread name
+      * @param threadGroup The thread group
+@@ -100,7 +100,7 @@ public class ThreadUtils {
+     }
+ 
+     /**
+-     * Return active threads with the specified name if they belong to a thread group with the specified group name.
++     * Finds active threads with the specified name if they belong to a thread group with the specified group name.
+      *
+      * @param threadName The thread name
+      * @param threadGroupName The thread group name
+@@ -132,7 +132,7 @@ public class ThreadUtils {
+     }
+ 
+     /**
+-     * Return active thread groups with the specified group name.
++     * Finds active thread groups with the specified group name.
+      *
+      * @param threadGroupName The thread group name
+      * @return the thread groups with the specified group name or an empty collection if no such thread group exists. The collection returned is always unmodifiable.
+@@ -148,7 +148,7 @@ public class ThreadUtils {
+     }
+ 
+     /**
+-     * Return all active thread groups excluding the system thread group (A thread group is active if it has been not destroyed).
++     * Gets all active thread groups excluding the system thread group (A thread group is active if it has been not destroyed).
+      *
+      * @return all thread groups excluding the system thread group. The collection returned is always unmodifiable.
+      * @throws  SecurityException
+@@ -162,7 +162,7 @@ public class ThreadUtils {
+     }
+ 
+     /**
+-     * Return the system thread group (sometimes also referred as "root thread group").
++     * Gets the system thread group (sometimes also referred as "root thread group").
+      *
+      * @return the system thread group
+      * @throws  SecurityException  if the current thread cannot modify
+@@ -177,7 +177,7 @@ public class ThreadUtils {
+     }
+ 
+     /**
+-     * Return all active threads (A thread is active if it has been started and has not yet died).
++     * Gets all active threads (A thread is active if it has been started and has not yet died).
+      *
+      * @return all active threads. The collection returned is always unmodifiable.
+      * @throws  SecurityException
+@@ -191,7 +191,7 @@ public class ThreadUtils {
+     }
+ 
+     /**
+-     * Return active threads with the specified name.
++     * Finds active threads with the specified name.
+      *
+      * @param threadName The thread name
+      * @return The threads with the specified name or an empty collection if no such thread exists. The collection returned is always unmodifiable.
+@@ -207,7 +207,7 @@ public class ThreadUtils {
+     }
+ 
+     /**
+-     * Return the active thread with the specified id.
++     * Finds the active thread with the specified id.
+      *
+      * @param threadId The thread id
+      * @return The thread with the specified id or {@code null} if no such thread exists
+diff --git a/src/main/java/org/apache/commons/lang3/builder/EqualsBuilder.java b/src/main/java/org/apache/commons/lang3/builder/EqualsBuilder.java
+index 30c8a1a19cb1475aa45a2f81411d573a48dcaba8..6bd1058427c9f36a12606021b750f40171f7276a 100644
+--- a/src/main/java/org/apache/commons/lang3/builder/EqualsBuilder.java
++++ b/src/main/java/org/apache/commons/lang3/builder/EqualsBuilder.java
+@@ -267,7 +267,7 @@ public class EqualsBuilder implements Builder<Boolean> {
+      * @return EqualsBuilder - used to chain calls.
+      * @since 3.8
+      */
+-    public EqualsBuilder setBypassReflectionClasses(List<Class<?>> bypassReflectionClasses) {
++    public EqualsBuilder setBypassReflectionClasses(final List<Class<?>> bypassReflectionClasses) {
+         this.bypassReflectionClasses = bypassReflectionClasses;
+         return this;
+     }
+diff --git a/src/main/java/org/apache/commons/lang3/builder/HashCodeBuilder.java b/src/main/java/org/apache/commons/lang3/builder/HashCodeBuilder.java
+index 90d4fabbad21072d4e047599deb6adcee2ca8711..c430b4060a4426b1251c2a67d2c1345da9d90b0d 100644
+--- a/src/main/java/org/apache/commons/lang3/builder/HashCodeBuilder.java
++++ b/src/main/java/org/apache/commons/lang3/builder/HashCodeBuilder.java
+@@ -959,7 +959,7 @@ public class HashCodeBuilder implements Builder<Integer> {
+ 
+     /**
+      * <p>
+-     * Return the computed {@code hashCode}.
++     * Returns the computed {@code hashCode}.
+      * </p>
+      *
+      * @return {@code hashCode} based on the fields appended
+diff --git a/src/main/java/org/apache/commons/lang3/compare/ComparableUtils.java b/src/main/java/org/apache/commons/lang3/compare/ComparableUtils.java
+index 4312af7ef17eba98ca5ac3ee1a7eaad73d295129..c757a525407f96bb01be0ad8d40d0848401f9923 100644
+--- a/src/main/java/org/apache/commons/lang3/compare/ComparableUtils.java
++++ b/src/main/java/org/apache/commons/lang3/compare/ComparableUtils.java
+@@ -31,6 +31,8 @@ public class ComparableUtils {
+ 
+     /**
+      * Provides access to the available methods
++     *
++     * @param <A> the type of objects that this object may be compared against.
+      */
+     public static class ComparableCheckBuilder<A extends Comparable<A>> {
+ 
+diff --git a/src/main/java/org/apache/commons/lang3/concurrent/AtomicSafeInitializer.java b/src/main/java/org/apache/commons/lang3/concurrent/AtomicSafeInitializer.java
+index 0b1a500c890c0c18b1ce0204f07cb4b93db2c83b..5bc91f1ad0268a9cfb7c749665b31325b7f7ff02 100644
+--- a/src/main/java/org/apache/commons/lang3/concurrent/AtomicSafeInitializer.java
++++ b/src/main/java/org/apache/commons/lang3/concurrent/AtomicSafeInitializer.java
+@@ -62,7 +62,7 @@ public abstract class AtomicSafeInitializer<T> implements
+     private final AtomicReference<T> reference = new AtomicReference<>();
+ 
+     /**
+-     * Get (and initialize, if not initialized yet) the required object
++     * Gets (and initialize, if not initialized yet) the required object
+      *
+      * @return lazily initialized object
+      * @throws ConcurrentException if the initialization of the object causes an
+diff --git a/src/main/java/org/apache/commons/lang3/event/EventListenerSupport.java b/src/main/java/org/apache/commons/lang3/event/EventListenerSupport.java
+index 18133753d69b72c65253c8397aadb9f6f46dc168..499032d1dbd59786d72a482baa0d80d21f7c8d78 100644
+--- a/src/main/java/org/apache/commons/lang3/event/EventListenerSupport.java
++++ b/src/main/java/org/apache/commons/lang3/event/EventListenerSupport.java
+@@ -225,7 +225,7 @@ public class EventListenerSupport<L> implements Serializable {
+     }
+ 
+     /**
+-     * Get an array containing the currently registered listeners.
++     * Gets an array containing the currently registered listeners.
+      * Modification to this array's elements will have no effect on the
+      * {@link EventListenerSupport} instance.
+      * @return L[]
+diff --git a/src/main/java/org/apache/commons/lang3/reflect/MethodUtils.java b/src/main/java/org/apache/commons/lang3/reflect/MethodUtils.java
+index 905052ff110634d0593a42a7280357bf5b3eb751..8ebc790a46d886a9a34eaef3f3aed2f2f2ebac66 100644
+--- a/src/main/java/org/apache/commons/lang3/reflect/MethodUtils.java
++++ b/src/main/java/org/apache/commons/lang3/reflect/MethodUtils.java
+@@ -785,7 +785,7 @@ public class MethodUtils {
+     }
+ 
+     /**
+-     * Get the hierarchy of overridden methods down to {@code result} respecting generics.
++     * Gets the hierarchy of overridden methods down to {@code result} respecting generics.
+      * @param method lowest to consider
+      * @param interfacesBehavior whether to search interfaces, {@code null} {@code implies} false
+      * @return Set&lt;Method&gt; in ascending order from sub- to superclass
+diff --git a/src/main/java/org/apache/commons/lang3/reflect/TypeUtils.java b/src/main/java/org/apache/commons/lang3/reflect/TypeUtils.java
+index e1bbd0e8c638d5823dee1de2a0fa3cbe194c575a..eced4e08294b76f52ced42b846723436b58ac812 100644
+--- a/src/main/java/org/apache/commons/lang3/reflect/TypeUtils.java
++++ b/src/main/java/org/apache/commons/lang3/reflect/TypeUtils.java
+@@ -1338,7 +1338,7 @@ public class TypeUtils {
+     }
+ 
+     /**
+-     * Get the array component type of {@code type}.
++     * Gets the array component type of {@code type}.
+      * @param type the type to be checked
+      * @return component type or null if type is not an array type
+      */
+@@ -1354,7 +1354,7 @@ public class TypeUtils {
+     }
+ 
+     /**
+-     * Get a type representing {@code type} with variable assignments "unrolled."
++     * Gets a type representing {@code type} with variable assignments "unrolled."
+      *
+      * @param typeArguments as from {@link TypeUtils#getTypeArguments(Type, Class)}
+      * @param type the type to unroll variable assignments for
+@@ -1540,7 +1540,7 @@ public class TypeUtils {
+     }
+ 
+     /**
+-     * Get a {@link WildcardTypeBuilder}.
++     * Gets a {@link WildcardTypeBuilder}.
+      * @return {@link WildcardTypeBuilder}
+      * @since 3.2
+      */
+diff --git a/src/main/java/org/apache/commons/lang3/text/ExtendedMessageFormat.java b/src/main/java/org/apache/commons/lang3/text/ExtendedMessageFormat.java
+index f52097bea743a39b0efb3626e115c92bbc402b51..6b921b87a824a40ac0c2d9c5e1d6d21c5c2c3412 100644
+--- a/src/main/java/org/apache/commons/lang3/text/ExtendedMessageFormat.java
++++ b/src/main/java/org/apache/commons/lang3/text/ExtendedMessageFormat.java
+@@ -295,7 +295,7 @@ public class ExtendedMessageFormat extends MessageFormat {
+     }
+ 
+     /**
+-     * Get a custom format from a format description.
++     * Gets a custom format from a format description.
+      *
+      * @param desc String
+      * @return Format
+diff --git a/src/main/java/org/apache/commons/lang3/text/FormattableUtils.java b/src/main/java/org/apache/commons/lang3/text/FormattableUtils.java
+index dd95561e9e61a24a421542a806f6bb5952b88a6d..a98299c89a0a4aa11f3ebfa2e3d789e8906f60d2 100644
+--- a/src/main/java/org/apache/commons/lang3/text/FormattableUtils.java
++++ b/src/main/java/org/apache/commons/lang3/text/FormattableUtils.java
+@@ -59,7 +59,7 @@ public class FormattableUtils {
+ 
+     //-----------------------------------------------------------------------
+     /**
+-     * Get the default formatted representation of the specified
++     * Gets the default formatted representation of the specified
+      * {@code Formattable}.
+      *
+      * @param formattable  the instance to convert to a string, not null
+diff --git a/src/main/java/org/apache/commons/lang3/time/DateUtils.java b/src/main/java/org/apache/commons/lang3/time/DateUtils.java
+index 2d651cf0a7cc4a8e356f6cbb73c65c5cf3dc67db..9fa254981ed7394a49fe50218c562a6f5a152395 100644
+--- a/src/main/java/org/apache/commons/lang3/time/DateUtils.java
++++ b/src/main/java/org/apache/commons/lang3/time/DateUtils.java
+@@ -1821,7 +1821,7 @@ public class DateUtils {
+         }
+ 
+         /**
+-         * Return the next calendar in the iteration
++         * Returns the next calendar in the iteration
+          *
+          * @return Object calendar for the next date
+          */
+diff --git a/src/main/java/org/apache/commons/lang3/time/FastDateParser.java b/src/main/java/org/apache/commons/lang3/time/FastDateParser.java
+index 79fb37d7d8897f59eb8e53e2f232afdca67f4d3f..233cf3f675ceeecdc36d36a127bb0c3c423ed86c 100644
+--- a/src/main/java/org/apache/commons/lang3/time/FastDateParser.java
++++ b/src/main/java/org/apache/commons/lang3/time/FastDateParser.java
+@@ -451,7 +451,7 @@ public class FastDateParser implements DateParser, Serializable {
+     }
+ 
+     /**
+-     * Get the short and long values displayed for a field
++     * Gets the short and long values displayed for a field
+      * @param cal The calendar to obtain the short and long values
+      * @param locale The locale of display names
+      * @param field The field of interest
+@@ -606,7 +606,7 @@ public class FastDateParser implements DateParser, Serializable {
+     private static final ConcurrentMap<Locale, Strategy>[] caches = new ConcurrentMap[Calendar.FIELD_COUNT];
+ 
+     /**
+-     * Get a cache of Strategies for a particular field
++     * Gets a cache of Strategies for a particular field
+      * @param field The Calendar field
+      * @return a cache of Locale to Strategy
+      */
+@@ -620,7 +620,7 @@ public class FastDateParser implements DateParser, Serializable {
+     }
+ 
+     /**
+-     * Construct a Strategy that parses a Text field
++     * Constructs a Strategy that parses a Text field
+      * @param field The Calendar field
+      * @param definingCalendar The calendar to obtain the short and long values
+      * @return a TextStrategy for the field and Locale
+@@ -648,7 +648,7 @@ public class FastDateParser implements DateParser, Serializable {
+         private final String formatField;
+ 
+         /**
+-         * Construct a Strategy that ensures the formatField has literal text
++         * Constructs a Strategy that ensures the formatField has literal text
+          * @param formatField The literal text to match
+          */
+         CopyQuotedStrategy(final String formatField) {
+@@ -690,7 +690,7 @@ public class FastDateParser implements DateParser, Serializable {
+         private final Map<String, Integer> lKeyValues;
+ 
+         /**
+-         * Construct a Strategy that parses a Text field
++         * Constructs a Strategy that parses a Text field
+          * @param field  The Calendar field
+          * @param definingCalendar  The Calendar to use
+          * @param locale  The Locale to use
+@@ -730,7 +730,7 @@ public class FastDateParser implements DateParser, Serializable {
+         private final int field;
+ 
+         /**
+-         * Construct a Strategy that parses a Number field
++         * Constructs a Strategy that parses a Number field
+          * @param field The Calendar field
+          */
+         NumberStrategy(final int field) {
+@@ -833,7 +833,7 @@ public class FastDateParser implements DateParser, Serializable {
+         private static final int ID = 0;
+ 
+         /**
+-         * Construct a Strategy that parses a TimeZone
++         * Constructs a Strategy that parses a TimeZone
+          * @param locale The Locale
+          */
+         TimeZoneStrategy(final Locale locale) {
+@@ -912,7 +912,7 @@ public class FastDateParser implements DateParser, Serializable {
+         // Z, +hh, -hh, +hhmm, -hhmm, +hh:mm or -hh:mm
+ 
+         /**
+-         * Construct a Strategy that parses a TimeZone
++         * Constructs a Strategy that parses a TimeZone
+          * @param pattern The Pattern
+          */
+         ISO8601TimeZoneStrategy(final String pattern) {
+diff --git a/src/main/java/org/apache/commons/lang3/tuple/Pair.java b/src/main/java/org/apache/commons/lang3/tuple/Pair.java
+index fda2618e8f65627def2dc3e6dbe6c039995f23ac..62889bd8d56d7017ef195890289df76c657dcfe3 100644
+--- a/src/main/java/org/apache/commons/lang3/tuple/Pair.java
++++ b/src/main/java/org/apache/commons/lang3/tuple/Pair.java
+@@ -55,7 +55,7 @@ public abstract class Pair<L, R> implements Map.Entry<L, R>, Comparable<Pair<L,
+         }
+ 
+         @Override
+-        public R setValue(R value) {
++        public R setValue(final R value) {
+             return null;
+         }
+ 

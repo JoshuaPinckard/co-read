@@ -1,0 +1,95 @@
+diff --git a/CHANGES.rst b/CHANGES.rst
+index 55578c60e8600fda0f6badc852162bfac56b1e44..b65e91df4864cbf1b5be52f0eb7028e832561682 100644
+--- a/CHANGES.rst
++++ b/CHANGES.rst
+@@ -1,5 +1,18 @@
+ .. currentmodule:: click
+ 
++Version 8.0.3
++-------------
++
++Released 2021-10-10
++
++-   Fix issue with ``Path(resolve_path=True)`` type creating invalid
++    paths. :issue:`2088`
++-   Importing ``readline`` does not cause the ``confirm()`` prompt to
++    disappear when pressing backspace. :issue:`2092`
++-   Any default values injected by ``invoke()`` are cast to the
++    corresponding parameter's type. :issue:`2089, 2090`
++
++
+ Version 8.0.2
+ -------------
+ 
+diff --git a/src/click/__init__.py b/src/click/__init__.py
+index 478e744ba4be0a0133b0769d55447b9420f011ae..a2ed5d135734e00738982c93b39cc2c2455c1ad1 100644
+--- a/src/click/__init__.py
++++ b/src/click/__init__.py
+@@ -72,4 +72,4 @@ from .utils import get_os_args as get_os_args
+ from .utils import get_text_stream as get_text_stream
+ from .utils import open_file as open_file
+ 
+-__version__ = "8.0.2"
++__version__ = "8.0.3"
+diff --git a/src/click/core.py b/src/click/core.py
+index 77a536aa314485db12ddc3041a20214c1b8d8459..f2263544ada420d646f74b2e1e4bf16d1d125192 100644
+--- a/src/click/core.py
++++ b/src/click/core.py
+@@ -739,7 +739,9 @@ class Context:
+ 
+             for param in other_cmd.params:
+                 if param.name not in kwargs and param.expose_value:
+-                    kwargs[param.name] = param.get_default(ctx)  # type: ignore
++                    kwargs[param.name] = param.type_cast_value(  # type: ignore
++                        ctx, param.get_default(ctx)
++                    )
+ 
+             # Track all kwargs as params, so that forward() will pass
+             # them on in subsequent calls.
+diff --git a/src/click/termui.py b/src/click/termui.py
+index a023f42bdf3b3303e1f6ffe15f9dbb0ee664c86e..cf8d5f132e74967b7a67fd9e8c83287739832c38 100644
+--- a/src/click/termui.py
++++ b/src/click/termui.py
+@@ -231,8 +231,10 @@ def confirm(
+         try:
+             # Write the prompt separately so that we get nice
+             # coloring through colorama on Windows
+-            echo(prompt, nl=False, err=err)
+-            value = visible_prompt_func("").lower().strip()
++            echo(prompt.rstrip(" "), nl=False, err=err)
++            # Echo a space to stdout to work around an issue where
++            # readline causes backspace to clear the whole line.
++            value = visible_prompt_func(" ").lower().strip()
+         except (KeyboardInterrupt, EOFError):
+             raise Abort() from None
+         if value in ("y", "yes"):
+diff --git a/src/click/types.py b/src/click/types.py
+index a7de43b09a7d68a8a23d64df88d514e20eab9316..103d21829d0fc7a4b7210d602580d12d58c6186a 100644
+--- a/src/click/types.py
++++ b/src/click/types.py
+@@ -836,20 +836,11 @@ class Path(ParamType):
+ 
+         if not is_dash:
+             if self.resolve_path:
+-                # Get the absolute directory containing the path.
+-                dir_ = os.path.dirname(os.path.abspath(rv))
+-
+-                # Resolve a symlink. realpath on Windows Python < 3.9
+-                # doesn't resolve symlinks. This might return a relative
+-                # path even if the path to the link is absolute.
+-                if os.path.islink(rv):
+-                    rv = os.readlink(rv)
+-
+-                # Join dir_ with the resolved symlink if the resolved
+-                # path is relative. This will make it relative to the
+-                # original containing directory.
+-                if not os.path.isabs(rv):
+-                    rv = os.path.join(dir_, rv)
++                # os.path.realpath doesn't resolve symlinks on Windows
++                # until Python 3.8. Use pathlib for now.
++                import pathlib
++
++                rv = os.fsdecode(pathlib.Path(rv).resolve())
+ 
+             try:
+                 st = os.stat(rv)

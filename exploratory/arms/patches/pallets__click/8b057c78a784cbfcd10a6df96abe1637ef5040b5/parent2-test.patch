@@ -1,0 +1,23 @@
+diff --git a/tests/test_arguments.py b/tests/test_arguments.py
+index 13d1c250dc2639b9b1a6fc78c88e92759ac13998..8e15d24cce0289a862cfae0940f15686cc9ba8ce 100644
+--- a/tests/test_arguments.py
++++ b/tests/test_arguments.py
+@@ -72,6 +72,18 @@ def test_file_args(runner):
+         assert result.exit_code == 0
+ 
+ 
++def test_stdout_default(runner):
++    @click.command()
++    @click.argument('output', type=click.File('w'), default='-')
++    def inout(output):
++        output.write('Foo bar baz\n')
++        output.flush()
++
++    result = runner.invoke(inout, [])
++    assert not result.exception
++    assert result.output == 'Foo bar baz\n'
++
++
+ def test_nargs_envvar(runner):
+     @click.command()
+     @click.option('--arg', nargs=-1)

@@ -1,0 +1,746 @@
+diff --git a/CHANGES.rst b/CHANGES.rst
+index 866d0a6dc75bcbf03cd8631795c93e6eb1cb3008..c1ab945f8caccd9833367df420d2e922575e3d2e 100644
+--- a/CHANGES.rst
++++ b/CHANGES.rst
+@@ -1,6 +1,18 @@
+ Click Changelog
+ ===============
+ 
++Version 8.0
++-----------
++
++Unreleased
++
++-   Adds a repr to Command, showing the command name for friendlier debugging. (`#1267`_, `#1295`_)
++-   Add support for distinguishing the source of a command line parameter. (`#1264`_, `#1329`_)
++
++.. _#1267: https://github.com/pallets/click/issues/1267
++.. _#1295: https://github.com/pallets/click/pull/1295
++.. _#1264: https://github.com/pallets/click/issues/1264
++.. _#1329: https://github.com/pallets/click/pull/1329
+ 
+ Version 7.1
+ -----------
+@@ -497,7 +509,7 @@ Version 3.0
+ 
+ (codename "clonk clonk", released on August 12th 2014)
+ 
+-- formatter now no longer attempts to accomodate for terminals
++- formatter now no longer attempts to accommodate for terminals
+   smaller than 50 characters.  If that happens it just assumes
+   a minimal width.
+ - added a way to not swallow exceptions in the test system.
+@@ -506,7 +518,7 @@ Version 3.0
+ - the CLI runner's result object now has a traceback attached.
+ - improved automatic short help detection to work better with
+   dots that do not terminate sentences.
+-- when definining options without actual valid option strings
++- when defining options without actual valid option strings
+   now, Click will give an error message instead of silently
+   passing.  This should catch situations where users wanted to
+   created arguments instead of options.
+diff --git a/CODE_OF_CONDUCT.md b/CODE_OF_CONDUCT.md
+new file mode 100644
+index 0000000000000000000000000000000000000000..f4ba197dec599c24887a90b70d54ee41fb7cf79d
+--- /dev/null
++++ b/CODE_OF_CONDUCT.md
+@@ -0,0 +1,76 @@
++# Contributor Covenant Code of Conduct
++
++## Our Pledge
++
++In the interest of fostering an open and welcoming environment, we as
++contributors and maintainers pledge to making participation in our project and
++our community a harassment-free experience for everyone, regardless of age, body
++size, disability, ethnicity, sex characteristics, gender identity and expression,
++level of experience, education, socio-economic status, nationality, personal
++appearance, race, religion, or sexual identity and orientation.
++
++## Our Standards
++
++Examples of behavior that contributes to creating a positive environment
++include:
++
++* Using welcoming and inclusive language
++* Being respectful of differing viewpoints and experiences
++* Gracefully accepting constructive criticism
++* Focusing on what is best for the community
++* Showing empathy towards other community members
++
++Examples of unacceptable behavior by participants include:
++
++* The use of sexualized language or imagery and unwelcome sexual attention or
++ advances
++* Trolling, insulting/derogatory comments, and personal or political attacks
++* Public or private harassment
++* Publishing others' private information, such as a physical or electronic
++ address, without explicit permission
++* Other conduct which could reasonably be considered inappropriate in a
++ professional setting
++
++## Our Responsibilities
++
++Project maintainers are responsible for clarifying the standards of acceptable
++behavior and are expected to take appropriate and fair corrective action in
++response to any instances of unacceptable behavior.
++
++Project maintainers have the right and responsibility to remove, edit, or
++reject comments, commits, code, wiki edits, issues, and other contributions
++that are not aligned to this Code of Conduct, or to ban temporarily or
++permanently any contributor for other behaviors that they deem inappropriate,
++threatening, offensive, or harmful.
++
++## Scope
++
++This Code of Conduct applies both within project spaces and in public spaces
++when an individual is representing the project or its community. Examples of
++representing a project or community include using an official project e-mail
++address, posting via an official social media account, or acting as an appointed
++representative at an online or offline event. Representation of a project may be
++further defined and clarified by project maintainers.
++
++## Enforcement
++
++Instances of abusive, harassing, or otherwise unacceptable behavior may be
++reported by contacting the project team at report@palletsprojects.com. All
++complaints will be reviewed and investigated and will result in a response that
++is deemed necessary and appropriate to the circumstances. The project team is
++obligated to maintain confidentiality with regard to the reporter of an incident.
++Further details of specific enforcement policies may be posted separately.
++
++Project maintainers who do not follow or enforce the Code of Conduct in good
++faith may face temporary or permanent repercussions as determined by other
++members of the project's leadership.
++
++## Attribution
++
++This Code of Conduct is adapted from the [Contributor Covenant][homepage], version 1.4,
++available at https://www.contributor-covenant.org/version/1/4/code-of-conduct.html
++
++[homepage]: https://www.contributor-covenant.org
++
++For answers to common questions about this code of conduct, see
++https://www.contributor-covenant.org/faq
+diff --git a/CONTRIBUTING.rst b/CONTRIBUTING.rst
+index 4db9b65a3a17eb3d3f0e98982c2f7ce41072e26f..07bef59cd769e281273ea2b8ee5167dc7dd04a30 100644
+--- a/CONTRIBUTING.rst
++++ b/CONTRIBUTING.rst
+@@ -10,8 +10,10 @@ Support questions
+ Please, don't use the issue tracker for this. Check whether the
+ ``#pocoo`` IRC channel on Freenode can help with your issue. If your problem
+ is not strictly Click-specific, ``#python`` on Freenode is generally more
+-active.  `StackOverflow <https://stackoverflow.com/>`_ is also worth
+-considering.
++active.  Also try searching or asking on `Stack Overflow`_ with the
++``python-click`` tag. 
++
++.. _Stack Overflow: https://stackoverflow.com/questions/tagged/python-click?sort=votes
+ 
+ Reporting issues
+ ================
+diff --git a/LICENSE.rst b/LICENSE.rst
+index 87ce152aafba76f0200eae513fd0541f4f767acd..d12a849186982399c537c5b9a8fd77bf2edd5eab 100644
+--- a/LICENSE.rst
++++ b/LICENSE.rst
+@@ -1,39 +1,28 @@
+-Copyright © 2014 by the Pallets team.
++Copyright 2014 Pallets
+ 
+-Some rights reserved.
++Redistribution and use in source and binary forms, with or without
++modification, are permitted provided that the following conditions are
++met:
+ 
+-Redistribution and use in source and binary forms of the software as
+-well as documentation, with or without modification, are permitted
+-provided that the following conditions are met:
+-
+--   Redistributions of source code must retain the above copyright
++1.  Redistributions of source code must retain the above copyright
+     notice, this list of conditions and the following disclaimer.
+ 
+--   Redistributions in binary form must reproduce the above copyright
++2.  Redistributions in binary form must reproduce the above copyright
+     notice, this list of conditions and the following disclaimer in the
+     documentation and/or other materials provided with the distribution.
+ 
+--   Neither the name of the copyright holder nor the names of its
++3.  Neither the name of the copyright holder nor the names of its
+     contributors may be used to endorse or promote products derived from
+     this software without specific prior written permission.
+ 
+-THIS SOFTWARE AND DOCUMENTATION IS PROVIDED BY THE COPYRIGHT HOLDERS AND
+-CONTRIBUTORS "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING,
+-BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND
+-FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE
+-COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT,
+-INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT
+-NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF
+-USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON
+-ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+-(INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
+-THIS SOFTWARE AND DOCUMENTATION, EVEN IF ADVISED OF THE POSSIBILITY OF
+-SUCH DAMAGE.
+-
+-----
+-
+-Click uses parts of optparse written by Gregory P. Ward and maintained
+-by the Python Software Foundation. This is limited to code in parser.py.
+-
+-Copyright © 2001-2006 Gregory P. Ward. All rights reserved.
+-Copyright © 2002-2006 Python Software Foundation. All rights reserved.
++THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
++"AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
++LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A
++PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
++HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
++SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED
++TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR
++PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF
++LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING
++NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
++SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+diff --git a/click/__init__.py b/click/__init__.py
+index 0fa5e3b81a2ddbf7b6dcead4a9e3aefe5b63ebbf..30303219c19c874e9515ee5a5a5b97b4b0593798 100644
+--- a/click/__init__.py
++++ b/click/__init__.py
+@@ -14,7 +14,7 @@ composable.
+ 
+ # Core classes
+ from .core import Context, BaseCommand, Command, MultiCommand, Group, \
+-     CommandCollection, Parameter, Option, Argument
++     CommandCollection, Parameter, Option, Argument, ParameterSource
+ 
+ # Globals
+ from .globals import get_current_context
+@@ -94,4 +94,4 @@ __all__ = [
+ disable_unicode_literals_warning = False
+ 
+ 
+-__version__ = '7.1.dev'
++__version__ = '8.0.dev'
+diff --git a/click/_bashcomplete.py b/click/_bashcomplete.py
+index a5f1084c9abb4ffd848b2f59f1bffd714713062c..0015b174d2ccf972e20ca361721fe7c13ec60f97 100644
+--- a/click/_bashcomplete.py
++++ b/click/_bashcomplete.py
+@@ -130,7 +130,7 @@ def start_of_option(param_str):
+ def is_incomplete_option(all_args, cmd_param):
+     """
+     :param all_args: the full original list of args supplied
+-    :param cmd_param: the current command paramter
++    :param cmd_param: the current command parameter
+     :return: whether or not the last option declaration (i.e. starts "-" or "--") is incomplete and
+     corresponds to this cmd_param. In other words whether this cmd_param option can still accept
+     values
+diff --git a/click/_compat.py b/click/_compat.py
+index 937e2301d493591b5620ed1efb100098741c8c4e..2be0a67e28088b16ad1aca92c1110b63a122ac71 100644
+--- a/click/_compat.py
++++ b/click/_compat.py
+@@ -155,7 +155,6 @@ class _FixupStream(object):
+ 
+ if PY2:
+     text_type = unicode
+-    bytes = str
+     raw_input = raw_input
+     string_types = (str, unicode)
+     int_types = (int, long)
+@@ -259,7 +258,6 @@ if PY2:
+             value = value.decode(get_filesystem_encoding(), 'replace')
+         return value
+ else:
+-    import io
+     text_type = str
+     raw_input = input
+     string_types = (str,)
+@@ -308,7 +306,7 @@ else:
+ 
+     def _find_binary_writer(stream):
+         # We need to figure out if the given stream is already binary.
+-        # This can happen because the official docs recommend detatching
++        # This can happen because the official docs recommend detaching
+         # the streams to get binary streams.  Some code might do this, so
+         # we need to deal with this case explicitly.
+         if _is_binary_writer(stream, False):
+diff --git a/click/_termui_impl.py b/click/_termui_impl.py
+index 00a8e5ef1ca817fea214246d8f045d45ae5edde3..d025452e73874319a03a7b9f75f879092c75a456 100644
+--- a/click/_termui_impl.py
++++ b/click/_termui_impl.py
+@@ -16,7 +16,7 @@ import sys
+ import time
+ import math
+ import contextlib
+-from ._compat import _default_text_stdout, range_type, PY2, isatty, \
++from ._compat import _default_text_stdout, range_type, isatty, \
+      open_stream, strip_ansi, term_len, get_best_encoding, WIN, int_types, \
+      CYGWIN
+ from .utils import echo
+@@ -436,17 +436,20 @@ class Editor(object):
+         import tempfile
+ 
+         text = text or ''
+-        if text and not text.endswith('\n'):
++        binary_data = type(text) in [bytes, bytearray]
++
++        if not binary_data and text and not text.endswith('\n'):
+             text += '\n'
+ 
+         fd, name = tempfile.mkstemp(prefix='editor-', suffix=self.extension)
+         try:
+-            if WIN:
+-                encoding = 'utf-8-sig'
+-                text = text.replace('\n', '\r\n')
+-            else:
+-                encoding = 'utf-8'
+-            text = text.encode(encoding)
++            if not binary_data:
++                if WIN:
++                    encoding = 'utf-8-sig'
++                    text = text.replace('\n', '\r\n')
++                else:
++                    encoding = 'utf-8'
++                text = text.encode(encoding)
+ 
+             f = os.fdopen(fd, 'wb')
+             f.write(text)
+@@ -464,7 +467,10 @@ class Editor(object):
+                 rv = f.read()
+             finally:
+                 f.close()
+-            return rv.decode('utf-8-sig').replace('\r\n', '\n')
++            if binary_data:
++                return rv
++            else:
++                return rv.decode('utf-8-sig').replace('\r\n', '\n')
+         finally:
+             os.unlink(name)
+ 
+diff --git a/click/_winconsole.py b/click/_winconsole.py
+index bbb080ddaea2b271522cfc7a15329d7259056c56..5c68ce21df1f7145f8b200d40987f7ef8877ae52 100644
+--- a/click/_winconsole.py
++++ b/click/_winconsole.py
+@@ -6,7 +6,7 @@
+ # There are some general differences in regards to how this works
+ # compared to the original patches as we do not need to patch
+ # the entire interpreter but just work in our little world of
+-# echo and prmopt.
++# echo and prompt.
+ 
+ import io
+ import os
+@@ -81,7 +81,7 @@ class Py_buffer(ctypes.Structure):
+ 
+ 
+ # On PyPy we cannot get buffers so our ability to operate here is
+-# serverly limited.
++# severely limited.
+ if pythonapi is None:
+     get_buffer = None
+ else:
+diff --git a/click/core.py b/click/core.py
+index 7a1e3422bec8c06344985fc6e3cdf2cd488d0ab4..eb124b43bab5e20967198b8f97cc5daceecc4bfb 100644
+--- a/click/core.py
++++ b/click/core.py
+@@ -129,6 +129,35 @@ def iter_params_for_processing(invocation_order, declaration_order):
+ 
+     return sorted(declaration_order, key=sort_key)
+ 
++class ParameterSource(object):
++    """This is an enum that indicates the source of a command line parameter.
++
++    The enum has one of the following values: COMMANDLINE,
++    ENVIRONMENT, DEFAULT, DEFAULT_MAP.  The DEFAULT indicates that the
++    default value in the decorator was used.  This class should be
++    converted to an enum when Python 2 support is dropped.
++    """
++
++    COMMANDLINE = "COMMANDLINE"
++    ENVIRONMENT = "ENVIRONMENT"
++    DEFAULT = "DEFAULT"
++    DEFAULT_MAP = "DEFAULT_MAP"
++    
++    VALUES = {COMMANDLINE, ENVIRONMENT, DEFAULT, DEFAULT_MAP}
++    
++    @classmethod
++    def validate(cls, value):
++        """Validate that the specified value is a valid enum.
++
++        This method will raise a ValueError if the value is
++        not a valid enum.
++
++        :param value: the string value to verify
++        """
++        if value not in cls.VALUES:
++            raise ValueError("Invalid ParameterSource value: '{}'. Valid "
++                             "values are: {}".format(value, ",".join(cls.VALUES)))
++
+ 
+ class Context(object):
+     """The context is a special internal object that holds state relevant
+@@ -339,7 +368,8 @@ class Context(object):
+ 
+         self._close_callbacks = []
+         self._depth = 0
+-
++        self._source_by_paramname = {}
++        
+     def __enter__(self):
+         self._depth += 1
+         push_context(self)
+@@ -572,6 +602,35 @@ class Context(object):
+ 
+         return self.invoke(cmd, **kwargs)
+ 
++    def set_parameter_source(self, name, source):
++        """Set the source of a parameter.
++
++        This indicates the location from which the value of the
++        parameter was obtained.
++
++        :param name: the name of the command line parameter
++        :param source: the source of the command line parameter, which
++                       should be a valid ParameterSource value
++        """
++        ParameterSource.validate(source)
++        self._source_by_paramname[name] = source
++
++    def get_parameter_source(self, name):
++        """Get the source of a parameter.
++
++        This indicates the location from which the value of the
++        parameter was obtained.  This can be useful for determining
++        when a user specified an option on the command line that is
++        the same as the default.  In that case, the source would be
++        ParameterSource.COMMANDLINE, even though the value of the
++        parameter was equivalent to the default.
++
++        :param name: the name of the command line parameter
++        :returns: the source
++        :rtype: ParameterSource
++        """
++        return self._source_by_paramname[name]
++
+ 
+ class BaseCommand(object):
+     """The base command implements the minimal API contract of commands.
+@@ -771,6 +830,8 @@ class Command(BaseCommand):
+ 
+     .. versionchanged:: 2.0
+        Added the `context_settings` parameter.
++    .. versionchanged:: 8.0
++       Added repr showing the command name
+ 
+     :param name: the name of the command to use unless a group overrides it.
+     :param context_settings: an optional dictionary with defaults that are
+@@ -815,6 +876,9 @@ class Command(BaseCommand):
+         self.hidden = hidden
+         self.deprecated = deprecated
+ 
++    def __repr__(self):
++        return '<%s %s>' % (self.__class__.__name__, self.name)
++
+     def get_usage(self, ctx):
+         formatter = ctx.make_formatter()
+         self.format_usage(ctx, formatter)
+@@ -1317,7 +1381,8 @@ class Parameter(object):
+     :param nargs: the number of arguments to match.  If not ``1`` the return
+                   value is a tuple instead of single value.  The default for
+                   nargs is ``1`` (except if the type is a tuple, then it's
+-                  the arity of the tuple).
++                  the arity of the tuple). If ``nargs=-1``, all remaining
++                  parameters are collected.
+     :param metavar: how the value is represented in the help page.
+     :param expose_value: if this is `True` then the value is passed onwards
+                          to the command callback and stored on the context,
+@@ -1389,10 +1454,15 @@ class Parameter(object):
+ 
+     def consume_value(self, ctx, opts):
+         value = opts.get(self.name)
++        source = ParameterSource.COMMANDLINE
+         if value is None:
+             value = self.value_from_envvar(ctx)
++            source = ParameterSource.ENVIRONMENT
+         if value is None:
+             value = ctx.lookup_default(self.name)
++            source = ParameterSource.DEFAULT_MAP
++        if value is not None:
++            ctx.set_parameter_source(self.name, source)
+         return value
+ 
+     def type_cast_value(self, ctx, value):
+@@ -1439,6 +1509,8 @@ class Parameter(object):
+ 
+         if value is None and not ctx.resilient_parsing:
+             value = self.get_default(ctx)
++            if value is not None:
++                ctx.set_parameter_source(self.name, ParameterSource.DEFAULT)
+ 
+         if self.required and self.value_is_missing(value):
+             raise MissingParameter(ctx=ctx, param=self)
+diff --git a/click/parser.py b/click/parser.py
+index 1c3ae9c8efd453aecda98026cf65208b789b948b..3d8bf69025ef6aa0de95ab0f33366baf78eac665 100644
+--- a/click/parser.py
++++ b/click/parser.py
+@@ -16,6 +16,11 @@ generated and optparse in the stdlib uses gettext for no good reason
+ and might cause us issues.
+ """
+ 
++# This code uses parts of optparse written by Gregory P. Ward and
++# maintained by the Python Software Foundation.
++# Copyright 2001-2006 Gregory P. Ward
++# Copyright 2002-2006 Python Software Foundation
++
+ import re
+ from collections import deque
+ from .exceptions import UsageError, NoSuchOption, BadOptionUsage, \
+diff --git a/docs/advanced.rst b/docs/advanced.rst
+index f8c0ed8e07352d1a6f3732f93e1b99f9d7073850..7cdb7ef0c1c6921b8cf873c7e3f68dd4213c3b2e 100644
+--- a/docs/advanced.rst
++++ b/docs/advanced.rst
+@@ -377,3 +377,30 @@ do.  However if you do use this for threading you need to be very careful
+ as the vast majority of the context is not thread safe!  You are only
+ allowed to read from the context, but not to perform any modifications on
+ it.
++
++
++Detecting the Source of a Parameter
++-----------------------------------
++
++In some situations it's helpful to understand whether or not an option
++or parameter came from the command line, the environment, the default
++value, or the default_map. The :meth:`Context.get_parameter_source`
++method can be used to find this out.
++
++.. click:example::
++
++    @click.command()
++    @click.argument('port', nargs=1, default=8080, envvar="PORT")
++    @click.pass_context
++    def cli(ctx, port):
++        source = ctx.get_parameter_source("port")
++        click.echo("Port came from {}".format(source))
++
++.. click:run::
++
++    invoke(cli, prog_name='cli', args=['8080'])
++    println()
++    invoke(cli, prog_name='cli', args=[], env={"PORT": "8080"})
++    println()
++    invoke(cli, prog_name='cli', args=[])
++    println()
+diff --git a/docs/bashcomplete.rst b/docs/bashcomplete.rst
+index bff38fac6d137f9e284cb960ff00e3e75635aeaf..fd642099eb05f4ceda30943de39b004da7dfedfa 100644
+--- a/docs/bashcomplete.rst
++++ b/docs/bashcomplete.rst
+@@ -29,7 +29,7 @@ least a dash has been provided.  Example::
+     --deep     --help     --rev      --shallow  -r
+ 
+ Additionally, custom suggestions can be provided for arguments and options with
+-the ``autocompletion`` parameter.  ``autocompletion`` should a callback function
++the ``autocompletion`` parameter.  ``autocompletion`` should be a callback function
+ that returns a list of strings. This is useful when the suggestions need to be
+ dynamically generated at bash completion time. The callback function will be
+ passed 3 keyword arguments:
+diff --git a/docs/commands.rst b/docs/commands.rst
+index 53834f7546ff83e5aa8a0d43157155b0cf555d4e..717d2233d51fb047ea06530e93ae8378181b2e66 100644
+--- a/docs/commands.rst
++++ b/docs/commands.rst
+@@ -287,7 +287,7 @@ Multi Command Chaining
+ Sometimes it is useful to be allowed to invoke more than one subcommand in
+ one go.  For instance if you have installed a setuptools package before
+ you might be familiar with the ``setup.py sdist bdist_wheel upload``
+-command chain which invokes ``dist`` before ``bdist_wheel`` before
++command chain which invokes ``sdist`` before ``bdist_wheel`` before
+ ``upload``.  Starting with Click 3.0 this is very simple to implement.
+ All you have to do is to pass ``chain=True`` to your multicommand:
+ 
+diff --git a/docs/quickstart.rst b/docs/quickstart.rst
+index 4479d0eafa39e6d74f9cd0257a35f67799931c0f..ccec1492b9a4cc4c0ad95ff9a7071b38ddc5cab7 100644
+--- a/docs/quickstart.rst
++++ b/docs/quickstart.rst
+@@ -32,12 +32,7 @@ install separate copies of Python, but it does provide a clever way to
+ keep different project environments isolated.  Let's see how virtualenv
+ works.
+ 
+-If you are on Mac OS X or Linux, chances are that one of the following two
+-commands will work for you::
+-
+-    $ sudo easy_install virtualenv
+-
+-or even better::
++If you are on Mac OS X or Linux::
+ 
+     $ sudo pip install virtualenv
+ 
+diff --git a/docs/setuptools.rst b/docs/setuptools.rst
+index 870591afbee8086ae76304881235715e9db56322..62999d731cbf4961c78afceec4b5ec1d6028997e 100644
+--- a/docs/setuptools.rst
++++ b/docs/setuptools.rst
+@@ -43,7 +43,9 @@ Introduction
+ To bundle your script with setuptools, all you need is the script in a
+ Python package and a ``setup.py`` file.
+ 
+-Imagine this directory structure::
++Imagine this directory structure:
++
++.. code-block:: text
+ 
+     yourscript.py
+     setup.py
+@@ -59,21 +61,24 @@ Contents of ``yourscript.py``:
+         """Example script."""
+         click.echo('Hello World!')
+ 
+-Contents of ``setup.py``::
++Contents of ``setup.py``:
++
++.. code-block:: python
+ 
+     from setuptools import setup
+ 
+     setup(
+         name='yourscript',
+-        version='0.1',
++        version='0.1.0',
+         py_modules=['yourscript'],
+         install_requires=[
+             'Click',
+         ],
+-        entry_points='''
+-            [console_scripts]
+-            yourscript=yourscript:cli
+-        ''',
++        entry_points={
++            'console_scripts': [
++                'yourscript = yourscript:cli',
++            ],
++        },
+     )
+ 
+ The magic is in the ``entry_points`` parameter.  Below
+@@ -88,7 +93,9 @@ Testing The Script
+ ------------------
+ 
+ To test the script, you can make a new virtualenv and then install your
+-package::
++package:
++
++.. code-block:: console
+ 
+     $ virtualenv venv
+     $ . venv/bin/activate
+@@ -105,35 +112,42 @@ Scripts in Packages
+ 
+ If your script is growing and you want to switch over to your script being
+ contained in a Python package the changes necessary are minimal.  Let's
+-assume your directory structure changed to this::
++assume your directory structure changed to this:
+ 
+-    yourpackage/
+-        __init__.py
+-        main.py
+-        utils.py
+-        scripts/
++.. code-block:: text
++
++    project/
++        yourpackage/
+             __init__.py
+-            yourscript.py
++            main.py
++            utils.py
++            scripts/
++                __init__.py
++                yourscript.py
++        setup.py
+ 
+ In this case instead of using ``py_modules`` in your ``setup.py`` file you
+ can use ``packages`` and the automatic package finding support of
+ setuptools.  In addition to that it's also recommended to include other
+ package data.
+ 
+-These would be the modified contents of ``setup.py``::
++These would be the modified contents of ``setup.py``:
++
++.. code-block:: python
+ 
+     from setuptools import setup, find_packages
+ 
+     setup(
+         name='yourpackage',
+-        version='0.1',
++        version='0.1.0',
+         packages=find_packages(),
+         include_package_data=True,
+         install_requires=[
+             'Click',
+         ],
+-        entry_points='''
+-            [console_scripts]
+-            yourscript=yourpackage.scripts.yourscript:cli
+-        ''',
++        entry_points={
++            'console_scripts': [
++                'yourscript = yourpackage.scripts.yourscript:cli',
++            ],
++        },
+     )
+diff --git a/docs/why.rst b/docs/why.rst
+index 76b84e71c088e11d2234bec86403c8f8c3db322d..5b029616a2440d73970770119658eb2951f23d52 100644
+--- a/docs/why.rst
++++ b/docs/why.rst
+@@ -22,11 +22,11 @@ There are many alternatives to Click and you can have a look at them if
+ you enjoy them better.  The obvious ones are ``optparse`` and ``argparse``
+ from the standard library.
+ 
+-Click is actually implemented as a wrapper around a mild fork of
+-``optparse`` and does not implement any parsing itself.  The reason it's
+-not based on ``argparse`` is that ``argparse`` does not allow proper
+-nesting of commands by design and has some deficiencies when it comes to
+-POSIX compliant argument handling.
++Click actually implements its own parsing of arguments and does not use
++``optparse`` or ``argparse`` following the ``optparse`` parsing behavior.
++The reason it's not based on ``argparse`` is that ``argparse`` does not
++allow proper nesting of commands by design and has some deficiencies when
++it comes to POSIX compliant argument handling.
+ 
+ Click is designed to be fun to work with and at the same time not stand in
+ your way.  It's not overly flexible either.  Currently, for instance, it
+@@ -101,7 +101,7 @@ following:
+ -   Click has a strong understanding of what types are and can give the user
+     consistent error messages if something goes wrong.  A subcommand
+     written by a different developer will not suddenly die with a
+-    different error messsage because it's manually handled.
++    different error message because it's manually handled.
+ -   Click has enough meta information available for its whole program
+     that it can evolve over time to improve the user experience without
+     forcing developers to adjust their programs.  For instance, if Click
+diff --git a/setup.py b/setup.py
+index 1c18dc7843d4f12e3b8eb836018f11570a6a8972..6f8fbde0aff095aaec751816fb56e18a780a9a33 100644
+--- a/setup.py
++++ b/setup.py
+@@ -6,10 +6,10 @@ with io.open("README.rst", "rt", encoding="utf8") as f:
+     readme = f.read()
+ 
+ with io.open("click/__init__.py", "rt", encoding="utf8") as f:
+-    version = re.search(r"__version__ = \'(.*?)\'", f.read()).group(1)
++    version = re.search(r"__version__ = '(.*?)'", f.read()).group(1)
+ 
+ setup(
+-    name="Click",
++    name="click",
+     version=version,
+     url="https://palletsprojects.com/p/click/",
+     project_urls={
+@@ -17,10 +17,10 @@ setup(
+         "Code": "https://github.com/pallets/click",
+         "Issue tracker": "https://github.com/pallets/click/issues",
+     },
+-    license="BSD",
++    license="BSD-3-Clause",
+     author="Armin Ronacher",
+     author_email="armin.ronacher@active-4.com",
+-    maintainer="Pallets Team",
++    maintainer="Pallets",
+     maintainer_email="contact@palletsprojects.com",
+     description="Composable command line interface toolkit",
+     long_description=readme,

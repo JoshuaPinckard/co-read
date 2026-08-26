@@ -1,0 +1,324 @@
+diff --git a/.flake8 b/.flake8
+new file mode 100644
+index 0000000000000000000000000000000000000000..c53acebcfc5e0ab7f6113f7ab11376959d57bf46
+--- /dev/null
++++ b/.flake8
+@@ -0,0 +1,25 @@
++[flake8]
++extend-select =
++    # bugbear
++    B
++    # bugbear opinions
++    B9
++    # implicit str concat
++    ISC
++extend-ignore =
++    # slice notation whitespace, invalid
++    E203
++    # line length, handled by bugbear B950
++    E501
++    # bare except, handled by bugbear B001
++    E722
++    # zip with strict=, requires python >= 3.10
++    B905
++    # string formatting opinion, B028 renamed to B907
++    B028
++    B907
++# up to 88 allowed by bugbear B950
++max-line-length = 80
++per-file-ignores =
++    # __init__ exports names
++    src/click/__init__.py: F401
+diff --git a/.github/workflows/publish.yaml b/.github/workflows/publish.yaml
+index 0ed495591672e9e0a68988dafefbebf9044adc24..a19312e4e3532af03474ade915adef47f077460c 100644
+--- a/.github/workflows/publish.yaml
++++ b/.github/workflows/publish.yaml
+@@ -9,8 +9,8 @@ jobs:
+     outputs:
+       hash: ${{ steps.hash.outputs.hash }}
+     steps:
+-      - uses: actions/checkout@ac593985615ec2ede58e132d2e21d2b1cbd6127c
+-      - uses: actions/setup-python@5ccb29d8773c3f3f653e1705f474dfaa8a06a912
++      - uses: actions/checkout@8e5e7e5ab8b370d6c329ec480221332ada57f0ab
++      - uses: actions/setup-python@57ded4d7d5e986d7296eab16560982c6dd7c923b
+         with:
+           python-version: '3.x'
+           cache: 'pip'
+@@ -33,7 +33,7 @@ jobs:
+       id-token: write
+       contents: write
+     # Can't pin with hash due to how this workflow works.
+-    uses: slsa-framework/slsa-github-generator/.github/workflows/generator_generic_slsa3.yml@v1.4.0
++    uses: slsa-framework/slsa-github-generator/.github/workflows/generator_generic_slsa3.yml@v1.5.0
+     with:
+       base64-subjects: ${{ needs.build.outputs.hash }}
+   create-release:
+@@ -61,12 +61,12 @@ jobs:
+     steps:
+       - uses: actions/download-artifact@9bc31d5ccc31df68ecc42ccf4149144866c47d8a
+       # Try uploading to Test PyPI first, in case something fails.
+-      - uses: pypa/gh-action-pypi-publish@c7f29f7adef1a245bd91520e94867e5c6eedddcc
++      - uses: pypa/gh-action-pypi-publish@0bf742be3ebe032c25dd15117957dc15d0cfc38d
+         with:
+           password: ${{ secrets.TEST_PYPI_TOKEN }}
+           repository_url: https://test.pypi.org/legacy/
+           packages_dir: artifact/
+-      - uses: pypa/gh-action-pypi-publish@c7f29f7adef1a245bd91520e94867e5c6eedddcc
++      - uses: pypa/gh-action-pypi-publish@0bf742be3ebe032c25dd15117957dc15d0cfc38d
+         with:
+           password: ${{ secrets.PYPI_TOKEN }}
+           packages_dir: artifact/
+diff --git a/.github/workflows/tests.yaml b/.github/workflows/tests.yaml
+index a85f6c7b3a4f00d866d58d4619df051db09b3ad2..21311794679d2e8cebb5c571a0ba578dd5cdf873 100644
+--- a/.github/workflows/tests.yaml
++++ b/.github/workflows/tests.yaml
+@@ -35,8 +35,8 @@ jobs:
+           - {name: 'PyPy', python: 'pypy-3.9', os: ubuntu-latest, tox: pypy39}
+           - {name: Typing, python: '3.11', os: ubuntu-latest, tox: typing}
+     steps:
+-      - uses: actions/checkout@ac593985615ec2ede58e132d2e21d2b1cbd6127c
+-      - uses: actions/setup-python@5ccb29d8773c3f3f653e1705f474dfaa8a06a912
++      - uses: actions/checkout@8e5e7e5ab8b370d6c329ec480221332ada57f0ab
++      - uses: actions/setup-python@57ded4d7d5e986d7296eab16560982c6dd7c923b
+         with:
+           python-version: ${{ matrix.python }}
+           cache: 'pip'
+@@ -47,10 +47,10 @@ jobs:
+           pip install -U setuptools
+           python -m pip install -U pip
+       - name: cache mypy
+-        uses: actions/cache@58c146cc91c5b9e778e71775dfe9bf1442ad9a12
++        uses: actions/cache@88522ab9f39a2ea568f7027eddc7d8d8bc9d59c8
+         with:
+           path: ./.mypy_cache
+-          key: mypy|${{ matrix.python }}|${{ hashFiles('setup.cfg') }}
++          key: mypy|${{ matrix.python }}|${{ hashFiles('pyproject.toml') }}
+         if: matrix.tox == 'typing'
+       - run: pip install tox
+       - run: tox run -e ${{ matrix.tox }}
+diff --git a/CHANGES.rst b/CHANGES.rst
+index c60c12a59d7c96f8ca57fe0f145a0bc2492925d6..39ad6ee8d5e1b82d6ffd546abe8fc4d5e5e08294 100644
+--- a/CHANGES.rst
++++ b/CHANGES.rst
+@@ -1,5 +1,14 @@
+ .. currentmodule:: click
+ 
++Version 8.2.0
++-------------
++
++Unreleased
++
++-   Use modern packaging metadata with ``pyproject.toml`` instead of ``setup.cfg``.
++    :pr:`326`
++
++
+ Version 8.1.4
+ -------------
+ 
+diff --git a/pyproject.toml b/pyproject.toml
+new file mode 100644
+index 0000000000000000000000000000000000000000..36ed838ba8943df6eed5beb01d246b51a3d656e1
+--- /dev/null
++++ b/pyproject.toml
+@@ -0,0 +1,63 @@
++[project]
++name = "click"
++description = "Composable command line interface toolkit"
++readme = "README.rst"
++license = {text = "BSD-3-Clause"}
++maintainers = [{name = "Pallets", email = "contact@palletsprojects.com"}]
++authors = [{name = "Armin Ronacher", email = "armin.ronacher@active-4.com"}]
++classifiers = [
++    "Development Status :: 5 - Production/Stable",
++    "Intended Audience :: Developers",
++    "License :: OSI Approved :: BSD License",
++    "Operating System :: OS Independent",
++    "Programming Language :: Python",
++]
++requires-python = ">=3.7"
++dependencies = [
++    "colorama; platform_system == 'Windows'",
++    "importlib-metadata; python_version < '3.8'",
++]
++dynamic = ["version"]
++
++[project.urls]
++Donate = "https://palletsprojects.com/donate"
++Documentation = "https://click.palletsprojects.com/"
++Changes = "https://click.palletsprojects.com/changes/"
++"Source Code" = "https://github.com/pallets/click/"
++"Issue Tracker" = "https://github.com/pallets/click/issues/"
++Twitter = "https://twitter.com/PalletsTeam"
++Chat = "https://discord.gg/pallets"
++
++[build-system]
++requires = ["setuptools"]
++build-backend = "setuptools.build_meta"
++
++[tool.setuptools.dynamic]
++version = {attr = "click.__version__"}
++
++[tool.pytest.ini_options]
++testpaths = ["tests"]
++filterwarnings = ["error"]
++
++[tool.coverage.run]
++branch = true
++source = ["click", "tests"]
++
++[tool.coverage.paths]
++source = ["src", "*/site-packages"]
++
++[tool.mypy]
++python_version = "3.7"
++files = ["src/click"]
++show_error_codes = true
++pretty = true
++strict = true
++local_partial_types = true
++warn_unreachable = true
++
++[[tool.mypy.overrides]]
++module = [
++    "colorama.*",
++    "importlib_metadata.*"
++]
++ignore_missing_imports = true
+diff --git a/setup.cfg b/setup.cfg
+deleted file mode 100644
+index 0d9b7ac51383eda5ca3573214427611fcee50d22..0000000000000000000000000000000000000000
+--- a/setup.cfg
++++ /dev/null
+@@ -1,107 +0,0 @@
+-[metadata]
+-name = click
+-version = attr: click.__version__
+-url = https://palletsprojects.com/p/click/
+-project_urls =
+-    Donate = https://palletsprojects.com/donate
+-    Documentation = https://click.palletsprojects.com/
+-    Changes = https://click.palletsprojects.com/changes/
+-    Source Code = https://github.com/pallets/click/
+-    Issue Tracker = https://github.com/pallets/click/issues/
+-    Twitter = https://twitter.com/PalletsTeam
+-    Chat = https://discord.gg/pallets
+-license = BSD-3-Clause
+-license_files = LICENSE.rst
+-author = Armin Ronacher
+-author_email = armin.ronacher@active-4.com
+-maintainer = Pallets
+-maintainer_email = contact@palletsprojects.com
+-description = Composable command line interface toolkit
+-long_description = file: README.rst
+-long_description_content_type = text/x-rst
+-classifiers =
+-    Development Status :: 5 - Production/Stable
+-    Intended Audience :: Developers
+-    License :: OSI Approved :: BSD License
+-    Operating System :: OS Independent
+-    Programming Language :: Python
+-
+-[options]
+-packages = find:
+-package_dir = = src
+-include_package_data = True
+-python_requires = >= 3.7
+-# Dependencies are in setup.py for GitHub's dependency graph.
+-
+-[options.packages.find]
+-where = src
+-
+-[tool:pytest]
+-testpaths = tests
+-filterwarnings =
+-    error
+-
+-[coverage:run]
+-branch = True
+-source =
+-    click
+-    tests
+-
+-[coverage:paths]
+-source =
+-    src
+-    */site-packages
+-
+-[flake8]
+-# B = bugbear
+-# E = pycodestyle errors
+-# F = flake8 pyflakes
+-# W = pycodestyle warnings
+-# B9 = bugbear opinions
+-# ISC = implicit str concat
+-select = B, E, F, W, B9, ISC
+-ignore =
+-    # slice notation whitespace, invalid
+-    E203
+-    # line length, handled by bugbear B950
+-    E501
+-    # bare except, handled by bugbear B001
+-    E722
+-    # bin op line break, invalid
+-    W503
+-    # zip with strict=, requires python >= 3.10
+-    B905
+-    # string formatting opinion, B028 renamed to B907
+-    B028
+-    B907
+-# up to 88 allowed by bugbear B950
+-max-line-length = 80
+-per-file-ignores =
+-    # __init__ exports names
+-    src/click/__init__.py: F401
+-
+-[mypy]
+-files = src/click
+-python_version = 3.7
+-show_error_codes = True
+-disallow_subclassing_any = True
+-disallow_untyped_calls = True
+-disallow_untyped_defs = True
+-disallow_incomplete_defs = True
+-disallow_any_generics = True
+-check_untyped_defs = True
+-no_implicit_optional = True
+-local_partial_types = True
+-no_implicit_reexport = True
+-strict_equality = True
+-warn_redundant_casts = True
+-warn_unused_configs = True
+-warn_unused_ignores = True
+-warn_return_any = True
+-warn_unreachable = True
+-
+-[mypy-colorama.*]
+-ignore_missing_imports = True
+-
+-[mypy-importlib_metadata.*]
+-ignore_missing_imports = True
+diff --git a/setup.py b/setup.py
+deleted file mode 100644
+index 0a74d4144abfd4ecfe747bd1ea0780c4979fd07f..0000000000000000000000000000000000000000
+--- a/setup.py
++++ /dev/null
+@@ -1,9 +0,0 @@
+-from setuptools import setup
+-
+-setup(
+-    name="click",
+-    install_requires=[
+-        "colorama; platform_system == 'Windows'",
+-        "importlib-metadata; python_version < '3.8'",
+-    ],
+-)
+diff --git a/src/click/__init__.py b/src/click/__init__.py
+index ea214e32071069b6d432b30a204ad95d39e5e444..a6e979972980c29d5feddb1fd9b621979bd1487b 100644
+--- a/src/click/__init__.py
++++ b/src/click/__init__.py
+@@ -70,4 +70,4 @@ from .utils import get_binary_stream as get_binary_stream
+ from .utils import get_text_stream as get_text_stream
+ from .utils import open_file as open_file
+ 
+-__version__ = "8.1.4.dev0"
++__version__ = "8.2.0.dev0"

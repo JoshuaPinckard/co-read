@@ -1,0 +1,25 @@
+diff --git a/src/changes/changes.xml b/src/changes/changes.xml
+index c038ad8b5e7a67d5ee9ece51cc7de3eb937435e6..5bd9589fd5b8c93eb81e95e0787f920c39e2fac0 100644
+--- a/src/changes/changes.xml
++++ b/src/changes/changes.xml
+@@ -46,6 +46,7 @@ The <action> type attribute can be add,update,fix,remove.
+   <body>
+ 
+   <release version="3.5" date="tba" description="tba">
++    <action issue="LANG-1261" type="fix" dev="pschumacher" >ArrayUtils.contains returns false for instances of subtypes</action>
+     <action issue="LANG-1230" type="fix" dev="pschumacher" due-to="Philippe Marschall">Remove unnecessary synchronization from registry lookup in EqualsBuilder and HashCodeBuilder</action>
+     <action issue="LANG-1224" type="add" dev="pschumacher" due-to="Caleb Cushing">Extend RandomStringUtils with methods that generate strings between a min and max length</action>
+     <action issue="LANG-1214" type="fix" dev="pschumacher" due-to="Henry Tung">Handle "void" in ClassUtils.getClass()</action>
+diff --git a/src/main/java/org/apache/commons/lang3/ArrayUtils.java b/src/main/java/org/apache/commons/lang3/ArrayUtils.java
+index 1d33fcf130bd0e4f619e4181073b7526a8bcb1f3..b2f019eda7969f096f83775c1e2952baad0c016f 100644
+--- a/src/main/java/org/apache/commons/lang3/ArrayUtils.java
++++ b/src/main/java/org/apache/commons/lang3/ArrayUtils.java
+@@ -3184,7 +3184,7 @@ public class ArrayUtils {
+                     return i;
+                 }
+             }
+-        } else if (array.getClass().getComponentType().isInstance(objectToFind)) {
++        } else {
+             for (int i = startIndex; i < array.length; i++) {
+                 if (objectToFind.equals(array[i])) {
+                     return i;

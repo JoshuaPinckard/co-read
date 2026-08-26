@@ -1,0 +1,5322 @@
+diff --git a/tests/conftest.py b/tests/conftest.py
+index 3aac93359e84505db4f045a41f3ffab3dbab5eb7..9440804feb3b22cb4a28f1f9eaa7f6e1fb0ce049 100644
+--- a/tests/conftest.py
++++ b/tests/conftest.py
+@@ -1,8 +1,8 @@
+-from click.testing import CliRunner
+-
+ import pytest
+ 
++from click.testing import CliRunner
++
+ 
+-@pytest.fixture(scope='function')
++@pytest.fixture(scope="function")
+ def runner(request):
+     return CliRunner()
+diff --git a/tests/test_arguments.py b/tests/test_arguments.py
+index 65d9a1e03f781ed966786fd69ea97b8292bbc057..0b510c00b8aeed45f6af134b17148f08ce44916b 100644
+--- a/tests/test_arguments.py
++++ b/tests/test_arguments.py
+@@ -1,52 +1,46 @@
+ # -*- coding: utf-8 -*-
++import sys
++
+ import pytest
++
+ import click
+-import sys
+-from click._compat import PY2, text_type
++from click._compat import PY2
++from click._compat import text_type
+ 
+ 
+ def test_nargs_star(runner):
+     @click.command()
+-    @click.argument('src', nargs=-1)
+-    @click.argument('dst')
++    @click.argument("src", nargs=-1)
++    @click.argument("dst")
+     def copy(src, dst):
+-        click.echo('src=%s' % '|'.join(src))
+-        click.echo('dst=%s' % dst)
++        click.echo("src={}".format("|".join(src)))
++        click.echo("dst={}".format(dst))
+ 
+-    result = runner.invoke(copy, ['foo.txt', 'bar.txt', 'dir'])
++    result = runner.invoke(copy, ["foo.txt", "bar.txt", "dir"])
+     assert not result.exception
+-    assert result.output.splitlines() == [
+-        'src=foo.txt|bar.txt',
+-        'dst=dir',
+-    ]
++    assert result.output.splitlines() == ["src=foo.txt|bar.txt", "dst=dir"]
+ 
+ 
+ def test_nargs_default(runner):
+-    try:
++    with pytest.raises(TypeError, match="nargs=-1"):
++
+         @click.command()
+-        @click.argument('src', nargs=-1, default=42)
++        @click.argument("src", nargs=-1, default=42)
+         def copy(src):
+             pass
+-    except TypeError as e:
+-        assert 'nargs=-1' in str(e)
+-    else:
+-        assert False
+ 
+ 
+ def test_nargs_tup(runner):
+     @click.command()
+-    @click.argument('name', nargs=1)
+-    @click.argument('point', nargs=2, type=click.INT)
++    @click.argument("name", nargs=1)
++    @click.argument("point", nargs=2, type=click.INT)
+     def copy(name, point):
+-        click.echo('name=%s' % name)
+-        click.echo('point=%d/%d' % point)
++        click.echo("name={}".format(name))
++        click.echo("point={0[0]}/{0[1]}".format(point))
+ 
+-    result = runner.invoke(copy, ['peter', '1', '2'])
++    result = runner.invoke(copy, ["peter", "1", "2"])
+     assert not result.exception
+-    assert result.output.splitlines() == [
+-        'name=peter',
+-        'point=1/2',
+-    ]
++    assert result.output.splitlines() == ["name=peter", "point=1/2"]
+ 
+ 
+ def test_nargs_tup_composite(runner):
+@@ -58,57 +52,61 @@ def test_nargs_tup_composite(runner):
+     ]
+ 
+     for opts in variations:
++
+         @click.command()
+-        @click.argument('item', **opts)
++        @click.argument("item", **opts)
+         def copy(item):
+-            click.echo('name=%s id=%d' % item)
++            click.echo("name={0[0]} id={0[1]:d}".format(item))
+ 
+-        result = runner.invoke(copy, ['peter', '1'])
++        result = runner.invoke(copy, ["peter", "1"])
+         assert not result.exception
+-        assert result.output.splitlines() == [
+-            'name=peter id=1',
+-        ]
++        assert result.output.splitlines() == ["name=peter id=1"]
+ 
+ 
+ def test_nargs_err(runner):
+     @click.command()
+-    @click.argument('x')
++    @click.argument("x")
+     def copy(x):
+         click.echo(x)
+ 
+-    result = runner.invoke(copy, ['foo'])
++    result = runner.invoke(copy, ["foo"])
+     assert not result.exception
+-    assert result.output == 'foo\n'
++    assert result.output == "foo\n"
+ 
+-    result = runner.invoke(copy, ['foo', 'bar'])
++    result = runner.invoke(copy, ["foo", "bar"])
+     assert result.exit_code == 2
+-    assert 'Got unexpected extra argument (bar)' in result.output
++    assert "Got unexpected extra argument (bar)" in result.output
+ 
+ 
+ def test_bytes_args(runner, monkeypatch):
+     @click.command()
+-    @click.argument('arg')
++    @click.argument("arg")
+     def from_bytes(arg):
+-        assert isinstance(arg, text_type), "UTF-8 encoded argument should be implicitly converted to Unicode"
++        assert isinstance(
++            arg, text_type
++        ), "UTF-8 encoded argument should be implicitly converted to Unicode"
+ 
+     # Simulate empty locale environment variables
+     if PY2:
+-        monkeypatch.setattr(sys.stdin, 'encoding', 'ANSI_X3.4-1968')
+-        monkeypatch.setattr(sys, 'getfilesystemencoding', lambda: 'ANSI_X3.4-1968')
+-        monkeypatch.setattr(sys, 'getdefaultencoding', lambda: 'ascii')
++        monkeypatch.setattr(sys.stdin, "encoding", "ANSI_X3.4-1968")
++        monkeypatch.setattr(sys, "getfilesystemencoding", lambda: "ANSI_X3.4-1968")
++        monkeypatch.setattr(sys, "getdefaultencoding", lambda: "ascii")
+     else:
+-        monkeypatch.setattr(sys.stdin, 'encoding', 'utf-8')
+-        monkeypatch.setattr(sys, 'getfilesystemencoding', lambda: 'utf-8')
+-        monkeypatch.setattr(sys, 'getdefaultencoding', lambda: 'utf-8')
++        monkeypatch.setattr(sys.stdin, "encoding", "utf-8")
++        monkeypatch.setattr(sys, "getfilesystemencoding", lambda: "utf-8")
++        monkeypatch.setattr(sys, "getdefaultencoding", lambda: "utf-8")
+ 
+-    runner.invoke(from_bytes, [u'Something outside of ASCII range: 林'.encode('UTF-8')],
+-            catch_exceptions=False)
++    runner.invoke(
++        from_bytes,
++        [u"Something outside of ASCII range: 林".encode("UTF-8")],
++        catch_exceptions=False,
++    )
+ 
+ 
+ def test_file_args(runner):
+     @click.command()
+-    @click.argument('input', type=click.File('rb'))
+-    @click.argument('output', type=click.File('wb'))
++    @click.argument("input", type=click.File("rb"))
++    @click.argument("output", type=click.File("wb"))
+     def inout(input, output):
+         while True:
+             chunk = input.read(1024)
+@@ -117,111 +115,111 @@ def test_file_args(runner):
+             output.write(chunk)
+ 
+     with runner.isolated_filesystem():
+-        result = runner.invoke(inout, ['-', 'hello.txt'], input='Hey!')
+-        assert result.output == ''
++        result = runner.invoke(inout, ["-", "hello.txt"], input="Hey!")
++        assert result.output == ""
+         assert result.exit_code == 0
+-        with open('hello.txt', 'rb') as f:
+-            assert f.read() == b'Hey!'
++        with open("hello.txt", "rb") as f:
++            assert f.read() == b"Hey!"
+ 
+-        result = runner.invoke(inout, ['hello.txt', '-'])
+-        assert result.output == 'Hey!'
++        result = runner.invoke(inout, ["hello.txt", "-"])
++        assert result.output == "Hey!"
+         assert result.exit_code == 0
+ 
+ 
+ def test_path_args(runner):
+     @click.command()
+-    @click.argument('input', type=click.Path(dir_okay=False, allow_dash=True))
++    @click.argument("input", type=click.Path(dir_okay=False, allow_dash=True))
+     def foo(input):
+         click.echo(input)
+ 
+-    result = runner.invoke(foo, ['-'])
+-    assert result.output == '-\n'
++    result = runner.invoke(foo, ["-"])
++    assert result.output == "-\n"
+     assert result.exit_code == 0
+ 
+ 
+ def test_file_atomics(runner):
+     @click.command()
+-    @click.argument('output', type=click.File('wb', atomic=True))
++    @click.argument("output", type=click.File("wb", atomic=True))
+     def inout(output):
+-        output.write(b'Foo bar baz\n')
++        output.write(b"Foo bar baz\n")
+         output.flush()
+-        with open(output.name, 'rb') as f:
++        with open(output.name, "rb") as f:
+             old_content = f.read()
+-            assert old_content == b'OLD\n'
++            assert old_content == b"OLD\n"
+ 
+     with runner.isolated_filesystem():
+-        with open('foo.txt', 'wb') as f:
+-            f.write(b'OLD\n')
+-        result = runner.invoke(inout, ['foo.txt'], input='Hey!',
+-        catch_exceptions=False)
+-        assert result.output == ''
++        with open("foo.txt", "wb") as f:
++            f.write(b"OLD\n")
++        result = runner.invoke(inout, ["foo.txt"], input="Hey!", catch_exceptions=False)
++        assert result.output == ""
+         assert result.exit_code == 0
+-        with open('foo.txt', 'rb') as f:
+-            assert f.read() == b'Foo bar baz\n'
++        with open("foo.txt", "rb") as f:
++            assert f.read() == b"Foo bar baz\n"
+ 
+ 
+ def test_stdout_default(runner):
+     @click.command()
+-    @click.argument('output', type=click.File('w'), default='-')
++    @click.argument("output", type=click.File("w"), default="-")
+     def inout(output):
+-        output.write('Foo bar baz\n')
++        output.write("Foo bar baz\n")
+         output.flush()
+ 
+     result = runner.invoke(inout, [])
+     assert not result.exception
+-    assert result.output == 'Foo bar baz\n'
++    assert result.output == "Foo bar baz\n"
+ 
+ 
+ def test_nargs_envvar(runner):
+     @click.command()
+-    @click.option('--arg', nargs=2)
++    @click.option("--arg", nargs=2)
+     def cmd(arg):
+-        click.echo('|'.join(arg))
++        click.echo("|".join(arg))
+ 
+-    result = runner.invoke(cmd, [], auto_envvar_prefix='TEST',
+-                           env={'TEST_ARG': 'foo bar'})
++    result = runner.invoke(
++        cmd, [], auto_envvar_prefix="TEST", env={"TEST_ARG": "foo bar"}
++    )
+     assert not result.exception
+-    assert result.output == 'foo|bar\n'
++    assert result.output == "foo|bar\n"
+ 
+     @click.command()
+-    @click.option('--arg', envvar='X', nargs=2)
++    @click.option("--arg", envvar="X", nargs=2)
+     def cmd(arg):
+-        click.echo('|'.join(arg))
++        click.echo("|".join(arg))
+ 
+-    result = runner.invoke(cmd, [], env={'X': 'foo bar'})
++    result = runner.invoke(cmd, [], env={"X": "foo bar"})
+     assert not result.exception
+-    assert result.output == 'foo|bar\n'
++    assert result.output == "foo|bar\n"
+ 
+ 
+ def test_empty_nargs(runner):
+     @click.command()
+-    @click.argument('arg', nargs=-1)
++    @click.argument("arg", nargs=-1)
+     def cmd(arg):
+-        click.echo('arg:' + '|'.join(arg))
++        click.echo("arg:{}".format("|".join(arg)))
+ 
+     result = runner.invoke(cmd, [])
+     assert result.exit_code == 0
+-    assert result.output == 'arg:\n'
++    assert result.output == "arg:\n"
+ 
+     @click.command()
+-    @click.argument('arg', nargs=-1, required=True)
++    @click.argument("arg", nargs=-1, required=True)
+     def cmd2(arg):
+-        click.echo('arg:' + '|'.join(arg))
++        click.echo("arg:{}".format("|".join(arg)))
+ 
+     result = runner.invoke(cmd2, [])
+     assert result.exit_code == 2
+-    assert 'Missing argument "ARG..."' in result.output
++    assert "Missing argument 'ARG...'" in result.output
+ 
+ 
+ def test_missing_arg(runner):
+     @click.command()
+-    @click.argument('arg')
++    @click.argument("arg")
+     def cmd(arg):
+-        click.echo('arg:' + arg)
++        click.echo("arg:{}".format(arg))
+ 
+     result = runner.invoke(cmd, [])
+     assert result.exit_code == 2
+-    assert 'Missing argument "ARG".' in result.output
++    assert "Missing argument 'ARG'." in result.output
+ 
+ 
+ def test_missing_argument_string_cast():
+@@ -235,94 +233,83 @@ def test_missing_argument_string_cast():
+ 
+ def test_implicit_non_required(runner):
+     @click.command()
+-    @click.argument('f', default='test')
++    @click.argument("f", default="test")
+     def cli(f):
+         click.echo(f)
+ 
+     result = runner.invoke(cli, [])
+     assert result.exit_code == 0
+-    assert result.output == 'test\n'
++    assert result.output == "test\n"
+ 
+ 
+ def test_eat_options(runner):
+     @click.command()
+-    @click.option('-f')
+-    @click.argument('files', nargs=-1)
++    @click.option("-f")
++    @click.argument("files", nargs=-1)
+     def cmd(f, files):
+         for filename in files:
+             click.echo(filename)
+         click.echo(f)
+ 
+-    result = runner.invoke(cmd, ['--', '-foo', 'bar'])
+-    assert result.output.splitlines() == [
+-        '-foo',
+-        'bar',
+-        '',
+-    ]
++    result = runner.invoke(cmd, ["--", "-foo", "bar"])
++    assert result.output.splitlines() == ["-foo", "bar", ""]
+ 
+-    result = runner.invoke(cmd, ['-f', '-x', '--', '-foo', 'bar'])
+-    assert result.output.splitlines() == [
+-        '-foo',
+-        'bar',
+-        '-x',
+-    ]
++    result = runner.invoke(cmd, ["-f", "-x", "--", "-foo", "bar"])
++    assert result.output.splitlines() == ["-foo", "bar", "-x"]
+ 
+ 
+ def test_nargs_star_ordering(runner):
+     @click.command()
+-    @click.argument('a', nargs=-1)
+-    @click.argument('b')
+-    @click.argument('c')
++    @click.argument("a", nargs=-1)
++    @click.argument("b")
++    @click.argument("c")
+     def cmd(a, b, c):
+         for arg in (a, b, c):
+             click.echo(arg)
+ 
+-    result = runner.invoke(cmd, ['a', 'b', 'c'])
+-    assert result.output.splitlines() == [
+-        PY2 and "(u'a',)" or "('a',)",
+-        'b',
+-        'c',
+-    ]
++    result = runner.invoke(cmd, ["a", "b", "c"])
++    assert result.output.splitlines() == ["(u'a',)" if PY2 else "('a',)", "b", "c"]
+ 
+ 
+ def test_nargs_specified_plus_star_ordering(runner):
+     @click.command()
+-    @click.argument('a', nargs=-1)
+-    @click.argument('b')
+-    @click.argument('c', nargs=2)
++    @click.argument("a", nargs=-1)
++    @click.argument("b")
++    @click.argument("c", nargs=2)
+     def cmd(a, b, c):
+         for arg in (a, b, c):
+             click.echo(arg)
+ 
+-    result = runner.invoke(cmd, ['a', 'b', 'c', 'd', 'e', 'f'])
++    result = runner.invoke(cmd, ["a", "b", "c", "d", "e", "f"])
+     assert result.output.splitlines() == [
+-        PY2 and "(u'a', u'b', u'c')" or "('a', 'b', 'c')",
+-        'd',
+-        PY2 and "(u'e', u'f')" or "('e', 'f')",
++        "(u'a', u'b', u'c')" if PY2 else "('a', 'b', 'c')",
++        "d",
++        "(u'e', u'f')" if PY2 else "('e', 'f')",
+     ]
+ 
+ 
+ def test_defaults_for_nargs(runner):
+     @click.command()
+-    @click.argument('a', nargs=2, type=int, default=(1, 2))
++    @click.argument("a", nargs=2, type=int, default=(1, 2))
+     def cmd(a):
+         x, y = a
+         click.echo(x + y)
+ 
+     result = runner.invoke(cmd, [])
+-    assert result.output.strip() == '3'
++    assert result.output.strip() == "3"
+ 
+-    result = runner.invoke(cmd, ['3', '4'])
+-    assert result.output.strip() == '7'
++    result = runner.invoke(cmd, ["3", "4"])
++    assert result.output.strip() == "7"
+ 
+-    result = runner.invoke(cmd, ['3'])
++    result = runner.invoke(cmd, ["3"])
+     assert result.exception is not None
+-    assert 'argument a takes 2 values' in result.output
++    assert "argument a takes 2 values" in result.output
+ 
+ 
+ def test_multiple_param_decls_not_allowed(runner):
+     with pytest.raises(TypeError):
++
+         @click.command()
+-        @click.argument('x', click.Choice(['a', 'b']))
++        @click.argument("x", click.Choice(["a", "b"]))
+         def copy(x):
+             click.echo(x)
+diff --git a/tests/test_bashcomplete.py b/tests/test_bashcomplete.py
+index 5eb4068aa70f76c1f7f28ce8da948ec0385a467a..df4ef287cba73256bcc2c167a7939ea27cd158df 100644
+--- a/tests/test_bashcomplete.py
++++ b/tests/test_bashcomplete.py
+@@ -1,5 +1,4 @@
+ # -*- coding: utf-8 -*-
+-
+ import pytest
+ 
+ import click
+@@ -7,94 +6,95 @@ from click._bashcomplete import get_choices
+ 
+ 
+ def choices_without_help(cli, args, incomplete):
+-    completions = get_choices(cli, 'dummy', args, incomplete)
++    completions = get_choices(cli, "dummy", args, incomplete)
+     return [c[0] for c in completions]
+ 
+ 
+ def choices_with_help(cli, args, incomplete):
+-    return list(get_choices(cli, 'dummy', args, incomplete))
++    return list(get_choices(cli, "dummy", args, incomplete))
+ 
+ 
+ def test_single_command():
+     @click.command()
+-    @click.option('--local-opt')
++    @click.option("--local-opt")
+     def cli(local_opt):
+         pass
+ 
+-    assert choices_without_help(cli, [], '-') == ['--local-opt']
+-    assert choices_without_help(cli, [], '') == []
++    assert choices_without_help(cli, [], "-") == ["--local-opt"]
++    assert choices_without_help(cli, [], "") == []
+ 
+ 
+ def test_boolean_flag():
+     @click.command()
+-    @click.option('--shout/--no-shout', default=False)
++    @click.option("--shout/--no-shout", default=False)
+     def cli(local_opt):
+         pass
+ 
+-    assert choices_without_help(cli, [], '-') == ['--shout', '--no-shout']
++    assert choices_without_help(cli, [], "-") == ["--shout", "--no-shout"]
+ 
+ 
+ def test_multi_value_option():
+     @click.group()
+-    @click.option('--pos', nargs=2, type=float)
++    @click.option("--pos", nargs=2, type=float)
+     def cli(local_opt):
+         pass
+ 
+     @cli.command()
+-    @click.option('--local-opt')
++    @click.option("--local-opt")
+     def sub(local_opt):
+         pass
+ 
+-    assert choices_without_help(cli, [], '-') == ['--pos']
+-    assert choices_without_help(cli, ['--pos'], '') == []
+-    assert choices_without_help(cli, ['--pos', '1.0'], '') == []
+-    assert choices_without_help(cli, ['--pos', '1.0', '1.0'], '') == ['sub']
++    assert choices_without_help(cli, [], "-") == ["--pos"]
++    assert choices_without_help(cli, ["--pos"], "") == []
++    assert choices_without_help(cli, ["--pos", "1.0"], "") == []
++    assert choices_without_help(cli, ["--pos", "1.0", "1.0"], "") == ["sub"]
+ 
+ 
+ def test_multi_option():
+     @click.command()
+-    @click.option('--message', '-m', multiple=True)
++    @click.option("--message", "-m", multiple=True)
+     def cli(local_opt):
+         pass
+ 
+-    assert choices_without_help(cli, [], '-') == ['--message', '-m']
+-    assert choices_without_help(cli, ['-m'], '') == []
++    assert choices_without_help(cli, [], "-") == ["--message", "-m"]
++    assert choices_without_help(cli, ["-m"], "") == []
+ 
+ 
+ def test_small_chain():
+     @click.group()
+-    @click.option('--global-opt')
++    @click.option("--global-opt")
+     def cli(global_opt):
+         pass
+ 
+     @cli.command()
+-    @click.option('--local-opt')
++    @click.option("--local-opt")
+     def sub(local_opt):
+         pass
+ 
+-    assert choices_without_help(cli, [], '') == ['sub']
+-    assert choices_without_help(cli, [], '-') == ['--global-opt']
+-    assert choices_without_help(cli, ['sub'], '') == []
+-    assert choices_without_help(cli, ['sub'], '-') == ['--local-opt']
++    assert choices_without_help(cli, [], "") == ["sub"]
++    assert choices_without_help(cli, [], "-") == ["--global-opt"]
++    assert choices_without_help(cli, ["sub"], "") == []
++    assert choices_without_help(cli, ["sub"], "-") == ["--local-opt"]
+ 
+ 
+ def test_long_chain():
+-    @click.group('cli')
+-    @click.option('--cli-opt')
++    @click.group("cli")
++    @click.option("--cli-opt")
+     def cli(cli_opt):
+         pass
+ 
+-    @cli.group('asub')
+-    @click.option('--asub-opt')
++    @cli.group("asub")
++    @click.option("--asub-opt")
+     def asub(asub_opt):
+         pass
+ 
+-    @asub.group('bsub')
+-    @click.option('--bsub-opt')
++    @asub.group("bsub")
++    @click.option("--bsub-opt")
+     def bsub(bsub_opt):
+         pass
+ 
+-    COLORS = ['red', 'green', 'blue']
++    COLORS = ["red", "green", "blue"]
++
+     def get_colors(ctx, args, incomplete):
+         for c in COLORS:
+             if c.startswith(incomplete):
+@@ -105,197 +105,237 @@ def test_long_chain():
+             if incomplete in c:
+                 yield c
+ 
+-    CSUB_OPT_CHOICES = ['foo', 'bar']
+-    CSUB_CHOICES = ['bar', 'baz']
+-    @bsub.command('csub')
+-    @click.option('--csub-opt', type=click.Choice(CSUB_OPT_CHOICES))
+-    @click.option('--csub', type=click.Choice(CSUB_CHOICES))
+-    @click.option('--search-color', autocompletion=search_colors)
+-    @click.argument('color', autocompletion=get_colors)
++    CSUB_OPT_CHOICES = ["foo", "bar"]
++    CSUB_CHOICES = ["bar", "baz"]
++
++    @bsub.command("csub")
++    @click.option("--csub-opt", type=click.Choice(CSUB_OPT_CHOICES))
++    @click.option("--csub", type=click.Choice(CSUB_CHOICES))
++    @click.option("--search-color", autocompletion=search_colors)
++    @click.argument("color", autocompletion=get_colors)
+     def csub(csub_opt, color):
+         pass
+ 
+-    assert choices_without_help(cli, [], '-') == ['--cli-opt']
+-    assert choices_without_help(cli, [], '') == ['asub']
+-    assert choices_without_help(cli, ['asub'], '-') == ['--asub-opt']
+-    assert choices_without_help(cli, ['asub'], '') == ['bsub']
+-    assert choices_without_help(cli, ['asub', 'bsub'], '-') == ['--bsub-opt']
+-    assert choices_without_help(cli, ['asub', 'bsub'], '') == ['csub']
+-    assert choices_without_help(cli, ['asub', 'bsub', 'csub'], '-') == ['--csub-opt', '--csub', '--search-color']
+-    assert choices_without_help(cli, ['asub', 'bsub', 'csub', '--csub-opt'], '') == CSUB_OPT_CHOICES
+-    assert choices_without_help(cli, ['asub', 'bsub', 'csub'], '--csub') == ['--csub-opt', '--csub']
+-    assert choices_without_help(cli, ['asub', 'bsub', 'csub', '--csub'], '') == CSUB_CHOICES
+-    assert choices_without_help(cli, ['asub', 'bsub', 'csub', '--csub-opt'], 'f') == ['foo']
+-    assert choices_without_help(cli, ['asub', 'bsub', 'csub'], '') == COLORS
+-    assert choices_without_help(cli, ['asub', 'bsub', 'csub'], 'b') == ['blue']
+-    assert choices_without_help(cli, ['asub', 'bsub', 'csub', '--search-color'], 'een') == ['green']
++    assert choices_without_help(cli, [], "-") == ["--cli-opt"]
++    assert choices_without_help(cli, [], "") == ["asub"]
++    assert choices_without_help(cli, ["asub"], "-") == ["--asub-opt"]
++    assert choices_without_help(cli, ["asub"], "") == ["bsub"]
++    assert choices_without_help(cli, ["asub", "bsub"], "-") == ["--bsub-opt"]
++    assert choices_without_help(cli, ["asub", "bsub"], "") == ["csub"]
++    assert choices_without_help(cli, ["asub", "bsub", "csub"], "-") == [
++        "--csub-opt",
++        "--csub",
++        "--search-color",
++    ]
++    assert (
++        choices_without_help(cli, ["asub", "bsub", "csub", "--csub-opt"], "")
++        == CSUB_OPT_CHOICES
++    )
++    assert choices_without_help(cli, ["asub", "bsub", "csub"], "--csub") == [
++        "--csub-opt",
++        "--csub",
++    ]
++    assert (
++        choices_without_help(cli, ["asub", "bsub", "csub", "--csub"], "")
++        == CSUB_CHOICES
++    )
++    assert choices_without_help(cli, ["asub", "bsub", "csub", "--csub-opt"], "f") == [
++        "foo"
++    ]
++    assert choices_without_help(cli, ["asub", "bsub", "csub"], "") == COLORS
++    assert choices_without_help(cli, ["asub", "bsub", "csub"], "b") == ["blue"]
++    assert choices_without_help(
++        cli, ["asub", "bsub", "csub", "--search-color"], "een"
++    ) == ["green"]
+ 
+ 
+ def test_chaining():
+-    @click.group('cli', chain=True)
+-    @click.option('--cli-opt')
+-    @click.argument('arg', type=click.Choice(['cliarg1', 'cliarg2']))
++    @click.group("cli", chain=True)
++    @click.option("--cli-opt")
++    @click.argument("arg", type=click.Choice(["cliarg1", "cliarg2"]))
+     def cli(cli_opt, arg):
+         pass
+ 
+     @cli.command()
+-    @click.option('--asub-opt')
++    @click.option("--asub-opt")
+     def asub(asub_opt):
+         pass
+ 
+-    @cli.command(help='bsub help')
+-    @click.option('--bsub-opt')
+-    @click.argument('arg', type=click.Choice(['arg1', 'arg2']))
++    @cli.command(help="bsub help")
++    @click.option("--bsub-opt")
++    @click.argument("arg", type=click.Choice(["arg1", "arg2"]))
+     def bsub(bsub_opt, arg):
+         pass
+ 
+     @cli.command()
+-    @click.option('--csub-opt')
+-    @click.argument('arg', type=click.Choice(['carg1', 'carg2']), default='carg1')
++    @click.option("--csub-opt")
++    @click.argument("arg", type=click.Choice(["carg1", "carg2"]), default="carg1")
+     def csub(csub_opt, arg):
+         pass
+ 
+-    assert choices_without_help(cli, [], '-') == ['--cli-opt']
+-    assert choices_without_help(cli, [], '') == ['cliarg1', 'cliarg2']
+-    assert choices_without_help(cli, ['cliarg1', 'asub'], '-') == ['--asub-opt']
+-    assert choices_without_help(cli, ['cliarg1', 'asub'], '') == ['bsub', 'csub']
+-    assert choices_without_help(cli, ['cliarg1', 'bsub'], '') == ['arg1', 'arg2']
+-    assert choices_without_help(cli, ['cliarg1', 'asub', '--asub-opt'], '') == []
+-    assert choices_without_help(cli, ['cliarg1', 'asub', '--asub-opt', '5', 'bsub'], '-') == ['--bsub-opt']
+-    assert choices_without_help(cli, ['cliarg1', 'asub', 'bsub'], '-') == ['--bsub-opt']
+-    assert choices_without_help(cli, ['cliarg1', 'asub', 'csub'], '') == ['carg1', 'carg2']
+-    assert choices_without_help(cli, ['cliarg1', 'bsub', 'arg1', 'csub'], '') == ['carg1', 'carg2']
+-    assert choices_without_help(cli, ['cliarg1', 'asub', 'csub'], '-') == ['--csub-opt']
+-    assert choices_with_help(cli, ['cliarg1', 'asub'], 'b') == [('bsub', 'bsub help')]
++    assert choices_without_help(cli, [], "-") == ["--cli-opt"]
++    assert choices_without_help(cli, [], "") == ["cliarg1", "cliarg2"]
++    assert choices_without_help(cli, ["cliarg1", "asub"], "-") == ["--asub-opt"]
++    assert choices_without_help(cli, ["cliarg1", "asub"], "") == ["bsub", "csub"]
++    assert choices_without_help(cli, ["cliarg1", "bsub"], "") == ["arg1", "arg2"]
++    assert choices_without_help(cli, ["cliarg1", "asub", "--asub-opt"], "") == []
++    assert choices_without_help(
++        cli, ["cliarg1", "asub", "--asub-opt", "5", "bsub"], "-"
++    ) == ["--bsub-opt"]
++    assert choices_without_help(cli, ["cliarg1", "asub", "bsub"], "-") == ["--bsub-opt"]
++    assert choices_without_help(cli, ["cliarg1", "asub", "csub"], "") == [
++        "carg1",
++        "carg2",
++    ]
++    assert choices_without_help(cli, ["cliarg1", "bsub", "arg1", "csub"], "") == [
++        "carg1",
++        "carg2",
++    ]
++    assert choices_without_help(cli, ["cliarg1", "asub", "csub"], "-") == ["--csub-opt"]
++    assert choices_with_help(cli, ["cliarg1", "asub"], "b") == [("bsub", "bsub help")]
+ 
+ 
+ def test_argument_choice():
+     @click.command()
+-    @click.argument('arg1', required=True, type=click.Choice(['arg11', 'arg12']))
+-    @click.argument('arg2', type=click.Choice(['arg21', 'arg22']), default='arg21')
+-    @click.argument('arg3', type=click.Choice(['arg', 'argument']), default='arg')
++    @click.argument("arg1", required=True, type=click.Choice(["arg11", "arg12"]))
++    @click.argument("arg2", type=click.Choice(["arg21", "arg22"]), default="arg21")
++    @click.argument("arg3", type=click.Choice(["arg", "argument"]), default="arg")
+     def cli():
+         pass
+ 
+-    assert choices_without_help(cli, [], '') == ['arg11', 'arg12']
+-    assert choices_without_help(cli, [], 'arg') == ['arg11', 'arg12']
+-    assert choices_without_help(cli, ['arg11'], '') == ['arg21', 'arg22']
+-    assert choices_without_help(cli, ['arg12', 'arg21'], '') == ['arg', 'argument']
+-    assert choices_without_help(cli, ['arg12', 'arg21'], 'argu') == ['argument']
++    assert choices_without_help(cli, [], "") == ["arg11", "arg12"]
++    assert choices_without_help(cli, [], "arg") == ["arg11", "arg12"]
++    assert choices_without_help(cli, ["arg11"], "") == ["arg21", "arg22"]
++    assert choices_without_help(cli, ["arg12", "arg21"], "") == ["arg", "argument"]
++    assert choices_without_help(cli, ["arg12", "arg21"], "argu") == ["argument"]
+ 
+ 
+ def test_option_choice():
+     @click.command()
+-    @click.option('--opt1', type=click.Choice(['opt11', 'opt12']), help='opt1 help')
+-    @click.option('--opt2', type=click.Choice(['opt21', 'opt22']), default='opt21')
+-    @click.option('--opt3', type=click.Choice(['opt', 'option']))
++    @click.option("--opt1", type=click.Choice(["opt11", "opt12"]), help="opt1 help")
++    @click.option("--opt2", type=click.Choice(["opt21", "opt22"]), default="opt21")
++    @click.option("--opt3", type=click.Choice(["opt", "option"]))
+     def cli():
+         pass
+ 
+-    assert choices_with_help(cli, [], '-') == [('--opt1', 'opt1 help'),
+-                                               ('--opt2', None),
+-                                               ('--opt3', None)]
+-    assert choices_without_help(cli, [], '--opt') == ['--opt1', '--opt2', '--opt3']
+-    assert choices_without_help(cli, [], '--opt1=') == ['opt11', 'opt12']
+-    assert choices_without_help(cli, [], '--opt2=') == ['opt21', 'opt22']
+-    assert choices_without_help(cli, ['--opt2'], '=') == ['opt21', 'opt22']
+-    assert choices_without_help(cli, ['--opt2', '='], 'opt') == ['opt21', 'opt22']
+-    assert choices_without_help(cli, ['--opt1'], '') == ['opt11', 'opt12']
+-    assert choices_without_help(cli, ['--opt2'], '') == ['opt21', 'opt22']
+-    assert choices_without_help(cli, ['--opt1', 'opt11', '--opt2'], '') == ['opt21', 'opt22']
+-    assert choices_without_help(cli, ['--opt2', 'opt21'], '-') == ['--opt1', '--opt3']
+-    assert choices_without_help(cli, ['--opt1', 'opt11'], '-') == ['--opt2', '--opt3']
+-    assert choices_without_help(cli, ['--opt1'], 'opt') == ['opt11', 'opt12']
+-    assert choices_without_help(cli, ['--opt3'], 'opti') == ['option']
+-
+-    assert choices_without_help(cli, ['--opt1', 'invalid_opt'], '-') == ['--opt2', '--opt3']
++    assert choices_with_help(cli, [], "-") == [
++        ("--opt1", "opt1 help"),
++        ("--opt2", None),
++        ("--opt3", None),
++    ]
++    assert choices_without_help(cli, [], "--opt") == ["--opt1", "--opt2", "--opt3"]
++    assert choices_without_help(cli, [], "--opt1=") == ["opt11", "opt12"]
++    assert choices_without_help(cli, [], "--opt2=") == ["opt21", "opt22"]
++    assert choices_without_help(cli, ["--opt2"], "=") == ["opt21", "opt22"]
++    assert choices_without_help(cli, ["--opt2", "="], "opt") == ["opt21", "opt22"]
++    assert choices_without_help(cli, ["--opt1"], "") == ["opt11", "opt12"]
++    assert choices_without_help(cli, ["--opt2"], "") == ["opt21", "opt22"]
++    assert choices_without_help(cli, ["--opt1", "opt11", "--opt2"], "") == [
++        "opt21",
++        "opt22",
++    ]
++    assert choices_without_help(cli, ["--opt2", "opt21"], "-") == ["--opt1", "--opt3"]
++    assert choices_without_help(cli, ["--opt1", "opt11"], "-") == ["--opt2", "--opt3"]
++    assert choices_without_help(cli, ["--opt1"], "opt") == ["opt11", "opt12"]
++    assert choices_without_help(cli, ["--opt3"], "opti") == ["option"]
++
++    assert choices_without_help(cli, ["--opt1", "invalid_opt"], "-") == [
++        "--opt2",
++        "--opt3",
++    ]
+ 
+ 
+ def test_option_and_arg_choice():
+     @click.command()
+-    @click.option('--opt1', type=click.Choice(['opt11', 'opt12']))
+-    @click.argument('arg1', required=False, type=click.Choice(['arg11', 'arg12']))
+-    @click.option('--opt2', type=click.Choice(['opt21', 'opt22']))
++    @click.option("--opt1", type=click.Choice(["opt11", "opt12"]))
++    @click.argument("arg1", required=False, type=click.Choice(["arg11", "arg12"]))
++    @click.option("--opt2", type=click.Choice(["opt21", "opt22"]))
+     def cli():
+         pass
+ 
+-    assert choices_without_help(cli, ['--opt1'], '') == ['opt11', 'opt12']
+-    assert choices_without_help(cli, [''], '--opt1=') == ['opt11', 'opt12']
+-    assert choices_without_help(cli, [], '') == ['arg11', 'arg12']
+-    assert choices_without_help(cli, ['--opt2'], '') == ['opt21', 'opt22']
+-    assert choices_without_help(cli, ['arg11'], '--opt') == ['--opt1', '--opt2']
+-    assert choices_without_help(cli, [], '--opt') == ['--opt1', '--opt2']
++    assert choices_without_help(cli, ["--opt1"], "") == ["opt11", "opt12"]
++    assert choices_without_help(cli, [""], "--opt1=") == ["opt11", "opt12"]
++    assert choices_without_help(cli, [], "") == ["arg11", "arg12"]
++    assert choices_without_help(cli, ["--opt2"], "") == ["opt21", "opt22"]
++    assert choices_without_help(cli, ["arg11"], "--opt") == ["--opt1", "--opt2"]
++    assert choices_without_help(cli, [], "--opt") == ["--opt1", "--opt2"]
+ 
+ 
+ def test_boolean_flag_choice():
+     @click.command()
+-    @click.option('--shout/--no-shout', default=False)
+-    @click.argument('arg', required=False, type=click.Choice(['arg1', 'arg2']))
++    @click.option("--shout/--no-shout", default=False)
++    @click.argument("arg", required=False, type=click.Choice(["arg1", "arg2"]))
+     def cli(local_opt):
+         pass
+ 
+-    assert choices_without_help(cli, [], '-') == ['--shout', '--no-shout']
+-    assert choices_without_help(cli, ['--shout'], '') == ['arg1', 'arg2']
++    assert choices_without_help(cli, [], "-") == ["--shout", "--no-shout"]
++    assert choices_without_help(cli, ["--shout"], "") == ["arg1", "arg2"]
+ 
+ 
+ def test_multi_value_option_choice():
+     @click.command()
+-    @click.option('--pos', nargs=2, type=click.Choice(['pos1', 'pos2']))
+-    @click.argument('arg', required=False, type=click.Choice(['arg1', 'arg2']))
++    @click.option("--pos", nargs=2, type=click.Choice(["pos1", "pos2"]))
++    @click.argument("arg", required=False, type=click.Choice(["arg1", "arg2"]))
+     def cli(local_opt):
+         pass
+ 
+-    assert choices_without_help(cli, ['--pos'], '') == ['pos1', 'pos2']
+-    assert choices_without_help(cli, ['--pos', 'pos1'], '') == ['pos1', 'pos2']
+-    assert choices_without_help(cli, ['--pos', 'pos1', 'pos2'], '') == ['arg1', 'arg2']
+-    assert choices_without_help(cli, ['--pos', 'pos1', 'pos2', 'arg1'], '') == []
++    assert choices_without_help(cli, ["--pos"], "") == ["pos1", "pos2"]
++    assert choices_without_help(cli, ["--pos", "pos1"], "") == ["pos1", "pos2"]
++    assert choices_without_help(cli, ["--pos", "pos1", "pos2"], "") == ["arg1", "arg2"]
++    assert choices_without_help(cli, ["--pos", "pos1", "pos2", "arg1"], "") == []
+ 
+ 
+ def test_multi_option_choice():
+     @click.command()
+-    @click.option('--message', '-m', multiple=True, type=click.Choice(['m1', 'm2']))
+-    @click.argument('arg', required=False, type=click.Choice(['arg1', 'arg2']))
++    @click.option("--message", "-m", multiple=True, type=click.Choice(["m1", "m2"]))
++    @click.argument("arg", required=False, type=click.Choice(["arg1", "arg2"]))
+     def cli(local_opt):
+         pass
+ 
+-    assert choices_without_help(cli, ['-m'], '') == ['m1', 'm2']
+-    assert choices_without_help(cli, ['-m', 'm1', '-m'], '') == ['m1', 'm2']
+-    assert choices_without_help(cli, ['-m', 'm1'], '') == ['arg1', 'arg2']
++    assert choices_without_help(cli, ["-m"], "") == ["m1", "m2"]
++    assert choices_without_help(cli, ["-m", "m1", "-m"], "") == ["m1", "m2"]
++    assert choices_without_help(cli, ["-m", "m1"], "") == ["arg1", "arg2"]
+ 
+ 
+ def test_variadic_argument_choice():
+     @click.command()
+-    @click.option('--opt', type=click.Choice(['opt1', 'opt2']))
+-    @click.argument('src', nargs=-1, type=click.Choice(['src1', 'src2']))
++    @click.option("--opt", type=click.Choice(["opt1", "opt2"]))
++    @click.argument("src", nargs=-1, type=click.Choice(["src1", "src2"]))
+     def cli(local_opt):
+         pass
+ 
+-    assert choices_without_help(cli, ['src1', 'src2'], '') == ['src1', 'src2']
+-    assert choices_without_help(cli, ['src1', 'src2'], '--o') == ['--opt']
+-    assert choices_without_help(cli, ['src1', 'src2', '--opt'], '') == ['opt1', 'opt2']
+-    assert choices_without_help(cli, ['src1', 'src2'], '') == ['src1', 'src2']
++    assert choices_without_help(cli, ["src1", "src2"], "") == ["src1", "src2"]
++    assert choices_without_help(cli, ["src1", "src2"], "--o") == ["--opt"]
++    assert choices_without_help(cli, ["src1", "src2", "--opt"], "") == ["opt1", "opt2"]
++    assert choices_without_help(cli, ["src1", "src2"], "") == ["src1", "src2"]
+ 
+ 
+ def test_variadic_argument_complete():
+-
+     def _complete(ctx, args, incomplete):
+-        return ['abc', 'def', 'ghi', 'jkl', 'mno', 'pqr', 'stu', 'vwx', 'yz']
++        return ["abc", "def", "ghi", "jkl", "mno", "pqr", "stu", "vwx", "yz"]
+ 
+     @click.group()
+     def entrypoint():
+         pass
+ 
+     @click.command()
+-    @click.option('--opt', autocompletion=_complete)
+-    @click.argument('arg', nargs=-1)
++    @click.option("--opt", autocompletion=_complete)
++    @click.argument("arg", nargs=-1)
+     def subcommand(opt, arg):
+         pass
+ 
+     entrypoint.add_command(subcommand)
+ 
+-    assert choices_without_help(entrypoint, ['subcommand', '--opt'], '') == _complete(0,0,0)
+-    assert choices_without_help(entrypoint, ['subcommand', 'whatever', '--opt'], '') == _complete(0,0,0)
+-    assert choices_without_help(entrypoint, ['subcommand', 'whatever', '--opt', 'abc'], '') == []
++    assert choices_without_help(entrypoint, ["subcommand", "--opt"], "") == _complete(
++        0, 0, 0
++    )
++    assert choices_without_help(
++        entrypoint, ["subcommand", "whatever", "--opt"], ""
++    ) == _complete(0, 0, 0)
++    assert (
++        choices_without_help(entrypoint, ["subcommand", "whatever", "--opt", "abc"], "")
++        == []
++    )
+ 
+ 
+ def test_long_chain_choice():
+@@ -304,19 +344,25 @@ def test_long_chain_choice():
+         pass
+ 
+     @cli.group()
+-    @click.option('--sub-opt', type=click.Choice(['subopt1', 'subopt2']))
+-    @click.argument('sub-arg', required=False, type=click.Choice(['subarg1', 'subarg2']))
++    @click.option("--sub-opt", type=click.Choice(["subopt1", "subopt2"]))
++    @click.argument(
++        "sub-arg", required=False, type=click.Choice(["subarg1", "subarg2"])
++    )
+     def sub(sub_opt, sub_arg):
+         pass
+ 
+-    @sub.command(short_help='bsub help')
+-    @click.option('--bsub-opt', type=click.Choice(['bsubopt1', 'bsubopt2']))
+-    @click.argument('bsub-arg1', required=False, type=click.Choice(['bsubarg1', 'bsubarg2']))
+-    @click.argument('bbsub-arg2', required=False, type=click.Choice(['bbsubarg1', 'bbsubarg2']))
++    @sub.command(short_help="bsub help")
++    @click.option("--bsub-opt", type=click.Choice(["bsubopt1", "bsubopt2"]))
++    @click.argument(
++        "bsub-arg1", required=False, type=click.Choice(["bsubarg1", "bsubarg2"])
++    )
++    @click.argument(
++        "bbsub-arg2", required=False, type=click.Choice(["bbsubarg1", "bbsubarg2"])
++    )
+     def bsub(bsub_opt):
+         pass
+ 
+-    @sub.group('csub')
++    @sub.group("csub")
+     def csub():
+         pass
+ 
+@@ -324,24 +370,42 @@ def test_long_chain_choice():
+     def dsub():
+         pass
+ 
+-    assert choices_with_help(cli, ['sub', 'subarg1'], '') == [('bsub', 'bsub help'), ('csub', '')]
+-    assert choices_without_help(cli, ['sub'], '') == ['subarg1', 'subarg2']
+-    assert choices_without_help(cli, ['sub', '--sub-opt'], '') == ['subopt1', 'subopt2']
+-    assert choices_without_help(cli, ['sub', '--sub-opt', 'subopt1'], '') == \
+-           ['subarg1', 'subarg2']
+-    assert choices_without_help(cli,
+-                                ['sub', '--sub-opt', 'subopt1', 'subarg1', 'bsub'], '-') == ['--bsub-opt']
+-    assert choices_without_help(cli,
+-                                ['sub', '--sub-opt', 'subopt1', 'subarg1', 'bsub'], '') == ['bsubarg1', 'bsubarg2']
+-    assert choices_without_help(cli,
+-                                ['sub', '--sub-opt', 'subopt1', 'subarg1', 'bsub', '--bsub-opt'], '') == \
+-           ['bsubopt1', 'bsubopt2']
+-    assert choices_without_help(cli,
+-                                ['sub', '--sub-opt', 'subopt1', 'subarg1', 'bsub', '--bsub-opt', 'bsubopt1', 'bsubarg1'],
+-                                '') == ['bbsubarg1', 'bbsubarg2']
+-    assert choices_without_help(cli,
+-                                ['sub', '--sub-opt', 'subopt1', 'subarg1', 'csub'],
+-                                '') == ['dsub']
++    assert choices_with_help(cli, ["sub", "subarg1"], "") == [
++        ("bsub", "bsub help"),
++        ("csub", ""),
++    ]
++    assert choices_without_help(cli, ["sub"], "") == ["subarg1", "subarg2"]
++    assert choices_without_help(cli, ["sub", "--sub-opt"], "") == ["subopt1", "subopt2"]
++    assert choices_without_help(cli, ["sub", "--sub-opt", "subopt1"], "") == [
++        "subarg1",
++        "subarg2",
++    ]
++    assert choices_without_help(
++        cli, ["sub", "--sub-opt", "subopt1", "subarg1", "bsub"], "-"
++    ) == ["--bsub-opt"]
++    assert choices_without_help(
++        cli, ["sub", "--sub-opt", "subopt1", "subarg1", "bsub"], ""
++    ) == ["bsubarg1", "bsubarg2"]
++    assert choices_without_help(
++        cli, ["sub", "--sub-opt", "subopt1", "subarg1", "bsub", "--bsub-opt"], ""
++    ) == ["bsubopt1", "bsubopt2"]
++    assert choices_without_help(
++        cli,
++        [
++            "sub",
++            "--sub-opt",
++            "subopt1",
++            "subarg1",
++            "bsub",
++            "--bsub-opt",
++            "bsubopt1",
++            "bsubarg1",
++        ],
++        "",
++    ) == ["bbsubarg1", "bbsubarg2"]
++    assert choices_without_help(
++        cli, ["sub", "--sub-opt", "subopt1", "subarg1", "csub"], ""
++    ) == ["dsub"]
+ 
+ 
+ def test_chained_multi():
+@@ -369,16 +433,16 @@ def test_chained_multi():
+     def esub():
+         pass
+ 
+-    assert choices_without_help(cli, ['sub'], '') == ['bsub', 'csub']
+-    assert choices_without_help(cli, ['sub'], 'c') == ['csub']
+-    assert choices_without_help(cli, ['sub', 'csub'], '') == ['dsub', 'esub']
+-    assert choices_without_help(cli, ['sub', 'csub', 'dsub'], '') == ['esub']
++    assert choices_without_help(cli, ["sub"], "") == ["bsub", "csub"]
++    assert choices_without_help(cli, ["sub"], "c") == ["csub"]
++    assert choices_without_help(cli, ["sub", "csub"], "") == ["dsub", "esub"]
++    assert choices_without_help(cli, ["sub", "csub", "dsub"], "") == ["esub"]
+ 
+ 
+ def test_hidden():
+     @click.group()
+-    @click.option('--name', hidden=True)
+-    @click.option('--choices', type=click.Choice([1, 2]), hidden=True)
++    @click.option("--name", hidden=True)
++    @click.option("--choices", type=click.Choice([1, 2]), hidden=True)
+     def cli(name):
+         pass
+ 
+@@ -395,20 +459,20 @@ def test_hidden():
+         pass
+ 
+     @cli.command(hidden=True)
+-    @click.option('--hname')
++    @click.option("--hname")
+     def hsub():
+         pass
+ 
+-    assert choices_without_help(cli, [], '--n') == []
+-    assert choices_without_help(cli, [], '--c') == []
++    assert choices_without_help(cli, [], "--n") == []
++    assert choices_without_help(cli, [], "--c") == []
+     # If the user exactly types out the hidden param, complete its options.
+-    assert choices_without_help(cli, ['--choices'], '') == [1, 2]
+-    assert choices_without_help(cli, [], '') == ['asub']
+-    assert choices_without_help(cli, [], '') == ['asub']
+-    assert choices_without_help(cli, [], 'h') == []
++    assert choices_without_help(cli, ["--choices"], "") == [1, 2]
++    assert choices_without_help(cli, [], "") == ["asub"]
++    assert choices_without_help(cli, [], "") == ["asub"]
++    assert choices_without_help(cli, [], "h") == []
+     # If the user exactly types out the hidden command, complete its subcommands.
+-    assert choices_without_help(cli, ['hgroup'], '') == ['hgroupsub']
+-    assert choices_without_help(cli, ['hsub'], '--h') == ['--hname']
++    assert choices_without_help(cli, ["hgroup"], "") == ["hgroupsub"]
++    assert choices_without_help(cli, ["hsub"], "--h") == ["--hname"]
+ 
+ 
+ @pytest.mark.parametrize(
+diff --git a/tests/test_basic.py b/tests/test_basic.py
+index f800b4d20d0f088e6bd451004e778877f567e58d..f07b6d1f50065dc89c0ee2a50e414b4da996ca79 100644
+--- a/tests/test_basic.py
++++ b/tests/test_basic.py
+@@ -1,6 +1,7 @@
+ # -*- coding: utf-8 -*-
+ import os
+ import uuid
++
+ import click
+ 
+ 
+@@ -8,18 +9,18 @@ def test_basic_functionality(runner):
+     @click.command()
+     def cli():
+         """Hello World!"""
+-        click.echo('I EXECUTED')
++        click.echo("I EXECUTED")
+ 
+-    result = runner.invoke(cli, ['--help'])
++    result = runner.invoke(cli, ["--help"])
+     assert not result.exception
+-    assert 'Hello World!' in result.output
+-    assert 'Show this message and exit.' in result.output
++    assert "Hello World!" in result.output
++    assert "Show this message and exit." in result.output
+     assert result.exit_code == 0
+-    assert 'I EXECUTED' not in result.output
++    assert "I EXECUTED" not in result.output
+ 
+     result = runner.invoke(cli, [])
+     assert not result.exception
+-    assert 'I EXECUTED' in result.output
++    assert "I EXECUTED" in result.output
+     assert result.exit_code == 0
+ 
+ 
+@@ -36,9 +37,9 @@ def test_repr():
+     def subcommand():
+         pass
+ 
+-    assert repr(command) == '<Command command>'
+-    assert repr(group) == '<Group group>'
+-    assert repr(subcommand) == '<Command subcommand>'
++    assert repr(command) == "<Command command>"
++    assert repr(group) == "<Group group>"
++    assert repr(subcommand) == "<Command subcommand>"
+ 
+ 
+ def test_return_values():
+@@ -46,423 +47,430 @@ def test_return_values():
+     def cli():
+         return 42
+ 
+-    with cli.make_context('foo', []) as ctx:
++    with cli.make_context("foo", []) as ctx:
+         rv = cli.invoke(ctx)
+-        assert rv is 42
++        assert rv == 42
+ 
+ 
+ def test_basic_group(runner):
+     @click.group()
+     def cli():
+         """This is the root."""
+-        click.echo('ROOT EXECUTED')
++        click.echo("ROOT EXECUTED")
+ 
+     @cli.command()
+     def subcommand():
+         """This is a subcommand."""
+-        click.echo('SUBCOMMAND EXECUTED')
++        click.echo("SUBCOMMAND EXECUTED")
+ 
+-    result = runner.invoke(cli, ['--help'])
++    result = runner.invoke(cli, ["--help"])
+     assert not result.exception
+-    assert 'COMMAND [ARGS]...' in result.output
+-    assert 'This is the root' in result.output
+-    assert 'This is a subcommand.' in result.output
++    assert "COMMAND [ARGS]..." in result.output
++    assert "This is the root" in result.output
++    assert "This is a subcommand." in result.output
+     assert result.exit_code == 0
+-    assert 'ROOT EXECUTED' not in result.output
++    assert "ROOT EXECUTED" not in result.output
+ 
+-    result = runner.invoke(cli, ['subcommand'])
++    result = runner.invoke(cli, ["subcommand"])
+     assert not result.exception
+     assert result.exit_code == 0
+-    assert 'ROOT EXECUTED' in result.output
+-    assert 'SUBCOMMAND EXECUTED' in result.output
++    assert "ROOT EXECUTED" in result.output
++    assert "SUBCOMMAND EXECUTED" in result.output
+ 
+ 
+ def test_basic_option(runner):
+     @click.command()
+-    @click.option('--foo', default='no value')
++    @click.option("--foo", default="no value")
+     def cli(foo):
+-        click.echo('FOO:[%s]' % foo)
++        click.echo(u"FOO:[{}]".format(foo))
+ 
+     result = runner.invoke(cli, [])
+     assert not result.exception
+-    assert 'FOO:[no value]' in result.output
++    assert "FOO:[no value]" in result.output
+ 
+-    result = runner.invoke(cli, ['--foo=42'])
++    result = runner.invoke(cli, ["--foo=42"])
+     assert not result.exception
+-    assert 'FOO:[42]' in result.output
++    assert "FOO:[42]" in result.output
+ 
+-    result = runner.invoke(cli, ['--foo'])
++    result = runner.invoke(cli, ["--foo"])
+     assert result.exception
+-    assert '--foo option requires an argument' in result.output
++    assert "--foo option requires an argument" in result.output
+ 
+-    result = runner.invoke(cli, ['--foo='])
++    result = runner.invoke(cli, ["--foo="])
+     assert not result.exception
+-    assert 'FOO:[]' in result.output
++    assert "FOO:[]" in result.output
+ 
+-    result = runner.invoke(cli, [u'--foo=\N{SNOWMAN}'])
++    result = runner.invoke(cli, [u"--foo=\N{SNOWMAN}"])
+     assert not result.exception
+-    assert u'FOO:[\N{SNOWMAN}]' in result.output
++    assert u"FOO:[\N{SNOWMAN}]" in result.output
+ 
+ 
+ def test_int_option(runner):
+     @click.command()
+-    @click.option('--foo', default=42)
++    @click.option("--foo", default=42)
+     def cli(foo):
+-        click.echo('FOO:[%s]' % (foo * 2))
++        click.echo("FOO:[{}]".format(foo * 2))
+ 
+     result = runner.invoke(cli, [])
+     assert not result.exception
+-    assert 'FOO:[84]' in result.output
++    assert "FOO:[84]" in result.output
+ 
+-    result = runner.invoke(cli, ['--foo=23'])
++    result = runner.invoke(cli, ["--foo=23"])
+     assert not result.exception
+-    assert 'FOO:[46]' in result.output
++    assert "FOO:[46]" in result.output
+ 
+-    result = runner.invoke(cli, ['--foo=bar'])
++    result = runner.invoke(cli, ["--foo=bar"])
+     assert result.exception
+-    assert 'Invalid value for "--foo": bar is not a valid integer' \
+-        in result.output
++    assert "Invalid value for '--foo': bar is not a valid integer" in result.output
+ 
+ 
+ def test_uuid_option(runner):
+     @click.command()
+-    @click.option('--u', default='ba122011-349f-423b-873b-9d6a79c688ab',
+-                  type=click.UUID)
++    @click.option(
++        "--u", default="ba122011-349f-423b-873b-9d6a79c688ab", type=click.UUID
++    )
+     def cli(u):
+         assert type(u) is uuid.UUID
+-        click.echo('U:[%s]' % u)
++        click.echo("U:[{}]".format(u))
+ 
+     result = runner.invoke(cli, [])
+     assert not result.exception
+-    assert 'U:[ba122011-349f-423b-873b-9d6a79c688ab]' in result.output
++    assert "U:[ba122011-349f-423b-873b-9d6a79c688ab]" in result.output
+ 
+-    result = runner.invoke(cli, ['--u=821592c1-c50e-4971-9cd6-e89dc6832f86'])
++    result = runner.invoke(cli, ["--u=821592c1-c50e-4971-9cd6-e89dc6832f86"])
+     assert not result.exception
+-    assert 'U:[821592c1-c50e-4971-9cd6-e89dc6832f86]' in result.output
++    assert "U:[821592c1-c50e-4971-9cd6-e89dc6832f86]" in result.output
+ 
+-    result = runner.invoke(cli, ['--u=bar'])
++    result = runner.invoke(cli, ["--u=bar"])
+     assert result.exception
+-    assert 'Invalid value for "--u": bar is not a valid UUID value' \
+-        in result.output
++    assert "Invalid value for '--u': bar is not a valid UUID value" in result.output
+ 
+ 
+ def test_float_option(runner):
+     @click.command()
+-    @click.option('--foo', default=42, type=click.FLOAT)
++    @click.option("--foo", default=42, type=click.FLOAT)
+     def cli(foo):
+         assert type(foo) is float
+-        click.echo('FOO:[%s]' % foo)
++        click.echo("FOO:[{}]".format(foo))
+ 
+     result = runner.invoke(cli, [])
+     assert not result.exception
+-    assert 'FOO:[42.0]' in result.output
++    assert "FOO:[42.0]" in result.output
+ 
+-    result = runner.invoke(cli, ['--foo=23.5'])
++    result = runner.invoke(cli, ["--foo=23.5"])
+     assert not result.exception
+-    assert 'FOO:[23.5]' in result.output
++    assert "FOO:[23.5]" in result.output
+ 
+-    result = runner.invoke(cli, ['--foo=bar'])
++    result = runner.invoke(cli, ["--foo=bar"])
+     assert result.exception
+-    assert 'Invalid value for "--foo": bar is not a valid float' \
+-        in result.output
++    assert "Invalid value for '--foo': bar is not a valid float" in result.output
+ 
+ 
+ def test_boolean_option(runner):
+     for default in True, False:
++
+         @click.command()
+-        @click.option('--with-foo/--without-foo', default=default)
++        @click.option("--with-foo/--without-foo", default=default)
+         def cli(with_foo):
+             click.echo(with_foo)
+ 
+-        result = runner.invoke(cli, ['--with-foo'])
++        result = runner.invoke(cli, ["--with-foo"])
+         assert not result.exception
+-        assert result.output == 'True\n'
+-        result = runner.invoke(cli, ['--without-foo'])
++        assert result.output == "True\n"
++        result = runner.invoke(cli, ["--without-foo"])
+         assert not result.exception
+-        assert result.output == 'False\n'
++        assert result.output == "False\n"
+         result = runner.invoke(cli, [])
+         assert not result.exception
+-        assert result.output == '%s\n' % default
++        assert result.output == "{}\n".format(default)
+ 
+     for default in True, False:
++
+         @click.command()
+-        @click.option('--flag', is_flag=True, default=default)
++        @click.option("--flag", is_flag=True, default=default)
+         def cli(flag):
+             click.echo(flag)
+ 
+-        result = runner.invoke(cli, ['--flag'])
++        result = runner.invoke(cli, ["--flag"])
+         assert not result.exception
+-        assert result.output == '%s\n' % (not default)
++        assert result.output == "{}\n".format(not default)
+         result = runner.invoke(cli, [])
+         assert not result.exception
+-        assert result.output == '%s\n' % (default)
++        assert result.output == "{}\n".format(default)
+ 
+ 
+ def test_boolean_conversion(runner):
+     for default in True, False:
++
+         @click.command()
+-        @click.option('--flag', default=default, type=bool)
++        @click.option("--flag", default=default, type=bool)
+         def cli(flag):
+             click.echo(flag)
+ 
+-        for value in 'true', 't', '1', 'yes', 'y':
+-            result = runner.invoke(cli, ['--flag', value])
++        for value in "true", "t", "1", "yes", "y":
++            result = runner.invoke(cli, ["--flag", value])
+             assert not result.exception
+-            assert result.output == 'True\n'
++            assert result.output == "True\n"
+ 
+-        for value in 'false', 'f', '0', 'no', 'n':
+-            result = runner.invoke(cli, ['--flag', value])
++        for value in "false", "f", "0", "no", "n":
++            result = runner.invoke(cli, ["--flag", value])
+             assert not result.exception
+-            assert result.output == 'False\n'
++            assert result.output == "False\n"
+ 
+         result = runner.invoke(cli, [])
+         assert not result.exception
+-        assert result.output == '%s\n' % default
++        assert result.output == "{}\n".format(default)
+ 
+ 
+ def test_file_option(runner):
+     @click.command()
+-    @click.option('--file', type=click.File('w'))
++    @click.option("--file", type=click.File("w"))
+     def input(file):
+-        file.write('Hello World!\n')
++        file.write("Hello World!\n")
+ 
+     @click.command()
+-    @click.option('--file', type=click.File('r'))
++    @click.option("--file", type=click.File("r"))
+     def output(file):
+         click.echo(file.read())
+ 
+     with runner.isolated_filesystem():
+-        result_in = runner.invoke(input, ['--file=example.txt'])
+-        result_out = runner.invoke(output, ['--file=example.txt'])
++        result_in = runner.invoke(input, ["--file=example.txt"])
++        result_out = runner.invoke(output, ["--file=example.txt"])
+ 
+     assert not result_in.exception
+-    assert result_in.output == ''
++    assert result_in.output == ""
+     assert not result_out.exception
+-    assert result_out.output == 'Hello World!\n\n'
++    assert result_out.output == "Hello World!\n\n"
+ 
+ 
+ def test_file_lazy_mode(runner):
+     do_io = False
+ 
+     @click.command()
+-    @click.option('--file', type=click.File('w'))
++    @click.option("--file", type=click.File("w"))
+     def input(file):
+         if do_io:
+-            file.write('Hello World!\n')
++            file.write("Hello World!\n")
+ 
+     @click.command()
+-    @click.option('--file', type=click.File('r'))
++    @click.option("--file", type=click.File("r"))
+     def output(file):
+         pass
+ 
+     with runner.isolated_filesystem():
+-        os.mkdir('example.txt')
++        os.mkdir("example.txt")
+ 
+         do_io = True
+-        result_in = runner.invoke(input, ['--file=example.txt'])
++        result_in = runner.invoke(input, ["--file=example.txt"])
+         assert result_in.exit_code == 1
+ 
+         do_io = False
+-        result_in = runner.invoke(input, ['--file=example.txt'])
++        result_in = runner.invoke(input, ["--file=example.txt"])
+         assert result_in.exit_code == 0
+ 
+-        result_out = runner.invoke(output, ['--file=example.txt'])
++        result_out = runner.invoke(output, ["--file=example.txt"])
+         assert result_out.exception
+ 
+     @click.command()
+-    @click.option('--file', type=click.File('w', lazy=False))
++    @click.option("--file", type=click.File("w", lazy=False))
+     def input_non_lazy(file):
+-        file.write('Hello World!\n')
++        file.write("Hello World!\n")
+ 
+     with runner.isolated_filesystem():
+-        os.mkdir('example.txt')
+-        result_in = runner.invoke(input_non_lazy, ['--file=example.txt'])
++        os.mkdir("example.txt")
++        result_in = runner.invoke(input_non_lazy, ["--file=example.txt"])
+         assert result_in.exit_code == 2
+-        assert 'Invalid value for "--file": Could not open file: example.txt' \
++        assert (
++            "Invalid value for '--file': Could not open file: example.txt"
+             in result_in.output
++        )
+ 
+ 
+ def test_path_option(runner):
+     @click.command()
+-    @click.option('-O', type=click.Path(file_okay=False, exists=True,
+-                                        writable=True))
++    @click.option("-O", type=click.Path(file_okay=False, exists=True, writable=True))
+     def write_to_dir(o):
+-        with open(os.path.join(o, 'foo.txt'), 'wb') as f:
+-            f.write(b'meh\n')
++        with open(os.path.join(o, "foo.txt"), "wb") as f:
++            f.write(b"meh\n")
+ 
+     with runner.isolated_filesystem():
+-        os.mkdir('test')
++        os.mkdir("test")
+ 
+-        result = runner.invoke(write_to_dir, ['-O', 'test'])
++        result = runner.invoke(write_to_dir, ["-O", "test"])
+         assert not result.exception
+ 
+-        with open('test/foo.txt', 'rb') as f:
+-            assert f.read() == b'meh\n'
++        with open("test/foo.txt", "rb") as f:
++            assert f.read() == b"meh\n"
+ 
+-        result = runner.invoke(write_to_dir, ['-O', 'test/foo.txt'])
+-        assert 'Invalid value for "-O": Directory "test/foo.txt" is a file.' \
+-            in result.output
++        result = runner.invoke(write_to_dir, ["-O", "test/foo.txt"])
++        assert "is a file" in result.output
+ 
+     @click.command()
+-    @click.option('-f', type=click.Path(exists=True))
++    @click.option("-f", type=click.Path(exists=True))
+     def showtype(f):
+-        click.echo('is_file=%s' % os.path.isfile(f))
+-        click.echo('is_dir=%s' % os.path.isdir(f))
++        click.echo("is_file={}".format(os.path.isfile(f)))
++        click.echo("is_dir={}".format(os.path.isdir(f)))
+ 
+     with runner.isolated_filesystem():
+-        result = runner.invoke(showtype, ['-f', 'xxx'])
+-        assert 'Error: Invalid value for "-f": Path "xxx" does not exist' \
+-            in result.output
++        result = runner.invoke(showtype, ["-f", "xxx"])
++        assert "does not exist" in result.output
+ 
+-        result = runner.invoke(showtype, ['-f', '.'])
+-        assert 'is_file=False' in result.output
+-        assert 'is_dir=True' in result.output
++        result = runner.invoke(showtype, ["-f", "."])
++        assert "is_file=False" in result.output
++        assert "is_dir=True" in result.output
+ 
+     @click.command()
+-    @click.option('-f', type=click.Path())
++    @click.option("-f", type=click.Path())
+     def exists(f):
+-        click.echo('exists=%s' % os.path.exists(f))
++        click.echo("exists={}".format(os.path.exists(f)))
+ 
+     with runner.isolated_filesystem():
+-        result = runner.invoke(exists, ['-f', 'xxx'])
+-        assert 'exists=False' in result.output
++        result = runner.invoke(exists, ["-f", "xxx"])
++        assert "exists=False" in result.output
+ 
+-        result = runner.invoke(exists, ['-f', '.'])
+-        assert 'exists=True' in result.output
++        result = runner.invoke(exists, ["-f", "."])
++        assert "exists=True" in result.output
+ 
+ 
+ def test_choice_option(runner):
+     @click.command()
+-    @click.option('--method', type=click.Choice(['foo', 'bar', 'baz']))
++    @click.option("--method", type=click.Choice(["foo", "bar", "baz"]))
+     def cli(method):
+         click.echo(method)
+ 
+-    result = runner.invoke(cli, ['--method=foo'])
++    result = runner.invoke(cli, ["--method=foo"])
+     assert not result.exception
+-    assert result.output == 'foo\n'
++    assert result.output == "foo\n"
+ 
+-    result = runner.invoke(cli, ['--method=meh'])
++    result = runner.invoke(cli, ["--method=meh"])
+     assert result.exit_code == 2
+-    assert 'Invalid value for "--method": invalid choice: meh. ' \
+-        '(choose from foo, bar, baz)' in result.output
++    assert (
++        "Invalid value for '--method': invalid choice: meh."
++        " (choose from foo, bar, baz)" in result.output
++    )
+ 
+-    result = runner.invoke(cli, ['--help'])
+-    assert '--method [foo|bar|baz]' in result.output
++    result = runner.invoke(cli, ["--help"])
++    assert "--method [foo|bar|baz]" in result.output
+ 
+ 
+ def test_datetime_option_default(runner):
+-
+     @click.command()
+-    @click.option('--start_date', type=click.DateTime())
++    @click.option("--start_date", type=click.DateTime())
+     def cli(start_date):
+-        click.echo(start_date.strftime('%Y-%m-%dT%H:%M:%S'))
++        click.echo(start_date.strftime("%Y-%m-%dT%H:%M:%S"))
+ 
+-    result = runner.invoke(cli, ['--start_date=2015-09-29'])
++    result = runner.invoke(cli, ["--start_date=2015-09-29"])
+     assert not result.exception
+-    assert result.output == '2015-09-29T00:00:00\n'
++    assert result.output == "2015-09-29T00:00:00\n"
+ 
+-    result = runner.invoke(cli, ['--start_date=2015-09-29T09:11:22'])
++    result = runner.invoke(cli, ["--start_date=2015-09-29T09:11:22"])
+     assert not result.exception
+-    assert result.output == '2015-09-29T09:11:22\n'
++    assert result.output == "2015-09-29T09:11:22\n"
+ 
+-    result = runner.invoke(cli, ['--start_date=2015-09'])
++    result = runner.invoke(cli, ["--start_date=2015-09"])
+     assert result.exit_code == 2
+-    assert ('Invalid value for "--start_date": '
+-            'invalid datetime format: 2015-09. '
+-            '(choose from %Y-%m-%d, %Y-%m-%dT%H:%M:%S, %Y-%m-%d %H:%M:%S)'
+-            ) in result.output
++    assert (
++        "Invalid value for '--start_date':"
++        " invalid datetime format: 2015-09."
++        " (choose from %Y-%m-%d, %Y-%m-%dT%H:%M:%S, %Y-%m-%d %H:%M:%S)"
++    ) in result.output
+ 
+-    result = runner.invoke(cli, ['--help'])
+-    assert '--start_date [%Y-%m-%d|%Y-%m-%dT%H:%M:%S|%Y-%m-%d %H:%M:%S]' in result.output
++    result = runner.invoke(cli, ["--help"])
++    assert (
++        "--start_date [%Y-%m-%d|%Y-%m-%dT%H:%M:%S|%Y-%m-%d %H:%M:%S]" in result.output
++    )
+ 
+ 
+ def test_datetime_option_custom(runner):
+     @click.command()
+-    @click.option('--start_date',
+-                  type=click.DateTime(formats=['%A %B %d, %Y']))
++    @click.option("--start_date", type=click.DateTime(formats=["%A %B %d, %Y"]))
+     def cli(start_date):
+-        click.echo(start_date.strftime('%Y-%m-%dT%H:%M:%S'))
++        click.echo(start_date.strftime("%Y-%m-%dT%H:%M:%S"))
+ 
+-    result = runner.invoke(cli, ['--start_date=Wednesday June 05, 2010'])
++    result = runner.invoke(cli, ["--start_date=Wednesday June 05, 2010"])
+     assert not result.exception
+-    assert result.output == '2010-06-05T00:00:00\n'
++    assert result.output == "2010-06-05T00:00:00\n"
+ 
+ 
+ def test_int_range_option(runner):
+     @click.command()
+-    @click.option('--x', type=click.IntRange(0, 5))
++    @click.option("--x", type=click.IntRange(0, 5))
+     def cli(x):
+         click.echo(x)
+ 
+-    result = runner.invoke(cli, ['--x=5'])
++    result = runner.invoke(cli, ["--x=5"])
+     assert not result.exception
+-    assert result.output == '5\n'
++    assert result.output == "5\n"
+ 
+-    result = runner.invoke(cli, ['--x=6'])
++    result = runner.invoke(cli, ["--x=6"])
+     assert result.exit_code == 2
+-    assert 'Invalid value for "--x": 6 is not in the valid range of 0 to 5.\n' \
++    assert (
++        "Invalid value for '--x': 6 is not in the valid range of 0 to 5.\n"
+         in result.output
++    )
+ 
+     @click.command()
+-    @click.option('--x', type=click.IntRange(0, 5, clamp=True))
++    @click.option("--x", type=click.IntRange(0, 5, clamp=True))
+     def clamp(x):
+         click.echo(x)
+ 
+-    result = runner.invoke(clamp, ['--x=5'])
++    result = runner.invoke(clamp, ["--x=5"])
+     assert not result.exception
+-    assert result.output == '5\n'
++    assert result.output == "5\n"
+ 
+-    result = runner.invoke(clamp, ['--x=6'])
++    result = runner.invoke(clamp, ["--x=6"])
+     assert not result.exception
+-    assert result.output == '5\n'
++    assert result.output == "5\n"
+ 
+-    result = runner.invoke(clamp, ['--x=-1'])
++    result = runner.invoke(clamp, ["--x=-1"])
+     assert not result.exception
+-    assert result.output == '0\n'
++    assert result.output == "0\n"
+ 
+ 
+ def test_float_range_option(runner):
+     @click.command()
+-    @click.option('--x', type=click.FloatRange(0, 5))
++    @click.option("--x", type=click.FloatRange(0, 5))
+     def cli(x):
+         click.echo(x)
+ 
+-    result = runner.invoke(cli, ['--x=5.0'])
++    result = runner.invoke(cli, ["--x=5.0"])
+     assert not result.exception
+-    assert result.output == '5.0\n'
++    assert result.output == "5.0\n"
+ 
+-    result = runner.invoke(cli, ['--x=6.0'])
++    result = runner.invoke(cli, ["--x=6.0"])
+     assert result.exit_code == 2
+-    assert 'Invalid value for "--x": 6.0 is not in the valid range of 0 to 5.\n' \
++    assert (
++        "Invalid value for '--x': 6.0 is not in the valid range of 0 to 5.\n"
+         in result.output
++    )
+ 
+     @click.command()
+-    @click.option('--x', type=click.FloatRange(0, 5, clamp=True))
++    @click.option("--x", type=click.FloatRange(0, 5, clamp=True))
+     def clamp(x):
+         click.echo(x)
+ 
+-    result = runner.invoke(clamp, ['--x=5.0'])
++    result = runner.invoke(clamp, ["--x=5.0"])
+     assert not result.exception
+-    assert result.output == '5.0\n'
++    assert result.output == "5.0\n"
+ 
+-    result = runner.invoke(clamp, ['--x=6.0'])
++    result = runner.invoke(clamp, ["--x=6.0"])
+     assert not result.exception
+-    assert result.output == '5\n'
++    assert result.output == "5\n"
+ 
+-    result = runner.invoke(clamp, ['--x=-1.0'])
++    result = runner.invoke(clamp, ["--x=-1.0"])
+     assert not result.exception
+-    assert result.output == '0\n'
++    assert result.output == "0\n"
+ 
+ 
+ def test_required_option(runner):
+     @click.command()
+-    @click.option('--foo', required=True)
++    @click.option("--foo", required=True)
+     def cli(foo):
+         click.echo(foo)
+ 
+     result = runner.invoke(cli, [])
+     assert result.exit_code == 2
+-    assert 'Missing option "--foo"' in result.output
++    assert "Missing option '--foo'" in result.output
+ 
+ 
+ def test_evaluation_order(runner):
+@@ -473,52 +481,50 @@ def test_evaluation_order(runner):
+         return value
+ 
+     @click.command()
+-    @click.option('--missing', default='missing',
+-                  is_eager=False, callback=memo)
+-    @click.option('--eager-flag1', flag_value='eager1',
+-                  is_eager=True, callback=memo)
+-    @click.option('--eager-flag2', flag_value='eager2',
+-                  is_eager=True, callback=memo)
+-    @click.option('--eager-flag3', flag_value='eager3',
+-                  is_eager=True, callback=memo)
+-    @click.option('--normal-flag1', flag_value='normal1',
+-                  is_eager=False, callback=memo)
+-    @click.option('--normal-flag2', flag_value='normal2',
+-                  is_eager=False, callback=memo)
+-    @click.option('--normal-flag3', flag_value='normal3',
+-                  is_eager=False, callback=memo)
++    @click.option("--missing", default="missing", is_eager=False, callback=memo)
++    @click.option("--eager-flag1", flag_value="eager1", is_eager=True, callback=memo)
++    @click.option("--eager-flag2", flag_value="eager2", is_eager=True, callback=memo)
++    @click.option("--eager-flag3", flag_value="eager3", is_eager=True, callback=memo)
++    @click.option("--normal-flag1", flag_value="normal1", is_eager=False, callback=memo)
++    @click.option("--normal-flag2", flag_value="normal2", is_eager=False, callback=memo)
++    @click.option("--normal-flag3", flag_value="normal3", is_eager=False, callback=memo)
+     def cli(**x):
+         pass
+ 
+-    result = runner.invoke(cli, ['--eager-flag2',
+-                                 '--eager-flag1',
+-                                 '--normal-flag2',
+-                                 '--eager-flag3',
+-                                 '--normal-flag3',
+-                                 '--normal-flag3',
+-                                 '--normal-flag1',
+-                                 '--normal-flag1'])
++    result = runner.invoke(
++        cli,
++        [
++            "--eager-flag2",
++            "--eager-flag1",
++            "--normal-flag2",
++            "--eager-flag3",
++            "--normal-flag3",
++            "--normal-flag3",
++            "--normal-flag1",
++            "--normal-flag1",
++        ],
++    )
+     assert not result.exception
+     assert called == [
+-        'eager2',
+-        'eager1',
+-        'eager3',
+-        'normal2',
+-        'normal3',
+-        'normal1',
+-        'missing',
++        "eager2",
++        "eager1",
++        "eager3",
++        "normal2",
++        "normal3",
++        "normal1",
++        "missing",
+     ]
+ 
+ 
+ def test_hidden_option(runner):
+     @click.command()
+-    @click.option('--nope', hidden=True)
++    @click.option("--nope", hidden=True)
+     def cli(nope):
+         click.echo(nope)
+ 
+-    result = runner.invoke(cli, ['--help'])
++    result = runner.invoke(cli, ["--help"])
+     assert result.exit_code == 0
+-    assert '--nope' not in result.output
++    assert "--nope" not in result.output
+ 
+ 
+ def test_hidden_command(runner):
+@@ -530,9 +536,9 @@ def test_hidden_command(runner):
+     def nope():
+         pass
+ 
+-    result = runner.invoke(cli, ['--help'])
++    result = runner.invoke(cli, ["--help"])
+     assert result.exit_code == 0
+-    assert 'nope' not in result.output
++    assert "nope" not in result.output
+ 
+ 
+ def test_hidden_group(runner):
+@@ -548,7 +554,7 @@ def test_hidden_group(runner):
+     def nope():
+         pass
+ 
+-    result = runner.invoke(cli, ['--help'])
++    result = runner.invoke(cli, ["--help"])
+     assert result.exit_code == 0
+-    assert 'subgroup' not in result.output
+-    assert 'nope' not in result.output
++    assert "subgroup" not in result.output
++    assert "nope" not in result.output
+diff --git a/tests/test_chain.py b/tests/test_chain.py
+index 56a60e3ce4dcbf9f6182efb82d367f023f67752a..c227270f22b55b48dcfe44c3b763aca9c65eb5f6 100644
+--- a/tests/test_chain.py
++++ b/tests/test_chain.py
+@@ -1,13 +1,16 @@
+ import sys
+-import click
++
+ import pytest
+ 
++import click
++
+ 
+ def debug():
+-    click.echo('%s=%s' % (
+-        sys._getframe(1).f_code.co_name,
+-        '|'.join(click.get_current_context().args),
+-    ))
++    click.echo(
++        "{}={}".format(
++            sys._getframe(1).f_code.co_name, "|".join(click.get_current_context().args)
++        )
++    )
+ 
+ 
+ def test_basic_chaining(runner):
+@@ -15,20 +18,20 @@ def test_basic_chaining(runner):
+     def cli():
+         pass
+ 
+-    @cli.command('sdist')
++    @cli.command("sdist")
+     def sdist():
+-        click.echo('sdist called')
++        click.echo("sdist called")
+ 
+-    @cli.command('bdist')
++    @cli.command("bdist")
+     def bdist():
+-        click.echo('bdist called')
++        click.echo("bdist called")
+ 
+-    result = runner.invoke(cli, ['bdist', 'sdist', 'bdist'])
++    result = runner.invoke(cli, ["bdist", "sdist", "bdist"])
+     assert not result.exception
+     assert result.output.splitlines() == [
+-        'bdist called',
+-        'sdist called',
+-        'bdist called',
++        "bdist called",
++        "sdist called",
++        "bdist called",
+     ]
+ 
+ 
+@@ -38,32 +41,32 @@ def test_chaining_help(runner):
+         """ROOT HELP"""
+         pass
+ 
+-    @cli.command('sdist')
++    @cli.command("sdist")
+     def sdist():
+         """SDIST HELP"""
+-        click.echo('sdist called')
++        click.echo("sdist called")
+ 
+-    @cli.command('bdist')
++    @cli.command("bdist")
+     def bdist():
+         """BDIST HELP"""
+-        click.echo('bdist called')
++        click.echo("bdist called")
+ 
+-    result = runner.invoke(cli, ['--help'])
++    result = runner.invoke(cli, ["--help"])
+     assert not result.exception
+-    assert 'COMMAND1 [ARGS]... [COMMAND2 [ARGS]...]...' in result.output
+-    assert 'ROOT HELP' in result.output
++    assert "COMMAND1 [ARGS]... [COMMAND2 [ARGS]...]..." in result.output
++    assert "ROOT HELP" in result.output
+ 
+-    result = runner.invoke(cli, ['sdist', '--help'])
++    result = runner.invoke(cli, ["sdist", "--help"])
+     assert not result.exception
+-    assert 'SDIST HELP' in result.output
++    assert "SDIST HELP" in result.output
+ 
+-    result = runner.invoke(cli, ['bdist', '--help'])
++    result = runner.invoke(cli, ["bdist", "--help"])
+     assert not result.exception
+-    assert 'BDIST HELP' in result.output
++    assert "BDIST HELP" in result.output
+ 
+-    result = runner.invoke(cli, ['bdist', 'sdist', '--help'])
++    result = runner.invoke(cli, ["bdist", "sdist", "--help"])
+     assert not result.exception
+-    assert 'SDIST HELP' in result.output
++    assert "SDIST HELP" in result.output
+ 
+ 
+ def test_chaining_with_options(runner):
+@@ -71,22 +74,19 @@ def test_chaining_with_options(runner):
+     def cli():
+         pass
+ 
+-    @cli.command('sdist')
+-    @click.option('--format')
++    @cli.command("sdist")
++    @click.option("--format")
+     def sdist(format):
+-        click.echo('sdist called %s' % format)
++        click.echo("sdist called {}".format(format))
+ 
+-    @cli.command('bdist')
+-    @click.option('--format')
++    @cli.command("bdist")
++    @click.option("--format")
+     def bdist(format):
+-        click.echo('bdist called %s' % format)
++        click.echo("bdist called {}".format(format))
+ 
+-    result = runner.invoke(cli, ['bdist', '--format=1', 'sdist', '--format=2'])
++    result = runner.invoke(cli, ["bdist", "--format=1", "sdist", "--format=2"])
+     assert not result.exception
+-    assert result.output.splitlines() == [
+-        'bdist called 1',
+-        'sdist called 2',
+-    ]
++    assert result.output.splitlines() == ["bdist called 1", "sdist called 2"]
+ 
+ 
+ def test_chaining_with_arguments(runner):
+@@ -94,73 +94,62 @@ def test_chaining_with_arguments(runner):
+     def cli():
+         pass
+ 
+-    @cli.command('sdist')
+-    @click.argument('format')
++    @cli.command("sdist")
++    @click.argument("format")
+     def sdist(format):
+-        click.echo('sdist called %s' % format)
++        click.echo("sdist called {}".format(format))
+ 
+-    @cli.command('bdist')
+-    @click.argument('format')
++    @cli.command("bdist")
++    @click.argument("format")
+     def bdist(format):
+-        click.echo('bdist called %s' % format)
++        click.echo("bdist called {}".format(format))
+ 
+-    result = runner.invoke(cli, ['bdist', '1', 'sdist', '2'])
++    result = runner.invoke(cli, ["bdist", "1", "sdist", "2"])
+     assert not result.exception
+-    assert result.output.splitlines() == [
+-        'bdist called 1',
+-        'sdist called 2',
+-    ]
++    assert result.output.splitlines() == ["bdist called 1", "sdist called 2"]
+ 
+ 
+ def test_pipeline(runner):
+     @click.group(chain=True, invoke_without_command=True)
+-    @click.option('-i', '--input', type=click.File('r'))
++    @click.option("-i", "--input", type=click.File("r"))
+     def cli(input):
+         pass
+ 
+     @cli.resultcallback()
+     def process_pipeline(processors, input):
+-        iterator = (x.rstrip('\r\n') for x in input)
++        iterator = (x.rstrip("\r\n") for x in input)
+         for processor in processors:
+             iterator = processor(iterator)
+         for item in iterator:
+             click.echo(item)
+ 
+-    @cli.command('uppercase')
++    @cli.command("uppercase")
+     def make_uppercase():
+         def processor(iterator):
+             for line in iterator:
+                 yield line.upper()
++
+         return processor
+ 
+-    @cli.command('strip')
++    @cli.command("strip")
+     def make_strip():
+         def processor(iterator):
+             for line in iterator:
+                 yield line.strip()
++
+         return processor
+ 
+-    result = runner.invoke(cli, ['-i', '-'], input='foo\nbar')
++    result = runner.invoke(cli, ["-i", "-"], input="foo\nbar")
+     assert not result.exception
+-    assert result.output.splitlines() == [
+-        'foo',
+-        'bar',
+-    ]
++    assert result.output.splitlines() == ["foo", "bar"]
+ 
+-    result = runner.invoke(cli, ['-i', '-', 'strip'], input='foo \n bar')
++    result = runner.invoke(cli, ["-i", "-", "strip"], input="foo \n bar")
+     assert not result.exception
+-    assert result.output.splitlines() == [
+-        'foo',
+-        'bar',
+-    ]
++    assert result.output.splitlines() == ["foo", "bar"]
+ 
+-    result = runner.invoke(cli, ['-i', '-', 'strip', 'uppercase'],
+-                           input='foo \n bar')
++    result = runner.invoke(cli, ["-i", "-", "strip", "uppercase"], input="foo \n bar")
+     assert not result.exception
+-    assert result.output.splitlines() == [
+-        'FOO',
+-        'BAR',
+-    ]
++    assert result.output.splitlines() == ["FOO", "BAR"]
+ 
+ 
+ def test_args_and_chain(runner):
+@@ -180,44 +169,38 @@ def test_args_and_chain(runner):
+     def c():
+         debug()
+ 
+-    result = runner.invoke(cli, ['a', 'b', 'c'])
++    result = runner.invoke(cli, ["a", "b", "c"])
+     assert not result.exception
+-    assert result.output.splitlines() == [
+-        'cli=',
+-        'a=',
+-        'b=',
+-        'c=',
+-    ]
++    assert result.output.splitlines() == ["cli=", "a=", "b=", "c="]
+ 
+ 
+ def test_multicommand_arg_behavior(runner):
+     with pytest.raises(RuntimeError):
++
+         @click.group(chain=True)
+-        @click.argument('forbidden', required=False)
++        @click.argument("forbidden", required=False)
+         def bad_cli():
+             pass
+ 
+     with pytest.raises(RuntimeError):
++
+         @click.group(chain=True)
+-        @click.argument('forbidden', nargs=-1)
++        @click.argument("forbidden", nargs=-1)
+         def bad_cli2():
+             pass
+ 
+     @click.group(chain=True)
+-    @click.argument('arg')
++    @click.argument("arg")
+     def cli(arg):
+-        click.echo('cli:%s' % arg)
++        click.echo("cli:{}".format(arg))
+ 
+     @cli.command()
+     def a():
+-        click.echo('a')
++        click.echo("a")
+ 
+-    result = runner.invoke(cli, ['foo', 'a'])
++    result = runner.invoke(cli, ["foo", "a"])
+     assert not result.exception
+-    assert result.output.splitlines() == [
+-        'cli:foo',
+-        'a',
+-    ]
++    assert result.output.splitlines() == ["cli:foo", "a"]
+ 
+ 
+ @pytest.mark.xfail
+@@ -242,11 +225,6 @@ def test_multicommand_chaining(runner):
+     def l1b():
+         debug()
+ 
+-    result = runner.invoke(cli, ['l1a', 'l2a', 'l1b'])
++    result = runner.invoke(cli, ["l1a", "l2a", "l1b"])
+     assert not result.exception
+-    assert result.output.splitlines() == [
+-        'cli=',
+-        'l1a=',
+-        'l2a=',
+-        'l1b=',
+-    ]
++    assert result.output.splitlines() == ["cli=", "l1a=", "l2a=", "l1b="]
+diff --git a/tests/test_commands.py b/tests/test_commands.py
+index 8186add747e1b9fee30ff94c584532c5e6630a1a..1d99218cdc6b2287a8633fe809d4b7e41f65434d 100644
+--- a/tests/test_commands.py
++++ b/tests/test_commands.py
+@@ -2,7 +2,6 @@
+ import re
+ 
+ import click
+-import pytest
+ 
+ 
+ def test_other_command_invoke(runner):
+@@ -12,33 +11,33 @@ def test_other_command_invoke(runner):
+         return ctx.invoke(other_cmd, arg=42)
+ 
+     @click.command()
+-    @click.argument('arg', type=click.INT)
++    @click.argument("arg", type=click.INT)
+     def other_cmd(arg):
+         click.echo(arg)
+ 
+     result = runner.invoke(cli, [])
+     assert not result.exception
+-    assert result.output == '42\n'
++    assert result.output == "42\n"
+ 
+ 
+ def test_other_command_forward(runner):
+     cli = click.Group()
+ 
+     @cli.command()
+-    @click.option('--count', default=1)
++    @click.option("--count", default=1)
+     def test(count):
+-        click.echo('Count: %d' % count)
++        click.echo("Count: {:d}".format(count))
+ 
+     @cli.command()
+-    @click.option('--count', default=1)
++    @click.option("--count", default=1)
+     @click.pass_context
+     def dist(ctx, count):
+         ctx.forward(test)
+         ctx.invoke(test, count=42)
+ 
+-    result = runner.invoke(cli, ['dist'])
++    result = runner.invoke(cli, ["dist"])
+     assert not result.exception
+-    assert result.output == 'Count: 1\nCount: 42\n'
++    assert result.output == "Count: 1\nCount: 42\n"
+ 
+ 
+ def test_auto_shorthelp(runner):
+@@ -59,13 +58,18 @@ def test_auto_shorthelp(runner):
+         """This is a long text that is too long to show as short help
+         and will be truncated instead."""
+ 
+-    result = runner.invoke(cli, ['--help'])
+-    assert re.search(
+-        r'Commands:\n\s+'
+-        r'long\s+This is a long text that is too long to show as short help\.\.\.\n\s+'
+-        r'short\s+This is a short text\.\n\s+'
+-        r'special-chars\s+Login and store the token in ~/.netrc\.\s*',
+-        result.output) is not None
++    result = runner.invoke(cli, ["--help"])
++    assert (
++        re.search(
++            r"Commands:\n\s+"
++            r"long\s+This is a long text that is too long to show as short help"
++            r"\.\.\.\n\s+"
++            r"short\s+This is a short text\.\n\s+"
++            r"special-chars\s+Login and store the token in ~/.netrc\.\s*",
++            result.output,
++        )
++        is not None
++    )
+ 
+ 
+ def test_no_args_is_help(runner):
+@@ -75,7 +79,7 @@ def test_no_args_is_help(runner):
+ 
+     result = runner.invoke(cli, [])
+     assert result.exit_code == 0
+-    assert 'Show this message and exit.' in result.output
++    assert "Show this message and exit." in result.output
+ 
+ 
+ def test_default_maps(runner):
+@@ -84,43 +88,41 @@ def test_default_maps(runner):
+         pass
+ 
+     @cli.command()
+-    @click.option('--name', default='normal')
++    @click.option("--name", default="normal")
+     def foo(name):
+         click.echo(name)
+ 
+-    result = runner.invoke(cli, ['foo'], default_map={
+-        'foo': {'name': 'changed'}
+-    })
++    result = runner.invoke(cli, ["foo"], default_map={"foo": {"name": "changed"}})
+ 
+     assert not result.exception
+-    assert result.output == 'changed\n'
++    assert result.output == "changed\n"
+ 
+ 
+ def test_group_with_args(runner):
+     @click.group()
+-    @click.argument('obj')
++    @click.argument("obj")
+     def cli(obj):
+-        click.echo('obj=%s' % obj)
++        click.echo("obj={}".format(obj))
+ 
+     @cli.command()
+     def move():
+-        click.echo('move')
++        click.echo("move")
+ 
+     result = runner.invoke(cli, [])
+     assert result.exit_code == 0
+-    assert 'Show this message and exit.' in result.output
++    assert "Show this message and exit." in result.output
+ 
+-    result = runner.invoke(cli, ['obj1'])
++    result = runner.invoke(cli, ["obj1"])
+     assert result.exit_code == 2
+-    assert 'Error: Missing command.' in result.output
++    assert "Error: Missing command." in result.output
+ 
+-    result = runner.invoke(cli, ['obj1', '--help'])
++    result = runner.invoke(cli, ["obj1", "--help"])
+     assert result.exit_code == 0
+-    assert 'Show this message and exit.' in result.output
++    assert "Show this message and exit." in result.output
+ 
+-    result = runner.invoke(cli, ['obj1', 'move'])
++    result = runner.invoke(cli, ["obj1", "move"])
+     assert result.exit_code == 0
+-    assert result.output == 'obj=obj1\nmove\n'
++    assert result.output == "obj=obj1\nmove\n"
+ 
+ 
+ def test_base_command(runner):
+@@ -131,7 +133,6 @@ def test_base_command(runner):
+         pass
+ 
+     class OptParseCommand(click.BaseCommand):
+-
+         def __init__(self, name, parser, callback):
+             click.BaseCommand.__init__(self, name)
+             self.parser = parser
+@@ -154,58 +155,67 @@ def test_base_command(runner):
+         def invoke(self, ctx):
+             ctx.invoke(self.callback, ctx.args, **ctx.params)
+ 
+-    parser = optparse.OptionParser(usage='Usage: foo test [OPTIONS]')
+-    parser.add_option("-f", "--file", dest="filename",
+-                      help="write report to FILE", metavar="FILE")
+-    parser.add_option("-q", "--quiet",
+-                      action="store_false", dest="verbose", default=True,
+-                      help="don't print status messages to stdout")
++    parser = optparse.OptionParser(usage="Usage: foo test [OPTIONS]")
++    parser.add_option(
++        "-f", "--file", dest="filename", help="write report to FILE", metavar="FILE"
++    )
++    parser.add_option(
++        "-q",
++        "--quiet",
++        action="store_false",
++        dest="verbose",
++        default=True,
++        help="don't print status messages to stdout",
++    )
+ 
+     def test_callback(args, filename, verbose):
+-        click.echo(' '.join(args))
++        click.echo(" ".join(args))
+         click.echo(filename)
+         click.echo(verbose)
+-    cli.add_command(OptParseCommand('test', parser, test_callback))
+ 
+-    result = runner.invoke(cli, ['test', '-f', 'test.txt', '-q',
+-                                 'whatever.txt', 'whateverelse.txt'])
++    cli.add_command(OptParseCommand("test", parser, test_callback))
++
++    result = runner.invoke(
++        cli, ["test", "-f", "test.txt", "-q", "whatever.txt", "whateverelse.txt"]
++    )
+     assert not result.exception
+     assert result.output.splitlines() == [
+-        'whatever.txt whateverelse.txt',
+-        'test.txt',
+-        'False',
++        "whatever.txt whateverelse.txt",
++        "test.txt",
++        "False",
+     ]
+ 
+-    result = runner.invoke(cli, ['test', '--help'])
++    result = runner.invoke(cli, ["test", "--help"])
+     assert not result.exception
+     assert result.output.splitlines() == [
+-        'Usage: foo test [OPTIONS]',
+-        '',
+-        'Options:',
+-        '  -h, --help            show this help message and exit',
+-        '  -f FILE, --file=FILE  write report to FILE',
+-        '  -q, --quiet           don\'t print status messages to stdout',
++        "Usage: foo test [OPTIONS]",
++        "",
++        "Options:",
++        "  -h, --help            show this help message and exit",
++        "  -f FILE, --file=FILE  write report to FILE",
++        "  -q, --quiet           don't print status messages to stdout",
+     ]
+ 
+ 
+ def test_object_propagation(runner):
+     for chain in False, True:
++
+         @click.group(chain=chain)
+-        @click.option('--debug/--no-debug', default=False)
++        @click.option("--debug/--no-debug", default=False)
+         @click.pass_context
+         def cli(ctx, debug):
+             if ctx.obj is None:
+                 ctx.obj = {}
+-            ctx.obj['DEBUG'] = debug
++            ctx.obj["DEBUG"] = debug
+ 
+         @cli.command()
+         @click.pass_context
+         def sync(ctx):
+-            click.echo('Debug is %s' % (ctx.obj['DEBUG'] and 'on' or 'off'))
++            click.echo("Debug is {}".format("on" if ctx.obj["DEBUG"] else "off"))
+ 
+-        result = runner.invoke(cli, ['sync'])
++        result = runner.invoke(cli, ["sync"])
+         assert result.exception is None
+-        assert result.output == 'Debug is off\n'
++        assert result.output == "Debug is off\n"
+ 
+ 
+ def test_other_command_invoke_with_defaults(runner):
+@@ -215,15 +225,15 @@ def test_other_command_invoke_with_defaults(runner):
+         return ctx.invoke(other_cmd)
+ 
+     @click.command()
+-    @click.option('--foo', type=click.INT, default=42)
++    @click.option("--foo", type=click.INT, default=42)
+     @click.pass_context
+     def other_cmd(ctx, foo):
+-        assert ctx.info_name == 'other-cmd'
++        assert ctx.info_name == "other-cmd"
+         click.echo(foo)
+ 
+     result = runner.invoke(cli, [])
+     assert not result.exception
+-    assert result.output == '42\n'
++    assert result.output == "42\n"
+ 
+ 
+ def test_invoked_subcommand(runner):
+@@ -231,39 +241,37 @@ def test_invoked_subcommand(runner):
+     @click.pass_context
+     def cli(ctx):
+         if ctx.invoked_subcommand is None:
+-            click.echo('no subcommand, use default')
++            click.echo("no subcommand, use default")
+             ctx.invoke(sync)
+         else:
+-            click.echo('invoke subcommand')
++            click.echo("invoke subcommand")
+ 
+     @cli.command()
+     def sync():
+-        click.echo('in subcommand')
++        click.echo("in subcommand")
+ 
+-    result = runner.invoke(cli, ['sync'])
++    result = runner.invoke(cli, ["sync"])
+     assert not result.exception
+-    assert result.output == 'invoke subcommand\nin subcommand\n'
++    assert result.output == "invoke subcommand\nin subcommand\n"
+ 
+     result = runner.invoke(cli)
+     assert not result.exception
+-    assert result.output == 'no subcommand, use default\nin subcommand\n'
++    assert result.output == "no subcommand, use default\nin subcommand\n"
+ 
+ 
+ def test_unprocessed_options(runner):
+-    @click.command(context_settings=dict(
+-        ignore_unknown_options=True
+-    ))
+-    @click.argument('args', nargs=-1, type=click.UNPROCESSED)
+-    @click.option('--verbose', '-v', count=True)
++    @click.command(context_settings=dict(ignore_unknown_options=True))
++    @click.argument("args", nargs=-1, type=click.UNPROCESSED)
++    @click.option("--verbose", "-v", count=True)
+     def cli(verbose, args):
+-        click.echo('Verbosity: %s' % verbose)
+-        click.echo('Args: %s' % '|'.join(args))
++        click.echo("Verbosity: {}".format(verbose))
++        click.echo("Args: {}".format("|".join(args)))
+ 
+-    result = runner.invoke(cli, ['-foo', '-vvvvx', '--muhaha', 'x', 'y', '-x'])
++    result = runner.invoke(cli, ["-foo", "-vvvvx", "--muhaha", "x", "y", "-x"])
+     assert not result.exception
+     assert result.output.splitlines() == [
+-        'Verbosity: 4',
+-        'Args: -foo|-x|--muhaha|x|y|-x',
++        "Verbosity: 4",
++        "Args: -foo|-x|--muhaha|x|y|-x",
+     ]
+ 
+ 
+@@ -273,21 +281,21 @@ def test_deprecated_in_help_messages(runner):
+         """CLI HELP"""
+         pass
+ 
+-    result = runner.invoke(cmd_with_help, ['--help'])
+-    assert '(DEPRECATED)' in result.output
++    result = runner.invoke(cmd_with_help, ["--help"])
++    assert "(DEPRECATED)" in result.output
+ 
+     @click.command(deprecated=True)
+     def cmd_without_help():
+         pass
+ 
+-    result = runner.invoke(cmd_without_help, ['--help'])
+-    assert '(DEPRECATED)' in result.output
++    result = runner.invoke(cmd_without_help, ["--help"])
++    assert "(DEPRECATED)" in result.output
+ 
+ 
+ def test_deprecated_in_invocation(runner):
+     @click.command(deprecated=True)
+     def deprecated_cmd():
+-        debug()
++        pass
+ 
+     result = runner.invoke(deprecated_cmd)
+-    assert 'DeprecationWarning:' in result.output
++    assert "DeprecationWarning:" in result.output
+diff --git a/tests/test_compat.py b/tests/test_compat.py
+index 674cded9a722d1b244ed6ef89d3a1735a87f137a..c26834a9a3b9d7a1cfcc978bd24e921dc696a2f0 100644
+--- a/tests/test_compat.py
++++ b/tests/test_compat.py
+@@ -1,6 +1,8 @@
+-import click
+ import pytest
+-from click._compat import should_strip_ansi, WIN
++
++import click
++from click._compat import should_strip_ansi
++from click._compat import WIN
+ 
+ 
+ def test_legacy_callbacks(runner):
+@@ -8,29 +10,31 @@ def test_legacy_callbacks(runner):
+         return value.upper()
+ 
+     @click.command()
+-    @click.option('--foo', callback=legacy_callback)
++    @click.option("--foo", callback=legacy_callback)
+     def cli(foo):
+         click.echo(foo)
+ 
+-    with pytest.warns(Warning, match='Invoked legacy parameter callback'):
+-        result = runner.invoke(cli, ['--foo', 'wat'])
++    with pytest.warns(Warning, match="Invoked legacy parameter callback"):
++        result = runner.invoke(cli, ["--foo", "wat"])
+         assert result.exit_code == 0
+-        assert 'WAT' in result.output
++        assert "WAT" in result.output
+ 
+ 
+ def test_bash_func_name():
+     from click._bashcomplete import get_completion_script
+-    script = get_completion_script('foo-bar baz_blah', '_COMPLETE_VAR', 'bash').strip()
+-    assert script.startswith('_foo_barbaz_blah_completion()')
+-    assert '_COMPLETE_VAR=complete $1' in script
++
++    script = get_completion_script("foo-bar baz_blah", "_COMPLETE_VAR", "bash").strip()
++    assert script.startswith("_foo_barbaz_blah_completion()")
++    assert "_COMPLETE_VAR=complete $1" in script
+ 
+ 
+ def test_zsh_func_name():
+     from click._bashcomplete import get_completion_script
+-    script = get_completion_script('foo-bar', '_COMPLETE_VAR', 'zsh').strip()
+-    assert script.startswith('#compdef foo-bar')
+-    assert 'compdef _foo_bar_completion foo-bar;' in script
+-    assert '(( ! $+commands[foo-bar] )) && return 1' in script
++
++    script = get_completion_script("foo-bar", "_COMPLETE_VAR", "zsh").strip()
++    assert script.startswith("#compdef foo-bar")
++    assert "compdef _foo_bar_completion foo-bar;" in script
++    assert "(( ! $+commands[foo-bar] )) && return 1" in script
+ 
+ 
+ @pytest.mark.xfail(WIN, reason="Jupyter not tested/supported on Windows")
+diff --git a/tests/test_context.py b/tests/test_context.py
+index 35933beba52ef6915c4b8bf37f35fba055c92a9d..b3a20c6a5a5626ee648166f2a8d1d680811a58b6 100644
+--- a/tests/test_context.py
++++ b/tests/test_context.py
+@@ -5,7 +5,7 @@ import click
+ def test_ensure_context_objects(runner):
+     class Foo(object):
+         def __init__(self):
+-            self.title = 'default'
++            self.title = "default"
+ 
+     pass_foo = click.make_pass_decorator(Foo, ensure=True)
+ 
+@@ -19,15 +19,15 @@ def test_ensure_context_objects(runner):
+     def test(foo):
+         click.echo(foo.title)
+ 
+-    result = runner.invoke(cli, ['test'])
++    result = runner.invoke(cli, ["test"])
+     assert not result.exception
+-    assert result.output == 'default\n'
++    assert result.output == "default\n"
+ 
+ 
+ def test_get_context_objects(runner):
+     class Foo(object):
+         def __init__(self):
+-            self.title = 'default'
++            self.title = "default"
+ 
+     pass_foo = click.make_pass_decorator(Foo, ensure=True)
+ 
+@@ -35,22 +35,22 @@ def test_get_context_objects(runner):
+     @click.pass_context
+     def cli(ctx):
+         ctx.obj = Foo()
+-        ctx.obj.title = 'test'
++        ctx.obj.title = "test"
+ 
+     @cli.command()
+     @pass_foo
+     def test(foo):
+         click.echo(foo.title)
+ 
+-    result = runner.invoke(cli, ['test'])
++    result = runner.invoke(cli, ["test"])
+     assert not result.exception
+-    assert result.output == 'test\n'
++    assert result.output == "test\n"
+ 
+ 
+ def test_get_context_objects_no_ensuring(runner):
+     class Foo(object):
+         def __init__(self):
+-            self.title = 'default'
++            self.title = "default"
+ 
+     pass_foo = click.make_pass_decorator(Foo)
+ 
+@@ -58,16 +58,16 @@ def test_get_context_objects_no_ensuring(runner):
+     @click.pass_context
+     def cli(ctx):
+         ctx.obj = Foo()
+-        ctx.obj.title = 'test'
++        ctx.obj.title = "test"
+ 
+     @cli.command()
+     @pass_foo
+     def test(foo):
+         click.echo(foo.title)
+ 
+-    result = runner.invoke(cli, ['test'])
++    result = runner.invoke(cli, ["test"])
+     assert not result.exception
+-    assert result.output == 'test\n'
++    assert result.output == "test\n"
+ 
+ 
+ def test_get_context_objects_missing(runner):
+@@ -86,11 +86,13 @@ def test_get_context_objects_missing(runner):
+     def test(foo):
+         click.echo(foo.title)
+ 
+-    result = runner.invoke(cli, ['test'])
++    result = runner.invoke(cli, ["test"])
+     assert result.exception is not None
+     assert isinstance(result.exception, RuntimeError)
+-    assert "Managed to invoke callback without a context object " \
+-        "of type 'Foo' existing" in str(result.exception)
++    assert (
++        "Managed to invoke callback without a context object of type"
++        " 'Foo' existing" in str(result.exception)
++    )
+ 
+ 
+ def test_multi_enter(runner):
+@@ -101,6 +103,7 @@ def test_multi_enter(runner):
+     def cli(ctx):
+         def callback():
+             called.append(True)
++
+         ctx.call_on_close(callback)
+ 
+         with ctx:
+@@ -117,8 +120,8 @@ def test_global_context_object(runner):
+     @click.pass_context
+     def cli(ctx):
+         assert click.get_current_context() is ctx
+-        ctx.obj = 'FOOBAR'
+-        assert click.get_current_context().obj == 'FOOBAR'
++        ctx.obj = "FOOBAR"
++        assert click.get_current_context().obj == "FOOBAR"
+ 
+     assert click.get_current_context(silent=True) is None
+     runner.invoke(cli, [], catch_exceptions=False)
+@@ -126,20 +129,20 @@ def test_global_context_object(runner):
+ 
+ 
+ def test_context_meta(runner):
+-    LANG_KEY = __name__ + '.lang'
++    LANG_KEY = "{}.lang".format(__name__)
+ 
+     def set_language(value):
+         click.get_current_context().meta[LANG_KEY] = value
+ 
+     def get_language():
+-        return click.get_current_context().meta.get(LANG_KEY, 'en_US')
++        return click.get_current_context().meta.get(LANG_KEY, "en_US")
+ 
+     @click.command()
+     @click.pass_context
+     def cli(ctx):
+-        assert get_language() == 'en_US'
+-        set_language('de_DE')
+-        assert get_language() == 'de_DE'
++        assert get_language() == "en_US"
++        set_language("de_DE")
++        assert get_language() == "de_DE"
+ 
+     runner.invoke(cli, [], catch_exceptions=False)
+ 
+@@ -174,16 +177,16 @@ def test_pass_obj(runner):
+     @click.group()
+     @click.pass_context
+     def cli(ctx):
+-        ctx.obj = 'test'
++        ctx.obj = "test"
+ 
+     @cli.command()
+     @click.pass_obj
+     def test(obj):
+         click.echo(obj)
+ 
+-    result = runner.invoke(cli, ['test'])
++    result = runner.invoke(cli, ["test"])
+     assert not result.exception
+-    assert result.output == 'test\n'
++    assert result.output == "test\n"
+ 
+ 
+ def test_close_before_pop(runner):
+@@ -192,17 +195,18 @@ def test_close_before_pop(runner):
+     @click.command()
+     @click.pass_context
+     def cli(ctx):
+-        ctx.obj = 'test'
++        ctx.obj = "test"
+ 
+         @ctx.call_on_close
+         def foo():
+-            assert click.get_current_context().obj == 'test'
++            assert click.get_current_context().obj == "test"
+             called.append(True)
+-        click.echo('aha!')
++
++        click.echo("aha!")
+ 
+     result = runner.invoke(cli, [])
+     assert not result.exception
+-    assert result.output == 'aha!\n'
++    assert result.output == "aha!\n"
+     assert called == [True]
+ 
+ 
+@@ -211,8 +215,9 @@ def test_make_pass_decorator_args(runner):
+     Test to check that make_pass_decorator doesn't consume arguments based on
+     invocation order.
+     """
++
+     class Foo(object):
+-        title = 'foocmd'
++        title = "foocmd"
+ 
+     pass_foo = click.make_pass_decorator(Foo)
+ 
+@@ -233,13 +238,13 @@ def test_make_pass_decorator_args(runner):
+     def test2(ctx, foo):
+         click.echo(foo.title)
+ 
+-    result = runner.invoke(cli, ['test1'])
++    result = runner.invoke(cli, ["test1"])
+     assert not result.exception
+-    assert result.output == 'foocmd\n'
++    assert result.output == "foocmd\n"
+ 
+-    result = runner.invoke(cli, ['test2'])
++    result = runner.invoke(cli, ["test2"])
+     assert not result.exception
+-    assert result.output == 'foocmd\n'
++    assert result.output == "foocmd\n"
+ 
+ 
+ def test_exit_not_standalone():
+@@ -248,11 +253,11 @@ def test_exit_not_standalone():
+     def cli(ctx):
+         ctx.exit(1)
+ 
+-    assert cli.main([], 'test_exit_not_standalone', standalone_mode=False) == 1
++    assert cli.main([], "test_exit_not_standalone", standalone_mode=False) == 1
+ 
+     @click.command()
+     @click.pass_context
+     def cli(ctx):
+         ctx.exit(0)
+ 
+-    assert cli.main([], 'test_exit_not_standalone', standalone_mode=False) == 0
++    assert cli.main([], "test_exit_not_standalone", standalone_mode=False) == 0
+diff --git a/tests/test_defaults.py b/tests/test_defaults.py
+index dba5a9c850ed9d73afd5d076560340e0d490fce1..ce449033199a68f6724f560fceeefe12be724d85 100644
+--- a/tests/test_defaults.py
++++ b/tests/test_defaults.py
+@@ -3,20 +3,19 @@ import click
+ 
+ def test_basic_defaults(runner):
+     @click.command()
+-    @click.option('--foo', default=42, type=click.FLOAT)
++    @click.option("--foo", default=42, type=click.FLOAT)
+     def cli(foo):
+         assert type(foo) is float
+-        click.echo('FOO:[%s]' % foo)
++        click.echo("FOO:[{}]".format(foo))
+ 
+     result = runner.invoke(cli, [])
+     assert not result.exception
+-    assert 'FOO:[42.0]' in result.output
++    assert "FOO:[42.0]" in result.output
+ 
+ 
+ def test_multiple_defaults(runner):
+     @click.command()
+-    @click.option('--foo', default=[23, 42], type=click.FLOAT,
+-                  multiple=True)
++    @click.option("--foo", default=[23, 42], type=click.FLOAT, multiple=True)
+     def cli(foo):
+         for item in foo:
+             assert type(item) is float
+@@ -24,23 +23,18 @@ def test_multiple_defaults(runner):
+ 
+     result = runner.invoke(cli, [])
+     assert not result.exception
+-    assert result.output.splitlines() == [
+-        '23.0',
+-        '42.0',
+-    ]
++    assert result.output.splitlines() == ["23.0", "42.0"]
+ 
+ 
+ def test_nargs_plus_multiple(runner):
+     @click.command()
+-    @click.option('--arg', default=((1, 2), (3, 4)),
+-                  nargs=2, multiple=True, type=click.INT)
++    @click.option(
++        "--arg", default=((1, 2), (3, 4)), nargs=2, multiple=True, type=click.INT
++    )
+     def cli(arg):
+         for item in arg:
+-            click.echo('<%d|%d>' % item)
++            click.echo("<{0[0]:d}|{0[1]:d}>".format(item))
+ 
+     result = runner.invoke(cli, [])
+     assert not result.exception
+-    assert result.output.splitlines() == [
+-        '<1|2>',
+-        '<3|4>',
+-    ]
++    assert result.output.splitlines() == ["<1|2>", "<3|4>"]
+diff --git a/tests/test_formatting.py b/tests/test_formatting.py
+index e4d25717aae8f70013536ee6b4111ddf0da74b93..4fabbb20f20b24d456ba11a8ad247d9d43920d4f 100644
+--- a/tests/test_formatting.py
++++ b/tests/test_formatting.py
+@@ -25,28 +25,28 @@ def test_basic_functionality(runner):
+         that will be rewrapped again.
+         """
+ 
+-    result = runner.invoke(cli, ['--help'], terminal_width=60)
++    result = runner.invoke(cli, ["--help"], terminal_width=60)
+     assert not result.exception
+     assert result.output.splitlines() == [
+-        'Usage: cli [OPTIONS]',
+-        '',
+-        '  First paragraph.',
+-        '',
+-        '  This is a very long second paragraph and not correctly',
+-        '  wrapped but it will be rewrapped.',
+-        '',
+-        '  This is',
+-        '  a paragraph',
+-        '  without rewrapping.',
+-        '',
+-        '  1',
+-        '   2',
+-        '    3',
+-        '',
+-        '  And this is a paragraph that will be rewrapped again.',
+-        '',
+-        'Options:',
+-        '  --help  Show this message and exit.',
++        "Usage: cli [OPTIONS]",
++        "",
++        "  First paragraph.",
++        "",
++        "  This is a very long second paragraph and not correctly",
++        "  wrapped but it will be rewrapped.",
++        "",
++        "  This is",
++        "  a paragraph",
++        "  without rewrapping.",
++        "",
++        "  1",
++        "   2",
++        "    3",
++        "",
++        "  And this is a paragraph that will be rewrapped again.",
++        "",
++        "Options:",
++        "  --help  Show this message and exit.",
+     ]
+ 
+ 
+@@ -62,30 +62,29 @@ def test_wrapping_long_options_strings(runner):
+         """
+ 
+     @a_very_long.command()
+-    @click.argument('first')
+-    @click.argument('second')
+-    @click.argument('third')
+-    @click.argument('fourth')
+-    @click.argument('fifth')
+-    @click.argument('sixth')
++    @click.argument("first")
++    @click.argument("second")
++    @click.argument("third")
++    @click.argument("fourth")
++    @click.argument("fifth")
++    @click.argument("sixth")
+     def command():
+         """A command.
+         """
+ 
+     # 54 is chosen as a length where the second line is one character
+     # longer than the maximum length.
+-    result = runner.invoke(cli, ['a-very-long', 'command', '--help'],
+-                           terminal_width=54)
++    result = runner.invoke(cli, ["a-very-long", "command", "--help"], terminal_width=54)
+     assert not result.exception
+     assert result.output.splitlines() == [
+-        'Usage: cli a-very-long command [OPTIONS] FIRST SECOND',
+-        '                               THIRD FOURTH FIFTH',
+-        '                               SIXTH',
+-        '',
+-        '  A command.',
+-        '',
+-        'Options:',
+-        '  --help  Show this message and exit.',
++        "Usage: cli a-very-long command [OPTIONS] FIRST SECOND",
++        "                               THIRD FOURTH FIFTH",
++        "                               SIXTH",
++        "",
++        "  A command.",
++        "",
++        "Options:",
++        "  --help  Show this message and exit.",
+     ]
+ 
+ 
+@@ -101,28 +100,29 @@ def test_wrapping_long_command_name(runner):
+         """
+ 
+     @a_very_very_very_long.command()
+-    @click.argument('first')
+-    @click.argument('second')
+-    @click.argument('third')
+-    @click.argument('fourth')
+-    @click.argument('fifth')
+-    @click.argument('sixth')
++    @click.argument("first")
++    @click.argument("second")
++    @click.argument("third")
++    @click.argument("fourth")
++    @click.argument("fifth")
++    @click.argument("sixth")
+     def command():
+         """A command.
+         """
+ 
+-    result = runner.invoke(cli, ['a-very-very-very-long', 'command', '--help'],
+-                           terminal_width=54)
++    result = runner.invoke(
++        cli, ["a-very-very-very-long", "command", "--help"], terminal_width=54
++    )
+     assert not result.exception
+     assert result.output.splitlines() == [
+-        'Usage: cli a-very-very-very-long command ',
+-        '           [OPTIONS] FIRST SECOND THIRD FOURTH FIFTH',
+-        '           SIXTH',
+-        '',
+-        '  A command.',
+-        '',
+-        'Options:',
+-        '  --help  Show this message and exit.',
++        "Usage: cli a-very-very-very-long command ",
++        "           [OPTIONS] FIRST SECOND THIRD FOURTH FIFTH",
++        "           SIXTH",
++        "",
++        "  A command.",
++        "",
++        "Options:",
++        "  --help  Show this message and exit.",
+     ]
+ 
+ 
+@@ -133,33 +133,33 @@ def test_formatting_empty_help_lines(runner):
+ 
+         """
+ 
+-    result = runner.invoke(cli, ['--help'])
++    result = runner.invoke(cli, ["--help"])
+     assert not result.exception
+     assert result.output.splitlines() == [
+-        'Usage: cli [OPTIONS]',
+-        '',
+-        '  Top level command',
+-        '',
+-        '',
+-        '',
+-        'Options:',
+-        '  --help  Show this message and exit.',
++        "Usage: cli [OPTIONS]",
++        "",
++        "  Top level command",
++        "",
++        "",
++        "",
++        "Options:",
++        "  --help  Show this message and exit.",
+     ]
+ 
+ 
+ def test_formatting_usage_error(runner):
+     @click.command()
+-    @click.argument('arg')
++    @click.argument("arg")
+     def cmd(arg):
+-        click.echo('arg:' + arg)
++        click.echo("arg:{}".format(arg))
+ 
+     result = runner.invoke(cmd, [])
+     assert result.exit_code == 2
+     assert result.output.splitlines() == [
+-        'Usage: cmd [OPTIONS] ARG',
+-        'Try "cmd --help" for help.',
+-        '',
+-        'Error: Missing argument "ARG".'
++        "Usage: cmd [OPTIONS] ARG",
++        "Try 'cmd --help' for help.",
++        "",
++        "Error: Missing argument 'ARG'.",
+     ]
+ 
+ 
+@@ -168,34 +168,35 @@ def test_formatting_usage_error_metavar_missing_arg(runner):
+     :author: @r-m-n
+     Including attribution to #612
+     """
++
+     @click.command()
+-    @click.argument('arg', metavar='metavar')
++    @click.argument("arg", metavar="metavar")
+     def cmd(arg):
+         pass
+ 
+     result = runner.invoke(cmd, [])
+     assert result.exit_code == 2
+     assert result.output.splitlines() == [
+-        'Usage: cmd [OPTIONS] metavar',
+-        'Try "cmd --help" for help.',
+-        '',
+-        'Error: Missing argument "metavar".'
++        "Usage: cmd [OPTIONS] metavar",
++        "Try 'cmd --help' for help.",
++        "",
++        "Error: Missing argument 'metavar'.",
+     ]
+ 
+ 
+ def test_formatting_usage_error_metavar_bad_arg(runner):
+     @click.command()
+-    @click.argument('arg', type=click.INT, metavar='metavar')
++    @click.argument("arg", type=click.INT, metavar="metavar")
+     def cmd(arg):
+         pass
+ 
+-    result = runner.invoke(cmd, ['3.14'])
++    result = runner.invoke(cmd, ["3.14"])
+     assert result.exit_code == 2
+     assert result.output.splitlines() == [
+-        'Usage: cmd [OPTIONS] metavar',
+-        'Try "cmd --help" for help.',
+-        '',
+-        'Error: Invalid value for "metavar": 3.14 is not a valid integer'
++        "Usage: cmd [OPTIONS] metavar",
++        "Try 'cmd --help' for help.",
++        "",
++        "Error: Invalid value for 'metavar': 3.14 is not a valid integer",
+     ]
+ 
+ 
+@@ -205,50 +206,51 @@ def test_formatting_usage_error_nested(runner):
+         pass
+ 
+     @cmd.command()
+-    @click.argument('bar')
++    @click.argument("bar")
+     def foo(bar):
+-        click.echo('foo:' + bar)
++        click.echo("foo:{}".format(bar))
+ 
+-    result = runner.invoke(cmd, ['foo'])
++    result = runner.invoke(cmd, ["foo"])
+     assert result.exit_code == 2
+     assert result.output.splitlines() == [
+-        'Usage: cmd foo [OPTIONS] BAR',
+-        'Try "cmd foo --help" for help.',
+-        '',
+-        'Error: Missing argument "BAR".'
++        "Usage: cmd foo [OPTIONS] BAR",
++        "Try 'cmd foo --help' for help.",
++        "",
++        "Error: Missing argument 'BAR'.",
+     ]
+ 
+ 
+ def test_formatting_usage_error_no_help(runner):
+     @click.command(add_help_option=False)
+-    @click.argument('arg')
++    @click.argument("arg")
+     def cmd(arg):
+-        click.echo('arg:' + arg)
++        click.echo("arg:{}".format(arg))
+ 
+     result = runner.invoke(cmd, [])
+     assert result.exit_code == 2
+     assert result.output.splitlines() == [
+-        'Usage: cmd [OPTIONS] ARG',
+-        '',
+-        'Error: Missing argument "ARG".'
++        "Usage: cmd [OPTIONS] ARG",
++        "",
++        "Error: Missing argument 'ARG'.",
+     ]
+ 
+ 
+ def test_formatting_usage_custom_help(runner):
+-    @click.command(context_settings=dict(help_option_names=['--man']))
+-    @click.argument('arg')
++    @click.command(context_settings=dict(help_option_names=["--man"]))
++    @click.argument("arg")
+     def cmd(arg):
+-        click.echo('arg:' + arg)
++        click.echo("arg:{}".format(arg))
+ 
+     result = runner.invoke(cmd, [])
+     assert result.exit_code == 2
+     assert result.output.splitlines() == [
+-        'Usage: cmd [OPTIONS] ARG',
+-        'Try "cmd --man" for help.',
+-        '',
+-        'Error: Missing argument "ARG".'
++        "Usage: cmd [OPTIONS] ARG",
++        "Try 'cmd --man' for help.",
++        "",
++        "Error: Missing argument 'ARG'.",
+     ]
+ 
++
+ def test_formatting_custom_type_metavar(runner):
+     class MyType(click.ParamType):
+         def get_metavar(self, param):
+@@ -260,13 +262,13 @@ def test_formatting_custom_type_metavar(runner):
+     def cmd(param):
+         pass
+ 
+-    result = runner.invoke(cmd, '--help')
++    result = runner.invoke(cmd, "--help")
+     assert not result.exception
+     assert result.output.splitlines() == [
+-        'Usage: foo [OPTIONS] MY_TYPE',
+-        '',
+-        'Options:',
+-        '  --help  Show this message and exit.'
++        "Usage: foo [OPTIONS] MY_TYPE",
++        "",
++        "Options:",
++        "  --help  Show this message and exit.",
+     ]
+ 
+ 
+@@ -284,18 +286,18 @@ def test_truncating_docstring(runner):
+         :param click.core.Context ctx: Click context.
+         """
+ 
+-    result = runner.invoke(cli, ['--help'], terminal_width=60)
++    result = runner.invoke(cli, ["--help"], terminal_width=60)
+     assert not result.exception
+     assert result.output.splitlines() == [
+-        'Usage: cli [OPTIONS]',
+-        '',
+-        '  First paragraph.',
+-        '',
+-        '  This is a very long second paragraph and not correctly',
+-        '  wrapped but it will be rewrapped.',
+-        '',
+-        'Options:',
+-        '  --help  Show this message and exit.',
++        "Usage: cli [OPTIONS]",
++        "",
++        "  First paragraph.",
++        "",
++        "  This is a very long second paragraph and not correctly",
++        "  wrapped but it will be rewrapped.",
++        "",
++        "Options:",
++        "  --help  Show this message and exit.",
+     ]
+ 
+ 
+@@ -305,47 +307,47 @@ def test_global_show_default(runner):
+     def cli():
+         pass
+ 
+-    result = runner.invoke(cli, ['--help'],)
++    result = runner.invoke(cli, ["--help"],)
+     assert result.output.splitlines() == [
+-        'Usage: cli [OPTIONS]',
+-        '',
+-        'Options:',
+-        '  -f TEXT  Output file name  [default: out.txt]',
+-        '  --help   Show this message and exit.  [default: False]'
++        "Usage: cli [OPTIONS]",
++        "",
++        "Options:",
++        "  -f TEXT  Output file name  [default: out.txt]",
++        "  --help   Show this message and exit.  [default: False]",
+     ]
+ 
+ 
+ def test_formatting_usage_multiline_option_padding(runner):
+-    @click.command('foo')
+-    @click.option('--bar', help='This help message will be padded if it wraps.')
++    @click.command("foo")
++    @click.option("--bar", help="This help message will be padded if it wraps.")
+     def cli():
+         pass
+ 
+-    result = runner.invoke(cli, '--help', terminal_width=45)
++    result = runner.invoke(cli, "--help", terminal_width=45)
+     assert not result.exception
+     assert result.output.splitlines() == [
+-        'Usage: foo [OPTIONS]',
+-        '',
+-        'Options:',
+-        '  --bar TEXT  This help message will be',
+-        '              padded if it wraps.',
+-        '',
+-        '  --help      Show this message and exit.'
++        "Usage: foo [OPTIONS]",
++        "",
++        "Options:",
++        "  --bar TEXT  This help message will be",
++        "              padded if it wraps.",
++        "",
++        "  --help      Show this message and exit.",
+     ]
+ 
+ 
+ def test_formatting_usage_no_option_padding(runner):
+-    @click.command('foo')
+-    @click.option('--bar', help='This help message will be padded if it wraps.')
++    @click.command("foo")
++    @click.option("--bar", help="This help message will be padded if it wraps.")
+     def cli():
+         pass
+ 
+-    result = runner.invoke(cli, '--help', terminal_width=80)
++    result = runner.invoke(cli, "--help", terminal_width=80)
+     assert not result.exception
+     assert result.output.splitlines() == [
+-        'Usage: foo [OPTIONS]',
+-        '',
+-        'Options:',
+-        '  --bar TEXT  This help message will be padded if it wraps.',
+-        '  --help      Show this message and exit.'
++        "Usage: foo [OPTIONS]",
++        "",
++        "Options:",
++        "  --bar TEXT  This help message will be padded if it wraps.",
++        "  --help      Show this message and exit.",
+     ]
+diff --git a/tests/test_imports.py b/tests/test_imports.py
+index 268c6068802d9f6cd63cd2277fc4f594ed7aec3b..b99d453d0626e9550b85e7703330d1ca0cd9d987 100644
+--- a/tests/test_imports.py
++++ b/tests/test_imports.py
+@@ -1,11 +1,11 @@
+-import sys
+ import json
+ import subprocess
++import sys
+ 
+ from click._compat import WIN
+ 
+ 
+-IMPORT_TEST = b'''\
++IMPORT_TEST = b"""\
+ try:
+     import __builtin__ as builtins
+ except ImportError:
+@@ -27,29 +27,46 @@ import click
+ rv = list(found_imports)
+ import json
+ click.echo(json.dumps(rv))
+-'''
++"""
+ 
+-ALLOWED_IMPORTS = set([
+-    'weakref', 'os', 'struct', 'collections', 'sys', 'contextlib',
+-    'functools', 'stat', 're', 'codecs', 'inspect', 'itertools', 'io',
+-    'threading', 'colorama', 'errno', 'fcntl', 'datetime', 'pipes', 'shlex'
+-])
++ALLOWED_IMPORTS = {
++    "weakref",
++    "os",
++    "struct",
++    "collections",
++    "sys",
++    "contextlib",
++    "functools",
++    "stat",
++    "re",
++    "codecs",
++    "inspect",
++    "itertools",
++    "io",
++    "threading",
++    "colorama",
++    "errno",
++    "fcntl",
++    "datetime",
++    "pipes",
++    "shlex",
++}
+ 
+ if WIN:
+-    ALLOWED_IMPORTS.update(['ctypes', 'ctypes.wintypes', 'msvcrt', 'time',
+-                            'zlib'])
++    ALLOWED_IMPORTS.update(["ctypes", "ctypes.wintypes", "msvcrt", "time", "zlib"])
+ 
+ 
+ def test_light_imports():
+-    c = subprocess.Popen([sys.executable, '-'], stdin=subprocess.PIPE,
+-                         stdout=subprocess.PIPE)
++    c = subprocess.Popen(
++        [sys.executable, "-"], stdin=subprocess.PIPE, stdout=subprocess.PIPE
++    )
+     rv = c.communicate(IMPORT_TEST)[0]
+ 
+     if sys.version_info[0] != 2:
+-        rv = rv.decode('utf-8')
++        rv = rv.decode("utf-8")
+     imported = json.loads(rv)
+ 
+     for module in imported:
+-        if module == 'click' or module.startswith('click.'):
++        if module == "click" or module.startswith("click."):
+             continue
+         assert module in ALLOWED_IMPORTS
+diff --git a/tests/test_normalization.py b/tests/test_normalization.py
+index 4790d32bbaa2e51e4982888dfcbf7486b0b3cba9..32df098e9bb08f9bbc36b77abe62f06a032db1b6 100644
+--- a/tests/test_normalization.py
++++ b/tests/test_normalization.py
+@@ -6,24 +6,24 @@ CONTEXT_SETTINGS = dict(token_normalize_func=lambda x: x.lower())
+ 
+ def test_option_normalization(runner):
+     @click.command(context_settings=CONTEXT_SETTINGS)
+-    @click.option('--foo')
+-    @click.option('-x')
++    @click.option("--foo")
++    @click.option("-x")
+     def cli(foo, x):
+         click.echo(foo)
+         click.echo(x)
+ 
+-    result = runner.invoke(cli, ['--FOO', '42', '-X', 23])
+-    assert result.output == '42\n23\n'
++    result = runner.invoke(cli, ["--FOO", "42", "-X", 23])
++    assert result.output == "42\n23\n"
+ 
+ 
+ def test_choice_normalization(runner):
+     @click.command(context_settings=CONTEXT_SETTINGS)
+-    @click.option('--choice', type=click.Choice(['Foo', 'Bar']))
++    @click.option("--choice", type=click.Choice(["Foo", "Bar"]))
+     def cli(choice):
+         click.echo(choice)
+ 
+-    result = runner.invoke(cli, ['--CHOICE', 'FOO'])
+-    assert result.output == 'Foo\n'
++    result = runner.invoke(cli, ["--CHOICE", "FOO"])
++    assert result.output == "Foo\n"
+ 
+ 
+ def test_command_normalization(runner):
+@@ -33,7 +33,7 @@ def test_command_normalization(runner):
+ 
+     @cli.command()
+     def foo():
+-        click.echo('here!')
++        click.echo("here!")
+ 
+-    result = runner.invoke(cli, ['FOO'])
+-    assert result.output == 'here!\n'
++    result = runner.invoke(cli, ["FOO"])
++    assert result.output == "here!\n"
+diff --git a/tests/test_options.py b/tests/test_options.py
+index 4a13a0a14367bb101a000e52f4c94cb0a9f9606d..4baa37451ff3c94884a2d56b63166a0d91939f76 100644
+--- a/tests/test_options.py
++++ b/tests/test_options.py
+@@ -1,93 +1,85 @@
+ # -*- coding: utf-8 -*-
+-import re
+ import os
+-import click
++import re
++
+ import pytest
+ 
++import click
+ from click._compat import text_type
+ 
+ 
+ def test_prefixes(runner):
+     @click.command()
+-    @click.option('++foo', is_flag=True, help='das foo')
+-    @click.option('--bar', is_flag=True, help='das bar')
++    @click.option("++foo", is_flag=True, help="das foo")
++    @click.option("--bar", is_flag=True, help="das bar")
+     def cli(foo, bar):
+-        click.echo('foo=%s bar=%s' % (foo, bar))
++        click.echo("foo={} bar={}".format(foo, bar))
+ 
+-    result = runner.invoke(cli, ['++foo', '--bar'])
++    result = runner.invoke(cli, ["++foo", "--bar"])
+     assert not result.exception
+-    assert result.output == 'foo=True bar=True\n'
++    assert result.output == "foo=True bar=True\n"
+ 
+-    result = runner.invoke(cli, ['--help'])
+-    assert re.search(r'\+\+foo\s+das foo', result.output) is not None
+-    assert re.search(r'--bar\s+das bar', result.output) is not None
++    result = runner.invoke(cli, ["--help"])
++    assert re.search(r"\+\+foo\s+das foo", result.output) is not None
++    assert re.search(r"--bar\s+das bar", result.output) is not None
+ 
+ 
+ def test_invalid_option(runner):
+-    try:
++    with pytest.raises(TypeError, match="name was passed"):
++
+         @click.command()
+-        @click.option('foo')
++        @click.option("foo")
+         def cli(foo):
+             pass
+-    except TypeError as e:
+-        assert 'No options defined but a name was passed (foo).' \
+-            in str(e)
+-    else:
+-        assert False, 'Expected a type error because of an invalid option.'
+ 
+ 
+ def test_invalid_nargs(runner):
+-    try:
++    with pytest.raises(TypeError, match="nargs < 0"):
++
+         @click.command()
+-        @click.option('--foo', nargs=-1)
++        @click.option("--foo", nargs=-1)
+         def cli(foo):
+             pass
+-    except TypeError as e:
+-        assert 'Options cannot have nargs < 0' in str(e)
+-    else:
+-        assert False, 'Expected a type error because of an invalid option.'
+ 
+ 
+ def test_nargs_tup_composite_mult(runner):
+     @click.command()
+-    @click.option('--item', type=(str, int), multiple=True)
++    @click.option("--item", type=(str, int), multiple=True)
+     def copy(item):
+         for item in item:
+-            click.echo('name=%s id=%d' % item)
++            click.echo("name={0[0]} id={0[1]:d}".format(item))
+ 
+-    result = runner.invoke(copy, ['--item', 'peter', '1', '--item', 'max', '2'])
++    result = runner.invoke(copy, ["--item", "peter", "1", "--item", "max", "2"])
+     assert not result.exception
+-    assert result.output.splitlines() == [
+-        'name=peter id=1',
+-        'name=max id=2',
+-    ]
++    assert result.output.splitlines() == ["name=peter id=1", "name=max id=2"]
+ 
+ 
+ def test_counting(runner):
+     @click.command()
+-    @click.option('-v', count=True, help='Verbosity',
+-                  type=click.IntRange(0, 3))
++    @click.option("-v", count=True, help="Verbosity", type=click.IntRange(0, 3))
+     def cli(v):
+-        click.echo('verbosity=%d' % v)
++        click.echo("verbosity={:d}".format(v))
+ 
+-    result = runner.invoke(cli, ['-vvv'])
++    result = runner.invoke(cli, ["-vvv"])
+     assert not result.exception
+-    assert result.output == 'verbosity=3\n'
++    assert result.output == "verbosity=3\n"
+ 
+-    result = runner.invoke(cli, ['-vvvv'])
++    result = runner.invoke(cli, ["-vvvv"])
+     assert result.exception
+-    assert 'Invalid value for "-v": 4 is not in the valid range of 0 to 3.' \
++    assert (
++        "Invalid value for '-v': 4 is not in the valid range of 0 to 3."
+         in result.output
++    )
+ 
+     result = runner.invoke(cli, [])
+     assert not result.exception
+-    assert result.output == 'verbosity=0\n'
++    assert result.output == "verbosity=0\n"
+ 
+-    result = runner.invoke(cli, ['--help'])
+-    assert re.search(r'-v\s+Verbosity', result.output) is not None
++    result = runner.invoke(cli, ["--help"])
++    assert re.search(r"-v\s+Verbosity", result.output) is not None
+ 
+ 
+-@pytest.mark.parametrize('unknown_flag', ['--foo', '-f'])
++@pytest.mark.parametrize("unknown_flag", ["--foo", "-f"])
+ def test_unknown_options(runner, unknown_flag):
+     @click.command()
+     def cli():
+@@ -95,85 +87,88 @@ def test_unknown_options(runner, unknown_flag):
+ 
+     result = runner.invoke(cli, [unknown_flag])
+     assert result.exception
+-    assert 'no such option: {0}'.format(unknown_flag) in result.output
++    assert "no such option: {}".format(unknown_flag) in result.output
+ 
+ 
+ def test_multiple_required(runner):
+     @click.command()
+-    @click.option('-m', '--message', multiple=True, required=True)
++    @click.option("-m", "--message", multiple=True, required=True)
+     def cli(message):
+-        click.echo('\n'.join(message))
++        click.echo("\n".join(message))
+ 
+-    result = runner.invoke(cli, ['-m', 'foo', '-mbar'])
++    result = runner.invoke(cli, ["-m", "foo", "-mbar"])
+     assert not result.exception
+-    assert result.output == 'foo\nbar\n'
++    assert result.output == "foo\nbar\n"
+ 
+     result = runner.invoke(cli, [])
+     assert result.exception
+-    assert 'Error: Missing option "-m" / "--message".' in result.output
++    assert "Error: Missing option '-m' / '--message'." in result.output
+ 
+ 
+ def test_empty_envvar(runner):
+     @click.command()
+-    @click.option('--mypath', type=click.Path(exists=True), envvar='MYPATH')
++    @click.option("--mypath", type=click.Path(exists=True), envvar="MYPATH")
+     def cli(mypath):
+-        click.echo('mypath: %s' % mypath)
++        click.echo("mypath: {}".format(mypath))
+ 
+-    result = runner.invoke(cli, [], env={'MYPATH': ''})
++    result = runner.invoke(cli, [], env={"MYPATH": ""})
+     assert result.exit_code == 0
+-    assert result.output == 'mypath: None\n'
++    assert result.output == "mypath: None\n"
+ 
+ 
+ def test_multiple_envvar(runner):
+     @click.command()
+-    @click.option('--arg', multiple=True)
++    @click.option("--arg", multiple=True)
+     def cmd(arg):
+-        click.echo('|'.join(arg))
++        click.echo("|".join(arg))
+ 
+-    result = runner.invoke(cmd, [], auto_envvar_prefix='TEST',
+-                           env={'TEST_ARG': 'foo bar baz'})
++    result = runner.invoke(
++        cmd, [], auto_envvar_prefix="TEST", env={"TEST_ARG": "foo bar baz"}
++    )
+     assert not result.exception
+-    assert result.output == 'foo|bar|baz\n'
++    assert result.output == "foo|bar|baz\n"
+ 
+     @click.command()
+-    @click.option('--arg', multiple=True, envvar='X')
++    @click.option("--arg", multiple=True, envvar="X")
+     def cmd(arg):
+-        click.echo('|'.join(arg))
++        click.echo("|".join(arg))
+ 
+-    result = runner.invoke(cmd, [], env={'X': 'foo bar baz'})
++    result = runner.invoke(cmd, [], env={"X": "foo bar baz"})
+     assert not result.exception
+-    assert result.output == 'foo|bar|baz\n'
++    assert result.output == "foo|bar|baz\n"
+ 
+     @click.command()
+-    @click.option('--arg', multiple=True, type=click.Path())
++    @click.option("--arg", multiple=True, type=click.Path())
+     def cmd(arg):
+-        click.echo('|'.join(arg))
++        click.echo("|".join(arg))
+ 
+-    result = runner.invoke(cmd, [], auto_envvar_prefix='TEST',
+-                           env={'TEST_ARG': 'foo%sbar' % os.path.pathsep})
++    result = runner.invoke(
++        cmd,
++        [],
++        auto_envvar_prefix="TEST",
++        env={"TEST_ARG": "foo{}bar".format(os.path.pathsep)},
++    )
+     assert not result.exception
+-    assert result.output == 'foo|bar\n'
++    assert result.output == "foo|bar\n"
+ 
+ 
+ def test_multiple_default_help(runner):
+     @click.command()
+-    @click.option('--arg1', multiple=True, default=('foo', 'bar'),
+-                  show_default=True)
+-    @click.option('--arg2', multiple=True, default=(1, 2), type=int,
+-                  show_default=True)
++    @click.option("--arg1", multiple=True, default=("foo", "bar"), show_default=True)
++    @click.option("--arg2", multiple=True, default=(1, 2), type=int, show_default=True)
+     def cmd(arg, arg2):
+         pass
+ 
+-    result = runner.invoke(cmd, ['--help'])
++    result = runner.invoke(cmd, ["--help"])
+     assert not result.exception
+-    assert 'foo, bar' in result.output
+-    assert '1, 2' in result.output
++    assert "foo, bar" in result.output
++    assert "1, 2" in result.output
+ 
+ 
+ def test_multiple_default_type(runner):
+     @click.command()
+-    @click.option('--arg1', multiple=True, default=('foo', 'bar'))
+-    @click.option('--arg2', multiple=True, default=(1, 'a'))
++    @click.option("--arg1", multiple=True, default=("foo", "bar"))
++    @click.option("--arg2", multiple=True, default=(1, "a"))
+     def cmd(arg1, arg2):
+         assert all(isinstance(e[0], text_type) for e in arg1)
+         assert all(isinstance(e[1], text_type) for e in arg1)
+@@ -181,96 +176,104 @@ def test_multiple_default_type(runner):
+         assert all(isinstance(e[0], int) for e in arg2)
+         assert all(isinstance(e[1], text_type) for e in arg2)
+ 
+-    result = runner.invoke(cmd, '--arg1 a b --arg1 test 1 --arg2 2 '
+-                           'two --arg2 4 four'.split())
++    result = runner.invoke(
++        cmd, "--arg1 a b --arg1 test 1 --arg2 2 two --arg2 4 four".split()
++    )
+     assert not result.exception
+ 
++
+ def test_dynamic_default_help_unset(runner):
+     @click.command()
+-    @click.option('--username', prompt=True,
+-                  default=lambda: os.environ.get('USER', ''),
+-                  show_default=True)
++    @click.option(
++        "--username",
++        prompt=True,
++        default=lambda: os.environ.get("USER", ""),
++        show_default=True,
++    )
+     def cmd(username):
+         print("Hello,", username)
+ 
+-    result = runner.invoke(cmd, ['--help'])
++    result = runner.invoke(cmd, ["--help"])
+     assert result.exit_code == 0
+-    assert '--username' in result.output
+-    assert 'lambda' not in result.output
+-    assert '(dynamic)' in result.output
++    assert "--username" in result.output
++    assert "lambda" not in result.output
++    assert "(dynamic)" in result.output
++
+ 
+ def test_dynamic_default_help_text(runner):
+     @click.command()
+-    @click.option('--username', prompt=True,
+-                  default=lambda: os.environ.get('USER', ''),
+-                  show_default='current user')
++    @click.option(
++        "--username",
++        prompt=True,
++        default=lambda: os.environ.get("USER", ""),
++        show_default="current user",
++    )
+     def cmd(username):
+         print("Hello,", username)
+ 
+-    result = runner.invoke(cmd, ['--help'])
++    result = runner.invoke(cmd, ["--help"])
+     assert result.exit_code == 0
+-    assert '--username' in result.output
+-    assert 'lambda' not in result.output
+-    assert '(current user)' in result.output
++    assert "--username" in result.output
++    assert "lambda" not in result.output
++    assert "(current user)" in result.output
+ 
+ 
+ def test_toupper_envvar_prefix(runner):
+     @click.command()
+-    @click.option('--arg')
++    @click.option("--arg")
+     def cmd(arg):
+         click.echo(arg)
+ 
+-    result = runner.invoke(cmd, [], auto_envvar_prefix='test',
+-                           env={'TEST_ARG': 'foo'})
++    result = runner.invoke(cmd, [], auto_envvar_prefix="test", env={"TEST_ARG": "foo"})
+     assert not result.exception
+-    assert result.output == 'foo\n'
++    assert result.output == "foo\n"
+ 
+ 
+ def test_nargs_envvar(runner):
+     @click.command()
+-    @click.option('--arg', nargs=2)
++    @click.option("--arg", nargs=2)
+     def cmd(arg):
+-        click.echo('|'.join(arg))
++        click.echo("|".join(arg))
+ 
+-    result = runner.invoke(cmd, [], auto_envvar_prefix='TEST',
+-                           env={'TEST_ARG': 'foo bar'})
++    result = runner.invoke(
++        cmd, [], auto_envvar_prefix="TEST", env={"TEST_ARG": "foo bar"}
++    )
+     assert not result.exception
+-    assert result.output == 'foo|bar\n'
++    assert result.output == "foo|bar\n"
+ 
+     @click.command()
+-    @click.option('--arg', nargs=2, multiple=True)
++    @click.option("--arg", nargs=2, multiple=True)
+     def cmd(arg):
+         for item in arg:
+-            click.echo('|'.join(item))
++            click.echo("|".join(item))
+ 
+-    result = runner.invoke(cmd, [], auto_envvar_prefix='TEST',
+-                           env={'TEST_ARG': 'x 1 y 2'})
++    result = runner.invoke(
++        cmd, [], auto_envvar_prefix="TEST", env={"TEST_ARG": "x 1 y 2"}
++    )
+     assert not result.exception
+-    assert result.output == 'x|1\ny|2\n'
++    assert result.output == "x|1\ny|2\n"
+ 
+ 
+ def test_show_envvar(runner):
+     @click.command()
+-    @click.option('--arg1', envvar='ARG1',
+-                  show_envvar=True)
++    @click.option("--arg1", envvar="ARG1", show_envvar=True)
+     def cmd(arg):
+         pass
+ 
+-    result = runner.invoke(cmd, ['--help'])
++    result = runner.invoke(cmd, ["--help"])
+     assert not result.exception
+-    assert 'ARG1' in result.output
++    assert "ARG1" in result.output
+ 
+ 
+ def test_show_envvar_auto_prefix(runner):
+     @click.command()
+-    @click.option('--arg1', show_envvar=True)
++    @click.option("--arg1", show_envvar=True)
+     def cmd(arg):
+         pass
+ 
+-    result = runner.invoke(cmd, ['--help'],
+-                           auto_envvar_prefix='TEST')
++    result = runner.invoke(cmd, ["--help"], auto_envvar_prefix="TEST")
+     assert not result.exception
+-    assert 'TEST_ARG1' in result.output
++    assert "TEST_ARG1" in result.output
+ 
+ 
+ def test_show_envvar_auto_prefix_dash_in_command(runner):
+@@ -279,133 +282,128 @@ def test_show_envvar_auto_prefix_dash_in_command(runner):
+         pass
+ 
+     @cli.command()
+-    @click.option('--baz', show_envvar=True)
++    @click.option("--baz", show_envvar=True)
+     def foo_bar(baz):
+         pass
+ 
+-    result = runner.invoke(cli, ['foo-bar', '--help'],
+-                           auto_envvar_prefix='TEST')
++    result = runner.invoke(cli, ["foo-bar", "--help"], auto_envvar_prefix="TEST")
+     assert not result.exception
+-    assert 'TEST_FOO_BAR_BAZ' in result.output
++    assert "TEST_FOO_BAR_BAZ" in result.output
+ 
+ 
+ def test_custom_validation(runner):
+     def validate_pos_int(ctx, param, value):
+         if value < 0:
+-            raise click.BadParameter('Value needs to be positive')
++            raise click.BadParameter("Value needs to be positive")
+         return value
+ 
+     @click.command()
+-    @click.option('--foo', callback=validate_pos_int, default=1)
++    @click.option("--foo", callback=validate_pos_int, default=1)
+     def cmd(foo):
+         click.echo(foo)
+ 
+-    result = runner.invoke(cmd, ['--foo', '-1'])
+-    assert 'Invalid value for "--foo": Value needs to be positive' \
+-        in result.output
++    result = runner.invoke(cmd, ["--foo", "-1"])
++    assert "Invalid value for '--foo': Value needs to be positive" in result.output
+ 
+-    result = runner.invoke(cmd, ['--foo', '42'])
+-    assert result.output == '42\n'
++    result = runner.invoke(cmd, ["--foo", "42"])
++    assert result.output == "42\n"
+ 
+ 
+ def test_winstyle_options(runner):
+     @click.command()
+-    @click.option('/debug;/no-debug', help='Enables or disables debug mode.')
++    @click.option("/debug;/no-debug", help="Enables or disables debug mode.")
+     def cmd(debug):
+         click.echo(debug)
+ 
+-    result = runner.invoke(cmd, ['/debug'], help_option_names=['/?'])
+-    assert result.output == 'True\n'
+-    result = runner.invoke(cmd, ['/no-debug'], help_option_names=['/?'])
+-    assert result.output == 'False\n'
+-    result = runner.invoke(cmd, [], help_option_names=['/?'])
+-    assert result.output == 'False\n'
+-    result = runner.invoke(cmd, ['/?'], help_option_names=['/?'])
+-    assert '/debug; /no-debug  Enables or disables debug mode.' in result.output
+-    assert '/?                 Show this message and exit.' in result.output
++    result = runner.invoke(cmd, ["/debug"], help_option_names=["/?"])
++    assert result.output == "True\n"
++    result = runner.invoke(cmd, ["/no-debug"], help_option_names=["/?"])
++    assert result.output == "False\n"
++    result = runner.invoke(cmd, [], help_option_names=["/?"])
++    assert result.output == "False\n"
++    result = runner.invoke(cmd, ["/?"], help_option_names=["/?"])
++    assert "/debug; /no-debug  Enables or disables debug mode." in result.output
++    assert "/?                 Show this message and exit." in result.output
+ 
+ 
+ def test_legacy_options(runner):
+     @click.command()
+-    @click.option('-whatever')
++    @click.option("-whatever")
+     def cmd(whatever):
+         click.echo(whatever)
+ 
+-    result = runner.invoke(cmd, ['-whatever', '42'])
+-    assert result.output == '42\n'
+-    result = runner.invoke(cmd, ['-whatever=23'])
+-    assert result.output == '23\n'
++    result = runner.invoke(cmd, ["-whatever", "42"])
++    assert result.output == "42\n"
++    result = runner.invoke(cmd, ["-whatever=23"])
++    assert result.output == "23\n"
+ 
+ 
+ def test_missing_option_string_cast():
+     ctx = click.Context(click.Command(""))
+ 
+     with pytest.raises(click.MissingParameter) as excinfo:
+-        click.Option(['-a'], required=True).full_process_value(ctx, None)
++        click.Option(["-a"], required=True).full_process_value(ctx, None)
+ 
+     assert str(excinfo.value) == "missing parameter: a"
+ 
+ 
+ def test_missing_choice(runner):
+     @click.command()
+-    @click.option('--foo', type=click.Choice(['foo', 'bar']),
+-                  required=True)
++    @click.option("--foo", type=click.Choice(["foo", "bar"]), required=True)
+     def cmd(foo):
+         click.echo(foo)
+ 
+     result = runner.invoke(cmd)
+     assert result.exit_code == 2
+-    error, separator, choices = result.output.partition('Choose from')
+-    assert 'Error: Missing option "--foo". ' in error
+-    assert 'Choose from' in separator
+-    assert 'foo' in choices
+-    assert 'bar' in choices
++    error, separator, choices = result.output.partition("Choose from")
++    assert "Error: Missing option '--foo'. " in error
++    assert "Choose from" in separator
++    assert "foo" in choices
++    assert "bar" in choices
+ 
+ 
+ def test_case_insensitive_choice(runner):
+     @click.command()
+-    @click.option('--foo', type=click.Choice(
+-        ['Orange', 'Apple'], case_sensitive=False))
++    @click.option("--foo", type=click.Choice(["Orange", "Apple"], case_sensitive=False))
+     def cmd(foo):
+         click.echo(foo)
+ 
+-    result = runner.invoke(cmd, ['--foo', 'apple'])
++    result = runner.invoke(cmd, ["--foo", "apple"])
+     assert result.exit_code == 0
+-    assert result.output == 'Apple\n'
++    assert result.output == "Apple\n"
+ 
+-    result = runner.invoke(cmd, ['--foo', 'oRANGe'])
++    result = runner.invoke(cmd, ["--foo", "oRANGe"])
+     assert result.exit_code == 0
+-    assert result.output == 'Orange\n'
++    assert result.output == "Orange\n"
+ 
+-    result = runner.invoke(cmd, ['--foo', 'Apple'])
++    result = runner.invoke(cmd, ["--foo", "Apple"])
+     assert result.exit_code == 0
+-    assert result.output == 'Apple\n'
++    assert result.output == "Apple\n"
+ 
+     @click.command()
+-    @click.option('--foo', type=click.Choice(['Orange', 'Apple']))
++    @click.option("--foo", type=click.Choice(["Orange", "Apple"]))
+     def cmd2(foo):
+         click.echo(foo)
+ 
+-    result = runner.invoke(cmd2, ['--foo', 'apple'])
++    result = runner.invoke(cmd2, ["--foo", "apple"])
+     assert result.exit_code == 2
+ 
+-    result = runner.invoke(cmd2, ['--foo', 'oRANGe'])
++    result = runner.invoke(cmd2, ["--foo", "oRANGe"])
+     assert result.exit_code == 2
+ 
+-    result = runner.invoke(cmd2, ['--foo', 'Apple'])
++    result = runner.invoke(cmd2, ["--foo", "Apple"])
+     assert result.exit_code == 0
+ 
+ 
+ def test_case_insensitive_choice_returned_exactly(runner):
+     @click.command()
+-    @click.option('--foo', type=click.Choice(
+-        ['Orange', 'Apple'], case_sensitive=False))
++    @click.option("--foo", type=click.Choice(["Orange", "Apple"], case_sensitive=False))
+     def cmd(foo):
+         click.echo(foo)
+ 
+-    result = runner.invoke(cmd, ['--foo', 'apple'])
++    result = runner.invoke(cmd, ["--foo", "apple"])
+     assert result.exit_code == 0
+-    assert result.output == 'Apple\n'
++    assert result.output == "Apple\n"
+ 
+ 
+ def test_option_help_preserve_paragraphs(runner):
+@@ -415,7 +413,7 @@ def test_option_help_preserve_paragraphs(runner):
+         "--config",
+         type=click.Path(),
+         help="""Configuration file to use.
+-        
++
+         If not given, the environment variable CONFIG_FILE is consulted
+         and used if set. If neither are given, a default configuration
+         file is loaded.""",
+@@ -423,7 +421,7 @@ def test_option_help_preserve_paragraphs(runner):
+     def cmd(config):
+         pass
+ 
+-    result = runner.invoke(cmd, ['--help'], )
++    result = runner.invoke(cmd, ["--help"],)
+     assert result.exit_code == 0
+     assert (
+         "  -C, --config PATH  Configuration file to use.\n"
+@@ -433,36 +431,37 @@ def test_option_help_preserve_paragraphs(runner):
+         "{i}configuration file is loaded.".format(i=" " * 21)
+     ) in result.output
+ 
++
+ def test_argument_custom_class(runner):
+     class CustomArgument(click.Argument):
+         def get_default(self, ctx):
+-            '''a dumb override of a default value for testing'''
+-            return 'I am a default'
++            """a dumb override of a default value for testing"""
++            return "I am a default"
+ 
+     @click.command()
+-    @click.argument('testarg', cls=CustomArgument, default='you wont see me')
++    @click.argument("testarg", cls=CustomArgument, default="you wont see me")
+     def cmd(testarg):
+         click.echo(testarg)
+ 
+     result = runner.invoke(cmd)
+-    assert 'I am a default' in result.output
+-    assert 'you wont see me' not in result.output
++    assert "I am a default" in result.output
++    assert "you wont see me" not in result.output
+ 
+ 
+ def test_option_custom_class(runner):
+     class CustomOption(click.Option):
+         def get_help_record(self, ctx):
+-            '''a dumb override of a help text for testing'''
+-            return ('--help', 'I am a help text')
++            """a dumb override of a help text for testing"""
++            return ("--help", "I am a help text")
+ 
+     @click.command()
+-    @click.option('--testoption', cls=CustomOption, help='you wont see me')
++    @click.option("--testoption", cls=CustomOption, help="you wont see me")
+     def cmd(testoption):
+         click.echo(testoption)
+ 
+-    result = runner.invoke(cmd, ['--help'])
+-    assert 'I am a help text' in result.output
+-    assert 'you wont see me' not in result.output
++    result = runner.invoke(cmd, ["--help"])
++    assert "I am a help text" in result.output
++    assert "you wont see me" not in result.output
+ 
+ 
+ def test_option_custom_class_reusable(runner):
+@@ -470,11 +469,11 @@ def test_option_custom_class_reusable(runner):
+ 
+     class CustomOption(click.Option):
+         def get_help_record(self, ctx):
+-            '''a dumb override of a help text for testing'''
+-            return ('--help', 'I am a help text')
++            """a dumb override of a help text for testing"""
++            return ("--help", "I am a help text")
+ 
+     # Assign to a variable to re-use the decorator.
+-    testoption = click.option('--testoption', cls=CustomOption, help='you wont see me')
++    testoption = click.option("--testoption", cls=CustomOption, help="you wont see me")
+ 
+     @click.command()
+     @testoption
+@@ -489,14 +488,14 @@ def test_option_custom_class_reusable(runner):
+     # Both of the commands should have the --help option now.
+     for cmd in (cmd1, cmd2):
+ 
+-        result = runner.invoke(cmd, ['--help'])
+-        assert 'I am a help text' in result.output
+-        assert 'you wont see me' not in result.output
++        result = runner.invoke(cmd, ["--help"])
++        assert "I am a help text" in result.output
++        assert "you wont see me" not in result.output
+ 
+ 
+ def test_bool_flag_with_type(runner):
+     @click.command()
+-    @click.option('--shout/--no-shout', default=False, type=bool)
++    @click.option("--shout/--no-shout", default=False, type=bool)
+     def cmd(shout):
+         pass
+ 
+@@ -506,43 +505,46 @@ def test_bool_flag_with_type(runner):
+ 
+ def test_aliases_for_flags(runner):
+     @click.command()
+-    @click.option('--warnings/--no-warnings', ' /-W', default=True)
++    @click.option("--warnings/--no-warnings", " /-W", default=True)
+     def cli(warnings):
+         click.echo(warnings)
+ 
+-    result = runner.invoke(cli, ['--warnings'])
+-    assert result.output == 'True\n'
+-    result = runner.invoke(cli, ['--no-warnings'])
+-    assert result.output == 'False\n'
+-    result = runner.invoke(cli, ['-W'])
+-    assert result.output == 'False\n'
++    result = runner.invoke(cli, ["--warnings"])
++    assert result.output == "True\n"
++    result = runner.invoke(cli, ["--no-warnings"])
++    assert result.output == "False\n"
++    result = runner.invoke(cli, ["-W"])
++    assert result.output == "False\n"
+ 
+     @click.command()
+-    @click.option('--warnings/--no-warnings', '-w', default=True)
++    @click.option("--warnings/--no-warnings", "-w", default=True)
+     def cli_alt(warnings):
+         click.echo(warnings)
+ 
+-    result = runner.invoke(cli_alt, ['--warnings'])
+-    assert result.output == 'True\n'
+-    result = runner.invoke(cli_alt, ['--no-warnings'])
+-    assert result.output == 'False\n'
+-    result = runner.invoke(cli_alt, ['-w'])
+-    assert result.output == 'True\n'
+-
+-@pytest.mark.parametrize('option_args,expected', [
+-    (['--aggressive', '--all', '-a'], 'aggressive'),
+-    (['--first', '--second', '--third', '-a', '-b', '-c'], 'first'),
+-    (['--apple', '--banana', '--cantaloupe', '-a', '-b', '-c'], 'apple'),
+-    (['--cantaloupe', '--banana', '--apple', '-c', '-b', '-a'], 'cantaloupe'),
+-    (['-a', '-b', '-c'], 'a'),
+-    (['-c', '-b', '-a'], 'c'),
+-    (['-a', '--apple', '-b', '--banana', '-c', '--cantaloupe'], 'apple'),
+-    (['-c', '-a', '--cantaloupe', '-b', '--banana', '--apple'], 'cantaloupe'),
+-    (['--from', '-f', '_from'], '_from'),
+-    (['--return', '-r', '_ret'], '_ret'),
+-])
++    result = runner.invoke(cli_alt, ["--warnings"])
++    assert result.output == "True\n"
++    result = runner.invoke(cli_alt, ["--no-warnings"])
++    assert result.output == "False\n"
++    result = runner.invoke(cli_alt, ["-w"])
++    assert result.output == "True\n"
++
++
++@pytest.mark.parametrize(
++    "option_args,expected",
++    [
++        (["--aggressive", "--all", "-a"], "aggressive"),
++        (["--first", "--second", "--third", "-a", "-b", "-c"], "first"),
++        (["--apple", "--banana", "--cantaloupe", "-a", "-b", "-c"], "apple"),
++        (["--cantaloupe", "--banana", "--apple", "-c", "-b", "-a"], "cantaloupe"),
++        (["-a", "-b", "-c"], "a"),
++        (["-c", "-b", "-a"], "c"),
++        (["-a", "--apple", "-b", "--banana", "-c", "--cantaloupe"], "apple"),
++        (["-c", "-a", "--cantaloupe", "-b", "--banana", "--apple"], "cantaloupe"),
++        (["--from", "-f", "_from"], "_from"),
++        (["--return", "-r", "_ret"], "_ret"),
++    ],
++)
+ def test_option_names(runner, option_args, expected):
+-
+     @click.command()
+     @click.option(*option_args, is_flag=True)
+     def cmd(**kwargs):
+@@ -551,6 +553,6 @@ def test_option_names(runner, option_args, expected):
+     assert cmd.params[0].name == expected
+ 
+     for form in option_args:
+-        if form.startswith('-'):
++        if form.startswith("-"):
+             result = runner.invoke(cmd, [form])
+-            assert result.output == 'True\n'
++            assert result.output == "True\n"
+diff --git a/tests/test_termui.py b/tests/test_termui.py
+index c6e06b63bf8c8160d2abeb346d2264d605858efd..99a6a476fb17287524c339c770f8eec611b4db87 100644
+--- a/tests/test_termui.py
++++ b/tests/test_termui.py
+@@ -1,9 +1,8 @@
+ # -*- coding: utf-8 -*-
+-import pytest
+-
+-import click
+ import time
+ 
++import pytest
++
+ import click._termui_impl
+ from click._compat import WIN
+ 
+@@ -29,16 +28,16 @@ def _create_progress(length=10, length_known=True, **kwargs):
+ 
+ def test_progressbar_strip_regression(runner, monkeypatch):
+     fake_clock = FakeClock()
+-    label = '    padded line'
++    label = "    padded line"
+ 
+     @click.command()
+     def cli():
+         with _create_progress(label=label) as progress:
+-            for thing in progress:
++            for _ in progress:
+                 fake_clock.advance_time()
+ 
+-    monkeypatch.setattr(time, 'time', fake_clock.time)
+-    monkeypatch.setattr(click._termui_impl, 'isatty', lambda _: True)
++    monkeypatch.setattr(time, "time", fake_clock.time)
++    monkeypatch.setattr(click._termui_impl, "isatty", lambda _: True)
+     assert label in runner.invoke(cli, []).output
+ 
+ 
+@@ -65,101 +64,118 @@ def test_progressbar_length_hint(runner, monkeypatch):
+ 
+     @click.command()
+     def cli():
+-        with click.progressbar(Hinted(10), label='test') as progress:
+-            for thing in progress:
++        with click.progressbar(Hinted(10), label="test") as progress:
++            for _ in progress:
+                 fake_clock.advance_time()
+ 
+-    monkeypatch.setattr(time, 'time', fake_clock.time)
+-    monkeypatch.setattr(click._termui_impl, 'isatty', lambda _: True)
++    monkeypatch.setattr(time, "time", fake_clock.time)
++    monkeypatch.setattr(click._termui_impl, "isatty", lambda _: True)
+     result = runner.invoke(cli, [])
+     assert result.exception is None
+ 
+ 
+ def test_progressbar_hidden(runner, monkeypatch):
+     fake_clock = FakeClock()
+-    label = 'whatever'
++    label = "whatever"
+ 
+     @click.command()
+     def cli():
+         with _create_progress(label=label) as progress:
+-            for thing in progress:
++            for _ in progress:
+                 fake_clock.advance_time()
+ 
+-    monkeypatch.setattr(time, 'time', fake_clock.time)
+-    monkeypatch.setattr(click._termui_impl, 'isatty', lambda _: False)
+-    assert runner.invoke(cli, []).output == ''
++    monkeypatch.setattr(time, "time", fake_clock.time)
++    monkeypatch.setattr(click._termui_impl, "isatty", lambda _: False)
++    assert runner.invoke(cli, []).output == ""
+ 
+ 
+-@pytest.mark.parametrize('avg, expected', [([], 0.0), ([1, 4], 2.5)])
++@pytest.mark.parametrize("avg, expected", [([], 0.0), ([1, 4], 2.5)])
+ def test_progressbar_time_per_iteration(runner, avg, expected):
+     with _create_progress(2, avg=avg) as progress:
+         assert progress.time_per_iteration == expected
+ 
+ 
+-@pytest.mark.parametrize('finished, expected', [(False, 5), (True, 0)])
++@pytest.mark.parametrize("finished, expected", [(False, 5), (True, 0)])
+ def test_progressbar_eta(runner, finished, expected):
+     with _create_progress(2, finished=finished, avg=[1, 4]) as progress:
+         assert progress.eta == expected
+ 
+ 
+-@pytest.mark.parametrize('eta, expected',
+-                         [(0, '00:00:00'), (30, '00:00:30'), (90, '00:01:30'), (900, '00:15:00'),
+-                          (9000, '02:30:00'), (99999999999, '1157407d 09:46:39'), (None, '')])
++@pytest.mark.parametrize(
++    "eta, expected",
++    [
++        (0, "00:00:00"),
++        (30, "00:00:30"),
++        (90, "00:01:30"),
++        (900, "00:15:00"),
++        (9000, "02:30:00"),
++        (99999999999, "1157407d 09:46:39"),
++        (None, ""),
++    ],
++)
+ def test_progressbar_format_eta(runner, eta, expected):
+     with _create_progress(1, eta_known=eta is not None, avg=[eta]) as progress:
+         assert progress.format_eta() == expected
+ 
+ 
+-@pytest.mark.parametrize('pos, length', [(0, 5), (-1, 1), (5, 5), (6, 5), (4, 0)])
++@pytest.mark.parametrize("pos, length", [(0, 5), (-1, 1), (5, 5), (6, 5), (4, 0)])
+ def test_progressbar_format_pos(runner, pos, length):
+     with _create_progress(length, length_known=length != 0, pos=pos) as progress:
+         result = progress.format_pos()
+         if progress.length_known:
+-            assert result == '%s/%s' % (pos, length)
++            assert result == "{}/{}".format(pos, length)
+         else:
+             assert result == str(pos)
+ 
+ 
+-@pytest.mark.parametrize('length, finished, pos, avg, expected',
+-                         [(8, False, 7, 0, '#######-'),
+-                          (0, True, 8, 0, '########'),
+-                          (0, False, 8, 0, '--------'),
+-                          (0, False, 5, 3, '#-------')
+-                          ])
++@pytest.mark.parametrize(
++    "length, finished, pos, avg, expected",
++    [
++        (8, False, 7, 0, "#######-"),
++        (0, True, 8, 0, "########"),
++        (0, False, 8, 0, "--------"),
++        (0, False, 5, 3, "#-------"),
++    ],
++)
+ def test_progressbar_format_bar(runner, length, finished, pos, avg, expected):
+-    with _create_progress(length,
+-                          length_known=length != 0,
+-                          width=8,
+-                          pos=pos,
+-                          finished=finished,
+-                          avg=[avg]) as progress:
++    with _create_progress(
++        length, length_known=length != 0, width=8, pos=pos, finished=finished, avg=[avg]
++    ) as progress:
+         assert progress.format_bar() == expected
+ 
+ 
+-@pytest.mark.parametrize('length, length_known, show_percent, show_pos, pos, expected',
+-                         [(0, True, True, True, 0, '  [--------]  0/0    0%'),
+-                          (0, True, False, True, 0, '  [--------]  0/0'),
+-                          (0, True, False, False, 0, '  [--------]'),
+-                          (0, False, False, False, 0, '  [--------]'),
+-                          (8, True, True, True, 8, '  [########]  8/8  100%')
+-                          ])
+-def test_progressbar_format_progress_line(runner, length, length_known, show_percent, show_pos, pos, expected):
+-    with _create_progress(length,
+-                          length_known,
+-                          width=8,
+-                          show_percent=show_percent,
+-                          pos=pos,
+-                          show_pos=show_pos) as progress:
++@pytest.mark.parametrize(
++    "length, length_known, show_percent, show_pos, pos, expected",
++    [
++        (0, True, True, True, 0, "  [--------]  0/0    0%"),
++        (0, True, False, True, 0, "  [--------]  0/0"),
++        (0, True, False, False, 0, "  [--------]"),
++        (0, False, False, False, 0, "  [--------]"),
++        (8, True, True, True, 8, "  [########]  8/8  100%"),
++    ],
++)
++def test_progressbar_format_progress_line(
++    runner, length, length_known, show_percent, show_pos, pos, expected
++):
++    with _create_progress(
++        length,
++        length_known,
++        width=8,
++        show_percent=show_percent,
++        pos=pos,
++        show_pos=show_pos,
++    ) as progress:
+         assert progress.format_progress_line() == expected
+ 
+ 
+-@pytest.mark.parametrize('test_item', ['test', None])
++@pytest.mark.parametrize("test_item", ["test", None])
+ def test_progressbar_format_progress_line_with_show_func(runner, test_item):
+-
+     def item_show_func(item):
+         return item
+ 
+-    with _create_progress(item_show_func=item_show_func, current_item=test_item) as progress:
++    with _create_progress(
++        item_show_func=item_show_func, current_item=test_item
++    ) as progress:
+         if test_item:
+             assert progress.format_progress_line().endswith(test_item)
+         else:
+@@ -167,22 +183,14 @@ def test_progressbar_format_progress_line_with_show_func(runner, test_item):
+ 
+ 
+ def test_progressbar_init_exceptions(runner):
+-    try:
++    with pytest.raises(TypeError, match="iterable or length is required"):
+         click.progressbar()
+-    except TypeError as e:
+-        assert str(e) == 'iterable or length is required'
+-    else:
+-        assert False, 'Expected an exception because unspecified arguments'
+ 
+ 
+ def test_progressbar_iter_outside_with_exceptions(runner):
+-    try:
++    with pytest.raises(RuntimeError, match="with block"):
+         progress = click.progressbar(length=2)
+         iter(progress)
+-    except RuntimeError as e:
+-        assert str(e) == 'You need to use progress bars in a with block.'
+-    else:
+-        assert False, 'Expected an exception because of abort-related inputs.'
+ 
+ 
+ def test_progressbar_is_iterator(runner, monkeypatch):
+@@ -190,7 +198,7 @@ def test_progressbar_is_iterator(runner, monkeypatch):
+ 
+     @click.command()
+     def cli():
+-        with click.progressbar(range(10), label='test') as progress:
++        with click.progressbar(range(10), label="test") as progress:
+             while True:
+                 try:
+                     next(progress)
+@@ -198,8 +206,8 @@ def test_progressbar_is_iterator(runner, monkeypatch):
+                 except StopIteration:
+                     break
+ 
+-    monkeypatch.setattr(time, 'time', fake_clock.time)
+-    monkeypatch.setattr(click._termui_impl, 'isatty', lambda _: True)
++    monkeypatch.setattr(time, "time", fake_clock.time)
++    monkeypatch.setattr(click._termui_impl, "isatty", lambda _: True)
+ 
+     result = runner.invoke(cli, [])
+     assert result.exception is None
+@@ -207,31 +215,31 @@ def test_progressbar_is_iterator(runner, monkeypatch):
+ 
+ def test_choices_list_in_prompt(runner, monkeypatch):
+     @click.command()
+-    @click.option('-g', type=click.Choice(['none', 'day', 'week', 'month']),
+-                  prompt=True)
++    @click.option(
++        "-g", type=click.Choice(["none", "day", "week", "month"]), prompt=True
++    )
+     def cli_with_choices(g):
+         pass
+ 
+     @click.command()
+-    @click.option('-g', type=click.Choice(['none', 'day', 'week', 'month']),
+-                  prompt=True, show_choices=False)
++    @click.option(
++        "-g",
++        type=click.Choice(["none", "day", "week", "month"]),
++        prompt=True,
++        show_choices=False,
++    )
+     def cli_without_choices(g):
+         pass
+ 
+-    result = runner.invoke(cli_with_choices, [], input='none')
+-    assert '(none, day, week, month)' in result.output
++    result = runner.invoke(cli_with_choices, [], input="none")
++    assert "(none, day, week, month)" in result.output
+ 
+-    result = runner.invoke(cli_without_choices, [], input='none')
+-    assert '(none, day, week, month)' not in result.output
++    result = runner.invoke(cli_without_choices, [], input="none")
++    assert "(none, day, week, month)" not in result.output
+ 
+ 
+ @pytest.mark.parametrize(
+-    "file_kwargs",
+-    [
+-        {"mode": "rt"},
+-        {"mode": "rb"},
+-        {"lazy": True},
+-    ]
++    "file_kwargs", [{"mode": "rt"}, {"mode": "rb"}, {"lazy": True}]
+ )
+ def test_file_prompt_default_format(runner, file_kwargs):
+     @click.command()
+@@ -247,7 +255,7 @@ def test_secho(runner):
+     with runner.isolation() as outstreams:
+         click.secho(None, nl=False)
+         bytes = outstreams[0].getvalue()
+-        assert bytes == b''
++        assert bytes == b""
+ 
+ 
+ def test_progressbar_yields_all_items(runner):
+@@ -265,49 +273,50 @@ def test_progressbar_update(runner, monkeypatch):
+                 fake_clock.advance_time()
+                 print("")
+ 
+-    monkeypatch.setattr(time, 'time', fake_clock.time)
+-    monkeypatch.setattr(click._termui_impl, 'isatty', lambda _: True)
++    monkeypatch.setattr(time, "time", fake_clock.time)
++    monkeypatch.setattr(click._termui_impl, "isatty", lambda _: True)
+     output = runner.invoke(cli, []).output
+ 
+-    lines = [line for line in output.split('\n') if '[' in line]
++    lines = [line for line in output.split("\n") if "[" in line]
+ 
+-    assert ' 25%  00:00:03' in lines[0]
+-    assert ' 50%  00:00:02' in lines[1]
+-    assert ' 75%  00:00:01' in lines[2]
+-    assert '100%          ' in lines[3]
++    assert " 25%  00:00:03" in lines[0]
++    assert " 50%  00:00:02" in lines[1]
++    assert " 75%  00:00:01" in lines[2]
++    assert "100%          " in lines[3]
+ 
+ 
+-@pytest.mark.parametrize(
+-    'key_char', (u'h', u'H', u'é', u'À', u' ', u'字', u'àH', u'àR')
+-)
+-@pytest.mark.parametrize('echo', [True, False])
+-@pytest.mark.skipif(not WIN, reason='Tests user-input using the msvcrt module.')
++@pytest.mark.parametrize("key_char", (u"h", u"H", u"é", u"À", u" ", u"字", u"àH", u"àR"))
++@pytest.mark.parametrize("echo", [True, False])
++@pytest.mark.skipif(not WIN, reason="Tests user-input using the msvcrt module.")
+ def test_getchar_windows(runner, monkeypatch, key_char, echo):
+-    monkeypatch.setattr(click._termui_impl.msvcrt, 'getwche', lambda: key_char)
+-    monkeypatch.setattr(click._termui_impl.msvcrt, 'getwch', lambda: key_char)
+-    monkeypatch.setattr(click.termui, '_getchar', None)
++    monkeypatch.setattr(click._termui_impl.msvcrt, "getwche", lambda: key_char)
++    monkeypatch.setattr(click._termui_impl.msvcrt, "getwch", lambda: key_char)
++    monkeypatch.setattr(click.termui, "_getchar", None)
+     assert click.getchar(echo) == key_char
+ 
+ 
+-@pytest.mark.parametrize('special_key_char, key_char', [(u'\x00', 'a'), (u'\x00', 'b'), (u'\xe0', 'c')])
+-@pytest.mark.skipif(not WIN, reason='Tests special character inputs using the msvcrt module.')
++@pytest.mark.parametrize(
++    "special_key_char, key_char", [(u"\x00", "a"), (u"\x00", "b"), (u"\xe0", "c")]
++)
++@pytest.mark.skipif(
++    not WIN, reason="Tests special character inputs using the msvcrt module."
++)
+ def test_getchar_special_key_windows(runner, monkeypatch, special_key_char, key_char):
+     ordered_inputs = [key_char, special_key_char]
+-    monkeypatch.setattr(click._termui_impl.msvcrt, 'getwch', lambda: ordered_inputs.pop())
+-    monkeypatch.setattr(click.termui, '_getchar', None)
++    monkeypatch.setattr(
++        click._termui_impl.msvcrt, "getwch", lambda: ordered_inputs.pop()
++    )
++    monkeypatch.setattr(click.termui, "_getchar", None)
+     assert click.getchar() == special_key_char + key_char
+ 
+ 
+-@pytest.mark.parametrize('key_char', [u'\x03', u'\x1a'])
+-@pytest.mark.skipif(not WIN, reason='Tests user-input using the msvcrt module.')
+-def test_getchar_windows_exceptions(runner, monkeypatch, key_char):
+-    monkeypatch.setattr(click._termui_impl.msvcrt, 'getwch', lambda: key_char)
+-    monkeypatch.setattr(click.termui, '_getchar', None)
+-    try:
++@pytest.mark.parametrize(
++    ("key_char", "exc"), [(u"\x03", KeyboardInterrupt), (u"\x1a", EOFError)],
++)
++@pytest.mark.skipif(not WIN, reason="Tests user-input using the msvcrt module.")
++def test_getchar_windows_exceptions(runner, monkeypatch, key_char, exc):
++    monkeypatch.setattr(click._termui_impl.msvcrt, "getwch", lambda: key_char)
++    monkeypatch.setattr(click.termui, "_getchar", None)
++
++    with pytest.raises(exc):
+         click.getchar()
+-    except KeyboardInterrupt:
+-        assert key_char == u'\x03'
+-    except EOFError:
+-        assert key_char == u'\x1a'
+-    else:
+-        assert False, 'Expected an exception because of abort-specific inputs.'
+diff --git a/tests/test_testing.py b/tests/test_testing.py
+index 7b03947d007bf7fe10039e79e81ea709527b2f17..22a285d906b3bec64441427ca7e0f6f566eafac9 100644
+--- a/tests/test_testing.py
++++ b/tests/test_testing.py
+@@ -2,12 +2,12 @@ import os
+ import sys
+ 
+ import pytest
+-import click
+ 
++import click
++from click._compat import PY2
++from click._compat import WIN
+ from click.testing import CliRunner
+ 
+-from click._compat import PY2, WIN
+-
+ # Use the most reasonable io that users would use for the python version.
+ if PY2:
+     from cStringIO import StringIO as ReasonableBytesIO
+@@ -18,8 +18,8 @@ else:
+ def test_runner():
+     @click.command()
+     def test():
+-        i = click.get_binary_stream('stdin')
+-        o = click.get_binary_stream('stdout')
++        i = click.get_binary_stream("stdin")
++        o = click.get_binary_stream("stdout")
+         while 1:
+             chunk = i.read(4096)
+             if not chunk:
+@@ -28,21 +28,21 @@ def test_runner():
+             o.flush()
+ 
+     runner = CliRunner()
+-    result = runner.invoke(test, input='Hello World!\n')
++    result = runner.invoke(test, input="Hello World!\n")
+     assert not result.exception
+-    assert result.output == 'Hello World!\n'
++    assert result.output == "Hello World!\n"
+ 
+     runner = CliRunner(echo_stdin=True)
+-    result = runner.invoke(test, input='Hello World!\n')
++    result = runner.invoke(test, input="Hello World!\n")
+     assert not result.exception
+-    assert result.output == 'Hello World!\nHello World!\n'
++    assert result.output == "Hello World!\nHello World!\n"
+ 
+ 
+ def test_runner_with_stream():
+     @click.command()
+     def test():
+-        i = click.get_binary_stream('stdin')
+-        o = click.get_binary_stream('stdout')
++        i = click.get_binary_stream("stdin")
++        o = click.get_binary_stream("stdout")
+         while 1:
+             chunk = i.read(4096)
+             if not chunk:
+@@ -51,36 +51,36 @@ def test_runner_with_stream():
+             o.flush()
+ 
+     runner = CliRunner()
+-    result = runner.invoke(test, input=ReasonableBytesIO(b'Hello World!\n'))
++    result = runner.invoke(test, input=ReasonableBytesIO(b"Hello World!\n"))
+     assert not result.exception
+-    assert result.output == 'Hello World!\n'
++    assert result.output == "Hello World!\n"
+ 
+     runner = CliRunner(echo_stdin=True)
+-    result = runner.invoke(test, input=ReasonableBytesIO(b'Hello World!\n'))
++    result = runner.invoke(test, input=ReasonableBytesIO(b"Hello World!\n"))
+     assert not result.exception
+-    assert result.output == 'Hello World!\nHello World!\n'
++    assert result.output == "Hello World!\nHello World!\n"
+ 
+ 
+ def test_prompts():
+     @click.command()
+-    @click.option('--foo', prompt=True)
++    @click.option("--foo", prompt=True)
+     def test(foo):
+-        click.echo('foo=%s' % foo)
++        click.echo("foo={}".format(foo))
+ 
+     runner = CliRunner()
+-    result = runner.invoke(test, input='wau wau\n')
++    result = runner.invoke(test, input="wau wau\n")
+     assert not result.exception
+-    assert result.output == 'Foo: wau wau\nfoo=wau wau\n'
++    assert result.output == "Foo: wau wau\nfoo=wau wau\n"
+ 
+     @click.command()
+-    @click.option('--foo', prompt=True, hide_input=True)
++    @click.option("--foo", prompt=True, hide_input=True)
+     def test(foo):
+-        click.echo('foo=%s' % foo)
++        click.echo("foo={}".format(foo))
+ 
+     runner = CliRunner()
+-    result = runner.invoke(test, input='wau wau\n')
++    result = runner.invoke(test, input="wau wau\n")
+     assert not result.exception
+-    assert result.output == 'Foo: \nfoo=wau wau\n'
++    assert result.output == "Foo: \nfoo=wau wau\n"
+ 
+ 
+ def test_getchar():
+@@ -89,9 +89,9 @@ def test_getchar():
+         click.echo(click.getchar())
+ 
+     runner = CliRunner()
+-    result = runner.invoke(continue_it, input='y')
++    result = runner.invoke(continue_it, input="y")
+     assert not result.exception
+-    assert result.output == 'y\n'
++    assert result.output == "y\n"
+ 
+ 
+ def test_catch_exceptions():
+@@ -118,20 +118,20 @@ def test_catch_exceptions():
+     assert result.exit_code == 1
+ 
+ 
+-@pytest.mark.skipif(WIN, reason='Test does not make sense on Windows.')
++@pytest.mark.skipif(WIN, reason="Test does not make sense on Windows.")
+ def test_with_color():
+     @click.command()
+     def cli():
+-        click.secho('hello world', fg='blue')
++        click.secho("hello world", fg="blue")
+ 
+     runner = CliRunner()
+ 
+     result = runner.invoke(cli)
+-    assert result.output == 'hello world\n'
++    assert result.output == "hello world\n"
+     assert not result.exception
+ 
+     result = runner.invoke(cli, color=True)
+-    assert result.output == click.style('hello world', fg='blue') + '\n'
++    assert result.output == "{}\n".format(click.style("hello world", fg="blue"))
+     assert not result.exception
+ 
+ 
+@@ -143,93 +143,93 @@ def test_with_color_but_pause_not_blocking():
+     runner = CliRunner()
+     result = runner.invoke(cli, color=True)
+     assert not result.exception
+-    assert result.output == ''
++    assert result.output == ""
+ 
+ 
+ def test_exit_code_and_output_from_sys_exit():
+     # See issue #362
+     @click.command()
+     def cli_string():
+-        click.echo('hello world')
+-        sys.exit('error')
++        click.echo("hello world")
++        sys.exit("error")
+ 
+     @click.command()
+     @click.pass_context
+     def cli_string_ctx_exit(ctx):
+-        click.echo('hello world')
+-        ctx.exit('error')
++        click.echo("hello world")
++        ctx.exit("error")
+ 
+     @click.command()
+     def cli_int():
+-        click.echo('hello world')
++        click.echo("hello world")
+         sys.exit(1)
+ 
+     @click.command()
+     @click.pass_context
+     def cli_int_ctx_exit(ctx):
+-        click.echo('hello world')
++        click.echo("hello world")
+         ctx.exit(1)
+ 
+     @click.command()
+     def cli_float():
+-        click.echo('hello world')
++        click.echo("hello world")
+         sys.exit(1.0)
+ 
+     @click.command()
+     @click.pass_context
+     def cli_float_ctx_exit(ctx):
+-        click.echo('hello world')
++        click.echo("hello world")
+         ctx.exit(1.0)
+ 
+     @click.command()
+     def cli_no_error():
+-        click.echo('hello world')
++        click.echo("hello world")
+ 
+     runner = CliRunner()
+ 
+     result = runner.invoke(cli_string)
+     assert result.exit_code == 1
+-    assert result.output == 'hello world\nerror\n'
++    assert result.output == "hello world\nerror\n"
+ 
+     result = runner.invoke(cli_string_ctx_exit)
+     assert result.exit_code == 1
+-    assert result.output == 'hello world\nerror\n'
++    assert result.output == "hello world\nerror\n"
+ 
+     result = runner.invoke(cli_int)
+     assert result.exit_code == 1
+-    assert result.output == 'hello world\n'
++    assert result.output == "hello world\n"
+ 
+     result = runner.invoke(cli_int_ctx_exit)
+     assert result.exit_code == 1
+-    assert result.output == 'hello world\n'
++    assert result.output == "hello world\n"
+ 
+     result = runner.invoke(cli_float)
+     assert result.exit_code == 1
+-    assert result.output == 'hello world\n1.0\n'
++    assert result.output == "hello world\n1.0\n"
+ 
+     result = runner.invoke(cli_float_ctx_exit)
+     assert result.exit_code == 1
+-    assert result.output == 'hello world\n1.0\n'
++    assert result.output == "hello world\n1.0\n"
+ 
+     result = runner.invoke(cli_no_error)
+     assert result.exit_code == 0
+-    assert result.output == 'hello world\n'
++    assert result.output == "hello world\n"
+ 
+ 
+ def test_env():
+     @click.command()
+     def cli_env():
+-        click.echo('ENV=%s' % os.environ['TEST_CLICK_ENV'])
++        click.echo("ENV={}".format(os.environ["TEST_CLICK_ENV"]))
+ 
+     runner = CliRunner()
+ 
+     env_orig = dict(os.environ)
+     env = dict(env_orig)
+-    assert 'TEST_CLICK_ENV' not in env
+-    env['TEST_CLICK_ENV'] = 'some_value'
++    assert "TEST_CLICK_ENV" not in env
++    env["TEST_CLICK_ENV"] = "some_value"
+     result = runner.invoke(cli_env, env=env)
+     assert result.exit_code == 0
+-    assert result.output == 'ENV=some_value\n'
++    assert result.output == "ENV=some_value\n"
+ 
+     assert os.environ == env_orig
+ 
+@@ -244,15 +244,15 @@ def test_stderr():
+ 
+     result = runner.invoke(cli_stderr)
+ 
+-    assert result.output == 'stdout\n'
+-    assert result.stdout == 'stdout\n'
+-    assert result.stderr == 'stderr\n'
++    assert result.output == "stdout\n"
++    assert result.stdout == "stdout\n"
++    assert result.stderr == "stderr\n"
+ 
+     runner_mix = CliRunner(mix_stderr=True)
+     result_mix = runner_mix.invoke(cli_stderr)
+ 
+-    assert result_mix.output == 'stdout\nstderr\n'
+-    assert result_mix.stdout == 'stdout\nstderr\n'
++    assert result_mix.output == "stdout\nstderr\n"
++    assert result_mix.stdout == "stdout\nstderr\n"
+ 
+     with pytest.raises(ValueError):
+         result_mix.stderr
+@@ -265,22 +265,24 @@ def test_stderr():
+ 
+     result = runner.invoke(cli_empty_stderr)
+ 
+-    assert result.output == 'stdout\n'
+-    assert result.stdout == 'stdout\n'
+-    assert result.stderr == ''
+-
+-
+-@pytest.mark.parametrize('args, expected_output', [
+-    (None, 'bar\n'),
+-    ([], 'bar\n'),
+-    ('', 'bar\n'),
+-    (['--foo', 'one two'], 'one two\n'),
+-    ('--foo "one two"', 'one two\n'),
+-])
++    assert result.output == "stdout\n"
++    assert result.stdout == "stdout\n"
++    assert result.stderr == ""
++
++
++@pytest.mark.parametrize(
++    "args, expected_output",
++    [
++        (None, "bar\n"),
++        ([], "bar\n"),
++        ("", "bar\n"),
++        (["--foo", "one two"], "one two\n"),
++        ('--foo "one two"', "one two\n"),
++    ],
++)
+ def test_args(args, expected_output):
+-
+     @click.command()
+-    @click.option('--foo', default='bar')
++    @click.option("--foo", default="bar")
+     def cli_args(foo):
+         click.echo(foo)
+ 
+@@ -298,4 +300,4 @@ def test_setting_prog_name_in_extra():
+     runner = CliRunner()
+     result = runner.invoke(cli, prog_name="foobar")
+     assert not result.exception
+-    assert result.output == 'ok\n'
++    assert result.output == "ok\n"
+diff --git a/tests/test_utils.py b/tests/test_utils.py
+index 93f1ca087d32312eeb780c08de4d1178ba7c2955..d86f59b8179225b33457a4a4f12f5a74c8c79b43 100644
+--- a/tests/test_utils.py
++++ b/tests/test_utils.py
+@@ -4,51 +4,53 @@ import sys
+ 
+ import pytest
+ 
+-import click
+-import click.utils
+ import click._termui_impl
+-from click._compat import WIN, PY2
++import click.utils
++from click._compat import WIN
+ 
+ 
+ def test_echo(runner):
+     with runner.isolation() as outstreams:
+-        click.echo(u'\N{SNOWMAN}')
+-        click.echo(b'\x44\x44')
++        click.echo(u"\N{SNOWMAN}")
++        click.echo(b"\x44\x44")
+         click.echo(42, nl=False)
+-        click.echo(b'a', nl=False)
+-        click.echo('\x1b[31mx\x1b[39m', nl=False)
+-        bytes = outstreams[0].getvalue().replace(b'\r\n', b'\n')
+-        assert bytes == b'\xe2\x98\x83\nDD\n42ax'
++        click.echo(b"a", nl=False)
++        click.echo("\x1b[31mx\x1b[39m", nl=False)
++        bytes = outstreams[0].getvalue().replace(b"\r\n", b"\n")
++        assert bytes == b"\xe2\x98\x83\nDD\n42ax"
+ 
+     # If we are in Python 2, we expect that writing bytes into a string io
+     # does not do anything crazy.  In Python 3
+     if sys.version_info[0] == 2:
+         import StringIO
++
+         sys.stdout = x = StringIO.StringIO()
+         try:
+-            click.echo('\xf6')
++            click.echo("\xf6")
+         finally:
+             sys.stdout = sys.__stdout__
+-        assert x.getvalue() == '\xf6\n'
++        assert x.getvalue() == "\xf6\n"
+ 
+     # And in any case, if wrapped, we expect bytes to survive.
+     @click.command()
+     def cli():
+-        click.echo(b'\xf6')
++        click.echo(b"\xf6")
++
+     result = runner.invoke(cli, [])
+-    assert result.stdout_bytes == b'\xf6\n'
++    assert result.stdout_bytes == b"\xf6\n"
+ 
+     # Ensure we do not strip for bytes.
+     with runner.isolation() as outstreams:
+-        click.echo(bytearray(b'\x1b[31mx\x1b[39m'), nl=False)
+-        assert outstreams[0].getvalue() == b'\x1b[31mx\x1b[39m'
++        click.echo(bytearray(b"\x1b[31mx\x1b[39m"), nl=False)
++        assert outstreams[0].getvalue() == b"\x1b[31mx\x1b[39m"
+ 
+ 
+ def test_echo_custom_file():
+     import io
++
+     f = io.StringIO()
+-    click.echo(u'hello', file=f)
+-    assert f.getvalue() == u'hello\n'
++    click.echo(u"hello", file=f)
++    assert f.getvalue() == u"hello\n"
+ 
+ 
+ @pytest.mark.parametrize(
+@@ -81,107 +83,105 @@ def test_styling(styles, ref):
+     assert click.unstyle(ref) == "x y"
+ 
+ 
+-@pytest.mark.parametrize(
+-    ("text", "expect"),
+-    [
+-        ("\x1b[?25lx y\x1b[?25h", "x y"),
+-    ]
+-)
++@pytest.mark.parametrize(("text", "expect"), [("\x1b[?25lx y\x1b[?25h", "x y")])
+ def test_unstyle_other_ansi(text, expect):
+     assert click.unstyle(text) == expect
+ 
+ 
+-
+ def test_filename_formatting():
+-    assert click.format_filename(b'foo.txt') == 'foo.txt'
+-    assert click.format_filename(b'/x/foo.txt') == '/x/foo.txt'
+-    assert click.format_filename(u'/x/foo.txt') == '/x/foo.txt'
+-    assert click.format_filename(u'/x/foo.txt', shorten=True) == 'foo.txt'
++    assert click.format_filename(b"foo.txt") == "foo.txt"
++    assert click.format_filename(b"/x/foo.txt") == "/x/foo.txt"
++    assert click.format_filename(u"/x/foo.txt") == "/x/foo.txt"
++    assert click.format_filename(u"/x/foo.txt", shorten=True) == "foo.txt"
+ 
+     # filesystem encoding on windows permits this.
+     if not WIN:
+-        assert click.format_filename(b'/x/foo\xff.txt', shorten=True) \
+-            == u'foo\ufffd.txt'
++        assert (
++            click.format_filename(b"/x/foo\xff.txt", shorten=True) == u"foo\ufffd.txt"
++        )
+ 
+ 
+ def test_prompts(runner):
+     @click.command()
+     def test():
+-        if click.confirm('Foo'):
+-            click.echo('yes!')
++        if click.confirm("Foo"):
++            click.echo("yes!")
+         else:
+-            click.echo('no :(')
++            click.echo("no :(")
+ 
+-    result = runner.invoke(test, input='y\n')
++    result = runner.invoke(test, input="y\n")
+     assert not result.exception
+-    assert result.output == 'Foo [y/N]: y\nyes!\n'
++    assert result.output == "Foo [y/N]: y\nyes!\n"
+ 
+-    result = runner.invoke(test, input='\n')
++    result = runner.invoke(test, input="\n")
+     assert not result.exception
+-    assert result.output == 'Foo [y/N]: \nno :(\n'
++    assert result.output == "Foo [y/N]: \nno :(\n"
+ 
+-    result = runner.invoke(test, input='n\n')
++    result = runner.invoke(test, input="n\n")
+     assert not result.exception
+-    assert result.output == 'Foo [y/N]: n\nno :(\n'
++    assert result.output == "Foo [y/N]: n\nno :(\n"
+ 
+     @click.command()
+     def test_no():
+-        if click.confirm('Foo', default=True):
+-            click.echo('yes!')
++        if click.confirm("Foo", default=True):
++            click.echo("yes!")
+         else:
+-            click.echo('no :(')
++            click.echo("no :(")
+ 
+-    result = runner.invoke(test_no, input='y\n')
++    result = runner.invoke(test_no, input="y\n")
+     assert not result.exception
+-    assert result.output == 'Foo [Y/n]: y\nyes!\n'
++    assert result.output == "Foo [Y/n]: y\nyes!\n"
+ 
+-    result = runner.invoke(test_no, input='\n')
++    result = runner.invoke(test_no, input="\n")
+     assert not result.exception
+-    assert result.output == 'Foo [Y/n]: \nyes!\n'
++    assert result.output == "Foo [Y/n]: \nyes!\n"
+ 
+-    result = runner.invoke(test_no, input='n\n')
++    result = runner.invoke(test_no, input="n\n")
+     assert not result.exception
+-    assert result.output == 'Foo [Y/n]: n\nno :(\n'
++    assert result.output == "Foo [Y/n]: n\nno :(\n"
+ 
+ 
+-@pytest.mark.skipif(WIN, reason='Different behavior on windows.')
++@pytest.mark.skipif(WIN, reason="Different behavior on windows.")
+ def test_prompts_abort(monkeypatch, capsys):
+     def f(_):
+         raise KeyboardInterrupt()
+ 
+-    monkeypatch.setattr('click.termui.hidden_prompt_func', f)
++    monkeypatch.setattr("click.termui.hidden_prompt_func", f)
+ 
+     try:
+-        click.prompt('Password', hide_input=True)
++        click.prompt("Password", hide_input=True)
+     except click.Abort:
+-        click.echo('Screw you.')
++        click.echo("Screw you.")
+ 
+     out, err = capsys.readouterr()
+-    assert out == 'Password: \nScrew you.\n'
++    assert out == "Password: \nScrew you.\n"
+ 
+ 
+ def _test_gen_func():
+-    yield 'a'
+-    yield 'b'
+-    yield 'c'
+-    yield 'abc'
+-
+-
+-@pytest.mark.skipif(WIN, reason='Different behavior on windows.')
+-@pytest.mark.parametrize('cat', ['cat', 'cat ', 'cat '])
+-@pytest.mark.parametrize('test', [
+-    # We need lambda here, because pytest will
+-    # reuse the parameters, and then the generators
+-    # are already used and will not yield anymore
+-    ('just text\n', lambda: 'just text'),
+-    ('iterable\n', lambda: ["itera", "ble"]),
+-    ('abcabc\n', lambda: _test_gen_func),
+-    ('abcabc\n', lambda: _test_gen_func()),
+-    ('012345\n', lambda: (c for c in range(6))),
+-])
++    yield "a"
++    yield "b"
++    yield "c"
++    yield "abc"
++
++
++@pytest.mark.skipif(WIN, reason="Different behavior on windows.")
++@pytest.mark.parametrize("cat", ["cat", "cat ", "cat "])
++@pytest.mark.parametrize(
++    "test",
++    [
++        # We need lambda here, because pytest will
++        # reuse the parameters, and then the generators
++        # are already used and will not yield anymore
++        ("just text\n", lambda: "just text"),
++        ("iterable\n", lambda: ["itera", "ble"]),
++        ("abcabc\n", lambda: _test_gen_func),
++        ("abcabc\n", lambda: _test_gen_func()),
++        ("012345\n", lambda: (c for c in range(6))),
++    ],
++)
+ def test_echo_via_pager(monkeypatch, capfd, cat, test):
+-    monkeypatch.setitem(os.environ, 'PAGER', cat)
+-    monkeypatch.setattr(click._termui_impl, 'isatty', lambda x: True)
++    monkeypatch.setitem(os.environ, "PAGER", cat)
++    monkeypatch.setattr(click._termui_impl, "isatty", lambda x: True)
+ 
+     expected_output = test[0]
+     test_input = test[1]()
+@@ -192,35 +192,35 @@ def test_echo_via_pager(monkeypatch, capfd, cat, test):
+     assert out == expected_output
+ 
+ 
+-@pytest.mark.skipif(WIN, reason='Test does not make sense on Windows.')
++@pytest.mark.skipif(WIN, reason="Test does not make sense on Windows.")
+ def test_echo_color_flag(monkeypatch, capfd):
+     isatty = True
+-    monkeypatch.setattr(click._compat, 'isatty', lambda x: isatty)
++    monkeypatch.setattr(click._compat, "isatty", lambda x: isatty)
+ 
+-    text = 'foo'
+-    styled_text = click.style(text, fg='red')
+-    assert styled_text == '\x1b[31mfoo\x1b[0m'
++    text = "foo"
++    styled_text = click.style(text, fg="red")
++    assert styled_text == "\x1b[31mfoo\x1b[0m"
+ 
+     click.echo(styled_text, color=False)
+     out, err = capfd.readouterr()
+-    assert out == text + '\n'
++    assert out == "{}\n".format(text)
+ 
+     click.echo(styled_text, color=True)
+     out, err = capfd.readouterr()
+-    assert out == styled_text + '\n'
++    assert out == "{}\n".format(styled_text)
+ 
+     isatty = True
+     click.echo(styled_text)
+     out, err = capfd.readouterr()
+-    assert out == styled_text + '\n'
++    assert out == "{}\n".format(styled_text)
+ 
+     isatty = False
+     click.echo(styled_text)
+     out, err = capfd.readouterr()
+-    assert out == text + '\n'
++    assert out == "{}\n".format(text)
+ 
+ 
+-@pytest.mark.skipif(WIN, reason='Test too complex to make work windows.')
++@pytest.mark.skipif(WIN, reason="Test too complex to make work windows.")
+ def test_echo_writing_to_standard_error(capfd, monkeypatch):
+     def emulate_input(text):
+         """Emulate keyboard input."""
+@@ -228,76 +228,76 @@ def test_echo_writing_to_standard_error(capfd, monkeypatch):
+             from StringIO import StringIO
+         else:
+             from io import StringIO
+-        monkeypatch.setattr(sys, 'stdin', StringIO(text))
++        monkeypatch.setattr(sys, "stdin", StringIO(text))
+ 
+-    click.echo('Echo to standard output')
++    click.echo("Echo to standard output")
+     out, err = capfd.readouterr()
+-    assert out == 'Echo to standard output\n'
+-    assert err == ''
++    assert out == "Echo to standard output\n"
++    assert err == ""
+ 
+-    click.echo('Echo to standard error', err=True)
++    click.echo("Echo to standard error", err=True)
+     out, err = capfd.readouterr()
+-    assert out == ''
+-    assert err == 'Echo to standard error\n'
++    assert out == ""
++    assert err == "Echo to standard error\n"
+ 
+-    emulate_input('asdlkj\n')
+-    click.prompt('Prompt to stdin')
++    emulate_input("asdlkj\n")
++    click.prompt("Prompt to stdin")
+     out, err = capfd.readouterr()
+-    assert out == 'Prompt to stdin: '
+-    assert err == ''
++    assert out == "Prompt to stdin: "
++    assert err == ""
+ 
+-    emulate_input('asdlkj\n')
+-    click.prompt('Prompt to stderr', err=True)
++    emulate_input("asdlkj\n")
++    click.prompt("Prompt to stderr", err=True)
+     out, err = capfd.readouterr()
+-    assert out == ''
+-    assert err == 'Prompt to stderr: '
++    assert out == ""
++    assert err == "Prompt to stderr: "
+ 
+-    emulate_input('y\n')
+-    click.confirm('Prompt to stdin')
++    emulate_input("y\n")
++    click.confirm("Prompt to stdin")
+     out, err = capfd.readouterr()
+-    assert out == 'Prompt to stdin [y/N]: '
+-    assert err == ''
++    assert out == "Prompt to stdin [y/N]: "
++    assert err == ""
+ 
+-    emulate_input('y\n')
+-    click.confirm('Prompt to stderr', err=True)
++    emulate_input("y\n")
++    click.confirm("Prompt to stderr", err=True)
+     out, err = capfd.readouterr()
+-    assert out == ''
+-    assert err == 'Prompt to stderr [y/N]: '
++    assert out == ""
++    assert err == "Prompt to stderr [y/N]: "
+ 
+-    monkeypatch.setattr(click.termui, 'isatty', lambda x: True)
+-    monkeypatch.setattr(click.termui, 'getchar', lambda: ' ')
++    monkeypatch.setattr(click.termui, "isatty", lambda x: True)
++    monkeypatch.setattr(click.termui, "getchar", lambda: " ")
+ 
+-    click.pause('Pause to stdout')
++    click.pause("Pause to stdout")
+     out, err = capfd.readouterr()
+-    assert out == 'Pause to stdout\n'
+-    assert err == ''
++    assert out == "Pause to stdout\n"
++    assert err == ""
+ 
+-    click.pause('Pause to stderr', err=True)
++    click.pause("Pause to stderr", err=True)
+     out, err = capfd.readouterr()
+-    assert out == ''
+-    assert err == 'Pause to stderr\n'
++    assert out == ""
++    assert err == "Pause to stderr\n"
+ 
+ 
+ def test_open_file(runner):
+     @click.command()
+-    @click.argument('filename')
++    @click.argument("filename")
+     def cli(filename):
+         with click.open_file(filename) as f:
+             click.echo(f.read())
+ 
+-        click.echo('meep')
++        click.echo("meep")
+ 
+     with runner.isolated_filesystem():
+-        with open('hello.txt', 'w') as f:
+-            f.write('Cool stuff')
++        with open("hello.txt", "w") as f:
++            f.write("Cool stuff")
+ 
+-        result = runner.invoke(cli, ['hello.txt'])
++        result = runner.invoke(cli, ["hello.txt"])
+         assert result.exception is None
+-        assert result.output == 'Cool stuff\nmeep\n'
++        assert result.output == "Cool stuff\nmeep\n"
+ 
+-        result = runner.invoke(cli, ['-'], input='foobar')
++        result = runner.invoke(cli, ["-"], input="foobar")
+         assert result.exception is None
+-        assert result.output == 'foobar\nmeep\n'
++        assert result.output == "foobar\nmeep\n"
+ 
+ 
+ def test_open_file_ignore_errors_stdin(runner):
+@@ -338,51 +338,47 @@ def test_open_file_ignore_no_encoding(runner):
+             f.read()
+ 
+ 
+-@pytest.mark.skipif(WIN, reason='os.chmod() is not fully supported on Windows.')
+-@pytest.mark.parametrize('permissions', [
+-    0o400,
+-    0o444,
+-    0o600,
+-    0o644,
+- ])
++@pytest.mark.skipif(WIN, reason="os.chmod() is not fully supported on Windows.")
++@pytest.mark.parametrize("permissions", [0o400, 0o444, 0o600, 0o644])
+ def test_open_file_atomic_permissions_existing_file(runner, permissions):
+     with runner.isolated_filesystem():
+-        with open('existing.txt', 'w') as f:
+-            f.write('content')
+-        os.chmod('existing.txt', permissions)
++        with open("existing.txt", "w") as f:
++            f.write("content")
++        os.chmod("existing.txt", permissions)
+ 
+         @click.command()
+-        @click.argument('filename')
++        @click.argument("filename")
+         def cli(filename):
+-           click.open_file(filename, 'w', atomic=True).close()
++            click.open_file(filename, "w", atomic=True).close()
+ 
+-        result = runner.invoke(cli, ['existing.txt'])
++        result = runner.invoke(cli, ["existing.txt"])
+         assert result.exception is None
+-        assert stat.S_IMODE(os.stat('existing.txt').st_mode) == permissions
++        assert stat.S_IMODE(os.stat("existing.txt").st_mode) == permissions
+ 
+ 
+-@pytest.mark.skipif(WIN, reason='os.stat() is not fully supported on Windows.')
++@pytest.mark.skipif(WIN, reason="os.stat() is not fully supported on Windows.")
+ def test_open_file_atomic_permissions_new_file(runner):
+     with runner.isolated_filesystem():
++
+         @click.command()
+-        @click.argument('filename')
++        @click.argument("filename")
+         def cli(filename):
+-            click.open_file(filename, 'w', atomic=True).close()
++            click.open_file(filename, "w", atomic=True).close()
+ 
+         # Create a test file to get the expected permissions for new files
+         # according to the current umask.
+-        with open('test.txt', 'w'):
++        with open("test.txt", "w"):
+             pass
+-        permissions = stat.S_IMODE(os.stat('test.txt').st_mode)
++        permissions = stat.S_IMODE(os.stat("test.txt").st_mode)
+ 
+-        result = runner.invoke(cli, ['new.txt'])
++        result = runner.invoke(cli, ["new.txt"])
+         assert result.exception is None
+-        assert stat.S_IMODE(os.stat('new.txt').st_mode) == permissions
++        assert stat.S_IMODE(os.stat("new.txt").st_mode) == permissions
+ 
+ 
+ def test_iter_keepopenfile(tmpdir):
+     expected = list(map(str, range(10)))
+-    p = tmpdir.mkdir('testdir').join('testfile')
++    p = tmpdir.mkdir("testdir").join("testfile")
+     p.write("\n".join(expected))
+     with p.open() as f:
+         for e_line, a_line in zip(expected, click.utils.KeepOpenFile(f)):
+@@ -391,7 +387,7 @@ def test_iter_keepopenfile(tmpdir):
+ 
+ def test_iter_lazyfile(tmpdir):
+     expected = list(map(str, range(10)))
+-    p = tmpdir.mkdir('testdir').join('testfile')
++    p = tmpdir.mkdir("testdir").join("testfile")
+     p.write("\n".join(expected))
+     with p.open() as f:
+         with click.utils.LazyFile(f.name) as lf:

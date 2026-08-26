@@ -1,0 +1,570 @@
+diff --git a/.pre-commit-config.yaml b/.pre-commit-config.yaml
+index 4ca95ed52f4c7e65b991468ee67d6d544a8a82e1..898dd08cfa60a3b6c08df411abd3da842128d73f 100644
+--- a/.pre-commit-config.yaml
++++ b/.pre-commit-config.yaml
+@@ -3,7 +3,7 @@ ci:
+   autoupdate_schedule: monthly
+ repos:
+   - repo: https://github.com/asottile/pyupgrade
+-    rev: v3.3.2
++    rev: v3.4.0
+     hooks:
+       - id: pyupgrade
+         args: ["--py37-plus"]
+diff --git a/CHANGES.rst b/CHANGES.rst
+index c60c12a59d7c96f8ca57fe0f145a0bc2492925d6..2d560885d15c2f55fe3015f546133a074070bae0 100644
+--- a/CHANGES.rst
++++ b/CHANGES.rst
+@@ -5,8 +5,11 @@ Version 8.1.4
+ 
+ Unreleased
+ 
++-   Replace all ``typing.Dict`` occurrences to ``typing.MutableMapping`` for
++    parameter hints.  :issue:`2255`
+ -   Improve type hinting for decorators and give all generic types parameters.
+     :issue:`2398`
++-   Fix return value and type signature of `shell_completion.add_completion_class` function. :pr:`2421`
+ 
+ 
+ Version 8.1.3
+diff --git a/README.rst b/README.rst
+index 84c87502ca17ba32b80d54a24000ae34600e27fb..76f26978a6d3a5e445950d26bfb4a9ff0af33433 100644
+--- a/README.rst
++++ b/README.rst
+@@ -75,6 +75,4 @@ Links
+ -   PyPI Releases: https://pypi.org/project/click/
+ -   Source Code: https://github.com/pallets/click
+ -   Issue Tracker: https://github.com/pallets/click/issues
+--   Website: https://palletsprojects.com/p/click
+--   Twitter: https://twitter.com/PalletsTeam
+ -   Chat: https://discord.gg/pallets
+diff --git a/docs/advanced.rst b/docs/advanced.rst
+index 3df492a778a0d979fd028a69e492d53b7e83f480..56495617d1bd94e862435ab2bc31f54d96ff83d1 100644
+--- a/docs/advanced.rst
++++ b/docs/advanced.rst
+@@ -79,7 +79,7 @@ object has a :attr:`~Context.params` attribute which is a dictionary of
+ all parameters.  Whatever is in that dictionary is being passed to the
+ callbacks.
+ 
+-This can be used to make up addition parameters.  Generally this pattern
++This can be used to make up additional parameters.  Generally this pattern
+ is not recommended but in some cases it can be useful.  At the very least
+ it's good to know that the system works this way.
+ 
+@@ -282,7 +282,7 @@ options:
+     command will abort with an error that there are leftover arguments.
+     If you go with this solution, the extra arguments will be collected in
+     :attr:`Context.args`.
+-2.  You can attach a :func:`argument` with ``nargs`` set to `-1` which
++2.  You can attach an :func:`argument` with ``nargs`` set to `-1` which
+     will eat up all leftover arguments.  In this case it's recommended to
+     set the `type` to :data:`UNPROCESSED` to avoid any string processing
+     on those arguments as otherwise they are forced into unicode strings
+@@ -339,7 +339,7 @@ are important to know about how this ignoring of unhandled flag happens:
+     to not allow arguments and options to be mixed.  Depending on your
+     situation this might improve your results.
+ 
+-Generally though the combinated handling of options and arguments from
++Generally though the combined handling of options and arguments from
+ your own commands and commands from another application are discouraged
+ and if you can avoid it, you should.  It's a much better idea to have
+ everything below a subcommand be forwarded to another application than to
+diff --git a/docs/conf.py b/docs/conf.py
+index b0ed9ff74a1f7294c623d043717453f172ceebfd..668b8383b80dcd02779ae62cabf81a033daca62b 100644
+--- a/docs/conf.py
++++ b/docs/conf.py
+@@ -38,8 +38,6 @@ html_context = {
+         ProjectLink("PyPI Releases", "https://pypi.org/project/click/"),
+         ProjectLink("Source Code", "https://github.com/pallets/click/"),
+         ProjectLink("Issue Tracker", "https://github.com/pallets/click/issues/"),
+-        ProjectLink("Website", "https://palletsprojects.com/p/click"),
+-        ProjectLink("Twitter", "https://twitter.com/PalletsTeam"),
+         ProjectLink("Chat", "https://discord.gg/pallets"),
+     ]
+ }
+diff --git a/requirements/build.txt b/requirements/build.txt
+index 37f419145ade55b7b09017d9b1dfa9a9c9211b13..98175b85658e168b46bcafe0a652dd430d104aa7 100644
+--- a/requirements/build.txt
++++ b/requirements/build.txt
+@@ -6,9 +6,7 @@
+ #    pip-compile-multi
+ #
+ build==0.10.0
+-    # via -r requirements\build.in
+-colorama==0.4.6
+-    # via build
++    # via -r requirements/build.in
+ packaging==23.1
+     # via build
+ pyproject-hooks==1.0.0
+diff --git a/requirements/dev.txt b/requirements/dev.txt
+index 3174cec8f377f1a21c091c52767a4c85b8a2ee0f..99a6f0346c0b618fc3cd3f768198d790da65ebd9 100644
+--- a/requirements/dev.txt
++++ b/requirements/dev.txt
+@@ -10,7 +10,7 @@
+ -r typing.txt
+ build==0.10.0
+     # via pip-tools
+-cachetools==5.3.0
++cachetools==5.3.1
+     # via tox
+ cfgv==3.3.1
+     # via pre-commit
+@@ -20,26 +20,28 @@ click==8.1.3
+     # via
+     #   pip-compile-multi
+     #   pip-tools
++colorama==0.4.6
++    # via tox
+ distlib==0.3.6
+     # via virtualenv
+ filelock==3.12.0
+     # via
+     #   tox
+     #   virtualenv
+-identify==2.5.23
++identify==2.5.24
+     # via pre-commit
+-nodeenv==1.7.0
++nodeenv==1.8.0
+     # via pre-commit
+-pip-compile-multi==2.6.2
+-    # via -r requirements\dev.in
++pip-compile-multi==2.6.3
++    # via -r requirements/dev.in
+ pip-tools==6.13.0
+     # via pip-compile-multi
+-platformdirs==3.5.0
++platformdirs==3.5.1
+     # via
+     #   tox
+     #   virtualenv
+-pre-commit==3.3.1
+-    # via -r requirements\dev.in
++pre-commit==3.3.2
++    # via -r requirements/dev.in
+ pyproject-api==1.5.1
+     # via tox
+ pyproject-hooks==1.0.0
+@@ -48,8 +50,8 @@ pyyaml==6.0
+     # via pre-commit
+ toposort==1.10
+     # via pip-compile-multi
+-tox==4.5.1
+-    # via -r requirements\dev.in
++tox==4.5.2
++    # via -r requirements/dev.in
+ virtualenv==20.23.0
+     # via
+     #   pre-commit
+diff --git a/requirements/docs.txt b/requirements/docs.txt
+index 216ac6007c8ecc64322ddd63741a0d6d55b436c7..34230e515bcae87b4d0f92eb4c2a92490c5175f7 100644
+--- a/requirements/docs.txt
++++ b/requirements/docs.txt
+@@ -9,12 +9,10 @@ alabaster==0.7.13
+     # via sphinx
+ babel==2.12.1
+     # via sphinx
+-certifi==2022.12.7
++certifi==2023.5.7
+     # via requests
+ charset-normalizer==3.1.0
+     # via requests
+-colorama==0.4.6
+-    # via sphinx
+ docutils==0.18.1
+     # via
+     #   sphinx
+@@ -32,26 +30,26 @@ packaging==23.1
+     #   pallets-sphinx-themes
+     #   sphinx
+ pallets-sphinx-themes==2.1.0
+-    # via -r requirements\docs.in
++    # via -r requirements/docs.in
+ pygments==2.15.1
+     # via
+     #   sphinx
+     #   sphinx-tabs
+-requests==2.29.0
++requests==2.31.0
+     # via sphinx
+ snowballstemmer==2.2.0
+     # via sphinx
+-sphinx==7.0.0
++sphinx==7.0.1
+     # via
+-    #   -r requirements\docs.in
++    #   -r requirements/docs.in
+     #   pallets-sphinx-themes
+     #   sphinx-issues
+     #   sphinx-tabs
+     #   sphinxcontrib-log-cabinet
+ sphinx-issues==3.0.1
+-    # via -r requirements\docs.in
++    # via -r requirements/docs.in
+ sphinx-tabs==3.4.1
+-    # via -r requirements\docs.in
++    # via -r requirements/docs.in
+ sphinxcontrib-applehelp==1.0.4
+     # via sphinx
+ sphinxcontrib-devhelp==1.0.2
+@@ -61,10 +59,10 @@ sphinxcontrib-htmlhelp==2.0.1
+ sphinxcontrib-jsmath==1.0.1
+     # via sphinx
+ sphinxcontrib-log-cabinet==1.0.1
+-    # via -r requirements\docs.in
++    # via -r requirements/docs.in
+ sphinxcontrib-qthelp==1.0.3
+     # via sphinx
+ sphinxcontrib-serializinghtml==1.1.5
+     # via sphinx
+-urllib3==1.26.15
++urllib3==2.0.2
+     # via requests
+diff --git a/requirements/tests.txt b/requirements/tests.txt
+index 00c1da7bfa9cf9fe12bdc5c2b491f3eea874273f..70ca162b742feac0b748319cae9dffc4cac95ea7 100644
+--- a/requirements/tests.txt
++++ b/requirements/tests.txt
+@@ -5,8 +5,6 @@
+ #
+ #    pip-compile-multi
+ #
+-colorama==0.4.6
+-    # via pytest
+ exceptiongroup==1.1.1
+     # via pytest
+ iniconfig==2.0.0
+@@ -16,6 +14,6 @@ packaging==23.1
+ pluggy==1.0.0
+     # via pytest
+ pytest==7.3.1
+-    # via -r requirements\tests.in
++    # via -r requirements/tests.in
+ tomli==2.0.1
+     # via pytest
+diff --git a/requirements/typing.txt b/requirements/typing.txt
+index a70f3f5ce63a3ff64ff5f595d37bc0d569a07f3d..bc63c0f8497e92c26b2d6bd869c938f0707f9e89 100644
+--- a/requirements/typing.txt
++++ b/requirements/typing.txt
+@@ -5,11 +5,11 @@
+ #
+ #    pip-compile-multi
+ #
+-mypy==0.991
++mypy==1.3.0
+     # via -r requirements/typing.in
+-mypy-extensions==0.4.3
++mypy-extensions==1.0.0
+     # via mypy
+ tomli==2.0.1
+     # via mypy
+-typing-extensions==4.4.0
++typing-extensions==4.6.2
+     # via mypy
+diff --git a/setup.cfg b/setup.cfg
+index 0d9b7ac51383eda5ca3573214427611fcee50d22..6b1971f76c881c715ecf02938ba37d40a5abc024 100644
+--- a/setup.cfg
++++ b/setup.cfg
+@@ -8,12 +8,9 @@ project_urls =
+     Changes = https://click.palletsprojects.com/changes/
+     Source Code = https://github.com/pallets/click/
+     Issue Tracker = https://github.com/pallets/click/issues/
+-    Twitter = https://twitter.com/PalletsTeam
+     Chat = https://discord.gg/pallets
+ license = BSD-3-Clause
+ license_files = LICENSE.rst
+-author = Armin Ronacher
+-author_email = armin.ronacher@active-4.com
+ maintainer = Pallets
+ maintainer_email = contact@palletsprojects.com
+ description = Composable command line interface toolkit
+@@ -40,6 +37,7 @@ where = src
+ testpaths = tests
+ filterwarnings =
+     error
++    ignore:ast:DeprecationWarning
+ 
+ [coverage:run]
+ branch = True
+diff --git a/src/click/core.py b/src/click/core.py
+index bdb4b9618188c6ea6dfb0a24af1096c998788921..42b74b0253be89ca46a4211032689a9871de95b4 100644
+--- a/src/click/core.py
++++ b/src/click/core.py
+@@ -264,7 +264,7 @@ class Context:
+         info_name: t.Optional[str] = None,
+         obj: t.Optional[t.Any] = None,
+         auto_envvar_prefix: t.Optional[str] = None,
+-        default_map: t.Optional[t.Dict[str, t.Any]] = None,
++        default_map: t.Optional[t.MutableMapping[str, t.Any]] = None,
+         terminal_width: t.Optional[int] = None,
+         max_content_width: t.Optional[int] = None,
+         resilient_parsing: bool = False,
+@@ -311,7 +311,7 @@ class Context:
+         ):
+             default_map = parent.default_map.get(info_name)
+ 
+-        self.default_map: t.Optional[t.Dict[str, t.Any]] = default_map
++        self.default_map: t.Optional[t.MutableMapping[str, t.Any]] = default_map
+ 
+         #: This flag indicates if a subcommand is going to be executed. A
+         #: group callback can use this information to figure out if it's
+@@ -862,7 +862,7 @@ class BaseCommand:
+     def __init__(
+         self,
+         name: t.Optional[str],
+-        context_settings: t.Optional[t.Dict[str, t.Any]] = None,
++        context_settings: t.Optional[t.MutableMapping[str, t.Any]] = None,
+     ) -> None:
+         #: the name the command thinks it has.  Upon registering a command
+         #: on a :class:`Group` the group will default the command name
+@@ -874,7 +874,7 @@ class BaseCommand:
+             context_settings = {}
+ 
+         #: an optional dictionary with defaults passed to the context.
+-        self.context_settings: t.Dict[str, t.Any] = context_settings
++        self.context_settings: t.MutableMapping[str, t.Any] = context_settings
+ 
+     def to_info_dict(self, ctx: Context) -> t.Dict[str, t.Any]:
+         """Gather information that could be useful for a tool generating
+@@ -916,7 +916,7 @@ class BaseCommand:
+         :param info_name: the info name for this invocation.  Generally this
+                           is the most descriptive name for the script or
+                           command.  For the toplevel script it's usually
+-                          the name of the script, for commands below it it's
++                          the name of the script, for commands below it's
+                           the name of the command.
+         :param args: the arguments to parse as list of strings.
+         :param parent: the parent context if available.
+@@ -949,7 +949,7 @@ class BaseCommand:
+         """Given a context, this invokes the command.  The default
+         implementation is raising a not implemented error.
+         """
+-        raise NotImplementedError("Base commands are not invokable by default")
++        raise NotImplementedError("Base commands are not invocable by default")
+ 
+     def shell_complete(self, ctx: Context, incomplete: str) -> t.List["CompletionItem"]:
+         """Return a list of completions for the incomplete value. Looks
+@@ -1117,7 +1117,7 @@ class BaseCommand:
+ 
+     def _main_shell_completion(
+         self,
+-        ctx_args: t.Dict[str, t.Any],
++        ctx_args: t.MutableMapping[str, t.Any],
+         prog_name: str,
+         complete_var: t.Optional[str] = None,
+     ) -> None:
+@@ -1193,7 +1193,7 @@ class Command(BaseCommand):
+     def __init__(
+         self,
+         name: t.Optional[str],
+-        context_settings: t.Optional[t.Dict[str, t.Any]] = None,
++        context_settings: t.Optional[t.MutableMapping[str, t.Any]] = None,
+         callback: t.Optional[t.Callable[..., t.Any]] = None,
+         params: t.Optional[t.List["Parameter"]] = None,
+         help: t.Optional[str] = None,
+@@ -1480,6 +1480,7 @@ class MultiCommand(Command):
+     :param result_callback: The result callback to attach to this multi
+         command. This can be set or changed later with the
+         :meth:`result_callback` decorator.
++    :param attrs: Other command arguments described in :class:`Command`.
+     """
+ 
+     allow_extra_args = True
+@@ -1778,7 +1779,7 @@ class Group(MultiCommand):
+         :class:`BaseCommand`.
+ 
+     .. versionchanged:: 8.0
+-        The ``commmands`` argument can be a list of command objects.
++        The ``commands`` argument can be a list of command objects.
+     """
+ 
+     #: If set, this is used by the group's :meth:`command` decorator
+@@ -1804,7 +1805,9 @@ class Group(MultiCommand):
+     def __init__(
+         self,
+         name: t.Optional[str] = None,
+-        commands: t.Optional[t.Union[t.Dict[str, Command], t.Sequence[Command]]] = None,
++        commands: t.Optional[
++            t.Union[t.MutableMapping[str, Command], t.Sequence[Command]]
++        ] = None,
+         **attrs: t.Any,
+     ) -> None:
+         super().__init__(name, **attrs)
+@@ -1815,7 +1818,7 @@ class Group(MultiCommand):
+             commands = {c.name: c for c in commands if c.name is not None}
+ 
+         #: The registered subcommands by their exported names.
+-        self.commands: t.Dict[str, Command] = commands
++        self.commands: t.MutableMapping[str, Command] = commands
+ 
+     def add_command(self, cmd: Command, name: t.Optional[str] = None) -> None:
+         """Registers another :class:`Command` with this group.  If the name
+@@ -1944,6 +1947,9 @@ class CommandCollection(MultiCommand):
+     commands together into one.  This is a straightforward implementation
+     that accepts a list of different multi commands as sources and
+     provides all the commands for each of them.
++
++    See :class:`MultiCommand` and :class:`Command` for the description of
++    ``name`` and ``attrs``.
+     """
+ 
+     def __init__(
+@@ -2467,6 +2473,7 @@ class Option(Parameter):
+                                context.
+     :param help: the help string.
+     :param hidden: hide this option from help outputs.
++    :param attrs: Other command arguments described in :class:`Parameter`.
+ 
+     .. versionchanged:: 8.1.0
+         Help text indentation is cleaned here instead of only in the
+@@ -2945,7 +2952,7 @@ class Argument(Parameter):
+     provide fewer features than options but can have infinite ``nargs``
+     and are required by default.
+ 
+-    All parameters are passed onwards to the parameter constructor.
++    All parameters are passed onwards to the constructor of :class:`Parameter`.
+     """
+ 
+     param_type_name = "argument"
+diff --git a/src/click/decorators.py b/src/click/decorators.py
+index b8b273185b5e201ff74515cfbae892f254936286..bdc4a3a88a2f7ccb6ec82cfab36c7f82651e6210 100644
+--- a/src/click/decorators.py
++++ b/src/click/decorators.py
+@@ -94,7 +94,7 @@ def make_pass_decorator(
+ 
+         return update_wrapper(new_func, f)
+ 
+-    return decorator
++    return decorator  # type: ignore[return-value]
+ 
+ 
+ def pass_meta_key(
+@@ -127,7 +127,7 @@ def pass_meta_key(
+         f"Decorator that passes {doc_description} as the first argument"
+         " to the decorated function."
+     )
+-    return decorator
++    return decorator  # type: ignore[return-value]
+ 
+ 
+ CmdType = t.TypeVar("CmdType", bound=Command)
+@@ -336,8 +336,14 @@ def argument(*param_decls: str, **attrs: t.Any) -> _Decorator[FC]:
+     This is equivalent to creating an :class:`Argument` instance manually
+     and attaching it to the :attr:`Command.params` list.
+ 
++    For the default argument class, refer to :class:`Argument` and
++    :class:`Parameter` for descriptions of parameters.
++
+     :param cls: the argument class to instantiate.  This defaults to
+                 :class:`Argument`.
++    :param param_decls: Passed as positional arguments to the constructor of
++        ``cls``.
++    :param attrs: Passed as keyword arguments to the constructor of ``cls``.
+     """
+ 
+     def decorator(f: FC) -> FC:
+@@ -355,8 +361,14 @@ def option(*param_decls: str, **attrs: t.Any) -> _Decorator[FC]:
+     This is equivalent to creating an :class:`Option` instance manually
+     and attaching it to the :attr:`Command.params` list.
+ 
++    For the default option class, refer to :class:`Option` and
++    :class:`Parameter` for descriptions of parameters.
++
+     :param cls: the option class to instantiate.  This defaults to
+                 :class:`Option`.
++    :param param_decls: Passed as positional arguments to the constructor of
++        ``cls``.
++    :param attrs: Passed as keyword arguments to the constructor of ``cls``.
+     """
+ 
+     def decorator(f: FC) -> FC:
+diff --git a/src/click/parser.py b/src/click/parser.py
+index 2d5a2ed7ba744f0eb6cd561d98c667b09cff4cc0..a9db242c1a96ed5f516a72cac3dc79cbae9fc53e 100644
+--- a/src/click/parser.py
++++ b/src/click/parser.py
+@@ -451,7 +451,7 @@ class OptionParser:
+             if stop:
+                 break
+ 
+-        # If we got any unknown options we re-combinate the string of the
++        # If we got any unknown options we recombine the string of the
+         # remaining options and re-attach the prefix, then report that
+         # to the state as new larg.  This way there is basic combinatorics
+         # that can be achieved while still ignoring unknown arguments.
+diff --git a/src/click/shell_completion.py b/src/click/shell_completion.py
+index c17a8e643c6e3bf281819b0116017a97bdf6c997..f93256e70822dbfbed9e45a4d92124fc4da17a10 100644
+--- a/src/click/shell_completion.py
++++ b/src/click/shell_completion.py
+@@ -16,7 +16,7 @@ from .utils import echo
+ 
+ def shell_complete(
+     cli: BaseCommand,
+-    ctx_args: t.Dict[str, t.Any],
++    ctx_args: t.MutableMapping[str, t.Any],
+     prog_name: str,
+     complete_var: str,
+     instruction: str,
+@@ -214,7 +214,7 @@ class ShellComplete:
+     def __init__(
+         self,
+         cli: BaseCommand,
+-        ctx_args: t.Dict[str, t.Any],
++        ctx_args: t.MutableMapping[str, t.Any],
+         prog_name: str,
+         complete_var: str,
+     ) -> None:
+@@ -389,6 +389,9 @@ class FishComplete(ShellComplete):
+         return f"{item.type},{item.value}"
+ 
+ 
++ShellCompleteType = t.TypeVar("ShellCompleteType", bound=t.Type[ShellComplete])
++
++
+ _available_shells: t.Dict[str, t.Type[ShellComplete]] = {
+     "bash": BashComplete,
+     "fish": FishComplete,
+@@ -397,8 +400,8 @@ _available_shells: t.Dict[str, t.Type[ShellComplete]] = {
+ 
+ 
+ def add_completion_class(
+-    cls: t.Type[ShellComplete], name: t.Optional[str] = None
+-) -> None:
++    cls: ShellCompleteType, name: t.Optional[str] = None
++) -> ShellCompleteType:
+     """Register a :class:`ShellComplete` subclass under the given name.
+     The name will be provided by the completion instruction environment
+     variable during completion.
+@@ -413,6 +416,8 @@ def add_completion_class(
+ 
+     _available_shells[name] = cls
+ 
++    return cls
++
+ 
+ def get_completion_class(shell: str) -> t.Optional[t.Type[ShellComplete]]:
+     """Look up a registered :class:`ShellComplete` subclass by the name
+@@ -482,7 +487,10 @@ def _is_incomplete_option(ctx: Context, args: t.List[str], param: Parameter) ->
+ 
+ 
+ def _resolve_context(
+-    cli: BaseCommand, ctx_args: t.Dict[str, t.Any], prog_name: str, args: t.List[str]
++    cli: BaseCommand,
++    ctx_args: t.MutableMapping[str, t.Any],
++    prog_name: str,
++    args: t.List[str],
+ ) -> Context:
+     """Produce the context hierarchy starting with the command and
+     traversing the complete arguments. This only follows the commands,
+diff --git a/src/click/utils.py b/src/click/utils.py
+index e9310e548fafeb7e8d10de67f7d13b5fb0fe141e..670bf05b80147aaf04527d05a2eb28699e7edd20 100644
+--- a/src/click/utils.py
++++ b/src/click/utils.py
+@@ -430,7 +430,7 @@ def get_app_dir(app_name: str, roaming: bool = True, force_posix: bool = False)
+     :param app_name: the application name.  This should be properly capitalized
+                      and can contain whitespace.
+     :param roaming: controls if the folder should be roaming or not on Windows.
+-                    Has no affect otherwise.
++                    Has no effect otherwise.
+     :param force_posix: if this is set to `True` then on any POSIX system the
+                         folder will be stored in the home folder with a leading
+                         dot instead of the XDG config home or darwin's

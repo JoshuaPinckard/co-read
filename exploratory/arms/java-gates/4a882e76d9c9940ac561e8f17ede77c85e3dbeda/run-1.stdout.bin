@@ -1,0 +1,64 @@
+
+-------------------------------------------------------
+ T E S T S
+-------------------------------------------------------
+Running org.apache.commons.lang3.builder.HashCodeBuilderTest
+Tests run: 44, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.032 sec - in org.apache.commons.lang3.builder.HashCodeBuilderTest
+Running org.apache.commons.lang3.builder.JsonToStringStyleTest
+Tests run: 9, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.02 sec - in org.apache.commons.lang3.builder.JsonToStringStyleTest
+Running org.apache.commons.lang3.reflect.TypeUtilsTest
+Tests run: 19, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.126 sec - in org.apache.commons.lang3.reflect.TypeUtilsTest
+Running org.apache.commons.lang3.time.DateFormatUtilsTest
+Tests run: 10, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.354 sec - in org.apache.commons.lang3.time.DateFormatUtilsTest
+Running org.apache.commons.lang3.time.DateUtilsTest
+Tests run: 48, Failures: 0, Errors: 2, Skipped: 0, Time elapsed: 0.189 sec <<< FAILURE! - in org.apache.commons.lang3.time.DateUtilsTest
+testLANG799_DE_OK(org.apache.commons.lang3.time.DateUtilsTest)  Time elapsed: 0.047 sec  <<< ERROR!
+java.text.ParseException: Unable to parse the date: Mi, 09 Apr 2008 23:55:38 GMT
+	at org.apache.commons.lang3.time.DateUtils.parseDateWithLeniency(DateUtils.java:401)
+	at org.apache.commons.lang3.time.DateUtils.parseDate(DateUtils.java:301)
+	at org.apache.commons.lang3.time.DateUtils.parseDate(DateUtils.java:278)
+	at org.apache.commons.lang3.time.DateUtilsTest.testLANG799_DE_OK(DateUtilsTest.java:1591)
+
+testLANG799_EN_WITH_DE_LOCALE(org.apache.commons.lang3.time.DateUtilsTest)  Time elapsed: 0.002 sec  <<< ERROR!
+java.text.ParseException: Unable to parse the date: Mi, 09 Apr 2008 23:55:38 GMT
+	at org.apache.commons.lang3.time.DateUtils.parseDateWithLeniency(DateUtils.java:401)
+	at org.apache.commons.lang3.time.DateUtils.parseDate(DateUtils.java:301)
+	at org.apache.commons.lang3.time.DateUtilsTest.testLANG799_EN_WITH_DE_LOCALE(DateUtilsTest.java:1616)
+
+Running org.apache.commons.lang3.time.DurationFormatUtilsTest
+Tests run: 25, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.704 sec - in org.apache.commons.lang3.time.DurationFormatUtilsTest
+Running org.apache.commons.lang3.time.FastDateParserTest
+Tests run: 33, Failures: 0, Errors: 1, Skipped: 0, Time elapsed: 6.372 sec <<< FAILURE! - in org.apache.commons.lang3.time.FastDateParserTest
+testTzParses(org.apache.commons.lang3.time.FastDateParserTest)  Time elapsed: 0.496 sec  <<< ERROR!
+java.lang.IllegalArgumentException: ???? is not a supported timezone name
+	at org.apache.commons.lang3.time.FastDateParser$TimeZoneStrategy.setCalendar(FastDateParser.java:826)
+	at org.apache.commons.lang3.time.FastDateParser.parse(FastDateParser.java:342)
+	at org.apache.commons.lang3.time.FastDateParser.parse(FastDateParser.java:296)
+	at org.apache.commons.lang3.time.FastDateParserTest.testTzParses(FastDateParserTest.java:274)
+
+Running org.apache.commons.lang3.time.FastDatePrinterTest
+Tests run: 17, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.005 sec - in org.apache.commons.lang3.time.FastDatePrinterTest
+Running org.apache.commons.lang3.time.FastDatePrinterTimeZonesTest
+Tests run: 632, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.179 sec - in org.apache.commons.lang3.time.FastDatePrinterTimeZonesTest
+
+Results :
+
+
+Tests in error: 
+  DateUtilsTest.testLANG799_DE_OK:1591 » Parse Unable to parse the date: Mi, 09 ...
+  DateUtilsTest.testLANG799_EN_WITH_DE_LOCALE:1616 » Parse Unable to parse the d...
+  FastDateParserTest.testTzParses:274 » IllegalArgument ???? is not a supported ...
+
+
+Tests run: 837, Failures: 0, Errors: 3, Skipped: 0
+
+[ERROR] Failed to execute goal org.apache.maven.plugins:maven-surefire-plugin:2.18:test (default-test) on project commons-lang3: There are test failures.
+[ERROR] 
+[ERROR] Please refer to C:\Users\joshp\Desktop\Blast-Radius-java-gate-scratch-20260825-1310\worktrees\102b75cd923c\target\surefire-reports for the individual test results.
+[ERROR] -> [Help 1]
+[ERROR] 
+[ERROR] To see the full stack trace of the errors, re-run Maven with the -e switch.
+[ERROR] Re-run Maven using the -X switch to enable full debug logging.
+[ERROR] 
+[ERROR] For more information about the errors and possible solutions, please read the following articles:
+[ERROR] [Help 1] http://cwiki.apache.org/confluence/display/MAVEN/MojoFailureException

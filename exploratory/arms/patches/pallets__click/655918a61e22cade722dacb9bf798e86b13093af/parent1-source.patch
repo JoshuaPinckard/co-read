@@ -1,0 +1,400 @@
+diff --git a/.gitignore b/.gitignore
+index fc5a65f293d02ccd0c8959cc1f8078c9f4e2dd9e..c1a1723d470beff99526e17e18b9987ee3ef9a82 100644
+--- a/.gitignore
++++ b/.gitignore
+@@ -1,5 +1,6 @@
+ /.idea/
+ /.vscode/
++.DS_Store/
+ /env/
+ /venv/
+ __pycache__/
+diff --git a/.pre-commit-config.yaml b/.pre-commit-config.yaml
+index ddc2ffb36042abd1fc0b55a068f837ff0f44d7f5..7b2b746a0d80e98384d3fb0a77e352b5cc466972 100644
+--- a/.pre-commit-config.yaml
++++ b/.pre-commit-config.yaml
+@@ -2,17 +2,17 @@ ci:
+   autoupdate_schedule: monthly
+ repos:
+   - repo: https://github.com/asottile/pyupgrade
+-    rev: v2.15.0
++    rev: v2.25.0
+     hooks:
+       - id: pyupgrade
+         args: ["--py36-plus"]
+   - repo: https://github.com/asottile/reorder_python_imports
+-    rev: v2.5.0
++    rev: v2.6.0
+     hooks:
+       - id: reorder-python-imports
+         args: ["--application-directories", "src"]
+   - repo: https://github.com/psf/black
+-    rev: 21.5b1
++    rev: 21.8b0
+     hooks:
+       - id: black
+   - repo: https://github.com/PyCQA/flake8
+@@ -23,7 +23,7 @@ repos:
+           - flake8-bugbear
+           - flake8-implicit-str-concat
+   - repo: https://github.com/pre-commit/pre-commit-hooks
+-    rev: v3.4.0
++    rev: v4.0.1
+     hooks:
+       - id: fix-byte-order-marker
+       - id: trailing-whitespace
+diff --git a/CHANGES.rst b/CHANGES.rst
+index 38ec5349d45b30cc75bfaacc47a88ae339061339..fa8063a1fe17cac4700ebcc6a631bc945cac5a41 100644
+--- a/CHANGES.rst
++++ b/CHANGES.rst
+@@ -1,5 +1,14 @@
+ .. currentmodule:: click
+ 
++Version 8.1.0
++-------------
++
++Unreleased
++
++-   Single options boolean flags with ``show_default=True`` only show
++    the default if it is ``True``. :issue:`1971`:
++
++
+ Version 8.0.2
+ -------------
+ 
+diff --git a/docs/.DS_Store b/docs/.DS_Store
+deleted file mode 100644
+index 5a9186236dc8dcd3dbbd29203f0d81d33a83f323..0000000000000000000000000000000000000000
+GIT binary patch
+literal 0
+HcmV?d00001
+
+literal 8196
+zcmeHM&2G~`5T0!dagw$aQK>y4UywMosHM;%A*3jjLk~zuL4X9PjpH<laBY*HrX>XB
+z!aD$Oz@zX4yaIO~pnNlHik;XMCxn#UXm>XDd^<be&aN{K5vg*|-6UEiA`6w}QV~r`
+z;rm=C%1m_SI-~-g$Rl^p3u=xRI1}3Df?>cgU>GnA7zPXj{{sVfW^=JJp8NW)X$=F0
+zfvIGG&j%ZoWhs&)E#>GyBPjsn94<>iA9;Xa>`0a(Inq*~7*l5tDuSvg#ZVfK`!=gX
+zmLfUQQo~7UIH}08iZT=>)`7D{om5Fn(;5a01CtDJ?tYo}$)O&##`1UGO7~H3o=FjK
+zLf7ec!YJ4O=7e6W)7{wku4ZQEE?v%9R>3MP6kb=FLBG<ic6*(2wf&O6J*jq^PSk%I
+z1m1bS>O5=J`}<4F4+FnjZTa=KfLm@IDzBcmd^hNqgP!kpWSok=VOe=AzrVCP7~H+L
+zxn^%|-yW{ngPom?HT%xi_HdZDR&H!Q*gH5neK&YN{P0=aAQhb>bVYwZZ@-|IaPqj)
+z_PxMw;5uV+Age=Ns-m{27JJ>nbbUpQ(=`u0myXf;RHHijx2VndBu=f2;c`HP7(ZS6
+z<CyjWwA<9c5+1>ZkC}BckUuAoHEPQ28bEp!V3bsw5(uASfiMq$0@ynew3}s77>VPG
+z5iW$aI-R6j6F%aooS=L<gnme;W9%^>acymbd1!+}C&LDF5l3Cc>IAU!hef@{0T|8X
+zL|HLT7R4i8=TM@9kr^w&yd<!B%+$vWF61PED1t#mAP{V&o<2tfZW1U<R_u-FJ6OB%
+zNCYcm`j4T-`iHQFHA`~OaiLCP92CLf-+3QLEds+aT$Kp!!W!?ARMt5*#w>===2&FA
+zSt#ZqY4NQbc{TW^_j4QQbc@VM63cvdfoF>WK3<kx;paz;pJiw^f%foOPwWLgPqJf;
+z<0U>$5ti#RbB>#gT`OG0QP(hMU!o?ESX;*k>_rI6+5R(k@lh58(~$LYF<Q2LW-gA*
+z1Id0~$k)t^7+*Q+gRj%{mEm2K&@Mom=Tk#8TyWMVFgOOLv&?F@S2_QGl>PpHI>|9!
+z8wRF?0X4T<*)7A_-@l2+{pMWTMm<2~!g?bu1%gJ>aY#wWA<zFXMBj!gV@i=6X^AT+
+a|NKS3*_qf~B=h{Q;}?i|{!2JaUGodK|9@rx
+
+diff --git a/docs/options.rst b/docs/options.rst
+index 277a98baa868d5dc8b2c8edd58cb471ccc577b3e..b54fbba0e8183d8fad7360699863405dc8f7cf74 100644
+--- a/docs/options.rst
++++ b/docs/options.rst
+@@ -109,6 +109,27 @@ To show the default values when showing command help, use ``show_default=True``
+ 
+    invoke(dots, args=['--help'])
+ 
++For single option boolean flags, the default remains hidden if the default
++value is False.
++
++.. click:example::
++
++    @click.command()
++    @click.option('--n', default=1, show_default=True)
++    @click.option("--gr", is_flag=True, show_default=True, default=False, help="Greet the world.")
++    @click.option("--br", is_flag=True, show_default=True, default=True, help="Add a thematic break")
++    def dots(n, gr, br):
++        if gr:
++            click.echo('Hello world!')
++        click.echo('.' * n)
++        if br:
++            click.echo('-' * n)
++
++.. click:run::
++
++   invoke(dots, args=['--help'])
++
++
+ Multi Value Options
+ -------------------
+ 
+diff --git a/examples/README b/examples/README
+index 6be32961f4d32a6ef85e6bca9c74d2f7b99dfd4f..566153fc9cb296fc7b07e3729569c8d4a7a8766d 100644
+--- a/examples/README
++++ b/examples/README
+@@ -9,4 +9,4 @@ Click Examples
+   through the wrong interpreter.
+ 
+   For more information about this see the documentation:
+-    https://click.palletsprojects.com/en/7.x/setuptools/
++    https://click.palletsprojects.com/setuptools/
+diff --git a/requirements/dev.txt b/requirements/dev.txt
+index fcc252613c3e78106226f444e78f70a23b4ace1e..3b95a8d3e53e2790a4329f15286ffb66a3f08bee 100644
+--- a/requirements/dev.txt
++++ b/requirements/dev.txt
+@@ -42,10 +42,10 @@ jinja2==3.0.1
+     # via sphinx
+ markupsafe==2.0.1
+     # via jinja2
++mypy==0.910
++    # via -r requirements/typing.in
+ mypy-extensions==0.4.3
+     # via mypy
+-mypy==0.812
+-    # via -r requirements/typing.in
+ nodeenv==1.6.0
+     # via pre-commit
+ packaging==20.9
+@@ -58,13 +58,13 @@ pallets-sphinx-themes==2.0.1
+     # via -r requirements/docs.in
+ pep517==0.10.0
+     # via pip-tools
+-pip-tools==6.1.0
++pip-tools==6.2.0
+     # via -r requirements/dev.in
+ pluggy==0.13.1
+     # via
+     #   pytest
+     #   tox
+-pre-commit==2.12.1
++pre-commit==2.14.1
+     # via -r requirements/dev.in
+ py==1.10.0
+     # via
+@@ -76,7 +76,7 @@ pygments==2.9.0
+     #   sphinx-tabs
+ pyparsing==2.4.7
+     # via packaging
+-pytest==6.2.4
++pytest==6.2.5
+     # via -r requirements/tests.in
+ pytz==2021.1
+     # via babel
+@@ -90,22 +90,22 @@ six==1.16.0
+     #   virtualenv
+ snowballstemmer==2.1.0
+     # via sphinx
+-sphinx-issues==1.2.0
+-    # via -r requirements/docs.in
+-sphinx-tabs==3.0.0
+-    # via -r requirements/docs.in
+-sphinx==4.0.2
++sphinx==4.1.2
+     # via
+     #   -r requirements/docs.in
+     #   pallets-sphinx-themes
+     #   sphinx-issues
+     #   sphinx-tabs
+     #   sphinxcontrib-log-cabinet
++sphinx-issues==1.2.0
++    # via -r requirements/docs.in
++sphinx-tabs==3.2.0
++    # via -r requirements/docs.in
+ sphinxcontrib-applehelp==1.0.2
+     # via sphinx
+ sphinxcontrib-devhelp==1.0.2
+     # via sphinx
+-sphinxcontrib-htmlhelp==1.0.3
++sphinxcontrib-htmlhelp==2.0.0
+     # via sphinx
+ sphinxcontrib-jsmath==1.0.1
+     # via sphinx
+@@ -113,26 +113,27 @@ sphinxcontrib-log-cabinet==1.0.1
+     # via -r requirements/docs.in
+ sphinxcontrib-qthelp==1.0.3
+     # via sphinx
+-sphinxcontrib-serializinghtml==1.1.4
++sphinxcontrib-serializinghtml==1.1.5
+     # via sphinx
+ toml==0.10.2
+     # via
++    #   mypy
+     #   pep517
+     #   pre-commit
+     #   pytest
+     #   tox
+-tox==3.23.1
++tox==3.24.3
+     # via -r requirements/dev.in
+-typed-ast==1.4.3
+-    # via mypy
+ typing-extensions==3.10.0.0
+     # via mypy
+-urllib3==1.26.4
++urllib3==1.26.5
+     # via requests
+ virtualenv==20.4.6
+     # via
+     #   pre-commit
+     #   tox
++wheel==0.36.2
++    # via pip-tools
+ 
+ # The following packages are considered to be unsafe in a requirements file:
+ # pip
+diff --git a/requirements/docs.txt b/requirements/docs.txt
+index 245f04b68d8f2400a0972ceb5c718d72503c1009..a6b1a535b0220690c73e1b7c0bbdb6a4fed3db48 100644
+--- a/requirements/docs.txt
++++ b/requirements/docs.txt
+@@ -42,22 +42,22 @@ requests==2.25.1
+     # via sphinx
+ snowballstemmer==2.1.0
+     # via sphinx
+-sphinx-issues==1.2.0
+-    # via -r requirements/docs.in
+-sphinx-tabs==3.0.0
+-    # via -r requirements/docs.in
+-sphinx==4.0.2
++sphinx==4.1.2
+     # via
+     #   -r requirements/docs.in
+     #   pallets-sphinx-themes
+     #   sphinx-issues
+     #   sphinx-tabs
+     #   sphinxcontrib-log-cabinet
++sphinx-issues==1.2.0
++    # via -r requirements/docs.in
++sphinx-tabs==3.2.0
++    # via -r requirements/docs.in
+ sphinxcontrib-applehelp==1.0.2
+     # via sphinx
+ sphinxcontrib-devhelp==1.0.2
+     # via sphinx
+-sphinxcontrib-htmlhelp==1.0.3
++sphinxcontrib-htmlhelp==2.0.0
+     # via sphinx
+ sphinxcontrib-jsmath==1.0.1
+     # via sphinx
+@@ -65,9 +65,9 @@ sphinxcontrib-log-cabinet==1.0.1
+     # via -r requirements/docs.in
+ sphinxcontrib-qthelp==1.0.3
+     # via sphinx
+-sphinxcontrib-serializinghtml==1.1.4
++sphinxcontrib-serializinghtml==1.1.5
+     # via sphinx
+-urllib3==1.26.4
++urllib3==1.26.5
+     # via requests
+ 
+ # The following packages are considered to be unsafe in a requirements file:
+diff --git a/requirements/tests.txt b/requirements/tests.txt
+index 4ff31e3187f0183342b80dfa151a4d27bd053046..89031f87756c9aff619ed6584c197b49c4298981 100644
+--- a/requirements/tests.txt
++++ b/requirements/tests.txt
+@@ -16,7 +16,7 @@ py==1.10.0
+     # via pytest
+ pyparsing==2.4.7
+     # via packaging
+-pytest==6.2.4
++pytest==6.2.5
+     # via -r requirements/tests.in
+ toml==0.10.2
+     # via pytest
+diff --git a/requirements/typing.txt b/requirements/typing.txt
+index 0e342aaad86334e020eef4705122495bc8d60f5b..fa04c8ad5423880cd3cfb1c2ff8250f4207391fc 100644
+--- a/requirements/typing.txt
++++ b/requirements/typing.txt
+@@ -4,11 +4,11 @@
+ #
+ #    pip-compile requirements/typing.in
+ #
++mypy==0.910
++    # via -r requirements/typing.in
+ mypy-extensions==0.4.3
+     # via mypy
+-mypy==0.812
+-    # via -r requirements/typing.in
+-typed-ast==1.4.3
++toml==0.10.2
+     # via mypy
+ typing-extensions==3.10.0.0
+     # via mypy
+diff --git a/setup.cfg b/setup.cfg
+index 45c6b894bee22e7eee313beeea04323558c9ac1c..2a66b784c1a4fc8266ec399f151f320dbcb054e1 100644
+--- a/setup.cfg
++++ b/setup.cfg
+@@ -69,6 +69,7 @@ ignore =
+     E722
+     # bin op line break, invalid
+     W503
++
+ # up to 88 allowed by bugbear B950
+ max-line-length = 80
+ per-file-ignores =
+diff --git a/src/click/__init__.py b/src/click/__init__.py
+index 969f4c4ddb813151546ebb41c29b75329a9a1538..87908779f2c2d44c4c87bd9cbce3b59866ffa64e 100644
+--- a/src/click/__init__.py
++++ b/src/click/__init__.py
+@@ -72,4 +72,4 @@ from .utils import get_os_args as get_os_args
+ from .utils import get_text_stream as get_text_stream
+ from .utils import open_file as open_file
+ 
+-__version__ = "8.0.2.dev0"
++__version__ = "8.1.0.dev0"
+diff --git a/src/click/core.py b/src/click/core.py
+index 5bbc90cf308a690ae7970390e9cb8eaa3cabf4b2..eb66e2a08db1aaf01fd3820e67093c1de7987fd9 100644
+--- a/src/click/core.py
++++ b/src/click/core.py
+@@ -2405,25 +2405,26 @@ class Option(Parameter):
+ 
+     All other parameters are passed onwards to the parameter constructor.
+ 
+-    :param show_default: controls if the default value should be shown on the
+-                         help page. Normally, defaults are not shown. If this
+-                         value is a string, it shows the string instead of the
+-                         value. This is particularly useful for dynamic options.
+-    :param show_envvar: controls if an environment variable should be shown on
+-                        the help page.  Normally, environment variables
+-                        are not shown.
+-    :param prompt: if set to `True` or a non empty string then the user will be
+-                   prompted for input.  If set to `True` the prompt will be the
+-                   option name capitalized.
++    :param show_default: Controls if the default value should be shown
++        on the help page. Normally, defaults are not shown. If this
++        value is a string, it shows that string in parentheses instead
++        of the actual value. This is particularly useful for dynamic
++        options. For single option boolean flags, the default remains
++        hidden if its value is ``False``.
++    :param show_envvar: Controls if an environment variable should be
++        shown on the help page. Normally, environment ariables are not
++        shown.
++    :param prompt: If set to ``True`` or a non empty string then the
++        user will be prompted for input. If set to ``True`` the prompt
++        will be the option name capitalized.
+     :param confirmation_prompt: Prompt a second time to confirm the
+         value if it was prompted for. Can be set to a string instead of
+         ``True`` to customize the message.
+     :param prompt_required: If set to ``False``, the user will be
+         prompted for input only when the option was specified as a flag
+         without a value.
+-    :param hide_input: if this is `True` then the input on the prompt will be
+-                       hidden from the user.  This is useful for password
+-                       input.
++    :param hide_input: If this is ``True`` then the input on the prompt
++        will be hidden from the user. This is useful for password input.
+     :param is_flag: forces this option to act as a flag.  The default is
+                     auto detection.
+     :param flag_value: which value should be used for this flag if it's
+@@ -2441,6 +2442,10 @@ class Option(Parameter):
+     :param help: the help string.
+     :param hidden: hide this option from help outputs.
+ 
++    .. versionchanged:: 8.1.0
++        The default of a single option boolean flag is not shown if the
++        default value is ``False``.
++
+     .. versionchanged:: 8.0.1
+         ``type`` is detected from ``flag_value`` if given.
+     """
+@@ -2734,6 +2739,8 @@ class Option(Parameter):
+                 default_string = split_opt(
+                     (self.opts if self.default else self.secondary_opts)[0]
+                 )[1]
++            elif self.is_bool_flag and not self.secondary_opts and not default_value:
++                default_string = ""
+             else:
+                 default_string = str(default_value)
+ 

@@ -1,0 +1,53 @@
+{
+  "command": [
+    "mvn",
+    "-q",
+    "-o",
+    "-s",
+    "<project>/tools/java/maven-settings.xml",
+    "-gs",
+    "<project>/tools/java/maven-settings.xml",
+    "-Dmaven.repo.local=<project>/tools/maven-repository",
+    "test",
+    "-Dtest=ArchUtilsTest,ArrayUtilsTest,BackgroundInitializerTest,CharRangeTest,ConcurrentUtilsTest,DateUtilsTest,EqualsBuilderTest,EventCountCircuitBreakerTest,EventUtilsTest,ExceptionUtilsTest,FastDateParserSDFTest,FastDatePrinterTimeZonesTest,FieldUtilsTest,FunctionsTest,ImmutablePairTest,ImmutableTripleTest,LocaleUtilsTest,MultiBackgroundInitializerTest,MutablePairTest,ObjectUtilsTest,PairTest,RandomStringUtilsTest,ReflectionToStringBuilderSummaryTest,SerializationUtilsTest,StrBuilderTest,StrSubstitutorTest,StreamsTest,StringUtilsTest,ValidateTest,WeekYearTest",
+    "-DfailIfNoTests=false"
+  ],
+  "elapsed_seconds": 52.453,
+  "label": "run-4",
+  "normalized": {
+    "normalized_sha256": "918d1d106266b377871b027845fae0a4389b2ecf4b94072c888189833f15f4b8",
+    "outcome_counts": {
+      "pass": 2829
+    },
+    "parse_errors": [],
+    "path": "exploratory/arms/java-gates/br-java-v4/ee87df847299c55c97347e6c11e00a283feb189d/run-4.normalized.json",
+    "sha256": "a72b2eb5e9f97cff236feaf397152f59ca6f27fd1379e955946167c594a1eec7",
+    "test_count": 2829
+  },
+  "reports_archive": "exploratory/arms/java-gates/br-java-v4/ee87df847299c55c97347e6c11e00a283feb189d/run-4.reports.zip",
+  "reports_archive_sha256": "6dfc4dc91a094dfbc3f590f1624366bf2e7e02aa2b12acdfcf4a784898d131a7",
+  "returncode": 0,
+  "source_export": {
+    "base": "3ce3b27dbd579a918e97e1fb09e9b0153cc71a60",
+    "clean_including_untracked_before": true,
+    "head_after": "3ce3b27dbd579a918e97e1fb09e9b0153cc71a60",
+    "head_before": "3ce3b27dbd579a918e97e1fb09e9b0153cc71a60",
+    "path": "C:/br-java-v4/a/f/ee87df847299/3ce3b27dbd57/r4",
+    "tracked_after": {
+      "tracked_file_count": 412,
+      "tracked_manifest_sha256": "56d0b34a7e9bd2885c623fc8164d4917526cc168c3fab57208c792c701705e50"
+    },
+    "tracked_before": {
+      "tracked_file_count": 412,
+      "tracked_manifest_sha256": "56d0b34a7e9bd2885c623fc8164d4917526cc168c3fab57208c792c701705e50"
+    },
+    "tracked_status_after": "",
+    "tracked_unchanged": true
+  },
+  "stderr": "exploratory/arms/java-gates/br-java-v4/ee87df847299c55c97347e6c11e00a283feb189d/run-4.stderr.bin",
+  "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "stdout": "exploratory/arms/java-gates/br-java-v4/ee87df847299c55c97347e6c11e00a283feb189d/run-4.stdout.bin",
+  "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "timed_out": false,
+  "timeout_termination": null
+}

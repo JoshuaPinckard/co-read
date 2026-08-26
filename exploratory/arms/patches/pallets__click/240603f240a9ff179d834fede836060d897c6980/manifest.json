@@ -1,0 +1,146 @@
+{
+  "base": "8929d392781c8113bc569f388c15c47b94f86581",
+  "canonical_merge_tree": {
+    "exit_code": 1,
+    "matches_canonical_row": true,
+    "result_tree": "5aa378f4d892fc4cd41891ad1e26fc3ac0ca8b76",
+    "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "stdout_sha256": "b07258fb445c29ac4a83b27a8542d26955e32217516e97ef00f7d6d02a1f4cd2"
+  },
+  "conflicted_paths": [
+    "pyproject.toml",
+    "uv.lock"
+  ],
+  "corpus_line": 73,
+  "joint_source": {
+    "constructible": false,
+    "patch": null,
+    "reason": "canonical textual conflict intersects source union",
+    "source_conflict_paths": [
+      "pyproject.toml",
+      "uv.lock"
+    ],
+    "source_paths": [
+      "CHANGES.md",
+      "docs/arguments.md",
+      "docs/changes.md",
+      "docs/documentation.md",
+      "docs/quickstart.md",
+      "docs/utils.md",
+      "examples/colors/README",
+      "pyproject.toml",
+      "src/click/_compat.py",
+      "src/click/core.py",
+      "src/click/decorators.py",
+      "src/click/shell_completion.py",
+      "src/click/termui.py",
+      "src/click/utils.py",
+      "uv.lock"
+    ]
+  },
+  "merge": "240603f240a9ff179d834fede836060d897c6980",
+  "parents": [
+    "679a7a0eccbdded7a6e85680bdaaf08003765e01",
+    "df2e5ed8c4e89f51ff4eddb9600d913083613e62"
+  ],
+  "prepared_at_utc": "2026-08-25T16:28:10.036+00:00",
+  "protocol_sha256": "fb1c0a9f9c7b48c30178d8a7e737250e18535ada63959c49c73c180505c69828",
+  "repo_slug": "pallets__click",
+  "repository": "pallets/click",
+  "result_tree": "5aa378f4d892fc4cd41891ad1e26fc3ac0ca8b76",
+  "runner_sha256": "e04bc99409e584636ce8cb81cc22f6a7ca9c917f9ec9e46ab68a4c2328b6b6c6",
+  "schema_version": 1,
+  "sides": {
+    "parent1": {
+      "changed_paths": [
+        "CHANGES.md",
+        "docs/arguments.md",
+        "docs/changes.md",
+        "docs/documentation.md",
+        "docs/quickstart.md",
+        "docs/utils.md",
+        "examples/colors/README",
+        "pyproject.toml",
+        "src/click/_compat.py",
+        "src/click/core.py",
+        "src/click/shell_completion.py",
+        "src/click/termui.py",
+        "src/click/utils.py",
+        "tests/test_arguments.py",
+        "tests/test_info_dict.py",
+        "tests/test_utils.py",
+        "uv.lock"
+      ],
+      "parent": "679a7a0eccbdded7a6e85680bdaaf08003765e01",
+      "reconstructed_parent_tree": "cfc7f6f76aeecd9021e6c61f92fac0084d757887",
+      "source_patch": {
+        "bytes": 17229,
+        "path": "exploratory/arms/patches/pallets__click/240603f240a9ff179d834fede836060d897c6980/parent1-source.patch",
+        "sha256": "59552da96c615eb14bff47e00dc97219a9499c1adca45f913544e590a42a93df"
+      },
+      "source_paths": [
+        "CHANGES.md",
+        "docs/arguments.md",
+        "docs/changes.md",
+        "docs/documentation.md",
+        "docs/quickstart.md",
+        "docs/utils.md",
+        "examples/colors/README",
+        "pyproject.toml",
+        "src/click/_compat.py",
+        "src/click/core.py",
+        "src/click/shell_completion.py",
+        "src/click/termui.py",
+        "src/click/utils.py",
+        "uv.lock"
+      ],
+      "test_patch": {
+        "bytes": 6875,
+        "path": "exploratory/arms/patches/pallets__click/240603f240a9ff179d834fede836060d897c6980/parent1-test.patch",
+        "sha256": "f9dc93c1b1e962e0dbaaa34540d9aa6679d051cfe79319c714cec04cdd631b1c"
+      },
+      "test_paths": [
+        "tests/test_arguments.py",
+        "tests/test_info_dict.py",
+        "tests/test_utils.py"
+      ]
+    },
+    "parent2": {
+      "changed_paths": [
+        "CHANGES.md",
+        "pyproject.toml",
+        "src/click/core.py",
+        "src/click/decorators.py",
+        "src/click/shell_completion.py",
+        "tests/test_basic.py",
+        "tests/test_options.py",
+        "uv.lock"
+      ],
+      "parent": "df2e5ed8c4e89f51ff4eddb9600d913083613e62",
+      "reconstructed_parent_tree": "206e6a28c8fbb22131308d573572a08d69a26381",
+      "source_patch": {
+        "bytes": 11725,
+        "path": "exploratory/arms/patches/pallets__click/240603f240a9ff179d834fede836060d897c6980/parent2-source.patch",
+        "sha256": "9c4009d73b2b3f026c3399d3db17bdfefe06aa66d6d05f724e74289a0aae190d"
+      },
+      "source_paths": [
+        "CHANGES.md",
+        "pyproject.toml",
+        "src/click/core.py",
+        "src/click/decorators.py",
+        "src/click/shell_completion.py",
+        "uv.lock"
+      ],
+      "test_patch": {
+        "bytes": 5395,
+        "path": "exploratory/arms/patches/pallets__click/240603f240a9ff179d834fede836060d897c6980/parent2-test.patch",
+        "sha256": "81f9f1f4778c158b58fc85b19e7c41b8c5325ddfe68dd40a0053258aa7255e42"
+      },
+      "test_paths": [
+        "tests/test_basic.py",
+        "tests/test_options.py"
+      ]
+    }
+  },
+  "site_index": 23
+}

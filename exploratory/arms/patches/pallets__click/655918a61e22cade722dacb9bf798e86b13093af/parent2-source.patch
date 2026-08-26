@@ -1,0 +1,376 @@
+diff --git a/.pre-commit-config.yaml b/.pre-commit-config.yaml
+index ddc2ffb36042abd1fc0b55a068f837ff0f44d7f5..2a1f9e717dea3a49380c2037276ba793e3188c79 100644
+--- a/.pre-commit-config.yaml
++++ b/.pre-commit-config.yaml
+@@ -2,17 +2,17 @@ ci:
+   autoupdate_schedule: monthly
+ repos:
+   - repo: https://github.com/asottile/pyupgrade
+-    rev: v2.15.0
++    rev: v2.29.0
+     hooks:
+       - id: pyupgrade
+         args: ["--py36-plus"]
+   - repo: https://github.com/asottile/reorder_python_imports
+-    rev: v2.5.0
++    rev: v2.6.0
+     hooks:
+       - id: reorder-python-imports
+         args: ["--application-directories", "src"]
+   - repo: https://github.com/psf/black
+-    rev: 21.5b1
++    rev: 21.9b0
+     hooks:
+       - id: black
+   - repo: https://github.com/PyCQA/flake8
+@@ -23,7 +23,7 @@ repos:
+           - flake8-bugbear
+           - flake8-implicit-str-concat
+   - repo: https://github.com/pre-commit/pre-commit-hooks
+-    rev: v3.4.0
++    rev: v4.0.1
+     hooks:
+       - id: fix-byte-order-marker
+       - id: trailing-whitespace
+diff --git a/CHANGES.rst b/CHANGES.rst
+index 38ec5349d45b30cc75bfaacc47a88ae339061339..e4e69b1156c18b17e6f6d0a9b4b5b906a695cd63 100644
+--- a/CHANGES.rst
++++ b/CHANGES.rst
+@@ -16,6 +16,10 @@ Unreleased
+     to be relative to the containing directory. :issue:`1921`
+ -   Completion does not skip Python's resource cleanup when exiting,
+     avoiding some unexpected warning output. :issue:`1738, 2017`
++-   Fix type annotation for ``type`` argument in ``prompt`` function.
++    :issue:`2062`
++-   Fix overline and italic styles, which were incorrectly added when
++    adding underline. :pr:`2058`
+ 
+ 
+ Version 8.0.1
+diff --git a/docs/conf.py b/docs/conf.py
+index 7d1f16c0a0623bb0fff5ba5a75887e4311d53d43..b0ed9ff74a1f7294c623d043717453f172ceebfd 100644
+--- a/docs/conf.py
++++ b/docs/conf.py
+@@ -38,7 +38,7 @@ html_context = {
+         ProjectLink("PyPI Releases", "https://pypi.org/project/click/"),
+         ProjectLink("Source Code", "https://github.com/pallets/click/"),
+         ProjectLink("Issue Tracker", "https://github.com/pallets/click/issues/"),
+-        ProjectLink("Website", "https://palletsprojects.com/"),
++        ProjectLink("Website", "https://palletsprojects.com/p/click"),
+         ProjectLink("Twitter", "https://twitter.com/PalletsTeam"),
+         ProjectLink("Chat", "https://discord.gg/pallets"),
+     ]
+diff --git a/requirements/dev.txt b/requirements/dev.txt
+index fcc252613c3e78106226f444e78f70a23b4ace1e..48f65e44efce947e9ba45c4bbd997e873ecb1958 100644
+--- a/requirements/dev.txt
++++ b/requirements/dev.txt
+@@ -6,49 +6,49 @@
+ #
+ alabaster==0.7.12
+     # via sphinx
+-appdirs==1.4.4
+-    # via virtualenv
+ attrs==21.2.0
+     # via pytest
+ babel==2.9.1
+     # via sphinx
+-certifi==2020.12.5
++backports.entry-points-selectable==1.1.0
++    # via virtualenv
++certifi==2021.5.30
+     # via requests
+-cfgv==3.3.0
++cfgv==3.3.1
+     # via pre-commit
+-chardet==4.0.0
++charset-normalizer==2.0.6
+     # via requests
+ click==8.0.1
+     # via pip-tools
+-distlib==0.3.1
++distlib==0.3.3
+     # via virtualenv
+ docutils==0.16
+     # via
+     #   sphinx
+     #   sphinx-tabs
+-filelock==3.0.12
++filelock==3.3.0
+     # via
+     #   tox
+     #   virtualenv
+-identify==2.2.4
++identify==2.3.0
+     # via pre-commit
+-idna==2.10
++idna==3.2
+     # via requests
+ imagesize==1.2.0
+     # via sphinx
+ iniconfig==1.1.1
+     # via pytest
+-jinja2==3.0.1
++jinja2==3.0.2
+     # via sphinx
+ markupsafe==2.0.1
+     # via jinja2
+ mypy-extensions==0.4.3
+     # via mypy
+-mypy==0.812
++mypy==0.910
+     # via -r requirements/typing.in
+ nodeenv==1.6.0
+     # via pre-commit
+-packaging==20.9
++packaging==21.0
+     # via
+     #   pallets-sphinx-themes
+     #   pytest
+@@ -56,33 +56,35 @@ packaging==20.9
+     #   tox
+ pallets-sphinx-themes==2.0.1
+     # via -r requirements/docs.in
+-pep517==0.10.0
++pep517==0.11.0
+     # via pip-tools
+-pip-tools==6.1.0
++pip-tools==6.3.0
+     # via -r requirements/dev.in
+-pluggy==0.13.1
++platformdirs==2.4.0
++    # via virtualenv
++pluggy==1.0.0
+     # via
+     #   pytest
+     #   tox
+-pre-commit==2.12.1
++pre-commit==2.15.0
+     # via -r requirements/dev.in
+ py==1.10.0
+     # via
+     #   pytest
+     #   tox
+-pygments==2.9.0
++pygments==2.10.0
+     # via
+     #   sphinx
+     #   sphinx-tabs
+ pyparsing==2.4.7
+     # via packaging
+-pytest==6.2.4
++pytest==6.2.5
+     # via -r requirements/tests.in
+-pytz==2021.1
++pytz==2021.3
+     # via babel
+ pyyaml==5.4.1
+     # via pre-commit
+-requests==2.25.1
++requests==2.26.0
+     # via sphinx
+ six==1.16.0
+     # via
+@@ -92,9 +94,9 @@ snowballstemmer==2.1.0
+     # via sphinx
+ sphinx-issues==1.2.0
+     # via -r requirements/docs.in
+-sphinx-tabs==3.0.0
++sphinx-tabs==3.2.0
+     # via -r requirements/docs.in
+-sphinx==4.0.2
++sphinx==4.2.0
+     # via
+     #   -r requirements/docs.in
+     #   pallets-sphinx-themes
+@@ -105,7 +107,7 @@ sphinxcontrib-applehelp==1.0.2
+     # via sphinx
+ sphinxcontrib-devhelp==1.0.2
+     # via sphinx
+-sphinxcontrib-htmlhelp==1.0.3
++sphinxcontrib-htmlhelp==2.0.0
+     # via sphinx
+ sphinxcontrib-jsmath==1.0.1
+     # via sphinx
+@@ -113,26 +115,28 @@ sphinxcontrib-log-cabinet==1.0.1
+     # via -r requirements/docs.in
+ sphinxcontrib-qthelp==1.0.3
+     # via sphinx
+-sphinxcontrib-serializinghtml==1.1.4
++sphinxcontrib-serializinghtml==1.1.5
+     # via sphinx
+ toml==0.10.2
+     # via
+-    #   pep517
++    #   mypy
+     #   pre-commit
+     #   pytest
+     #   tox
+-tox==3.23.1
++tomli==1.2.1
++    # via pep517
++tox==3.24.4
+     # via -r requirements/dev.in
+-typed-ast==1.4.3
++typing-extensions==3.10.0.2
+     # via mypy
+-typing-extensions==3.10.0.0
+-    # via mypy
+-urllib3==1.26.4
++urllib3==1.26.7
+     # via requests
+-virtualenv==20.4.6
++virtualenv==20.8.1
+     # via
+     #   pre-commit
+     #   tox
++wheel==0.37.0
++    # via pip-tools
+ 
+ # The following packages are considered to be unsafe in a requirements file:
+ # pip
+diff --git a/requirements/docs.txt b/requirements/docs.txt
+index 245f04b68d8f2400a0972ceb5c718d72503c1009..00eefc0ab215f6280e84537e8f10e66c599fa243 100644
+--- a/requirements/docs.txt
++++ b/requirements/docs.txt
+@@ -8,45 +8,45 @@ alabaster==0.7.12
+     # via sphinx
+ babel==2.9.1
+     # via sphinx
+-certifi==2020.12.5
++certifi==2021.5.30
+     # via requests
+-chardet==4.0.0
++charset-normalizer==2.0.6
+     # via requests
+ docutils==0.16
+     # via
+     #   sphinx
+     #   sphinx-tabs
+-idna==2.10
++idna==3.2
+     # via requests
+ imagesize==1.2.0
+     # via sphinx
+-jinja2==3.0.1
++jinja2==3.0.2
+     # via sphinx
+ markupsafe==2.0.1
+     # via jinja2
+-packaging==20.9
++packaging==21.0
+     # via
+     #   pallets-sphinx-themes
+     #   sphinx
+ pallets-sphinx-themes==2.0.1
+     # via -r requirements/docs.in
+-pygments==2.9.0
++pygments==2.10.0
+     # via
+     #   sphinx
+     #   sphinx-tabs
+ pyparsing==2.4.7
+     # via packaging
+-pytz==2021.1
++pytz==2021.3
+     # via babel
+-requests==2.25.1
++requests==2.26.0
+     # via sphinx
+ snowballstemmer==2.1.0
+     # via sphinx
+ sphinx-issues==1.2.0
+     # via -r requirements/docs.in
+-sphinx-tabs==3.0.0
++sphinx-tabs==3.2.0
+     # via -r requirements/docs.in
+-sphinx==4.0.2
++sphinx==4.2.0
+     # via
+     #   -r requirements/docs.in
+     #   pallets-sphinx-themes
+@@ -57,7 +57,7 @@ sphinxcontrib-applehelp==1.0.2
+     # via sphinx
+ sphinxcontrib-devhelp==1.0.2
+     # via sphinx
+-sphinxcontrib-htmlhelp==1.0.3
++sphinxcontrib-htmlhelp==2.0.0
+     # via sphinx
+ sphinxcontrib-jsmath==1.0.1
+     # via sphinx
+@@ -65,9 +65,9 @@ sphinxcontrib-log-cabinet==1.0.1
+     # via -r requirements/docs.in
+ sphinxcontrib-qthelp==1.0.3
+     # via sphinx
+-sphinxcontrib-serializinghtml==1.1.4
++sphinxcontrib-serializinghtml==1.1.5
+     # via sphinx
+-urllib3==1.26.4
++urllib3==1.26.7
+     # via requests
+ 
+ # The following packages are considered to be unsafe in a requirements file:
+diff --git a/requirements/tests.txt b/requirements/tests.txt
+index 4ff31e3187f0183342b80dfa151a4d27bd053046..b89972937b2aff5b2b434bd0341944656f63d0fd 100644
+--- a/requirements/tests.txt
++++ b/requirements/tests.txt
+@@ -8,15 +8,15 @@ attrs==21.2.0
+     # via pytest
+ iniconfig==1.1.1
+     # via pytest
+-packaging==20.9
++packaging==21.0
+     # via pytest
+-pluggy==0.13.1
++pluggy==1.0.0
+     # via pytest
+ py==1.10.0
+     # via pytest
+ pyparsing==2.4.7
+     # via packaging
+-pytest==6.2.4
++pytest==6.2.5
+     # via -r requirements/tests.in
+ toml==0.10.2
+     # via pytest
+diff --git a/requirements/typing.txt b/requirements/typing.txt
+index 0e342aaad86334e020eef4705122495bc8d60f5b..f5af819edf7beedb24caac664862f9e2dba0a433 100644
+--- a/requirements/typing.txt
++++ b/requirements/typing.txt
+@@ -6,9 +6,9 @@
+ #
+ mypy-extensions==0.4.3
+     # via mypy
+-mypy==0.812
++mypy==0.910
+     # via -r requirements/typing.in
+-typed-ast==1.4.3
++toml==0.10.2
+     # via mypy
+-typing-extensions==3.10.0.0
++typing-extensions==3.10.0.2
+     # via mypy
+diff --git a/src/click/termui.py b/src/click/termui.py
+index 08fd8980d494d23d37217d91e93d60291a350fc2..a023f42bdf3b3303e1f6ffe15f9dbb0ee664c86e 100644
+--- a/src/click/termui.py
++++ b/src/click/termui.py
+@@ -84,7 +84,7 @@ def prompt(
+     default: t.Optional[t.Any] = None,
+     hide_input: bool = False,
+     confirmation_prompt: t.Union[bool, str] = False,
+-    type: t.Optional[ParamType] = None,
++    type: t.Optional[t.Union[ParamType, t.Any]] = None,
+     value_proc: t.Optional[t.Callable[[str], t.Any]] = None,
+     prompt_suffix: str = ": ",
+     show_default: bool = True,
+@@ -596,9 +596,9 @@ def style(
+     if underline is not None:
+         bits.append(f"\033[{4 if underline else 24}m")
+     if overline is not None:
+-        bits.append(f"\033[{53 if underline else 55}m")
++        bits.append(f"\033[{53 if overline else 55}m")
+     if italic is not None:
+-        bits.append(f"\033[{5 if underline else 23}m")
++        bits.append(f"\033[{3 if italic else 23}m")
+     if blink is not None:
+         bits.append(f"\033[{5 if blink else 25}m")
+     if reverse is not None:

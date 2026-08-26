@@ -1,0 +1,458 @@
+diff --git a/src/test/java/org/apache/commons/lang3/CharEncodingTest.java b/src/test/java/org/apache/commons/lang3/CharEncodingTest.java
+index 35557f3591c34936408bb531a90d99e0d6bb092f..4324c6fad8b555dfcb8849f5eb3b3ed229826f87 100644
+--- a/src/test/java/org/apache/commons/lang3/CharEncodingTest.java
++++ b/src/test/java/org/apache/commons/lang3/CharEncodingTest.java
+@@ -17,9 +17,6 @@
+ 
+ package org.apache.commons.lang3;
+ 
+-import static org.apache.commons.lang3.JavaVersion.JAVA_1_1;
+-import static org.apache.commons.lang3.JavaVersion.JAVA_1_2;
+-import static org.apache.commons.lang3.JavaVersion.JAVA_1_3;
+ import static org.junit.Assert.assertFalse;
+ import static org.junit.Assert.assertTrue;
+ 
+@@ -45,17 +42,13 @@ public class CharEncodingTest  {
+     }
+ 
+     @Test
+-    public void testMustBeSupportedJava1_3_1() {
+-        if (SystemUtils.isJavaVersionAtLeast(JAVA_1_3)) {
+-            this.assertSupportedEncoding(CharEncoding.ISO_8859_1);
+-            this.assertSupportedEncoding(CharEncoding.US_ASCII);
+-            this.assertSupportedEncoding(CharEncoding.UTF_16);
+-            this.assertSupportedEncoding(CharEncoding.UTF_16BE);
+-            this.assertSupportedEncoding(CharEncoding.UTF_16LE);
+-            this.assertSupportedEncoding(CharEncoding.UTF_8);
+-        } else {
+-            this.warn("Java 1.3 tests not run since the current version is " + SystemUtils.JAVA_SPECIFICATION_VERSION);
+-        }
++    public void testMustBeSupportedJava1_3_1_and_above() {
++        this.assertSupportedEncoding(CharEncoding.ISO_8859_1);
++        this.assertSupportedEncoding(CharEncoding.US_ASCII);
++        this.assertSupportedEncoding(CharEncoding.UTF_16);
++        this.assertSupportedEncoding(CharEncoding.UTF_16BE);
++        this.assertSupportedEncoding(CharEncoding.UTF_16LE);
++        this.assertSupportedEncoding(CharEncoding.UTF_8);
+     }
+ 
+     @Test
+@@ -74,38 +67,4 @@ public class CharEncodingTest  {
+         assertFalse(CharEncoding.isSupported("DOESNOTEXIST"));
+         assertFalse(CharEncoding.isSupported("this is not a valid encoding name"));
+     }
+-
+-    @Test
+-    public void testWorksOnJava1_1_8() {
+-        //
+-        // In this test, I simply deleted the encodings from the 1.3.1 list.
+-        // The Javadoc do not specify which encodings are required.
+-        //
+-        if (SystemUtils.isJavaVersionAtLeast(JAVA_1_1)) {
+-            this.assertSupportedEncoding(CharEncoding.ISO_8859_1);
+-            this.assertSupportedEncoding(CharEncoding.US_ASCII);
+-            this.assertSupportedEncoding(CharEncoding.UTF_8);
+-        } else {
+-            this.warn("Java 1.1 tests not run since the current version is " + SystemUtils.JAVA_SPECIFICATION_VERSION);
+-        }
+-    }
+-
+-    @Test
+-    public void testWorksOnJava1_2_2() {
+-        //
+-        // In this test, I simply deleted the encodings from the 1.3.1 list.
+-        // The Javadoc do not specify which encodings are required.
+-        //
+-        if (SystemUtils.isJavaVersionAtLeast(JAVA_1_2)) {
+-            this.assertSupportedEncoding(CharEncoding.ISO_8859_1);
+-            this.assertSupportedEncoding(CharEncoding.US_ASCII);
+-            this.assertSupportedEncoding(CharEncoding.UTF_8);
+-        } else {
+-            this.warn("Java 1.2 tests not run since the current version is " + SystemUtils.JAVA_SPECIFICATION_VERSION);
+-        }
+-    }
+-
+-    void warn(final String msg) {
+-        System.err.println(msg);
+-    }
+ }
+diff --git a/src/test/java/org/apache/commons/lang3/StringUtilsTest.java b/src/test/java/org/apache/commons/lang3/StringUtilsTest.java
+index 75cfa383e121b99a230906a454c6ac30f32c6d27..8f0e88e4a2b0f138d959deff5e533ade6dbbcb59 100644
+--- a/src/test/java/org/apache/commons/lang3/StringUtilsTest.java
++++ b/src/test/java/org/apache/commons/lang3/StringUtilsTest.java
+@@ -1122,6 +1122,33 @@ public class StringUtilsTest {
+         assertEquals("farfarfar", StringUtils.replace("foofoofoo", "oo", "ar"));
+     }
+ 
++    @Test
++    public void testReplaceIgnoreCase_StringStringString() {
++        assertEquals(null, StringUtils.replaceIgnoreCase(null, null, null));
++        assertEquals(null, StringUtils.replaceIgnoreCase(null, null, "any"));
++        assertEquals(null, StringUtils.replaceIgnoreCase(null, "any", null));
++        assertEquals(null, StringUtils.replaceIgnoreCase(null, "any", "any"));
++
++        assertEquals("", StringUtils.replaceIgnoreCase("", null, null));
++        assertEquals("", StringUtils.replaceIgnoreCase("", null, "any"));
++        assertEquals("", StringUtils.replaceIgnoreCase("", "any", null));
++        assertEquals("", StringUtils.replaceIgnoreCase("", "any", "any"));
++
++        assertEquals("FOO", StringUtils.replaceIgnoreCase("FOO", "", "any"));
++        assertEquals("FOO", StringUtils.replaceIgnoreCase("FOO", null, "any"));
++        assertEquals("FOO", StringUtils.replaceIgnoreCase("FOO", "F", null));
++        assertEquals("FOO", StringUtils.replaceIgnoreCase("FOO", null, null));
++
++        assertEquals("", StringUtils.replaceIgnoreCase("foofoofoo", "foo", ""));
++        assertEquals("barbarbar", StringUtils.replaceIgnoreCase("foofoofoo", "foo", "bar"));
++        assertEquals("farfarfar", StringUtils.replaceIgnoreCase("foofoofoo", "oo", "ar"));
++
++        // IgnoreCase
++        assertEquals("", StringUtils.replaceIgnoreCase("foofoofoo", "FOO", ""));
++        assertEquals("barbarbar", StringUtils.replaceIgnoreCase("fooFOOfoo", "foo", "bar"));
++        assertEquals("farfarfar", StringUtils.replaceIgnoreCase("foofOOfoo", "OO", "ar"));
++    }
++
+     @Test
+     public void testReplacePattern() {
+         assertNull(StringUtils.replacePattern(null, "", ""));
+@@ -1244,6 +1271,43 @@ public class StringUtilsTest {
+         assertEquals("f", StringUtils.replace("oofoo", "o", "", 1000));
+     }
+ 
++    @Test
++    public void testReplaceIgnoreCase_StringStringStringInt() {
++        assertEquals(null, StringUtils.replaceIgnoreCase(null, null, null, 2));
++        assertEquals(null, StringUtils.replaceIgnoreCase(null, null, "any", 2));
++        assertEquals(null, StringUtils.replaceIgnoreCase(null, "any", null, 2));
++        assertEquals(null, StringUtils.replaceIgnoreCase(null, "any", "any", 2));
++
++        assertEquals("", StringUtils.replaceIgnoreCase("", null, null, 2));
++        assertEquals("", StringUtils.replaceIgnoreCase("", null, "any", 2));
++        assertEquals("", StringUtils.replaceIgnoreCase("", "any", null, 2));
++        assertEquals("", StringUtils.replaceIgnoreCase("", "any", "any", 2));
++
++        String str = new String(new char[] { 'o', 'o', 'f', 'o', 'o' });
++        assertSame(str, StringUtils.replaceIgnoreCase(str, "x", "", -1));
++
++        assertEquals("f", StringUtils.replaceIgnoreCase("oofoo", "o", "", -1));
++        assertEquals("oofoo", StringUtils.replaceIgnoreCase("oofoo", "o", "", 0));
++        assertEquals("ofoo", StringUtils.replaceIgnoreCase("oofoo", "o", "", 1));
++        assertEquals("foo", StringUtils.replaceIgnoreCase("oofoo", "o", "", 2));
++        assertEquals("fo", StringUtils.replaceIgnoreCase("oofoo", "o", "", 3));
++        assertEquals("f", StringUtils.replaceIgnoreCase("oofoo", "o", "", 4));
++
++        assertEquals("f", StringUtils.replaceIgnoreCase("oofoo", "o", "", -5));
++        assertEquals("f", StringUtils.replaceIgnoreCase("oofoo", "o", "", 1000));
++
++        // IgnoreCase
++        assertEquals("f", StringUtils.replaceIgnoreCase("oofoo", "O", "", -1));
++        assertEquals("oofoo", StringUtils.replaceIgnoreCase("oofoo", "O", "", 0));
++        assertEquals("ofoo", StringUtils.replaceIgnoreCase("oofoo", "O", "", 1));
++        assertEquals("foo", StringUtils.replaceIgnoreCase("oofoo", "O", "", 2));
++        assertEquals("fo", StringUtils.replaceIgnoreCase("oofoo", "O", "", 3));
++        assertEquals("f", StringUtils.replaceIgnoreCase("oofoo", "O", "", 4));
++
++        assertEquals("f", StringUtils.replaceIgnoreCase("oofoo", "O", "", -5));
++        assertEquals("f", StringUtils.replaceIgnoreCase("oofoo", "O", "", 1000));
++    }
++
+     @Test
+     public void testReplaceOnce_StringStringString() {
+         assertNull(StringUtils.replaceOnce(null, null, null));
+@@ -1264,6 +1328,29 @@ public class StringUtilsTest {
+         assertEquals("foofoo", StringUtils.replaceOnce("foofoofoo", "foo", ""));
+     }
+ 
++    @Test
++    public void testReplaceOnceIgnoreCase_StringStringString() {
++        assertEquals(null, StringUtils.replaceOnceIgnoreCase(null, null, null));
++        assertEquals(null, StringUtils.replaceOnceIgnoreCase(null, null, "any"));
++        assertEquals(null, StringUtils.replaceOnceIgnoreCase(null, "any", null));
++        assertEquals(null, StringUtils.replaceOnceIgnoreCase(null, "any", "any"));
++
++        assertEquals("", StringUtils.replaceOnceIgnoreCase("", null, null));
++        assertEquals("", StringUtils.replaceOnceIgnoreCase("", null, "any"));
++        assertEquals("", StringUtils.replaceOnceIgnoreCase("", "any", null));
++        assertEquals("", StringUtils.replaceOnceIgnoreCase("", "any", "any"));
++
++        assertEquals("FOO", StringUtils.replaceOnceIgnoreCase("FOO", "", "any"));
++        assertEquals("FOO", StringUtils.replaceOnceIgnoreCase("FOO", null, "any"));
++        assertEquals("FOO", StringUtils.replaceOnceIgnoreCase("FOO", "F", null));
++        assertEquals("FOO", StringUtils.replaceOnceIgnoreCase("FOO", null, null));
++
++        assertEquals("foofoo", StringUtils.replaceOnceIgnoreCase("foofoofoo", "foo", ""));
++
++        // Ignore Case
++        assertEquals("Foofoo", StringUtils.replaceOnceIgnoreCase("FoOFoofoo", "foo", ""));
++    }
++
+     /**
+      * Test method for 'StringUtils.replaceEach(String, String[], String[])'
+      */
+@@ -2485,6 +2572,42 @@ public class StringUtilsTest {
+         assertEquals("queued", StringUtils.remove("queued", "zz"));
+     }
+ 
++    @Test
++    public void testRemoveIgnoreCase_String() {
++        // StringUtils.removeIgnoreCase(null, *) = null
++        assertEquals(null, StringUtils.removeIgnoreCase(null, null));
++        assertEquals(null, StringUtils.removeIgnoreCase(null, ""));
++        assertEquals(null, StringUtils.removeIgnoreCase(null, "a"));
++
++        // StringUtils.removeIgnoreCase("", *) = ""
++        assertEquals("", StringUtils.removeIgnoreCase("", null));
++        assertEquals("", StringUtils.removeIgnoreCase("", ""));
++        assertEquals("", StringUtils.removeIgnoreCase("", "a"));
++
++        // StringUtils.removeIgnoreCase(*, null) = *
++        assertEquals(null, StringUtils.removeIgnoreCase(null, null));
++        assertEquals("", StringUtils.removeIgnoreCase("", null));
++        assertEquals("a", StringUtils.removeIgnoreCase("a", null));
++
++        // StringUtils.removeIgnoreCase(*, "") = *
++        assertEquals(null, StringUtils.removeIgnoreCase(null, ""));
++        assertEquals("", StringUtils.removeIgnoreCase("", ""));
++        assertEquals("a", StringUtils.removeIgnoreCase("a", ""));
++
++        // StringUtils.removeIgnoreCase("queued", "ue") = "qd"
++        assertEquals("qd", StringUtils.removeIgnoreCase("queued", "ue"));
++
++        // StringUtils.removeIgnoreCase("queued", "zz") = "queued"
++        assertEquals("queued", StringUtils.removeIgnoreCase("queued", "zz"));
++
++        // IgnoreCase
++        // StringUtils.removeIgnoreCase("quEUed", "UE") = "qd"
++        assertEquals("qd", StringUtils.removeIgnoreCase("quEUed", "UE"));
++
++        // StringUtils.removeIgnoreCase("queued", "zZ") = "queued"
++        assertEquals("queued", StringUtils.removeIgnoreCase("queued", "zZ"));
++    }
++
+     @Test
+     public void testRemove_char() {
+         // StringUtils.remove(null, *)       = null
+diff --git a/src/test/java/org/apache/commons/lang3/SystemUtilsTest.java b/src/test/java/org/apache/commons/lang3/SystemUtilsTest.java
+index 9b614426c2a01934aeef91d6e9bf6ecb0cd820d4..bb6d12b13c15b385913a48c736b96733c82d4630 100644
+--- a/src/test/java/org/apache/commons/lang3/SystemUtilsTest.java
++++ b/src/test/java/org/apache/commons/lang3/SystemUtilsTest.java
+@@ -19,11 +19,18 @@
+ 
+ package org.apache.commons.lang3;
+ 
++import static org.apache.commons.lang3.JavaVersion.JAVA_1_1;
++import static org.apache.commons.lang3.JavaVersion.JAVA_1_2;
++import static org.apache.commons.lang3.JavaVersion.JAVA_1_3;
+ import static org.apache.commons.lang3.JavaVersion.JAVA_1_4;
++import static org.apache.commons.lang3.JavaVersion.JAVA_1_5;
++import static org.apache.commons.lang3.JavaVersion.JAVA_1_6;
++import static org.apache.commons.lang3.JavaVersion.JAVA_1_7;
++import static org.apache.commons.lang3.JavaVersion.JAVA_1_8;
++import static org.apache.commons.lang3.JavaVersion.JAVA_9;
+ import static org.junit.Assert.assertEquals;
+ import static org.junit.Assert.assertFalse;
+ import static org.junit.Assert.assertNotNull;
+-import static org.junit.Assert.assertNull;
+ import static org.junit.Assert.assertTrue;
+ 
+ import java.io.File;
+@@ -94,7 +101,7 @@ public class SystemUtilsTest {
+     @Test
+     @SuppressWarnings("deprecation")
+     public void testIS_JAVA() {
+-        final String javaVersion = System.getProperty("java.specification.name");
++        final String javaVersion = SystemUtils.JAVA_VERSION;
+         if (javaVersion == null) {
+             assertFalse(SystemUtils.IS_JAVA_1_1);
+             assertFalse(SystemUtils.IS_JAVA_1_2);
+@@ -106,61 +113,6 @@ public class SystemUtilsTest {
+             assertFalse(SystemUtils.IS_JAVA_1_8);
+             assertFalse(SystemUtils.IS_JAVA_1_9);
+             assertFalse(SystemUtils.IS_JAVA_9);
+-        } else if (javaVersion.startsWith("1.1")) {
+-            assertTrue(SystemUtils.IS_JAVA_1_1);
+-            assertFalse(SystemUtils.IS_JAVA_1_2);
+-            assertFalse(SystemUtils.IS_JAVA_1_3);
+-            assertFalse(SystemUtils.IS_JAVA_1_4);
+-            assertFalse(SystemUtils.IS_JAVA_1_5);
+-            assertFalse(SystemUtils.IS_JAVA_1_6);
+-            assertFalse(SystemUtils.IS_JAVA_1_7);
+-            assertFalse(SystemUtils.IS_JAVA_1_8);
+-            assertFalse(SystemUtils.IS_JAVA_1_9);
+-            assertFalse(SystemUtils.IS_JAVA_9);
+-        } else if (javaVersion.startsWith("1.2")) {
+-            assertFalse(SystemUtils.IS_JAVA_1_1);
+-            assertTrue(SystemUtils.IS_JAVA_1_2);
+-            assertFalse(SystemUtils.IS_JAVA_1_3);
+-            assertFalse(SystemUtils.IS_JAVA_1_4);
+-            assertFalse(SystemUtils.IS_JAVA_1_5);
+-            assertFalse(SystemUtils.IS_JAVA_1_6);
+-            assertFalse(SystemUtils.IS_JAVA_1_7);
+-            assertFalse(SystemUtils.IS_JAVA_1_8);
+-            assertFalse(SystemUtils.IS_JAVA_1_9);
+-            assertFalse(SystemUtils.IS_JAVA_9);
+-        } else if (javaVersion.startsWith("1.3")) {
+-            assertFalse(SystemUtils.IS_JAVA_1_1);
+-            assertFalse(SystemUtils.IS_JAVA_1_2);
+-            assertTrue(SystemUtils.IS_JAVA_1_3);
+-            assertFalse(SystemUtils.IS_JAVA_1_4);
+-            assertFalse(SystemUtils.IS_JAVA_1_5);
+-            assertFalse(SystemUtils.IS_JAVA_1_6);
+-            assertFalse(SystemUtils.IS_JAVA_1_7);
+-            assertFalse(SystemUtils.IS_JAVA_1_8);
+-            assertFalse(SystemUtils.IS_JAVA_1_9);
+-            assertFalse(SystemUtils.IS_JAVA_9);
+-        } else if (javaVersion.startsWith("1.4")) {
+-            assertFalse(SystemUtils.IS_JAVA_1_1);
+-            assertFalse(SystemUtils.IS_JAVA_1_2);
+-            assertFalse(SystemUtils.IS_JAVA_1_3);
+-            assertTrue(SystemUtils.IS_JAVA_1_4);
+-            assertFalse(SystemUtils.IS_JAVA_1_5);
+-            assertFalse(SystemUtils.IS_JAVA_1_6);
+-            assertFalse(SystemUtils.IS_JAVA_1_7);
+-            assertFalse(SystemUtils.IS_JAVA_1_8);
+-            assertFalse(SystemUtils.IS_JAVA_1_9);
+-            assertFalse(SystemUtils.IS_JAVA_9);
+-        } else if (javaVersion.startsWith("1.5")) {
+-            assertFalse(SystemUtils.IS_JAVA_1_1);
+-            assertFalse(SystemUtils.IS_JAVA_1_2);
+-            assertFalse(SystemUtils.IS_JAVA_1_3);
+-            assertFalse(SystemUtils.IS_JAVA_1_4);
+-            assertTrue(SystemUtils.IS_JAVA_1_5);
+-            assertFalse(SystemUtils.IS_JAVA_1_6);
+-            assertFalse(SystemUtils.IS_JAVA_1_7);
+-            assertFalse(SystemUtils.IS_JAVA_1_8);
+-            assertFalse(SystemUtils.IS_JAVA_1_9);
+-            assertFalse(SystemUtils.IS_JAVA_9);
+         } else if (javaVersion.startsWith("1.6")) {
+             assertFalse(SystemUtils.IS_JAVA_1_1);
+             assertFalse(SystemUtils.IS_JAVA_1_2);
+@@ -431,6 +383,51 @@ public class SystemUtilsTest {
+         assertTrue(SystemUtils.isJavaVersionMatch(javaVersion, "9"));
+     }
+ 
++    @Test
++    public void testIsJavaVersionAtLeat() throws Exception {
++        if (SystemUtils.IS_JAVA_1_6) {
++            assertTrue(SystemUtils.isJavaVersionAtLeast(JAVA_1_1));
++            assertTrue(SystemUtils.isJavaVersionAtLeast(JAVA_1_2));
++            assertTrue(SystemUtils.isJavaVersionAtLeast(JAVA_1_3));
++            assertTrue(SystemUtils.isJavaVersionAtLeast(JAVA_1_4));
++            assertTrue(SystemUtils.isJavaVersionAtLeast(JAVA_1_5));
++            assertTrue(SystemUtils.isJavaVersionAtLeast(JAVA_1_6));
++            assertFalse(SystemUtils.isJavaVersionAtLeast(JAVA_1_7));
++            assertFalse(SystemUtils.isJavaVersionAtLeast(JAVA_1_8));
++            assertFalse(SystemUtils.isJavaVersionAtLeast(JAVA_9));
++        } else if (SystemUtils.IS_JAVA_1_7) {
++            assertTrue(SystemUtils.isJavaVersionAtLeast(JAVA_1_1));
++            assertTrue(SystemUtils.isJavaVersionAtLeast(JAVA_1_2));
++            assertTrue(SystemUtils.isJavaVersionAtLeast(JAVA_1_3));
++            assertTrue(SystemUtils.isJavaVersionAtLeast(JAVA_1_4));
++            assertTrue(SystemUtils.isJavaVersionAtLeast(JAVA_1_5));
++            assertTrue(SystemUtils.isJavaVersionAtLeast(JAVA_1_6));
++            assertTrue(SystemUtils.isJavaVersionAtLeast(JAVA_1_7));
++            assertFalse(SystemUtils.isJavaVersionAtLeast(JAVA_1_8));
++            assertFalse(SystemUtils.isJavaVersionAtLeast(JAVA_9));
++        } else if (SystemUtils.IS_JAVA_1_8) {
++            assertTrue(SystemUtils.isJavaVersionAtLeast(JAVA_1_1));
++            assertTrue(SystemUtils.isJavaVersionAtLeast(JAVA_1_2));
++            assertTrue(SystemUtils.isJavaVersionAtLeast(JAVA_1_3));
++            assertTrue(SystemUtils.isJavaVersionAtLeast(JAVA_1_4));
++            assertTrue(SystemUtils.isJavaVersionAtLeast(JAVA_1_5));
++            assertTrue(SystemUtils.isJavaVersionAtLeast(JAVA_1_6));
++            assertTrue(SystemUtils.isJavaVersionAtLeast(JAVA_1_7));
++            assertTrue(SystemUtils.isJavaVersionAtLeast(JAVA_1_8));
++            assertFalse(SystemUtils.isJavaVersionAtLeast(JAVA_9));
++        } else if (SystemUtils.IS_JAVA_9) {
++            assertTrue(SystemUtils.isJavaVersionAtLeast(JAVA_1_1));
++            assertTrue(SystemUtils.isJavaVersionAtLeast(JAVA_1_2));
++            assertTrue(SystemUtils.isJavaVersionAtLeast(JAVA_1_3));
++            assertTrue(SystemUtils.isJavaVersionAtLeast(JAVA_1_4));
++            assertTrue(SystemUtils.isJavaVersionAtLeast(JAVA_1_5));
++            assertTrue(SystemUtils.isJavaVersionAtLeast(JAVA_1_6));
++            assertTrue(SystemUtils.isJavaVersionAtLeast(JAVA_1_7));
++            assertTrue(SystemUtils.isJavaVersionAtLeast(JAVA_1_8));
++            assertTrue(SystemUtils.isJavaVersionAtLeast(JAVA_9));
++        }
++    }
++
+     @Test
+     public void testOSMatchesName() {
+         String osName = null;
+@@ -511,21 +508,14 @@ public class SystemUtilsTest {
+ 
+     @Test
+     public void testJavaAwtHeadless() {
+-        final boolean atLeastJava14 = SystemUtils.isJavaVersionAtLeast(JAVA_1_4);
+         final String expectedStringValue = System.getProperty("java.awt.headless");
+         final String expectedStringValueWithDefault = System.getProperty("java.awt.headless", "false");
+         assertNotNull(expectedStringValueWithDefault);
+-        if (atLeastJava14) {
+-            final boolean expectedValue = Boolean.valueOf(expectedStringValue).booleanValue();
+-            if (expectedStringValue != null) {
+-                assertEquals(expectedStringValue, SystemUtils.JAVA_AWT_HEADLESS);
+-            }
+-            assertEquals(expectedValue, SystemUtils.isJavaAwtHeadless());
+-        } else {
+-            assertNull(expectedStringValue);
+-            assertNull(SystemUtils.JAVA_AWT_HEADLESS);
+-            assertEquals(expectedStringValueWithDefault, "" + SystemUtils.isJavaAwtHeadless());
++        final boolean expectedValue = Boolean.valueOf(expectedStringValue).booleanValue();
++        if (expectedStringValue != null) {
++            assertEquals(expectedStringValue, SystemUtils.JAVA_AWT_HEADLESS);
+         }
++        assertEquals(expectedValue, SystemUtils.isJavaAwtHeadless());
+         assertEquals(expectedStringValueWithDefault, "" + SystemUtils.isJavaAwtHeadless());
+     }
+ }
+diff --git a/src/test/java/org/apache/commons/lang3/math/NumberUtilsTest.java b/src/test/java/org/apache/commons/lang3/math/NumberUtilsTest.java
+index c3d83c6ff69bc58ffe8cf4a8bdb46cd0dba3ff69..ef313e133b29ca4eeb9cb8a94e28fe6112644746 100644
+--- a/src/test/java/org/apache/commons/lang3/math/NumberUtilsTest.java
++++ b/src/test/java/org/apache/commons/lang3/math/NumberUtilsTest.java
+@@ -1297,7 +1297,7 @@ public class NumberUtilsTest {
+ 
+     @Test
+     public void testLANG1252() {
+-        //Check idiosyncries between java 1.6 and 1.7,1.8 redarding leading + signs
++        //Check idiosyncrasies between java 1.6 and 1.7, 1.8 regarding leading + signs
+         if (SystemUtils.IS_JAVA_1_6) {
+             compareIsCreatableWithCreateNumber("+2", false);
+         } else {
+diff --git a/src/test/java/org/apache/commons/lang3/text/WordUtilsTest.java b/src/test/java/org/apache/commons/lang3/text/WordUtilsTest.java
+index 0da57dd58cd24c6576b425cb9af9e533013bc61c..8275768121b05d7a85dc921c630d3043c6fa0991 100644
+--- a/src/test/java/org/apache/commons/lang3/text/WordUtilsTest.java
++++ b/src/test/java/org/apache/commons/lang3/text/WordUtilsTest.java
+@@ -154,7 +154,33 @@ public class WordUtilsTest {
+         expected = "Click here,\nhttp://commons.apach\ne.org, to jump to\nthe commons website";
+         assertEquals(expected, WordUtils.wrap(input, 20, "\n", true));
+     }
+-    
++
++    @Test
++    public void testWrap_StringIntStringBooleanString() {
++
++        //no changes test
++        String input = "flammable/inflammable";
++        String expected = "flammable/inflammable";
++        assertEquals(expected, WordUtils.wrap(input, 30, "\n", false, "/"));
++
++        // wrap on / and small width
++        expected = "flammable\ninflammable";
++        assertEquals(expected, WordUtils.wrap(input, 2, "\n", false, "/"));
++
++        // wrap long words on / 1
++        expected = "flammable\ninflammab\nle";
++        assertEquals(expected, WordUtils.wrap(input, 9, "\n", true, "/"));
++
++        // wrap long words on / 2
++        expected = "flammable\ninflammable";
++        assertEquals(expected, WordUtils.wrap(input, 15, "\n", true, "/"));
++
++        // wrap long words on / 3
++        input = "flammableinflammable";
++        expected = "flammableinflam\nmable";
++        assertEquals(expected, WordUtils.wrap(input, 15, "\n", true, "/"));
++    }
++
+     //-----------------------------------------------------------------------
+     @Test
+     public void testCapitalize_String() {

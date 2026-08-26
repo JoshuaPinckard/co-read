@@ -1,0 +1,872 @@
+diff --git a/.appveyor.yml b/.appveyor.yml
+deleted file mode 100644
+index 8d90295b9f77d90215830b359b0b1406086aaeed..0000000000000000000000000000000000000000
+--- a/.appveyor.yml
++++ /dev/null
+@@ -1,28 +0,0 @@
+-environment:
+-  global:
+-    TOXENV: py,codecov
+-
+-  matrix:
+-    - PYTHON: C:\Python37-x64
+-    - PYTHON: C:\Python27-x64
+-    - PYTHON: C:\Python37
+-    - PYTHON: C:\Python27
+-
+-init:
+-  - SET PATH=%PYTHON%;%PATH%
+-
+-install:
+-  - python -m pip install -U tox
+-
+-build: false
+-
+-test_script:
+-  - python -m tox
+-
+-branches:
+-  only:
+-    - master
+-    - /^.*\.x$/
+-
+-cache:
+-  - '%LOCALAPPDATA%\pip\Cache'
+diff --git a/.azure-pipelines.yml b/.azure-pipelines.yml
+new file mode 100644
+index 0000000000000000000000000000000000000000..00e732dde667043335565f14dc96242e41767438
+--- /dev/null
++++ b/.azure-pipelines.yml
+@@ -0,0 +1,61 @@
++trigger:
++  - master
++  - "*.x"
++
++variables:
++  vmImage: ubuntu-latest
++  python.version: "3.7"
++  TOXENV: py,coverage-ci
++  hasTestResults: true
++
++strategy:
++  matrix:
++    Python 3.7 Linux:
++      vmImage: ubuntu-latest
++    Python 3.7 Windows:
++      vmImage: windows-latest
++    Python 3.7 Mac:
++      vmImage: macos-latest
++    PyPy 3 Linux:
++      python.version: pypy3
++    Python 3.6 Linux:
++      python.version: 3.6
++    Python 3.5 Linux:
++      python.version: 3.5
++    Python 2.7 Linux:
++      python.version: 2.7
++    Python 2.7 Windows:
++      python.version: 2.7
++      vmImage: windows-latest
++    Docs:
++      TOXENV: docs
++      hasTestResults: false
++
++pool:
++  vmImage: $(vmImage)
++
++steps:
++  - task: UsePythonVersion@0
++    inputs:
++      versionSpec: "$(python.version)"
++    displayName: Use Python $(python.version)
++
++  - script: pip --disable-pip-version-check install -U tox
++    displayName: Install tox
++
++  - script: tox -s false -- --junit-xml=test-results.xml
++    displayName: Run tox
++
++  - task: PublishTestResults@2
++    inputs:
++      testResultsFiles: test-results.xml
++      testRunTitle: $(Agent.JobName)
++    condition: eq(variables['hasTestResults'], 'true')
++    displayName: Publish test results
++
++  - task: PublishCodeCoverageResults@1
++    inputs:
++      codeCoverageTool: Cobertura
++      summaryFileLocation: coverage.xml
++    condition: eq(variables['hasTestResults'], 'true')
++    displayName: Publish coverage results
+diff --git a/.travis.yml b/.travis.yml
+deleted file mode 100644
+index 301897367299ceb6ef0a9481638bf178ca8b4156..0000000000000000000000000000000000000000
+--- a/.travis.yml
++++ /dev/null
+@@ -1,55 +0,0 @@
+-os: linux
+-sudo: false
+-language: python
+-python:
+-  - "3.6"
+-  - "3.5"
+-  - "3.4"
+-  - "2.7"
+-  - "nightly"
+-  - "pypy3"
+-  - "pypy"
+-env: TOXENV=py,codecov
+-
+-matrix:
+-  include:
+-    - env: TOXENV=docs-html
+-    - os: osx
+-      language: generic
+-      env: TOXENV=py3,py2,codecov
+-      cache:
+-        pip: false
+-        directories:
+-          - $HOME/Library/Caches/Homebrew
+-          - $HOME/Library/Caches/pip
+-  allow_failures:
+-    - python: nightly
+-    - python: pypy3
+-    - python: pypy
+-    - os: osx
+-  fast_finish: true
+-
+-before_install:
+-  - |
+-    if [[ $TRAVIS_OS_NAME == 'osx' ]]; then
+-      brew upgrade python
+-      brew install python@2
+-      export PATH="/usr/local/opt/python/libexec/bin:${PATH}"
+-    fi
+-
+-install:
+-  - pip install tox
+-
+-script:
+-  - tox
+-
+-cache:
+-  - pip
+-
+-branches:
+-  only:
+-    - master
+-    - /^.*\.x$/
+-
+-notifications:
+-  email: false
+diff --git a/CHANGES.rst b/CHANGES.rst
+index 866d0a6dc75bcbf03cd8631795c93e6eb1cb3008..ab8ac1ae5bd6cf6785e8525086d1b15074cd8cea 100644
+--- a/CHANGES.rst
++++ b/CHANGES.rst
+@@ -7,6 +7,17 @@ Version 7.1
+ 
+ Unreleased
+ 
++- Add ``no_args_is_help`` option to ``click.Command``, defaults to False (`#1167`_)
++- Fix link in ``unicode_literals`` error message. (`#1151`_)
++- Add support for colored output on UNIX Jupyter notebooks. (`#1185`_)
++- Remove unused compat shim for ``bytes``. (`#1195`_)
++- Expand unit testing around termui, especially getchar (Windows). (`#1116`_)
++
++.. _#1167: https://github.com/pallets/click/pull/1167
++.. _#1151: https://github.com/pallets/click/pull/1151
++.. _#1185: https://github.com/pallets/click/issues/1185
++.. _#1195: https://github.com/pallets/click/pull/1195
++.. _#1116: https://github.com/pallets/click/issues/1116
+ 
+ Version 7.0
+ -----------
+diff --git a/CONTRIBUTING.rst b/CONTRIBUTING.rst
+index 4db9b65a3a17eb3d3f0e98982c2f7ce41072e26f..2a2fe73a7a0ebfb3d7b3db6f086e4ce449d54c48 100644
+--- a/CONTRIBUTING.rst
++++ b/CONTRIBUTING.rst
+@@ -10,8 +10,10 @@ Support questions
+ Please, don't use the issue tracker for this. Check whether the
+ ``#pocoo`` IRC channel on Freenode can help with your issue. If your problem
+ is not strictly Click-specific, ``#python`` on Freenode is generally more
+-active.  `StackOverflow <https://stackoverflow.com/>`_ is also worth
+-considering.
++active.  Also try searching or asking on `Stack Overflow`_ with the
++``python-click`` tag. 
++
++.. _Stack Overflow: https://stackoverflow.com/questions/tagged/python-click?sort=votes
+ 
+ Reporting issues
+ ================
+@@ -37,6 +39,9 @@ Submitting patches
+ 
+ - For docs and bug fixes: Submit against the latest maintenance branch instead of master!
+ 
++- Non docs or text related changes need an entry in ``CHANGES.rst``,
++  and ``.. versionadded`` or ``.. versionchanged`` markers in the docs.
++
+ Running the testsuite
+ ---------------------
+ 
+diff --git a/README.rst b/README.rst
+index e4c047151ccea3bfb1705c749ec671486ed2d168..41fb7128be1f0848f84118f9bf37526b7e2d3173 100644
+--- a/README.rst
++++ b/README.rst
+@@ -39,7 +39,7 @@ What does it look like? Here is an example of a simple Click program:
+ .. code-block:: python
+ 
+     import click
+-    
++
+     @click.command()
+     @click.option("--count", default=1, help="Number of greetings.")
+     @click.option("--name", prompt="Your name",
+@@ -48,7 +48,7 @@ What does it look like? Here is an example of a simple Click program:
+         """Simple program that greets NAME for a total of COUNT times."""
+         for _ in range(count):
+             click.echo("Hello, %s!" % name)
+-    
++
+     if __name__ == '__main__':
+         hello()
+ 
+@@ -83,9 +83,5 @@ Links
+ *   Releases: https://pypi.org/project/click/
+ *   Code: https://github.com/pallets/click
+ *   Issue tracker: https://github.com/pallets/click/issues
+-*   Test status:
+-
+-    *   Linux, Mac: https://travis-ci.org/pallets/click
+-    *   Windows: https://ci.appveyor.com/project/pallets/click
+-
+-*   Test coverage: https://codecov.io/gh/pallets/click
++*   Test status: https://dev.azure.com/pallets/click/_build
++*   Official chat: https://discord.gg/t6rrQZH
+diff --git a/click/_compat.py b/click/_compat.py
+index 937e2301d493591b5620ed1efb100098741c8c4e..85f41523bda021a7c7ea8affe6002182082fe665 100644
+--- a/click/_compat.py
++++ b/click/_compat.py
+@@ -155,7 +155,6 @@ class _FixupStream(object):
+ 
+ if PY2:
+     text_type = unicode
+-    bytes = str
+     raw_input = raw_input
+     string_types = (str, unicode)
+     int_types = (int, long)
+@@ -571,11 +570,23 @@ def strip_ansi(value):
+     return _ansi_re.sub('', value)
+ 
+ 
++def _is_jupyter_kernel_output(stream):
++    if WIN:
++        # TODO: Couldn't test on Windows, should't try to support until
++        # someone tests the details wrt colorama.
++        return
++
++    while isinstance(stream, (_FixupStream, _NonClosingTextIOWrapper)):
++        stream = stream._stream
++
++    return stream.__class__.__module__.startswith("ipykernel.")
++
++
+ def should_strip_ansi(stream=None, color=None):
+     if color is None:
+         if stream is None:
+             stream = sys.stdin
+-        return not isatty(stream)
++        return not isatty(stream) and not _is_jupyter_kernel_output(stream)
+     return not color
+ 
+ 
+diff --git a/click/_unicodefun.py b/click/_unicodefun.py
+index 620edff37e260e244108bdabddd0b3434a6d3d31..aeaa4084c95f6cca802b4df6dfc05363a1acb3b3 100644
+--- a/click/_unicodefun.py
++++ b/click/_unicodefun.py
+@@ -43,7 +43,7 @@ def _check_for_unicode_literals():
+                  'because it can introduce subtle bugs in your '
+                  'code.  You should instead use explicit u"" literals '
+                  'for your unicode strings.  For more information see '
+-                 'https://click.palletsprojects.com/python3/'),
++                 'https://click.palletsprojects.com/en/7.x/python3/'),
+          stacklevel=bad_frame)
+ 
+ 
+diff --git a/click/core.py b/click/core.py
+index 7a1e3422bec8c06344985fc6e3cdf2cd488d0ab4..19a983bdd5129cd90e6b68d3c45796a7512eafe3 100644
+--- a/click/core.py
++++ b/click/core.py
+@@ -208,6 +208,9 @@ class Context(object):
+                   codes are used in texts that Click prints which is by
+                   default not the case.  This for instance would affect
+                   help output.
++    :param show_default: if True, shows defaults for all options.
++                    Even if an option is later created with show_default=False,
++                    this command-level setting overrides it.
+     """
+ 
+     def __init__(self, command, parent=None, info_name=None, obj=None,
+@@ -216,7 +219,7 @@ class Context(object):
+                  resilient_parsing=False, allow_extra_args=None,
+                  allow_interspersed_args=None,
+                  ignore_unknown_options=None, help_option_names=None,
+-                 token_normalize_func=None, color=None):
++                 token_normalize_func=None, color=None, show_default=None):
+         #: the parent context or `None` if none exists.
+         self.parent = parent
+         #: the :class:`Command` for this context.
+@@ -337,6 +340,8 @@ class Context(object):
+         #: Controls if styling output is wanted or not.
+         self.color = color
+ 
++        self.show_default = show_default
++
+         self._close_callbacks = []
+         self._depth = 0
+ 
+@@ -771,6 +776,8 @@ class Command(BaseCommand):
+ 
+     .. versionchanged:: 2.0
+        Added the `context_settings` parameter.
++    .. versionchanged:: 7.1
++       Added the `no_args_is_help` parameter.
+ 
+     :param name: the name of the command to use unless a group overrides it.
+     :param context_settings: an optional dictionary with defaults that are
+@@ -785,6 +792,10 @@ class Command(BaseCommand):
+                        shown on the command listing of the parent command.
+     :param add_help_option: by default each command registers a ``--help``
+                             option.  This can be disabled by this parameter.
++    :param no_args_is_help: this controls what happens if no arguments are
++                            provided.  This option is disabled by default.
++                            If enabled this will add ``--help`` as argument
++                            if no arguments are passed
+     :param hidden: hide this command from help outputs.
+ 
+     :param deprecated: issues a message indicating that
+@@ -794,7 +805,7 @@ class Command(BaseCommand):
+     def __init__(self, name, context_settings=None, callback=None,
+                  params=None, help=None, epilog=None, short_help=None,
+                  options_metavar='[OPTIONS]', add_help_option=True,
+-                 hidden=False, deprecated=False):
++                 no_args_is_help=False, hidden=False, deprecated=False):
+         BaseCommand.__init__(self, name, context_settings)
+         #: the callback to execute when the command fires.  This might be
+         #: `None` in which case nothing happens.
+@@ -812,6 +823,7 @@ class Command(BaseCommand):
+         self.options_metavar = options_metavar
+         self.short_help = short_help
+         self.add_help_option = add_help_option
++        self.no_args_is_help = no_args_is_help
+         self.hidden = hidden
+         self.deprecated = deprecated
+ 
+@@ -932,6 +944,10 @@ class Command(BaseCommand):
+                 formatter.write_text(self.epilog)
+ 
+     def parse_args(self, ctx, args):
++        if not args and self.no_args_is_help and not ctx.resilient_parsing:
++            echo(ctx.get_help(), color=ctx.color)
++            ctx.exit()
++
+         parser = self.make_parser(ctx)
+         opts, args, param_order = parser.parse_args(args=args)
+ 
+@@ -1714,7 +1730,8 @@ class Option(Parameter):
+                            ', '.join('%s' % d for d in envvar)
+                            if isinstance(envvar, (list, tuple))
+                            else envvar, ))
+-        if self.default is not None and self.show_default:
++        if self.default is not None and \
++            (self.show_default or ctx.show_default):
+             if isinstance(self.show_default, string_types):
+                 default_string = '({})'.format(self.show_default)
+             elif isinstance(self.default, (list, tuple)):
+diff --git a/click/globals.py b/click/globals.py
+index 843b594abe40b092a9b508ddc69b2d236e627363..1b85c76ee779919a4d5dc14cf26768edf8c85e0c 100644
+--- a/click/globals.py
++++ b/click/globals.py
+@@ -15,7 +15,7 @@ def get_current_context(silent=False):
+ 
+     .. versionadded:: 5.0
+ 
+-    :param silent: is set to `True` the return value is `None` if no context
++    :param silent: if set to `True` the return value is `None` if no context
+                    is available.  The default behavior is to raise a
+                    :exc:`RuntimeError`.
+     """
+diff --git a/click/termui.py b/click/termui.py
+index bf9a3aa163f9221111f3136643ac04d056e57f12..0e8e84ca885177b902a0989a46cc6778a7d31a27 100644
+--- a/click/termui.py
++++ b/click/termui.py
+@@ -272,11 +272,17 @@ def progressbar(iterable=None, length=None, label=None, show_eta=True,
+     will not be rendered if the file is not a terminal.
+ 
+     The context manager creates the progress bar.  When the context
+-    manager is entered the progress bar is already displayed.  With every
++    manager is entered the progress bar is already created.  With every
+     iteration over the progress bar, the iterable passed to the bar is
+     advanced and the bar is updated.  When the context manager exits,
+     a newline is printed and the progress bar is finalized on screen.
+ 
++    Note: The progress bar is currently designed for use cases where the
++    total progress can be expected to take at least several seconds.
++    Because of this, the ProgressBar class object won't display
++    progress that is considered too fast, and progress where the time
++    between steps is less than a second.
++
+     No printing must happen or the progress bar will be unintentionally
+     destroyed.
+ 
+diff --git a/docs/commands.rst b/docs/commands.rst
+index 53834f7546ff83e5aa8a0d43157155b0cf555d4e..378fa73875c80871e1c6f8c2042f950a578a5f98 100644
+--- a/docs/commands.rst
++++ b/docs/commands.rst
+@@ -27,7 +27,7 @@ when an inner command runs:
+     def cli(debug):
+         click.echo('Debug mode is %s' % ('on' if debug else 'off'))
+ 
+-    @cli.command()
++    @cli.command()  # @cli, not @click!
+     def sync():
+         click.echo('Syncing')
+ 
+diff --git a/docs/parameters.rst b/docs/parameters.rst
+index 9ca3208426d890d455a0b75694efaf5aca1017be..66462af3999a9ea8e72b9790dfd0c1f09118f562 100644
+--- a/docs/parameters.rst
++++ b/docs/parameters.rst
+@@ -110,30 +110,40 @@ Implementing Custom Types
+ -------------------------
+ 
+ To implement a custom type, you need to subclass the :class:`ParamType`
+-class.  Types can be invoked with or without context and parameter object,
+-which is why they need to be able to deal with this.
++class. Override the :meth:`~ParamType.convert` method to convert the
++value from a string to the correct type.
+ 
+ The following code implements an integer type that accepts hex and octal
+ numbers in addition to normal integers, and converts them into regular
+-integers::
++integers.
++
++.. code-block:: python
+ 
+     import click
+ 
+     class BasedIntParamType(click.ParamType):
+-        name = 'integer'
++        name = "integer"
+ 
+         def convert(self, value, param, ctx):
+             try:
+-                if value[:2].lower() == '0x':
++                if value[:2].lower() == "0x":
+                     return int(value[2:], 16)
+-                elif value[:1] == '0':
++                elif value[:1] == "0":
+                     return int(value, 8)
+                 return int(value, 10)
++            except TypeError:
++                self.fail(
++                    "expected string for int() conversion, got "
++                    f"{value!r} of type {type(value).__name__}",
++                    param,
++                    ctx,
++                )
+             except ValueError:
+-                self.fail('%s is not a valid integer' % value, param, ctx)
++                self.fail(f"{value!r} is not a valid integer", param, ctx)
+ 
+     BASED_INT = BasedIntParamType()
+ 
+-As you can see, a subclass needs to implement the :meth:`ParamType.convert`
+-method and optionally provide the :attr:`ParamType.name` attribute.  The
+-latter can be used for documentation purposes.
++The :attr:`~ParamType.name` attribute is optional and is used for
++documentation. Call :meth:`~ParamType.fail` if conversion fails. The
++``param`` and ``ctx`` arguments may be ``None`` in some cases such as
++prompts.
+diff --git a/docs/python3.rst b/docs/python3.rst
+index 0ec1014e40ea9a75e204e5520ae834e4be59ff01..922ceef91c1cc9047358445b602a751e9aa66839 100644
+--- a/docs/python3.rst
++++ b/docs/python3.rst
+@@ -159,6 +159,11 @@ Python 3 bug tracker:
+     <http://bugs.python.org/issue21398>`_ (this is relevant to Click
+     because the pager support is provided by the stdlib pydoc module)
+ 
++Note (Python 3.7 onwards): Even though your locale may not be properly
++configured, Python 3.7 Click will not raise the above exception because Python
++3.7 programs are better at choosing default locales.  This doesn't change the
++general issue that your locale may be misconfigured.
++
+ Unicode Literals
+ ----------------
+ 
+diff --git a/docs/testing.rst b/docs/testing.rst
+index 174b7756734a72870486bf467129f481892a6f00..4d9ed6791b51b9b3cab371a02329a87d39d73c32 100644
+--- a/docs/testing.rst
++++ b/docs/testing.rst
+@@ -20,48 +20,61 @@ The basic functionality for testing Click applications is the
+ and captures the output as both bytes and binary data.
+ 
+ The return value is a :class:`Result` object, which has the captured output
+-data, exit code, and optional exception attached.
+-
+-Example::
+-
+-    import click
+-    from click.testing import CliRunner
+-
+-    def test_hello_world():
+-        @click.command()
+-        @click.argument('name')
+-        def hello(name):
+-            click.echo('Hello %s!' % name)
+-
+-        runner = CliRunner()
+-        result = runner.invoke(hello, ['Peter'])
+-        assert result.exit_code == 0
+-        assert result.output == 'Hello Peter!\n'
+-
+-For subcommand testing, a subcommand name must be specified in the `args` parameter of :meth:`CliRunner.invoke` method.
+-
+-Example::
+-
+-    import click
+-    from click.testing import CliRunner
+-    
+-    def test_sync():
+-        @click.group()
+-        @click.option('--debug/--no-debug', default=False)
+-        def cli(debug):
+-            click.echo('Debug mode is %s' % ('on' if debug else 'off')) 
+-    
+-        @cli.command()
+-        def sync():
+-            click.echo('Syncing')
+-    
+-        runner = CliRunner()
+-        result = runner.invoke(cli, ['--debug', 'sync'])
+-        assert result.exit_code == 0
+-        assert 'Debug mode is on' in result.output
+-        assert 'Syncing' in result.output
+-
+-Additional keyword arguments passed to ``.invoke()`` will be used to construct the initial Context object. For example, if you want to run your tests against a fixed terminal width you can use the following::
++data, exit code, and optional exception attached:
++
++.. code-block:: python
++   :caption: hello.py
++
++   import click
++
++   @click.command()
++   @click.argument('name')
++   def hello(name):
++      click.echo('Hello %s!' % name)
++
++.. code-block:: python
++   :caption: test_hello.py
++
++   from click.testing import CliRunner
++   from hello import hello
++
++   def test_hello_world():
++     runner = CliRunner()
++     result = runner.invoke(hello, ['Peter'])
++     assert result.exit_code == 0
++     assert result.output == 'Hello Peter!\n'
++
++For subcommand testing, a subcommand name must be specified in the `args` parameter of :meth:`CliRunner.invoke` method:
++
++.. code-block:: python
++   :caption: sync.py
++
++   import click
++
++   @click.group()
++   @click.option('--debug/--no-debug', default=False)
++   def cli(debug):
++      click.echo('Debug mode is %s' % ('on' if debug else 'off'))
++
++   @cli.command()
++   def sync():
++      click.echo('Syncing')
++
++.. code-block:: python
++   :caption: test_sync.py
++
++   from click.testing import CliRunner
++   from sync import cli
++
++   def test_sync():
++     runner = CliRunner()
++     result = runner.invoke(cli, ['--debug', 'sync'])
++     assert result.exit_code == 0
++     assert 'Debug mode is on' in result.output
++     assert 'Syncing' in result.output
++
++Additional keyword arguments passed to ``.invoke()`` will be used to construct the initial Context object.
++For example, if you want to run your tests against a fixed terminal width you can use the following::
+ 
+     runner = CliRunner()
+     result = runner.invoke(cli, ['--debug', 'sync'], terminal_width=60)
+@@ -71,47 +84,61 @@ File System Isolation
+ 
+ For basic command line tools that want to operate with the file system, the
+ :meth:`CliRunner.isolated_filesystem` method comes in useful which sets up
+-an empty folder and changes the current working directory to.
++an empty folder and changes the current working directory to:
+ 
+-Example::
++.. code-block:: python
++   :caption: cat.py
+ 
+-    import click
+-    from click.testing import CliRunner
++   import click
+ 
+-    def test_cat():
+-        @click.command()
+-        @click.argument('f', type=click.File())
+-        def cat(f):
+-            click.echo(f.read())
++   @click.command()
++   @click.argument('f', type=click.File())
++   def cat(f):
++      click.echo(f.read())
+ 
+-        runner = CliRunner()
+-        with runner.isolated_filesystem():
+-            with open('hello.txt', 'w') as f:
+-                f.write('Hello World!')
++.. code-block:: python
++   :caption: test_cat.py
+ 
+-            result = runner.invoke(cat, ['hello.txt'])
+-            assert result.exit_code == 0
+-            assert result.output == 'Hello World!\n'
++   from click.testing import CliRunner
++   from cat import cat
++
++   def test_cat():
++      runner = CliRunner()
++      with runner.isolated_filesystem():
++         with open('hello.txt', 'w') as f:
++             f.write('Hello World!')
++
++         result = runner.invoke(cat, ['hello.txt'])
++         assert result.exit_code == 0
++         assert result.output == 'Hello World!\n'
+ 
+ Input Streams
+ -------------
+ 
+ The test wrapper can also be used to provide input data for the input
+-stream (stdin).  This is very useful for testing prompts, for instance::
++stream (stdin).  This is very useful for testing prompts, for instance:
++
++.. code-block:: python
++   :caption: prompt.py
++
++   import click
++
++   @click.command()
++   @click.option('--foo', prompt=True)
++   def prompt(foo):
++      click.echo('foo=%s' % foo)
+ 
+-    import click
+-    from click.testing import CliRunner
++.. code-block:: python
++   :caption: test_prompt.py
+ 
+-    def test_prompts():
+-        @click.command()
+-        @click.option('--foo', prompt=True)
+-        def test(foo):
+-            click.echo('foo=%s' % foo)
++   from click.testing import CliRunner
++   from prompt import prompt
+ 
+-        runner = CliRunner()
+-        result = runner.invoke(test, input='wau wau\n')
+-        assert not result.exception
+-        assert result.output == 'Foo: wau wau\nfoo=wau wau\n'
++   def test_prompts():
++      runner = CliRunner()
++      result = runner.invoke(prompt, input='wau wau\n')
++      assert not result.exception
++      assert result.output == 'Foo: wau wau\nfoo=wau wau\n'
+ 
+ Note that prompts will be emulated so that they write the input data to
+ the output stream as well.  If hidden input is expected then this
+diff --git a/docs/why.rst b/docs/why.rst
+index 76b84e71c088e11d2234bec86403c8f8c3db322d..10aeff848ba620de94f600ec8894687b4aa4db82 100644
+--- a/docs/why.rst
++++ b/docs/why.rst
+@@ -22,11 +22,11 @@ There are many alternatives to Click and you can have a look at them if
+ you enjoy them better.  The obvious ones are ``optparse`` and ``argparse``
+ from the standard library.
+ 
+-Click is actually implemented as a wrapper around a mild fork of
+-``optparse`` and does not implement any parsing itself.  The reason it's
+-not based on ``argparse`` is that ``argparse`` does not allow proper
+-nesting of commands by design and has some deficiencies when it comes to
+-POSIX compliant argument handling.
++Click actually implements its own parsing of arguments and does not use
++``optparse`` or ``argparse`` following the ``optparse`` parsing behavior.
++The reason it's not based on ``argparse`` is that ``argparse`` does not
++allow proper nesting of commands by design and has some deficiencies when
++it comes to POSIX compliant argument handling.
+ 
+ Click is designed to be fun to work with and at the same time not stand in
+ your way.  It's not overly flexible either.  Currently, for instance, it
+@@ -101,7 +101,7 @@ following:
+ -   Click has a strong understanding of what types are and can give the user
+     consistent error messages if something goes wrong.  A subcommand
+     written by a different developer will not suddenly die with a
+-    different error messsage because it's manually handled.
++    different error message because it's manually handled.
+ -   Click has enough meta information available for its whole program
+     that it can evolve over time to improve the user experience without
+     forcing developers to adjust their programs.  For instance, if Click
+@@ -125,7 +125,7 @@ reasons for this.  The biggest one is that too much configurability makes
+ it hard to achieve a consistent command line experience.
+ 
+ The best example for this is optparse's ``callback`` functionality for
+-accepting arbitrary number of arguments.  Due to syntactical ambiguities
++accepting an arbitrary number of arguments.  Due to syntactical ambiguities
+ on the command line, there is no way to implement fully variadic arguments.
+ There are always tradeoffs that need to be made and in case of
+ ``argparse`` these tradeoffs have been critical enough, that a system like
+diff --git a/examples/complex/complex/cli.py b/examples/complex/complex/cli.py
+index bcfd14a132b648ec425455b25e5701ffff552a8f..0d10c628c9a20e45b69134127279fb531e3c7112 100644
+--- a/examples/complex/complex/cli.py
++++ b/examples/complex/complex/cli.py
+@@ -6,7 +6,7 @@ import click
+ CONTEXT_SETTINGS = dict(auto_envvar_prefix='COMPLEX')
+ 
+ 
+-class Context(object):
++class Environment(object):
+ 
+     def __init__(self):
+         self.verbose = False
+@@ -24,7 +24,7 @@ class Context(object):
+             self.log(msg, *args)
+ 
+ 
+-pass_context = click.make_pass_decorator(Context, ensure=True)
++pass_environment = click.make_pass_decorator(Environment, ensure=True)
+ cmd_folder = os.path.abspath(os.path.join(os.path.dirname(__file__),
+                                           'commands'))
+ 
+@@ -57,7 +57,7 @@ class ComplexCLI(click.MultiCommand):
+               help='Changes the folder to operate on.')
+ @click.option('-v', '--verbose', is_flag=True,
+               help='Enables verbose mode.')
+-@pass_context
++@pass_environment
+ def cli(ctx, verbose, home):
+     """A complex command line interface."""
+     ctx.verbose = verbose
+diff --git a/examples/complex/complex/commands/cmd_init.py b/examples/complex/complex/commands/cmd_init.py
+index 8c30186c3e16ff6ba31b587f9c3a7d2d5b30f919..a77116bea5905478722d5bd492daf5d05c668b60 100644
+--- a/examples/complex/complex/commands/cmd_init.py
++++ b/examples/complex/complex/commands/cmd_init.py
+@@ -1,10 +1,10 @@
+ import click
+-from complex.cli import pass_context
++from complex.cli import pass_environment
+ 
+ 
+ @click.command('init', short_help='Initializes a repo.')
+ @click.argument('path', required=False, type=click.Path(resolve_path=True))
+-@pass_context
++@pass_environment
+ def cli(ctx, path):
+     """Initializes a repository."""
+     if path is None:
+diff --git a/examples/complex/complex/commands/cmd_status.py b/examples/complex/complex/commands/cmd_status.py
+index 99e736eee6cc8cad123f503bd8764c45a60830c8..12229c42f345232d1d3b31cd16c3ca18f0ab63da 100644
+--- a/examples/complex/complex/commands/cmd_status.py
++++ b/examples/complex/complex/commands/cmd_status.py
+@@ -1,9 +1,9 @@
+ import click
+-from complex.cli import pass_context
++from complex.cli import pass_environment
+ 
+ 
+ @click.command('status', short_help='Shows file changes.')
+-@pass_context
++@pass_environment
+ def cli(ctx):
+     """Shows file changes in the current working directory."""
+     ctx.log('Changed files: none')
+diff --git a/setup.py b/setup.py
+index 1c18dc7843d4f12e3b8eb836018f11570a6a8972..a6e0a94774b976bd8eb3080d4b76f567f68b02bd 100644
+--- a/setup.py
++++ b/setup.py
+@@ -9,7 +9,7 @@ with io.open("click/__init__.py", "rt", encoding="utf8") as f:
+     version = re.search(r"__version__ = \'(.*?)\'", f.read()).group(1)
+ 
+ setup(
+-    name="Click",
++    name="click",
+     version=version,
+     url="https://palletsprojects.com/p/click/",
+     project_urls={
+diff --git a/tox.ini b/tox.ini
+index a44b11070229599833440c665d14bb50d03026b8..51ba92a0079f1d6f1e3a144e96dd1ec511603cfd 100644
+--- a/tox.ini
++++ b/tox.ini
+@@ -1,39 +1,32 @@
+ [tox]
+ envlist =
+-    py{37,36,35,34,27,py3,py}
+-    docs-html
+-    coverage-report
++    py{37,36,35,27,py3,py}
++    docs
++    coverage
+ skip_missing_interpreters = true
+ 
+ [testenv]
+-passenv = LANG
+ deps =
+     pytest
+     coverage
+     colorama
+-commands = coverage run -p -m pytest {posargs}
++commands = coverage run -p -m pytest --tb=short -Werror --basetemp={envtmpdir} {posargs}
+ 
+-[testenv:docs-html]
++[testenv:docs]
+ deps = -r docs/requirements.txt
+ commands = sphinx-build -W -b html -d {envtmpdir}/doctrees docs {envtmpdir}/html
+ 
+-[testenv:docs-linkcheck]
+-deps = -r docs/requirements.txt
+-commands = sphinx-build -W -b linkcheck -d {envtmpdir}/doctrees docs {envtmpdir}/linkcheck
+-
+-[testenv:coverage-report]
++[testenv:coverage]
+ deps = coverage
+ skip_install = true
+ commands =
+     coverage combine
+-    coverage report
+     coverage html
++    coverage report
+ 
+-[testenv:codecov]
+-passenv = CI TRAVIS TRAVIS_* APPVEYOR APPVEYOR_*
++[testenv:coverage-ci]
+ deps = codecov
+ skip_install = true
+ commands =
+     coverage combine
+-    coverage report
+-    codecov
++    coverage xml

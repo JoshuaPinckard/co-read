@@ -1,0 +1,996 @@
+diff --git a/.github/ISSUE_TEMPLATE.md b/.github/ISSUE_TEMPLATE.md
+new file mode 100644
+index 0000000000000000000000000000000000000000..8f31ae94e43b0d91fd0342ba855897d868c38e25
+--- /dev/null
++++ b/.github/ISSUE_TEMPLATE.md
+@@ -0,0 +1,33 @@
++**This issue tracker is a tool to address bugs in Click itself.
++Please use the #pocoo IRC channel on freenode, the Discord server or 
++Stack Overflow for general questions about using Flask or issues
++not related to Click.**
++
++If you'd like to report a bug in Click, fill out the template below. Provide
++any extra information that may be useful / related to your problem.
++Ideally, create an [MCVE](https://stackoverflow.com/help/mcve), which helps us
++understand the problem and helps check that it is not caused by something in
++your code.
++
++---
++
++### Expected Behavior
++
++Tell us what should happen.
++
++```python
++Paste a minimal example that causes the problem.
++```
++
++### Actual Behavior
++
++Tell us what happens instead.
++
++```pytb
++Paste the full traceback if there was an exception.
++```
++
++### Environment
++
++* Python version:
++* Click version:
+diff --git a/CHANGES.rst b/CHANGES.rst
+index b65346b0fb95afe161cad1e4d8f98b847ea86065..17fd5b3ce0e2b067fbb28f32e84a1a04f0a2716e 100644
+--- a/CHANGES.rst
++++ b/CHANGES.rst
+@@ -5,18 +5,45 @@ Version 7.1
+ 
+ Unreleased
+ 
+--   Add ``no_args_is_help`` option to ``click.Command``, defaults to
+-    False :pr:`1167`
++-   Fix PyPI package name, "click" is lowercase again.
+ -   Fix link in ``unicode_literals`` error message. :pr:`1151`
+ -   Add support for colored output on UNIX Jupyter notebooks.
+     :issue:`1185`
++-   Operations that strip ANSI controls will strip the cursor hide/show
++    sequences. :issue:`1216`
+ -   Remove unused compat shim for ``bytes``. :pr:`1195`
+--   Expand unit testing around termui, especially getchar (Windows).
++-   Expand testing around termui, especially getchar on Windows.
+     :issue:`1116`
+ -   Fix output on Windows Python 2.7 built with MSVC 14. :pr:`1342`
+--   Always return of of the passed choices for ``click.Choice``
+-    :issue:`1277`, :pr:`1318`
+ -   Fix ``OSError`` when running in MSYS2. :issue:`1338`
++-   Fix ``OSError`` when redirecting to ``NUL`` stream on Windows.
++    :issue:`1065`
++-   Fix error in new AppEngine environments. :issue:`1462`
++-   Always return one of the passed choices for ``click.Choice``
++    :issue:`1277`, :pr:`1318`
++-   Add ``no_args_is_help`` option to ``click.Command``, defaults to
++    False :pr:`1167`
++-   Add ``show_defaults`` parameter to ``Context`` to enable showing
++    defaults globally. :issue:`1018`
++-   Handle ``env MYPATH=''`` as though the option were not passed.
++    :issue:`1196`
++-   It is once again possible to call ``next(bar)`` on an active
++    progress bar instance. :issue:`1125`
++-   ``open_file`` with ``atomic=True`` retains permissions of existing
++    files and respects the current umask for new files. :issue:`1376`
++-   When using the test ``CliRunner`` with ``mix_stderr=False``, if
++    ``result.stderr`` is empty it will not raise a ``ValueError``.
++    :issue:`1193`
++-   Remove the unused ``mix_stderr`` parameter from
++    ``CliRunner.invoke``. :issue:`1435`
++-   Fix ``TypeError`` raised when using bool flags and specifying
++    ``type=bool``. :issue:`1287`
++-   Newlines in option help text are replaced with spaces before
++    re-wrapping to avoid uneven line breaks. :issue:`834`
++-   ``MissingParameter`` exceptions are printable in the Python
++    interpreter. :issue:`1139`
++-   Fix how default values for file-type options are shown during
++    prompts. :issue:`914`
+ 
+ 
+ Version 7.0
+diff --git a/click/_compat.py b/click/_compat.py
+index d4dbbe4d9e370adea8caf7409810e9b3fb5cc1b9..f8efb2979dc31cd3023d69091ac31414088371ed 100644
+--- a/click/_compat.py
++++ b/click/_compat.py
+@@ -11,12 +11,12 @@ CYGWIN = sys.platform.startswith('cygwin')
+ MSYS2 = sys.platform.startswith('win') and ('GCC' in sys.version)
+ # Determine local App Engine environment, per Google's own suggestion
+ APP_ENGINE = ('APPENGINE_RUNTIME' in os.environ and
+-              'Development/' in os.environ['SERVER_SOFTWARE'])
++              'Development/' in os.environ.get('SERVER_SOFTWARE', ''))
+ WIN = sys.platform.startswith('win') and not APP_ENGINE and not MSYS2
+ DEFAULT_COLUMNS = 80
+ 
+ 
+-_ansi_re = re.compile(r'\033\[((?:\d|;)*)([a-zA-Z])')
++_ansi_re = re.compile(r"\033\[[;?0-9]*[a-zA-Z]")
+ 
+ 
+ def get_filesystem_encoding():
+@@ -329,80 +329,88 @@ else:
+         # but this at least will force Click to recover somehow.
+         return is_ascii_encoding(getattr(stream, 'encoding', None) or 'ascii')
+ 
+-    def _is_compatible_text_stream(stream, encoding, errors):
+-        stream_encoding = getattr(stream, 'encoding', None)
+-        stream_errors = getattr(stream, 'errors', None)
+-
+-        # Perfect match.
+-        if stream_encoding == encoding and stream_errors == errors:
+-            return True
+-
+-        # Otherwise, it's only a compatible stream if we did not ask for
+-        # an encoding.
+-        if encoding is None:
+-            return stream_encoding is not None
++    def _is_compat_stream_attr(stream, attr, value):
++        """A stream attribute is compatible if it is equal to the
++        desired value or the desired value is unset and the attribute
++        has a value.
++        """
++        stream_value = getattr(stream, attr, None)
++        return stream_value == value or (value is None and stream_value is not None)
+ 
+-        return False
++    def _is_compatible_text_stream(stream, encoding, errors):
++        """Check if a stream's encoding and errors attributes are
++        compatible with the desired values.
++        """
++        return (
++            _is_compat_stream_attr(stream, "encoding", encoding)
++            and _is_compat_stream_attr(stream, "errors", errors)
++        )
+ 
+-    def _force_correct_text_reader(text_reader, encoding, errors,
+-                                   force_readable=False):
+-        if _is_binary_reader(text_reader, False):
+-            binary_reader = text_reader
++    def _force_correct_text_stream(
++        text_stream,
++        encoding,
++        errors,
++        is_binary,
++        find_binary,
++        force_readable=False,
++        force_writable=False,
++    ):
++        if is_binary(text_stream, False):
++            binary_reader = text_stream
+         else:
+-            # If there is no target encoding set, we need to verify that the
+-            # reader is not actually misconfigured.
+-            if encoding is None and not _stream_is_misconfigured(text_reader):
+-                return text_reader
+-
+-            if _is_compatible_text_stream(text_reader, encoding, errors):
+-                return text_reader
+-
+-            # If the reader has no encoding, we try to find the underlying
+-            # binary reader for it.  If that fails because the environment is
+-            # misconfigured, we silently go with the same reader because this
+-            # is too common to happen.  In that case, mojibake is better than
+-            # exceptions.
+-            binary_reader = _find_binary_reader(text_reader)
++            # If the stream looks compatible, and won't default to a
++            # misconfigured ascii encoding, return it as-is.
++            if (
++                _is_compatible_text_stream(text_stream, encoding, errors)
++                and not (
++                    encoding is None
++                    and _stream_is_misconfigured(text_stream)
++                )
++            ):
++                return text_stream
++
++            # Otherwise, get the underlying binary reader.
++            binary_reader = find_binary(text_stream)
++
++            # If that's not possible, silently use the original reader
++            # and get mojibake instead of exceptions.
+             if binary_reader is None:
+-                return text_reader
++                return text_stream
+ 
+-        # At this point, we default the errors to replace instead of strict
+-        # because nobody handles those errors anyways and at this point
+-        # we're so fundamentally fucked that nothing can repair it.
++        # Default errors to replace instead of strict in order to get
++        # something that works.
+         if errors is None:
+-            errors = 'replace'
+-        return _make_text_stream(binary_reader, encoding, errors,
+-                                 force_readable=force_readable)
+-
+-    def _force_correct_text_writer(text_writer, encoding, errors,
+-                                   force_writable=False):
+-        if _is_binary_writer(text_writer, False):
+-            binary_writer = text_writer
+-        else:
+-            # If there is no target encoding set, we need to verify that the
+-            # writer is not actually misconfigured.
+-            if encoding is None and not _stream_is_misconfigured(text_writer):
+-                return text_writer
+-
+-            if _is_compatible_text_stream(text_writer, encoding, errors):
+-                return text_writer
+-
+-            # If the writer has no encoding, we try to find the underlying
+-            # binary writer for it.  If that fails because the environment is
+-            # misconfigured, we silently go with the same writer because this
+-            # is too common to happen.  In that case, mojibake is better than
+-            # exceptions.
+-            binary_writer = _find_binary_writer(text_writer)
+-            if binary_writer is None:
+-                return text_writer
+-
+-        # At this point, we default the errors to replace instead of strict
+-        # because nobody handles those errors anyways and at this point
+-        # we're so fundamentally fucked that nothing can repair it.
+-        if errors is None:
+-            errors = 'replace'
+-        return _make_text_stream(binary_writer, encoding, errors,
+-                                 force_writable=force_writable)
++            errors = "replace"
++
++        # Wrap the binary stream in a text stream with the correct
++        # encoding parameters.
++        return _make_text_stream(
++            binary_reader,
++            encoding,
++            errors,
++            force_readable=force_readable,
++            force_writable=force_writable,
++        )
++
++    def _force_correct_text_reader(text_reader, encoding, errors, force_readable=False):
++        return _force_correct_text_stream(
++            text_reader,
++            encoding,
++            errors,
++            _is_binary_reader,
++            _find_binary_reader,
++            force_readable=force_readable,
++        )
++
++    def _force_correct_text_writer(text_writer, encoding, errors, force_writable=False):
++        return _force_correct_text_stream(
++            text_writer,
++            encoding,
++            errors,
++            _is_binary_writer,
++            _find_binary_writer,
++            force_writable=force_writable,
++        )
+ 
+     def get_binary_stdin():
+         reader = _find_binary_reader(sys.stdin)
+@@ -468,24 +476,45 @@ def get_streerror(e, default=None):
+     return msg
+ 
+ 
+-def open_stream(filename, mode='r', encoding=None, errors='strict',
+-                atomic=False):
++def _wrap_io_open(file, mode, encoding, errors):
++    """On Python 2, :func:`io.open` returns a text file wrapper that
++    requires passing ``unicode`` to ``write``. Need to open the file in
++    binary mode then wrap it in a subclass that can write ``str`` and
++    ``unicode``.
++
++    Also handles not passing ``encoding`` and ``errors`` in binary mode.
++    """
++    binary = "b" in mode
++
++    if binary:
++        kwargs = {}
++    else:
++        kwargs = {"encoding": encoding, "errors": errors}
++
++    if not PY2 or binary:
++        return io.open(file, mode, **kwargs)
++
++    f = io.open(file, "b" + mode.replace("t", ""))
++    return _make_text_stream(f, **kwargs)
++
++
++def open_stream(filename, mode='r', encoding=None, errors='strict', atomic=False):
++    binary = "b" in mode
++
+     # Standard streams first.  These are simple because they don't need
+     # special handling for the atomic flag.  It's entirely ignored.
+     if filename == '-':
+         if any(m in mode for m in ['w', 'a', 'x']):
+-            if 'b' in mode:
++            if binary:
+                 return get_binary_stdout(), False
+             return get_text_stdout(encoding=encoding, errors=errors), False
+-        if 'b' in mode:
++        if binary:
+             return get_binary_stdin(), False
+         return get_text_stdin(encoding=encoding, errors=errors), False
+ 
+     # Non-atomic writes directly go out through the regular open functions.
+     if not atomic:
+-        if encoding is None:
+-            return open(filename, mode), True
+-        return io.open(filename, mode, encoding=encoding, errors=errors), True
++        return _wrap_io_open(filename, mode, encoding, errors), True
+ 
+     # Some usability stuff for atomic writes
+     if 'a' in mode:
+@@ -504,15 +533,41 @@ def open_stream(filename, mode='r', encoding=None, errors='strict',
+     # as a proxy in the same folder and then using the fdopen
+     # functionality to wrap it in a Python file.  Then we wrap it in an
+     # atomic file that moves the file over on close.
+-    import tempfile
+-    fd, tmp_filename = tempfile.mkstemp(dir=os.path.dirname(filename),
+-                                        prefix='.__atomic-write')
++    import errno
++    import random
+ 
+-    if encoding is not None:
+-        f = io.open(fd, mode, encoding=encoding, errors=errors)
+-    else:
+-        f = os.fdopen(fd, mode)
++    try:
++        perm = os.stat(filename).st_mode
++    except OSError:
++        perm = None
++
++    flags = os.O_RDWR | os.O_CREAT | os.O_EXCL
+ 
++    if binary:
++        flags |= getattr(os, 'O_BINARY', 0)
++
++    while True:
++        tmp_filename = os.path.join(
++            os.path.dirname(filename),
++            '.__atomic-write%08x' % (random.randrange(1 << 32),),
++        )
++        try:
++            fd = os.open(tmp_filename, flags, 0o666 if perm is None else perm)
++            break
++        except OSError as e:
++            if e.errno == errno.EEXIST or (
++                os.name == "nt"
++                and e.errno == errno.EACCES
++                and os.path.isdir(e.filename)
++                and os.access(e.filename, os.W_OK)
++            ):
++                continue
++            raise
++
++    if perm is not None:
++        os.chmod(tmp_filename, perm)  # in case perm includes bits in umask
++
++    f = _wrap_io_open(fd, mode, encoding, errors)
+     return _AtomicFile(f, tmp_filename, os.path.realpath(filename)), True
+ 
+ 
+diff --git a/click/_termui_impl.py b/click/_termui_impl.py
+index 00a8e5ef1ca817fea214246d8f045d45ae5edde3..c3e14c6c577353e0306caf527e08e306765314d3 100644
+--- a/click/_termui_impl.py
++++ b/click/_termui_impl.py
+@@ -108,6 +108,17 @@ class ProgressBar(object):
+         self.render_progress()
+         return self.generator()
+ 
++    def __next__(self):
++        # Iteration is defined in terms of a generator function,
++        # returned by iter(self); use that to define next(). This works
++        # because `self.iter` is an iterable consumed by that generator,
++        # so it is re-entry safe. Calling `next(self.generator())`
++        # twice works and does "what you want".
++        return next(iter(self))
++
++    # Python 2 compat
++    next = __next__
++
+     def is_fast(self):
+         return time.time() - self.start <= self.short_limit
+ 
+@@ -270,11 +281,17 @@ class ProgressBar(object):
+         self.finished = True
+ 
+     def generator(self):
++        """Return a generator which yields the items added to the bar
++        during construction, and updates the progress bar *after* the
++        yielded block returns.
+         """
+-        Returns a generator which yields the items added to the bar during
+-        construction, and updates the progress bar *after* the yielded block
+-        returns.
+-        """
++        # WARNING: the iterator interface for `ProgressBar` relies on
++        # this and only works because this is a simple generator which
++        # doesn't create or manage additional state. If this function
++        # changes, the impact should be evaluated both against
++        # `iter(bar)` and `next(bar)`. `next()` in particular may call
++        # `self.generator()` repeatedly, and this must remain safe in
++        # order for that interface to work.
+         if not self.entered:
+             raise RuntimeError('You need to use progress bars in a with block.')
+ 
+diff --git a/click/_winconsole.py b/click/_winconsole.py
+index 2bc0cfb1347280922d4a2afed80ae938062bc4c6..dc203cc160efacaf1ae05d346ea80a9beac9c88a 100644
+--- a/click/_winconsole.py
++++ b/click/_winconsole.py
+@@ -24,7 +24,7 @@ try:
+     PyBuffer_Release = pythonapi.PyBuffer_Release
+ except ImportError:
+     pythonapi = None
+-from ctypes.wintypes import LPWSTR, LPCWSTR, HANDLE
++from ctypes.wintypes import DWORD, LPWSTR, LPCWSTR, HANDLE
+ 
+ 
+ c_ssize_p = POINTER(c_ssize_t)
+@@ -33,6 +33,7 @@ kernel32 = windll.kernel32
+ GetStdHandle = kernel32.GetStdHandle
+ ReadConsoleW = kernel32.ReadConsoleW
+ WriteConsoleW = kernel32.WriteConsoleW
++GetConsoleMode = kernel32.GetConsoleMode
+ GetLastError = kernel32.GetLastError
+ GetCommandLineW = WINFUNCTYPE(LPWSTR)(
+     ('GetCommandLineW', windll.kernel32))
+@@ -287,11 +288,24 @@ _stream_factories = {
+ }
+ 
+ 
++def _is_console(f):
++    if not hasattr(f, 'fileno'):
++        return False
++
++    try:
++        fileno = f.fileno()
++    except OSError:
++        return False
++
++    handle = msvcrt.get_osfhandle(fileno)
++    return bool(GetConsoleMode(handle, byref(DWORD())))
++
++
+ def _get_windows_console_stream(f, encoding, errors):
+     if get_buffer is not None and \
+        encoding in ('utf-16-le', None) \
+        and errors in ('strict', None) and \
+-       hasattr(f, 'isatty') and f.isatty():
++       _is_console(f):
+         func = _stream_factories.get(f.fileno())
+         if func is not None:
+             if not PY2:
+diff --git a/click/core.py b/click/core.py
+index 3c57a3653376a298a99394fce38a151148a8e03f..d4a29aefae81d440078c331559765913c401e3d8 100644
+--- a/click/core.py
++++ b/click/core.py
+@@ -154,6 +154,9 @@ class Context(object):
+        Added the `color`, `ignore_unknown_options`, and
+        `max_content_width` parameters.
+ 
++    .. versionadded:: 7.1
++       Added the `show_default` parameter.
++
+     :param command: the command class for this context.
+     :param parent: the parent context.
+     :param info_name: the info name for this invocation.  Generally this
+@@ -940,7 +943,8 @@ class Command(BaseCommand):
+         for param in self.get_params(ctx):
+             rv = param.get_help_record(ctx)
+             if rv is not None:
+-                opts.append(rv)
++                part_a, part_b = rv
++                opts.append((part_a, part_b.replace('\n', ' ')))
+ 
+         if opts:
+             with formatter.section('Options'):
+@@ -1320,12 +1324,6 @@ class Parameter(object):
+ 
+     Some settings are supported by both options and arguments.
+ 
+-    .. versionchanged:: 2.0
+-       Changed signature for parameter callback to also be passed the
+-       parameter.  In Click 2.0, the old callback format will still work,
+-       but it will raise a warning to give you change to migrate the
+-       code easier.
+-
+     :param param_decls: the parameter declarations for this option or
+                         argument.  This is a list of flags or argument
+                         names.
+@@ -1353,6 +1351,16 @@ class Parameter(object):
+                      order of processing.
+     :param envvar: a string or list of strings that are environment variables
+                    that should be checked.
++
++    .. versionchanged:: 7.1
++        Empty environment variables are ignored rather than taking the
++        empty string value. This makes it possible for scripts to clear
++        variables if they can't unset them.
++
++    .. versionchanged:: 2.0
++        Changed signature for parameter callback to also be passed the
++        parameter. The old callback format will still work, but it will
++        raise a warning to give you a chance to migrate the code easier.
+     """
+     param_type_name = 'parameter'
+ 
+@@ -1480,7 +1488,10 @@ class Parameter(object):
+                 if rv is not None:
+                     return rv
+         else:
+-            return os.environ.get(self.envvar)
++            rv = os.environ.get(self.envvar)
++
++            if rv != "":
++                return rv
+ 
+     def value_from_envvar(self, ctx):
+         rv = self.resolve_envvar_value(ctx)
+@@ -1596,7 +1607,7 @@ class Option(Parameter):
+         self.is_flag = is_flag
+         self.flag_value = flag_value
+         if self.is_flag and isinstance(self.flag_value, bool) \
+-           and type is None:
++           and type in [None, bool]:
+             self.type = BOOL
+             self.is_bool_flag = True
+         else:
+@@ -1760,7 +1771,7 @@ class Option(Parameter):
+         return ((any_prefix_is_slash and '; ' or ' / ').join(rv), help)
+ 
+     def get_default(self, ctx):
+-        # If we're a non boolean flag out default is more complex because
++        # If we're a non boolean flag our default is more complex because
+         # we need to look at all flags in the same group to figure out
+         # if we're the the default one in which case we return the flag
+         # value as default.
+diff --git a/click/decorators.py b/click/decorators.py
+index c57c5308613ec4798155e68088cc4644a42d2d52..1f10e73c201d1a79e54567ae841dcd83b2619b0c 100644
+--- a/click/decorators.py
++++ b/click/decorators.py
+@@ -94,9 +94,9 @@ def command(name=None, cls=None, **attrs):
+     callback.  This will also automatically attach all decorated
+     :func:`option`\s and :func:`argument`\s as parameters to the command.
+ 
+-    The name of the command defaults to the name of the function.  If you
+-    want to change that, you can pass the intended name as the first
+-    argument.
++    The name of the command defaults to the name of the function with
++    underscores replaced by dashes.  If you want to change that, you can
++    pass the intended name as the first argument.
+ 
+     All keyword arguments are forwarded to the underlying command class.
+ 
+diff --git a/click/exceptions.py b/click/exceptions.py
+index 6fa17658cb20c9c6b0b4843736196780257d5f40..21db907a74ad3581b3f7433e7056c1e4c87da394 100644
+--- a/click/exceptions.py
++++ b/click/exceptions.py
+@@ -152,6 +152,19 @@ class MissingParameter(BadParameter):
+             msg or '',
+         )
+ 
++    def __str__(self):
++        if self.message is None:
++            param_name = self.param.name if self.param else None
++            return "missing parameter: {}".format(param_name)
++        else:
++            return self.message
++
++    if PY2:
++        __unicode__ = __str__
++
++        def __str__(self):
++            return self.__unicode__().encode("utf-8")
++
+ 
+ class NoSuchOption(UsageError):
+     """Raised if click attempted to handle an option that does not
+diff --git a/click/termui.py b/click/termui.py
+index 0e8e84ca885177b902a0989a46cc6778a7d31a27..fa2727a9bc1562cb59f41f775030347662b21686 100644
+--- a/click/termui.py
++++ b/click/termui.py
+@@ -1,3 +1,4 @@
++import io
+ import os
+ import sys
+ import struct
+@@ -5,11 +6,12 @@ import inspect
+ import itertools
+ 
+ from ._compat import raw_input, text_type, string_types, \
+-     isatty, strip_ansi, get_winterm_size, DEFAULT_COLUMNS, WIN
++    isatty, strip_ansi, get_winterm_size, DEFAULT_COLUMNS, WIN
+ from .utils import echo
+ from .exceptions import Abort, UsageError
+ from .types import convert_type, Choice, Path
+ from .globals import resolve_color_default
++from .utils import LazyFile
+ 
+ 
+ # The prompt functions to use.  The doc tools currently override these
+@@ -48,10 +50,17 @@ def _build_prompt(text, suffix, show_default=False, default=None, show_choices=T
+     if type is not None and show_choices and isinstance(type, Choice):
+         prompt += ' (' + ", ".join(map(str, type.choices)) + ')'
+     if default is not None and show_default:
+-        prompt = '%s [%s]' % (prompt, default)
++        prompt = '%s [%s]' % (prompt, _format_default(default))
+     return prompt + suffix
+ 
+ 
++def _format_default(default):
++    if isinstance(default, (io.IOBase, LazyFile)) and hasattr(default, "name"):
++        return default.name
++
++    return default
++
++
+ def prompt(text, default=None, hide_input=False, confirmation_prompt=False,
+            type=None, value_proc=None, prompt_suffix=': ', show_default=True,
+            err=False, show_choices=True):
+diff --git a/click/testing.py b/click/testing.py
+index 1b2924e0b13996e83e8dc14001247886d534ee1c..343b007236c6a540172480eedcbcacb4ca1ba679 100644
+--- a/click/testing.py
++++ b/click/testing.py
+@@ -79,7 +79,7 @@ class Result(object):
+         self.runner = runner
+         #: The standard output as bytes.
+         self.stdout_bytes = stdout_bytes
+-        #: The standard error as bytes, or False(y) if not available
++        #: The standard error as bytes, or None if not available
+         self.stderr_bytes = stderr_bytes
+         #: The exit code as integer.
+         self.exit_code = exit_code
+@@ -102,7 +102,7 @@ class Result(object):
+     @property
+     def stderr(self):
+         """The standard error as unicode string."""
+-        if not self.stderr_bytes:
++        if self.stderr_bytes is None:
+             raise ValueError("stderr not separately captured")
+         return self.stderr_bytes.decode(self.runner.charset, 'replace') \
+             .replace('\r\n', '\n')
+@@ -278,7 +278,7 @@ class CliRunner(object):
+             clickpkg.formatting.FORCED_WIDTH = old_forced_width
+ 
+     def invoke(self, cli, args=None, input=None, env=None,
+-               catch_exceptions=True, color=False, mix_stderr=False, **extra):
++               catch_exceptions=True, color=False, **extra):
+         """Invokes a command in an isolated environment.  The arguments are
+         forwarded directly to the command line script, the `extra` keyword
+         arguments are passed to the :meth:`~clickpkg.Command.main` function of
+@@ -347,7 +347,10 @@ class CliRunner(object):
+             finally:
+                 sys.stdout.flush()
+                 stdout = outstreams[0].getvalue()
+-                stderr = outstreams[1] and outstreams[1].getvalue()
++                if self.mix_stderr:
++                    stderr = None
++                else:
++                    stderr = outstreams[1].getvalue()
+ 
+         return Result(runner=self,
+                       stdout_bytes=stdout,
+diff --git a/docs/commands.rst b/docs/commands.rst
+index 378fa73875c80871e1c6f8c2042f950a578a5f98..c32e917d6e0b60489ca5061b811736d0c5c118f9 100644
+--- a/docs/commands.rst
++++ b/docs/commands.rst
+@@ -88,7 +88,7 @@ script like this:
+     @click.pass_context
+     def cli(ctx, debug):
+         # ensure that ctx.obj exists and is a dict (in case `cli()` is called
+-        # by means other than the `if` block below
++        # by means other than the `if` block below)
+         ctx.ensure_object(dict)
+ 
+         ctx.obj['DEBUG'] = debug
+@@ -317,7 +317,8 @@ When using multi command chaining you can only have one command (the last)
+ use ``nargs=-1`` on an argument.  It is also not possible to nest multi
+ commands below chained multicommands.  Other than that there are no
+ restrictions on how they work.  They can accept options and arguments as
+-normal.
++normal. The order between options and arguments is limited for chained
++commands. Currently only ``--options argument`` order is allowed.
+ 
+ Another note: the :attr:`Context.invoked_subcommand` attribute is a bit
+ useless for multi commands as it will give ``'*'`` as value if more than
+@@ -439,10 +440,18 @@ defaults.
+ This is useful if you plug in some commands from another package but
+ you're not satisfied with the defaults.
+ 
+-The default map can be nested arbitrarily for each subcommand and
+-provided when the script is invoked.  Alternatively, it can also be
+-overridden at any point by commands.  For instance, a top-level command could
+-load the defaults from a configuration file.
++The default map can be nested arbitrarily for each subcommand:
++
++.. code-block:: python
++
++    default_map = {
++        "debug": True,  # default for a top level option
++        "runserver": {"port": 5000}  # default for a subcommand
++    }
++
++The default map can be provided when the script is invoked, or
++overridden at any point by commands. For instance, a top-level command
++could load the defaults from a configuration file.
+ 
+ Example usage:
+ 
+diff --git a/docs/options.rst b/docs/options.rst
+index 095041e8ebde9516b69f23a6c235750e146163c3..d7d7356fec2f1ca5d79673dbf3b32d202e5aba49 100644
+--- a/docs/options.rst
++++ b/docs/options.rst
+@@ -149,7 +149,7 @@ Multiple Options
+ ----------------
+ 
+ Similarly to ``nargs``, there is also the case of wanting to support a
+-parameter being provided multiple times to and have all values recorded --
++parameter being provided multiple times and have all the values recorded --
+ not just the last one.  For instance, ``git commit -m foo -m bar`` would
+ record two lines for the commit message: ``foo`` and ``bar``. This can be
+ accomplished with the ``multiple`` flag:
+@@ -169,6 +169,15 @@ And on the command line:
+ 
+     invoke(commit, args=['-m', 'foo', '-m', 'bar'])
+ 
++When passing a ``default`` with ``multiple=True``, the default value
++must be a list or tuple, otherwise it will be interpreted as a list of
++single characters.
++
++.. code-block:: python
++
++    @click.option("--format", multiple=True, default=["json"])
++
++
+ Counting
+ --------
+ 
+@@ -341,13 +350,15 @@ What it looks like:
+     println()
+     invoke(digest, args=['--help'])
+ 
+-.. note::
++Only pass the choices as list or tuple. Other iterables (like
++generators) may lead to unexpected results.
+ 
+-    You should only pass the choices as list or tuple.  Other iterables (like
+-    generators) may lead to surprising results.
++Choices work with options that have ``multiple=True``. If a ``default``
++value is given with ``multiple=True``, it should be a list or tuple of
++valid choices.
+ 
+-    Choices should be unique after considering the effects of
+-    ``case_sensitive`` and any specified token normalization function.
++Choices should be unique after considering the effects of
++``case_sensitive`` and any specified token normalization function.
+ 
+ .. versionchanged:: 7.1
+     The resulting value from an option will always be on the of the
+@@ -394,6 +405,10 @@ What it looks like:
+ 
+     invoke(hello, input=['John'])
+ 
++It is advised that prompt not be used in conjunction with the multiple
++flag set to True. Instead, prompt in the function interactively.
++
++
+ Password Prompts
+ ----------------
+ 
+diff --git a/docs/python3.rst b/docs/python3.rst
+index b68da640414bc08d20b5a9f006f32298e290e99e..c1736a8d72d71b7e4b6428a32d652d176b9f3d97 100644
+--- a/docs/python3.rst
++++ b/docs/python3.rst
+@@ -120,6 +120,12 @@ If you see something like this error in Python 3::
+       to Python 2 or consult the Python 3 section of the docs for
+       mitigation steps.
+ 
++.. note::
++
++    In Python 3.7 and later you will no longer get a ``RuntimeError`` in
++    many cases thanks to :pep:`538` and :pep:`540`, which changed the
++    default assumption in unconfigured environments.
++
+ You are dealing with an environment where Python 3 thinks you are
+ restricted to ASCII data.  The solution to these problems is different
+ depending on which locale your computer is running in.
+diff --git a/docs/quickstart.rst b/docs/quickstart.rst
+index c5ee8c66eb182a896fec979d5a4f8222e7840307..3644509e043832c8867c7e110ce2b75bf46df020 100644
+--- a/docs/quickstart.rst
++++ b/docs/quickstart.rst
+@@ -39,7 +39,7 @@ commands will work for you::
+ 
+ or even better::
+ 
+-    $ sudo pip install virtualenv
++    $ pip install virtualenv --user
+ 
+ One of these will probably install virtualenv on your system.  Maybe it's even
+ in your package manager.  If you use Ubuntu, try::
+diff --git a/docs/testing.rst b/docs/testing.rst
+index 4d9ed6791b51b9b3cab371a02329a87d39d73c32..52a888dd713ba5fe1ea2818b9c5356fd31eeb3ec 100644
+--- a/docs/testing.rst
++++ b/docs/testing.rst
+@@ -82,9 +82,9 @@ For example, if you want to run your tests against a fixed terminal width you ca
+ File System Isolation
+ ---------------------
+ 
+-For basic command line tools that want to operate with the file system, the
+-:meth:`CliRunner.isolated_filesystem` method comes in useful which sets up
+-an empty folder and changes the current working directory to:
++For basic command line tools with file system operations, the
++:meth:`CliRunner.isolated_filesystem` method is useful for setting the
++current working directory to a new, empty folder.
+ 
+ .. code-block:: python
+    :caption: cat.py
+diff --git a/docs/utils.rst b/docs/utils.rst
+index 7250d848dc1876567fcfa7fa40fabf94eff3fc97..4ac3374e17c7e5caf53da3859468b73ad2a62686 100644
+--- a/docs/utils.rst
++++ b/docs/utils.rst
+@@ -389,6 +389,16 @@ but you know the length, you can explicitly provide it::
+         for user in bar:
+             modify_the_user(user)
+ 
++Note that :func:`progressbar` updates the bar *after* each iteration of the
++loop. So code like this will render correctly::
++
++    import time
++
++    with click.progressbar([1, 2, 3]) as bar:
++        for x in bar:
++            print('sleep({})...'.format(x))
++            time.sleep(x)
++
+ Another useful feature is to associate a label with the progress bar which
+ will be shown preceding the progress bar::
+ 
+diff --git a/docs/why.rst b/docs/why.rst
+index 75c198080db9ea40cc7505dbc75e2189fe3c241f..9418bfe74cc7065f18676f4f647239c058e03c63 100644
+--- a/docs/why.rst
++++ b/docs/why.rst
+@@ -10,7 +10,7 @@ line utility for Python out there which ticks the following boxes:
+ *   is lazily composable without restrictions
+ *   supports implementation of Unix/POSIX command line conventions
+ *   supports loading values from environment variables out of the box
+-*   supports for prompting of custom values
++*   support for prompting of custom values
+ *   is fully nestable and composable
+ *   works the same in Python 2 and 3
+ *   supports file handling out of the box
+@@ -18,9 +18,9 @@ line utility for Python out there which ticks the following boxes:
+     ANSI colors, fetching direct keyboard input, screen clearing,
+     finding config paths, launching apps and editors, etc.)
+ 
+-There are many alternatives to Click and you can have a look at them if
+-you enjoy them better.  The obvious ones are ``optparse`` and ``argparse``
+-from the standard library.
++There are many alternatives to Click; the obvious ones are ``optparse``
++and ``argparse`` from the standard library. Have a look to see if something
++else resonates with you.
+ 
+ Click actually implements its own parsing of arguments and does not use
+ ``optparse`` or ``argparse`` following the ``optparse`` parsing behavior.
+@@ -28,13 +28,10 @@ The reason it's not based on ``argparse`` is that ``argparse`` does not
+ allow proper nesting of commands by design and has some deficiencies when
+ it comes to POSIX compliant argument handling.
+ 
+-Click is designed to be fun to work with and at the same time not stand in
+-your way.  It's not overly flexible either.  Currently, for instance, it
+-does not allow you to customize the help pages too much. This is intentional
+-because Click is designed to allow you to nest command line utilities.  The
+-idea is that you can have a system that works together with another system by
+-tacking two Click instances together and they will continue working as they
+-should.
++Click is designed to be fun and customizable but not overly flexible.
++For instance, the customizability of help pages is constrained. This
++constraint is intentional because Click promises multiple Click instances
++will continue to function as intended when strung together.
+ 
+ Too much customizability would break this promise.
+ 
+@@ -43,31 +40,29 @@ microframework ecosystem because no tool could provide it with the
+ functionality it needed.
+ 
+ To get an understanding of what Click is all about, I strongly recommend
+-looking at the :ref:`complex-guide` chapter to see what it's useful for.
++looking at the :ref:`complex-guide` chapter.
+ 
+ Why not Argparse?
+ -----------------
+ 
+-Click is internally based on optparse instead of argparse.  This however
++Click is internally based on ``optparse`` instead of ``argparse``. This
+ is an implementation detail that a user does not have to be concerned
+-with.  The reason however Click is not using argparse is that it has some
+-problematic behaviors that make handling arbitrary command line interfaces
+-hard:
+-
+-*   argparse has built-in magic behavior to guess if something is an
+-    argument or an option.  This becomes a problem when dealing with
+-    incomplete command lines as it's not possible to know without having a
+-    full understanding of the command line how the parser is going to
+-    behave.  This goes against Click's ambitions of dispatching to
+-    subparsers.
+-*   argparse currently does not support disabling of interspersed
+-    arguments.  Without this feature it's not possible to safely implement
+-    Click's nested parsing nature.
++with. Click is not based on argparse because it has some behaviors that
++make handling arbitrary command line interfaces hard:
++
++*   argparse has built-in behavior to guess if something is an
++    argument or an option. This becomes a problem when dealing with
++    incomplete command lines; the behaviour becomes unpredictable
++    without full knowledge of a command line. This goes against Click's
++    ambitions of dispatching to subparsers.
++*   argparse does not support disabling interspersed arguments. Without
++    this feature, it's not possible to safely implement Click's nested
++    parsing.
+ 
+ Why not Docopt etc.?
+ --------------------
+ 
+-Docopt and many tools like it are cool in how they work, but very few of
++Docopt, and many tools like it, are cool in how they work, but very few of
+ these tools deal with nesting of commands and composability in a way like
+ Click.  To the best of the developer's knowledge, Click is the first
+ Python library that aims to create a level of composability of applications
+@@ -78,13 +73,13 @@ according to those rules.  The side effect of this is that docopt is quite
+ rigid in how it handles the command line interface.  The upside of docopt
+ is that it gives you strong control over your help page; the downside is
+ that due to this it cannot rewrap your output for the current terminal
+-width and it makes translations hard.  On top of that docopt is restricted
++width, and it makes translations hard.  On top of that, docopt is restricted
+ to basic parsing.  It does not handle argument dispatching and callback
+ invocation or types.  This means there is a lot of code that needs to be
+ written in addition to the basic help page to handle the parsing results.
+ 
+ Most of all, however, it makes composability hard.  While docopt does
+-support dispatching to subcommands, it for instance does not directly
++support dispatching to subcommands, it, for instance, does not directly
+ support any kind of automatic subcommand enumeration based on what's
+ available or it does not enforce subcommands to work in a consistent way.
+ 
+@@ -95,25 +90,25 @@ following:
+ -   Click does not just parse, it also dispatches to the appropriate code.
+ -   Click has a strong concept of an invocation context that allows
+     subcommands to respond to data from the parent command.
+--   Click has strong information available for all parameters and commands
+-    so that it can generate unified help pages for the full CLI and to
++-   Click has strong information available for all parameters and commands,
++    so it can generate unified help pages for the full CLI and
+     assist the user in converting the input data as necessary.
+--   Click has a strong understanding of what types are and can give the user
++-   Click has a strong understanding of what types are, and it can give the user
+     consistent error messages if something goes wrong.  A subcommand
+     written by a different developer will not suddenly die with a
+     different error message because it's manually handled.
+ -   Click has enough meta information available for its whole program
+-    that it can evolve over time to improve the user experience without
++    to evolve over time and improve the user experience without
+     forcing developers to adjust their programs.  For instance, if Click
+     decides to change how help pages are formatted, all Click programs
+     will automatically benefit from this.
+ 
+-The aim of Click is to make composable systems, whereas the aim of docopt
++The aim of Click is to make composable systems. Whereas, the aim of docopt
+ is to build the most beautiful and hand-crafted command line interfaces.
+ These two goals conflict with one another in subtle ways.  Click
+ actively prevents people from implementing certain patterns in order to
+-achieve unified command line interfaces.  You have very little input on
+-reformatting your help pages for instance.
++achieve unified command line interfaces.  For instance, as a developer, you
++are given very little choice in formatting your help pages.
+ 
+ 
+ Why Hardcoded Behaviors?
+@@ -144,7 +139,7 @@ even optparse and argparse support automatic expansion of long arguments.
+ The reason for this is that it's a liability for backwards compatibility.
+ If people start relying on automatically modified parameters and someone
+ adds a new parameter in the future, the script might stop working.  These
+-kinds of problems are hard to find so Click does not attempt to be magical
++kinds of problems are hard to find, so Click does not attempt to be magical
+ about this.
+ 
+ This sort of behavior however can be implemented on a higher level to
