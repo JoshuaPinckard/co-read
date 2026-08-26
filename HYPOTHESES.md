@@ -288,15 +288,17 @@ so the prediction is a lower bound on task-level exposure and therefore on
 collision probability. The interval above is widened to reflect this and no
 narrower claim is made.
 
-**A lease correction is required before the buildout consumes L\*.** The
-computed optimum (L\* = 26 seconds, false expiry 49.6%) assumes a blocking
-cost of one agent-minute per waiting minute, which implicitly sets the
-probability that another agent wants the region to 1. Measured read
-multiplicity is p50 = 1 and p90 = 1 actor per 24 hours, so the effective
-blocking cost is smaller by roughly an order of magnitude and L\* moves up
-correspondingly. The lease rule is recomputed with contention probability as
-an explicit factor before any lease constant ships, and the 1-hour seed
-stands until it is.
+**Lease correction, computed 2026-08-26
+(`exploratory/models/LEASE-CORRECTION.md`).** The instrument's L\* of 26
+seconds assumed a second agent always waiting. With contention probability p
+as an explicit factor the objective is bimodal with breakeven p\* = 0.023:
+below it the optimum is 58 to 60 minutes (pinned by the read-to-write p90 of
+58.66 minutes), above it short leases win. The measured contention bracket
+[0.01, 0.10] straddles p\*, so no single constant is correct and the rule
+that ships is per-key adaptive: 60-minute renewable lease while observed
+live multiplicity on the region is 1, demoting toward one minute when a
+second reader or claim arrives. p is observed per key by the index itself,
+never assumed globally.
 
 Preconditions for any arms run, non-negotiable:
 1. This file approved and committed first.
