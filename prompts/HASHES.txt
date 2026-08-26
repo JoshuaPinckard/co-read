@@ -12,6 +12,7 @@ e41b253dee0520ddecfbb82bc4ade4242457bbc2be13823a35fcd3f5d643ea09  job-corpus.txt
 8c9151e6bafbf03cccb7b4e09e1c9a164d2da3e12118a3b2ea2c537057fe7f8b  job-engine-gap.txt  4643 bytes
 68a374df51dcdbc58a8199e4874d801a9287570af47bdf33c83b22971fa0ffe9  job-go-runner.txt  3253 bytes
 a81111fd5964c1b32833c4249eece2333e34ed552ff01f3b2196c57446305d34  job-harvest-corpus.txt  5128 bytes
+a05b371c0a6ff769a84aea319f8bb4f2c50ae7feebd629f40f762aec802ddf78  job-hazard-model.txt  5071 bytes
 6127df5f9550da03bbcbc84e78f0fe710ac20503eea699ae227d1773cba4e2df  job-hazard-upgrade.txt  3795 bytes
 4244f560e9ca5f0c65a48038be1c64c6480bfdcd1ff8422f506406558a8ccdd1  job-java-runner.txt  2976 bytes
 db4e04ef2020f58480e4a63fca9c622ee261ffc4b6bfc34b53afa51459ab43e3  job-normalization.txt  3067 bytes
