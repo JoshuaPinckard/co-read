@@ -1,0 +1,19 @@
+Three re-analyses of the existing mined corpus, answering an external review. No new mining, no repository fetching, no agent subjects. All inputs are under corpus/conflicts/ (per-repo JSONL and _all_merges files), exploratory/conflicts/MINING.md (definitions), and exploratory/arms/sites.json plus sites-go.json and sites-java.json (the 19 validated arms sites).
+
+## 1. Site stratification (gates the arms pilot)
+
+For each of the 19 validated sites, look up its merge's changed-byte overlap classification in the mined conflict rows (overlap, same_file_disjoint, boundary_only, unclassifiable). Report the stratum composition of the eligible population: how many byte-intersecting, how many same-file-disjoint, how many with mutually-unsatisfiable-test potential (from SITES.md's contradictory-task section if present). State plainly whether the same-file-disjoint stratum is single digits. If any site's merge is unclassifiable, say so rather than guessing.
+
+## 2. Censoring vs disjointness (defends the 81.7% claim)
+
+The strict overlap status was decidable for 372 of 416 conflicted merges (89.4%). The review asks whether the 10.6% censored merges are correlated with disjointness, which would bias the 81.7% intersection rate upward. From the conflict rows: characterize the 44 undecidable merges (which repos, which range-status reasons, file counts, artifact vs handwritten mix) and compare their observable properties against the decidable population. You cannot observe their true overlap status (that is what censoring means) so DO NOT estimate it. Instead report whether the censoring mechanism (binary results, missing blobs, refinement limits) is plausibly related to overlap status, with the actual reason distribution, and compute the bounds: the intersection rate if all 44 censored merges were disjoint (worst case) and if all were intersecting (best case). Those two bounds are the honest answer.
+
+## 3. Conditional base rate (reconciles with prior literature)
+
+Prior merge-conflict literature reports rates in the high single digits to teens. Our 1.66% uses all evaluable two-parent merges including topologically trivial ones (0 of 5,356 conflicts at one commit of combined divergence is the dilution). From _all_merges rows, recompute the conflict rate conditional on BOTH sides having a nonempty diff against the base, per repository and pooled, with the same denominators-in-sentence discipline. Also report the rate conditional on both sides touching at least one common file, which is the strictest comparable population. State which conditioning most closely matches the populations of Ghiotto et al. (TSE), Kasi and Sarma (Cassandra), Accioly et al., and Brun et al., to the extent their populations are described in your knowledge, marking anything not verifiable from local data as requiring citation verification.
+
+## Output
+
+exploratory/conflicts/REANALYSIS.md with the three sections, denominators in the same sentence as every rate, per-claim confidence with reasons, "Claims that could NOT be verified" and "What would change this verdict". Also update nothing else: no existing result document is edited.
+
+Read-only on corpus data. Scripts under instruments/conflicts/. Do not fabricate.

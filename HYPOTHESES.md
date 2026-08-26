@@ -195,6 +195,42 @@ contradictory-task subset for P3.
   cell table is committed here as a further amendment when validation and
   the runner gates report, before the first pilot draw.
 
+**Amendment 2 — DRAFT 2026-08-26, pending PI approval, from external review
+the PI forwarded. Nothing here runs until approved, and it must precede the
+first draw.**
+
+- **A sixth arm: optimistic isolation.** Every agent works its own worktree
+  with no coordination, results merge at integration, the answer key
+  validates, and losers are retried. This is the deployed status quo
+  (copy-modify-merge with agent retries) and the arm the thesis must beat,
+  not just file locks. The reviewer is right that its absence was
+  conspicuous. Arms become: sequential, unmediated shared tree, optimistic
+  isolation, file locks, coordinator, full system.
+- **Wasted compute is a pre-specified metric**: retried agent-minutes and
+  discarded-diff agent-minutes, reported per arm beside correct completions.
+  This is the axis where optimism should lose and claims should win, and it
+  is specified now so it cannot become a post hoc rescue.
+- **Site strata are pre-specified**: byte-intersecting, same-file-disjoint,
+  and contradictory-task, assigned from the mining classification before any
+  draw. If the disjoint stratum is single digits across the 19 eligible
+  sites, more disjoint sites are mined before phase 2 rather than after.
+- **Environment pinning and interleaving**: subject model identifiers and
+  CLI versions are recorded per draw, and arm order is randomized and
+  interleaved across sites so provider-side model drift spreads across arms
+  instead of correlating with one. Analysis workers already carry the
+  double-run discipline, and subjects now carry schedule interleaving.
+- **A test-gate sensitivity instrument is preregistered beside the arms**:
+  inject known semantic breaks that merge cleanly (reusing the perturbation
+  operator on clean-merge pairs) and measure the fraction the repository
+  suite catches. The safety story of every winning arm is "tests stand
+  behind integration" and that wall currently has no measured load rating.
+  Prediction: catch rate below 1.0 and above 0.5, stated before measurement.
+- **P6 is restated in changed lines**: the transfer claim rides the
+  lines-of-divergence curve (AUC 0.801) rather than commits (0.815), because
+  commit counts are a human workflow artifact that agent populations will
+  not preserve, while changed-line exposure plausibly survives the
+  population shift. Commits and time remain reported.
+
 Preconditions for any arms run, non-negotiable:
 1. This file approved and committed first.
 2. Agent-subject runs meet the LEAN-Bench clean-room bar: environment
