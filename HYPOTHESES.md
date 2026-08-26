@@ -215,6 +215,24 @@ an agents paper. This amendment precedes the first draw.**
   and contradictory-task, assigned from the mining classification before any
   draw. If the disjoint stratum is single digits across the 19 eligible
   sites, more disjoint sites are mined before phase 2 rather than after.
+
+  **Stratum correction, 2026-08-26, before any draw.** The contingency fired
+  and its result corrected the specification. The 19 sites contain 0
+  same-file-disjoint merges, and mining for more found only 3 candidates in
+  gated repositories, all rejected on their runner gates (evidence:
+  `exploratory/arms/DISJOINT-SITES.md`). The stratum was also the wrong
+  object. Byte-disjoint *conflicted* merges test whether byte claims are
+  more permissive than git's line merge, a narrow question the mining
+  already answers descriptively at 11.1%. The under-blocking safety question
+  needs merges that were **clean with same-file concurrency**, where a
+  byte-granular claim would have permitted both writes and the question is
+  whether the integrated result is correct. That population is large (475 of
+  684 same-file concurrent units in Click alone). The third stratum is
+  therefore renamed **permissive** and defined as clean same-file-concurrent
+  sites carrying a recorded base-coordinate byte-overlap classification. The
+  strict-disjoint result stands as a recorded negative, and boundary-only
+  Click sites (2 validated) remain available as a labeled sensitivity class.
+  No draw has run under either definition.
 - **Environment pinning and interleaving**: subject model identifiers and
   CLI versions are recorded per draw, and arm order is randomized and
   interleaved across sites so provider-side model drift spreads across arms
@@ -231,6 +249,54 @@ an agents paper. This amendment precedes the first draw.**
   commit counts are a human workflow artifact that agent populations will
   not preserve, while changed-line exposure plausibly survives the
   population shift. Commits and time remain reported.
+
+**Amendment 3 — the preregistered transfer prediction. Drafted 2026-08-26
+before any draw, from `exploratory/models/HAZARD.md` and its frozen
+instrument. Pending PI approval.**
+
+The P6 transfer claim becomes a number. The conflict hazard fitted on 23,428
+human merges is `logit(p) = -5.955 + 0.234 * log(1 + combined changed
+lines)`, slope 95% [0.115, 0.353] excluding zero, reproducing the mined bin
+rates. Pushing the measured agent write-size distribution through it:
+
+- p50 task pair (18 combined lines): **0.51%** [0.19%, 1.38%]
+- p90 task pair (112 combined lines): **0.78%** [0.31%, 1.93%]
+- distributional mean: 0.62% provisional, sharp range [0.481%, 0.707%]
+
+**Preregistered prediction.** On task pairs not selected for historical
+conflict, the unmediated arm's realized textual collision rate falls within
+**[0.2%, 2.0%]**, the union of cluster intervals across that exposure range.
+Above 2.0% falsifies pure exposure transfer and indicates agent-specific
+concentration beyond size. Below 0.2% indicates agents avoid collision
+beyond what exposure predicts. Either miss is a finding and is reported with
+both numbers side by side.
+
+**Where the prediction is tested, and where it is not.** The 19 sites are
+conflict-selected: mean fitted hazard 1.155% against a realized 100%, an
+86.6x concentration, so they measure coordination rather than transfer. The
+**permissive stratum** (Amendment 2's correction: clean merges with same-file
+concurrency) is selected for concurrency and not for conflict, and its
+historical outcome was clean. It is therefore the transfer test, at no
+additional draws. Its per-site fitted hazards are computed before its first
+draw and recorded beside the realized rate. On conflict-selected sites the
+preregistered claim remains only the ordering: realized above the
+exposure-only prediction.
+
+**Unit caveat, stated now rather than after.** The agent exposure input is
+per-write aggregate claim lines, while the human exposure is a branch diff,
+so the prediction is a lower bound on task-level exposure and therefore on
+collision probability. The interval above is widened to reflect this and no
+narrower claim is made.
+
+**A lease correction is required before the buildout consumes L\*.** The
+computed optimum (L\* = 26 seconds, false expiry 49.6%) assumes a blocking
+cost of one agent-minute per waiting minute, which implicitly sets the
+probability that another agent wants the region to 1. Measured read
+multiplicity is p50 = 1 and p90 = 1 actor per 24 hours, so the effective
+blocking cost is smaller by roughly an order of magnitude and L\* moves up
+correspondingly. The lease rule is recomputed with contention probability as
+an explicit factor before any lease constant ships, and the 1-hour seed
+stands until it is.
 
 Preconditions for any arms run, non-negotiable:
 1. This file approved and committed first.
