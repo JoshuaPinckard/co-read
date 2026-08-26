@@ -122,12 +122,20 @@ class ArithmeticTests(unittest.TestCase):
         summary = analyze.summarize_hydration(
             {
                 "discovery_lazy_fetch": False,
+                "current_miner_protocol_revision": analyze.MINER_PROTOCOL_REVISION,
+                "current_miner_source_sha256": analyze.MINER_SOURCE_SHA256,
                 "results": [
                     {
                         "status": "already_hydrated",
                         "missing_before_count": 0,
                         "missing_after_count": 0,
                         "fetch_batch_count": 0,
+                        "merge_base_source": "validated_mined_all_merges",
+                        "merge_base_invocations": 0,
+                        "mined_merge_protocol_revision": analyze.MINER_PROTOCOL_REVISION,
+                        "mined_merge_source_sha256": analyze.MINER_SOURCE_SHA256,
+                        "mined_all_merges_sha256": "a" * 64,
+                        "mined_summary_sha256": "b" * 64,
                     },
                     {
                         "status": "hydrated",
@@ -143,6 +151,11 @@ class ArithmeticTests(unittest.TestCase):
         self.assertEqual(summary["missing_before_count"], 3)
         self.assertEqual(summary["missing_after_count"], 0)
         self.assertEqual(summary["fetch_batch_count"], 1)
+        self.assertEqual(summary["validated_mined_base_repositories"], 1)
+        self.assertEqual(
+            summary["merge_base_source_counts"],
+            {"validated_mined_all_merges": 1},
+        )
         self.assertFalse(summary["discovery_lazy_fetch"])
 
     def test_prefixed_unavailable_range_status_rejects_regions(self) -> None:

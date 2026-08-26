@@ -1738,6 +1738,8 @@ def summarize_hydration(value: Mapping[str, Any]) -> dict[str, Any]:
     missing_after = 0
     complete = 0
     fetch_batches = 0
+    base_sources: collections.Counter[str] = collections.Counter()
+    validated_mined_bases = 0
     for raw in results:
         if not isinstance(raw, Mapping):
             continue
@@ -1754,6 +1756,18 @@ def summarize_hydration(value: Mapping[str, Any]) -> dict[str, Any]:
             fetch_batches += batches
         if status != "failed" and after == 0:
             complete += 1
+        base_source = raw.get("merge_base_source")
+        if isinstance(base_source, str):
+            base_sources[base_source] += 1
+        if (
+            base_source == "validated_mined_all_merges"
+            and raw.get("merge_base_invocations") == 0
+            and raw.get("mined_merge_protocol_revision") == MINER_PROTOCOL_REVISION
+            and raw.get("mined_merge_source_sha256") == MINER_SOURCE_SHA256
+            and isinstance(raw.get("mined_all_merges_sha256"), str)
+            and isinstance(raw.get("mined_summary_sha256"), str)
+        ):
+            validated_mined_bases += 1
     return {
         "repository_count": len(results),
         "status_counts": dict(sorted(statuses.items())),
@@ -1762,6 +1776,12 @@ def summarize_hydration(value: Mapping[str, Any]) -> dict[str, Any]:
         "missing_after_count": missing_after,
         "fetch_batch_count": fetch_batches,
         "discovery_lazy_fetch": value.get("discovery_lazy_fetch"),
+        "merge_base_source_counts": dict(sorted(base_sources.items())),
+        "validated_mined_base_repositories": validated_mined_bases,
+        "current_miner_protocol_revision": value.get(
+            "current_miner_protocol_revision"
+        ),
+        "current_miner_source_sha256": value.get("current_miner_source_sha256"),
     }
 
 
@@ -2121,15 +2141,17 @@ def determinism_disk_text(determinism: Mapping[str, Any] | None) -> str:
     return "**[disk usage was not supplied by the determinism report]**"
 
 
-def auc_verdict(auc: Mapping[str, Any]) -> str:
+def auc_verdict(
+    auc: Mapping[str, Any], *, scope: str = "in this selected corpus"
+) -> str:
     interval = auc.get("repository_bootstrap_95")
     informative = int(auc.get("informative_repositories", 0))
     if not isinstance(interval, list) or len(interval) != 2:
         return f"No directional claim: only {informative} informative repositories or no stable interval."
     if interval[0] > 0.5:
-        return "Positive within-repository rank association in this selected corpus; this is not causal."
+        return f"Positive within-repository rank association {scope}; this is not causal."
     if interval[1] < 0.5:
-        return "Negative within-repository rank association in this selected corpus; this is not causal."
+        return f"Negative within-repository rank association {scope}; this is not causal."
     return "No directional claim: the repository-bootstrap interval includes the 0.5 null."
 
 
@@ -2470,7 +2492,9 @@ def render_markdown(metrics: Mapping[str, Any]) -> str:
                     "For each repository below, the verifier ran the full miner twice with "
                     "`--no-resume` into independent `run1` and `run2` output roots. It compared "
                     "the conflict JSONL, `_all_merges` JSONL, and summary JSON byte-for-byte "
-                    "between runs and against the canonical corpus."
+                    "between runs and against the canonical corpus. The retained verification "
+                    f"used {format_integer(determinism.get('merge_workers_per_run'))} merge "
+                    "workers per miner run."
                 ),
                 "",
                 "| Repository slug | All-merge rows | Conflict rows | run1 == run2 | run1 == canonical |",
@@ -2530,6 +2554,9 @@ def render_markdown(metrics: Mapping[str, Any]) -> str:
         missing_before = int(hydration.get("missing_before_count", 0))
         missing_after = int(hydration.get("missing_after_count", 0))
         fetch_batches = int(hydration.get("fetch_batch_count", 0))
+        validated_mined_bases = int(
+            hydration.get("validated_mined_base_repositories", 0)
+        )
         discovery_no_lazy = hydration.get("discovery_lazy_fetch") is False
         lines.extend(
             [
@@ -2539,7 +2566,11 @@ def render_markdown(metrics: Mapping[str, Any]) -> str:
                     f"after the audit; {missing_before:,} required objects were missing before "
                     f"it and {missing_after:,} after it, across {fetch_batches:,} explicit fetch "
                     f"batches. Discovery lazy fetching disabled: "
-                    f"`{str(discovery_no_lazy).lower()}`."
+                    f"`{str(discovery_no_lazy).lower()}`. For the final post-mining pass, "
+                    f"{validated_mined_bases:,} / {hydration_repositories:,} repositories "
+                    "used exact history-ordered base/parent tuples from current-provenance "
+                    "canonical `_all_merges` files whose summary hashes were revalidated; "
+                    "this required zero per-merge `merge-base` subprocesses."
                 ),
                 "",
             ]
@@ -2671,6 +2702,14 @@ def render_markdown(metrics: Mapping[str, Any]) -> str:
         [
             "",
             "`artifacts` is the union of generated, lockfile, and vendored occurrences; it is not silently pooled with handwritten files.",
+            (
+                "Plainly, the exact top-1% concentration is "
+                f"{format_rate(metrics['concentration']['handwritten']['top_one_percent_occurrence_share'])} "
+                "for the handwritten residual and "
+                f"{format_rate(metrics['concentration']['artifacts']['top_one_percent_occurrence_share'])} "
+                "for pooled artifacts; lockfiles are the strong exception at "
+                f"{format_rate(metrics['concentration']['lockfile']['top_one_percent_occurrence_share'])}."
+            ),
             "",
             "## Divergence versus conflict probability",
             "",
@@ -2705,6 +2744,16 @@ def render_markdown(metrics: Mapping[str, Any]) -> str:
         analysis = metrics["divergence"][metric]
         availability = analysis["availability"]
         auc = analysis["auc"]
+        if metric == "lines":
+            availability_detail = (
+                " Among available countable-text rows, "
+                f"{format_rate(rate(int(availability['conflicted_available']), int(availability['available_merges'])))} "
+                "conflicted; the unavailable-row rate makes this relationship coverage-conditioned."
+            )
+            auc_scope = "among available countable-text rows in this selected corpus"
+        else:
+            availability_detail = ""
+            auc_scope = "in this selected corpus"
         auc_point = (
             "not estimable"
             if auc["macro_equal_repository_auc"] is None
@@ -2717,12 +2766,14 @@ def render_markdown(metrics: Mapping[str, Any]) -> str:
                 (
                     f"Available for {format_rate(availability['available_rate'])} evaluable merges; "
                     f"unavailable rows had conflict rate "
-                    f"{format_rate(availability['unavailable_conflict_rate'])}. "
+                    f"{format_rate(availability['unavailable_conflict_rate'])}."
+                    f"{availability_detail} "
                     f"Equal-repository within-repository AUC: {auc_point} "
                     f"with 95% repository bootstrap {format_number_interval(auc['repository_bootstrap_95'])}; "
                     f"{auc['informative_repositories']:,} informative repositories "
                     f"({auc['repositories_above_null']:,} above / {auc['repositories_equal_null']:,} equal / "
-                    f"{auc['repositories_below_null']:,} below 0.5). **{auc_verdict(auc)}**"
+                    f"{auc['repositories_below_null']:,} below 0.5). "
+                    f"**{auc_verdict(auc, scope=auc_scope)}**"
                 ),
                 "",
                 "| Exposure bin | Conflicted / evaluable | Wilson 95% | Repository-cluster 95% | Contributing repos |",
@@ -2802,7 +2853,20 @@ def render_markdown(metrics: Mapping[str, Any]) -> str:
             ),
             "",
             granularity_verdict_text(
-                granularity_rows["artifacts"], "Generated/lockfile/vendored conflict files"
+                granularity_rows["artifacts"],
+                "Pooled generated/lockfile/vendored conflict files",
+            ),
+            (
+                "The pooled artifact verdict is driven by lockfiles, whose measurable median was "
+                f"{distribution_cell(granularity_rows['lockfile']['file_ratio_distribution'], 'median')} "
+                f"at {format_rate(granularity_rows['lockfile']['measurement_coverage'])} coverage. "
+                "The generated and vendored measured subsets instead had medians of "
+                f"{distribution_cell(granularity_rows['generated']['file_ratio_distribution'], 'median')} "
+                "and "
+                f"{distribution_cell(granularity_rows['vendored']['file_ratio_distribution'], 'median')} "
+                f"at only {format_rate(granularity_rows['generated']['measurement_coverage'])} and "
+                f"{format_rate(granularity_rows['vendored']['measurement_coverage'])} coverage, "
+                "respectively, so subtype inference remains coverage-limited."
             ),
             "",
         ]
@@ -2990,9 +3054,10 @@ def render_markdown(metrics: Mapping[str, Any]) -> str:
             "python instruments/conflicts/prepare_repositories.py --report exploratory/conflicts/PREPARATION.json",
             "python instruments/conflicts/hydrate_repositories.py --report exploratory/conflicts/HYDRATION.json",
             "python instruments/conflicts/miner.py --no-resume --merge-workers 7",
+            "python instruments/conflicts/hydrate_repositories.py --use-mined-bases --report exploratory/conflicts/HYDRATION.json",
             "python instruments/conflicts/reclassify_outputs.py",
             "python instruments/conflicts/recompute_overlap_outputs.py",
-            "python instruments/conflicts/verify_determinism.py",
+            "python instruments/conflicts/verify_determinism.py --merge-workers 5",
             "python instruments/conflicts/analyze.py",
             "```",
             "",

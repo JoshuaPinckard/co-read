@@ -153,6 +153,179 @@ def test_primary_merge_base_returns_none_for_unrelated_histories(
     assert hydrate.primary_merge_base("git", Path("mirror"), "a" * 40, "b" * 40) is None
 
 
+def test_merge_bases_from_mined_rows_validates_order_parents_and_provenance(
+    tmp_path: Path,
+) -> None:
+    first = ("1" * 40, "2" * 40, "3" * 40)
+    second = ("4" * 40, "5" * 40, "6" * 40)
+    base = "7" * 40
+    other_base = "6" * 40
+    frozen_head = "9" * 40
+    rows = [
+        {
+            "schema_version": 1,
+            "repo": "owner/repo",
+            "merge": first[0],
+            "parents": [first[1], first[2]],
+            "merge_base": base,
+            "merge_bases": [other_base, base],
+            "multiple_merge_bases": True,
+            "evaluation_status": "clean",
+            "miner_protocol_revision": hydrate.MINER_PROTOCOL_REVISION,
+            "miner_source_sha256": hydrate.MINER_SOURCE_SHA256,
+        },
+        {
+            "schema_version": 1,
+            "repo": "owner/repo",
+            "merge": second[0],
+            "parents": [second[1], second[2]],
+            "merge_base": None,
+            "merge_bases": [],
+            "multiple_merge_bases": False,
+            "evaluation_status": "no_merge_base",
+            "miner_protocol_revision": hydrate.MINER_PROTOCOL_REVISION,
+            "miner_source_sha256": hydrate.MINER_SOURCE_SHA256,
+        },
+    ]
+    path = tmp_path / "owner__repo.jsonl"
+    all_merges_bytes = "".join(
+        hydrate.canonical_json(row) + "\n" for row in rows
+    ).encode("ascii")
+    path.write_bytes(all_merges_bytes)
+    summary_path = tmp_path / "owner__repo.summary.json"
+    summary = {
+        "schema_version": 1,
+        "repo": "owner/repo",
+        "slug": "owner__repo",
+        "head": frozen_head,
+        "miner_protocol_revision": hydrate.MINER_PROTOCOL_REVISION,
+        "miner_source_sha256": hydrate.MINER_SOURCE_SHA256,
+        "first_parent_commits": 4,
+        "first_parent_merges": 3,
+        "eligible_two_parent_merges": 2,
+        "excluded_octopus_merges": 1,
+        "clean_merges": 1,
+        "conflicted_merges": 0,
+        "failed_merges": 1,
+        "no_merge_base_merges": 1,
+        "multiple_merge_base_merges": 1,
+        "output_sha256": {
+            "all_merges": hydrate.hashlib.sha256(all_merges_bytes).hexdigest(),
+            "conflicts": hydrate.hashlib.sha256(b"").hexdigest(),
+        },
+    }
+    summary_path.write_bytes(
+        (hydrate.canonical_json(summary) + "\n").encode("ascii")
+    )
+
+    bases, observed_all_hash, observed_summary_hash = hydrate.merge_bases_from_mined_rows(
+        path,
+        summary_path,
+        {
+            "repo": "owner/repo",
+            "slug": "owner__repo",
+            "frozen_head": frozen_head,
+        },
+        [first, second],
+        4,
+        1,
+    )
+
+    assert bases == [base, None]
+    assert observed_all_hash == hydrate.hashlib.sha256(all_merges_bytes).hexdigest()
+    assert observed_summary_hash == hydrate.hashlib.sha256(
+        summary_path.read_bytes()
+    ).hexdigest()
+
+
+def test_merge_bases_from_mined_rows_rejects_parent_mismatch(tmp_path: Path) -> None:
+    merge = "1" * 40
+    parent1 = "2" * 40
+    parent2 = "3" * 40
+    base = "4" * 40
+    path = tmp_path / "owner__repo.jsonl"
+    path.write_bytes(
+        (
+            hydrate.canonical_json(
+                {
+                    "schema_version": 1,
+                    "repo": "owner/repo",
+                    "merge": merge,
+                    "parents": [parent2, parent1],
+                    "merge_base": base,
+                    "merge_bases": [base],
+                    "multiple_merge_bases": False,
+                    "evaluation_status": "conflicted",
+                    "miner_protocol_revision": hydrate.MINER_PROTOCOL_REVISION,
+                    "miner_source_sha256": hydrate.MINER_SOURCE_SHA256,
+                }
+            )
+            + "\n"
+        ).encode("ascii")
+    )
+
+    with pytest.raises(hydrate.HydrationError, match="differs from first-parent"):
+        hydrate.merge_bases_from_mined_rows(
+            path,
+            tmp_path / "missing-summary.json",
+            {
+                "repo": "owner/repo",
+                "slug": "owner__repo",
+                "frozen_head": "9" * 40,
+            },
+            [(merge, parent1, parent2)],
+            2,
+            0,
+        )
+
+
+@pytest.mark.parametrize(
+    ("schema_version", "include_base", "message"),
+    [
+        (True, True, "unsupported schema"),
+        (1, False, "lacks explicit merge_base"),
+    ],
+)
+def test_merge_bases_from_mined_rows_rejects_nonexact_schema_or_missing_base(
+    tmp_path: Path,
+    schema_version: object,
+    include_base: bool,
+    message: str,
+) -> None:
+    merge = "1" * 40
+    parent1 = "2" * 40
+    parent2 = "3" * 40
+    row = {
+        "schema_version": schema_version,
+        "repo": "owner/repo",
+        "merge": merge,
+        "parents": [parent1, parent2],
+        "merge_bases": [],
+        "multiple_merge_bases": False,
+        "evaluation_status": "no_merge_base",
+        "miner_protocol_revision": hydrate.MINER_PROTOCOL_REVISION,
+        "miner_source_sha256": hydrate.MINER_SOURCE_SHA256,
+    }
+    if include_base:
+        row["merge_base"] = None
+    path = tmp_path / "owner__repo.jsonl"
+    path.write_bytes((hydrate.canonical_json(row) + "\n").encode("ascii"))
+
+    with pytest.raises(hydrate.HydrationError, match=message):
+        hydrate.merge_bases_from_mined_rows(
+            path,
+            tmp_path / "missing-summary.json",
+            {
+                "repo": "owner/repo",
+                "slug": "owner__repo",
+                "frozen_head": "9" * 40,
+            },
+            [(merge, parent1, parent2)],
+            2,
+            0,
+        )
+
+
 def test_fixed_batches_preserve_sorted_input_and_fixed_boundaries() -> None:
     values = [f"{number:040x}" for number in range(5)]
     assert list(hydrate.fixed_batches(values, 2)) == [
@@ -199,6 +372,7 @@ def test_main_continues_after_repository_failure(
         repository: dict[str, str],
         _mirror_root: Path,
         _batch_size: int,
+        _mined_all_merges_root: Path | None = None,
     ) -> dict[str, str]:
         attempted.append(repository["slug"])
         if repository["slug"] == "owner__first":

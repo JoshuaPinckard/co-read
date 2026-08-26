@@ -21,9 +21,15 @@ from concurrent.futures import ThreadPoolExecutor
 from pathlib import Path
 from typing import Any, Iterable, Iterator, Sequence, TypeVar
 
+try:
+    from .miner import MINER_PROTOCOL_REVISION, MINER_SOURCE_SHA256
+except ImportError:  # direct script execution
+    from miner import MINER_PROTOCOL_REVISION, MINER_SOURCE_SHA256
+
 
 PROJECT_ROOT = Path(__file__).resolve().parents[2]
 DEFAULT_MANIFEST = Path(__file__).with_name("repositories.json")
+DEFAULT_ALL_MERGES_ROOT = PROJECT_ROOT / "corpus" / "conflicts" / "_all_merges"
 DEFAULT_BATCH_SIZE = 20_000
 DEFAULT_DIFF_PAIR_BATCH_SIZE = 512
 DEFAULT_MERGE_BASE_WORKERS = 8
@@ -426,11 +432,227 @@ def merge_bases_for_history(
         return list(executor.map(resolve, enumerate(merges, 1)))
 
 
+def merge_bases_from_mined_rows(
+    path: Path,
+    summary_path: Path,
+    repository: dict[str, Any],
+    merges: Sequence[tuple[str, str, str]],
+    first_parent_commits: int,
+    excluded_octopus_merges: int,
+) -> tuple[list[str | None], str, str]:
+    """Load bases from a mined all-merges file after exact history validation.
+
+    This post-mining fast path avoids recomputing one ``merge-base`` subprocess
+    per merge.  It is deliberately fail-closed: rows must be in the exact
+    first-parent order, must name the same parents, and must carry one uniform
+    miner protocol/source provenance pair.
+    """
+
+    bases: list[str | None] = []
+    status_counts: dict[str, int] = {"clean": 0, "conflicted": 0, "no_merge_base": 0}
+    multiple_base_count = 0
+    all_merges_digest = hashlib.sha256()
+    row_count = 0
+    try:
+        stream = path.open("rb")
+    except OSError as error:
+        raise HydrationError(f"cannot read mined merge rows {path}: {error}") from error
+    with stream:
+        for position, raw_line in enumerate(stream, 1):
+            all_merges_digest.update(raw_line)
+            if not raw_line.endswith(b"\n") or raw_line.endswith(b"\r\n"):
+                raise HydrationError(
+                    f"mined merge row {position} is not exactly LF-terminated: {path}"
+                )
+            line = raw_line[:-1]
+            if not line:
+                raise HydrationError(f"blank mined merge row {position}: {path}")
+            if position > len(merges):
+                raise HydrationError(
+                    f"mined merge rows contain an extra row {position} for "
+                    f"{repository['slug']}"
+                )
+            try:
+                row = json.loads(line)
+            except (UnicodeDecodeError, json.JSONDecodeError) as error:
+                raise HydrationError(
+                    f"invalid mined merge row {position} in {path}: {error}"
+                ) from error
+            if not isinstance(row, dict):
+                raise HydrationError(
+                    f"mined merge row {position} is not an object: {path}"
+                )
+            try:
+                canonical_line = canonical_json(row).encode("ascii")
+            except (TypeError, ValueError) as error:
+                raise HydrationError(
+                    f"mined merge row {position} cannot be canonicalized: {path}: {error}"
+                ) from error
+            if canonical_line != line:
+                raise HydrationError(
+                    f"mined merge row {position} is not canonical LF-only JSON: {path}"
+                )
+            expected = merges[position - 1]
+            row_count = position
+            merge, parent1, parent2 = expected
+            if type(row.get("schema_version")) is not int or row["schema_version"] != 1:
+                raise HydrationError(
+                    f"mined merge row {position} has unsupported schema for "
+                    f"{repository['slug']}"
+                )
+            if row.get("repo") != repository["repo"]:
+                raise HydrationError(
+                    f"mined merge row {position} has wrong repo for "
+                    f"{repository['slug']}"
+                )
+            if row.get("merge") != merge or row.get("parents") != [parent1, parent2]:
+                raise HydrationError(
+                    f"mined merge row {position} differs from first-parent history for "
+                    f"{repository['slug']}"
+                )
+
+            if row.get("miner_protocol_revision") != MINER_PROTOCOL_REVISION:
+                raise HydrationError(
+                    f"mined merge row {position} has stale protocol provenance for "
+                    f"{repository['slug']}"
+                )
+            if row.get("miner_source_sha256") != MINER_SOURCE_SHA256:
+                raise HydrationError(
+                    f"mined merge row {position} has stale source provenance for "
+                    f"{repository['slug']}"
+                )
+
+            if "merge_base" not in row:
+                raise HydrationError(
+                    f"mined merge row {position} lacks explicit merge_base for "
+                    f"{repository['slug']}"
+                )
+            base = row["merge_base"]
+            merge_bases = row.get("merge_bases")
+            multiple_merge_bases = row.get("multiple_merge_bases")
+            status = row.get("evaluation_status")
+            if status not in status_counts:
+                raise HydrationError(
+                    f"mined merge row {position} has unsupported status {status!r} for "
+                    f"{repository['slug']}"
+                )
+            status_counts[status] += 1
+            if base is None:
+                if (
+                    status != "no_merge_base"
+                    or merge_bases != []
+                    or multiple_merge_bases is not False
+                ):
+                    raise HydrationError(
+                        f"mined merge row {position} has inconsistent null base for "
+                        f"{repository['slug']}"
+                    )
+            else:
+                if not isinstance(base, str) or not TEXT_OID_RE.fullmatch(base):
+                    raise HydrationError(
+                        f"mined merge row {position} has invalid base for "
+                        f"{repository['slug']}"
+                    )
+                if status not in {"clean", "conflicted"}:
+                    raise HydrationError(
+                        f"mined merge row {position} has base with status {status!r} for "
+                        f"{repository['slug']}"
+                    )
+                if (
+                    not isinstance(merge_bases, list)
+                    or not merge_bases
+                    or any(
+                        not isinstance(item, str) or not TEXT_OID_RE.fullmatch(item)
+                        for item in merge_bases
+                    )
+                    or merge_bases != sorted(set(merge_bases))
+                    or base not in merge_bases
+                    or multiple_merge_bases is not (len(merge_bases) > 1)
+                ):
+                    raise HydrationError(
+                        f"mined merge row {position} has inconsistent base list for "
+                        f"{repository['slug']}"
+                    )
+                if multiple_merge_bases:
+                    multiple_base_count += 1
+            bases.append(base)
+
+    if row_count != len(merges):
+        raise HydrationError(
+            f"mined merge row count {row_count} != first-parent merge count "
+            f"{len(merges)} for {repository['slug']}"
+        )
+
+    try:
+        summary_raw = summary_path.read_bytes()
+    except OSError as error:
+        raise HydrationError(
+            f"cannot read mined summary {summary_path}: {error}"
+        ) from error
+    if not summary_raw.endswith(b"\n") or summary_raw.count(b"\n") != 1:
+        raise HydrationError(
+            f"mined summary is not one terminal-LF JSON record: {summary_path}"
+        )
+    try:
+        summary = json.loads(summary_raw[:-1])
+    except (UnicodeDecodeError, json.JSONDecodeError) as error:
+        raise HydrationError(f"invalid mined summary {summary_path}: {error}") from error
+    if not isinstance(summary, dict):
+        raise HydrationError(f"mined summary is not an object: {summary_path}")
+    try:
+        canonical_summary = canonical_json(summary).encode("ascii")
+    except (TypeError, ValueError) as error:
+        raise HydrationError(
+            f"mined summary cannot be canonicalized: {summary_path}: {error}"
+        ) from error
+    if canonical_summary != summary_raw[:-1]:
+        raise HydrationError(f"mined summary is not canonical JSON: {summary_path}")
+
+    all_merges_sha256 = all_merges_digest.hexdigest()
+    expected_summary_fields = {
+        "schema_version": 1,
+        "repo": repository["repo"],
+        "slug": repository["slug"],
+        "head": repository["frozen_head"],
+        "miner_protocol_revision": MINER_PROTOCOL_REVISION,
+        "miner_source_sha256": MINER_SOURCE_SHA256,
+        "first_parent_commits": first_parent_commits,
+        "first_parent_merges": len(merges) + excluded_octopus_merges,
+        "eligible_two_parent_merges": len(merges),
+        "excluded_octopus_merges": excluded_octopus_merges,
+        "clean_merges": status_counts["clean"],
+        "conflicted_merges": status_counts["conflicted"],
+        "failed_merges": status_counts["no_merge_base"],
+        "no_merge_base_merges": status_counts["no_merge_base"],
+        "multiple_merge_base_merges": multiple_base_count,
+    }
+    for field, expected_value in expected_summary_fields.items():
+        observed_value = summary.get(field)
+        if (
+            (type(expected_value) is int and type(observed_value) is not int)
+            or observed_value != expected_value
+        ):
+            raise HydrationError(
+                f"mined summary field {field!r} differs from validated history/rows "
+                f"for {repository['slug']}"
+            )
+    output_hashes = summary.get("output_sha256")
+    if (
+        not isinstance(output_hashes, dict)
+        or output_hashes.get("all_merges") != all_merges_sha256
+    ):
+        raise HydrationError(
+            f"mined summary all-merges hash differs from {path}"
+        )
+    return bases, all_merges_sha256, hashlib.sha256(summary_raw).hexdigest()
+
+
 def hydrate_repository(
     git: str,
     repository: dict[str, Any],
     mirror_root: Path,
     batch_size: int,
+    mined_all_merges_root: Path | None = None,
 ) -> dict[str, Any]:
     slug = repository["slug"]
     frozen_head = repository["frozen_head"]
@@ -450,10 +672,33 @@ def hydrate_repository(
         "rev-list",
         "--first-parent",
         "--parents",
+        "--reverse",
         frozen_head,
     )
     first_parent_commits, merges, octopus = parse_first_parent_history(history)
-    bases = merge_bases_for_history(git, mirror, merges)
+    mined_all_merges_sha256: str | None = None
+    mined_summary_sha256: str | None = None
+    mined_all_merges_path: Path | None = None
+    mined_summary_path: Path | None = None
+    if mined_all_merges_root is None:
+        bases = merge_bases_for_history(git, mirror, merges)
+        merge_base_source = "git_merge_base"
+        merge_base_invocations = len(merges)
+        merge_base_workers = DEFAULT_MERGE_BASE_WORKERS
+    else:
+        mined_all_merges_path = mined_all_merges_root / f"{slug}.jsonl"
+        mined_summary_path = mined_all_merges_root.parent / "_summaries" / f"{slug}.json"
+        bases, mined_all_merges_sha256, mined_summary_sha256 = merge_bases_from_mined_rows(
+            mined_all_merges_path,
+            mined_summary_path,
+            repository,
+            merges,
+            first_parent_commits,
+            octopus,
+        )
+        merge_base_source = "validated_mined_all_merges"
+        merge_base_invocations = 0
+        merge_base_workers = 0
     comparison_pairs: list[tuple[str, str]] = []
     no_merge_base_merges: list[str] = []
     merge_input_digest = hashlib.sha256()
@@ -502,7 +747,21 @@ def hydrate_repository(
         "diff_tree_invocations": diff_tree_invocations,
         "diff_tree_logical_comparisons": len(comparison_pairs),
         "diff_tree_pair_batch_size": DEFAULT_DIFF_PAIR_BATCH_SIZE,
-        "merge_base_workers": DEFAULT_MERGE_BASE_WORKERS,
+        "merge_base_invocations": merge_base_invocations,
+        "merge_base_workers": merge_base_workers,
+        "merge_base_source": merge_base_source,
+        "mined_merge_protocol_revision": (
+            MINER_PROTOCOL_REVISION if mined_all_merges_root is not None else None
+        ),
+        "mined_merge_source_sha256": (
+            MINER_SOURCE_SHA256 if mined_all_merges_root is not None else None
+        ),
+        "mined_all_merges_path": (
+            stable_path(mined_all_merges_path) if mined_all_merges_path else None
+        ),
+        "mined_all_merges_sha256": mined_all_merges_sha256,
+        "mined_summary_path": stable_path(mined_summary_path) if mined_summary_path else None,
+        "mined_summary_sha256": mined_summary_sha256,
         "no_merge_base_count": len(no_merge_base_merges),
         "no_merge_base_merges": no_merge_base_merges,
         "primary_merge_inputs_sha256": merge_input_digest.hexdigest(),
@@ -574,6 +833,11 @@ def build_report(
     results: Sequence[dict[str, Any]], batch_size: int, mirror_root: Path
 ) -> dict[str, Any]:
     failed = sum(result["status"] == "failed" for result in results)
+    merge_base_sources: dict[str, int] = {}
+    for result in results:
+        source = result.get("merge_base_source")
+        if isinstance(source, str):
+            merge_base_sources[source] = merge_base_sources.get(source, 0) + 1
     return {
         "schema_version": 1,
         "artifact_type": "conflict_mirror_hydration_report",
@@ -603,6 +867,9 @@ def build_report(
             "--stdin",
         ],
         "discovery_lazy_fetch": False,
+        "merge_base_source_counts": dict(sorted(merge_base_sources.items())),
+        "current_miner_protocol_revision": MINER_PROTOCOL_REVISION,
+        "current_miner_source_sha256": MINER_SOURCE_SHA256,
         "results": list(results),
     }
 
@@ -631,6 +898,22 @@ def parse_arguments(arguments: Sequence[str] | None = None) -> argparse.Namespac
     )
     parser.add_argument("--report", type=Path, help="write the canonical JSON report")
     parser.add_argument("--batch-size", type=int, default=DEFAULT_BATCH_SIZE)
+    parser.add_argument(
+        "--use-mined-bases",
+        action="store_true",
+        help=(
+            "post-mining fast path using canonical all-merges rows below "
+            "corpus/conflicts/_all_merges"
+        ),
+    )
+    parser.add_argument(
+        "--mined-all-merges-root",
+        type=Path,
+        help=(
+            "post-mining fast path: load bases from validated canonical all-merges "
+            "JSONL files below this directory instead of rerunning git merge-base"
+        ),
+    )
     parser.add_argument("--git", default="git", help="Git executable")
     return parser.parse_args(arguments)
 
@@ -650,6 +933,17 @@ def main(arguments: Sequence[str] | None = None) -> int:
             mirror_root = args.mirror_root.resolve(strict=False)
         if not mirror_root.is_dir():
             raise HydrationError(f"task mirror root does not exist: {mirror_root}")
+        if not args.use_mined_bases and args.mined_all_merges_root is None:
+            mined_all_merges_root = None
+        else:
+            mined_all_merges_root = (
+                args.mined_all_merges_root or DEFAULT_ALL_MERGES_ROOT
+            ).resolve(strict=False)
+            if not mined_all_merges_root.is_dir():
+                raise HydrationError(
+                    "mined all-merges root does not exist: "
+                    f"{mined_all_merges_root}"
+                )
     except HydrationError as error:
         print(f"hydrate_repositories.py: {error}", file=sys.stderr)
         return 2
@@ -662,6 +956,7 @@ def main(arguments: Sequence[str] | None = None) -> int:
                 repository,
                 mirror_root,
                 args.batch_size,
+                mined_all_merges_root,
             )
         except Exception as error:  # preserve independent later repository attempts
             result = {

@@ -1,0 +1,17 @@
+Mine and validate SAME-FILE-DISJOINT arms sites. Amendment 2's approved contingency fired: the 19-site arms population contains 0 same-file-disjoint sites (exploratory/conflicts/REANALYSIS.md section 1), and that stratum is the decisive subgroup for the fine-claiming safety question. This job builds it before phase 2.
+
+## Population
+
+The mined corpus records 46 same_file_disjoint conflicted merges and 22 boundary_only merges across the 16 repositories (corpus/conflicts/*.jsonl, changed-byte overlap class per merge). Restrict to the four runnable repositories with gated runners: pallets/click, pygments/pygments (Python validator: instruments and protocol per exploratory/arms/SITES.md), gohugoio/hugo (Go runner: instruments/arms/go/), apache/commons-lang (Java runner: instruments/arms/java/). Enumerate every same_file_disjoint and boundary_only merge in those four, whether or not both sides touched tests, and report the census first: how many exist per repo per class, how many have both-sides tests.
+
+## Validation
+
+For each candidate with both-sides tests, run the EXACT existing gate for its language: the frozen Python site-validation protocol (SITES.md records its protocol SHA and rules — reuse the validator, do not rewrite it), the Go focal-map + five-run gate, or the Java compile + focal + five-run gate. A candidate without both-sides tests is recorded in the census but not validated. Rejections are results with their exact failing check.
+
+If the runnable four yield fewer than 4 validated disjoint-stratum sites, extend the census (not validation) to the remaining 12 mined repositories so the report can say what a new runner would buy, naming which repository holds the most disjoint both-tests candidates.
+
+## Output
+
+exploratory/arms/DISJOINT-SITES.md: first line X validated disjoint-stratum sites / Y candidates attempted / Z census total. Census table per repo per class. Per-site validation evidence in the existing SITES.md style. Append validated rows to exploratory/arms/sites-disjoint.json in the sites.json schema with a stratum field. "Claims that could NOT be verified", "What would change this verdict", per-claim confidence with reasons.
+
+Read-only on corpus mirrors (scratch copies only). Do not modify fixture/, prompts/, existing results, or the shim build in progress under instruments/arms/shim/. Do not fabricate.
