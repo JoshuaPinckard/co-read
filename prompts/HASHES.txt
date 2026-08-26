@@ -21,4 +21,5 @@ f7b108b7e01fb6103177453f406bb47e1e8d65a9e82a2364c79f4b743a39c772  job-retrieval-
 0f604d73af16cd954be1f7b8a96ba103988bb8aaa6ea9d67cbb2fa2dc90a05b0  job-review-reanalysis.txt  3223 bytes
 eb16c5fd1c8e3ca013537f5542c71dac00b22b305a41e306adfd19834bfdcf6a  job-second-repo.txt  3867 bytes
 3e33ae98158db46b3cfac9c9120c6e22798eb7615a0efbc2d732e813f5b94811  job-semantic-merge.txt  5986 bytes
+ab320cacf2f90cbcf5f12feaa541e6a4f8383aa8df637b3e2a652a4f88b30164  job-shim-build.txt  6362 bytes
 5c8d200812fede61f088bdf547fb3bd8740ec70dfb8047940d78bec8f33f1dfa  job-site-validation.txt  3229 bytes

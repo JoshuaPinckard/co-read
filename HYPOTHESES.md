@@ -195,9 +195,10 @@ contradictory-task subset for P3.
   cell table is committed here as a further amendment when validation and
   the runner gates report, before the first pilot draw.
 
-**Amendment 2 — DRAFT 2026-08-26, pending PI approval, from external review
-the PI forwarded. Nothing here runs until approved, and it must precede the
-first draw.**
+**Amendment 2 — APPROVED by the PI 2026-08-26 ("1) yes 3) ok"), from
+external review the PI forwarded. The PI also ruled the study is one paper:
+the arms ladder completes it rather than splitting into a mining paper and
+an agents paper. This amendment precedes the first draw.**
 
 - **A sixth arm: optimistic isolation.** Every agent works its own worktree
   with no coordination, results merge at integration, the answer key
