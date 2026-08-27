@@ -1,0 +1,26 @@
+============================= test session starts =============================
+platform win32 -- Python 3.11.9, pytest-8.4.2, pluggy-1.6.0
+rootdir: C:\Users\joshp\AppData\Local\Temp\blast-radius-pygments-causal-opbff12g\screen-pr-3160-9fdhxk67\tests-only
+configfile: pyproject.toml
+collected 1 item
+
+tests\snippets\wat\test_sign_extension_instructions.txt F                [100%]
+
+================================== FAILURES ===================================
+___________ tests\snippets\wat\test_sign_extension_instructions.txt ___________
+The tokens produced by the "wat" lexer differ from the expected ones in the file "tests\snippets\wat\test_sign_extension_instructions.txt".
+Run `tox -- tests\snippets --update-goldens` to update it.
+
+  
+  - 'i32.extend8_s' Name.Builtin
+  + 'i32'         Keyword.Type
+  + '.'           Error
+  + 'e'           Error
+  + 'x'           Error
+  + 't'           Error...
+  
+  ...Full output truncated (53 lines hidden), use '-vv' to show
+- generated xml file: C:\Users\joshp\Desktop\Blast-Radius\exploratory\causal\verification\pygments-results-arms\screening\pr-3160\tests-only-targeted.xml -
+=========================== short test summary info ===========================
+FAILED tests/snippets/wat/test_sign_extension_instructions.txt::
+============================== 1 failed in 0.10s ==============================

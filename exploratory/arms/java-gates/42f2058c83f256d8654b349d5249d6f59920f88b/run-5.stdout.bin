@@ -1,0 +1,28 @@
+
+-------------------------------------------------------
+ T E S T S
+-------------------------------------------------------
+Running org.apache.commons.lang3.ArrayUtilsTest
+Tests run: 255, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.189 sec - in org.apache.commons.lang3.ArrayUtilsTest
+Running org.apache.commons.lang3.ClassUtilsTest
+Tests run: 57, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.001 sec - in org.apache.commons.lang3.ClassUtilsTest
+Running org.apache.commons.lang3.DigitalBase10SizeUnitTest
+Tests run: 6, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0 sec - in org.apache.commons.lang3.DigitalBase10SizeUnitTest
+Running org.apache.commons.lang3.DigitalBase2SizeUnitTest
+Tests run: 6, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0 sec - in org.apache.commons.lang3.DigitalBase2SizeUnitTest
+Running org.apache.commons.lang3.JavaVersionTest
+Tests run: 3, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0 sec - in org.apache.commons.lang3.JavaVersionTest
+Running org.apache.commons.lang3.math.NumberUtilsTest
+Tests run: 95, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.001 sec - in org.apache.commons.lang3.math.NumberUtilsTest
+Running org.apache.commons.lang3.SystemUtilsTest
+Can't test IS_JAVA value: 11.0.32
+Tests run: 13, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.036 sec - in org.apache.commons.lang3.SystemUtilsTest
+Running org.apache.commons.lang3.ValidateTest
+Tests run: 97, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.001 sec - in org.apache.commons.lang3.ValidateTest
+Running org.apache.commons.lang3.XMLCharacterTest
+Tests run: 7, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0 sec - in org.apache.commons.lang3.XMLCharacterTest
+
+Results :
+
+Tests run: 539, Failures: 0, Errors: 0, Skipped: 0
+

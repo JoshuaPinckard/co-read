@@ -1,0 +1,23 @@
+============================= test session starts =============================
+platform win32 -- Python 3.11.9, pytest-8.4.2, pluggy-1.6.0
+rootdir: C:\Users\joshp\AppData\Local\Temp\blast-radius-attrs-causal\a1606-1r2ubske\b
+configfile: pyproject.toml
+plugins: hypothesis-6.161.6, xdist-3.8.0
+collected 1426 items
+
+bench\test_benchmarks.py ...............                                 [  1%]
+tests\test_3rd_party.py .                                                [  1%]
+tests\test_abc.py ....                                                   [  1%]
+tests\test_annotations.py .........................ss................... [  4%]
+....                                                                     [  4%]
+tests\test_cmp.py ...................................................... [  8%]
+........................                                                 [ 10%]
+tests\test_compat.py ......                                              [ 10%]
+tests\test_config.py ....                                                [ 11%]
+tests\test_converters.py ......................................          [ 13%]
+tests\test_dunders.py .................................................. [ 17%]
+.................................................                        [ 20%]
+tests\test_filters.py .................................                  [ 23%]
+tests\test_funcs.py .................................................... [ 26%]
+.                                                                        [ 26%]
+tests\test_functional.py .......

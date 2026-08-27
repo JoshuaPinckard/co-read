@@ -1,0 +1,41 @@
+diff --git a/pygments/lexer.py b/pygments/lexer.py
+index 804aafe013e466290fb7f88edb0c62d5ecec718c..91c9f35cc58715dffbb6969cda2e5bc5675f8d57 100644
+--- a/pygments/lexer.py
++++ b/pygments/lexer.py
+@@ -794,8 +794,9 @@ def do_insertions(insertions, tokens):
+         oldi = 0
+         while insleft and i + len(v) >= index:
+             tmpval = v[oldi:index - i]
+-            yield realpos, t, tmpval
+-            realpos += len(tmpval)
++            if tmpval:
++                yield realpos, t, tmpval
++                realpos += len(tmpval)
+             for it_index, it_token, it_value in itokens:
+                 yield realpos, it_token, it_value
+                 realpos += len(it_value)
+@@ -805,8 +806,9 @@ def do_insertions(insertions, tokens):
+             except StopIteration:
+                 insleft = False
+                 break  # not strictly necessary
+-        yield realpos, t, v[oldi:]
+-        realpos += len(v) - oldi
++        if oldi < len(v):
++            yield realpos, t, v[oldi:]
++            realpos += len(v) - oldi
+ 
+     # leftover tokens
+     while insleft:
+diff --git a/pygments/lexers/shell.py b/pygments/lexers/shell.py
+index 713d432111ab8f15b08e60cf4750e855f94d4e15..daef1f39acd6df2eb8eda9afadfd7eeec54dda2f 100644
+--- a/pygments/lexers/shell.py
++++ b/pygments/lexers/shell.py
+@@ -232,7 +232,7 @@ class BashSessionLexer(ShellSessionBaseLexer):
+     _innerLexerCls = BashLexer
+     _ps1rgx = re.compile(
+         r'^((?:(?:\[.*?\])|(?:\(\S+\))?(?:| |sh\S*?|\w+\S+[@:]\S+(?:\s+\S+)' \
+-        r'?|\[\S+[@:][^\n]+\].+))\s*[$#%])(.*\n?)')
++        r'?|\[\S+[@:][^\n]+\].+))\s*[$#%]\s*)(.*\n?)')
+     _ps2 = '>'
+ 
+ 

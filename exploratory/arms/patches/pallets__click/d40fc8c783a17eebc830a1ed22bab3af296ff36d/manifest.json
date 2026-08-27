@@ -1,0 +1,146 @@
+{
+  "base": "159d0e577ca88ee14e543ff3ebeab3f21515eb59",
+  "canonical_merge_tree": {
+    "exit_code": 1,
+    "matches_canonical_row": true,
+    "result_tree": "04fd76782c5aa4966ecb6b543f75c4ee5dcf3d52",
+    "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "stdout_sha256": "abcbb342d95f68e777c8e79ed62397715437118a3d1defb80b80b9dd4c884f8c"
+  },
+  "conflicted_paths": [
+    "CHANGES"
+  ],
+  "corpus_line": 31,
+  "joint_source": {
+    "constructible": false,
+    "patch": null,
+    "reason": "canonical textual conflict intersects source union",
+    "source_conflict_paths": [
+      "CHANGES"
+    ],
+    "source_paths": [
+      ".travis.yml",
+      "CHANGES",
+      "CONTRIBUTING.rst",
+      "MANIFEST.in",
+      "click/__init__.py",
+      "click/_compat.py",
+      "click/_termui_impl.py",
+      "click/_unicodefun.py",
+      "click/core.py",
+      "click/exceptions.py",
+      "click/parser.py",
+      "click/types.py",
+      "click/utils.py",
+      "docs/_templates/sidebarintro.html",
+      "docs/advanced.rst",
+      "docs/commands.rst",
+      "docs/quickstart.rst",
+      "docs/utils.rst",
+      "setup.py"
+    ]
+  },
+  "merge": "d40fc8c783a17eebc830a1ed22bab3af296ff36d",
+  "parents": [
+    "0ad05de2c368a94d9589472de383dd5523cf7659",
+    "15977f2913ded61d8c1ac38012feadf2397b945d"
+  ],
+  "prepared_at_utc": "2026-08-25T16:21:34.198+00:00",
+  "protocol_sha256": "fb1c0a9f9c7b48c30178d8a7e737250e18535ada63959c49c73c180505c69828",
+  "repo_slug": "pallets__click",
+  "repository": "pallets/click",
+  "result_tree": "04fd76782c5aa4966ecb6b543f75c4ee5dcf3d52",
+  "runner_sha256": "e04bc99409e584636ce8cb81cc22f6a7ca9c917f9ec9e46ab68a4c2328b6b6c6",
+  "schema_version": 1,
+  "sides": {
+    "parent1": {
+      "changed_paths": [
+        ".travis.yml",
+        "CHANGES",
+        "CONTRIBUTING.rst",
+        "MANIFEST.in",
+        "click/__init__.py",
+        "click/_compat.py",
+        "click/_termui_impl.py",
+        "click/_unicodefun.py",
+        "click/core.py",
+        "click/exceptions.py",
+        "click/parser.py",
+        "click/types.py",
+        "click/utils.py",
+        "docs/_templates/sidebarintro.html",
+        "docs/advanced.rst",
+        "docs/commands.rst",
+        "docs/quickstart.rst",
+        "docs/utils.rst",
+        "setup.py",
+        "tests/test_basic.py",
+        "tests/test_termui.py"
+      ],
+      "parent": "0ad05de2c368a94d9589472de383dd5523cf7659",
+      "reconstructed_parent_tree": "5d62f45093ed31750d4a7c0dc087514550c73870",
+      "source_patch": {
+        "bytes": 19083,
+        "path": "exploratory/arms/patches/pallets__click/d40fc8c783a17eebc830a1ed22bab3af296ff36d/parent1-source.patch",
+        "sha256": "21b52c1ffc7e288abc57da28af3b534092b4d5695bd13afd23403f898f2f99c3"
+      },
+      "source_paths": [
+        ".travis.yml",
+        "CHANGES",
+        "CONTRIBUTING.rst",
+        "MANIFEST.in",
+        "click/__init__.py",
+        "click/_compat.py",
+        "click/_termui_impl.py",
+        "click/_unicodefun.py",
+        "click/core.py",
+        "click/exceptions.py",
+        "click/parser.py",
+        "click/types.py",
+        "click/utils.py",
+        "docs/_templates/sidebarintro.html",
+        "docs/advanced.rst",
+        "docs/commands.rst",
+        "docs/quickstart.rst",
+        "docs/utils.rst",
+        "setup.py"
+      ],
+      "test_patch": {
+        "bytes": 2423,
+        "path": "exploratory/arms/patches/pallets__click/d40fc8c783a17eebc830a1ed22bab3af296ff36d/parent1-test.patch",
+        "sha256": "0a4b0f340d9f51e5903aae58475323d529f97272feb1a703a3493ec42af97250"
+      },
+      "test_paths": [
+        "tests/test_basic.py",
+        "tests/test_termui.py"
+      ]
+    },
+    "parent2": {
+      "changed_paths": [
+        "CHANGES",
+        "click/types.py",
+        "tests/test_arguments.py"
+      ],
+      "parent": "15977f2913ded61d8c1ac38012feadf2397b945d",
+      "reconstructed_parent_tree": "126d3873c5b1122fcc70b9434b51c322837efe5a",
+      "source_patch": {
+        "bytes": 2567,
+        "path": "exploratory/arms/patches/pallets__click/d40fc8c783a17eebc830a1ed22bab3af296ff36d/parent2-source.patch",
+        "sha256": "22d13e8ce42af8decb49022d56431342c687179f5282fd0517c3520daae84fb6"
+      },
+      "source_paths": [
+        "CHANGES",
+        "click/types.py"
+      ],
+      "test_patch": {
+        "bytes": 725,
+        "path": "exploratory/arms/patches/pallets__click/d40fc8c783a17eebc830a1ed22bab3af296ff36d/parent2-test.patch",
+        "sha256": "befd45308f34155795b8d0763f9cba82ceedae736c496cbebae2c06bdb98953d"
+      },
+      "test_paths": [
+        "tests/test_arguments.py"
+      ]
+    }
+  },
+  "site_index": 3
+}

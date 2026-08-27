@@ -1,0 +1,91 @@
+diff --git a/src/click/core.py b/src/click/core.py
+index cc0d4603b442c72cf170d2090c7888ae59d9ba89..a694d8737ea945add514be8f142c30eadf095a1a 100644
+--- a/src/click/core.py
++++ b/src/click/core.py
+@@ -23,6 +23,7 @@ from .exceptions import BadParameter
+ from .exceptions import ClickException
+ from .exceptions import Exit
+ from .exceptions import MissingParameter
++from .exceptions import NoArgsIsHelpError
+ from .exceptions import UsageError
+ from .formatting import HelpFormatter
+ from .formatting import join_options
+@@ -1133,8 +1134,7 @@ class Command:
+ 
+     def parse_args(self, ctx: Context, args: list[str]) -> list[str]:
+         if not args and self.no_args_is_help and not ctx.resilient_parsing:
+-            echo(ctx.get_help(), color=ctx.color)
+-            ctx.exit()
++            raise NoArgsIsHelpError(ctx)
+ 
+         parser = self.make_parser(ctx)
+         opts, args, param_order = parser.parse_args(args=args)
+@@ -1724,8 +1724,7 @@ class Group(Command):
+ 
+     def parse_args(self, ctx: Context, args: list[str]) -> list[str]:
+         if not args and self.no_args_is_help and not ctx.resilient_parsing:
+-            echo(ctx.get_help(), color=ctx.color)
+-            ctx.exit()
++            raise NoArgsIsHelpError(ctx)
+ 
+         rest = super().parse_args(ctx, args)
+ 
+@@ -1828,7 +1827,7 @@ class Group(Command):
+         # place.
+         if cmd is None and not ctx.resilient_parsing:
+             if _split_opt(cmd_name)[0]:
+-                self.parse_args(ctx, ctx.args)
++                self.parse_args(ctx, args)
+             ctx.fail(_("No such command {name!r}.").format(name=original_cmd_name))
+         return cmd_name if cmd else None, cmd, args[1:]
+ 
+diff --git a/src/click/exceptions.py b/src/click/exceptions.py
+index c7ebe81875cb7b8389dc2e01ba6107a95a9927f1..27dd5e0102f7bd2d1ae6b725fe3a8ceb6e396bd1 100644
+--- a/src/click/exceptions.py
++++ b/src/click/exceptions.py
+@@ -255,6 +255,15 @@ class BadArgumentUsage(UsageError):
+     """
+ 
+ 
++class NoArgsIsHelpError(UsageError):
++    def __init__(self, ctx: Context) -> None:
++        self.ctx: Context
++        super().__init__(ctx.get_help(), ctx=ctx)
++
++    def show(self, file: t.IO[t.Any] | None = None) -> None:
++        echo(self.format_message(), file=file, err=True, color=self.ctx.color)
++
++
+ class FileError(ClickException):
+     """Raised if a file cannot be opened."""
+ 
+diff --git a/tests/test_commands.py b/tests/test_commands.py
+index 5a56799adfd4b2c64998476a948c38910782a646..02c4a30438ac38245b0917b43b293855fee45c5d 100644
+--- a/tests/test_commands.py
++++ b/tests/test_commands.py
+@@ -95,13 +95,9 @@ def test_auto_shorthelp(runner):
+     )
+ 
+ 
+-def test_no_args_is_help(runner):
+-    @click.command(no_args_is_help=True)
+-    def cli():
+-        pass
+-
+-    result = runner.invoke(cli, [])
+-    assert result.exit_code == 0
++def test_command_no_args_is_help(runner):
++    result = runner.invoke(click.Command("test", no_args_is_help=True))
++    assert result.exit_code == 2
+     assert "Show this message and exit." in result.output
+ 
+ 
+@@ -127,7 +123,7 @@ def test_default_maps(runner):
+         (["obj1"], 2, "Error: Missing command."),
+         (["obj1", "--help"], 0, "Show this message and exit."),
+         (["obj1", "move"], 0, "obj=obj1\nmove\n"),
+-        ([], 0, "Show this message and exit."),
++        ([], 2, "Show this message and exit."),
+     ],
+ )
+ def test_group_with_args(runner, args, exit_code, expect):

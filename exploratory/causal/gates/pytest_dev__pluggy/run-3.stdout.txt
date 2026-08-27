@@ -1,0 +1,22 @@
+============================= test session starts =============================
+platform win32 -- Python 3.11.9, pytest-9.0.3, pluggy-1.6.0
+benchmark: 5.2.3 (defaults: timer=time.perf_counter disable_gc=False min_rounds=5 min_time=0.000005 max_time=1.0 calibration_precision=10 warmup=False warmup_iterations=100000)
+rootdir: C:\Users\joshp\Desktop\Blast-Radius\exploratory\causal\repositories\pytest-dev-pluggy
+configfile: tox.ini
+testpaths: testing
+plugins: benchmark-5.2.3
+collected 144 items
+
+testing\test_details.py ..............                                   [  9%]
+testing\test_helpers.py ................                                 [ 20%]
+testing\test_hookcaller.py .......................                       [ 36%]
+testing\test_invocations.py ...............                              [ 47%]
+testing\test_multicall.py ........................                       [ 63%]
+testing\test_pluginmanager.py .......................................... [ 93%]
+.                                                                        [ 93%]
+testing\test_result.py .                                                 [ 94%]
+testing\test_tracer.py ....                                              [ 97%]
+testing\test_warnings.py ....                                            [100%]
+
+- generated xml file: C:\Users\joshp\Desktop\Blast-Radius\exploratory\causal\gates\pytest_dev__pluggy\run-3.xml -
+============================= 144 passed in 0.56s =============================

@@ -1,0 +1,66 @@
+diff --git a/src/changes/changes.xml b/src/changes/changes.xml
+index ab6245eb480e466016b429b736b4a3a44e006b9a..9692e3505355a5caec53404bae48803ecde63738 100644
+--- a/src/changes/changes.xml
++++ b/src/changes/changes.xml
+@@ -22,6 +22,7 @@
+   <body>
+ 
+   <release version="3.5" date="tba" description="tba">
++    <action issue="LANG-1132" type="add" dev="britter" due-to="Jack Tan">ReflectionToStringBuilder doesn't throw IllegalArgumentException when the constructor's object param is null</action>
+     <action issue="LANG-701" type="add" dev="britter" due-to="James Sawle">StringUtils join with var args</action>
+     <action issue="LANG-1130" type="fix" dev="britter">Fix critical issues reported by SonarQube</action>
+     <action issue="LANG-1131" type="fix" dev="britter">StrBuilder.equals(StrBuilder) doesn't check for null inputs</action>
+diff --git a/src/main/java/org/apache/commons/lang3/builder/ReflectionToStringBuilder.java b/src/main/java/org/apache/commons/lang3/builder/ReflectionToStringBuilder.java
+index d172b1e173528bac7ed5c6634d1dc1fe1798703f..6c2199b736ce1b76da6cd63b27e33e378a177274 100644
+--- a/src/main/java/org/apache/commons/lang3/builder/ReflectionToStringBuilder.java
++++ b/src/main/java/org/apache/commons/lang3/builder/ReflectionToStringBuilder.java
+@@ -362,6 +362,13 @@ public class ReflectionToStringBuilder extends ToStringBuilder {
+     public static String toStringExclude(final Object object, final String... excludeFieldNames) {
+         return new ReflectionToStringBuilder(object).setExcludeFieldNames(excludeFieldNames).toString();
+     }
++    
++    private static Object checkNotNull(final Object obj) {
++        if (obj == null) {
++            throw new IllegalArgumentException("The Object passed in should not be null.");
++        }
++        return obj;
++    }
+ 
+     /**
+      * Whether or not to append static fields.
+@@ -400,7 +407,7 @@ public class ReflectionToStringBuilder extends ToStringBuilder {
+      *             if the Object passed in is <code>null</code>
+      */
+     public ReflectionToStringBuilder(final Object object) {
+-        super(object);
++        super(checkNotNull(object));
+     }
+ 
+     /**
+@@ -420,7 +427,7 @@ public class ReflectionToStringBuilder extends ToStringBuilder {
+      *             if the Object passed in is <code>null</code>
+      */
+     public ReflectionToStringBuilder(final Object object, final ToStringStyle style) {
+-        super(object, style);
++        super(checkNotNull(object), style);
+     }
+ 
+     /**
+@@ -446,7 +453,7 @@ public class ReflectionToStringBuilder extends ToStringBuilder {
+      *             if the Object passed in is <code>null</code>
+      */
+     public ReflectionToStringBuilder(final Object object, final ToStringStyle style, final StringBuffer buffer) {
+-        super(object, style, buffer);
++        super(checkNotNull(object), style, buffer);
+     }
+ 
+     /**
+@@ -471,7 +478,7 @@ public class ReflectionToStringBuilder extends ToStringBuilder {
+     public <T> ReflectionToStringBuilder(
+             final T object, final ToStringStyle style, final StringBuffer buffer,
+             final Class<? super T> reflectUpToClass, final boolean outputTransients, final boolean outputStatics) {
+-        super(object, style, buffer);
++        super(checkNotNull(object), style, buffer);
+         this.setUpToClass(reflectUpToClass);
+         this.setAppendTransients(outputTransients);
+         this.setAppendStatics(outputStatics);

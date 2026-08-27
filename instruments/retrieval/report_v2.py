@@ -1171,6 +1171,8 @@ def _population_and_reconstruction_section(bundle: ReportBundle) -> list[str]:
         or 0
     )
     snapshot_unavailable = max(0, outside - catalog_outside)
+    paired_excluded = int(population["paired_excluded_queries"])
+    paired_excluded_noun = "query" if paired_excluded == 1 else "queries"
     table, unavailable_rows = _tree_population_table(bundle)
     audit = bundle.audit["provenance_by_window"][PRIMARY_WINDOW]
     mapped_reconstruction = block["reconstruction"]["all_mapped_queries"]
@@ -1191,7 +1193,7 @@ def _population_and_reconstruction_section(bundle: ReportBundle) -> list[str]:
         f"{mapped:,} had a validated Git snapshot for the indexed arms. Empirical scope derivation put "
         f"{catalog_outside:,} queries outside every protected indexed tree; another {snapshot_unavailable:,} "
         "targeted a catalogued tree but lacked a reconstructable/available snapshot. "
-        f"{population['paired_excluded_queries']:,} mapped queries lacked a complete five-arm row set. "
+        f"{paired_excluded:,} mapped {paired_excluded_noun} lacked a complete five-arm row set. "
         "All arms use the same paired IDs, so an unavailable arm cannot silently improve another arm's denominator.",
         "The empirically outside-index count includes available non-Git current trees because the protected index requires a Git worktree. "
         "Their ripgrep-only current-tree controls are shown in the per-tree `rg n` column but remain outside the global paired head-to-head denominator.",
@@ -1344,8 +1346,8 @@ def _tokenisation_section(bundle: ReportBundle) -> list[str]:
         )
     elif delta > 0:
         interpretation = (
-            f"The direction **confirms** the prior positive-sign result at scale: identifier-aware BM25 gained **{delta:+.2f} percentage points** "
-            "of recall@20 over the legacy tokenizer."
+            f"The direction **confirms** the prior positive-sign result at scale, but not its magnitude: identifier-aware BM25 gained "
+            f"**{delta:+.2f} percentage points** of recall@20 over the legacy tokenizer, versus +8.3 points in the collapsed 300-second pass."
         )
     else:
         interpretation = (
@@ -1429,6 +1431,8 @@ def _claims_sections(bundle: ReportBundle) -> list[str]:
     non_git = bundle.summary["reconstruction"]["non_git_unscored_queries_by_window"][PRIMARY_WINDOW]
     unavailable = _unavailability(bundle.summary)
     unavailable_count = sum(len(arms) for arms in unavailable.values())
+    execution = bundle.summary.get("execution") or {}
+    resumed_arm_rows = int(execution.get("resumed_arm_rows", 0) or 0)
     session_counts = Counter(
         record_id.split(":", 1)[0] for record_id in bundle.eval_ids[PRIMARY_WINDOW]
     )
@@ -1455,6 +1459,12 @@ def _claims_sections(bundle: ReportBundle) -> list[str]:
         claims.append(
             f"- {unavailable_count:,} declared tree/arm combinations could not run; their cells are empty and their reasons are reported rather than imputed."
         )
+    if resumed_arm_rows:
+        claims.append(
+            f"- Complete first-pass state warmup and index-refresh diagnostics could not be verified after the orchestration command lease expired. "
+            f"The runner resumed from {resumed_arm_rows:,} durable arm rows without re-running them; rankings, payloads, and per-query timings survive, "
+            "but aggregate refresh counts and state warmup details in the final summary cover the resumed pass only."
+        )
     changes = [
         "- Explicit per-query commit SHAs plus frozen dirty/untracked worktrees would replace timestamp inference and could change both control and index recall.",
         "- Preserved Git histories or archived snapshots for unavailable and non-Git target trees would enlarge the paired population and could change the verdict.",
@@ -1471,7 +1481,7 @@ def _claims_sections(bundle: ReportBundle) -> list[str]:
         f"- **Head-to-head — moderate within these repositories.** The arms are paired on {population['scorable_positive_queries']:,} scorable positives under prespecified arm-specific response contracts, but those contracts are asymmetric and relevance is implicit and exposure-biased.",
         "- **Response-byte arithmetic — high for this serializer; token-count confidence — low-to-moderate.** Bytes are directly measured, while tokens are only bytes/4.",
         "- **Tokenisation ablation — moderate.** It is paired and isolates the tokenizer, but it remains an implicit-feedback result from one organisation.",
-        "- **Latency — moderate for this machine, low for deployment generalisation.** Query timing is measured under one recorded warmup/cache policy and local load.",
+        "- **Latency — moderate for this machine, low for deployment generalisation.** Query timing is measured under one recorded warmup/cache policy and local load; per-query timings survived the resume, while complete first-pass state warmup diagnostics did not.",
         "- **Cross-repository/customer generalisation — low.** Even a session-level split would not create independent organisations or repository families.",
     ]
     return [
@@ -1537,6 +1547,22 @@ def _reproduction_section(bundle: ReportBundle) -> list[str]:
                 + _code(json.dumps(execution["warmup"], sort_keys=True, ensure_ascii=False))
                 + "."
             )
+        resumed_arm_rows = int(execution.get("resumed_arm_rows", 0) or 0)
+        if resumed_arm_rows:
+            lines.append(
+                f" Execution resumed from {resumed_arm_rows:,} durable arm rows after the orchestration command lease expired. "
+                "Those rows were hash/fingerprint-validated and not rerun. Final aggregate full/incremental refresh counts and state warmup details therefore describe only the resumed pass; per-query result and timing rows remain intact."
+            )
+        policies = sorted(
+            {
+                str((state.get("index") or {}).get("fts_maintenance_policy"))
+                for state in (execution.get("states") or [])
+                if isinstance(state, Mapping)
+                and (state.get("index") or {}).get("fts_maintenance_policy")
+            }
+        )
+        if policies:
+            lines.append(" FTS maintenance policy: " + _code("; ".join(policies)) + ".")
     notes = bundle.summary.get("notes")
     if isinstance(notes, Sequence) and not isinstance(notes, (str, bytes)) and notes:
         lines.extend(["", "Runner notes:", "", *(f"- {_cell(note)}" for note in notes)])

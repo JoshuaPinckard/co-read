@@ -1,0 +1,51 @@
+============================= test session starts =============================
+platform win32 -- Python 3.11.9, pytest-9.1.1, pluggy-1.6.0
+rootdir: C:\Users\joshp\AppData\Local\Temp\blast-radius-flask-causal\f6133-z9ksvbsp\t
+configfile: pyproject.toml
+testpaths: tests
+collected 494 items
+
+tests\test_appctx.py ...............                                     [  3%]
+tests\test_async.py ........                                             [  4%]
+tests\test_basic.py ...F................................................ [ 15%]
+........................................................................ [ 29%]
+..........                                                               [ 31%]
+tests\test_blueprints.py ............................................... [ 41%]
+.............                                                            [ 43%]
+tests\test_cli.py ...................................................... [ 54%]
+....                                                                     [ 55%]
+tests\test_config.py ...................                                 [ 59%]
+tests\test_converters.py ..                                              [ 59%]
+tests\test_helpers.py ...................................                [ 67%]
+tests\test_instance_config.py .......                                    [ 68%]
+tests\test_json.py ...............................                       [ 74%]
+tests\test_json_tag.py ..............                                    [ 77%]
+tests\test_logging.py ......                                             [ 78%]
+tests\test_regression.py .                                               [ 78%]
+tests\test_reqctx.py ..........                                          [ 80%]
+tests\test_request.py ...                                                [ 81%]
+tests\test_session_interface.py .                                        [ 81%]
+tests\test_signals.py .......                                            [ 83%]
+tests\test_subclassing.py .                                              [ 83%]
+tests\test_templating.py ................................                [ 89%]
+tests\test_testing.py ..........................                         [ 95%]
+tests\test_user_error_handler.py .........                               [ 96%]
+tests\test_views.py ...............                                      [100%]
+
+================================== FAILURES ===================================
+__________________________ test_method_route[query] ___________________________
+
+app = <Flask 'flask_test'>, client = <FlaskClient <Flask 'flask_test'>>
+method = 'query'
+
+    @pytest.mark.parametrize("method", ["get", "query", "post", "put", "delete", "patch"])
+    def test_method_route(app, client, method):
+>       method_route = getattr(app, method)
+                       ^^^^^^^^^^^^^^^^^^^^
+E       AttributeError: 'Flask' object has no attribute 'query'
+
+tests\test_basic.py:58: AttributeError
+- generated xml file: C:\Users\joshp\Desktop\Blast-Radius\exploratory\causal\verification\arms\pr-6133\tests-only.xml -
+=========================== short test summary info ===========================
+FAILED tests/test_basic.py::test_method_route[query] - AttributeError: 'Flask...
+======================== 1 failed, 493 passed in 7.30s ========================

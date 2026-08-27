@@ -1,0 +1,26 @@
+diff --git a/tests/test_utils.py b/tests/test_utils.py
+index 23b3709686e21331e109af8835f14c547ea3bd19..d21b246c2dff7ff0a5fa5e5af69b920ddb71c2e7 100644
+--- a/tests/test_utils.py
++++ b/tests/test_utils.py
+@@ -67,11 +67,19 @@ def test_echo_custom_file():
+         ({"bold": True}, "\x1b[1mx y\x1b[0m"),
+         ({"dim": True}, "\x1b[2mx y\x1b[0m"),
+         ({"underline": True}, "\x1b[4mx y\x1b[0m"),
+-        ({"overline": True}, "\x1b[55mx y\x1b[0m"),
+-        ({"italic": True}, "\x1b[23mx y\x1b[0m"),
++        ({"overline": True}, "\x1b[53mx y\x1b[0m"),
++        ({"italic": True}, "\x1b[3mx y\x1b[0m"),
+         ({"blink": True}, "\x1b[5mx y\x1b[0m"),
+         ({"reverse": True}, "\x1b[7mx y\x1b[0m"),
+         ({"strikethrough": True}, "\x1b[9mx y\x1b[0m"),
++        ({"bold": False}, "\x1b[22mx y\x1b[0m"),
++        ({"dim": False}, "\x1b[22mx y\x1b[0m"),
++        ({"underline": False}, "\x1b[24mx y\x1b[0m"),
++        ({"overline": False}, "\x1b[55mx y\x1b[0m"),
++        ({"italic": False}, "\x1b[23mx y\x1b[0m"),
++        ({"blink": False}, "\x1b[25mx y\x1b[0m"),
++        ({"reverse": False}, "\x1b[27mx y\x1b[0m"),
++        ({"strikethrough": False}, "\x1b[29mx y\x1b[0m"),
+         ({"fg": "black", "reset": False}, "\x1b[30mx y"),
+     ],
+ )

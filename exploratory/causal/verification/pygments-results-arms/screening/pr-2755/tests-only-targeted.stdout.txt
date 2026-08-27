@@ -1,0 +1,41 @@
+============================= test session starts =============================
+platform win32 -- Python 3.11.9, pytest-8.4.2, pluggy-1.6.0
+rootdir: C:\Users\joshp\AppData\Local\Temp\blast-radius-pygments-causal-opbff12g\screen-pr-2755-79lp5z4f\tests-only
+configfile: pyproject.toml
+collected 2 items
+
+tests\snippets\llvm\test_constants.txt F                                 [ 50%]
+tests\snippets\llvm\test_vectors.txt F                                   [100%]
+
+================================== FAILURES ===================================
+___________________ tests\snippets\llvm\test_constants.txt ____________________
+The tokens produced by the "llvm" lexer differ from the expected ones in the file "tests\snippets\llvm\test_constants.txt".
+Run `tox -- tests\snippets --update-goldens` to update it.
+
+  
+  Skipping 51 identical leading characters in diff, use -v to show
+    tespace
+  + '0'           Literal.Number
+  + 'x'           Error
+  + 'K'           Error
+  + 'A'           Error...
+  
+  ...Full output truncated (46 lines hidden), use '-vv' to show
+____________________ tests\snippets\llvm\test_vectors.txt _____________________
+The tokens produced by the "llvm" lexer differ from the expected ones in the file "tests\snippets\llvm\test_vectors.txt".
+Run `tox -- tests\snippets --update-goldens` to update it.
+
+  
+  Skipping 496 identical leading characters in diff, use -v to show
+    tespace
+  - 'splat'       Keyword
+  + 's'           Error
+  + 'p'           Error
+  + 'l'           Error...
+  
+  ...Full output truncated (9 lines hidden), use '-vv' to show
+- generated xml file: C:\Users\joshp\Desktop\Blast-Radius\exploratory\causal\verification\pygments-results-arms\screening\pr-2755\tests-only-targeted.xml -
+=========================== short test summary info ===========================
+FAILED tests/snippets/llvm/test_constants.txt::
+FAILED tests/snippets/llvm/test_vectors.txt::
+============================== 2 failed in 0.15s ==============================

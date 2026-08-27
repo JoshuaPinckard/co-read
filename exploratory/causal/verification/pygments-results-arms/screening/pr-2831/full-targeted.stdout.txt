@@ -1,0 +1,13 @@
+============================= test session starts =============================
+platform win32 -- Python 3.11.9, pytest-8.4.2, pluggy-1.6.0
+rootdir: C:\Users\joshp\AppData\Local\Temp\blast-radius-pygments-causal-opbff12g\screen-pr-2831-5nbv_lqw\full
+configfile: pyproject.toml
+collected 4 items
+
+tests\snippets\elpi\test_func.txt .                                      [ 25%]
+tests\snippets\elpi\test_pred.txt .                                      [ 50%]
+tests\snippets\elpi\test_quotations.txt .                                [ 75%]
+tests\snippets\elpi\test_type.txt .                                      [100%]
+
+- generated xml file: C:\Users\joshp\Desktop\Blast-Radius\exploratory\causal\verification\pygments-results-arms\screening\pr-2831\full-targeted.xml -
+============================== 4 passed in 0.15s ==============================

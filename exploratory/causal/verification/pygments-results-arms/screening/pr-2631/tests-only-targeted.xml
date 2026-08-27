@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?><testsuites name="pytest tests"><testsuite name="pytest" errors="0" failures="4" skipped="0" tests="4" time="0.139" timestamp="2026-08-24T08:31:39.731440-07:00" hostname="JoshP"><testcase classname="tests.snippets.rust.test_func.txt" name="" time="0.008"><failure message="The tokens produced by the &quot;rust&quot; lexer differ from the expected ones in the file &quot;tests\snippets\rust\test_func.txt&quot;.&#10;Run `tox -- tests\snippets --update-goldens` to update it.&#10;&#10;  &#10;    'fn'          Keyword&#10;  - ' '           Text.Whitespace&#10;  ?                   -----------&#10;  + ' '           Text&#10;    'func'        Name.Function&#10;    '('           Punctuation...&#10;  &#10;  ...Full output truncated (21 lines hidden), use '-vv' to show">The tokens produced by the "rust" lexer differ from the expected ones in the file "tests\snippets\rust\test_func.txt".
+Run `tox -- tests\snippets --update-goldens` to update it.
+
+  
+    'fn'          Keyword
+  - ' '           Text.Whitespace
+  ?                   -----------
+  + ' '           Text
+    'func'        Name.Function
+    '('           Punctuation...
+  
+  ...Full output truncated (21 lines hidden), use '-vv' to show</failure></testcase><testcase classname="tests.snippets.rust.test_rawstrings.txt" name="" time="0.001"><failure message="The tokens produced by the &quot;rust&quot; lexer differ from the expected ones in the file &quot;tests\snippets\rust\test_rawstrings.txt&quot;.&#10;Run `tox -- tests\snippets --update-goldens` to update it.&#10;&#10;  &#10;    'fn'          Keyword&#10;  - ' '           Text.Whitespace&#10;  ?                   -----------&#10;  + ' '           Text&#10;    'main'        Name.Function&#10;    '('           Punctuation...&#10;  &#10;  ...Full output truncated (92 lines hidden), use '-vv' to show">The tokens produced by the "rust" lexer differ from the expected ones in the file "tests\snippets\rust\test_rawstrings.txt".
+Run `tox -- tests\snippets --update-goldens` to update it.
+
+  
+    'fn'          Keyword
+  - ' '           Text.Whitespace
+  ?                   -----------
+  + ' '           Text
+    'main'        Name.Function
+    '('           Punctuation...
+  
+  ...Full output truncated (92 lines hidden), use '-vv' to show</failure></testcase><testcase classname="tests.snippets.rust.test_struct.txt" name="" time="0.001"><failure message="The tokens produced by the &quot;rust&quot; lexer differ from the expected ones in the file &quot;tests\snippets\rust\test_struct.txt&quot;.&#10;Run `tox -- tests\snippets --update-goldens` to update it.&#10;&#10;  &#10;    'struct'      Keyword&#10;  - ' '           Text.Whitespace&#10;  ?                   -----------&#10;  + ' '           Text&#10;    'X'           Name.Class&#10;    ' '           Text.Whitespace...&#10;  &#10;  ...Full output truncated (14 lines hidden), use '-vv' to show">The tokens produced by the "rust" lexer differ from the expected ones in the file "tests\snippets\rust\test_struct.txt".
+Run `tox -- tests\snippets --update-goldens` to update it.
+
+  
+    'struct'      Keyword
+  - ' '           Text.Whitespace
+  ?                   -----------
+  + ' '           Text
+    'X'           Name.Class
+    ' '           Text.Whitespace...
+  
+  ...Full output truncated (14 lines hidden), use '-vv' to show</failure></testcase><testcase classname="tests.snippets.rust.test_use.txt" name="" time="0.001"><failure message="The tokens produced by the &quot;rust&quot; lexer differ from the expected ones in the file &quot;tests\snippets\rust\test_use.txt&quot;.&#10;Run `tox -- tests\snippets --update-goldens` to update it.&#10;&#10;  &#10;  Skipping 75 identical leading characters in diff, use -v to show&#10;  -           Punctuation&#10;  +           Text&#10;    'collections' Name&#10;  - '::'          Punctuation&#10;  + '::'          Text...&#10;  &#10;  ...Full output truncated (3 lines hidden), use '-vv' to show">The tokens produced by the "rust" lexer differ from the expected ones in the file "tests\snippets\rust\test_use.txt".
+Run `tox -- tests\snippets --update-goldens` to update it.
+
+  
+  Skipping 75 identical leading characters in diff, use -v to show
+  -           Punctuation
+  +           Text
+    'collections' Name
+  - '::'          Punctuation
+  + '::'          Text...
+  
+  ...Full output truncated (3 lines hidden), use '-vv' to show</failure></testcase></testsuite></testsuites>

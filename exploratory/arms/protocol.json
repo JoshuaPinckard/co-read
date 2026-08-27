@@ -1,0 +1,67 @@
+{
+  "schema_version": 1,
+  "frozen_before_candidate_pytest": true,
+  "population": {
+    "pallets/click": 24,
+    "pygments/pygments": 2,
+    "predicate": "conflicted merge row with both_sides_touched_tests=true in corpus/conflicts/<slug>.jsonl"
+  },
+  "patch_rule": {
+    "diff": "git diff --binary --full-index --no-renames B P_i",
+    "test_paths": "exact diffs.parent{i}.test_files paths from the canonical JSONL row",
+    "source_paths": "all other changed paths in that base-to-parent diff",
+    "application": "each arm starts from a fresh exported B tree; source and test patches are never layered on an earlier outcome arm"
+  },
+  "focal_selection_rule": {
+    "direct_targets": "Each changed conventional pytest module whose basename matches test*.py is a whole-module collector target. A nonconventional changed artifact is a direct target only if pytest itself collects one or more items when it is passed explicitly. conftest.py, package initializers, typing fixtures, and golden/support outputs that yield no pytest items are recorded as unmapped support paths, not silently called focal tests.",
+    "overlay_collection": "Apply the complete side-i test patch to B and collect every direct target with plugin autoload disabled. Missing conventional modules, collection errors, or zero collected items reject the side.",
+    "node_ids": "The sorted unique direct collector targets (normally changed test-module paths) are the frozen focal node ids. Collected leaf item ids are evidence recorded separately for each state, not a replacement target set.",
+    "base_collection": "Every frozen collector target must exist and collect at least one item at untouched B. A missing target, collection error, or zero-item result rejects the side. Added leaf tests inside an existing module remain included in red/green runs because the module target is unchanged.",
+    "no_outcome_adaptation": "No direct target is removed because of a collection or test outcome. Every non-direct test-patch path and its mapping status remains recorded."
+  },
+  "independent_checks": {
+    "base": "Run the exact focal collector targets five times on five fresh untouched B exports. All five runs must be pytest-green (exit zero, no failure/error), and normalized JUnit case/outcome signatures must be identical. Stable unrelated skips/xfails are allowed as in fixture/click/GATE.md and are counted.",
+    "red": "On a fresh B export apply only side i's test patch and run the exact focal collector targets. Outcome-blind collection freezes this overlay's exact leaf item ids. A qualifying red exits 1 and has at least one test-level failure or error, with no collection/import/internal/usage error.",
+    "green": "On a fresh B export apply both side i patches and run the exact focal collector targets. It must collect exactly the frozen overlay leaf ids, exit zero, and every leaf that failed/errored in red must be present with outcome passed (not skipped/xfail). Stable unrelated skips are counted but do not invalidate green.",
+    "site": "Both sides must independently pass base determinism, red, and green. Two non-red test-only greens are classified as a non-probe rejection."
+  },
+  "joint_check": {
+    "construction": "Intersect the canonical merge-tree conflicted paths with the two source-path sets. A nonempty intersection is a textual source conflict and is not constructible. Otherwise construct the exact source-only joint patch as B-to-canonical-result-tree restricted to the union of source paths; sequential unified-patch context failure is not used to infer conflict.",
+    "evaluation": "When the two source patches combine, evaluate each side on a fresh copy containing both source patches plus that side's own test patch, using that side's frozen focal node ids.",
+    "contradiction": "Call a site mutually unsatisfiable only when at least one joint focal set is stably non-green on an immediate identical rerun while the other is green or stably non-green. A disagreeing rerun is unverified, not contradictory."
+  },
+  "apparatus_path_policy": {
+    "execution_temp": "Every environment probe and pytest subprocess receives a distinct initially empty worker-owned scratch directory at <worker>/t/<16-hex SHA-256 prefix of the absolute raw attempt root>. TEMP, TMP, and TMPDIR all name it. The runner records its pre-cleanup manifest and removes it after the child exits; redirection, stale reuse, or cleanup failure is an apparatus error.",
+    "windows_temp_path_budget": 160,
+    "windows_child_path_budget": 240,
+    "child_path_gate": "Before each child starts, the runner verifies the absolute frozen Python, runner, source, worktree, temp, focal-target, leaf-record, and JUnit paths against the Windows budget.",
+    "compact_paths": "Fresh worktree and run directory names use compact hash/time tokens. Full merge, worker, runner, protocol, and timestamp provenance is stored in result records rather than repeated in child-facing directory names.",
+    "batch_publication": "Site results are staged under generation run roots. The first site-execution apparatus error detected before publication stops the batch and publishes zero new top-level results; only an apparatus-clean runtime/runner postflight permits the publication phase."
+  },
+  "environment": {
+    "python": "C:/Users/joshp/Desktop/Blast-Radius-semantic-scratch-20260824/click-test-env-v2/Scripts/python.exe",
+    "python_version": "3.11.9",
+    "pytest_version": "8.4.2",
+    "click_compat_root": "instruments/posture/python39_compat",
+    "python_sha256": "21bb438c0d4a6f1f164b9a646f6ee000340185e5871180aec06db8d3f07c0082",
+    "python_site_packages_sha256": "7b0d8123fe6b78dc8508cb903136f85b2996065b45528b3ad39856a0c163c627",
+    "python_venv_config_sha256": "09b965c47561d6e26591fbe11ed50d0fa72c8f20a0ee6821511f6efa7664b753",
+    "python_environment_manifest_sha256": "9b547f028430f7b9ad7ca9e8d564a767c75704eefe59533878a00f1b8dab4a10",
+    "click_compat_sha256": "abc04bebfff063da4f5d26343734cece84ef1cfa631a23ee8816fafed5d743dc",
+    "python_path_rule": "<attempt>/src when present, otherwise <attempt>; append the fixed Click compatibility root for Click only",
+    "policy": {
+      "PYTEST_ADDOPTS": "removed",
+      "PYTEST_PLUGINS": "removed",
+      "PYTEST_DEBUG_TEMPROOT": "removed",
+      "PYTHONHOME": "removed",
+      "PYTEST_DISABLE_PLUGIN_AUTOLOAD": "1",
+      "PYTHONDONTWRITEBYTECODE": "1",
+      "PYTHONNOUSERSITE": "1",
+      "PYTHONHASHSEED": "0",
+      "TEMP/TMP/TMPDIR": "the same per-process worker-owned isolated short temporary root",
+      "GIT_NO_LAZY_FETCH": "1",
+      "GIT_TERMINAL_PROMPT": "0"
+    },
+    "timeout_seconds": 120
+  }
+}

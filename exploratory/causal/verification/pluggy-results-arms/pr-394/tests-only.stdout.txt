@@ -1,0 +1,100 @@
+============================= test session starts =============================
+platform win32 -- Python 3.11.9, pytest-7.4.4, pluggy-unknown
+benchmark: 4.0.0 (defaults: timer=time.perf_counter disable_gc=False min_rounds=5 min_time=0.000005 max_time=1.0 calibration_precision=10 warmup=False warmup_iterations=100000)
+rootdir: C:\Users\joshp\AppData\Local\Temp\blast-radius-pluggy-causal\a394-rd4c1u57\t
+configfile: tox.ini
+testpaths: testing
+plugins: benchmark-4.0.0
+collected 87 items
+
+testing\test_details.py .....                                            [  5%]
+testing\test_helpers.py ......                                           [ 12%]
+testing\test_hookcaller.py ....................                          [ 35%]
+testing\test_invocations.py .........                                    [ 45%]
+testing\test_multicall.py ..........F                                    [ 58%]
+testing\test_pluginmanager.py ................................           [ 95%]
+testing\test_tracer.py ....                                              [100%]
+
+================================== FAILURES ===================================
+______________________ test_hookwrapper_force_exception _______________________
+
+    @hookimpl(hookwrapper=True)
+    def m2():
+        out.append("m2 init")
+        result = yield
+        try:
+>           result.get_result()
+
+testing\test_multicall.py:184: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+    @hookimpl
+    def m4():
+>       raise ValueError("m4")
+E       ValueError: m4
+
+testing\test_multicall.py:199: ValueError
+
+During handling of the above exception, another exception occurred:
+
+    def test_hookwrapper_force_exception() -> None:
+        out = []
+    
+        @hookimpl(hookwrapper=True)
+        def m1():
+            out.append("m1 init")
+            result = yield
+            try:
+                result.get_result()
+            except BaseException as exc:
+                result.force_exception(exc)
+            out.append("m1 finish")
+    
+        @hookimpl(hookwrapper=True)
+        def m2():
+            out.append("m2 init")
+            result = yield
+            try:
+                result.get_result()
+            except BaseException as exc:
+                new_exc = OSError("m2")
+                new_exc.__cause__ = exc
+                result.force_exception(new_exc)
+            out.append("m2 finish")
+    
+        @hookimpl(hookwrapper=True)
+        def m3():
+            out.append("m3 init")
+            yield
+            out.append("m3 finish")
+    
+        @hookimpl
+        def m4():
+            raise ValueError("m4")
+    
+        with pytest.raises(OSError, match="m2") as excinfo:
+>           MC([m4, m3, m2, m1], {})
+
+testing\test_multicall.py:202: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+testing\test_multicall.py:31: in MC
+    return caller("foo", hookfuncs, kwargs, firstresult)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+    @hookimpl(hookwrapper=True)
+    def m2():
+        out.append("m2 init")
+        result = yield
+        try:
+            result.get_result()
+        except BaseException as exc:
+            new_exc = OSError("m2")
+            new_exc.__cause__ = exc
+>           result.force_exception(new_exc)
+E           AttributeError: '_Result' object has no attribute 'force_exception'
+
+testing\test_multicall.py:188: AttributeError
+- generated xml file: C:\Users\joshp\Desktop\Blast-Radius\exploratory\causal\verification\pluggy-results-arms\pr-394\tests-only.xml -
+=========================== short test summary info ===========================
+FAILED testing/test_multicall.py::test_hookwrapper_force_exception - Attribut...
+======================== 1 failed, 86 passed in 0.37s =========================

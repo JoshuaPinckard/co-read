@@ -1,0 +1,42 @@
+============================= test session starts =============================
+platform win32 -- Python 3.11.9, pytest-8.4.2, pluggy-1.6.0
+rootdir: C:\Users\joshp\AppData\Local\Temp\blast-radius-pygments-causal-opbff12g\screen-pr-3143-pigag0lo\tests-only
+configfile: pyproject.toml
+collected 3 items
+
+tests\snippets\lua\attributes.txt F                                      [ 33%]
+tests\snippets\lua\test_separate_operators.txt F                         [ 66%]
+tests\snippets\lua\test_single_operators.txt .                           [100%]
+
+================================== FAILURES ===================================
+______________________ tests\snippets\lua\attributes.txt ______________________
+The tokens produced by the "lua" lexer differ from the expected ones in the file "tests\snippets\lua\attributes.txt".
+Run `tox -- tests\snippets --update-goldens` to update it.
+
+  
+  Skipping 126 identical leading characters in diff, use -v to show
+  -           Punctuation
+  +           Operator
+    ' '           Text.Whitespace
+  - 'const'       Name.Attribute
+  ?                    ^^^   ^^...
+  
+  ...Full output truncated (40 lines hidden), use '-vv' to show
+_______________ tests\snippets\lua\test_separate_operators.txt ________________
+The tokens produced by the "lua" lexer differ from the expected ones in the file "tests\snippets\lua\test_separate_operators.txt".
+Run `tox -- tests\snippets --update-goldens` to update it.
+
+  
+  Skipping 50 identical leading characters in diff, use -v to show
+    tespace
+  - '='           Operator
+  ?    -
+  + '=-'          Operator
+  ?   +...
+  
+  ...Full output truncated (27 lines hidden), use '-vv' to show
+- generated xml file: C:\Users\joshp\Desktop\Blast-Radius\exploratory\causal\verification\pygments-results-arms\screening\pr-3143\tests-only-targeted.xml -
+=========================== short test summary info ===========================
+FAILED tests/snippets/lua/attributes.txt::
+FAILED tests/snippets/lua/test_separate_operators.txt::
+========================= 2 failed, 1 passed in 0.25s =========================

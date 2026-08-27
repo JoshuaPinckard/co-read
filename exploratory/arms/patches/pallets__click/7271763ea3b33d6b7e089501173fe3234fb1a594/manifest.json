@@ -1,0 +1,155 @@
+{
+  "base": "6e05e1fa1c2804410f9916b27edc07076e3b156d",
+  "canonical_merge_tree": {
+    "exit_code": 1,
+    "matches_canonical_row": true,
+    "result_tree": "8e348ea4a72416624a186e778fed42ab9208bdc5",
+    "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "stdout_sha256": "fda32a77224fe2459010af2a4ff45c8217f82ce15e08de7a11bc0920146f4035"
+  },
+  "conflicted_paths": [
+    "setup.cfg"
+  ],
+  "corpus_line": 62,
+  "joint_source": {
+    "constructible": false,
+    "patch": null,
+    "reason": "canonical textual conflict intersects source union",
+    "source_conflict_paths": [
+      "setup.cfg"
+    ],
+    "source_paths": [
+      ".flake8",
+      ".github/workflows/publish.yaml",
+      ".github/workflows/tests.yaml",
+      ".pre-commit-config.yaml",
+      "CHANGES.rst",
+      "README.rst",
+      "docs/advanced.rst",
+      "docs/conf.py",
+      "pyproject.toml",
+      "requirements/build.txt",
+      "requirements/dev.txt",
+      "requirements/docs.txt",
+      "requirements/tests.txt",
+      "requirements/typing.txt",
+      "setup.cfg",
+      "setup.py",
+      "src/click/__init__.py",
+      "src/click/core.py",
+      "src/click/decorators.py",
+      "src/click/parser.py",
+      "src/click/shell_completion.py",
+      "src/click/utils.py"
+    ]
+  },
+  "merge": "7271763ea3b33d6b7e089501173fe3234fb1a594",
+  "parents": [
+    "b0538dffe889ff5d03934927c31a9b71e5129848",
+    "ac15816133ef12001ebf6d6aecb7a3cf14487761"
+  ],
+  "prepared_at_utc": "2026-08-25T16:26:06.620+00:00",
+  "protocol_sha256": "fb1c0a9f9c7b48c30178d8a7e737250e18535ada63959c49c73c180505c69828",
+  "repo_slug": "pallets__click",
+  "repository": "pallets/click",
+  "result_tree": "8e348ea4a72416624a186e778fed42ab9208bdc5",
+  "runner_sha256": "e04bc99409e584636ce8cb81cc22f6a7ca9c917f9ec9e46ab68a4c2328b6b6c6",
+  "schema_version": 1,
+  "sides": {
+    "parent1": {
+      "changed_paths": [
+        ".flake8",
+        ".github/workflows/publish.yaml",
+        ".github/workflows/tests.yaml",
+        "CHANGES.rst",
+        "pyproject.toml",
+        "setup.cfg",
+        "setup.py",
+        "src/click/__init__.py",
+        "tests/test_utils.py"
+      ],
+      "parent": "b0538dffe889ff5d03934927c31a9b71e5129848",
+      "reconstructed_parent_tree": "8d372bb09db05999ab0c3fc1ef5ac4d2219d871c",
+      "source_patch": {
+        "bytes": 10155,
+        "path": "exploratory/arms/patches/pallets__click/7271763ea3b33d6b7e089501173fe3234fb1a594/parent1-source.patch",
+        "sha256": "7967f4031d0768f93613084192eb85283641aefabd4b7bc3c9b7df61c855b1a6"
+      },
+      "source_paths": [
+        ".flake8",
+        ".github/workflows/publish.yaml",
+        ".github/workflows/tests.yaml",
+        "CHANGES.rst",
+        "pyproject.toml",
+        "setup.cfg",
+        "setup.py",
+        "src/click/__init__.py"
+      ],
+      "test_patch": {
+        "bytes": 790,
+        "path": "exploratory/arms/patches/pallets__click/7271763ea3b33d6b7e089501173fe3234fb1a594/parent1-test.patch",
+        "sha256": "5ac1e529f185f4b44fdaae86023cf21bba60114ad2b95004ade1783e721a51b7"
+      },
+      "test_paths": [
+        "tests/test_utils.py"
+      ]
+    },
+    "parent2": {
+      "changed_paths": [
+        ".pre-commit-config.yaml",
+        "CHANGES.rst",
+        "README.rst",
+        "docs/advanced.rst",
+        "docs/conf.py",
+        "requirements/build.txt",
+        "requirements/dev.txt",
+        "requirements/docs.txt",
+        "requirements/tests.txt",
+        "requirements/typing.txt",
+        "setup.cfg",
+        "src/click/core.py",
+        "src/click/decorators.py",
+        "src/click/parser.py",
+        "src/click/shell_completion.py",
+        "src/click/utils.py",
+        "tests/test_shell_completion.py",
+        "tests/test_termui.py"
+      ],
+      "parent": "ac15816133ef12001ebf6d6aecb7a3cf14487761",
+      "reconstructed_parent_tree": "63284bb71f8ba17d322b767a99b393a59afc6d2e",
+      "source_patch": {
+        "bytes": 21357,
+        "path": "exploratory/arms/patches/pallets__click/7271763ea3b33d6b7e089501173fe3234fb1a594/parent2-source.patch",
+        "sha256": "68d89cadbff62a1c1b9400fbf9506bd3099cec06e39f52006fda14e38d3d979d"
+      },
+      "source_paths": [
+        ".pre-commit-config.yaml",
+        "CHANGES.rst",
+        "README.rst",
+        "docs/advanced.rst",
+        "docs/conf.py",
+        "requirements/build.txt",
+        "requirements/dev.txt",
+        "requirements/docs.txt",
+        "requirements/tests.txt",
+        "requirements/typing.txt",
+        "setup.cfg",
+        "src/click/core.py",
+        "src/click/decorators.py",
+        "src/click/parser.py",
+        "src/click/shell_completion.py",
+        "src/click/utils.py"
+      ],
+      "test_patch": {
+        "bytes": 4132,
+        "path": "exploratory/arms/patches/pallets__click/7271763ea3b33d6b7e089501173fe3234fb1a594/parent2-test.patch",
+        "sha256": "7d0fa42144125d04df79cbc9fd1fd5324b7089373c1ec769e7a0132deaa7d173"
+      },
+      "test_paths": [
+        "tests/test_shell_completion.py",
+        "tests/test_termui.py"
+      ]
+    }
+  },
+  "site_index": 17
+}

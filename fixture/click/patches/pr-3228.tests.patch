@@ -1,0 +1,64 @@
+diff --git a/tests/test_commands.py b/tests/test_commands.py
+index f26529a5425293546152faff273dec5770430c91..ddce905bf7932ec7d9ffae4aa7b83a1a1b9ca7aa 100644
+--- a/tests/test_commands.py
++++ b/tests/test_commands.py
+@@ -573,3 +573,35 @@ def test_abort_exceptions_with_disabled_standalone_mode(runner, exc):
+     assert rv.exit_code == 1
+     assert isinstance(rv.exception.__cause__, exc)
+     assert rv.exception.__cause__.args == ("catch me!",)
++
++
++def test_unknown_command(runner):
++    result = runner.invoke(click.Group(), "unknown")
++    assert result.exception
++    assert "No such command 'unknown'." in result.output
++
++
++@pytest.mark.parametrize(
++    ("value", "expect"),
++    [
++        ("pause", "Did you mean 'push'?"),
++        ("decline", "(Did you mean one of: 'declare', 'refine'?)"),
++    ],
++)
++def test_suggest_possible_commands(runner, value, expect):
++    cli = click.Group()
++
++    @cli.command()
++    def push():
++        pass
++
++    @cli.command()
++    def declare():
++        pass
++
++    @cli.command()
++    def refine():
++        pass
++
++    result = runner.invoke(cli, [value])
++    assert expect in result.output
+diff --git a/tests/test_options.py b/tests/test_options.py
+index e335f3c1a0857ba0c45b5ccc8b03fbfa6de6f085..c5ed5efa19a535a8c133a7b61dfe65497fad82ce 100644
+--- a/tests/test_options.py
++++ b/tests/test_options.py
+@@ -141,15 +141,15 @@ def test_unknown_options(runner, unknown_flag):
+ 
+     result = runner.invoke(cli, [unknown_flag])
+     assert result.exception
+-    assert f"No such option: {unknown_flag}" in result.output
++    assert f"No such option '{unknown_flag}'." in result.output
+ 
+ 
+ @pytest.mark.parametrize(
+     ("value", "expect"),
+     [
+-        ("--cat", "Did you mean --count?"),
+-        ("--bounds", "(Possible options: --bound, --count)"),
+-        ("--bount", "(Possible options: --bound, --count)"),
++        ("--cat", "Did you mean '--count'?"),
++        ("--bounds", "(Did you mean one of: '--bound', '--count'?)"),
++        ("--bount", "(Did you mean one of: '--bound', '--count'?)"),
+     ],
+ )
+ def test_suggest_possible_options(runner, value, expect):

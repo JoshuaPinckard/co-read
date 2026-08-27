@@ -1,0 +1,342 @@
+diff --git a/CHANGES b/CHANGES
+index 976a60b1e8dbd4ef9fae7421b271d1d3cb3c62e8..8b865b93cec0bdb48bc22fef3b55ff30f4c69f01 100644
+--- a/CHANGES
++++ b/CHANGES
+@@ -3,6 +3,14 @@ Click Changelog
+ 
+ This contains all major version changes between Click releases.
+ 
++Version 7.0
++-----------
++
++(upcoming release with new features, release date to be decided)
++
++- The exception objects now store unicode properly.
++- Added the ability to hide commands and options from help.
++
+ Version 6.3
+ -----------
+ 
+@@ -12,7 +20,6 @@ Version 6.3
+   on Windows.
+ - Fixed a bug that cased locale detection to error out on Python 3.
+ 
+-
+ Version 6.2
+ -----------
+ 
+diff --git a/CONTRIBUTING.rst b/CONTRIBUTING.rst
+index e16e50b2dc38c89fe1aeb9e56644611c1f3e8404..3b8d6e6eba443ba419e12d8e50e54a34b53b6503 100644
+--- a/CONTRIBUTING.rst
++++ b/CONTRIBUTING.rst
+@@ -32,6 +32,9 @@ Submitting patches
+ - Try to follow `PEP8 <http://legacy.python.org/dev/peps/pep-0008/>`_, but you
+   may ignore the line-length-limit if following it would make the code uglier.
+ 
++- For features: Consider whether your feature would be a better fit for an
++  `external package <click.pocoo.org/contrib/>`_
++
+ Running the testsuite
+ ---------------------
+ 
+diff --git a/MANIFEST.in b/MANIFEST.in
+index 69c14ebe1018bc71ba5f438687c0cf79fdf4e797..15458cf27edd85ff795f4cb16557defe0a010719 100644
+--- a/MANIFEST.in
++++ b/MANIFEST.in
+@@ -1,12 +1,9 @@
+ include Makefile CHANGES LICENSE
+-recursive-include artwork *
+-recursive-include tests *
+-recursive-include examples *
+-recursive-include docs *
+-recursive-exclude docs *.pyc
+-recursive-exclude docs *.pyo
+-recursive-exclude tests *.pyc
+-recursive-exclude tests *.pyo
+-recursive-exclude examples *.pyc
+-recursive-exclude examples *.pyo
++
++graft artwork
++graft tests
++graft examples
++graft docs
+ prune docs/_build
++
++global-exclude *.py[co] .DS_Store
+diff --git a/click/__init__.py b/click/__init__.py
+index e0b8f97af0f96744d3a86a808c31b76234f55607..774d988224d02fc8be468ec2f44b3ed6f809daf0 100644
+--- a/click/__init__.py
++++ b/click/__init__.py
+@@ -95,4 +95,4 @@ __all__ = [
+ disable_unicode_literals_warning = False
+ 
+ 
+-__version__ = '6.4-dev'
++__version__ = '7.0-dev'
+diff --git a/click/_bashcomplete.py b/click/_bashcomplete.py
+index 43feffbc04806b24727010882c5d27fafa50952e..d97b66a9ef0778cc6269e7591ac043e10a9abc3b 100644
+--- a/click/_bashcomplete.py
++++ b/click/_bashcomplete.py
+@@ -30,27 +30,19 @@ def get_completion_script(prog_name, complete_var):
+ 
+ def resolve_ctx(cli, prog_name, args):
+     ctx = cli.make_context(prog_name, args, resilient_parsing=True)
+-    while ctx.args and isinstance(ctx.command, MultiCommand):
+-        cmd = ctx.command.get_command(ctx, ctx.args[0])
++    while ctx.args + ctx.protected_args and isinstance(ctx.command, MultiCommand):
++        a = ctx.args + ctx.protected_args
++        cmd = ctx.command.get_command(ctx, a[0])
+         if cmd is None:
+             return None
+-        ctx = cmd.make_context(ctx.args[0], ctx.args[1:], parent=ctx,
+-                               resilient_parsing=True)
++        ctx = cmd.make_context(a[0], a[1:], parent=ctx, resilient_parsing=True)
+     return ctx
+ 
+ 
+-def do_complete(cli, prog_name):
+-    cwords = split_arg_string(os.environ['COMP_WORDS'])
+-    cword = int(os.environ['COMP_CWORD'])
+-    args = cwords[1:cword]
+-    try:
+-        incomplete = cwords[cword]
+-    except IndexError:
+-        incomplete = ''
+-
++def get_choices(cli, prog_name, args, incomplete):
+     ctx = resolve_ctx(cli, prog_name, args)
+     if ctx is None:
+-        return True
++        return
+ 
+     choices = []
+     if incomplete and not incomplete[:1].isalnum():
+@@ -64,7 +56,20 @@ def do_complete(cli, prog_name):
+ 
+     for item in choices:
+         if item.startswith(incomplete):
+-            echo(item)
++            yield item
++
++
++def do_complete(cli, prog_name):
++    cwords = split_arg_string(os.environ['COMP_WORDS'])
++    cword = int(os.environ['COMP_CWORD'])
++    args = cwords[1:cword]
++    try:
++        incomplete = cwords[cword]
++    except IndexError:
++        incomplete = ''
++
++    for item in get_choices(cli, prog_name, args, incomplete):
++        echo(item)
+ 
+     return True
+ 
+diff --git a/click/_compat.py b/click/_compat.py
+index 6bbebd3b35a1655a82a136898bb94cd89797d8f0..3e24a4eec1e652e104aae1f5397ea634a1b94fae 100644
+--- a/click/_compat.py
++++ b/click/_compat.py
+@@ -139,6 +139,7 @@ if PY2:
+     bytes = str
+     raw_input = raw_input
+     string_types = (str, unicode)
++    int_types = (int, long)
+     iteritems = lambda x: x.iteritems()
+     range_type = xrange
+ 
+@@ -212,6 +213,7 @@ else:
+     text_type = str
+     raw_input = input
+     string_types = (str,)
++    int_types = (int,)
+     range_type = range
+     isidentifier = lambda x: x.isidentifier()
+     iteritems = lambda x: iter(x.items())
+diff --git a/click/_termui_impl.py b/click/_termui_impl.py
+index a2c1eb02d76aa66d00e0b9e0aa41be43a5d28b0c..9796a9f79f9942915e10cfccf018107b5ca65dd7 100644
+--- a/click/_termui_impl.py
++++ b/click/_termui_impl.py
+@@ -14,7 +14,7 @@ import sys
+ import time
+ import math
+ from ._compat import _default_text_stdout, range_type, PY2, isatty, \
+-     open_stream, strip_ansi, term_len, get_best_encoding, WIN
++     open_stream, strip_ansi, term_len, get_best_encoding, WIN, int_types
+ from .utils import echo
+ from .exceptions import ClickException
+ 
+@@ -41,7 +41,7 @@ def _length_hint(obj):
+         except TypeError:
+             return None
+         if hint is NotImplemented or \
+-           not isinstance(hint, (int, long)) or \
++           not isinstance(hint, int_types) or \
+            hint < 0:
+             return None
+         return hint
+diff --git a/click/core.py b/click/core.py
+index 33a527aac569c0c09bff1b23dabfaf8456d80c41..3670834524d7304d8f74ff5810a4f14655a83b8e 100644
+--- a/click/core.py
++++ b/click/core.py
+@@ -737,11 +737,13 @@ class Command(BaseCommand):
+                        shown on the command listing of the parent command.
+     :param add_help_option: by default each command registers a ``--help``
+                             option.  This can be disabled by this parameter.
++    :param hidden: hide this command from help outputs.
+     """
+ 
+     def __init__(self, name, context_settings=None, callback=None,
+                  params=None, help=None, epilog=None, short_help=None,
+-                 options_metavar='[OPTIONS]', add_help_option=True):
++                 options_metavar='[OPTIONS]', add_help_option=True,
++                 hidden=False):
+         BaseCommand.__init__(self, name, context_settings)
+         #: the callback to execute when the command fires.  This might be
+         #: `None` in which case nothing happens.
+@@ -757,6 +759,7 @@ class Command(BaseCommand):
+             short_help = make_default_short_help(help)
+         self.short_help = short_help
+         self.add_help_option = add_help_option
++        self.hidden = hidden
+ 
+     def get_usage(self, ctx):
+         formatter = ctx.make_formatter()
+@@ -996,6 +999,8 @@ class MultiCommand(Command):
+             # What is this, the tool lied about a command.  Ignore it
+             if cmd is None:
+                 continue
++            if cmd.hidden:
++                continue
+ 
+             help = cmd.short_help or ''
+             rows.append((subcommand, help))
+@@ -1442,6 +1447,7 @@ class Option(Parameter):
+                                variable in case a prefix is defined on the
+                                context.
+     :param help: the help string.
++    :param hidden: hide this option from help outputs.
+     """
+     param_type_name = 'option'
+ 
+@@ -1449,7 +1455,7 @@ class Option(Parameter):
+                  prompt=False, confirmation_prompt=False,
+                  hide_input=False, is_flag=None, flag_value=None,
+                  multiple=False, count=False, allow_from_autoenv=True,
+-                 type=None, help=None, **attrs):
++                 type=None, help=None, hidden=False, **attrs):
+         default_is_missing = attrs.get('default', _missing) is _missing
+         Parameter.__init__(self, param_decls, type=type, **attrs)
+ 
+@@ -1462,6 +1468,7 @@ class Option(Parameter):
+         self.prompt = prompt_text
+         self.confirmation_prompt = confirmation_prompt
+         self.hide_input = hide_input
++        self.hidden = hidden
+ 
+         # Flags
+         if is_flag is None:
+@@ -1589,6 +1596,8 @@ class Option(Parameter):
+             parser.add_option(self.opts, **kwargs)
+ 
+     def get_help_record(self, ctx):
++        if self.hidden:
++            return
+         any_prefix_is_slash = []
+ 
+         def _write_opts(opts):
+diff --git a/click/exceptions.py b/click/exceptions.py
+index 74a4542bb57f29be1a50412b063f4298448e70c0..e2c0bcd9cd8dd843362355f086f9586756d1f73b 100644
+--- a/click/exceptions.py
++++ b/click/exceptions.py
+@@ -9,15 +9,22 @@ class ClickException(Exception):
+     exit_code = 1
+ 
+     def __init__(self, message):
++        ctor_msg = message
+         if PY2:
+-            if message is not None:
+-                message = message.encode('utf-8')
+-        Exception.__init__(self, message)
++            if ctor_msg is not None:
++                ctor_msg = ctor_msg.encode('utf-8')
++        Exception.__init__(self, ctor_msg)
+         self.message = message
+ 
+     def format_message(self):
+         return self.message
+ 
++    def __unicode__(self):
++        return self.message
++
++    def __str__(self):
++        return self.message.encode('utf-8')
++
+     def show(self, file=None):
+         if file is None:
+             file = get_text_stderr()
+@@ -164,10 +171,13 @@ class BadOptionUsage(UsageError):
+     for an option is not correct.
+ 
+     .. versionadded:: 4.0
++
++    :param option_name: the name of the option being used incorrectly.
+     """
+ 
+-    def __init__(self, message, ctx=None):
++    def __init__(self, option_name, message, ctx=None):
+         UsageError.__init__(self, message, ctx)
++        self.option_name = option_name
+ 
+ 
+ class BadArgumentUsage(UsageError):
+diff --git a/click/parser.py b/click/parser.py
+index 9775c9ff9b99d85ed040e410f5209a342b9dd565..4fe3d2f60244c40db1c9f941b24e895f6ccca240 100644
+--- a/click/parser.py
++++ b/click/parser.py
+@@ -74,8 +74,8 @@ def _unpack_args(args, nargs_spec):
+ 
+ def _error_opt_args(nargs, opt):
+     if nargs == 1:
+-        raise BadOptionUsage('%s option requires an argument' % opt)
+-    raise BadOptionUsage('%s option requires %d arguments' % (opt, nargs))
++        raise BadOptionUsage(opt, '%s option requires an argument' % opt)
++    raise BadOptionUsage(opt, '%s option requires %d arguments' % (opt, nargs))
+ 
+ 
+ def split_opt(opt):
+@@ -342,7 +342,7 @@ class OptionParser(object):
+                 del state.rargs[:nargs]
+ 
+         elif explicit_value is not None:
+-            raise BadOptionUsage('%s option does not take a value' % opt)
++            raise BadOptionUsage(opt, '%s option does not take a value' % opt)
+ 
+         else:
+             value = None
+diff --git a/docs/advanced.rst b/docs/advanced.rst
+index f2b83dd1c747381b9ddf10058cb87d49de4d49a3..a0165f0e89abef2359d19b42cca73e4fd9db3999 100644
+--- a/docs/advanced.rst
++++ b/docs/advanced.rst
+@@ -346,7 +346,7 @@ Global Context Access
+ .. versionadded:: 5.0
+ 
+ Starting with Click 5.0 it is possible to access the current context from
+-anywhere within the same through through the use of the
++anywhere within the same thread through the use of the
+ :func:`get_current_context` function which returns it.  This is primarily
+ useful for accessing the context bound object as well as some flags that
+ are stored on it to customize the runtime behavior.  For instance the
+diff --git a/docs/utils.rst b/docs/utils.rst
+index f1798b999ad6b53b28147d878e49f9ee5316cb0d..2ecbe8873d80e0a5c83f32941439b550c06bf384 100644
+--- a/docs/utils.rst
++++ b/docs/utils.rst
+@@ -266,7 +266,7 @@ streams respond to Unicode and binary data.
+ 
+ Because of this, click provides the :func:`get_binary_stream` and
+ :func:`get_text_stream` functions, which produce consistent results with
+-different Python versions and for a wide variety pf terminal configurations.
++different Python versions and for a wide variety of terminal configurations.
+ 
+ The end result is that these functions will always return a functional
+ stream object (except in very odd cases in Python 3; see

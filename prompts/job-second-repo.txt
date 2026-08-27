@@ -1,0 +1,48 @@
+Build a causal-dependency fixture for a SECOND repository. The existing measurement rests entirely on one codebase, and that is its single largest weakness — a reviewer will say so immediately, and they will be right.
+
+## What a fixture is
+
+Read `fixture/click/README.md`, `GATE.md` and `TASKS.md` first. The Click fixture is: a repository gated for deterministic tests, one or more base trees formed by reverting selected commits, and historical PRs reduced to paired source and test patches, where each task is verified **green on the base with tests absent, red with its test patch applied but its source patch reverted, and green with both.**
+
+That green-red-green property is what makes it a causal probe rather than a corpus. Reproduce the method, not the contents.
+
+## Step 1 — the gate, and it is strict
+
+Choose a repository and prove it usable before anything else. Requirements, all mandatory:
+
+- Python, so the existing AST perturbation operator applies unchanged.
+- A test suite that runs in **under about two minutes**.
+- **Deterministic**: run the suite five times on an unmodified tree and confirm an identical normalised result hash. Verify HEAD, tree, index and tracked-diff hashes are unchanged before and after every run. Any variation and the repository is unusable — say so and try the next candidate.
+- Enough history to construct tasks with real test coverage.
+- **Deliberately unlike Click.** Click is a small, mature, dependency-light CLI library. Prefer something structurally different: a web framework, a data or scientific library, an async library, something with heavier internal coupling or a different testing style. Justify the choice against that axis, not by popularity.
+
+Candidates worth trying, but pick on the gate rather than on this list: `psf/requests`, `pallets/flask`, `pallets/jinja`, `python-attrs/attrs`, `pydantic/pydantic`, `encode/httpx`, `tox-dev/tox`, `pytest-dev/pluggy`.
+
+Some of these are already cloned under `corpus/_clones/`. Clone what you need; keep total disk modest and say what you used.
+
+Record every candidate tried, its suite runtime, and its determinism result, accepted or rejected. **A rejection is a result.** Report them all.
+
+## Step 2 — the tasks
+
+Fix the selection rule before looking at any outcome and state it in the report. Target **30 tasks** with verified green-red-green. Report how many candidates were examined to yield them.
+
+Emit base trees and paired source/test patches in exactly the Click fixture's layout, under `fixture/<repo-name>/`, with its own README recording provenance, licence, the gate result, and the selection rule.
+
+Keep it small: patches and base trees only. Do not vendor git history — a separate compact commit-stream file in the Click fixture's format is welcome and is only tens of kilobytes.
+
+## Step 3 — do NOT run the sweep
+
+The perturbation sweep runs on Codex Cloud, which has pytest but no network egress. Your job is to produce a validated, self-contained fixture that a cloud task can consume. Verify green-red-green locally; leave the sweep alone.
+
+## Output
+
+`exploratory/causal/SECOND-REPO.md`:
+
+1. **Which repository, and did it pass the gate?** First line. If nothing passed, that is the finding — report every candidate and stop.
+2. The gate table: candidates, runtime, five-run determinism, accepted or rejected and why.
+3. Why this repository is structurally unlike Click, argued on the axis, not asserted.
+4. The selection rule as fixed in advance, candidates examined, tasks yielded, yield rate.
+5. Green-red-green verification for every accepted task, with actual pytest counts.
+6. **"Claims that could NOT be verified"** and **"What would change this verdict"**, with per-claim confidence and its reason.
+
+Do not fabricate. A candidate that fails the gate is a recorded result. Do not modify anything under `fixture/click/`.

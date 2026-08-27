@@ -1,0 +1,165 @@
+diff --git a/tests/snippets/smithy/test_control_statement.txt b/tests/snippets/smithy/test_control_statement.txt
+new file mode 100644
+index 0000000000000000000000000000000000000000..794d59dbfb1a3d55e34749d341dfe75602e548a9
+--- /dev/null
++++ b/tests/snippets/smithy/test_control_statement.txt
+@@ -0,0 +1,14 @@
++---input---
++$version: "2.0"
++$operationInputSuffix: "Request"
++
++---tokens---
++'$version'    Keyword.Declaration
++':'           Name.Decorator
++' "2.0"'      Name.Class
++'\n'          Text.Whitespace
++
++'$operationInputSuffix' Keyword.Declaration
++':'           Name.Decorator
++' "Request"'  Name.Class
++'\n'          Text.Whitespace
+diff --git a/tests/snippets/smithy/test_enum.txt b/tests/snippets/smithy/test_enum.txt
+new file mode 100644
+index 0000000000000000000000000000000000000000..72bf677860056c27840a87f4f62dead0181bec18
+--- /dev/null
++++ b/tests/snippets/smithy/test_enum.txt
+@@ -0,0 +1,45 @@
++---input---
++enum Suit {
++    DIAMOND
++    CLUB
++}
++
++intEnum FaceCard {
++    JACK = 11
++    QUEEN = 12
++}
++
++---tokens---
++'enum'        Keyword.Declaration
++' Suit'       Name.Class
++' '           Text.Whitespace
++'{'           Text
++'\n    '      Text.Whitespace
++'DIAMOND'     Name.Variable.Class
++'\n    '      Text.Whitespace
++'CLUB'        Name.Variable.Class
++'\n'          Text.Whitespace
++
++'}'           Text
++'\n\n'        Text.Whitespace
++
++'intEnum'     Keyword.Declaration
++' FaceCard'   Name.Class
++' '           Text.Whitespace
++'{'           Text
++'\n    '      Text.Whitespace
++'JACK'        Name.Variable.Class
++' '           Text.Whitespace
++'='           Name.Decorator
++' '           Text.Whitespace
++'11'          Literal.Number
++'\n    '      Text.Whitespace
++'QUEEN'       Name.Variable.Class
++' '           Text.Whitespace
++'='           Name.Decorator
++' '           Text.Whitespace
++'12'          Literal.Number
++'\n'          Text.Whitespace
++
++'}'           Text
++'\n'          Text.Whitespace
+diff --git a/tests/snippets/smithy/test_inline_operation.txt b/tests/snippets/smithy/test_inline_operation.txt
+new file mode 100644
+index 0000000000000000000000000000000000000000..d25a35de04263b9522d03706dc6e2dfce716f897
+--- /dev/null
++++ b/tests/snippets/smithy/test_inline_operation.txt
+@@ -0,0 +1,28 @@
++---input---
++operation GetUser {
++    input := {
++        userId: String
++    }
++}
++
++---tokens---
++'operation'   Keyword.Declaration
++' GetUser'    Name.Class
++' '           Text.Whitespace
++'{'           Text
++'\n    '      Text.Whitespace
++'input'       Name.Variable.Class
++' '           Text.Whitespace
++':='          Name.Decorator
++' '           Text.Whitespace
++'{'           Text
++'\n        '  Text.Whitespace
++'userId:'     Name.Label
++' '           Text.Whitespace
++'String'      Name.Variable.Class
++'\n    '      Text.Whitespace
++'}'           Text
++'\n'          Text.Whitespace
++
++'}'           Text
++'\n'          Text.Whitespace
+diff --git a/tests/snippets/smithy/test_mixins_and_elision.txt b/tests/snippets/smithy/test_mixins_and_elision.txt
+new file mode 100644
+index 0000000000000000000000000000000000000000..797bd392a8e4e7b40a59f7ea399ac03254b54cbd
+--- /dev/null
++++ b/tests/snippets/smithy/test_mixins_and_elision.txt
+@@ -0,0 +1,32 @@
++---input---
++structure UserDetails for User with [BaseMixin] {
++    $id
++    name: String
++}
++
++---tokens---
++'structure'   Keyword.Declaration
++' UserDetails' Name.Class
++' '           Text.Whitespace
++'for'         Keyword.Declaration
++' '           Text.Whitespace
++'User'        Name.Variable.Class
++' '           Text.Whitespace
++'with'        Keyword.Declaration
++' '           Text.Whitespace
++'['           Text
++'BaseMixin'   Name.Variable.Class
++']'           Text
++' '           Text.Whitespace
++'{'           Text
++'\n    '      Text.Whitespace
++'$'           Name.Decorator
++'id'          Name.Variable.Class
++'\n    '      Text.Whitespace
++'name:'       Name.Label
++' '           Text.Whitespace
++'String'      Name.Variable.Class
++'\n'          Text.Whitespace
++
++'}'           Text
++'\n'          Text.Whitespace
+diff --git a/tests/snippets/smithy/test_textblock.txt b/tests/snippets/smithy/test_textblock.txt
+new file mode 100644
+index 0000000000000000000000000000000000000000..ddccb9cff23b571f87ecb029657ad53bc1b451dc
+--- /dev/null
++++ b/tests/snippets/smithy/test_textblock.txt
+@@ -0,0 +1,16 @@
++---input---
++@documentation("""
++    A text block with "interior" quotes and a {"json": "value"}.
++    """)
++string Documented
++
++---tokens---
++'@documentation' Name.Decorator
++'('           Text
++'"""\n    A text block with "interior" quotes and a {"json": "value"}.\n    """' Literal.String.Doc
++')'           Text
++'\n'          Text.Whitespace
++
++'string'      Keyword.Declaration
++' Documented' Name.Class
++'\n'          Text.Whitespace

@@ -1,0 +1,59 @@
+diff --git a/pygments/lexers/c_cpp.py b/pygments/lexers/c_cpp.py
+index 9b45136683ca3212a1c727dba53df789e5676a0d..130299366a536ecab9245bcdffcbbd888c7d3dae 100644
+--- a/pygments/lexers/c_cpp.py
++++ b/pygments/lexers/c_cpp.py
+@@ -449,11 +449,16 @@ class CppLexer(CFamilyLexer):
+             inherit
+         ],
+         'namespace': [
+-            (r'[;{]', Punctuation, ('#pop', 'root')),
++            (r';', Punctuation, ('#pop', 'root')),
++            (r'\{', Punctuation, ('#pop', 'namespace-body')),
+             (r'inline\b', Keyword.Reserved),
+             (CFamilyLexer._ident, Name.Namespace),
+             include('statement')
+         ],
++        'namespace-body': [
++            (r'\}', Punctuation, '#pop'),
++            include('root'),
++        ],
+         'annotation': [
+             (r'\]\]', Punctuation, '#pop'),
+             (r'\(', Punctuation, 'annotation-args'),
+diff --git a/tests/examplefiles/cpp/namespace.cpp.output b/tests/examplefiles/cpp/namespace.cpp.output
+index 080a59c46119e3d3da18b85a23269683776d2999..07df6faa4ec1283e080a8402571c1357d97132a1 100644
+--- a/tests/examplefiles/cpp/namespace.cpp.output
++++ b/tests/examplefiles/cpp/namespace.cpp.output
+@@ -133,7 +133,7 @@
+ 'FlyString'   Name
+ '&'           Operator
+ ' '           Text.Whitespace
+-'local_name'  Name
++'local_name'  Name.Function
+ '('           Punctuation
+ ')'           Punctuation
+ ' '           Text.Whitespace
+diff --git a/tests/snippets/cpp/test_function_after_namespace.txt b/tests/snippets/cpp/test_function_after_namespace.txt
+new file mode 100644
+index 0000000000000000000000000000000000000000..05ef8ccca0bf07b8cf2376c0195d63bbece01422
+--- /dev/null
++++ b/tests/snippets/cpp/test_function_after_namespace.txt
+@@ -0,0 +1,18 @@
++---input---
++namespace {}
++void fn();
++
++---tokens---
++'namespace'   Keyword
++' '           Text.Whitespace
++'{'           Punctuation
++'}'           Punctuation
++'\n'          Text.Whitespace
++
++'void'        Keyword.Type
++' '           Text.Whitespace
++'fn'          Name.Function
++'('           Punctuation
++')'           Punctuation
++';'           Punctuation
++'\n'          Text.Whitespace

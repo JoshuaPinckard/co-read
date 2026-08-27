@@ -1,0 +1,2076 @@
+{
+  "analysis_contract": {
+    "agents_used": false,
+    "model_choice_locked_before_fit": true,
+    "network_used": false,
+    "no_new_mining": true,
+    "path": "instruments/models/MODEL_SPEC.md",
+    "sha256": "e4cdaa9f02fa6bdbf82fe1ad8b3adc04a7367031473b906fd7c89fe7bfa9b18b"
+  },
+  "collision_null": {
+    "birthday_reference": {
+      "interpretation": "not the requested contiguous null and not used for conclusions",
+      "pooled_handwritten_mean_disjoint_probability": 0.6745056705856896
+    },
+    "clustering_statistics": {
+      "click_bounding_hull_width_sensitivity": {
+        "null_expected_overlap_units": 68.15481602881289,
+        "null_overlap_probability": 0.4938754784696586,
+        "null_span_pairs": 138,
+        "observed_overlap_probability": 0.9057971014492754,
+        "observed_overlap_units": 125,
+        "observed_span_pairs": 138,
+        "observed_to_null_overlap_ratio": 1.8340596788810264,
+        "warning": "sensitivity counts unchanged gaps inside each bounding hull as width and overlap"
+      },
+      "click_span_supported_miner_strict": {
+        "null_expected_overlap_units": 15.362165082942083,
+        "null_overlap_probability": 0.11132003683291364,
+        "null_span_pairs": 138,
+        "observed_overlap_probability": 0.7536231884057971,
+        "observed_overlap_units": 104,
+        "observed_span_pairs": 138,
+        "observed_to_null_overlap_ratio": 6.769879078794697
+      },
+      "full_click_textual_proxy": {
+        "null_expected_overlap_units": 105.28468747672252,
+        "null_overlap_probability": 0.13210123899212362,
+        "null_span_denominator": 797,
+        "observed_overlap_probability": 0.3055555555555556,
+        "observed_overlap_units": 209,
+        "observed_same_file_units": 684,
+        "observed_to_null_overlap_ratio": 2.3130408002742047,
+        "warning": "numerator and null exposure distribution come from different cohorts; this is contextual, not an identified causal clustering effect"
+      }
+    },
+    "file_granularity_prediction": {
+      "comparison_warning": "the null width distribution is from handwritten, classifiable, conflict-selected paths across repositories; the measured Click rate is a complete anchored textual-conflict census",
+      "measured_click_nonconflicting_units": 475,
+      "measured_click_overblock_rate": 0.6944444444444444,
+      "measured_click_same_file_units": 684,
+      "measured_minus_null_probability": -0.1734543165634319,
+      "null_expected_nonoverlap_probability": 0.8678987610078763,
+      "null_expected_nonoverlap_units_over_primary_span_sample": 691.7153125232775,
+      "null_primary_span_denominator": 797,
+      "result_blob_N_sensitivity": {
+        "all_pairs": 797,
+        "coordinate_warning": "widths are derived from base-coordinate changed spans; result-blob N is a size sensitivity, not the coordinate-correct primary denominator",
+        "eligible_pairs": 792,
+        "mean_disjoint_probability": 0.933509531362413,
+        "width_mode": "changed_byte_mass"
+      }
+    },
+    "granularity_curves": {
+      "click_bounding_hull_width_null_sensitivity": [
+        {
+          "denominator_pairs": 138,
+          "expected_overblocked_units": 0.0,
+          "g_bytes": null,
+          "granularity": "exact_span",
+          "overblock_probability": 0.0
+        },
+        {
+          "denominator_pairs": 138,
+          "expected_overblocked_units": 2.150428582903907,
+          "g_bytes": 64,
+          "granularity": "64B",
+          "overblock_probability": 0.015582815818144255
+        },
+        {
+          "denominator_pairs": 138,
+          "expected_overblocked_units": 7.76974215914051,
+          "g_bytes": 256,
+          "granularity": "256B",
+          "overblock_probability": 0.05630247941406166
+        },
+        {
+          "denominator_pairs": 138,
+          "expected_overblocked_units": 22.381704580296034,
+          "g_bytes": 1024,
+          "granularity": "1KB",
+          "overblock_probability": 0.16218626507460895
+        },
+        {
+          "denominator_pairs": 138,
+          "expected_overblocked_units": 51.437811125330114,
+          "g_bytes": 4096,
+          "granularity": "4KB",
+          "overblock_probability": 0.3727377617777545
+        },
+        {
+          "denominator_pairs": 138,
+          "expected_overblocked_units": 69.84518397118711,
+          "g_bytes": null,
+          "granularity": "whole_file",
+          "overblock_probability": 0.5061245215303414
+        }
+      ],
+      "click_conflict_selected_empirical_spans": [
+        {
+          "denominator_pairs": 138,
+          "g_bytes": null,
+          "granularity": "exact_span",
+          "overblock_rate": 0.0,
+          "overblocked_units": 0
+        },
+        {
+          "denominator_pairs": 138,
+          "g_bytes": 64,
+          "granularity": "64B",
+          "overblock_rate": 0.2246376811594203,
+          "overblocked_units": 31
+        },
+        {
+          "denominator_pairs": 138,
+          "g_bytes": 256,
+          "granularity": "256B",
+          "overblock_rate": 0.2463768115942029,
+          "overblocked_units": 34
+        },
+        {
+          "denominator_pairs": 138,
+          "g_bytes": 1024,
+          "granularity": "1KB",
+          "overblock_rate": 0.2463768115942029,
+          "overblocked_units": 34
+        },
+        {
+          "denominator_pairs": 138,
+          "g_bytes": 4096,
+          "granularity": "4KB",
+          "overblock_rate": 0.2463768115942029,
+          "overblocked_units": 34
+        },
+        {
+          "denominator_pairs": 138,
+          "g_bytes": null,
+          "granularity": "whole_file",
+          "overblock_rate": 0.2463768115942029,
+          "overblocked_units": 34
+        }
+      ],
+      "click_conflict_selected_same_cohort_null": [
+        {
+          "denominator_pairs": 138,
+          "expected_overblocked_units": 0.0,
+          "g_bytes": null,
+          "granularity": "exact_span",
+          "overblock_probability": 0.0
+        },
+        {
+          "denominator_pairs": 138,
+          "expected_overblocked_units": 3.715084010846632,
+          "g_bytes": 64,
+          "granularity": "64B",
+          "overblock_probability": 0.026920898629323422
+        },
+        {
+          "denominator_pairs": 138,
+          "expected_overblocked_units": 13.453512209574935,
+          "g_bytes": 256,
+          "granularity": "256B",
+          "overblock_probability": 0.0974892189099633
+        },
+        {
+          "denominator_pairs": 138,
+          "expected_overblocked_units": 36.134528814787956,
+          "g_bytes": 1024,
+          "granularity": "1KB",
+          "overblock_probability": 0.261844411701362
+        },
+        {
+          "denominator_pairs": 138,
+          "expected_overblocked_units": 78.71583507138955,
+          "g_bytes": 4096,
+          "granularity": "4KB",
+          "overblock_probability": 0.5704046019665909
+        },
+        {
+          "denominator_pairs": 138,
+          "expected_overblocked_units": 122.63783491705792,
+          "g_bytes": null,
+          "granularity": "whole_file",
+          "overblock_probability": 0.8886799631670863
+        }
+      ],
+      "click_empirical_denominator_warning": "base-coordinate spans are retained only for conflict-selected mined paths, not the full 684-unit Click census",
+      "click_handwritten_sensitivity_empirical_spans": [
+        {
+          "denominator_pairs": 136,
+          "g_bytes": null,
+          "granularity": "exact_span",
+          "overblock_rate": 0.0,
+          "overblocked_units": 0
+        },
+        {
+          "denominator_pairs": 136,
+          "g_bytes": 64,
+          "granularity": "64B",
+          "overblock_rate": 0.22058823529411764,
+          "overblocked_units": 30
+        },
+        {
+          "denominator_pairs": 136,
+          "g_bytes": 256,
+          "granularity": "256B",
+          "overblock_rate": 0.2426470588235294,
+          "overblocked_units": 33
+        },
+        {
+          "denominator_pairs": 136,
+          "g_bytes": 1024,
+          "granularity": "1KB",
+          "overblock_rate": 0.2426470588235294,
+          "overblocked_units": 33
+        },
+        {
+          "denominator_pairs": 136,
+          "g_bytes": 4096,
+          "granularity": "4KB",
+          "overblock_rate": 0.2426470588235294,
+          "overblocked_units": 33
+        },
+        {
+          "denominator_pairs": 136,
+          "g_bytes": null,
+          "granularity": "whole_file",
+          "overblock_rate": 0.2426470588235294,
+          "overblocked_units": 33
+        }
+      ],
+      "granularity_rule": "expand each retained interval/effective insertion byte outward to every fixed file-origin-aligned g-byte block it touches; overblock iff the miner says exact changes are strict-disjoint but padded claim unions overlap",
+      "pooled_bounding_hull_width_null_sensitivity": [
+        {
+          "denominator_pairs": 797,
+          "expected_overblocked_units": 0.0,
+          "g_bytes": null,
+          "granularity": "exact_span",
+          "overblock_probability": 0.0
+        },
+        {
+          "denominator_pairs": 797,
+          "expected_overblocked_units": 14.047348837203284,
+          "g_bytes": 64,
+          "granularity": "64B",
+          "overblock_probability": 0.017625280849690443
+        },
+        {
+          "denominator_pairs": 797,
+          "expected_overblocked_units": 35.953347804651436,
+          "g_bytes": 256,
+          "granularity": "256B",
+          "overblock_probability": 0.04511085044498298
+        },
+        {
+          "denominator_pairs": 797,
+          "expected_overblocked_units": 95.6950693425973,
+          "g_bytes": 1024,
+          "granularity": "1KB",
+          "overblock_probability": 0.12006909578744955
+        },
+        {
+          "denominator_pairs": 797,
+          "expected_overblocked_units": 187.43223087124625,
+          "g_bytes": 4096,
+          "granularity": "4KB",
+          "overblock_probability": 0.23517218428010822
+        },
+        {
+          "denominator_pairs": 797,
+          "expected_overblocked_units": 280.22610438593813,
+          "g_bytes": null,
+          "granularity": "whole_file",
+          "overblock_probability": 0.351601134737689
+        }
+      ],
+      "pooled_handwritten_contiguous_null": [
+        {
+          "denominator_pairs": 797,
+          "expected_overblocked_units": 0.0,
+          "g_bytes": null,
+          "granularity": "exact_span",
+          "overblock_probability": 0.0
+        },
+        {
+          "denominator_pairs": 797,
+          "expected_overblocked_units": 37.70537913895127,
+          "g_bytes": 64,
+          "granularity": "64B",
+          "overblock_probability": 0.04730913317308817
+        },
+        {
+          "denominator_pairs": 797,
+          "expected_overblocked_units": 92.75075199299658,
+          "g_bytes": 256,
+          "granularity": "256B",
+          "overblock_probability": 0.11637484566248003
+        },
+        {
+          "denominator_pairs": 797,
+          "expected_overblocked_units": 237.50211908157047,
+          "g_bytes": 1024,
+          "granularity": "1KB",
+          "overblock_probability": 0.29799513059168187
+        },
+        {
+          "denominator_pairs": 797,
+          "expected_overblocked_units": 443.2193601368857,
+          "g_bytes": 4096,
+          "granularity": "4KB",
+          "overblock_probability": 0.5561096112131565
+        },
+        {
+          "denominator_pairs": 797,
+          "expected_overblocked_units": 691.7153125232775,
+          "g_bytes": null,
+          "granularity": "whole_file",
+          "overblock_probability": 0.8678987610078763
+        }
+      ]
+    },
+    "null_definition": {
+      "bounding_hull_sensitivity": "a named sensitivity counts unchanged gaps between first and last changed coordinates; it is not primary",
+      "disjoint_formula": "if D=N-w1-w2 >= 0: (D+1)(D+2)/((N-w1+1)(N-w2+1)); else 0",
+      "insertion_rule": "an insertion-only edit contributes one effective byte at its anchor (the adjacent in-file byte at EOF)",
+      "multi_hunk_rule": "w is unioned changed-byte mass across refined intervals plus effective insertion bytes; the null places one contiguous span of that size",
+      "not_tuned_to_click": true,
+      "primary": "two positive contiguous half-open byte spans with independent uniform integer starts conditional on measured changed-byte masses w1,w2 and base_blob_size N",
+      "scattered_reference": "exp(-w1*w2/N); reported as a distinct birthday/scattered-byte reference, not used as the contiguous null"
+    },
+    "span_inputs": {
+      "all_strict_classifiable_effective_pairs": 822,
+      "bounding_hull_width1_bytes_sensitivity": {
+        "count": 797,
+        "maximum": 315206.0,
+        "mean": 7138.983688833124,
+        "minimum": 1.0,
+        "p50": 1009.0,
+        "p90": 15699.0,
+        "p99": 113954.0,
+        "percentile_method": "nearest-rank / numpy inverted_cdf"
+      },
+      "bounding_hull_width2_bytes_sensitivity": {
+        "count": 797,
+        "maximum": 288319.0,
+        "mean": 5596.601003764115,
+        "minimum": 1.0,
+        "p50": 718.0,
+        "p90": 11353.0,
+        "p99": 101071.0,
+        "percentile_method": "nearest-rank / numpy inverted_cdf"
+      },
+      "click_conflict_selected_handwritten_pairs": 136,
+      "click_conflict_selected_pairs": 138,
+      "excluded_path_counts": {
+        "status:unclassifiable_missing_or_nonblob_stage": 8808,
+        "status:unclassifiable_refinement_limit": 30
+      },
+      "handwritten_marker_spans": {
+        "pairing_note": "marker spans describe disputed result regions but do not supply two side-specific widths; the paired null therefore uses unioned changed-byte masses from the mined parent-side base-coordinate spans",
+        "result_blob_size_bytes": {
+          "count": 845,
+          "maximum": 327402.0,
+          "mean": 17609.136094674555,
+          "minimum": 116.0,
+          "p50": 5640.0,
+          "p90": 44785.0,
+          "p99": 155211.0,
+          "percentile_method": "nearest-rank / numpy inverted_cdf"
+        },
+        "span_bytes": {
+          "count": 845,
+          "maximum": 80864.0,
+          "mean": 1334.305325443787,
+          "minimum": 107.0,
+          "p50": 485.0,
+          "p90": 2705.0,
+          "p99": 12209.0,
+          "percentile_method": "nearest-rank / numpy inverted_cdf"
+        },
+        "span_fraction": {
+          "count": 845,
+          "maximum": 1.0,
+          "mean": 0.20310489168560467,
+          "minimum": 0.0008724653643625743,
+          "p50": 0.10674373795761079,
+          "p90": 0.5594462540716613,
+          "p99": 1.0,
+          "percentile_method": "nearest-rank / numpy inverted_cdf"
+        }
+      },
+      "handwritten_primary_pairs": 797,
+      "primary_base_blob_size_bytes": {
+        "count": 797,
+        "maximum": 321863.0,
+        "mean": 16772.677540777917,
+        "minimum": 4.0,
+        "p50": 4348.0,
+        "p90": 46453.0,
+        "p99": 187115.0,
+        "percentile_method": "nearest-rank / numpy inverted_cdf"
+      },
+      "primary_pairs_by_repository": {
+        "ansible/ansible": 102,
+        "apache/commons-lang": 30,
+        "chinabugotech/hutool": 37,
+        "gohugoio/hugo": 285,
+        "hashicorp/terraform": 18,
+        "jupyter/notebook": 2,
+        "pallets/click": 136,
+        "pallets/itsdangerous": 27,
+        "prometheus/prometheus": 104,
+        "psf/requests": 16,
+        "pygments/pygments": 4,
+        "redis/redis": 36
+      },
+      "primary_width1_bytes": {
+        "count": 797,
+        "maximum": 59590.0,
+        "mean": 581.3688833124215,
+        "minimum": 1.0,
+        "p50": 9.0,
+        "p90": 1172.0,
+        "p99": 7785.0,
+        "percentile_method": "nearest-rank / numpy inverted_cdf"
+      },
+      "primary_width2_bytes": {
+        "count": 797,
+        "maximum": 59590.0,
+        "mean": 360.8883312421581,
+        "minimum": 1.0,
+        "p50": 9.0,
+        "p90": 523.0,
+        "p99": 6987.0,
+        "percentile_method": "nearest-rank / numpy inverted_cdf"
+      }
+    }
+  },
+  "hazard": {
+    "exposure_only_predictions": {
+      "definition": "two concurrent unselected tasks; combined exposure is W1+W2 in changed lines",
+      "distribution_mean_pushthrough": {
+        "bound_status": "sharp under monotonic hazard, integer task sizes, minimum one line, and only the retained nearest-rank constraints",
+        "estimand": "E[h(W1+W2)] for independent same-distribution task draws",
+        "independence_assumption": "W1 and W2 are independent draws with replacement",
+        "inputs": {
+          "count": 1354,
+          "max": 452,
+          "minimum_assumption": 1,
+          "p50": 9,
+          "p90": 56,
+          "p99": 200,
+          "percentile_method": "nearest-rank; rank=ceil(p*n)"
+        },
+        "label": "independent_distribution_pushthrough",
+        "lower_extreme_task_distribution": {
+          "count": 1354,
+          "maximum": 452.0,
+          "mean": 11.401772525849335,
+          "minimum": 1.0,
+          "p50": 9.0,
+          "p90": 56.0,
+          "p99": 200.0,
+          "percentile_method": "nearest-rank / numpy inverted_cdf"
+        },
+        "missing_input": "the 1,354 raw aggregate_claim_lines_per_write observations or a lossless histogram",
+        "provisional_quantile_reconstruction_probability": 0.0062044962884506135,
+        "provisional_repository_bootstrap_ci95": [
+          0.0021576075310603274,
+          0.016286757402138988
+        ],
+        "reconstructed_task_distribution": {
+          "count": 1354,
+          "maximum": 452.0,
+          "mean": 30.17282127031019,
+          "minimum": 1.0,
+          "p50": 9.0,
+          "p90": 56.0,
+          "p99": 200.0,
+          "percentile_method": "nearest-rank / numpy inverted_cdf"
+        },
+        "status": "not_point_identified_from_parameters_json",
+        "summary_consistent_probability_bounds": [
+          0.0048120617808927275,
+          0.00706588562427668
+        ],
+        "upper_extreme_task_distribution": {
+          "count": 1354,
+          "maximum": 452.0,
+          "mean": 49.27695716395864,
+          "minimum": 9.0,
+          "p50": 9.0,
+          "p90": 56.0,
+          "p99": 200.0,
+          "percentile_method": "nearest-rank / numpy inverted_cdf"
+        }
+      },
+      "p50": {
+        "cluster_ci95_high": 0.0138349035008327,
+        "cluster_ci95_low": 0.0018996034641857904,
+        "cluster_logit_se": 0.5095959875706849,
+        "combined_exposure_lines": 18,
+        "exposure_lines": 18.0,
+        "input_statistic": "nearest-rank p50 of aggregate_claim_lines_per_write",
+        "label": "p50_task_size_pair",
+        "per_task_lines": 9,
+        "probability": 0.005140664905014352,
+        "repository_bootstrap_ci95": [
+          0.0016994165125601372,
+          0.013192161033358608
+        ]
+      },
+      "p90": {
+        "cluster_ci95_high": 0.019275093702639853,
+        "cluster_ci95_low": 0.0031212292095932808,
+        "cluster_logit_se": 0.46861168462003844,
+        "combined_exposure_lines": 112,
+        "exposure_lines": 112.0,
+        "input_statistic": "nearest-rank p90 of aggregate_claim_lines_per_write",
+        "label": "p90_task_size_pair",
+        "per_task_lines": 56,
+        "probability": 0.007783461220439503,
+        "repository_bootstrap_ci95": [
+          0.0028813125312853664,
+          0.020820167980186283
+        ]
+      },
+      "preregistered_use": "P6 exposure-only prediction for the unmediated collision rate on future unselected concurrent tasks"
+    },
+    "fit": {
+      "cluster_uncertainty": {
+        "clusters": 15,
+        "cr1_correction": 1.0714743081557732,
+        "observations": 23428,
+        "parameters": 2
+      },
+      "constraint_active": false,
+      "covariance_naive_information_inverse": [
+        [
+          0.030273522283436907,
+          -0.003883558495609726
+        ],
+        [
+          -0.003883558495609736,
+          0.0005799013826755337
+        ]
+      ],
+      "covariance_repository_cluster_cr1": [
+        [
+          0.3770570048576797,
+          -0.02534170223400582
+        ],
+        [
+          -0.02534170223400664,
+          0.0036754651923636833
+        ]
+      ],
+      "log_likelihood": -1282.4338878374813,
+      "optimizer_message": "CONVERGENCE: RELATIVE REDUCTION OF F <= FACTR*EPSMCH",
+      "optimizer_success": true,
+      "parameters": {
+        "alpha": {
+          "estimate": -5.954861314277114,
+          "repository_bootstrap_percentile_ci95": [
+            -7.303390879645892,
+            -4.877186116685385
+          ],
+          "repository_cluster_cr1_se": 0.6140496762133172,
+          "repository_cluster_normal_ci95": [
+            -7.158376564373697,
+            -4.751346064180531
+          ]
+        },
+        "beta": {
+          "estimate": 0.2341506799113892,
+          "repository_bootstrap_percentile_ci95": [
+            0.14003924452203892,
+            0.36980628772134777
+          ],
+          "repository_cluster_cr1_se": 0.060625614985447225,
+          "repository_cluster_normal_ci95": [
+            0.11532665799932083,
+            0.3529747018234575
+          ]
+        }
+      },
+      "repository_bootstrap": {
+        "failed_draws": 0,
+        "repositories": 15,
+        "requested_draws": 2000,
+        "resampling_unit": "repository",
+        "seed": 20260825,
+        "successful_draws": 2000
+      }
+    },
+    "formula": "logit(p) = alpha + beta * log(1 + combined_text_lines_changed); beta >= 0",
+    "model_choice_locked_before_fit": true,
+    "model_specification_path": "instruments/models/MODEL_SPEC.md",
+    "population": {
+      "countable_text_conflict_rate": 0.010158784360594161,
+      "countable_text_conflicts": 238,
+      "countable_text_merges": 23428,
+      "evaluable_merges": 25073,
+      "repositories": 15,
+      "unavailable_text_exposure_conflicts": 178,
+      "unavailable_text_exposure_merges": 1645
+    },
+    "sanity_check_against_mining_bins": [
+      {
+        "bin": "0",
+        "cluster_ci95_high": 0.008566046170791196,
+        "cluster_ci95_low": 0.0007777117694474282,
+        "cluster_logit_se": 0.6140496762133172,
+        "conflicted": 0,
+        "contributing_repositories": 3,
+        "evaluable": 3,
+        "exposure_lines": 0.0,
+        "lower": 0,
+        "mean_fitted_probability_in_bin": 0.002586496139248491,
+        "observed_max": 0,
+        "observed_midpoint": 0.0,
+        "observed_min": 0,
+        "observed_rate": 0.0,
+        "probability": 0.002586496139248491,
+        "repository_bootstrap_ci95": [
+          0.0006727990411111637,
+          0.007560820835336701
+        ],
+        "upper": 0
+      },
+      {
+        "bin": "1-15",
+        "cluster_ci95_high": 0.012165447779041147,
+        "cluster_ci95_low": 0.001525595140335282,
+        "cluster_logit_se": 0.5323894988400832,
+        "conflicted": 6,
+        "contributing_repositories": 15,
+        "evaluable": 5341,
+        "exposure_lines": 8.0,
+        "lower": 1,
+        "mean_fitted_probability_in_bin": 0.003932795310954652,
+        "observed_max": 15,
+        "observed_midpoint": 8.0,
+        "observed_min": 1,
+        "observed_rate": 0.0011233851338700617,
+        "probability": 0.00431910039534539,
+        "repository_bootstrap_ci95": [
+          0.0013241040929406658,
+          0.011331245472456555
+        ],
+        "upper": 15
+      },
+      {
+        "bin": "16-63",
+        "cluster_ci95_high": 0.015853463140307878,
+        "cluster_ci95_low": 0.0023569878345808715,
+        "cluster_logit_se": 0.4897090526295109,
+        "conflicted": 17,
+        "contributing_repositories": 15,
+        "evaluable": 3770,
+        "exposure_lines": 39.5,
+        "lower": 16,
+        "mean_fitted_probability_in_bin": 0.005878102680445713,
+        "observed_max": 63,
+        "observed_midpoint": 39.5,
+        "observed_min": 16,
+        "observed_rate": 0.004509283819628647,
+        "probability": 0.006131296134474686,
+        "repository_bootstrap_ci95": [
+          0.0021129260868081277,
+          0.016046360939063295
+        ],
+        "upper": 63
+      },
+      {
+        "bin": "64-255",
+        "cluster_ci95_high": 0.020671273706245986,
+        "cluster_ci95_low": 0.0034242990878377085,
+        "cluster_logit_se": 0.46309675637099096,
+        "conflicted": 39,
+        "contributing_repositories": 15,
+        "evaluable": 4345,
+        "exposure_lines": 159.5,
+        "lower": 64,
+        "mean_fitted_probability_in_bin": 0.008071710108196987,
+        "observed_max": 255,
+        "observed_midpoint": 159.5,
+        "observed_min": 64,
+        "observed_rate": 0.00897583429228999,
+        "probability": 0.008444368085402488,
+        "repository_bootstrap_ci95": [
+          0.003187197097209688,
+          0.022854630409319773
+        ],
+        "upper": 255
+      },
+      {
+        "bin": "256-1,023",
+        "cluster_ci95_high": 0.02768982184162242,
+        "cluster_ci95_low": 0.004845572082673069,
+        "cluster_logit_se": 0.4505752819786268,
+        "conflicted": 73,
+        "contributing_repositories": 15,
+        "evaluable": 4307,
+        "exposure_lines": 639.5,
+        "lower": 256,
+        "mean_fitted_probability_in_bin": 0.011049455815249555,
+        "observed_max": 1023,
+        "observed_midpoint": 639.5,
+        "observed_min": 256,
+        "observed_rate": 0.01694915254237288,
+        "probability": 0.011638599671262847,
+        "repository_bootstrap_ci95": [
+          0.004684537830639617,
+          0.0321375648467031
+        ],
+        "upper": 1023
+      },
+      {
+        "bin": "1,024-4,095",
+        "cluster_ci95_high": 0.03811094046243325,
+        "cluster_ci95_low": 0.006652316645051003,
+        "cluster_logit_se": 0.45350778388513807,
+        "conflicted": 52,
+        "contributing_repositories": 15,
+        "evaluable": 3049,
+        "exposure_lines": 2559.5,
+        "lower": 1024,
+        "mean_fitted_probability_in_bin": 0.01511521851331957,
+        "observed_max": 4095,
+        "observed_midpoint": 2559.5,
+        "observed_min": 1024,
+        "observed_rate": 0.017054772056411937,
+        "probability": 0.016028056718246884,
+        "repository_bootstrap_ci95": [
+          0.00671110763737041,
+          0.04703739516550837
+        ],
+        "upper": 4095
+      },
+      {
+        "bin": "4,096+",
+        "cluster_ci95_high": 0.2136533847866561,
+        "cluster_ci95_low": 0.021354642230038183,
+        "cluster_logit_se": 0.6433428164394462,
+        "conflicted": 51,
+        "contributing_repositories": 13,
+        "evaluable": 2613,
+        "exposure_lines": 1946720.5,
+        "lower": 4096,
+        "mean_fitted_probability_in_bin": 0.025288498532848796,
+        "observed_max": 3889340,
+        "observed_midpoint": 1946720.5,
+        "observed_min": 4101,
+        "observed_rate": 0.01951779563719862,
+        "probability": 0.07149346136770429,
+        "repository_bootstrap_ci95": [
+          0.026129879997535552,
+          0.2918239814218357
+        ],
+        "upper": null
+      }
+    ],
+    "site_conditioned_context": {
+      "fit_population_eligible_sites": 17,
+      "historical_conflicts": 19,
+      "historical_realized_collision_rate": 1.0,
+      "interpretation": "all sites were selected as historical conflicts; 100% versus the mean hazard measures selection concentration beyond line exposure, not out-of-sample calibration",
+      "manifest_check": {
+        "extra_in_manifest": [],
+        "missing_from_manifest": [],
+        "reanalyzed_python_identities": 11,
+        "status": "matched",
+        "validated_manifest_identities": 11
+      },
+      "mean_fitted_hazard": 0.011553094133328723,
+      "mean_fitted_hazard_repository_bootstrap_ci95": [
+        0.0046664797093514685,
+        0.0320164795498292
+      ],
+      "preregistered_selected_site_claim": "ordering only: realized selected-site collision rate above the exposure-only prediction at agent diff sizes",
+      "realized_to_mean_hazard_ratio": 86.55689882376784,
+      "site_count": 19,
+      "sites": [
+        {
+          "binary_files_parent1": 0,
+          "binary_files_parent2": 0,
+          "cluster_ci95_high": 0.02610037241820014,
+          "cluster_ci95_low": 0.004539122143844334,
+          "cluster_logit_se": 0.4518229776919792,
+          "combined_exposure_source": "stored_combined_text_lines_changed",
+          "combined_text_lines_changed": 488,
+          "exposure_lines": 488.0,
+          "fit_population_eligible": true,
+          "gate": "Python validated",
+          "historical_conflicted": true,
+          "merge": "16975997084a21a37dea351b6967b63591fd991f",
+          "mined_overlap_classification": "overlap",
+          "parent1_text_lines_changed": 474,
+          "parent2_text_lines_changed": 14,
+          "probability": 0.010933658656846928,
+          "repo": "pallets/click"
+        },
+        {
+          "binary_files_parent1": 0,
+          "binary_files_parent2": 0,
+          "cluster_ci95_high": 0.03363384444750796,
+          "cluster_ci95_low": 0.005916240956321689,
+          "cluster_logit_se": 0.45054660133318725,
+          "combined_exposure_source": "stored_combined_text_lines_changed",
+          "combined_text_lines_changed": 1508,
+          "exposure_lines": 1508.0,
+          "fit_population_eligible": true,
+          "gate": "Python validated",
+          "historical_conflicted": true,
+          "merge": "11abf2bff0f48b7f7b04b38b6a70fb102ef17662",
+          "mined_overlap_classification": "boundary_only",
+          "parent1_text_lines_changed": 530,
+          "parent2_text_lines_changed": 978,
+          "probability": 0.01418805661817541,
+          "repo": "pallets/click"
+        },
+        {
+          "binary_files_parent1": 0,
+          "binary_files_parent2": 0,
+          "cluster_ci95_high": 0.032742124279757194,
+          "cluster_ci95_low": 0.005762782796214214,
+          "cluster_logit_se": 0.45020027817921593,
+          "combined_exposure_source": "stored_combined_text_lines_changed",
+          "combined_text_lines_changed": 1343,
+          "exposure_lines": 1343.0,
+          "fit_population_eligible": true,
+          "gate": "Python validated",
+          "historical_conflicted": true,
+          "merge": "22697863f0a252082226068290eff3d57f79a3ec",
+          "mined_overlap_classification": "overlap",
+          "parent1_text_lines_changed": 534,
+          "parent2_text_lines_changed": 809,
+          "probability": 0.013813773765613479,
+          "repo": "pallets/click"
+        },
+        {
+          "binary_files_parent1": 0,
+          "binary_files_parent2": 0,
+          "cluster_ci95_high": 0.028267068311179498,
+          "cluster_ci95_low": 0.00495467585532797,
+          "cluster_logit_se": 0.45028199805728947,
+          "combined_exposure_source": "stored_combined_text_lines_changed",
+          "combined_text_lines_changed": 702,
+          "exposure_lines": 702.0,
+          "fit_population_eligible": true,
+          "gate": "Python validated",
+          "historical_conflicted": true,
+          "merge": "8b971f73743aa3bec1f09414377d3d01369de1bd",
+          "mined_overlap_classification": "overlap",
+          "parent1_text_lines_changed": 540,
+          "parent2_text_lines_changed": 162,
+          "probability": 0.011892071177952265,
+          "repo": "pallets/click"
+        },
+        {
+          "binary_files_parent1": 1,
+          "binary_files_parent2": 0,
+          "cluster_ci95_high": 0.023594732381206268,
+          "cluster_ci95_low": 0.004037682257998139,
+          "cluster_logit_se": 0.45541253768335943,
+          "combined_exposure_source": "derived_text_component_binary_present",
+          "combined_text_lines_changed": 304,
+          "exposure_lines": 304.0,
+          "fit_population_eligible": false,
+          "gate": "Python validated",
+          "historical_conflicted": true,
+          "merge": "655918a61e22cade722dacb9bf798e86b13093af",
+          "mined_overlap_classification": "overlap",
+          "parent1_text_lines_changed": 168,
+          "parent2_text_lines_changed": 136,
+          "probability": 0.009800758245738297,
+          "repo": "pallets/click"
+        },
+        {
+          "binary_files_parent1": 1,
+          "binary_files_parent2": 0,
+          "cluster_ci95_high": 0.022782525996855697,
+          "cluster_ci95_low": 0.003870287374353928,
+          "cluster_logit_se": 0.4571087410588536,
+          "combined_exposure_source": "derived_text_component_binary_present",
+          "combined_text_lines_changed": 257,
+          "exposure_lines": 257.0,
+          "fit_population_eligible": false,
+          "gate": "Python validated",
+          "historical_conflicted": true,
+          "merge": "65eceb08e392e74dcc761be2090e951274ccbe36",
+          "mined_overlap_classification": "overlap",
+          "parent1_text_lines_changed": 103,
+          "parent2_text_lines_changed": 154,
+          "probability": 0.009427687303957748,
+          "repo": "pallets/click"
+        },
+        {
+          "binary_files_parent1": 0,
+          "binary_files_parent2": 0,
+          "cluster_ci95_high": 0.02569608527388075,
+          "cluster_ci95_low": 0.004459743097479243,
+          "cluster_logit_se": 0.4522557012655433,
+          "combined_exposure_source": "stored_combined_text_lines_changed",
+          "combined_text_lines_changed": 454,
+          "exposure_lines": 454.0,
+          "fit_population_eligible": true,
+          "gate": "Python validated",
+          "historical_conflicted": true,
+          "merge": "7271763ea3b33d6b7e089501173fe3234fb1a594",
+          "mined_overlap_classification": "unclassifiable",
+          "parent1_text_lines_changed": 235,
+          "parent2_text_lines_changed": 219,
+          "probability": 0.01075267822297686,
+          "repo": "pallets/click"
+        },
+        {
+          "binary_files_parent1": 0,
+          "binary_files_parent2": 0,
+          "cluster_ci95_high": 0.035259629938371596,
+          "cluster_ci95_low": 0.006189990681633414,
+          "cluster_logit_se": 0.45140934901149893,
+          "combined_exposure_source": "stored_combined_text_lines_changed",
+          "combined_text_lines_changed": 1845,
+          "exposure_lines": 1845.0,
+          "fit_population_eligible": true,
+          "gate": "Python validated",
+          "historical_conflicted": true,
+          "merge": "d9af5cfa009c927a96d10ed38a3e37979876a12e",
+          "mined_overlap_classification": "overlap",
+          "parent1_text_lines_changed": 871,
+          "parent2_text_lines_changed": 974,
+          "probability": 0.014863577076340973,
+          "repo": "pallets/click"
+        },
+        {
+          "binary_files_parent1": 0,
+          "binary_files_parent2": 0,
+          "cluster_ci95_high": 0.022963806122616618,
+          "cluster_ci95_low": 0.003907853766472767,
+          "cluster_logit_se": 0.45670407762011084,
+          "combined_exposure_source": "stored_combined_text_lines_changed",
+          "combined_text_lines_changed": 267,
+          "exposure_lines": 267.0,
+          "fit_population_eligible": true,
+          "gate": "Python validated",
+          "historical_conflicted": true,
+          "merge": "3a40e43e8f61761cb7bd4f3e27ae3060690a84eb",
+          "mined_overlap_classification": "overlap",
+          "parent1_text_lines_changed": 90,
+          "parent2_text_lines_changed": 177,
+          "probability": 0.009511205611720032,
+          "repo": "pallets/click"
+        },
+        {
+          "binary_files_parent1": 0,
+          "binary_files_parent2": 0,
+          "cluster_ci95_high": 0.02693602279912286,
+          "cluster_ci95_low": 0.004701349644047725,
+          "cluster_logit_se": 0.4510817359687707,
+          "combined_exposure_source": "stored_combined_text_lines_changed",
+          "combined_text_lines_changed": 564,
+          "exposure_lines": 564.0,
+          "fit_population_eligible": true,
+          "gate": "Python validated",
+          "historical_conflicted": true,
+          "merge": "240603f240a9ff179d834fede836060d897c6980",
+          "mined_overlap_classification": "boundary_only",
+          "parent1_text_lines_changed": 326,
+          "parent2_text_lines_changed": 238,
+          "probability": 0.01130557592142482,
+          "repo": "pallets/click"
+        },
+        {
+          "binary_files_parent1": 0,
+          "binary_files_parent2": 0,
+          "cluster_ci95_high": 0.017517997609343687,
+          "cluster_ci95_low": 0.0027318747882454034,
+          "cluster_logit_se": 0.47786039267571356,
+          "combined_exposure_source": "stored_combined_text_lines_changed",
+          "combined_text_lines_changed": 68,
+          "exposure_lines": 68.0,
+          "fit_population_eligible": true,
+          "gate": "Python validated",
+          "historical_conflicted": true,
+          "merge": "00a31bcae2f61ce74ccfabd05be2731bfc7a5a28",
+          "mined_overlap_classification": "overlap",
+          "parent1_text_lines_changed": 33,
+          "parent2_text_lines_changed": 35,
+          "probability": 0.006940323325945963,
+          "repo": "pygments/pygments"
+        },
+        {
+          "binary_files_parent1": 0,
+          "binary_files_parent2": 0,
+          "cluster_ci95_high": 0.03657444352899819,
+          "cluster_ci95_low": 0.006405905239685204,
+          "cluster_logit_se": 0.45229479579183296,
+          "combined_exposure_source": "stored_combined_text_lines_changed",
+          "combined_text_lines_changed": 2154,
+          "exposure_lines": 2154.0,
+          "fit_population_eligible": true,
+          "gate": "Go runner-eligible",
+          "historical_conflicted": true,
+          "merge": "3583dd6d713c243808b5e8724b32565ceaf66104",
+          "mined_overlap_classification": "overlap",
+          "parent1_text_lines_changed": 1598,
+          "parent2_text_lines_changed": 556,
+          "probability": 0.015403654046585226,
+          "repo": "gohugoio/hugo"
+        },
+        {
+          "binary_files_parent1": 0,
+          "binary_files_parent2": 0,
+          "cluster_ci95_high": 0.031531224865085944,
+          "cluster_ci95_low": 0.005550495095107613,
+          "cluster_logit_se": 0.4498971116251333,
+          "combined_exposure_source": "stored_combined_text_lines_changed",
+          "combined_text_lines_changed": 1140,
+          "exposure_lines": 1140.0,
+          "fit_population_eligible": true,
+          "gate": "Go runner-eligible",
+          "historical_conflicted": true,
+          "merge": "604ddb90c5d6f1ca5583be1ec0ea8e48f014741a",
+          "mined_overlap_classification": "overlap",
+          "parent1_text_lines_changed": 1099,
+          "parent2_text_lines_changed": 41,
+          "probability": 0.013301075476821616,
+          "repo": "gohugoio/hugo"
+        },
+        {
+          "binary_files_parent1": 0,
+          "binary_files_parent2": 0,
+          "cluster_ci95_high": 0.03595837794716127,
+          "cluster_ci95_low": 0.006305331113185636,
+          "cluster_logit_se": 0.4518608879135098,
+          "combined_exposure_source": "stored_combined_text_lines_changed",
+          "combined_text_lines_changed": 2005,
+          "exposure_lines": 2005.0,
+          "fit_population_eligible": true,
+          "gate": "Java gate passed",
+          "historical_conflicted": true,
+          "merge": "640953167adf3580a2c21077d78e7e7ce84ead03",
+          "mined_overlap_classification": "overlap",
+          "parent1_text_lines_changed": 1991,
+          "parent2_text_lines_changed": 14,
+          "probability": 0.0151512739390138,
+          "repo": "apache/commons-lang"
+        },
+        {
+          "binary_files_parent1": 0,
+          "binary_files_parent2": 0,
+          "cluster_ci95_high": 0.01823347812200674,
+          "cluster_ci95_low": 0.0028913712669435465,
+          "cluster_logit_se": 0.473742042490084,
+          "combined_exposure_source": "stored_combined_text_lines_changed",
+          "combined_text_lines_changed": 84,
+          "exposure_lines": 84.0,
+          "fit_population_eligible": true,
+          "gate": "Java gate passed",
+          "historical_conflicted": true,
+          "merge": "7fae5b0b17dbfa46236243cc53f0ea853ed89f5c",
+          "mined_overlap_classification": "overlap",
+          "parent1_text_lines_changed": 24,
+          "parent2_text_lines_changed": 60,
+          "probability": 0.0072851061089195535,
+          "repo": "apache/commons-lang"
+        },
+        {
+          "binary_files_parent1": 0,
+          "binary_files_parent2": 0,
+          "cluster_ci95_high": 0.023446593676423686,
+          "cluster_ci95_low": 0.004007327488782629,
+          "cluster_logit_se": 0.4556999879055329,
+          "combined_exposure_source": "stored_combined_text_lines_changed",
+          "combined_text_lines_changed": 295,
+          "exposure_lines": 295.0,
+          "fit_population_eligible": true,
+          "gate": "Java gate passed",
+          "historical_conflicted": true,
+          "merge": "80644cdab9a77db0a52d09d9ebb1f406912997d1",
+          "mined_overlap_classification": "overlap",
+          "parent1_text_lines_changed": 114,
+          "parent2_text_lines_changed": 181,
+          "probability": 0.009732929170404908,
+          "repo": "apache/commons-lang"
+        },
+        {
+          "binary_files_parent1": 0,
+          "binary_files_parent2": 0,
+          "cluster_ci95_high": 0.022963806122616618,
+          "cluster_ci95_low": 0.003907853766472767,
+          "cluster_logit_se": 0.45670407762011084,
+          "combined_exposure_source": "stored_combined_text_lines_changed",
+          "combined_text_lines_changed": 267,
+          "exposure_lines": 267.0,
+          "fit_population_eligible": true,
+          "gate": "Java gate passed",
+          "historical_conflicted": true,
+          "merge": "481137553f878e2f69ce05129d4aecbf016a1756",
+          "mined_overlap_classification": "overlap",
+          "parent1_text_lines_changed": 152,
+          "parent2_text_lines_changed": 115,
+          "probability": 0.009511205611720032,
+          "repo": "apache/commons-lang"
+        },
+        {
+          "binary_files_parent1": 0,
+          "binary_files_parent2": 0,
+          "cluster_ci95_high": 0.038702253559293354,
+          "cluster_ci95_low": 0.006745513677950648,
+          "cluster_logit_se": 0.4540192883604925,
+          "combined_exposure_source": "stored_combined_text_lines_changed",
+          "combined_text_lines_changed": 2729,
+          "exposure_lines": 2729.0,
+          "fit_population_eligible": true,
+          "gate": "Java gate passed",
+          "historical_conflicted": true,
+          "merge": "42f2058c83f256d8654b349d5249d6f59920f88b",
+          "mined_overlap_classification": "overlap",
+          "parent1_text_lines_changed": 2708,
+          "parent2_text_lines_changed": 21,
+          "probability": 0.016266490949130092,
+          "repo": "apache/commons-lang"
+        },
+        {
+          "binary_files_parent1": 0,
+          "binary_files_parent2": 0,
+          "cluster_ci95_high": 0.022782525996855697,
+          "cluster_ci95_low": 0.003870287374353928,
+          "cluster_logit_se": 0.4571087410588536,
+          "combined_exposure_source": "stored_combined_text_lines_changed",
+          "combined_text_lines_changed": 257,
+          "exposure_lines": 257.0,
+          "fit_population_eligible": true,
+          "gate": "Java gate passed",
+          "historical_conflicted": true,
+          "merge": "6681a34d25b63a47c2d619ae0466825304ea9b1f",
+          "mined_overlap_classification": "overlap",
+          "parent1_text_lines_changed": 89,
+          "parent2_text_lines_changed": 168,
+          "probability": 0.009427687303957748,
+          "repo": "apache/commons-lang"
+        }
+      ],
+      "text_component_binary_present_sites": 2
+    },
+    "source_files": [
+      {
+        "bytes": 12972747,
+        "countable_text_conflicts": 58,
+        "countable_text_rows": 4725,
+        "evaluable": 5054,
+        "path": "corpus/conflicts/_all_merges/ansible__ansible.jsonl",
+        "rows": 5057,
+        "sha256": "4122068e839270e2ee3a03c33ceb4077b38e317a87a6884d33e835c793ad4cd8"
+      },
+      {
+        "bytes": 474611,
+        "countable_text_conflicts": 25,
+        "countable_text_rows": 219,
+        "evaluable": 219,
+        "path": "corpus/conflicts/_all_merges/apache__commons-lang.jsonl",
+        "rows": 219,
+        "sha256": "15a361434ee0a353a5e10fc079bd53ced867cee7548743f02bd65becd3abe120"
+      },
+      {
+        "bytes": 108223,
+        "countable_text_conflicts": 0,
+        "countable_text_rows": 62,
+        "evaluable": 62,
+        "path": "corpus/conflicts/_all_merges/BurntSushi__ripgrep.jsonl",
+        "rows": 62,
+        "sha256": "dd2dabc405a6134aca75cf8e77011e483000afb8c33dfd520b1d535832b617d6"
+      },
+      {
+        "bytes": 2073567,
+        "countable_text_conflicts": 14,
+        "countable_text_rows": 839,
+        "evaluable": 866,
+        "path": "corpus/conflicts/_all_merges/chinabugotech__hutool.jsonl",
+        "rows": 866,
+        "sha256": "ab60c9d0a77981a31e6c5f0aad4d5201d2f797a6b240c47f5891dc44b9e9348c"
+      },
+      {
+        "bytes": 10543032,
+        "countable_text_conflicts": 7,
+        "countable_text_rows": 60,
+        "evaluable": 219,
+        "path": "corpus/conflicts/_all_merges/gohugoio__hugo.jsonl",
+        "rows": 223,
+        "sha256": "30de1c45d450f5d6ac5eac4314099ddab0a17a01f370b0efbf817d75327504aa"
+      },
+      {
+        "bytes": 239860,
+        "countable_text_conflicts": 0,
+        "countable_text_rows": 116,
+        "evaluable": 123,
+        "path": "corpus/conflicts/_all_merges/hashicorp__terraform-provider-random.jsonl",
+        "rows": 125,
+        "sha256": "3699c25c8447d1f9b5bba1ff23067977644c3b8c48956f17282fc35b168240db"
+      },
+      {
+        "bytes": 24682228,
+        "countable_text_conflicts": 12,
+        "countable_text_rows": 6170,
+        "evaluable": 6630,
+        "path": "corpus/conflicts/_all_merges/hashicorp__terraform.jsonl",
+        "rows": 6630,
+        "sha256": "cc9099e5e1797fe166c71e9d8bc032be9cdc13aaf53b5ed158207fc4c25b1af5"
+      },
+      {
+        "bytes": 5711368,
+        "countable_text_conflicts": 2,
+        "countable_text_rows": 2808,
+        "evaluable": 3017,
+        "path": "corpus/conflicts/_all_merges/jupyter__notebook.jsonl",
+        "rows": 3018,
+        "sha256": "1c9b634724747244689cde38e00f252d32decf688705bccc689dc668aecc8128"
+      },
+      {
+        "bytes": 1452850,
+        "countable_text_conflicts": 65,
+        "countable_text_rows": 793,
+        "evaluable": 818,
+        "path": "corpus/conflicts/_all_merges/pallets__click.jsonl",
+        "rows": 818,
+        "sha256": "43353975e39a05974ec225c2293d563b9effe504c8c811ae6025086fd1c964b8"
+      },
+      {
+        "bytes": 351225,
+        "countable_text_conflicts": 13,
+        "countable_text_rows": 199,
+        "evaluable": 202,
+        "path": "corpus/conflicts/_all_merges/pallets__itsdangerous.jsonl",
+        "rows": 202,
+        "sha256": "df12e2db123a5e9ea48f60f7ae5f4c822f03ed884bfd2fc31238a8ce900f119d"
+      },
+      {
+        "bytes": 8909329,
+        "countable_text_conflicts": 7,
+        "countable_text_rows": 3812,
+        "evaluable": 3916,
+        "path": "corpus/conflicts/_all_merges/prometheus__prometheus.jsonl",
+        "rows": 3916,
+        "sha256": "f8524511a3eaf407aaea070234da50d08a7746f2f4b3f81edd77b65e1c8acf1a"
+      },
+      {
+        "bytes": 1939701,
+        "countable_text_conflicts": 12,
+        "countable_text_rows": 1081,
+        "evaluable": 1104,
+        "path": "corpus/conflicts/_all_merges/psf__requests.jsonl",
+        "rows": 1104,
+        "sha256": "d2d860fc1a621e2bb59a5230c48ca47ed70abe306f896af3b16193fe7c626882"
+      },
+      {
+        "bytes": 862829,
+        "countable_text_conflicts": 3,
+        "countable_text_rows": 238,
+        "evaluable": 239,
+        "path": "corpus/conflicts/_all_merges/pygments__pygments.jsonl",
+        "rows": 239,
+        "sha256": "986cf6bab99f8489d680f1d758ab64ab94c78b182088768f1586061ca610d464"
+      },
+      {
+        "bytes": 2148744,
+        "countable_text_conflicts": 20,
+        "countable_text_rows": 1039,
+        "evaluable": 1048,
+        "path": "corpus/conflicts/_all_merges/redis__redis.jsonl",
+        "rows": 1048,
+        "sha256": "a5b1969cf432533e1164d4df1067cf49a2c4cb799576b3b83e8ce38691ef86a0"
+      },
+      {
+        "bytes": 0,
+        "countable_text_conflicts": 0,
+        "countable_text_rows": 0,
+        "evaluable": 0,
+        "path": "corpus/conflicts/_all_merges/superfluid-org__protocol-monorepo.jsonl",
+        "rows": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "bytes": 241824645,
+        "countable_text_conflicts": 0,
+        "countable_text_rows": 1267,
+        "evaluable": 1556,
+        "path": "corpus/conflicts/_all_merges/ydb-platform__ydb.jsonl",
+        "rows": 1556,
+        "sha256": "751dc5510bdc39d5bd98195370ab22f943734deb6dec0cf30c7d3d3e0bd7c7a4"
+      }
+    ]
+  },
+  "lease": {
+    "L_star_minutes": 0.42924999793370566,
+    "L_star_seconds": 25.75499987602234,
+    "caveat": "raw interval values are absent; the optimum and curve are reconstruction-dependent, and the linger endpoint is right-censored rather than an explicit close",
+    "cost_ratio_sensitivity": [
+      {
+        "blocking_cost": 0.0,
+        "expected_dangling_minutes": 0.0,
+        "false_expiry": 0.9975308641975309,
+        "false_expiry_cost": 0.0997530864197531,
+        "lease_minutes": 0.0,
+        "numeric_cost_ratio_reacquisition_to_blocking": 0.1,
+        "objective_agent_minutes_per_claim": 0.0997530864197531
+      },
+      {
+        "blocking_cost": 0.0,
+        "expected_dangling_minutes": 0.0,
+        "false_expiry": 0.9975308641975309,
+        "false_expiry_cost": 0.11192480383654156,
+        "lease_minutes": 0.0,
+        "numeric_cost_ratio_reacquisition_to_blocking": 0.11220184543019636,
+        "objective_agent_minutes_per_claim": 0.11192480383654156
+      },
+      {
+        "blocking_cost": 0.0,
+        "expected_dangling_minutes": 0.0,
+        "false_expiry": 0.9975308641975309,
+        "false_expiry_cost": 0.12558169539872682,
+        "lease_minutes": 0.0,
+        "numeric_cost_ratio_reacquisition_to_blocking": 0.12589254117941673,
+        "objective_agent_minutes_per_claim": 0.12558169539872682
+      },
+      {
+        "blocking_cost": 0.0,
+        "expected_dangling_minutes": 0.0,
+        "false_expiry": 0.9975308641975309,
+        "false_expiry_cost": 0.14090497975989946,
+        "lease_minutes": 0.0,
+        "numeric_cost_ratio_reacquisition_to_blocking": 0.14125375446227545,
+        "objective_agent_minutes_per_claim": 0.14090497975989946
+      },
+      {
+        "blocking_cost": 0.0,
+        "expected_dangling_minutes": 0.0,
+        "false_expiry": 0.9975308641975309,
+        "false_expiry_cost": 0.15809798759365182,
+        "lease_minutes": 0.0,
+        "numeric_cost_ratio_reacquisition_to_blocking": 0.15848931924611134,
+        "objective_agent_minutes_per_claim": 0.15809798759365182
+      },
+      {
+        "blocking_cost": 0.0,
+        "expected_dangling_minutes": 0.0,
+        "false_expiry": 0.9975308641975309,
+        "false_expiry_cost": 0.1773888596680802,
+        "lease_minutes": 0.0,
+        "numeric_cost_ratio_reacquisition_to_blocking": 0.1778279410038923,
+        "objective_agent_minutes_per_claim": 0.1773888596680802
+      },
+      {
+        "blocking_cost": 0.0,
+        "expected_dangling_minutes": 0.0,
+        "false_expiry": 0.9975308641975309,
+        "false_expiry_cost": 0.19903357413516726,
+        "lease_minutes": 0.0,
+        "numeric_cost_ratio_reacquisition_to_blocking": 0.19952623149688797,
+        "objective_agent_minutes_per_claim": 0.19903357413516726
+      },
+      {
+        "blocking_cost": 0.0,
+        "expected_dangling_minutes": 0.0,
+        "false_expiry": 0.9975308641975309,
+        "false_expiry_cost": 0.22331934320533567,
+        "lease_minutes": 0.0,
+        "numeric_cost_ratio_reacquisition_to_blocking": 0.223872113856834,
+        "objective_agent_minutes_per_claim": 0.22331934320533567
+      },
+      {
+        "blocking_cost": 0.0,
+        "expected_dangling_minutes": 0.0,
+        "false_expiry": 0.9975308641975309,
+        "false_expiry_cost": 0.25056842427898035,
+        "lease_minutes": 0.0,
+        "numeric_cost_ratio_reacquisition_to_blocking": 0.251188643150958,
+        "objective_agent_minutes_per_claim": 0.25056842427898035
+      },
+      {
+        "blocking_cost": 0.0,
+        "expected_dangling_minutes": 0.0,
+        "false_expiry": 0.9975308641975309,
+        "false_expiry_cost": 0.2811423961063801,
+        "lease_minutes": 0.0,
+        "numeric_cost_ratio_reacquisition_to_blocking": 0.28183829312644537,
+        "objective_agent_minutes_per_claim": 0.2811423961063801
+      },
+      {
+        "blocking_cost": 0.0,
+        "expected_dangling_minutes": 0.0,
+        "false_expiry": 0.9975308641975309,
+        "false_expiry_cost": 0.31544695671803097,
+        "lease_minutes": 0.0,
+        "numeric_cost_ratio_reacquisition_to_blocking": 0.31622776601683794,
+        "objective_agent_minutes_per_claim": 0.31544695671803097
+      },
+      {
+        "blocking_cost": 0.0,
+        "expected_dangling_minutes": 0.0,
+        "false_expiry": 0.9975308641975309,
+        "false_expiry_cost": 0.3539373067910234,
+        "lease_minutes": 0.0,
+        "numeric_cost_ratio_reacquisition_to_blocking": 0.35481338923357547,
+        "objective_agent_minutes_per_claim": 0.3539373067910234
+      },
+      {
+        "blocking_cost": 0.0,
+        "expected_dangling_minutes": 0.0,
+        "false_expiry": 0.9975308641975309,
+        "false_expiry_cost": 0.397124189885464,
+        "lease_minutes": 0.0,
+        "numeric_cost_ratio_reacquisition_to_blocking": 0.3981071705534973,
+        "objective_agent_minutes_per_claim": 0.397124189885464
+      },
+      {
+        "blocking_cost": 0.0,
+        "expected_dangling_minutes": 0.0,
+        "false_expiry": 0.9975308641975309,
+        "false_expiry_cost": 0.4455806697012077,
+        "lease_minutes": 0.0,
+        "numeric_cost_ratio_reacquisition_to_blocking": 0.44668359215096315,
+        "objective_agent_minutes_per_claim": 0.4455806697012077
+      },
+      {
+        "blocking_cost": 0.0,
+        "expected_dangling_minutes": 0.0,
+        "false_expiry": 0.9975308641975309,
+        "false_expiry_cost": 0.4999497342849828,
+        "lease_minutes": 0.0,
+        "numeric_cost_ratio_reacquisition_to_blocking": 0.5011872336272724,
+        "objective_agent_minutes_per_claim": 0.4999497342849828
+      },
+      {
+        "blocking_cost": 0.0,
+        "expected_dangling_minutes": 0.0,
+        "false_expiry": 0.9975308641975309,
+        "false_expiry_cost": 0.5609528280911137,
+        "lease_minutes": 0.0,
+        "numeric_cost_ratio_reacquisition_to_blocking": 0.5623413251903491,
+        "objective_agent_minutes_per_claim": 0.5609528280911137
+      },
+      {
+        "blocking_cost": 0.0,
+        "expected_dangling_minutes": 0.0,
+        "false_expiry": 0.9975308641975309,
+        "false_expiry_cost": 0.6293994251111065,
+        "lease_minutes": 0.0,
+        "numeric_cost_ratio_reacquisition_to_blocking": 0.6309573444801934,
+        "objective_agent_minutes_per_claim": 0.6293994251111065
+      },
+      {
+        "blocking_cost": 0.0,
+        "expected_dangling_minutes": 0.0,
+        "false_expiry": 0.9975308641975309,
+        "false_expiry_cost": 0.706197770101708,
+        "lease_minutes": 0.0,
+        "numeric_cost_ratio_reacquisition_to_blocking": 0.707945784384138,
+        "objective_agent_minutes_per_claim": 0.706197770101708
+      },
+      {
+        "blocking_cost": 0.0,
+        "expected_dangling_minutes": 0.0,
+        "false_expiry": 0.9975308641975309,
+        "false_expiry_cost": 0.7923669304410117,
+        "lease_minutes": 0.0,
+        "numeric_cost_ratio_reacquisition_to_blocking": 0.7943282347242815,
+        "objective_agent_minutes_per_claim": 0.7923669304410117
+      },
+      {
+        "blocking_cost": 0.42911126167063746,
+        "expected_dangling_minutes": 0.42911126167063746,
+        "false_expiry": 0.4962962962962963,
+        "false_expiry_cost": 0.44232453966637747,
+        "lease_minutes": 0.42924999793370566,
+        "numeric_cost_ratio_reacquisition_to_blocking": 0.8912509381337457,
+        "objective_agent_minutes_per_claim": 0.8714358013370149
+      },
+      {
+        "blocking_cost": 0.42911126167063746,
+        "expected_dangling_minutes": 0.42911126167063746,
+        "false_expiry": 0.4962962962962963,
+        "false_expiry_cost": 0.4962962962962963,
+        "lease_minutes": 0.42924999793370566,
+        "numeric_cost_ratio_reacquisition_to_blocking": 1.0,
+        "objective_agent_minutes_per_claim": 0.9254075579669337
+      },
+      {
+        "blocking_cost": 0.42911126167063746,
+        "expected_dangling_minutes": 0.42911126167063746,
+        "false_expiry": 0.4962962962962963,
+        "false_expiry_cost": 0.5568536032461597,
+        "lease_minutes": 0.42924999793370566,
+        "numeric_cost_ratio_reacquisition_to_blocking": 1.1220184543019636,
+        "objective_agent_minutes_per_claim": 0.9859648649167971
+      },
+      {
+        "blocking_cost": 0.42911126167063746,
+        "expected_dangling_minutes": 0.42911126167063746,
+        "false_expiry": 0.4962962962962963,
+        "false_expiry_cost": 0.624800019186735,
+        "lease_minutes": 0.42924999793370566,
+        "numeric_cost_ratio_reacquisition_to_blocking": 1.2589254117941675,
+        "objective_agent_minutes_per_claim": 1.0539112808573725
+      },
+      {
+        "blocking_cost": 0.42911126167063746,
+        "expected_dangling_minutes": 0.42911126167063746,
+        "false_expiry": 0.4962962962962963,
+        "false_expiry_cost": 0.7010371517757376,
+        "lease_minutes": 0.42924999793370566,
+        "numeric_cost_ratio_reacquisition_to_blocking": 1.4125375446227548,
+        "objective_agent_minutes_per_claim": 1.130148413446375
+      },
+      {
+        "blocking_cost": 0.42911126167063746,
+        "expected_dangling_minutes": 0.42911126167063746,
+        "false_expiry": 0.4962962962962963,
+        "false_expiry_cost": 0.786576621443664,
+        "lease_minutes": 0.42924999793370566,
+        "numeric_cost_ratio_reacquisition_to_blocking": 1.584893192461114,
+        "objective_agent_minutes_per_claim": 1.2156878831143014
+      },
+      {
+        "blocking_cost": 0.42911126167063746,
+        "expected_dangling_minutes": 0.42911126167063746,
+        "false_expiry": 0.4962962962962963,
+        "false_expiry_cost": 0.8825534849822801,
+        "lease_minutes": 0.42924999793370566,
+        "numeric_cost_ratio_reacquisition_to_blocking": 1.7782794100389228,
+        "objective_agent_minutes_per_claim": 1.3116647466529177
+      },
+      {
+        "blocking_cost": 0.42911126167063746,
+        "expected_dangling_minutes": 0.42911126167063746,
+        "false_expiry": 0.4962962962962963,
+        "false_expiry_cost": 0.9902412970586292,
+        "lease_minutes": 0.42924999793370566,
+        "numeric_cost_ratio_reacquisition_to_blocking": 1.9952623149688797,
+        "objective_agent_minutes_per_claim": 1.4193525587292666
+      },
+      {
+        "blocking_cost": 0.42911126167063746,
+        "expected_dangling_minutes": 0.42911126167063746,
+        "false_expiry": 0.4962962962962963,
+        "false_expiry_cost": 1.1110690095116946,
+        "lease_minutes": 0.42924999793370566,
+        "numeric_cost_ratio_reacquisition_to_blocking": 2.23872113856834,
+        "objective_agent_minutes_per_claim": 1.540180271182332
+      },
+      {
+        "blocking_cost": 0.42911126167063746,
+        "expected_dangling_minutes": 0.42911126167063746,
+        "false_expiry": 0.4962962962962963,
+        "false_expiry_cost": 1.2466399326751254,
+        "lease_minutes": 0.42924999793370566,
+        "numeric_cost_ratio_reacquisition_to_blocking": 2.511886431509581,
+        "objective_agent_minutes_per_claim": 1.6757511943457628
+      },
+      {
+        "blocking_cost": 0.42911126167063746,
+        "expected_dangling_minutes": 0.42911126167063746,
+        "false_expiry": 0.4962962962962963,
+        "false_expiry_cost": 1.398753010331248,
+        "lease_minutes": 0.42924999793370566,
+        "numeric_cost_ratio_reacquisition_to_blocking": 2.818382931264455,
+        "objective_agent_minutes_per_claim": 1.8278642720018854
+      },
+      {
+        "blocking_cost": 0.42911126167063746,
+        "expected_dangling_minutes": 0.42911126167063746,
+        "false_expiry": 0.4962962962962963,
+        "false_expiry_cost": 1.5694266906020846,
+        "lease_minutes": 0.42924999793370566,
+        "numeric_cost_ratio_reacquisition_to_blocking": 3.1622776601683795,
+        "objective_agent_minutes_per_claim": 1.998537952272722
+      },
+      {
+        "blocking_cost": 0.42911126167063746,
+        "expected_dangling_minutes": 0.42911126167063746,
+        "false_expiry": 0.4962962962962963,
+        "false_expiry_cost": 1.6514424687256049,
+        "lease_minutes": 0.42924999793370566,
+        "numeric_cost_ratio_reacquisition_to_blocking": 3.3275333325068157,
+        "objective_agent_minutes_per_claim": 2.0805537303962423
+      },
+      {
+        "blocking_cost": 0.42911126167063746,
+        "expected_dangling_minutes": 0.42911126167063746,
+        "false_expiry": 0.4962962962962963,
+        "false_expiry_cost": 1.760925709529597,
+        "lease_minutes": 0.42924999793370566,
+        "numeric_cost_ratio_reacquisition_to_blocking": 3.548133892335755,
+        "objective_agent_minutes_per_claim": 2.1900369712002346
+      },
+      {
+        "blocking_cost": 0.42911126167063746,
+        "expected_dangling_minutes": 0.42911126167063746,
+        "false_expiry": 0.4962962962962963,
+        "false_expiry_cost": 1.9757911427469868,
+        "lease_minutes": 0.42924999793370566,
+        "numeric_cost_ratio_reacquisition_to_blocking": 3.981071705534973,
+        "objective_agent_minutes_per_claim": 2.404902404417624
+      },
+      {
+        "blocking_cost": 0.42911126167063746,
+        "expected_dangling_minutes": 0.42911126167063746,
+        "false_expiry": 0.4962962962962963,
+        "false_expiry_cost": 2.216874124008484,
+        "lease_minutes": 0.42924999793370566,
+        "numeric_cost_ratio_reacquisition_to_blocking": 4.466835921509633,
+        "objective_agent_minutes_per_claim": 2.6459853856791216
+      },
+      {
+        "blocking_cost": 0.42911126167063746,
+        "expected_dangling_minutes": 0.42911126167063746,
+        "false_expiry": 0.4962962962962963,
+        "false_expiry_cost": 2.487373678002019,
+        "lease_minutes": 0.42924999793370566,
+        "numeric_cost_ratio_reacquisition_to_blocking": 5.011872336272725,
+        "objective_agent_minutes_per_claim": 2.916484939672656
+      },
+      {
+        "blocking_cost": 0.42911126167063746,
+        "expected_dangling_minutes": 0.42911126167063746,
+        "false_expiry": 0.4962962962962963,
+        "false_expiry_cost": 2.790879169463214,
+        "lease_minutes": 0.42924999793370566,
+        "numeric_cost_ratio_reacquisition_to_blocking": 5.623413251903491,
+        "objective_agent_minutes_per_claim": 3.2199904311338514
+      },
+      {
+        "blocking_cost": 0.42911126167063746,
+        "expected_dangling_minutes": 0.42911126167063746,
+        "false_expiry": 0.4962962962962963,
+        "false_expiry_cost": 3.131417931864663,
+        "lease_minutes": 0.42924999793370566,
+        "numeric_cost_ratio_reacquisition_to_blocking": 6.309573444801933,
+        "objective_agent_minutes_per_claim": 3.5605291935353005
+      },
+      {
+        "blocking_cost": 0.42911126167063746,
+        "expected_dangling_minutes": 0.42911126167063746,
+        "false_expiry": 0.4962962962962963,
+        "false_expiry_cost": 3.513508707684241,
+        "lease_minutes": 0.42924999793370566,
+        "numeric_cost_ratio_reacquisition_to_blocking": 7.07945784384138,
+        "objective_agent_minutes_per_claim": 3.9426199693548782
+      },
+      {
+        "blocking_cost": 0.42911126167063746,
+        "expected_dangling_minutes": 0.42911126167063746,
+        "false_expiry": 0.4962962962962963,
+        "false_expiry_cost": 3.9422216093723614,
+        "lease_minutes": 0.42924999793370566,
+        "numeric_cost_ratio_reacquisition_to_blocking": 7.943282347242818,
+        "objective_agent_minutes_per_claim": 4.371332871042999
+      },
+      {
+        "blocking_cost": 0.42911126167063746,
+        "expected_dangling_minutes": 0.42911126167063746,
+        "false_expiry": 0.4962962962962963,
+        "false_expiry_cost": 4.423245396663776,
+        "lease_minutes": 0.42924999793370566,
+        "numeric_cost_ratio_reacquisition_to_blocking": 8.91250938133746,
+        "objective_agent_minutes_per_claim": 4.852356658334414
+      },
+      {
+        "blocking_cost": 0.42911126167063746,
+        "expected_dangling_minutes": 0.42911126167063746,
+        "false_expiry": 0.4962962962962963,
+        "false_expiry_cost": 4.962962962962963,
+        "lease_minutes": 0.42924999793370566,
+        "numeric_cost_ratio_reacquisition_to_blocking": 10.0,
+        "objective_agent_minutes_per_claim": 5.392074224633601
+      }
+    ],
+    "costs": {
+      "blocking_cost_agent_minutes_per_waiting_minute": 1.0,
+      "numeric_default_ratio": 3.3275333325068157,
+      "reacquisition_cost_agent_minutes": 3.3275333325068157,
+      "reacquisition_derivation": "p50 structured active span per core-active actor / 60; workload proxy, not measured startup overhead"
+    },
+    "curve": [
+      {
+        "blocking_cost": 0.0,
+        "expected_dangling_minutes": 0.0,
+        "false_expiry": 0.9975308641975309,
+        "false_expiry_cost": 3.319317200821614,
+        "lease_minutes": 0.0,
+        "objective_agent_minutes_per_claim": 3.319317200821614
+      },
+      {
+        "blocking_cost": 0.16661279896574013,
+        "expected_dangling_minutes": 0.16661279896574013,
+        "false_expiry": 0.8049382716049382,
+        "false_expiry_cost": 2.6784589293758567,
+        "lease_minutes": 0.16666666666666666,
+        "objective_agent_minutes_per_claim": 2.8450717283415967
+      },
+      {
+        "blocking_cost": 0.2499191984486102,
+        "expected_dangling_minutes": 0.2499191984486102,
+        "false_expiry": 0.7086419753086419,
+        "false_expiry_cost": 2.3580297936529777,
+        "lease_minutes": 0.25,
+        "objective_agent_minutes_per_claim": 2.607948992101588
+      },
+      {
+        "blocking_cost": 0.42911126167063746,
+        "expected_dangling_minutes": 0.42911126167063746,
+        "false_expiry": 0.4962962962962963,
+        "false_expiry_cost": 1.6514424687256049,
+        "lease_minutes": 0.42924999793370566,
+        "objective_agent_minutes_per_claim": 2.0805537303962423
+      },
+      {
+        "blocking_cost": 0.4998383968972204,
+        "expected_dangling_minutes": 0.4998383968972204,
+        "false_expiry": 0.4962962962962963,
+        "false_expiry_cost": 1.6514424687256049,
+        "lease_minutes": 0.5,
+        "objective_agent_minutes_per_claim": 2.1512808656228253
+      },
+      {
+        "blocking_cost": 0.9996429093624714,
+        "expected_dangling_minutes": 0.9996429093624714,
+        "false_expiry": 0.49382716049382713,
+        "false_expiry_cost": 1.6432263370404028,
+        "lease_minutes": 1.0,
+        "objective_agent_minutes_per_claim": 2.6428692464028742
+      },
+      {
+        "blocking_cost": 1.998928728087414,
+        "expected_dangling_minutes": 1.998928728087414,
+        "false_expiry": 0.48641975308641977,
+        "false_expiry_cost": 1.6185779419847968,
+        "lease_minutes": 2.0,
+        "objective_agent_minutes_per_claim": 3.6175066700722107
+      },
+      {
+        "blocking_cost": 4.99464364043707,
+        "expected_dangling_minutes": 4.99464364043707,
+        "false_expiry": 0.4666666666666667,
+        "false_expiry_cost": 1.5528488885031806,
+        "lease_minutes": 5.0,
+        "objective_agent_minutes_per_claim": 6.547492528940251
+      },
+      {
+        "blocking_cost": 9.980310492389819,
+        "expected_dangling_minutes": 9.980310492389819,
+        "false_expiry": 0.43209876543209874,
+        "false_expiry_cost": 1.4378230449103524,
+        "lease_minutes": 10.0,
+        "objective_agent_minutes_per_claim": 11.418133537300172
+      },
+      {
+        "blocking_cost": 14.95693017879061,
+        "expected_dangling_minutes": 14.95693017879061,
+        "false_expiry": 0.39753086419753086,
+        "false_expiry_cost": 1.3227972013175242,
+        "lease_minutes": 15.0,
+        "objective_agent_minutes_per_claim": 16.279727380108135
+      },
+      {
+        "blocking_cost": 29.832639185313464,
+        "expected_dangling_minutes": 29.832639185313464,
+        "false_expiry": 0.2962962962962963,
+        "false_expiry_cost": 0.9859358022242416,
+        "lease_minutes": 30.0,
+        "objective_agent_minutes_per_claim": 30.818574987537705
+      },
+      {
+        "blocking_cost": 59.3403936815559,
+        "expected_dangling_minutes": 59.3403936815559,
+        "false_expiry": 0.0962962962962963,
+        "false_expiry_cost": 0.32042913572287857,
+        "lease_minutes": 60.0,
+        "objective_agent_minutes_per_claim": 59.66082281727878
+      },
+      {
+        "blocking_cost": 117.3809749120602,
+        "expected_dangling_minutes": 117.3809749120602,
+        "false_expiry": 0.0962962962962963,
+        "false_expiry_cost": 0.32042913572287857,
+        "lease_minutes": 120.0,
+        "objective_agent_minutes_per_claim": 117.70140404778307
+      },
+      {
+        "blocking_cost": 229.562700019914,
+        "expected_dangling_minutes": 229.562700019914,
+        "false_expiry": 0.09135802469135802,
+        "false_expiry_cost": 0.3039968723524745,
+        "lease_minutes": 240.0,
+        "objective_agent_minutes_per_claim": 229.86669689226648
+      },
+      {
+        "blocking_cost": 438.32840082300237,
+        "expected_dangling_minutes": 438.32840082300237,
+        "false_expiry": 0.08148148148148149,
+        "false_expiry_cost": 0.2711323456116665,
+        "lease_minutes": 480.0,
+        "objective_agent_minutes_per_claim": 438.599533168614
+      },
+      {
+        "blocking_cost": 626.297102409265,
+        "expected_dangling_minutes": 626.297102409265,
+        "false_expiry": 0.07160493827160494,
+        "false_expiry_cost": 0.2382678188708584,
+        "lease_minutes": 720.0,
+        "objective_agent_minutes_per_claim": 626.5353702281359
+      },
+      {
+        "blocking_cost": 1065.756831282312,
+        "expected_dangling_minutes": 1065.756831282312,
+        "false_expiry": 0.04197530864197531,
+        "false_expiry_cost": 0.13967423864843423,
+        "lease_minutes": 1440.0,
+        "objective_agent_minutes_per_claim": 1065.8965055209605
+      },
+      {
+        "blocking_cost": 1633.4648128570657,
+        "expected_dangling_minutes": 1633.4648128570657,
+        "false_expiry": 0.007407407407407408,
+        "false_expiry_cost": 0.024648395055606044,
+        "lease_minutes": 2880.0,
+        "objective_agent_minutes_per_claim": 1633.4894612521214
+      },
+      {
+        "blocking_cost": 1919.0299838377,
+        "expected_dangling_minutes": 1919.0299838377,
+        "false_expiry": 0.0024691358024691358,
+        "false_expiry_cost": 0.008216131685202015,
+        "lease_minutes": 4320.0,
+        "objective_agent_minutes_per_claim": 1919.0381999693852
+      },
+      {
+        "blocking_cost": 2163.798928180164,
+        "expected_dangling_minutes": 2163.798928180164,
+        "false_expiry": 0.0,
+        "false_expiry_cost": 0.0,
+        "lease_minutes": 10080.0,
+        "objective_agent_minutes_per_claim": 2163.798928180164
+      }
+    ],
+    "definitions": {
+      "expected_dangling": "mean min(L,D) over reconstructed last-write-to-observed-end linger",
+      "false_expiry": "fraction of reconstructed read-to-write intervals strictly greater than L",
+      "objective": "FalseExpiry(L)*ReacquisitionCost + ExpectedDanglingTime(L)*BlockingCost",
+      "units": "minutes and agent-minutes per claim"
+    },
+    "inputs": {
+      "linger": {
+        "count": 3094,
+        "max": 1329345.2690000534,
+        "p50": 83035.18700003624,
+        "p90": 259336.9390001297,
+        "p99": 511917.3789999485,
+        "percentile_method": "nearest-rank; rank=ceil(p*n)"
+      },
+      "reacquisition_proxy": {
+        "count": 3765,
+        "max": 1352179.269999981,
+        "p50": 199.65199995040894,
+        "p90": 1991.7639999389648,
+        "p99": 31021.292999982834,
+        "percentile_method": "nearest-rank; rank=ceil(p*n)"
+      },
+      "read_to_write": {
+        "count": 405,
+        "max": 278233.52100014687,
+        "p50": 25.75499987602234,
+        "p90": 3519.388000011444,
+        "p99": 133320.74100017548,
+        "percentile_method": "nearest-rank; rank=ceil(p*n)"
+      }
+    },
+    "optimum": {
+      "blocking_cost": 0.42911126167063746,
+      "expected_dangling_minutes": 0.42911126167063746,
+      "false_expiry": 0.4962962962962963,
+      "false_expiry_cost": 1.6514424687256049,
+      "lease_minutes": 0.42924999793370566,
+      "objective_agent_minutes_per_claim": 2.0805537303962423
+    },
+    "reconstruction": {
+      "linger_reconstructed_count": 3094,
+      "method": "piecewise-linear quantile function through minimum=0, p50, p90, p99, and maximum; forced to reproduce reported nearest ranks",
+      "read_to_write_reconstructed_count": 405
+    },
+    "scenario_lease_maximum_minutes": 0.42924999793370566,
+    "scenario_lease_minimum_minutes": 0.42924999793370566,
+    "status": "provisional_quantile_reconstruction_not_empirical",
+    "summary_consistent_extreme_scenarios": [
+      {
+        "blocking_cost": 0.21476373522992134,
+        "expected_dangling_minutes": 0.21476373522992134,
+        "false_expiry": 0.10123456790123457,
+        "false_expiry_cost": 0.3368613990932826,
+        "lease_minutes": 0.42924999793370566,
+        "linger_scenario": "low",
+        "objective_agent_minutes_per_claim": 0.5516251343232039,
+        "read_write_scenario": "low"
+      },
+      {
+        "blocking_cost": 0.4292499979337058,
+        "expected_dangling_minutes": 0.4292499979337058,
+        "false_expiry": 0.10123456790123457,
+        "false_expiry_cost": 0.3368613990932826,
+        "lease_minutes": 0.42924999793370566,
+        "linger_scenario": "high",
+        "objective_agent_minutes_per_claim": 0.7661113970269884,
+        "read_write_scenario": "low"
+      },
+      {
+        "blocking_cost": 0.21476373522992134,
+        "expected_dangling_minutes": 0.21476373522992134,
+        "false_expiry": 0.49876543209876545,
+        "false_expiry_cost": 1.659658600410807,
+        "lease_minutes": 0.42924999793370566,
+        "linger_scenario": "low",
+        "objective_agent_minutes_per_claim": 1.8744223356407284,
+        "read_write_scenario": "high"
+      },
+      {
+        "blocking_cost": 0.4292499979337058,
+        "expected_dangling_minutes": 0.4292499979337058,
+        "false_expiry": 0.49876543209876545,
+        "false_expiry_cost": 1.659658600410807,
+        "lease_minutes": 0.42924999793370566,
+        "linger_scenario": "high",
+        "objective_agent_minutes_per_claim": 2.0889085983445126,
+        "read_write_scenario": "high"
+      }
+    ]
+  },
+  "provenance": {
+    "conflict_row_files": [
+      {
+        "bytes": 668750,
+        "path": "corpus/conflicts/ansible__ansible.jsonl",
+        "rows": 83,
+        "sha256": "032c0fda0f69786edbf31a248ca842f1edef8118f3243803cf708072bb1ed02d"
+      },
+      {
+        "bytes": 144707,
+        "path": "corpus/conflicts/apache__commons-lang.jsonl",
+        "rows": 25,
+        "sha256": "aad01a6946c91cada8e6f47097b77f49f692339cd4cc9c343d665d8328db391c"
+      },
+      {
+        "bytes": 0,
+        "path": "corpus/conflicts/BurntSushi__ripgrep.jsonl",
+        "rows": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "bytes": 127711,
+        "path": "corpus/conflicts/chinabugotech__hutool.jsonl",
+        "rows": 14,
+        "sha256": "4b6aa021f83c43c5a7734cbf99ffadc34793fef1ed06c32a77ac2910c18fada7"
+      },
+      {
+        "bytes": 16405812,
+        "path": "corpus/conflicts/gohugoio__hugo.jsonl",
+        "rows": 124,
+        "sha256": "ef19ab06e7a08604525bfbe1db08a45ae0bb033e44df1b607ea01ce037f10d66"
+      },
+      {
+        "bytes": 0,
+        "path": "corpus/conflicts/hashicorp__terraform-provider-random.jsonl",
+        "rows": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "bytes": 157759,
+        "path": "corpus/conflicts/hashicorp__terraform.jsonl",
+        "rows": 17,
+        "sha256": "ad33caada4c91461d03cbdd8d2fdabc5ad484b16a414625fceba4191d2dca949"
+      },
+      {
+        "bytes": 9078,
+        "path": "corpus/conflicts/jupyter__notebook.jsonl",
+        "rows": 2,
+        "sha256": "a623c0eaa041600003e9064815dd56daa664eb194148e49080a13fb505b4a813"
+      },
+      {
+        "bytes": 470041,
+        "path": "corpus/conflicts/pallets__click.jsonl",
+        "rows": 73,
+        "sha256": "3313f832b07923b234aa14f43f92f0239a1145b08825be60b42c5f6a1fbfdf98"
+      },
+      {
+        "bytes": 82934,
+        "path": "corpus/conflicts/pallets__itsdangerous.jsonl",
+        "rows": 13,
+        "sha256": "7c91c3d488dc0d7945703304e7706e719a8baf28c69f1566d2b8adc7bfbab696"
+      },
+      {
+        "bytes": 725980,
+        "path": "corpus/conflicts/prometheus__prometheus.jsonl",
+        "rows": 25,
+        "sha256": "1e64d971218423a572cb8c4e799fe5ff9f1cb6196549970c8c343dcd974882fa"
+      },
+      {
+        "bytes": 53414,
+        "path": "corpus/conflicts/psf__requests.jsonl",
+        "rows": 13,
+        "sha256": "ee49e2216526d9334739494a47f0d3dac672abe4e367fab3fbf67d2a5b273502"
+      },
+      {
+        "bytes": 28875,
+        "path": "corpus/conflicts/pygments__pygments.jsonl",
+        "rows": 3,
+        "sha256": "f27275b9460fb867a33561775652f23cba89252f4317e392ade11f913f0f4101"
+      },
+      {
+        "bytes": 139653,
+        "path": "corpus/conflicts/redis__redis.jsonl",
+        "rows": 24,
+        "sha256": "ebe6dd078408e2bc3348b32d159e268bda976f32297a14312db9f7c0712504f5"
+      },
+      {
+        "bytes": 0,
+        "path": "corpus/conflicts/superfluid-org__protocol-monorepo.jsonl",
+        "rows": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "bytes": 0,
+        "path": "corpus/conflicts/ydb-platform__ydb.jsonl",
+        "rows": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    ],
+    "other_load_bearing_sources": [
+      {
+        "bytes": 152657,
+        "path": "exploratory/build-params/parameters.json",
+        "sha256": "51382e90e6d22860fa7ef3e526ddd5cca1884fc42a6b2a8496e05f023bdef837"
+      },
+      {
+        "bytes": 27542150,
+        "path": "exploratory/arms/sites.json",
+        "sha256": "2a7e87029f40428859339cf4c91654eaec84c929485098111c4fd07fa4a84bc0"
+      },
+      {
+        "bytes": 44645,
+        "path": "exploratory/conflicts/MINING.md",
+        "sha256": "2e6ac03ca19f69803cd078032b4bba525aeeec9931c24675c1c5f8e4f2d72d6f"
+      },
+      {
+        "bytes": 24104,
+        "path": "exploratory/conflicts/REANALYSIS.md",
+        "sha256": "e24c7a84a0f41fa26e769bf513c66af1700ae5abd77c68ac2755741d4ad7a938"
+      },
+      {
+        "bytes": 20727,
+        "path": "exploratory/conflicts/SEMANTIC.md",
+        "sha256": "657c338cfb065ad428ceb411d0d1714cb3ce554dbd289e77c5e331525d0be014"
+      }
+    ]
+  },
+  "schema_version": "blast-radius-hazard-models/1"
+}

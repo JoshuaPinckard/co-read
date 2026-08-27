@@ -1,0 +1,1 @@
+<?xml version="1.0" encoding="utf-8"?><testsuites name="pytest tests"><testsuite name="pytest" errors="0" failures="0" skipped="0" tests="1" time="0.122" timestamp="2026-08-24T08:24:26.850012-07:00" hostname="JoshP"><testcase classname="tests.snippets.googlesql.test_leading_substring_set_not_keyword.txt" name="" time="0.046" /></testsuite></testsuites>

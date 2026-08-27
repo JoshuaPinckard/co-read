@@ -1,0 +1,120 @@
+{
+  "base": "5c77dc02d64d0f61691779248d784d2add9a8ce0",
+  "canonical_merge_tree": {
+    "exit_code": 1,
+    "matches_canonical_row": true,
+    "result_tree": "440aef6b94d227d8457142bfefcdd6fdef6ce706",
+    "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "stdout_sha256": "51223bb27605f181cbe259e394ee498a5c7076d6b5d0ca66b4c3f11357c9632e"
+  },
+  "conflicted_paths": [
+    "tests/test_shell.py"
+  ],
+  "corpus_line": 2,
+  "joint_source": {
+    "constructible": true,
+    "index_verification": {
+      "actual_changed_paths": [
+        "pygments/lexer.py",
+        "pygments/lexers/shell.py"
+      ],
+      "actual_entries_sha256": "608bc643ac7d32b486a0e3944c16d173d244ca265135a9ecc4bd0e3aba39947a",
+      "actual_tree": "d572592ad0a6ff71b353f077ae40f1dee32637b7",
+      "base": "5c77dc02d64d0f61691779248d784d2add9a8ce0",
+      "changed_paths_match_exactly": true,
+      "declared_paths": [
+        "pygments/lexer.py",
+        "pygments/lexers/shell.py"
+      ],
+      "expected_changed_paths": [
+        "pygments/lexer.py",
+        "pygments/lexers/shell.py"
+      ],
+      "modes_and_oids_match": true,
+      "no_outside_path_changed": true,
+      "outside_declared_paths": [],
+      "path_count": 2,
+      "target": "440aef6b94d227d8457142bfefcdd6fdef6ce706",
+      "target_entries_sha256": "608bc643ac7d32b486a0e3944c16d173d244ca265135a9ecc4bd0e3aba39947a",
+      "verified": true
+    },
+    "patch": {
+      "bytes": 1645,
+      "path": "exploratory/arms/patches/pygments__pygments/00a31bcae2f61ce74ccfabd05be2731bfc7a5a28/joint-source.patch",
+      "sha256": "5fcf52dcac1ae1f3f5c59bc8a54da34c863403fb9e83374c5ff96a663c298445"
+    },
+    "reason": null,
+    "source_conflict_paths": [],
+    "source_paths": [
+      "pygments/lexer.py",
+      "pygments/lexers/shell.py"
+    ]
+  },
+  "merge": "00a31bcae2f61ce74ccfabd05be2731bfc7a5a28",
+  "parents": [
+    "a3d4100a31dccefbe7701a7ac04c4e354c03a188",
+    "456ac59d8481c09c29ea9f771550a933ba70edb8"
+  ],
+  "prepared_at_utc": "2026-08-25T16:20:36.167+00:00",
+  "protocol_sha256": "fb1c0a9f9c7b48c30178d8a7e737250e18535ada63959c49c73c180505c69828",
+  "repo_slug": "pygments__pygments",
+  "repository": "pygments/pygments",
+  "result_tree": "440aef6b94d227d8457142bfefcdd6fdef6ce706",
+  "runner_sha256": "e04bc99409e584636ce8cb81cc22f6a7ca9c917f9ec9e46ab68a4c2328b6b6c6",
+  "schema_version": 1,
+  "sides": {
+    "parent1": {
+      "changed_paths": [
+        "pygments/lexer.py",
+        "tests/test_cfm.py",
+        "tests/test_latex_formatter.py",
+        "tests/test_shell.py"
+      ],
+      "parent": "a3d4100a31dccefbe7701a7ac04c4e354c03a188",
+      "reconstructed_parent_tree": "7dce3fb31a1126891855bc3857f27993a0e45074",
+      "source_patch": {
+        "bytes": 1087,
+        "path": "exploratory/arms/patches/pygments__pygments/00a31bcae2f61ce74ccfabd05be2731bfc7a5a28/parent1-source.patch",
+        "sha256": "fb335fa3272e829ea2b6b1d579e77a48664b48efef60052cd8f7f58955a7efcf"
+      },
+      "source_paths": [
+        "pygments/lexer.py"
+      ],
+      "test_patch": {
+        "bytes": 5163,
+        "path": "exploratory/arms/patches/pygments__pygments/00a31bcae2f61ce74ccfabd05be2731bfc7a5a28/parent1-test.patch",
+        "sha256": "221dc5cdac69b8ed695ad4824afab5bc7f76b42b23a7ef6e06a9fdbb03ff93c6"
+      },
+      "test_paths": [
+        "tests/test_cfm.py",
+        "tests/test_latex_formatter.py",
+        "tests/test_shell.py"
+      ]
+    },
+    "parent2": {
+      "changed_paths": [
+        "pygments/lexers/shell.py",
+        "tests/test_shell.py"
+      ],
+      "parent": "456ac59d8481c09c29ea9f771550a933ba70edb8",
+      "reconstructed_parent_tree": "96f2fa58f4e3439a3ac5c0cb3f68916331735a97",
+      "source_patch": {
+        "bytes": 558,
+        "path": "exploratory/arms/patches/pygments__pygments/00a31bcae2f61ce74ccfabd05be2731bfc7a5a28/parent2-source.patch",
+        "sha256": "de7ab17dc38a7a4861d4ac5bc685891531f5e760fae5b90bc082e803b6222684"
+      },
+      "source_paths": [
+        "pygments/lexers/shell.py"
+      ],
+      "test_patch": {
+        "bytes": 1929,
+        "path": "exploratory/arms/patches/pygments__pygments/00a31bcae2f61ce74ccfabd05be2731bfc7a5a28/parent2-test.patch",
+        "sha256": "ea34721272044170486631b7c01a232034efe24abc758a991f7212e9d96b7286"
+      },
+      "test_paths": [
+        "tests/test_shell.py"
+      ]
+    }
+  },
+  "site_index": 0
+}

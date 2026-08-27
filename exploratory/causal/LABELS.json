@@ -1,0 +1,2939 @@
+{
+  "description": "File-level dynamic execution dependencies under function-entry RuntimeError perturbation.",
+  "labels": [
+    {
+      "base": "base-control",
+      "depended": false,
+      "file": "click/__init__.py",
+      "focal_test": "tests/test_basic.py::test_boolean_conversion",
+      "functions_perturbed": 0,
+      "seconds": 0.615506,
+      "task": "pr-973"
+    },
+    {
+      "base": "base-control",
+      "depended": false,
+      "file": "click/_bashcomplete.py",
+      "focal_test": "tests/test_basic.py::test_boolean_conversion",
+      "functions_perturbed": 10,
+      "seconds": 0.558413,
+      "task": "pr-973"
+    },
+    {
+      "base": "base-control",
+      "depended": true,
+      "file": "click/_compat.py",
+      "focal_test": "tests/test_basic.py::test_boolean_conversion",
+      "functions_perturbed": 64,
+      "seconds": 0.405476,
+      "task": "pr-973"
+    },
+    {
+      "base": "base-control",
+      "depended": false,
+      "file": "click/_termui_impl.py",
+      "focal_test": "tests/test_basic.py::test_boolean_conversion",
+      "functions_perturbed": 35,
+      "seconds": 0.538979,
+      "task": "pr-973"
+    },
+    {
+      "base": "base-control",
+      "depended": false,
+      "file": "click/_textwrap.py",
+      "focal_test": "tests/test_basic.py::test_boolean_conversion",
+      "functions_perturbed": 3,
+      "seconds": 0.495092,
+      "task": "pr-973"
+    },
+    {
+      "base": "base-control",
+      "depended": true,
+      "file": "click/_unicodefun.py",
+      "focal_test": "tests/test_basic.py::test_boolean_conversion",
+      "functions_perturbed": 3,
+      "seconds": 0.968593,
+      "task": "pr-973"
+    },
+    {
+      "base": "base-control",
+      "depended": false,
+      "file": "click/_winconsole.py",
+      "focal_test": "tests/test_basic.py::test_boolean_conversion",
+      "functions_perturbed": 21,
+      "seconds": 0.533451,
+      "task": "pr-973"
+    },
+    {
+      "base": "base-control",
+      "depended": true,
+      "file": "click/core.py",
+      "focal_test": "tests/test_basic.py::test_boolean_conversion",
+      "functions_perturbed": 113,
+      "seconds": 0.588344,
+      "task": "pr-973"
+    },
+    {
+      "base": "base-control",
+      "depended": true,
+      "file": "click/decorators.py",
+      "focal_test": "tests/test_basic.py::test_boolean_conversion",
+      "functions_perturbed": 27,
+      "seconds": 0.611562,
+      "task": "pr-973"
+    },
+    {
+      "base": "base-control",
+      "depended": true,
+      "file": "click/exceptions.py",
+      "focal_test": "tests/test_basic.py::test_boolean_conversion",
+      "functions_perturbed": 19,
+      "seconds": 0.55084,
+      "task": "pr-973"
+    },
+    {
+      "base": "base-control",
+      "depended": false,
+      "file": "click/formatting.py",
+      "focal_test": "tests/test_basic.py::test_boolean_conversion",
+      "functions_perturbed": 17,
+      "seconds": 0.485536,
+      "task": "pr-973"
+    },
+    {
+      "base": "base-control",
+      "depended": true,
+      "file": "click/globals.py",
+      "focal_test": "tests/test_basic.py::test_boolean_conversion",
+      "functions_perturbed": 4,
+      "seconds": 0.550711,
+      "task": "pr-973"
+    },
+    {
+      "base": "base-control",
+      "depended": true,
+      "file": "click/parser.py",
+      "focal_test": "tests/test_basic.py::test_boolean_conversion",
+      "functions_perturbed": 21,
+      "seconds": 0.565403,
+      "task": "pr-973"
+    },
+    {
+      "base": "base-control",
+      "depended": false,
+      "file": "click/termui.py",
+      "focal_test": "tests/test_basic.py::test_boolean_conversion",
+      "functions_perturbed": 18,
+      "seconds": 0.502025,
+      "task": "pr-973"
+    },
+    {
+      "base": "base-control",
+      "depended": true,
+      "file": "click/testing.py",
+      "focal_test": "tests/test_basic.py::test_boolean_conversion",
+      "functions_perturbed": 24,
+      "seconds": 0.514386,
+      "task": "pr-973"
+    },
+    {
+      "base": "base-control",
+      "depended": true,
+      "file": "click/utils.py",
+      "focal_test": "tests/test_basic.py::test_boolean_conversion",
+      "functions_perturbed": 27,
+      "seconds": 0.647036,
+      "task": "pr-973"
+    },
+    {
+      "base": "base-control",
+      "depended": false,
+      "file": "docs/conf.py",
+      "focal_test": "tests/test_basic.py::test_boolean_conversion",
+      "functions_perturbed": 0,
+      "seconds": 0.46508,
+      "task": "pr-973"
+    },
+    {
+      "base": "base-control",
+      "depended": false,
+      "file": "examples/aliases/aliases.py",
+      "focal_test": "tests/test_basic.py::test_boolean_conversion",
+      "functions_perturbed": 10,
+      "seconds": 0.475592,
+      "task": "pr-973"
+    },
+    {
+      "base": "base-control",
+      "depended": false,
+      "file": "examples/aliases/setup.py",
+      "focal_test": "tests/test_basic.py::test_boolean_conversion",
+      "functions_perturbed": 0,
+      "seconds": 0.490114,
+      "task": "pr-973"
+    },
+    {
+      "base": "base-control",
+      "depended": false,
+      "file": "examples/bashcompletion/bashcompletion.py",
+      "focal_test": "tests/test_basic.py::test_boolean_conversion",
+      "functions_perturbed": 6,
+      "seconds": 0.498933,
+      "task": "pr-973"
+    },
+    {
+      "base": "base-control",
+      "depended": false,
+      "file": "examples/bashcompletion/setup.py",
+      "focal_test": "tests/test_basic.py::test_boolean_conversion",
+      "functions_perturbed": 0,
+      "seconds": 0.498206,
+      "task": "pr-973"
+    },
+    {
+      "base": "base-control",
+      "depended": false,
+      "file": "examples/colors/colors.py",
+      "focal_test": "tests/test_basic.py::test_boolean_conversion",
+      "functions_perturbed": 1,
+      "seconds": 0.580115,
+      "task": "pr-973"
+    },
+    {
+      "base": "base-control",
+      "depended": false,
+      "file": "examples/colors/setup.py",
+      "focal_test": "tests/test_basic.py::test_boolean_conversion",
+      "functions_perturbed": 0,
+      "seconds": 0.442706,
+      "task": "pr-973"
+    },
+    {
+      "base": "base-control",
+      "depended": false,
+      "file": "examples/complex/complex/__init__.py",
+      "focal_test": "tests/test_basic.py::test_boolean_conversion",
+      "functions_perturbed": 0,
+      "seconds": 0.510056,
+      "task": "pr-973"
+    },
+    {
+      "base": "base-control",
+      "depended": false,
+      "file": "examples/complex/complex/cli.py",
+      "focal_test": "tests/test_basic.py::test_boolean_conversion",
+      "functions_perturbed": 6,
+      "seconds": 0.513299,
+      "task": "pr-973"
+    },
+    {
+      "base": "base-control",
+      "depended": false,
+      "file": "examples/complex/complex/commands/__init__.py",
+      "focal_test": "tests/test_basic.py::test_boolean_conversion",
+      "functions_perturbed": 0,
+      "seconds": 0.459339,
+      "task": "pr-973"
+    },
+    {
+      "base": "base-control",
+      "depended": false,
+      "file": "examples/complex/complex/commands/cmd_init.py",
+      "focal_test": "tests/test_basic.py::test_boolean_conversion",
+      "functions_perturbed": 1,
+      "seconds": 0.530755,
+      "task": "pr-973"
+    },
+    {
+      "base": "base-control",
+      "depended": false,
+      "file": "examples/complex/complex/commands/cmd_status.py",
+      "focal_test": "tests/test_basic.py::test_boolean_conversion",
+      "functions_perturbed": 1,
+      "seconds": 0.43843,
+      "task": "pr-973"
+    },
+    {
+      "base": "base-control",
+      "depended": false,
+      "file": "examples/complex/setup.py",
+      "focal_test": "tests/test_basic.py::test_boolean_conversion",
+      "functions_perturbed": 0,
+      "seconds": 0.504368,
+      "task": "pr-973"
+    },
+    {
+      "base": "base-control",
+      "depended": false,
+      "file": "examples/imagepipe/imagepipe.py",
+      "focal_test": "tests/test_basic.py::test_boolean_conversion",
+      "functions_perturbed": 21,
+      "seconds": 0.441229,
+      "task": "pr-973"
+    },
+    {
+      "base": "base-control",
+      "depended": false,
+      "file": "examples/imagepipe/setup.py",
+      "focal_test": "tests/test_basic.py::test_boolean_conversion",
+      "functions_perturbed": 0,
+      "seconds": 0.514254,
+      "task": "pr-973"
+    },
+    {
+      "base": "base-control",
+      "depended": false,
+      "file": "examples/inout/inout.py",
+      "focal_test": "tests/test_basic.py::test_boolean_conversion",
+      "functions_perturbed": 1,
+      "seconds": 0.45339,
+      "task": "pr-973"
+    },
+    {
+      "base": "base-control",
+      "depended": false,
+      "file": "examples/inout/setup.py",
+      "focal_test": "tests/test_basic.py::test_boolean_conversion",
+      "functions_perturbed": 0,
+      "seconds": 0.490371,
+      "task": "pr-973"
+    },
+    {
+      "base": "base-control",
+      "depended": false,
+      "file": "examples/naval/naval.py",
+      "focal_test": "tests/test_basic.py::test_boolean_conversion",
+      "functions_perturbed": 8,
+      "seconds": 0.560299,
+      "task": "pr-973"
+    },
+    {
+      "base": "base-control",
+      "depended": false,
+      "file": "examples/naval/setup.py",
+      "focal_test": "tests/test_basic.py::test_boolean_conversion",
+      "functions_perturbed": 0,
+      "seconds": 0.547372,
+      "task": "pr-973"
+    },
+    {
+      "base": "base-control",
+      "depended": false,
+      "file": "examples/repo/repo.py",
+      "focal_test": "tests/test_basic.py::test_boolean_conversion",
+      "functions_perturbed": 9,
+      "seconds": 0.490566,
+      "task": "pr-973"
+    },
+    {
+      "base": "base-control",
+      "depended": false,
+      "file": "examples/repo/setup.py",
+      "focal_test": "tests/test_basic.py::test_boolean_conversion",
+      "functions_perturbed": 0,
+      "seconds": 0.450172,
+      "task": "pr-973"
+    },
+    {
+      "base": "base-control",
+      "depended": false,
+      "file": "examples/termui/setup.py",
+      "focal_test": "tests/test_basic.py::test_boolean_conversion",
+      "functions_perturbed": 0,
+      "seconds": 0.485033,
+      "task": "pr-973"
+    },
+    {
+      "base": "base-control",
+      "depended": false,
+      "file": "examples/termui/termui.py",
+      "focal_test": "tests/test_basic.py::test_boolean_conversion",
+      "functions_perturbed": 13,
+      "seconds": 0.508716,
+      "task": "pr-973"
+    },
+    {
+      "base": "base-control",
+      "depended": false,
+      "file": "examples/validation/setup.py",
+      "focal_test": "tests/test_basic.py::test_boolean_conversion",
+      "functions_perturbed": 0,
+      "seconds": 0.463564,
+      "task": "pr-973"
+    },
+    {
+      "base": "base-control",
+      "depended": false,
+      "file": "examples/validation/validation.py",
+      "focal_test": "tests/test_basic.py::test_boolean_conversion",
+      "functions_perturbed": 3,
+      "seconds": 0.461195,
+      "task": "pr-973"
+    },
+    {
+      "base": "base-control",
+      "depended": false,
+      "file": "setup.py",
+      "focal_test": "tests/test_basic.py::test_boolean_conversion",
+      "functions_perturbed": 0,
+      "seconds": 0.528983,
+      "task": "pr-973"
+    },
+    {
+      "base": "base-control",
+      "depended": false,
+      "file": "click/__init__.py",
+      "focal_test": "tests/test_options.py::test_option_custom_class_reusable",
+      "functions_perturbed": 0,
+      "seconds": 0.436744,
+      "task": "pr-994"
+    },
+    {
+      "base": "base-control",
+      "depended": false,
+      "file": "click/_bashcomplete.py",
+      "focal_test": "tests/test_options.py::test_option_custom_class_reusable",
+      "functions_perturbed": 10,
+      "seconds": 0.453044,
+      "task": "pr-994"
+    },
+    {
+      "base": "base-control",
+      "depended": true,
+      "file": "click/_compat.py",
+      "focal_test": "tests/test_options.py::test_option_custom_class_reusable",
+      "functions_perturbed": 64,
+      "seconds": 0.443142,
+      "task": "pr-994"
+    },
+    {
+      "base": "base-control",
+      "depended": false,
+      "file": "click/_termui_impl.py",
+      "focal_test": "tests/test_options.py::test_option_custom_class_reusable",
+      "functions_perturbed": 35,
+      "seconds": 0.479131,
+      "task": "pr-994"
+    },
+    {
+      "base": "base-control",
+      "depended": false,
+      "file": "click/_textwrap.py",
+      "focal_test": "tests/test_options.py::test_option_custom_class_reusable",
+      "functions_perturbed": 3,
+      "seconds": 0.467814,
+      "task": "pr-994"
+    },
+    {
+      "base": "base-control",
+      "depended": true,
+      "file": "click/_unicodefun.py",
+      "focal_test": "tests/test_options.py::test_option_custom_class_reusable",
+      "functions_perturbed": 3,
+      "seconds": 0.483954,
+      "task": "pr-994"
+    },
+    {
+      "base": "base-control",
+      "depended": false,
+      "file": "click/_winconsole.py",
+      "focal_test": "tests/test_options.py::test_option_custom_class_reusable",
+      "functions_perturbed": 21,
+      "seconds": 0.45505,
+      "task": "pr-994"
+    },
+    {
+      "base": "base-control",
+      "depended": true,
+      "file": "click/core.py",
+      "focal_test": "tests/test_options.py::test_option_custom_class_reusable",
+      "functions_perturbed": 113,
+      "seconds": 0.495846,
+      "task": "pr-994"
+    },
+    {
+      "base": "base-control",
+      "depended": false,
+      "file": "click/exceptions.py",
+      "focal_test": "tests/test_options.py::test_option_custom_class_reusable",
+      "functions_perturbed": 19,
+      "seconds": 0.429678,
+      "task": "pr-994"
+    },
+    {
+      "base": "base-control",
+      "depended": true,
+      "file": "click/formatting.py",
+      "focal_test": "tests/test_options.py::test_option_custom_class_reusable",
+      "functions_perturbed": 17,
+      "seconds": 0.517396,
+      "task": "pr-994"
+    },
+    {
+      "base": "base-control",
+      "depended": true,
+      "file": "click/globals.py",
+      "focal_test": "tests/test_options.py::test_option_custom_class_reusable",
+      "functions_perturbed": 4,
+      "seconds": 0.507999,
+      "task": "pr-994"
+    },
+    {
+      "base": "base-control",
+      "depended": true,
+      "file": "click/parser.py",
+      "focal_test": "tests/test_options.py::test_option_custom_class_reusable",
+      "functions_perturbed": 21,
+      "seconds": 0.585659,
+      "task": "pr-994"
+    },
+    {
+      "base": "base-control",
+      "depended": false,
+      "file": "click/termui.py",
+      "focal_test": "tests/test_options.py::test_option_custom_class_reusable",
+      "functions_perturbed": 18,
+      "seconds": 0.498053,
+      "task": "pr-994"
+    },
+    {
+      "base": "base-control",
+      "depended": true,
+      "file": "click/testing.py",
+      "focal_test": "tests/test_options.py::test_option_custom_class_reusable",
+      "functions_perturbed": 24,
+      "seconds": 0.516523,
+      "task": "pr-994"
+    },
+    {
+      "base": "base-control",
+      "depended": true,
+      "file": "click/types.py",
+      "focal_test": "tests/test_options.py::test_option_custom_class_reusable",
+      "functions_perturbed": 43,
+      "seconds": 0.5577,
+      "task": "pr-994"
+    },
+    {
+      "base": "base-control",
+      "depended": true,
+      "file": "click/utils.py",
+      "focal_test": "tests/test_options.py::test_option_custom_class_reusable",
+      "functions_perturbed": 27,
+      "seconds": 0.512374,
+      "task": "pr-994"
+    },
+    {
+      "base": "base-control",
+      "depended": false,
+      "file": "docs/conf.py",
+      "focal_test": "tests/test_options.py::test_option_custom_class_reusable",
+      "functions_perturbed": 0,
+      "seconds": 0.419385,
+      "task": "pr-994"
+    },
+    {
+      "base": "base-control",
+      "depended": false,
+      "file": "examples/aliases/aliases.py",
+      "focal_test": "tests/test_options.py::test_option_custom_class_reusable",
+      "functions_perturbed": 10,
+      "seconds": 0.458554,
+      "task": "pr-994"
+    },
+    {
+      "base": "base-control",
+      "depended": false,
+      "file": "examples/aliases/setup.py",
+      "focal_test": "tests/test_options.py::test_option_custom_class_reusable",
+      "functions_perturbed": 0,
+      "seconds": 0.436228,
+      "task": "pr-994"
+    },
+    {
+      "base": "base-control",
+      "depended": false,
+      "file": "examples/bashcompletion/bashcompletion.py",
+      "focal_test": "tests/test_options.py::test_option_custom_class_reusable",
+      "functions_perturbed": 6,
+      "seconds": 0.436793,
+      "task": "pr-994"
+    },
+    {
+      "base": "base-control",
+      "depended": false,
+      "file": "examples/bashcompletion/setup.py",
+      "focal_test": "tests/test_options.py::test_option_custom_class_reusable",
+      "functions_perturbed": 0,
+      "seconds": 0.501373,
+      "task": "pr-994"
+    },
+    {
+      "base": "base-control",
+      "depended": false,
+      "file": "examples/colors/colors.py",
+      "focal_test": "tests/test_options.py::test_option_custom_class_reusable",
+      "functions_perturbed": 1,
+      "seconds": 0.525038,
+      "task": "pr-994"
+    },
+    {
+      "base": "base-control",
+      "depended": false,
+      "file": "examples/colors/setup.py",
+      "focal_test": "tests/test_options.py::test_option_custom_class_reusable",
+      "functions_perturbed": 0,
+      "seconds": 0.487186,
+      "task": "pr-994"
+    },
+    {
+      "base": "base-control",
+      "depended": false,
+      "file": "examples/complex/complex/__init__.py",
+      "focal_test": "tests/test_options.py::test_option_custom_class_reusable",
+      "functions_perturbed": 0,
+      "seconds": 0.44144,
+      "task": "pr-994"
+    },
+    {
+      "base": "base-control",
+      "depended": false,
+      "file": "examples/complex/complex/cli.py",
+      "focal_test": "tests/test_options.py::test_option_custom_class_reusable",
+      "functions_perturbed": 6,
+      "seconds": 0.445436,
+      "task": "pr-994"
+    },
+    {
+      "base": "base-control",
+      "depended": false,
+      "file": "examples/complex/complex/commands/__init__.py",
+      "focal_test": "tests/test_options.py::test_option_custom_class_reusable",
+      "functions_perturbed": 0,
+      "seconds": 0.428051,
+      "task": "pr-994"
+    },
+    {
+      "base": "base-control",
+      "depended": false,
+      "file": "examples/complex/complex/commands/cmd_init.py",
+      "focal_test": "tests/test_options.py::test_option_custom_class_reusable",
+      "functions_perturbed": 1,
+      "seconds": 0.444952,
+      "task": "pr-994"
+    },
+    {
+      "base": "base-control",
+      "depended": false,
+      "file": "examples/complex/complex/commands/cmd_status.py",
+      "focal_test": "tests/test_options.py::test_option_custom_class_reusable",
+      "functions_perturbed": 1,
+      "seconds": 0.422662,
+      "task": "pr-994"
+    },
+    {
+      "base": "base-control",
+      "depended": false,
+      "file": "examples/complex/setup.py",
+      "focal_test": "tests/test_options.py::test_option_custom_class_reusable",
+      "functions_perturbed": 0,
+      "seconds": 0.450759,
+      "task": "pr-994"
+    },
+    {
+      "base": "base-control",
+      "depended": false,
+      "file": "examples/imagepipe/imagepipe.py",
+      "focal_test": "tests/test_options.py::test_option_custom_class_reusable",
+      "functions_perturbed": 21,
+      "seconds": 0.478767,
+      "task": "pr-994"
+    },
+    {
+      "base": "base-control",
+      "depended": false,
+      "file": "examples/imagepipe/setup.py",
+      "focal_test": "tests/test_options.py::test_option_custom_class_reusable",
+      "functions_perturbed": 0,
+      "seconds": 0.526236,
+      "task": "pr-994"
+    },
+    {
+      "base": "base-control",
+      "depended": false,
+      "file": "examples/inout/inout.py",
+      "focal_test": "tests/test_options.py::test_option_custom_class_reusable",
+      "functions_perturbed": 1,
+      "seconds": 0.467007,
+      "task": "pr-994"
+    },
+    {
+      "base": "base-control",
+      "depended": false,
+      "file": "examples/inout/setup.py",
+      "focal_test": "tests/test_options.py::test_option_custom_class_reusable",
+      "functions_perturbed": 0,
+      "seconds": 0.489001,
+      "task": "pr-994"
+    },
+    {
+      "base": "base-control",
+      "depended": false,
+      "file": "examples/naval/naval.py",
+      "focal_test": "tests/test_options.py::test_option_custom_class_reusable",
+      "functions_perturbed": 8,
+      "seconds": 0.49151,
+      "task": "pr-994"
+    },
+    {
+      "base": "base-control",
+      "depended": false,
+      "file": "examples/naval/setup.py",
+      "focal_test": "tests/test_options.py::test_option_custom_class_reusable",
+      "functions_perturbed": 0,
+      "seconds": 0.485048,
+      "task": "pr-994"
+    },
+    {
+      "base": "base-control",
+      "depended": false,
+      "file": "examples/repo/repo.py",
+      "focal_test": "tests/test_options.py::test_option_custom_class_reusable",
+      "functions_perturbed": 9,
+      "seconds": 0.47526,
+      "task": "pr-994"
+    },
+    {
+      "base": "base-control",
+      "depended": false,
+      "file": "examples/repo/setup.py",
+      "focal_test": "tests/test_options.py::test_option_custom_class_reusable",
+      "functions_perturbed": 0,
+      "seconds": 0.451519,
+      "task": "pr-994"
+    },
+    {
+      "base": "base-control",
+      "depended": false,
+      "file": "examples/termui/setup.py",
+      "focal_test": "tests/test_options.py::test_option_custom_class_reusable",
+      "functions_perturbed": 0,
+      "seconds": 0.46769,
+      "task": "pr-994"
+    },
+    {
+      "base": "base-control",
+      "depended": false,
+      "file": "examples/termui/termui.py",
+      "focal_test": "tests/test_options.py::test_option_custom_class_reusable",
+      "functions_perturbed": 13,
+      "seconds": 0.425208,
+      "task": "pr-994"
+    },
+    {
+      "base": "base-control",
+      "depended": false,
+      "file": "examples/validation/setup.py",
+      "focal_test": "tests/test_options.py::test_option_custom_class_reusable",
+      "functions_perturbed": 0,
+      "seconds": 0.437372,
+      "task": "pr-994"
+    },
+    {
+      "base": "base-control",
+      "depended": false,
+      "file": "examples/validation/validation.py",
+      "focal_test": "tests/test_options.py::test_option_custom_class_reusable",
+      "functions_perturbed": 3,
+      "seconds": 0.446856,
+      "task": "pr-994"
+    },
+    {
+      "base": "base-control",
+      "depended": false,
+      "file": "setup.py",
+      "focal_test": "tests/test_options.py::test_option_custom_class_reusable",
+      "functions_perturbed": 0,
+      "seconds": 0.482476,
+      "task": "pr-994"
+    },
+    {
+      "base": "base-control",
+      "depended": false,
+      "file": "click/__init__.py",
+      "focal_test": "tests/test_testing.py::test_setting_prog_name_in_extra",
+      "functions_perturbed": 0,
+      "seconds": 0.445526,
+      "task": "pr-999"
+    },
+    {
+      "base": "base-control",
+      "depended": false,
+      "file": "click/_bashcomplete.py",
+      "focal_test": "tests/test_testing.py::test_setting_prog_name_in_extra",
+      "functions_perturbed": 10,
+      "seconds": 0.452031,
+      "task": "pr-999"
+    },
+    {
+      "base": "base-control",
+      "depended": true,
+      "file": "click/_compat.py",
+      "focal_test": "tests/test_testing.py::test_setting_prog_name_in_extra",
+      "functions_perturbed": 64,
+      "seconds": 0.383691,
+      "task": "pr-999"
+    },
+    {
+      "base": "base-control",
+      "depended": false,
+      "file": "click/_termui_impl.py",
+      "focal_test": "tests/test_testing.py::test_setting_prog_name_in_extra",
+      "functions_perturbed": 35,
+      "seconds": 0.425039,
+      "task": "pr-999"
+    },
+    {
+      "base": "base-control",
+      "depended": false,
+      "file": "click/_textwrap.py",
+      "focal_test": "tests/test_testing.py::test_setting_prog_name_in_extra",
+      "functions_perturbed": 3,
+      "seconds": 0.448822,
+      "task": "pr-999"
+    },
+    {
+      "base": "base-control",
+      "depended": true,
+      "file": "click/_unicodefun.py",
+      "focal_test": "tests/test_testing.py::test_setting_prog_name_in_extra",
+      "functions_perturbed": 3,
+      "seconds": 0.434275,
+      "task": "pr-999"
+    },
+    {
+      "base": "base-control",
+      "depended": false,
+      "file": "click/_winconsole.py",
+      "focal_test": "tests/test_testing.py::test_setting_prog_name_in_extra",
+      "functions_perturbed": 21,
+      "seconds": 0.436868,
+      "task": "pr-999"
+    },
+    {
+      "base": "base-control",
+      "depended": true,
+      "file": "click/core.py",
+      "focal_test": "tests/test_testing.py::test_setting_prog_name_in_extra",
+      "functions_perturbed": 113,
+      "seconds": 0.481081,
+      "task": "pr-999"
+    },
+    {
+      "base": "base-control",
+      "depended": true,
+      "file": "click/decorators.py",
+      "focal_test": "tests/test_testing.py::test_setting_prog_name_in_extra",
+      "functions_perturbed": 27,
+      "seconds": 0.484922,
+      "task": "pr-999"
+    },
+    {
+      "base": "base-control",
+      "depended": true,
+      "file": "click/exceptions.py",
+      "focal_test": "tests/test_testing.py::test_setting_prog_name_in_extra",
+      "functions_perturbed": 19,
+      "seconds": 0.444526,
+      "task": "pr-999"
+    },
+    {
+      "base": "base-control",
+      "depended": false,
+      "file": "click/formatting.py",
+      "focal_test": "tests/test_testing.py::test_setting_prog_name_in_extra",
+      "functions_perturbed": 17,
+      "seconds": 0.418484,
+      "task": "pr-999"
+    },
+    {
+      "base": "base-control",
+      "depended": true,
+      "file": "click/globals.py",
+      "focal_test": "tests/test_testing.py::test_setting_prog_name_in_extra",
+      "functions_perturbed": 4,
+      "seconds": 0.443498,
+      "task": "pr-999"
+    },
+    {
+      "base": "base-control",
+      "depended": true,
+      "file": "click/parser.py",
+      "focal_test": "tests/test_testing.py::test_setting_prog_name_in_extra",
+      "functions_perturbed": 21,
+      "seconds": 0.4463,
+      "task": "pr-999"
+    },
+    {
+      "base": "base-control",
+      "depended": false,
+      "file": "click/termui.py",
+      "focal_test": "tests/test_testing.py::test_setting_prog_name_in_extra",
+      "functions_perturbed": 18,
+      "seconds": 0.454766,
+      "task": "pr-999"
+    },
+    {
+      "base": "base-control",
+      "depended": true,
+      "file": "click/types.py",
+      "focal_test": "tests/test_testing.py::test_setting_prog_name_in_extra",
+      "functions_perturbed": 43,
+      "seconds": 0.512311,
+      "task": "pr-999"
+    },
+    {
+      "base": "base-control",
+      "depended": true,
+      "file": "click/utils.py",
+      "focal_test": "tests/test_testing.py::test_setting_prog_name_in_extra",
+      "functions_perturbed": 27,
+      "seconds": 0.416619,
+      "task": "pr-999"
+    },
+    {
+      "base": "base-control",
+      "depended": false,
+      "file": "docs/conf.py",
+      "focal_test": "tests/test_testing.py::test_setting_prog_name_in_extra",
+      "functions_perturbed": 0,
+      "seconds": 0.399339,
+      "task": "pr-999"
+    },
+    {
+      "base": "base-control",
+      "depended": false,
+      "file": "examples/aliases/aliases.py",
+      "focal_test": "tests/test_testing.py::test_setting_prog_name_in_extra",
+      "functions_perturbed": 10,
+      "seconds": 0.419131,
+      "task": "pr-999"
+    },
+    {
+      "base": "base-control",
+      "depended": false,
+      "file": "examples/aliases/setup.py",
+      "focal_test": "tests/test_testing.py::test_setting_prog_name_in_extra",
+      "functions_perturbed": 0,
+      "seconds": 0.440924,
+      "task": "pr-999"
+    },
+    {
+      "base": "base-control",
+      "depended": false,
+      "file": "examples/bashcompletion/bashcompletion.py",
+      "focal_test": "tests/test_testing.py::test_setting_prog_name_in_extra",
+      "functions_perturbed": 6,
+      "seconds": 0.424733,
+      "task": "pr-999"
+    },
+    {
+      "base": "base-control",
+      "depended": false,
+      "file": "examples/bashcompletion/setup.py",
+      "focal_test": "tests/test_testing.py::test_setting_prog_name_in_extra",
+      "functions_perturbed": 0,
+      "seconds": 0.411569,
+      "task": "pr-999"
+    },
+    {
+      "base": "base-control",
+      "depended": false,
+      "file": "examples/colors/colors.py",
+      "focal_test": "tests/test_testing.py::test_setting_prog_name_in_extra",
+      "functions_perturbed": 1,
+      "seconds": 0.44001,
+      "task": "pr-999"
+    },
+    {
+      "base": "base-control",
+      "depended": false,
+      "file": "examples/colors/setup.py",
+      "focal_test": "tests/test_testing.py::test_setting_prog_name_in_extra",
+      "functions_perturbed": 0,
+      "seconds": 0.521383,
+      "task": "pr-999"
+    },
+    {
+      "base": "base-control",
+      "depended": false,
+      "file": "examples/complex/complex/__init__.py",
+      "focal_test": "tests/test_testing.py::test_setting_prog_name_in_extra",
+      "functions_perturbed": 0,
+      "seconds": 0.395802,
+      "task": "pr-999"
+    },
+    {
+      "base": "base-control",
+      "depended": false,
+      "file": "examples/complex/complex/cli.py",
+      "focal_test": "tests/test_testing.py::test_setting_prog_name_in_extra",
+      "functions_perturbed": 6,
+      "seconds": 0.466834,
+      "task": "pr-999"
+    },
+    {
+      "base": "base-control",
+      "depended": false,
+      "file": "examples/complex/complex/commands/__init__.py",
+      "focal_test": "tests/test_testing.py::test_setting_prog_name_in_extra",
+      "functions_perturbed": 0,
+      "seconds": 0.424454,
+      "task": "pr-999"
+    },
+    {
+      "base": "base-control",
+      "depended": false,
+      "file": "examples/complex/complex/commands/cmd_init.py",
+      "focal_test": "tests/test_testing.py::test_setting_prog_name_in_extra",
+      "functions_perturbed": 1,
+      "seconds": 0.479166,
+      "task": "pr-999"
+    },
+    {
+      "base": "base-control",
+      "depended": false,
+      "file": "examples/complex/complex/commands/cmd_status.py",
+      "focal_test": "tests/test_testing.py::test_setting_prog_name_in_extra",
+      "functions_perturbed": 1,
+      "seconds": 0.48765,
+      "task": "pr-999"
+    },
+    {
+      "base": "base-control",
+      "depended": false,
+      "file": "examples/complex/setup.py",
+      "focal_test": "tests/test_testing.py::test_setting_prog_name_in_extra",
+      "functions_perturbed": 0,
+      "seconds": 0.482231,
+      "task": "pr-999"
+    },
+    {
+      "base": "base-control",
+      "depended": false,
+      "file": "examples/imagepipe/imagepipe.py",
+      "focal_test": "tests/test_testing.py::test_setting_prog_name_in_extra",
+      "functions_perturbed": 21,
+      "seconds": 0.47901,
+      "task": "pr-999"
+    },
+    {
+      "base": "base-control",
+      "depended": false,
+      "file": "examples/imagepipe/setup.py",
+      "focal_test": "tests/test_testing.py::test_setting_prog_name_in_extra",
+      "functions_perturbed": 0,
+      "seconds": 0.464108,
+      "task": "pr-999"
+    },
+    {
+      "base": "base-control",
+      "depended": false,
+      "file": "examples/inout/inout.py",
+      "focal_test": "tests/test_testing.py::test_setting_prog_name_in_extra",
+      "functions_perturbed": 1,
+      "seconds": 0.461586,
+      "task": "pr-999"
+    },
+    {
+      "base": "base-control",
+      "depended": false,
+      "file": "examples/inout/setup.py",
+      "focal_test": "tests/test_testing.py::test_setting_prog_name_in_extra",
+      "functions_perturbed": 0,
+      "seconds": 0.406667,
+      "task": "pr-999"
+    },
+    {
+      "base": "base-control",
+      "depended": false,
+      "file": "examples/naval/naval.py",
+      "focal_test": "tests/test_testing.py::test_setting_prog_name_in_extra",
+      "functions_perturbed": 8,
+      "seconds": 0.441043,
+      "task": "pr-999"
+    },
+    {
+      "base": "base-control",
+      "depended": false,
+      "file": "examples/naval/setup.py",
+      "focal_test": "tests/test_testing.py::test_setting_prog_name_in_extra",
+      "functions_perturbed": 0,
+      "seconds": 0.444142,
+      "task": "pr-999"
+    },
+    {
+      "base": "base-control",
+      "depended": false,
+      "file": "examples/repo/repo.py",
+      "focal_test": "tests/test_testing.py::test_setting_prog_name_in_extra",
+      "functions_perturbed": 9,
+      "seconds": 0.419675,
+      "task": "pr-999"
+    },
+    {
+      "base": "base-control",
+      "depended": false,
+      "file": "examples/repo/setup.py",
+      "focal_test": "tests/test_testing.py::test_setting_prog_name_in_extra",
+      "functions_perturbed": 0,
+      "seconds": 0.404593,
+      "task": "pr-999"
+    },
+    {
+      "base": "base-control",
+      "depended": false,
+      "file": "examples/termui/setup.py",
+      "focal_test": "tests/test_testing.py::test_setting_prog_name_in_extra",
+      "functions_perturbed": 0,
+      "seconds": 0.424244,
+      "task": "pr-999"
+    },
+    {
+      "base": "base-control",
+      "depended": false,
+      "file": "examples/termui/termui.py",
+      "focal_test": "tests/test_testing.py::test_setting_prog_name_in_extra",
+      "functions_perturbed": 13,
+      "seconds": 0.425697,
+      "task": "pr-999"
+    },
+    {
+      "base": "base-control",
+      "depended": false,
+      "file": "examples/validation/setup.py",
+      "focal_test": "tests/test_testing.py::test_setting_prog_name_in_extra",
+      "functions_perturbed": 0,
+      "seconds": 0.43675,
+      "task": "pr-999"
+    },
+    {
+      "base": "base-control",
+      "depended": false,
+      "file": "examples/validation/validation.py",
+      "focal_test": "tests/test_testing.py::test_setting_prog_name_in_extra",
+      "functions_perturbed": 3,
+      "seconds": 0.408689,
+      "task": "pr-999"
+    },
+    {
+      "base": "base-control",
+      "depended": false,
+      "file": "setup.py",
+      "focal_test": "tests/test_testing.py::test_setting_prog_name_in_extra",
+      "functions_perturbed": 0,
+      "seconds": 0.400714,
+      "task": "pr-999"
+    },
+    {
+      "base": "base-control",
+      "depended": false,
+      "file": "click/__init__.py",
+      "focal_test": "tests/test_arguments.py::test_multiple_param_decls_not_allowed",
+      "functions_perturbed": 0,
+      "seconds": 0.413408,
+      "task": "pr-1014"
+    },
+    {
+      "base": "base-control",
+      "depended": false,
+      "file": "click/_bashcomplete.py",
+      "focal_test": "tests/test_arguments.py::test_multiple_param_decls_not_allowed",
+      "functions_perturbed": 10,
+      "seconds": 0.481391,
+      "task": "pr-1014"
+    },
+    {
+      "base": "base-control",
+      "depended": true,
+      "file": "click/_compat.py",
+      "focal_test": "tests/test_arguments.py::test_multiple_param_decls_not_allowed",
+      "functions_perturbed": 64,
+      "seconds": 0.393758,
+      "task": "pr-1014"
+    },
+    {
+      "base": "base-control",
+      "depended": false,
+      "file": "click/_termui_impl.py",
+      "focal_test": "tests/test_arguments.py::test_multiple_param_decls_not_allowed",
+      "functions_perturbed": 35,
+      "seconds": 0.434013,
+      "task": "pr-1014"
+    },
+    {
+      "base": "base-control",
+      "depended": false,
+      "file": "click/_textwrap.py",
+      "focal_test": "tests/test_arguments.py::test_multiple_param_decls_not_allowed",
+      "functions_perturbed": 3,
+      "seconds": 0.45286,
+      "task": "pr-1014"
+    },
+    {
+      "base": "base-control",
+      "depended": false,
+      "file": "click/_unicodefun.py",
+      "focal_test": "tests/test_arguments.py::test_multiple_param_decls_not_allowed",
+      "functions_perturbed": 3,
+      "seconds": 0.511771,
+      "task": "pr-1014"
+    },
+    {
+      "base": "base-control",
+      "depended": false,
+      "file": "click/_winconsole.py",
+      "focal_test": "tests/test_arguments.py::test_multiple_param_decls_not_allowed",
+      "functions_perturbed": 21,
+      "seconds": 0.435042,
+      "task": "pr-1014"
+    },
+    {
+      "base": "base-control",
+      "depended": true,
+      "file": "click/decorators.py",
+      "focal_test": "tests/test_arguments.py::test_multiple_param_decls_not_allowed",
+      "functions_perturbed": 27,
+      "seconds": 0.529612,
+      "task": "pr-1014"
+    },
+    {
+      "base": "base-control",
+      "depended": false,
+      "file": "click/exceptions.py",
+      "focal_test": "tests/test_arguments.py::test_multiple_param_decls_not_allowed",
+      "functions_perturbed": 19,
+      "seconds": 0.436874,
+      "task": "pr-1014"
+    },
+    {
+      "base": "base-control",
+      "depended": false,
+      "file": "click/formatting.py",
+      "focal_test": "tests/test_arguments.py::test_multiple_param_decls_not_allowed",
+      "functions_perturbed": 17,
+      "seconds": 0.477895,
+      "task": "pr-1014"
+    },
+    {
+      "base": "base-control",
+      "depended": false,
+      "file": "click/globals.py",
+      "focal_test": "tests/test_arguments.py::test_multiple_param_decls_not_allowed",
+      "functions_perturbed": 4,
+      "seconds": 0.511758,
+      "task": "pr-1014"
+    },
+    {
+      "base": "base-control",
+      "depended": false,
+      "file": "click/parser.py",
+      "focal_test": "tests/test_arguments.py::test_multiple_param_decls_not_allowed",
+      "functions_perturbed": 21,
+      "seconds": 0.456325,
+      "task": "pr-1014"
+    },
+    {
+      "base": "base-control",
+      "depended": false,
+      "file": "click/termui.py",
+      "focal_test": "tests/test_arguments.py::test_multiple_param_decls_not_allowed",
+      "functions_perturbed": 18,
+      "seconds": 0.460275,
+      "task": "pr-1014"
+    },
+    {
+      "base": "base-control",
+      "depended": true,
+      "file": "click/testing.py",
+      "focal_test": "tests/test_arguments.py::test_multiple_param_decls_not_allowed",
+      "functions_perturbed": 24,
+      "seconds": 0.472693,
+      "task": "pr-1014"
+    },
+    {
+      "base": "base-control",
+      "depended": true,
+      "file": "click/types.py",
+      "focal_test": "tests/test_arguments.py::test_multiple_param_decls_not_allowed",
+      "functions_perturbed": 43,
+      "seconds": 0.473344,
+      "task": "pr-1014"
+    },
+    {
+      "base": "base-control",
+      "depended": false,
+      "file": "click/utils.py",
+      "focal_test": "tests/test_arguments.py::test_multiple_param_decls_not_allowed",
+      "functions_perturbed": 27,
+      "seconds": 0.473291,
+      "task": "pr-1014"
+    },
+    {
+      "base": "base-control",
+      "depended": false,
+      "file": "docs/conf.py",
+      "focal_test": "tests/test_arguments.py::test_multiple_param_decls_not_allowed",
+      "functions_perturbed": 0,
+      "seconds": 0.442365,
+      "task": "pr-1014"
+    },
+    {
+      "base": "base-control",
+      "depended": false,
+      "file": "examples/aliases/aliases.py",
+      "focal_test": "tests/test_arguments.py::test_multiple_param_decls_not_allowed",
+      "functions_perturbed": 10,
+      "seconds": 0.410962,
+      "task": "pr-1014"
+    },
+    {
+      "base": "base-control",
+      "depended": false,
+      "file": "examples/aliases/setup.py",
+      "focal_test": "tests/test_arguments.py::test_multiple_param_decls_not_allowed",
+      "functions_perturbed": 0,
+      "seconds": 0.463343,
+      "task": "pr-1014"
+    },
+    {
+      "base": "base-control",
+      "depended": false,
+      "file": "examples/bashcompletion/bashcompletion.py",
+      "focal_test": "tests/test_arguments.py::test_multiple_param_decls_not_allowed",
+      "functions_perturbed": 6,
+      "seconds": 0.452178,
+      "task": "pr-1014"
+    },
+    {
+      "base": "base-control",
+      "depended": false,
+      "file": "examples/bashcompletion/setup.py",
+      "focal_test": "tests/test_arguments.py::test_multiple_param_decls_not_allowed",
+      "functions_perturbed": 0,
+      "seconds": 0.430899,
+      "task": "pr-1014"
+    },
+    {
+      "base": "base-control",
+      "depended": false,
+      "file": "examples/colors/colors.py",
+      "focal_test": "tests/test_arguments.py::test_multiple_param_decls_not_allowed",
+      "functions_perturbed": 1,
+      "seconds": 0.433459,
+      "task": "pr-1014"
+    },
+    {
+      "base": "base-control",
+      "depended": false,
+      "file": "examples/colors/setup.py",
+      "focal_test": "tests/test_arguments.py::test_multiple_param_decls_not_allowed",
+      "functions_perturbed": 0,
+      "seconds": 0.395304,
+      "task": "pr-1014"
+    },
+    {
+      "base": "base-control",
+      "depended": false,
+      "file": "examples/complex/complex/__init__.py",
+      "focal_test": "tests/test_arguments.py::test_multiple_param_decls_not_allowed",
+      "functions_perturbed": 0,
+      "seconds": 0.474144,
+      "task": "pr-1014"
+    },
+    {
+      "base": "base-control",
+      "depended": false,
+      "file": "examples/complex/complex/cli.py",
+      "focal_test": "tests/test_arguments.py::test_multiple_param_decls_not_allowed",
+      "functions_perturbed": 6,
+      "seconds": 0.451988,
+      "task": "pr-1014"
+    },
+    {
+      "base": "base-control",
+      "depended": false,
+      "file": "examples/complex/complex/commands/__init__.py",
+      "focal_test": "tests/test_arguments.py::test_multiple_param_decls_not_allowed",
+      "functions_perturbed": 0,
+      "seconds": 0.439245,
+      "task": "pr-1014"
+    },
+    {
+      "base": "base-control",
+      "depended": false,
+      "file": "examples/complex/complex/commands/cmd_init.py",
+      "focal_test": "tests/test_arguments.py::test_multiple_param_decls_not_allowed",
+      "functions_perturbed": 1,
+      "seconds": 0.414159,
+      "task": "pr-1014"
+    },
+    {
+      "base": "base-control",
+      "depended": false,
+      "file": "examples/complex/complex/commands/cmd_status.py",
+      "focal_test": "tests/test_arguments.py::test_multiple_param_decls_not_allowed",
+      "functions_perturbed": 1,
+      "seconds": 0.438644,
+      "task": "pr-1014"
+    },
+    {
+      "base": "base-control",
+      "depended": false,
+      "file": "examples/complex/setup.py",
+      "focal_test": "tests/test_arguments.py::test_multiple_param_decls_not_allowed",
+      "functions_perturbed": 0,
+      "seconds": 0.483263,
+      "task": "pr-1014"
+    },
+    {
+      "base": "base-control",
+      "depended": false,
+      "file": "examples/imagepipe/imagepipe.py",
+      "focal_test": "tests/test_arguments.py::test_multiple_param_decls_not_allowed",
+      "functions_perturbed": 21,
+      "seconds": 0.513156,
+      "task": "pr-1014"
+    },
+    {
+      "base": "base-control",
+      "depended": false,
+      "file": "examples/imagepipe/setup.py",
+      "focal_test": "tests/test_arguments.py::test_multiple_param_decls_not_allowed",
+      "functions_perturbed": 0,
+      "seconds": 0.435154,
+      "task": "pr-1014"
+    },
+    {
+      "base": "base-control",
+      "depended": false,
+      "file": "examples/inout/inout.py",
+      "focal_test": "tests/test_arguments.py::test_multiple_param_decls_not_allowed",
+      "functions_perturbed": 1,
+      "seconds": 0.396511,
+      "task": "pr-1014"
+    },
+    {
+      "base": "base-control",
+      "depended": false,
+      "file": "examples/inout/setup.py",
+      "focal_test": "tests/test_arguments.py::test_multiple_param_decls_not_allowed",
+      "functions_perturbed": 0,
+      "seconds": 0.476272,
+      "task": "pr-1014"
+    },
+    {
+      "base": "base-control",
+      "depended": false,
+      "file": "examples/naval/naval.py",
+      "focal_test": "tests/test_arguments.py::test_multiple_param_decls_not_allowed",
+      "functions_perturbed": 8,
+      "seconds": 0.444066,
+      "task": "pr-1014"
+    },
+    {
+      "base": "base-control",
+      "depended": false,
+      "file": "examples/naval/setup.py",
+      "focal_test": "tests/test_arguments.py::test_multiple_param_decls_not_allowed",
+      "functions_perturbed": 0,
+      "seconds": 0.46699,
+      "task": "pr-1014"
+    },
+    {
+      "base": "base-control",
+      "depended": false,
+      "file": "examples/repo/repo.py",
+      "focal_test": "tests/test_arguments.py::test_multiple_param_decls_not_allowed",
+      "functions_perturbed": 9,
+      "seconds": 0.470725,
+      "task": "pr-1014"
+    },
+    {
+      "base": "base-control",
+      "depended": false,
+      "file": "examples/repo/setup.py",
+      "focal_test": "tests/test_arguments.py::test_multiple_param_decls_not_allowed",
+      "functions_perturbed": 0,
+      "seconds": 0.482404,
+      "task": "pr-1014"
+    },
+    {
+      "base": "base-control",
+      "depended": false,
+      "file": "examples/termui/setup.py",
+      "focal_test": "tests/test_arguments.py::test_multiple_param_decls_not_allowed",
+      "functions_perturbed": 0,
+      "seconds": 0.457776,
+      "task": "pr-1014"
+    },
+    {
+      "base": "base-control",
+      "depended": false,
+      "file": "examples/termui/termui.py",
+      "focal_test": "tests/test_arguments.py::test_multiple_param_decls_not_allowed",
+      "functions_perturbed": 13,
+      "seconds": 0.445545,
+      "task": "pr-1014"
+    },
+    {
+      "base": "base-control",
+      "depended": false,
+      "file": "examples/validation/setup.py",
+      "focal_test": "tests/test_arguments.py::test_multiple_param_decls_not_allowed",
+      "functions_perturbed": 0,
+      "seconds": 0.436336,
+      "task": "pr-1014"
+    },
+    {
+      "base": "base-control",
+      "depended": false,
+      "file": "examples/validation/validation.py",
+      "focal_test": "tests/test_arguments.py::test_multiple_param_decls_not_allowed",
+      "functions_perturbed": 3,
+      "seconds": 0.414993,
+      "task": "pr-1014"
+    },
+    {
+      "base": "base-control",
+      "depended": false,
+      "file": "setup.py",
+      "focal_test": "tests/test_arguments.py::test_multiple_param_decls_not_allowed",
+      "functions_perturbed": 0,
+      "seconds": 0.451303,
+      "task": "pr-1014"
+    },
+    {
+      "base": "base-overlap",
+      "depended": false,
+      "file": "docs/conf.py",
+      "focal_test": "tests/test_options.py::test_missing_envvar",
+      "functions_perturbed": 0,
+      "seconds": 0.668984,
+      "task": "pr-2972"
+    },
+    {
+      "base": "base-overlap",
+      "depended": false,
+      "file": "examples/aliases/aliases.py",
+      "focal_test": "tests/test_options.py::test_missing_envvar",
+      "functions_perturbed": 14,
+      "seconds": 0.685601,
+      "task": "pr-2972"
+    },
+    {
+      "base": "base-overlap",
+      "depended": false,
+      "file": "examples/colors/colors.py",
+      "focal_test": "tests/test_options.py::test_missing_envvar",
+      "functions_perturbed": 1,
+      "seconds": 0.769379,
+      "task": "pr-2972"
+    },
+    {
+      "base": "base-overlap",
+      "depended": false,
+      "file": "examples/completion/completion.py",
+      "focal_test": "tests/test_options.py::test_missing_envvar",
+      "functions_perturbed": 7,
+      "seconds": 0.688666,
+      "task": "pr-2972"
+    },
+    {
+      "base": "base-overlap",
+      "depended": false,
+      "file": "examples/complex/complex/__init__.py",
+      "focal_test": "tests/test_options.py::test_missing_envvar",
+      "functions_perturbed": 0,
+      "seconds": 0.663185,
+      "task": "pr-2972"
+    },
+    {
+      "base": "base-overlap",
+      "depended": false,
+      "file": "examples/complex/complex/cli.py",
+      "focal_test": "tests/test_options.py::test_missing_envvar",
+      "functions_perturbed": 6,
+      "seconds": 0.833575,
+      "task": "pr-2972"
+    },
+    {
+      "base": "base-overlap",
+      "depended": false,
+      "file": "examples/complex/complex/commands/__init__.py",
+      "focal_test": "tests/test_options.py::test_missing_envvar",
+      "functions_perturbed": 0,
+      "seconds": 0.722446,
+      "task": "pr-2972"
+    },
+    {
+      "base": "base-overlap",
+      "depended": false,
+      "file": "examples/complex/complex/commands/cmd_init.py",
+      "focal_test": "tests/test_options.py::test_missing_envvar",
+      "functions_perturbed": 1,
+      "seconds": 0.692554,
+      "task": "pr-2972"
+    },
+    {
+      "base": "base-overlap",
+      "depended": false,
+      "file": "examples/complex/complex/commands/cmd_status.py",
+      "focal_test": "tests/test_options.py::test_missing_envvar",
+      "functions_perturbed": 1,
+      "seconds": 0.733132,
+      "task": "pr-2972"
+    },
+    {
+      "base": "base-overlap",
+      "depended": false,
+      "file": "examples/imagepipe/imagepipe.py",
+      "focal_test": "tests/test_options.py::test_missing_envvar",
+      "functions_perturbed": 21,
+      "seconds": 0.713244,
+      "task": "pr-2972"
+    },
+    {
+      "base": "base-overlap",
+      "depended": false,
+      "file": "examples/inout/inout.py",
+      "focal_test": "tests/test_options.py::test_missing_envvar",
+      "functions_perturbed": 1,
+      "seconds": 0.708818,
+      "task": "pr-2972"
+    },
+    {
+      "base": "base-overlap",
+      "depended": false,
+      "file": "examples/naval/naval.py",
+      "focal_test": "tests/test_options.py::test_missing_envvar",
+      "functions_perturbed": 8,
+      "seconds": 0.695263,
+      "task": "pr-2972"
+    },
+    {
+      "base": "base-overlap",
+      "depended": false,
+      "file": "examples/repo/repo.py",
+      "focal_test": "tests/test_options.py::test_missing_envvar",
+      "functions_perturbed": 9,
+      "seconds": 0.761619,
+      "task": "pr-2972"
+    },
+    {
+      "base": "base-overlap",
+      "depended": false,
+      "file": "examples/termui/termui.py",
+      "focal_test": "tests/test_options.py::test_missing_envvar",
+      "functions_perturbed": 13,
+      "seconds": 0.665399,
+      "task": "pr-2972"
+    },
+    {
+      "base": "base-overlap",
+      "depended": false,
+      "file": "examples/validation/validation.py",
+      "focal_test": "tests/test_options.py::test_missing_envvar",
+      "functions_perturbed": 3,
+      "seconds": 0.693456,
+      "task": "pr-2972"
+    },
+    {
+      "base": "base-overlap",
+      "depended": false,
+      "file": "src/click/__init__.py",
+      "focal_test": "tests/test_options.py::test_missing_envvar",
+      "functions_perturbed": 1,
+      "seconds": 0.726666,
+      "task": "pr-2972"
+    },
+    {
+      "base": "base-overlap",
+      "depended": true,
+      "file": "src/click/_compat.py",
+      "focal_test": "tests/test_options.py::test_missing_envvar",
+      "functions_perturbed": 49,
+      "seconds": 0.485791,
+      "task": "pr-2972"
+    },
+    {
+      "base": "base-overlap",
+      "depended": false,
+      "file": "src/click/_termui_impl.py",
+      "focal_test": "tests/test_options.py::test_missing_envvar",
+      "functions_perturbed": 36,
+      "seconds": 0.852677,
+      "task": "pr-2972"
+    },
+    {
+      "base": "base-overlap",
+      "depended": false,
+      "file": "src/click/_textwrap.py",
+      "focal_test": "tests/test_options.py::test_missing_envvar",
+      "functions_perturbed": 3,
+      "seconds": 0.708175,
+      "task": "pr-2972"
+    },
+    {
+      "base": "base-overlap",
+      "depended": false,
+      "file": "src/click/_utils.py",
+      "focal_test": "tests/test_options.py::test_missing_envvar",
+      "functions_perturbed": 1,
+      "seconds": 0.748355,
+      "task": "pr-2972"
+    },
+    {
+      "base": "base-overlap",
+      "depended": false,
+      "file": "src/click/_winconsole.py",
+      "focal_test": "tests/test_options.py::test_missing_envvar",
+      "functions_perturbed": 20,
+      "seconds": 0.732888,
+      "task": "pr-2972"
+    },
+    {
+      "base": "base-overlap",
+      "depended": true,
+      "file": "src/click/decorators.py",
+      "focal_test": "tests/test_options.py::test_missing_envvar",
+      "functions_perturbed": 33,
+      "seconds": 0.772174,
+      "task": "pr-2972"
+    },
+    {
+      "base": "base-overlap",
+      "depended": true,
+      "file": "src/click/exceptions.py",
+      "focal_test": "tests/test_options.py::test_missing_envvar",
+      "functions_perturbed": 20,
+      "seconds": 0.84868,
+      "task": "pr-2972"
+    },
+    {
+      "base": "base-overlap",
+      "depended": true,
+      "file": "src/click/formatting.py",
+      "focal_test": "tests/test_options.py::test_missing_envvar",
+      "functions_perturbed": 17,
+      "seconds": 0.770924,
+      "task": "pr-2972"
+    },
+    {
+      "base": "base-overlap",
+      "depended": true,
+      "file": "src/click/globals.py",
+      "focal_test": "tests/test_options.py::test_missing_envvar",
+      "functions_perturbed": 6,
+      "seconds": 0.760553,
+      "task": "pr-2972"
+    },
+    {
+      "base": "base-overlap",
+      "depended": true,
+      "file": "src/click/parser.py",
+      "focal_test": "tests/test_options.py::test_missing_envvar",
+      "functions_perturbed": 21,
+      "seconds": 0.449417,
+      "task": "pr-2972"
+    },
+    {
+      "base": "base-overlap",
+      "depended": false,
+      "file": "src/click/shell_completion.py",
+      "focal_test": "tests/test_options.py::test_missing_envvar",
+      "functions_perturbed": 27,
+      "seconds": 0.646855,
+      "task": "pr-2972"
+    },
+    {
+      "base": "base-overlap",
+      "depended": false,
+      "file": "src/click/termui.py",
+      "focal_test": "tests/test_options.py::test_missing_envvar",
+      "functions_perturbed": 23,
+      "seconds": 0.668169,
+      "task": "pr-2972"
+    },
+    {
+      "base": "base-overlap",
+      "depended": true,
+      "file": "src/click/testing.py",
+      "focal_test": "tests/test_options.py::test_missing_envvar",
+      "functions_perturbed": 37,
+      "seconds": 0.732125,
+      "task": "pr-2972"
+    },
+    {
+      "base": "base-overlap",
+      "depended": true,
+      "file": "src/click/types.py",
+      "focal_test": "tests/test_options.py::test_missing_envvar",
+      "functions_perturbed": 66,
+      "seconds": 0.753338,
+      "task": "pr-2972"
+    },
+    {
+      "base": "base-overlap",
+      "depended": true,
+      "file": "src/click/utils.py",
+      "focal_test": "tests/test_options.py::test_missing_envvar",
+      "functions_perturbed": 31,
+      "seconds": 0.706484,
+      "task": "pr-2972"
+    },
+    {
+      "base": "base-overlap",
+      "depended": false,
+      "file": "docs/conf.py",
+      "focal_test": "tests/test_context.py::test_hiding_of_unset_sentinel_in_callbacks",
+      "functions_perturbed": 0,
+      "seconds": 0.480659,
+      "task": "pr-3137"
+    },
+    {
+      "base": "base-overlap",
+      "depended": false,
+      "file": "examples/aliases/aliases.py",
+      "focal_test": "tests/test_context.py::test_hiding_of_unset_sentinel_in_callbacks",
+      "functions_perturbed": 14,
+      "seconds": 0.591381,
+      "task": "pr-3137"
+    },
+    {
+      "base": "base-overlap",
+      "depended": false,
+      "file": "examples/colors/colors.py",
+      "focal_test": "tests/test_context.py::test_hiding_of_unset_sentinel_in_callbacks",
+      "functions_perturbed": 1,
+      "seconds": 0.463137,
+      "task": "pr-3137"
+    },
+    {
+      "base": "base-overlap",
+      "depended": false,
+      "file": "examples/completion/completion.py",
+      "focal_test": "tests/test_context.py::test_hiding_of_unset_sentinel_in_callbacks",
+      "functions_perturbed": 7,
+      "seconds": 0.492118,
+      "task": "pr-3137"
+    },
+    {
+      "base": "base-overlap",
+      "depended": false,
+      "file": "examples/complex/complex/__init__.py",
+      "focal_test": "tests/test_context.py::test_hiding_of_unset_sentinel_in_callbacks",
+      "functions_perturbed": 0,
+      "seconds": 0.450001,
+      "task": "pr-3137"
+    },
+    {
+      "base": "base-overlap",
+      "depended": false,
+      "file": "examples/complex/complex/cli.py",
+      "focal_test": "tests/test_context.py::test_hiding_of_unset_sentinel_in_callbacks",
+      "functions_perturbed": 6,
+      "seconds": 0.522038,
+      "task": "pr-3137"
+    },
+    {
+      "base": "base-overlap",
+      "depended": false,
+      "file": "examples/complex/complex/commands/__init__.py",
+      "focal_test": "tests/test_context.py::test_hiding_of_unset_sentinel_in_callbacks",
+      "functions_perturbed": 0,
+      "seconds": 0.49095,
+      "task": "pr-3137"
+    },
+    {
+      "base": "base-overlap",
+      "depended": false,
+      "file": "examples/complex/complex/commands/cmd_init.py",
+      "focal_test": "tests/test_context.py::test_hiding_of_unset_sentinel_in_callbacks",
+      "functions_perturbed": 1,
+      "seconds": 0.495686,
+      "task": "pr-3137"
+    },
+    {
+      "base": "base-overlap",
+      "depended": false,
+      "file": "examples/complex/complex/commands/cmd_status.py",
+      "focal_test": "tests/test_context.py::test_hiding_of_unset_sentinel_in_callbacks",
+      "functions_perturbed": 1,
+      "seconds": 0.483016,
+      "task": "pr-3137"
+    },
+    {
+      "base": "base-overlap",
+      "depended": false,
+      "file": "examples/imagepipe/imagepipe.py",
+      "focal_test": "tests/test_context.py::test_hiding_of_unset_sentinel_in_callbacks",
+      "functions_perturbed": 21,
+      "seconds": 0.550969,
+      "task": "pr-3137"
+    },
+    {
+      "base": "base-overlap",
+      "depended": false,
+      "file": "examples/inout/inout.py",
+      "focal_test": "tests/test_context.py::test_hiding_of_unset_sentinel_in_callbacks",
+      "functions_perturbed": 1,
+      "seconds": 0.559887,
+      "task": "pr-3137"
+    },
+    {
+      "base": "base-overlap",
+      "depended": false,
+      "file": "examples/naval/naval.py",
+      "focal_test": "tests/test_context.py::test_hiding_of_unset_sentinel_in_callbacks",
+      "functions_perturbed": 8,
+      "seconds": 0.623698,
+      "task": "pr-3137"
+    },
+    {
+      "base": "base-overlap",
+      "depended": false,
+      "file": "examples/repo/repo.py",
+      "focal_test": "tests/test_context.py::test_hiding_of_unset_sentinel_in_callbacks",
+      "functions_perturbed": 9,
+      "seconds": 0.4862,
+      "task": "pr-3137"
+    },
+    {
+      "base": "base-overlap",
+      "depended": false,
+      "file": "examples/termui/termui.py",
+      "focal_test": "tests/test_context.py::test_hiding_of_unset_sentinel_in_callbacks",
+      "functions_perturbed": 13,
+      "seconds": 0.469334,
+      "task": "pr-3137"
+    },
+    {
+      "base": "base-overlap",
+      "depended": false,
+      "file": "examples/validation/validation.py",
+      "focal_test": "tests/test_context.py::test_hiding_of_unset_sentinel_in_callbacks",
+      "functions_perturbed": 3,
+      "seconds": 0.587149,
+      "task": "pr-3137"
+    },
+    {
+      "base": "base-overlap",
+      "depended": false,
+      "file": "src/click/__init__.py",
+      "focal_test": "tests/test_context.py::test_hiding_of_unset_sentinel_in_callbacks",
+      "functions_perturbed": 1,
+      "seconds": 0.561306,
+      "task": "pr-3137"
+    },
+    {
+      "base": "base-overlap",
+      "depended": true,
+      "file": "src/click/_compat.py",
+      "focal_test": "tests/test_context.py::test_hiding_of_unset_sentinel_in_callbacks",
+      "functions_perturbed": 49,
+      "seconds": 0.476509,
+      "task": "pr-3137"
+    },
+    {
+      "base": "base-overlap",
+      "depended": false,
+      "file": "src/click/_termui_impl.py",
+      "focal_test": "tests/test_context.py::test_hiding_of_unset_sentinel_in_callbacks",
+      "functions_perturbed": 36,
+      "seconds": 0.55822,
+      "task": "pr-3137"
+    },
+    {
+      "base": "base-overlap",
+      "depended": false,
+      "file": "src/click/_textwrap.py",
+      "focal_test": "tests/test_context.py::test_hiding_of_unset_sentinel_in_callbacks",
+      "functions_perturbed": 3,
+      "seconds": 0.5288,
+      "task": "pr-3137"
+    },
+    {
+      "base": "base-overlap",
+      "depended": true,
+      "file": "src/click/_utils.py",
+      "focal_test": "tests/test_context.py::test_hiding_of_unset_sentinel_in_callbacks",
+      "functions_perturbed": 1,
+      "seconds": 0.573064,
+      "task": "pr-3137"
+    },
+    {
+      "base": "base-overlap",
+      "depended": false,
+      "file": "src/click/_winconsole.py",
+      "focal_test": "tests/test_context.py::test_hiding_of_unset_sentinel_in_callbacks",
+      "functions_perturbed": 20,
+      "seconds": 0.490687,
+      "task": "pr-3137"
+    },
+    {
+      "base": "base-overlap",
+      "depended": true,
+      "file": "src/click/decorators.py",
+      "focal_test": "tests/test_context.py::test_hiding_of_unset_sentinel_in_callbacks",
+      "functions_perturbed": 33,
+      "seconds": 0.522785,
+      "task": "pr-3137"
+    },
+    {
+      "base": "base-overlap",
+      "depended": true,
+      "file": "src/click/exceptions.py",
+      "focal_test": "tests/test_context.py::test_hiding_of_unset_sentinel_in_callbacks",
+      "functions_perturbed": 20,
+      "seconds": 0.534955,
+      "task": "pr-3137"
+    },
+    {
+      "base": "base-overlap",
+      "depended": false,
+      "file": "src/click/formatting.py",
+      "focal_test": "tests/test_context.py::test_hiding_of_unset_sentinel_in_callbacks",
+      "functions_perturbed": 17,
+      "seconds": 0.496546,
+      "task": "pr-3137"
+    },
+    {
+      "base": "base-overlap",
+      "depended": true,
+      "file": "src/click/globals.py",
+      "focal_test": "tests/test_context.py::test_hiding_of_unset_sentinel_in_callbacks",
+      "functions_perturbed": 6,
+      "seconds": 0.507953,
+      "task": "pr-3137"
+    },
+    {
+      "base": "base-overlap",
+      "depended": true,
+      "file": "src/click/parser.py",
+      "focal_test": "tests/test_context.py::test_hiding_of_unset_sentinel_in_callbacks",
+      "functions_perturbed": 21,
+      "seconds": 0.471472,
+      "task": "pr-3137"
+    },
+    {
+      "base": "base-overlap",
+      "depended": false,
+      "file": "src/click/shell_completion.py",
+      "focal_test": "tests/test_context.py::test_hiding_of_unset_sentinel_in_callbacks",
+      "functions_perturbed": 27,
+      "seconds": 0.50561,
+      "task": "pr-3137"
+    },
+    {
+      "base": "base-overlap",
+      "depended": false,
+      "file": "src/click/termui.py",
+      "focal_test": "tests/test_context.py::test_hiding_of_unset_sentinel_in_callbacks",
+      "functions_perturbed": 23,
+      "seconds": 0.554978,
+      "task": "pr-3137"
+    },
+    {
+      "base": "base-overlap",
+      "depended": true,
+      "file": "src/click/testing.py",
+      "focal_test": "tests/test_context.py::test_hiding_of_unset_sentinel_in_callbacks",
+      "functions_perturbed": 37,
+      "seconds": 0.510636,
+      "task": "pr-3137"
+    },
+    {
+      "base": "base-overlap",
+      "depended": true,
+      "file": "src/click/types.py",
+      "focal_test": "tests/test_context.py::test_hiding_of_unset_sentinel_in_callbacks",
+      "functions_perturbed": 66,
+      "seconds": 0.67848,
+      "task": "pr-3137"
+    },
+    {
+      "base": "base-overlap",
+      "depended": true,
+      "file": "src/click/utils.py",
+      "focal_test": "tests/test_context.py::test_hiding_of_unset_sentinel_in_callbacks",
+      "functions_perturbed": 31,
+      "seconds": 0.577684,
+      "task": "pr-3137"
+    },
+    {
+      "base": "base-overlap",
+      "depended": false,
+      "file": "docs/conf.py",
+      "focal_test": "tests/test_options.py::test_flag_value_and_default[opt_params49-args49-True] tests/test_termui.py::test_flag_value_prompt[--flag-opt_params60-args60-[Y/n]--True] tests/test_termui.py::test_flag_value_prompt[--flag-opt_params61-args61-[Y/n]-y-True] tests/test_termui.py::test_flag_value_prompt[--flag-opt_params62-args62-[Y/n]-n-False]",
+      "functions_perturbed": 0,
+      "seconds": 0.915314,
+      "task": "pr-3239"
+    },
+    {
+      "base": "base-overlap",
+      "depended": false,
+      "file": "examples/aliases/aliases.py",
+      "focal_test": "tests/test_options.py::test_flag_value_and_default[opt_params49-args49-True] tests/test_termui.py::test_flag_value_prompt[--flag-opt_params60-args60-[Y/n]--True] tests/test_termui.py::test_flag_value_prompt[--flag-opt_params61-args61-[Y/n]-y-True] tests/test_termui.py::test_flag_value_prompt[--flag-opt_params62-args62-[Y/n]-n-False]",
+      "functions_perturbed": 14,
+      "seconds": 0.835686,
+      "task": "pr-3239"
+    },
+    {
+      "base": "base-overlap",
+      "depended": false,
+      "file": "examples/colors/colors.py",
+      "focal_test": "tests/test_options.py::test_flag_value_and_default[opt_params49-args49-True] tests/test_termui.py::test_flag_value_prompt[--flag-opt_params60-args60-[Y/n]--True] tests/test_termui.py::test_flag_value_prompt[--flag-opt_params61-args61-[Y/n]-y-True] tests/test_termui.py::test_flag_value_prompt[--flag-opt_params62-args62-[Y/n]-n-False]",
+      "functions_perturbed": 1,
+      "seconds": 0.882939,
+      "task": "pr-3239"
+    },
+    {
+      "base": "base-overlap",
+      "depended": false,
+      "file": "examples/completion/completion.py",
+      "focal_test": "tests/test_options.py::test_flag_value_and_default[opt_params49-args49-True] tests/test_termui.py::test_flag_value_prompt[--flag-opt_params60-args60-[Y/n]--True] tests/test_termui.py::test_flag_value_prompt[--flag-opt_params61-args61-[Y/n]-y-True] tests/test_termui.py::test_flag_value_prompt[--flag-opt_params62-args62-[Y/n]-n-False]",
+      "functions_perturbed": 7,
+      "seconds": 0.820795,
+      "task": "pr-3239"
+    },
+    {
+      "base": "base-overlap",
+      "depended": false,
+      "file": "examples/complex/complex/__init__.py",
+      "focal_test": "tests/test_options.py::test_flag_value_and_default[opt_params49-args49-True] tests/test_termui.py::test_flag_value_prompt[--flag-opt_params60-args60-[Y/n]--True] tests/test_termui.py::test_flag_value_prompt[--flag-opt_params61-args61-[Y/n]-y-True] tests/test_termui.py::test_flag_value_prompt[--flag-opt_params62-args62-[Y/n]-n-False]",
+      "functions_perturbed": 0,
+      "seconds": 0.866134,
+      "task": "pr-3239"
+    },
+    {
+      "base": "base-overlap",
+      "depended": false,
+      "file": "examples/complex/complex/cli.py",
+      "focal_test": "tests/test_options.py::test_flag_value_and_default[opt_params49-args49-True] tests/test_termui.py::test_flag_value_prompt[--flag-opt_params60-args60-[Y/n]--True] tests/test_termui.py::test_flag_value_prompt[--flag-opt_params61-args61-[Y/n]-y-True] tests/test_termui.py::test_flag_value_prompt[--flag-opt_params62-args62-[Y/n]-n-False]",
+      "functions_perturbed": 6,
+      "seconds": 0.902152,
+      "task": "pr-3239"
+    },
+    {
+      "base": "base-overlap",
+      "depended": false,
+      "file": "examples/complex/complex/commands/__init__.py",
+      "focal_test": "tests/test_options.py::test_flag_value_and_default[opt_params49-args49-True] tests/test_termui.py::test_flag_value_prompt[--flag-opt_params60-args60-[Y/n]--True] tests/test_termui.py::test_flag_value_prompt[--flag-opt_params61-args61-[Y/n]-y-True] tests/test_termui.py::test_flag_value_prompt[--flag-opt_params62-args62-[Y/n]-n-False]",
+      "functions_perturbed": 0,
+      "seconds": 0.817699,
+      "task": "pr-3239"
+    },
+    {
+      "base": "base-overlap",
+      "depended": false,
+      "file": "examples/complex/complex/commands/cmd_init.py",
+      "focal_test": "tests/test_options.py::test_flag_value_and_default[opt_params49-args49-True] tests/test_termui.py::test_flag_value_prompt[--flag-opt_params60-args60-[Y/n]--True] tests/test_termui.py::test_flag_value_prompt[--flag-opt_params61-args61-[Y/n]-y-True] tests/test_termui.py::test_flag_value_prompt[--flag-opt_params62-args62-[Y/n]-n-False]",
+      "functions_perturbed": 1,
+      "seconds": 0.914286,
+      "task": "pr-3239"
+    },
+    {
+      "base": "base-overlap",
+      "depended": false,
+      "file": "examples/complex/complex/commands/cmd_status.py",
+      "focal_test": "tests/test_options.py::test_flag_value_and_default[opt_params49-args49-True] tests/test_termui.py::test_flag_value_prompt[--flag-opt_params60-args60-[Y/n]--True] tests/test_termui.py::test_flag_value_prompt[--flag-opt_params61-args61-[Y/n]-y-True] tests/test_termui.py::test_flag_value_prompt[--flag-opt_params62-args62-[Y/n]-n-False]",
+      "functions_perturbed": 1,
+      "seconds": 0.875278,
+      "task": "pr-3239"
+    },
+    {
+      "base": "base-overlap",
+      "depended": false,
+      "file": "examples/imagepipe/imagepipe.py",
+      "focal_test": "tests/test_options.py::test_flag_value_and_default[opt_params49-args49-True] tests/test_termui.py::test_flag_value_prompt[--flag-opt_params60-args60-[Y/n]--True] tests/test_termui.py::test_flag_value_prompt[--flag-opt_params61-args61-[Y/n]-y-True] tests/test_termui.py::test_flag_value_prompt[--flag-opt_params62-args62-[Y/n]-n-False]",
+      "functions_perturbed": 21,
+      "seconds": 0.864545,
+      "task": "pr-3239"
+    },
+    {
+      "base": "base-overlap",
+      "depended": false,
+      "file": "examples/inout/inout.py",
+      "focal_test": "tests/test_options.py::test_flag_value_and_default[opt_params49-args49-True] tests/test_termui.py::test_flag_value_prompt[--flag-opt_params60-args60-[Y/n]--True] tests/test_termui.py::test_flag_value_prompt[--flag-opt_params61-args61-[Y/n]-y-True] tests/test_termui.py::test_flag_value_prompt[--flag-opt_params62-args62-[Y/n]-n-False]",
+      "functions_perturbed": 1,
+      "seconds": 0.806245,
+      "task": "pr-3239"
+    },
+    {
+      "base": "base-overlap",
+      "depended": false,
+      "file": "examples/naval/naval.py",
+      "focal_test": "tests/test_options.py::test_flag_value_and_default[opt_params49-args49-True] tests/test_termui.py::test_flag_value_prompt[--flag-opt_params60-args60-[Y/n]--True] tests/test_termui.py::test_flag_value_prompt[--flag-opt_params61-args61-[Y/n]-y-True] tests/test_termui.py::test_flag_value_prompt[--flag-opt_params62-args62-[Y/n]-n-False]",
+      "functions_perturbed": 8,
+      "seconds": 0.848689,
+      "task": "pr-3239"
+    },
+    {
+      "base": "base-overlap",
+      "depended": false,
+      "file": "examples/repo/repo.py",
+      "focal_test": "tests/test_options.py::test_flag_value_and_default[opt_params49-args49-True] tests/test_termui.py::test_flag_value_prompt[--flag-opt_params60-args60-[Y/n]--True] tests/test_termui.py::test_flag_value_prompt[--flag-opt_params61-args61-[Y/n]-y-True] tests/test_termui.py::test_flag_value_prompt[--flag-opt_params62-args62-[Y/n]-n-False]",
+      "functions_perturbed": 9,
+      "seconds": 0.910951,
+      "task": "pr-3239"
+    },
+    {
+      "base": "base-overlap",
+      "depended": false,
+      "file": "examples/termui/termui.py",
+      "focal_test": "tests/test_options.py::test_flag_value_and_default[opt_params49-args49-True] tests/test_termui.py::test_flag_value_prompt[--flag-opt_params60-args60-[Y/n]--True] tests/test_termui.py::test_flag_value_prompt[--flag-opt_params61-args61-[Y/n]-y-True] tests/test_termui.py::test_flag_value_prompt[--flag-opt_params62-args62-[Y/n]-n-False]",
+      "functions_perturbed": 13,
+      "seconds": 0.824659,
+      "task": "pr-3239"
+    },
+    {
+      "base": "base-overlap",
+      "depended": false,
+      "file": "examples/validation/validation.py",
+      "focal_test": "tests/test_options.py::test_flag_value_and_default[opt_params49-args49-True] tests/test_termui.py::test_flag_value_prompt[--flag-opt_params60-args60-[Y/n]--True] tests/test_termui.py::test_flag_value_prompt[--flag-opt_params61-args61-[Y/n]-y-True] tests/test_termui.py::test_flag_value_prompt[--flag-opt_params62-args62-[Y/n]-n-False]",
+      "functions_perturbed": 3,
+      "seconds": 0.871687,
+      "task": "pr-3239"
+    },
+    {
+      "base": "base-overlap",
+      "depended": false,
+      "file": "src/click/__init__.py",
+      "focal_test": "tests/test_options.py::test_flag_value_and_default[opt_params49-args49-True] tests/test_termui.py::test_flag_value_prompt[--flag-opt_params60-args60-[Y/n]--True] tests/test_termui.py::test_flag_value_prompt[--flag-opt_params61-args61-[Y/n]-y-True] tests/test_termui.py::test_flag_value_prompt[--flag-opt_params62-args62-[Y/n]-n-False]",
+      "functions_perturbed": 1,
+      "seconds": 0.787513,
+      "task": "pr-3239"
+    },
+    {
+      "base": "base-overlap",
+      "depended": true,
+      "file": "src/click/_compat.py",
+      "focal_test": "tests/test_options.py::test_flag_value_and_default[opt_params49-args49-True] tests/test_termui.py::test_flag_value_prompt[--flag-opt_params60-args60-[Y/n]--True] tests/test_termui.py::test_flag_value_prompt[--flag-opt_params61-args61-[Y/n]-y-True] tests/test_termui.py::test_flag_value_prompt[--flag-opt_params62-args62-[Y/n]-n-False]",
+      "functions_perturbed": 49,
+      "seconds": 0.505387,
+      "task": "pr-3239"
+    },
+    {
+      "base": "base-overlap",
+      "depended": false,
+      "file": "src/click/_termui_impl.py",
+      "focal_test": "tests/test_options.py::test_flag_value_and_default[opt_params49-args49-True] tests/test_termui.py::test_flag_value_prompt[--flag-opt_params60-args60-[Y/n]--True] tests/test_termui.py::test_flag_value_prompt[--flag-opt_params61-args61-[Y/n]-y-True] tests/test_termui.py::test_flag_value_prompt[--flag-opt_params62-args62-[Y/n]-n-False]",
+      "functions_perturbed": 36,
+      "seconds": 0.809325,
+      "task": "pr-3239"
+    },
+    {
+      "base": "base-overlap",
+      "depended": false,
+      "file": "src/click/_textwrap.py",
+      "focal_test": "tests/test_options.py::test_flag_value_and_default[opt_params49-args49-True] tests/test_termui.py::test_flag_value_prompt[--flag-opt_params60-args60-[Y/n]--True] tests/test_termui.py::test_flag_value_prompt[--flag-opt_params61-args61-[Y/n]-y-True] tests/test_termui.py::test_flag_value_prompt[--flag-opt_params62-args62-[Y/n]-n-False]",
+      "functions_perturbed": 3,
+      "seconds": 0.827492,
+      "task": "pr-3239"
+    },
+    {
+      "base": "base-overlap",
+      "depended": false,
+      "file": "src/click/_utils.py",
+      "focal_test": "tests/test_options.py::test_flag_value_and_default[opt_params49-args49-True] tests/test_termui.py::test_flag_value_prompt[--flag-opt_params60-args60-[Y/n]--True] tests/test_termui.py::test_flag_value_prompt[--flag-opt_params61-args61-[Y/n]-y-True] tests/test_termui.py::test_flag_value_prompt[--flag-opt_params62-args62-[Y/n]-n-False]",
+      "functions_perturbed": 1,
+      "seconds": 0.805137,
+      "task": "pr-3239"
+    },
+    {
+      "base": "base-overlap",
+      "depended": false,
+      "file": "src/click/_winconsole.py",
+      "focal_test": "tests/test_options.py::test_flag_value_and_default[opt_params49-args49-True] tests/test_termui.py::test_flag_value_prompt[--flag-opt_params60-args60-[Y/n]--True] tests/test_termui.py::test_flag_value_prompt[--flag-opt_params61-args61-[Y/n]-y-True] tests/test_termui.py::test_flag_value_prompt[--flag-opt_params62-args62-[Y/n]-n-False]",
+      "functions_perturbed": 20,
+      "seconds": 0.842545,
+      "task": "pr-3239"
+    },
+    {
+      "base": "base-overlap",
+      "depended": true,
+      "file": "src/click/decorators.py",
+      "focal_test": "tests/test_options.py::test_flag_value_and_default[opt_params49-args49-True] tests/test_termui.py::test_flag_value_prompt[--flag-opt_params60-args60-[Y/n]--True] tests/test_termui.py::test_flag_value_prompt[--flag-opt_params61-args61-[Y/n]-y-True] tests/test_termui.py::test_flag_value_prompt[--flag-opt_params62-args62-[Y/n]-n-False]",
+      "functions_perturbed": 33,
+      "seconds": 0.995028,
+      "task": "pr-3239"
+    },
+    {
+      "base": "base-overlap",
+      "depended": false,
+      "file": "src/click/exceptions.py",
+      "focal_test": "tests/test_options.py::test_flag_value_and_default[opt_params49-args49-True] tests/test_termui.py::test_flag_value_prompt[--flag-opt_params60-args60-[Y/n]--True] tests/test_termui.py::test_flag_value_prompt[--flag-opt_params61-args61-[Y/n]-y-True] tests/test_termui.py::test_flag_value_prompt[--flag-opt_params62-args62-[Y/n]-n-False]",
+      "functions_perturbed": 20,
+      "seconds": 0.825304,
+      "task": "pr-3239"
+    },
+    {
+      "base": "base-overlap",
+      "depended": false,
+      "file": "src/click/formatting.py",
+      "focal_test": "tests/test_options.py::test_flag_value_and_default[opt_params49-args49-True] tests/test_termui.py::test_flag_value_prompt[--flag-opt_params60-args60-[Y/n]--True] tests/test_termui.py::test_flag_value_prompt[--flag-opt_params61-args61-[Y/n]-y-True] tests/test_termui.py::test_flag_value_prompt[--flag-opt_params62-args62-[Y/n]-n-False]",
+      "functions_perturbed": 17,
+      "seconds": 0.795286,
+      "task": "pr-3239"
+    },
+    {
+      "base": "base-overlap",
+      "depended": true,
+      "file": "src/click/globals.py",
+      "focal_test": "tests/test_options.py::test_flag_value_and_default[opt_params49-args49-True] tests/test_termui.py::test_flag_value_prompt[--flag-opt_params60-args60-[Y/n]--True] tests/test_termui.py::test_flag_value_prompt[--flag-opt_params61-args61-[Y/n]-y-True] tests/test_termui.py::test_flag_value_prompt[--flag-opt_params62-args62-[Y/n]-n-False]",
+      "functions_perturbed": 6,
+      "seconds": 0.942673,
+      "task": "pr-3239"
+    },
+    {
+      "base": "base-overlap",
+      "depended": true,
+      "file": "src/click/parser.py",
+      "focal_test": "tests/test_options.py::test_flag_value_and_default[opt_params49-args49-True] tests/test_termui.py::test_flag_value_prompt[--flag-opt_params60-args60-[Y/n]--True] tests/test_termui.py::test_flag_value_prompt[--flag-opt_params61-args61-[Y/n]-y-True] tests/test_termui.py::test_flag_value_prompt[--flag-opt_params62-args62-[Y/n]-n-False]",
+      "functions_perturbed": 21,
+      "seconds": 0.457846,
+      "task": "pr-3239"
+    },
+    {
+      "base": "base-overlap",
+      "depended": false,
+      "file": "src/click/shell_completion.py",
+      "focal_test": "tests/test_options.py::test_flag_value_and_default[opt_params49-args49-True] tests/test_termui.py::test_flag_value_prompt[--flag-opt_params60-args60-[Y/n]--True] tests/test_termui.py::test_flag_value_prompt[--flag-opt_params61-args61-[Y/n]-y-True] tests/test_termui.py::test_flag_value_prompt[--flag-opt_params62-args62-[Y/n]-n-False]",
+      "functions_perturbed": 27,
+      "seconds": 0.855509,
+      "task": "pr-3239"
+    },
+    {
+      "base": "base-overlap",
+      "depended": true,
+      "file": "src/click/termui.py",
+      "focal_test": "tests/test_options.py::test_flag_value_and_default[opt_params49-args49-True] tests/test_termui.py::test_flag_value_prompt[--flag-opt_params60-args60-[Y/n]--True] tests/test_termui.py::test_flag_value_prompt[--flag-opt_params61-args61-[Y/n]-y-True] tests/test_termui.py::test_flag_value_prompt[--flag-opt_params62-args62-[Y/n]-n-False]",
+      "functions_perturbed": 23,
+      "seconds": 0.914074,
+      "task": "pr-3239"
+    },
+    {
+      "base": "base-overlap",
+      "depended": true,
+      "file": "src/click/testing.py",
+      "focal_test": "tests/test_options.py::test_flag_value_and_default[opt_params49-args49-True] tests/test_termui.py::test_flag_value_prompt[--flag-opt_params60-args60-[Y/n]--True] tests/test_termui.py::test_flag_value_prompt[--flag-opt_params61-args61-[Y/n]-y-True] tests/test_termui.py::test_flag_value_prompt[--flag-opt_params62-args62-[Y/n]-n-False]",
+      "functions_perturbed": 37,
+      "seconds": 0.908537,
+      "task": "pr-3239"
+    },
+    {
+      "base": "base-overlap",
+      "depended": true,
+      "file": "src/click/types.py",
+      "focal_test": "tests/test_options.py::test_flag_value_and_default[opt_params49-args49-True] tests/test_termui.py::test_flag_value_prompt[--flag-opt_params60-args60-[Y/n]--True] tests/test_termui.py::test_flag_value_prompt[--flag-opt_params61-args61-[Y/n]-y-True] tests/test_termui.py::test_flag_value_prompt[--flag-opt_params62-args62-[Y/n]-n-False]",
+      "functions_perturbed": 66,
+      "seconds": 0.850599,
+      "task": "pr-3239"
+    },
+    {
+      "base": "base-overlap",
+      "depended": true,
+      "file": "src/click/utils.py",
+      "focal_test": "tests/test_options.py::test_flag_value_and_default[opt_params49-args49-True] tests/test_termui.py::test_flag_value_prompt[--flag-opt_params60-args60-[Y/n]--True] tests/test_termui.py::test_flag_value_prompt[--flag-opt_params61-args61-[Y/n]-y-True] tests/test_termui.py::test_flag_value_prompt[--flag-opt_params62-args62-[Y/n]-n-False]",
+      "functions_perturbed": 31,
+      "seconds": 0.926456,
+      "task": "pr-3239"
+    },
+    {
+      "base": "base-overlap",
+      "depended": false,
+      "file": "docs/conf.py",
+      "focal_test": "tests/test_options.py::test_show_default_with_empty_string[non-string-comparable-object]",
+      "functions_perturbed": 0,
+      "seconds": 0.678711,
+      "task": "pr-3299"
+    },
+    {
+      "base": "base-overlap",
+      "depended": false,
+      "file": "examples/aliases/aliases.py",
+      "focal_test": "tests/test_options.py::test_show_default_with_empty_string[non-string-comparable-object]",
+      "functions_perturbed": 14,
+      "seconds": 0.748589,
+      "task": "pr-3299"
+    },
+    {
+      "base": "base-overlap",
+      "depended": false,
+      "file": "examples/colors/colors.py",
+      "focal_test": "tests/test_options.py::test_show_default_with_empty_string[non-string-comparable-object]",
+      "functions_perturbed": 1,
+      "seconds": 0.749767,
+      "task": "pr-3299"
+    },
+    {
+      "base": "base-overlap",
+      "depended": false,
+      "file": "examples/completion/completion.py",
+      "focal_test": "tests/test_options.py::test_show_default_with_empty_string[non-string-comparable-object]",
+      "functions_perturbed": 7,
+      "seconds": 0.734681,
+      "task": "pr-3299"
+    },
+    {
+      "base": "base-overlap",
+      "depended": false,
+      "file": "examples/complex/complex/__init__.py",
+      "focal_test": "tests/test_options.py::test_show_default_with_empty_string[non-string-comparable-object]",
+      "functions_perturbed": 0,
+      "seconds": 0.711128,
+      "task": "pr-3299"
+    },
+    {
+      "base": "base-overlap",
+      "depended": false,
+      "file": "examples/complex/complex/cli.py",
+      "focal_test": "tests/test_options.py::test_show_default_with_empty_string[non-string-comparable-object]",
+      "functions_perturbed": 6,
+      "seconds": 0.704706,
+      "task": "pr-3299"
+    },
+    {
+      "base": "base-overlap",
+      "depended": false,
+      "file": "examples/complex/complex/commands/__init__.py",
+      "focal_test": "tests/test_options.py::test_show_default_with_empty_string[non-string-comparable-object]",
+      "functions_perturbed": 0,
+      "seconds": 0.750885,
+      "task": "pr-3299"
+    },
+    {
+      "base": "base-overlap",
+      "depended": false,
+      "file": "examples/complex/complex/commands/cmd_init.py",
+      "focal_test": "tests/test_options.py::test_show_default_with_empty_string[non-string-comparable-object]",
+      "functions_perturbed": 1,
+      "seconds": 0.765208,
+      "task": "pr-3299"
+    },
+    {
+      "base": "base-overlap",
+      "depended": false,
+      "file": "examples/complex/complex/commands/cmd_status.py",
+      "focal_test": "tests/test_options.py::test_show_default_with_empty_string[non-string-comparable-object]",
+      "functions_perturbed": 1,
+      "seconds": 0.683565,
+      "task": "pr-3299"
+    },
+    {
+      "base": "base-overlap",
+      "depended": false,
+      "file": "examples/imagepipe/imagepipe.py",
+      "focal_test": "tests/test_options.py::test_show_default_with_empty_string[non-string-comparable-object]",
+      "functions_perturbed": 21,
+      "seconds": 0.705083,
+      "task": "pr-3299"
+    },
+    {
+      "base": "base-overlap",
+      "depended": false,
+      "file": "examples/inout/inout.py",
+      "focal_test": "tests/test_options.py::test_show_default_with_empty_string[non-string-comparable-object]",
+      "functions_perturbed": 1,
+      "seconds": 0.66778,
+      "task": "pr-3299"
+    },
+    {
+      "base": "base-overlap",
+      "depended": false,
+      "file": "examples/naval/naval.py",
+      "focal_test": "tests/test_options.py::test_show_default_with_empty_string[non-string-comparable-object]",
+      "functions_perturbed": 8,
+      "seconds": 0.719226,
+      "task": "pr-3299"
+    },
+    {
+      "base": "base-overlap",
+      "depended": false,
+      "file": "examples/repo/repo.py",
+      "focal_test": "tests/test_options.py::test_show_default_with_empty_string[non-string-comparable-object]",
+      "functions_perturbed": 9,
+      "seconds": 0.74819,
+      "task": "pr-3299"
+    },
+    {
+      "base": "base-overlap",
+      "depended": false,
+      "file": "examples/termui/termui.py",
+      "focal_test": "tests/test_options.py::test_show_default_with_empty_string[non-string-comparable-object]",
+      "functions_perturbed": 13,
+      "seconds": 0.739395,
+      "task": "pr-3299"
+    },
+    {
+      "base": "base-overlap",
+      "depended": false,
+      "file": "examples/validation/validation.py",
+      "focal_test": "tests/test_options.py::test_show_default_with_empty_string[non-string-comparable-object]",
+      "functions_perturbed": 3,
+      "seconds": 0.669465,
+      "task": "pr-3299"
+    },
+    {
+      "base": "base-overlap",
+      "depended": false,
+      "file": "src/click/__init__.py",
+      "focal_test": "tests/test_options.py::test_show_default_with_empty_string[non-string-comparable-object]",
+      "functions_perturbed": 1,
+      "seconds": 0.763915,
+      "task": "pr-3299"
+    },
+    {
+      "base": "base-overlap",
+      "depended": true,
+      "file": "src/click/_compat.py",
+      "focal_test": "tests/test_options.py::test_show_default_with_empty_string[non-string-comparable-object]",
+      "functions_perturbed": 49,
+      "seconds": 0.450464,
+      "task": "pr-3299"
+    },
+    {
+      "base": "base-overlap",
+      "depended": false,
+      "file": "src/click/_termui_impl.py",
+      "focal_test": "tests/test_options.py::test_show_default_with_empty_string[non-string-comparable-object]",
+      "functions_perturbed": 36,
+      "seconds": 0.739633,
+      "task": "pr-3299"
+    },
+    {
+      "base": "base-overlap",
+      "depended": false,
+      "file": "src/click/_textwrap.py",
+      "focal_test": "tests/test_options.py::test_show_default_with_empty_string[non-string-comparable-object]",
+      "functions_perturbed": 3,
+      "seconds": 0.727729,
+      "task": "pr-3299"
+    },
+    {
+      "base": "base-overlap",
+      "depended": false,
+      "file": "src/click/_utils.py",
+      "focal_test": "tests/test_options.py::test_show_default_with_empty_string[non-string-comparable-object]",
+      "functions_perturbed": 1,
+      "seconds": 0.746128,
+      "task": "pr-3299"
+    },
+    {
+      "base": "base-overlap",
+      "depended": false,
+      "file": "src/click/_winconsole.py",
+      "focal_test": "tests/test_options.py::test_show_default_with_empty_string[non-string-comparable-object]",
+      "functions_perturbed": 20,
+      "seconds": 0.709222,
+      "task": "pr-3299"
+    },
+    {
+      "base": "base-overlap",
+      "depended": false,
+      "file": "src/click/decorators.py",
+      "focal_test": "tests/test_options.py::test_show_default_with_empty_string[non-string-comparable-object]",
+      "functions_perturbed": 33,
+      "seconds": 0.781821,
+      "task": "pr-3299"
+    },
+    {
+      "base": "base-overlap",
+      "depended": false,
+      "file": "src/click/exceptions.py",
+      "focal_test": "tests/test_options.py::test_show_default_with_empty_string[non-string-comparable-object]",
+      "functions_perturbed": 20,
+      "seconds": 0.873235,
+      "task": "pr-3299"
+    },
+    {
+      "base": "base-overlap",
+      "depended": true,
+      "file": "src/click/formatting.py",
+      "focal_test": "tests/test_options.py::test_show_default_with_empty_string[non-string-comparable-object]",
+      "functions_perturbed": 17,
+      "seconds": 0.951332,
+      "task": "pr-3299"
+    },
+    {
+      "base": "base-overlap",
+      "depended": false,
+      "file": "src/click/globals.py",
+      "focal_test": "tests/test_options.py::test_show_default_with_empty_string[non-string-comparable-object]",
+      "functions_perturbed": 6,
+      "seconds": 0.798214,
+      "task": "pr-3299"
+    },
+    {
+      "base": "base-overlap",
+      "depended": true,
+      "file": "src/click/parser.py",
+      "focal_test": "tests/test_options.py::test_show_default_with_empty_string[non-string-comparable-object]",
+      "functions_perturbed": 21,
+      "seconds": 0.501144,
+      "task": "pr-3299"
+    },
+    {
+      "base": "base-overlap",
+      "depended": false,
+      "file": "src/click/shell_completion.py",
+      "focal_test": "tests/test_options.py::test_show_default_with_empty_string[non-string-comparable-object]",
+      "functions_perturbed": 27,
+      "seconds": 0.686627,
+      "task": "pr-3299"
+    },
+    {
+      "base": "base-overlap",
+      "depended": false,
+      "file": "src/click/termui.py",
+      "focal_test": "tests/test_options.py::test_show_default_with_empty_string[non-string-comparable-object]",
+      "functions_perturbed": 23,
+      "seconds": 0.675172,
+      "task": "pr-3299"
+    },
+    {
+      "base": "base-overlap",
+      "depended": true,
+      "file": "src/click/testing.py",
+      "focal_test": "tests/test_options.py::test_show_default_with_empty_string[non-string-comparable-object]",
+      "functions_perturbed": 37,
+      "seconds": 0.862222,
+      "task": "pr-3299"
+    },
+    {
+      "base": "base-overlap",
+      "depended": true,
+      "file": "src/click/types.py",
+      "focal_test": "tests/test_options.py::test_show_default_with_empty_string[non-string-comparable-object]",
+      "functions_perturbed": 66,
+      "seconds": 0.804179,
+      "task": "pr-3299"
+    },
+    {
+      "base": "base-overlap",
+      "depended": false,
+      "file": "src/click/utils.py",
+      "focal_test": "tests/test_options.py::test_show_default_with_empty_string[non-string-comparable-object]",
+      "functions_perturbed": 31,
+      "seconds": 0.734806,
+      "task": "pr-3299"
+    }
+  ],
+  "limitations": "A file can matter to correctness without being executed by the focal test or exposed by this perturbation.",
+  "operator": "Insert raise RuntimeError(\"perturbed\") at the start of every function and method body in one file.",
+  "schema_version": 1,
+  "scope": "One discovered focal pytest test (or affected tests) per historical Click change; files in the PR diff and test directories excluded.",
+  "task_results": [
+    {
+      "base": "base-control",
+      "base_apply_checks": {
+        "base-control": true,
+        "base-overlap": true
+      },
+      "error": "git apply --whitespace=nowarn --exclude=tests/test_context.py /workspace/co-read/fixture/click/patches/pr-787.patch\nerror: patch failed: click/decorators.py:61\nerror: click/decorators.py: patch does not apply\n",
+      "focal_test": null,
+      "focal_test_files": [
+        "tests/test_context.py"
+      ],
+      "status": "error",
+      "task": "pr-787",
+      "wall_seconds": 0.078944
+    },
+    {
+      "base": "base-control",
+      "base_apply_checks": {
+        "base-control": true,
+        "base-overlap": true
+      },
+      "depended": 9,
+      "files_swept": 42,
+      "focal_test": "tests/test_basic.py::test_boolean_conversion",
+      "focal_test_files": [
+        "tests/test_basic.py"
+      ],
+      "oracle": {
+        "restored": "....................                                                     [100%]\n20 passed in 0.14s",
+        "restored_exit": 0,
+        "seconds": 1.66908,
+        "source_tests": "....................                                                     [100%]\n20 passed in 0.15s",
+        "source_tests_exit": 0,
+        "tests_only": "........F...........                                                     [100%]\n=================================== FAILURES ===================================\n___________________________ test_boolean_conversion ____________________________\ntests/test_basic.py:192: in test_boolean_conversion\n    assert not result.exception\nE   assert not SystemExit(2)\nE    +  where SystemExit(2) = <Result SystemExit(2)>.exception\n=========================== short test summary info ============================\nFAILED tests/test_basic.py::test_boolean_conversion - assert not SystemExit(2)\n1 failed, 19 passed in 0.14s",
+        "tests_only_exit": 1
+      },
+      "rate": 0.21428571428571427,
+      "status": "complete",
+      "task": "pr-973",
+      "wall_seconds": 24.18244
+    },
+    {
+      "base": "base-control",
+      "base_apply_checks": {
+        "base-control": true,
+        "base-overlap": true
+      },
+      "depended": 9,
+      "files_swept": 42,
+      "focal_test": "tests/test_options.py::test_option_custom_class_reusable",
+      "focal_test_files": [
+        "tests/test_options.py"
+      ],
+      "oracle": {
+        "restored": "....................................                                     [100%]\n36 passed in 0.14s",
+        "restored_exit": 0,
+        "seconds": 1.56406,
+        "source_tests": "....................................                                     [100%]\n36 passed in 0.12s",
+        "source_tests_exit": 0,
+        "tests_only": "........................F...........                                     [100%]\n=================================== FAILURES ===================================\n______________________ test_option_custom_class_reusable _______________________\ntests/test_options.py:423: in test_option_custom_class_reusable\n    assert 'I am a help text' in result.output\nE   AssertionError: assert 'I am a help text' in 'Usage: cmd2 [OPTIONS]\\n\\nOptions:\\n  --testoption TEXT  you wont see me\\n  --help             Show this message and exit.\\n'\nE    +  where 'Usage: cmd2 [OPTIONS]\\n\\nOptions:\\n  --testoption TEXT  you wont see me\\n  --help             Show this message and exit.\\n' = <Result okay>.output\n=========================== short test summary info ============================\nFAILED tests/test_options.py::test_option_custom_class_reusable - AssertionEr...\n1 failed, 35 passed in 0.14s",
+        "tests_only_exit": 1
+      },
+      "rate": 0.21428571428571427,
+      "status": "complete",
+      "task": "pr-994",
+      "wall_seconds": 21.925576
+    },
+    {
+      "base": "base-control",
+      "base_apply_checks": {
+        "base-control": true,
+        "base-overlap": true
+      },
+      "depended": 9,
+      "files_swept": 42,
+      "focal_test": "tests/test_testing.py::test_setting_prog_name_in_extra",
+      "focal_test_files": [
+        "tests/test_testing.py"
+      ],
+      "oracle": {
+        "restored": "................                                                         [100%]\n16 passed in 0.07s",
+        "restored_exit": 0,
+        "seconds": 1.371695,
+        "source_tests": "................                                                         [100%]\n16 passed in 0.06s",
+        "source_tests_exit": 0,
+        "tests_only": "...............F                                                         [100%]\n=================================== FAILURES ===================================\n_______________________ test_setting_prog_name_in_extra ________________________\ntests/test_testing.py:288: in test_setting_prog_name_in_extra\n    assert not result.exception\nE   assert not TypeError(\"click.core.BaseCommand.main() got multiple values for keyword argument 'prog_name'\")\nE    +  where TypeError(\"click.core.BaseCommand.main() got multiple values for keyword argument 'prog_name'\") = <Result TypeError(\"click.core.BaseCommand.main() got multiple values for keyword argument 'prog_name'\")>.exception\n=========================== short test summary info ============================\nFAILED tests/test_testing.py::test_setting_prog_name_in_extra - assert not Ty...\n1 failed, 15 passed in 0.07s",
+        "tests_only_exit": 1
+      },
+      "rate": 0.21428571428571427,
+      "status": "complete",
+      "task": "pr-999",
+      "wall_seconds": 20.384057
+    },
+    {
+      "base": "base-control",
+      "base_apply_checks": {
+        "base-control": true,
+        "base-overlap": true
+      },
+      "depended": 4,
+      "files_swept": 42,
+      "focal_test": "tests/test_arguments.py::test_multiple_param_decls_not_allowed",
+      "focal_test_files": [
+        "tests/test_arguments.py"
+      ],
+      "oracle": {
+        "restored": "..................                                                       [100%]\n18 passed in 0.09s",
+        "restored_exit": 0,
+        "seconds": 1.324694,
+        "source_tests": "..................                                                       [100%]\n18 passed in 0.06s",
+        "source_tests_exit": 0,
+        "tests_only": ".................F                                                       [100%]\n=================================== FAILURES ===================================\n____________________ test_multiple_param_decls_not_allowed _____________________\ntests/test_arguments.py:294: in test_multiple_param_decls_not_allowed\n    with pytest.raises(TypeError):\n         ^^^^^^^^^^^^^^^^^^^^^^^^\nE   Failed: DID NOT RAISE <class 'TypeError'>\n=========================== short test summary info ============================\nFAILED tests/test_arguments.py::test_multiple_param_decls_not_allowed - Faile...\n1 failed, 17 passed in 0.09s",
+        "tests_only_exit": 1
+      },
+      "rate": 0.09523809523809523,
+      "status": "complete",
+      "task": "pr-1014",
+      "wall_seconds": 20.839823
+    },
+    {
+      "base": "base-control",
+      "base_apply_checks": {
+        "base-control": true,
+        "base-overlap": true
+      },
+      "error": "git apply --whitespace=nowarn --exclude=tests/test_bashcomplete.py /workspace/co-read/fixture/click/patches/pr-1061.patch\nerror: patch failed: CHANGES.rst:84\nerror: CHANGES.rst: patch does not apply\nerror: patch failed: click/_bashcomplete.py:23\nerror: click/_bashcomplete.py: patch does not apply\n",
+      "focal_test": null,
+      "focal_test_files": [
+        "tests/test_bashcomplete.py"
+      ],
+      "status": "error",
+      "task": "pr-1061",
+      "wall_seconds": 0.050593
+    },
+    {
+      "base": "base-overlap",
+      "base_apply_checks": {
+        "base-control": true,
+        "base-overlap": true
+      },
+      "depended": 9,
+      "files_swept": 31,
+      "focal_test": "tests/test_options.py::test_missing_envvar",
+      "focal_test_files": [
+        "tests/test_options.py"
+      ],
+      "oracle": {
+        "restored": "........................................................................ [ 13%]\n........................................................................ [ 26%]\n........................................................................ [ 39%]\n........................................................................ [ 52%]\n........................................................................ [ 65%]\n........................................................................ [ 78%]\n........................................................................ [ 91%]\n...............................................                          [100%]\n551 passed in 1.01s",
+        "restored_exit": 0,
+        "seconds": 4.539308,
+        "source_tests": "........................................................................ [ 13%]\n........................................................................ [ 26%]\n........................................................................ [ 39%]\n........................................................................ [ 52%]\n........................................................................ [ 65%]\n........................................................................ [ 78%]\n........................................................................ [ 91%]\n...............................................                          [100%]\n551 passed in 0.99s",
+        "source_tests_exit": 0,
+        "tests_only": "........................................................................ [ 13%]\n........................................................................ [ 26%]\n..........................F............................................. [ 39%]\n........................................................................ [ 52%]\n........................................................................ [ 65%]\n........................................................................ [ 78%]\n........................................................................ [ 91%]\n...............................................                          [100%]\n=================================== FAILURES ===================================\n_____________________________ test_missing_envvar ______________________________\n\nrunner = <click.testing.CliRunner object at 0x7fbe2c3ff9e0>\n\n    def test_missing_envvar(runner):\n        cli = click.Command(\n            \"cli\", params=[click.Option([\"--foo\"], envvar=\"bar\", required=True)]\n        )\n        result = runner.invoke(cli)\n        assert result.exit_code == 2\n        assert \"Error: Missing option '--foo'.\" in result.output\n        cli = click.Command(\n            \"cli\",\n            params=[click.Option([\"--foo\"], envvar=\"bar\", show_envvar=True, required=True)],\n        )\n        result = runner.invoke(cli)\n        assert result.exit_code == 2\n        assert \"Error: Missing option '--foo' (env var: 'bar').\" in result.output\n    \n        cli = click.Command(\n            \"cli\", params=[click.Option([\"--foo\"], show_envvar=True, required=True)]\n        )\n        result = runner.invoke(cli)\n        assert result.exit_code == 2\n>       assert \"Error: Missing option '--foo'.\" in result.output\nE       assert \"Error: Missing option '--foo'.\" in \"Usage: cli [OPTIONS]\\nTry 'cli --help' for help.\\n\\nError: Missing option '--foo' (env var: 'None').\\n\"\nE        +  where \"Usage: cli [OPTIONS]\\nTry 'cli --help' for help.\\n\\nError: Missing option '--foo' (env var: 'None').\\n\" = <Result SystemExit(2)>.output\n\ntests/test_options.py:921: AssertionError\n=========================== short test summary info ============================\nFAILED tests/test_options.py::test_missing_envvar - assert \"Error: Missing op...\n1 failed, 550 passed in 1.10s",
+        "tests_only_exit": 1
+      },
+      "rate": 0.2903225806451613,
+      "status": "complete",
+      "task": "pr-2972",
+      "wall_seconds": 27.157109
+    },
+    {
+      "base": "base-overlap",
+      "base_apply_checks": {
+        "base-control": true,
+        "base-overlap": true
+      },
+      "error": "git apply --whitespace=nowarn --exclude=tests/test_testing.py /workspace/co-read/fixture/click/patches/pr-2991.patch\nerror: patch failed: src/click/testing.py:99\nerror: src/click/testing.py: patch does not apply\n",
+      "focal_test": null,
+      "focal_test_files": [
+        "tests/test_testing.py"
+      ],
+      "status": "error",
+      "task": "pr-2991",
+      "wall_seconds": 0.047159
+    },
+    {
+      "base": "base-overlap",
+      "base_apply_checks": {
+        "base-control": true,
+        "base-overlap": true
+      },
+      "error": "git apply --whitespace=nowarn --exclude=tests/test_shell_completion.py /workspace/co-read/fixture/click/patches/pr-3013.patch\nerror: patch failed: src/click/shell_completion.py:405\nerror: src/click/shell_completion.py: patch does not apply\n",
+      "focal_test": null,
+      "focal_test_files": [
+        "tests/test_shell_completion.py"
+      ],
+      "status": "error",
+      "task": "pr-3013",
+      "wall_seconds": 0.053548
+    },
+    {
+      "base": "base-overlap",
+      "base_apply_checks": {
+        "base-control": true,
+        "base-overlap": true
+      },
+      "depended": 9,
+      "files_swept": 31,
+      "focal_test": "tests/test_context.py::test_hiding_of_unset_sentinel_in_callbacks",
+      "focal_test_files": [
+        "tests/test_context.py"
+      ],
+      "oracle": {
+        "restored": "..............................                                           [100%]\n30 passed in 0.10s",
+        "restored_exit": 0,
+        "seconds": 1.526025,
+        "source_tests": "..............................                                           [100%]\n30 passed in 0.11s",
+        "source_tests_exit": 0,
+        "tests_only": " click.echo(f\"after_process.my_opt: {ctx.params.get('my_opt')!r}\")\n                click.echo(f\"after_process.my_callback: {ctx.params.get('my_callback')!r}\")\n    \n                return value\n    \n        def change_other_params(ctx, param, value):\n            \"\"\"A callback that modifies other parameters' values via the context.\"\"\"\n            assert click.get_current_context() is ctx\n            click.echo(f\"before_change.my_arg: {ctx.params.get('my_arg')!r}\")\n            click.echo(f\"before_change.my_opt: {ctx.params.get('my_opt')!r}\")\n            click.echo(f\"before_change.my_callback: {ctx.params.get('my_callback')!r}\")\n    \n            click.echo(f\"before_change.param: {param!r}\")\n            click.echo(f\"before_change.value: {value!r}\")\n    \n            ctx.params[\"my_arg\"] = \"changed\"\n            # Reset to None parameters that where not UNSET to see they are not forced back\n            # to UNSET.\n            ctx.params[\"my_callback\"] = None\n    \n            return value\n    \n        @click.command\n        @click.argument(\"my-arg\", required=False)\n        @click.option(\"--my-opt\")\n        @click.option(\"--my-callback\", callback=inspect_other_params)\n        @click.option(\"--check-internal\", cls=ParameterInternalCheck)\n        @click.option(\n            \"--modifying-callback\", cls=ParameterInternalCheck, callback=change_other_params\n        )\n        @click.pass_context\n        def cli(ctx, my_arg, my_opt, my_callback, check_internal, modifying_callback):\n            click.echo(f\"cli.my_arg: {my_arg!r}\")\n            click.echo(f\"cli.my_opt: {my_opt!r}\")\n            click.echo(f\"cli.my_callback: {my_callback!r}\")\n            click.echo(f\"cli.check_internal: {check_internal!r}\")\n            click.echo(f\"cli.modifying_callback: {modifying_callback!r}\")\n    \n        runner = click.testing.CliRunner()\n        result = runner.invoke(cli)\n    \n>       assert result.stdout.splitlines() == [\n            # Values of other parameters within the callback are None, not UNSET.\n            \"callback.my_arg: None\",\n            \"callback.my_opt: None\",\n            \"callback.my_callback: None\",\n            \"callback.param: <Option my_callback>\",\n            \"callback.value: None\",\n            # Previous UNSET values were not altered by the callback.\n            \"before_process.my_arg: Sentinel.UNSET\",\n            \"before_process.my_opt: Sentinel.UNSET\",\n            \"before_process.my_callback: 'hard-coded'\",\n            \"after_process.my_arg: Sentinel.UNSET\",\n            \"after_process.my_opt: Sentinel.UNSET\",\n            \"after_process.my_callback: 'hard-coded'\",\n            # Changes on other parameters within the callback are restored afterwards.\n            \"before_process.my_arg: Sentinel.UNSET\",\n            \"before_process.my_opt: Sentinel.UNSET\",\n            \"before_process.my_callback: 'hard-coded'\",\n            \"before_change.my_arg: None\",\n            \"before_change.my_opt: None\",\n            \"before_change.my_callback: 'hard-coded'\",\n            \"before_change.param: <ParameterInternalCheck modifying_callback>\",\n            \"before_change.value: None\",\n            \"after_process.my_arg: 'changed'\",\n            \"after_process.my_opt: Sentinel.UNSET\",\n            \"after_process.my_callback: None\",\n            # Unset values within the main command are UNSET, but hidden as None.\n            \"cli.my_arg: 'changed'\",\n            \"cli.my_opt: None\",\n            \"cli.my_callback: None\",\n            \"cli.check_internal: None\",\n            \"cli.modifying_callback: None\",\n        ]\nE       AssertionError: assert ['callback.my...l.UNSET', ...] == ['callback.my...l.UNSET', ...]\nE         \nE         At index 0 diff: 'callback.my_arg: Sentinel.UNSET' != 'callback.my_arg: None'\nE         Use -v to get more diff\n\ntests/test_context.py:256: AssertionError\n=========================== short test summary info ============================\nFAILED tests/test_context.py::test_hiding_of_unset_sentinel_in_callbacks - As...\n1 failed, 29 passed in 0.13s",
+        "tests_only_exit": 1
+      },
+      "rate": 0.2903225806451613,
+      "status": "complete",
+      "task": "pr-3137",
+      "wall_seconds": 18.350792
+    },
+    {
+      "base": "base-overlap",
+      "base_apply_checks": {
+        "base-control": true,
+        "base-overlap": true
+      },
+      "depended": 8,
+      "files_swept": 31,
+      "focal_test": "tests/test_options.py::test_flag_value_and_default[opt_params49-args49-True] tests/test_termui.py::test_flag_value_prompt[--flag-opt_params60-args60-[Y/n]--True] tests/test_termui.py::test_flag_value_prompt[--flag-opt_params61-args61-[Y/n]-y-True] tests/test_termui.py::test_flag_value_prompt[--flag-opt_params62-args62-[Y/n]-n-False]",
+      "focal_test_files": [
+        "tests/test_options.py",
+        "tests/test_termui.py"
+      ],
+      "oracle": {
+        "restored": "........................................................................ [  9%]\n........................................................................ [ 18%]\n........................................................................ [ 28%]\n........................................................................ [ 37%]\n........................................................................ [ 47%]\n........................................................................ [ 56%]\n........................................................................ [ 66%]\n........................................................................ [ 75%]\n.........................sssssssssssssssssssss................ss........ [ 85%]\n........................................................................ [ 94%]\n......................................                                   [100%]\n735 passed, 23 skipped in 1.48s",
+        "restored_exit": 0,
+        "seconds": 5.904794,
+        "source_tests": "........................................................................ [  9%]\n........................................................................ [ 18%]\n........................................................................ [ 28%]\n........................................................................ [ 37%]\n........................................................................ [ 47%]\n........................................................................ [ 56%]\n........................................................................ [ 66%]\n........................................................................ [ 75%]\n.........................sssssssssssssssssssss................ss........ [ 85%]\n........................................................................ [ 94%]\n......................................                                   [100%]\n735 passed, 23 skipped in 1.42s",
+        "source_tests_exit": 0,
+        "tests_only": "           expected_output += f\"{expected_prompt}{input}\\n\"\n    \n                if expected is INVALID:\n                    expected_output += \"Error: invalid input\\n\"\n    \n                # The prompt is expected to be repeated.\n                if expected in (REPEAT, INVALID):\n                    expected_output += expected_prompt\n    \n            if expected not in (REPEAT, INVALID):\n                expected_output += f\"{expected!r}\\n\"\n    \n>           assert result.output == expected_output\nE           AssertionError: assert 'Flag [y/N]: y\\nTrue\\n' == 'Flag [Y/n]: y\\nTrue\\n'\nE             \nE             - Flag [Y/n]: y\nE             ?       ^ ^\nE             + Flag [y/N]: y\nE             ?       ^ ^\nE               True\n\ntests/test_termui.py:935: AssertionError\n_______ test_flag_value_prompt[--flag-opt_params62-args62-[Y/n]-n-False] _______\n\nrunner = <click.testing.CliRunner object at 0x7f6fba9b53a0>\nopt_decls = '--flag'\nopt_params = {'default': True, 'flag_value': False, 'prompt': True}, args = []\nprompt = '[Y/n]', input = 'n', expected = False\n\n    @pytest.mark.parametrize(\n        (\"opt_decls\", \"opt_params\", \"args\", \"prompt\", \"input\", \"expected\"),\n        # Boolean flag prompt cases.\n        [(\"--flag/--no-flag\", *case_params) for case_params in BOOLEAN_FLAG_PROMPT_CASES]\n        # Non-boolean flag prompt cases.\n        + [(\"--flag\", *case_params) for case_params in FLAG_VALUE_PROMPT_CASES],\n    )\n    def test_flag_value_prompt(\n        runner, opt_decls, opt_params, args, prompt, input, expected\n    ):\n        \"\"\"Check how flag value are prompted and handled by all combinations of\n        ``prompt``, ``default``, and ``flag_value`` parameters.\n    \n        Covers concerns raised in issue https://github.com/pallets/click/issues/1992.\n        \"\"\"\n    \n        @click.command()\n        @click.option(opt_decls, **opt_params)\n        def cli(flag):\n            click.echo(repr(flag))\n    \n        invoke_options = {\"standalone_mode\": False}\n        if input is not None:\n            assert isinstance(input, str)\n            invoke_options[\"input\"] = f\"{input}\\n\"\n    \n        result = runner.invoke(cli, args, **invoke_options)\n    \n        if expected in (MissingParameter, BadParameter):\n            assert isinstance(result.exception, expected)\n            assert not result.output\n            assert result.exit_code == 1\n    \n        else:\n            expected_output = \"\"\n            if prompt is not None:\n                # Build the expected prompt.\n                assert isinstance(prompt, str)\n                expected_prompt = f\"Flag {prompt}: \" if prompt else \"Flag: \"\n    \n                # Add the user input to the expected output.\n                assert isinstance(input, str)\n                expected_output += f\"{expected_prompt}{input}\\n\"\n    \n                if expected is INVALID:\n                    expected_output += \"Error: invalid input\\n\"\n    \n                # The prompt is expected to be repeated.\n                if expected in (REPEAT, INVALID):\n                    expected_output += expected_prompt\n    \n            if expected not in (REPEAT, INVALID):\n                expected_output += f\"{expected!r}\\n\"\n    \n>           assert result.output == expected_output\nE           AssertionError: assert 'Flag [y/N]: n\\nFalse\\n' == 'Flag [Y/n]: n\\nFalse\\n'\nE             \nE             - Flag [Y/n]: n\nE             ?       ^ ^\nE             + Flag [y/N]: n\nE             ?       ^ ^\nE               False\n\ntests/test_termui.py:935: AssertionError\n=========================== short test summary info ============================\nFAILED tests/test_options.py::test_flag_value_and_default[opt_params49-args49-True]\nFAILED tests/test_termui.py::test_flag_value_prompt[--flag-opt_params60-args60-[Y/n]--True]\nFAILED tests/test_termui.py::test_flag_value_prompt[--flag-opt_params61-args61-[Y/n]-y-True]\nFAILED tests/test_termui.py::test_flag_value_prompt[--flag-opt_params62-args62-[Y/n]-n-False]\n4 failed, 731 passed, 23 skipped in 1.53s",
+        "tests_only_exit": 1
+      },
+      "rate": 0.25806451612903225,
+      "status": "complete",
+      "task": "pr-3239",
+      "wall_seconds": 32.471653
+    },
+    {
+      "base": "base-overlap",
+      "base_apply_checks": {
+        "base-control": true,
+        "base-overlap": true
+      },
+      "depended": 5,
+      "files_swept": 31,
+      "focal_test": "tests/test_options.py::test_show_default_with_empty_string[non-string-comparable-object]",
+      "focal_test_files": [
+        "tests/test_options.py"
+      ],
+      "oracle": {
+        "restored": "........................................................................ [ 13%]\n........................................................................ [ 26%]\n........................................................................ [ 39%]\n........................................................................ [ 52%]\n........................................................................ [ 65%]\n........................................................................ [ 78%]\n........................................................................ [ 91%]\n................................................                         [100%]\n552 passed in 1.02s",
+        "restored_exit": 0,
+        "seconds": 4.539389,
+        "source_tests": "........................................................................ [ 13%]\n........................................................................ [ 26%]\n........................................................................ [ 39%]\n........................................................................ [ 52%]\n........................................................................ [ 65%]\n........................................................................ [ 78%]\n........................................................................ [ 91%]\n................................................                         [100%]\n552 passed in 0.94s",
+        "source_tests_exit": 0,
+        "tests_only": "........................................................................ [ 13%]\n........................................................................ [ 26%]\n................................................................F....... [ 39%]\n........................................................................ [ 52%]\n........................................................................ [ 65%]\n........................................................................ [ 78%]\n........................................................................ [ 91%]\n................................................                         [100%]\n=================================== FAILURES ===================================\n______ test_show_default_with_empty_string[non-string-comparable-object] _______\n\nrunner = <click.testing.CliRunner object at 0x7f7562fb9700>\ndefault = <test_options._StrictEq object at 0x7f756322fb00>\nexpected = '[default: strict]'\n\n    @pytest.mark.parametrize(\n        (\"default\", \"expected\"),\n        [\n            (\"\", '[default: \"\"]'),\n            (_StrictEq(), \"[default: strict]\"),\n        ],\n        ids=[\"empty-string\", \"non-string-comparable-object\"],\n    )\n    def test_show_default_with_empty_string(runner, default, expected):\n        \"\"\"The empty-string check in help rendering must not break on objects\n        whose ``__eq__`` raises for string operands.\n    \n        Regression test for https://github.com/pallets/click/issues/3298.\n        \"\"\"\n        opt = click.Option([\"--limit\"], default=default, show_default=True)\n        ctx = click.Context(click.Command(\"cli\"))\n>       message = opt.get_help_record(ctx)[1]\n                  ^^^^^^^^^^^^^^^^^^^^^^^^\n\ntests/test_options.py:1283: \n_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ \nsrc/click/core.py:3003: in get_help_record\n    extra = self.get_help_extra(ctx)\n            ^^^^^^^^^^^^^^^^^^^^^^^^\nsrc/click/core.py:3083: in get_help_extra\n    elif default_value == \"\":\n         ^^^^^^^^^^^^^^^^^^^\n_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ \n\nself = <test_options._StrictEq object at 0x7f756322fb00>, other = ''\n\n    def __eq__(self, other):\n        if isinstance(other, str):\n>           raise ValueError(\"cannot compare to string\")\nE           ValueError: cannot compare to string\n\ntests/test_options.py:1260: ValueError\n=========================== short test summary info ============================\nFAILED tests/test_options.py::test_show_default_with_empty_string[non-string-comparable-object]\n1 failed, 551 passed in 1.18s",
+        "tests_only_exit": 1
+      },
+      "rate": 0.16129032258064516,
+      "status": "complete",
+      "task": "pr-3299",
+      "wall_seconds": 27.678711
+    },
+    {
+      "base": "base-overlap",
+      "base_apply_checks": {
+        "base-control": true,
+        "base-overlap": true
+      },
+      "error": "git apply --whitespace=nowarn --exclude=tests/test_termui.py /workspace/co-read/fixture/click/patches/pr-3330.patch\nerror: patch failed: src/click/_termui_impl.py:367\nerror: src/click/_termui_impl.py: patch does not apply\n",
+      "focal_test": null,
+      "focal_test_files": [
+        "tests/test_termui.py"
+      ],
+      "status": "error",
+      "task": "pr-3330",
+      "wall_seconds": 0.062345
+    }
+  ],
+  "tasks_requested": [
+    "pr-787",
+    "pr-973",
+    "pr-994",
+    "pr-999",
+    "pr-1014",
+    "pr-1061",
+    "pr-2972",
+    "pr-2991",
+    "pr-3013",
+    "pr-3137",
+    "pr-3239",
+    "pr-3299",
+    "pr-3330"
+  ],
+  "total_runtime_seconds": 193.289172
+}

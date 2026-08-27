@@ -1,0 +1,296 @@
+diff --git a/src/test/java/org/apache/commons/lang3/EnumUtilsTest.java b/src/test/java/org/apache/commons/lang3/EnumUtilsTest.java
+index a2d0fb08458d65941d18a71ae2e41f51ba53ac97..c2f9c1ffc5080f280990dbcd6da962026b42306a 100644
+--- a/src/test/java/org/apache/commons/lang3/EnumUtilsTest.java
++++ b/src/test/java/org/apache/commons/lang3/EnumUtilsTest.java
+@@ -215,6 +215,12 @@ public class EnumUtilsTest {
+         assertEquals(5L, EnumUtils.generateBitVector(Traffic.class, EnumSet.of(Traffic.RED, Traffic.GREEN)));
+         assertEquals(6L, EnumUtils.generateBitVector(Traffic.class, EnumSet.of(Traffic.AMBER, Traffic.GREEN)));
+         assertEquals(7L, EnumUtils.generateBitVector(Traffic.class, EnumSet.of(Traffic.RED, Traffic.AMBER, Traffic.GREEN)));
++
++        // 64 values Enum (to test whether no int<->long jdk convertion issue exists)
++        assertEquals((1L << 31), EnumUtils.generateBitVector(Enum64.class, EnumSet.of(Enum64.A31)));
++        assertEquals((1L << 32), EnumUtils.generateBitVector(Enum64.class, EnumSet.of(Enum64.A32)));
++        assertEquals((1L << 63), EnumUtils.generateBitVector(Enum64.class, EnumSet.of(Enum64.A63)));
++        assertEquals(Long.MIN_VALUE, EnumUtils.generateBitVector(Enum64.class, EnumSet.of(Enum64.A63)));
+     }
+ 
+     @Test
+@@ -227,6 +233,16 @@ public class EnumUtilsTest {
+         assertArrayEquals(EnumUtils.generateBitVectors(Traffic.class, EnumSet.of(Traffic.RED, Traffic.GREEN)), 5L);
+         assertArrayEquals(EnumUtils.generateBitVectors(Traffic.class, EnumSet.of(Traffic.AMBER, Traffic.GREEN)), 6L);
+         assertArrayEquals(EnumUtils.generateBitVectors(Traffic.class, EnumSet.of(Traffic.RED, Traffic.AMBER, Traffic.GREEN)), 7L);
++
++        // 64 values Enum (to test whether no int<->long jdk convertion issue exists)
++        assertArrayEquals(EnumUtils.generateBitVectors(Enum64.class, EnumSet.of(Enum64.A31)), (1L << 31));
++        assertArrayEquals(EnumUtils.generateBitVectors(Enum64.class, EnumSet.of(Enum64.A32)), (1L << 32));
++        assertArrayEquals(EnumUtils.generateBitVectors(Enum64.class, EnumSet.of(Enum64.A63)), (1L << 63));
++        assertArrayEquals(EnumUtils.generateBitVectors(Enum64.class, EnumSet.of(Enum64.A63)), Long.MIN_VALUE);
++
++        // More than 64 values Enum
++        assertArrayEquals(EnumUtils.generateBitVectors(TooMany.class, EnumSet.of(TooMany.M2)), 1L, 0L);
++        assertArrayEquals(EnumUtils.generateBitVectors(TooMany.class, EnumSet.of(TooMany.L2, TooMany.M2)), 1L, (1L << 63));
+     }
+ 
+     @Test
+@@ -241,6 +257,12 @@ public class EnumUtilsTest {
+         assertEquals(7L, EnumUtils.generateBitVector(Traffic.class, Traffic.RED, Traffic.AMBER, Traffic.GREEN));
+         //gracefully handles duplicates:
+         assertEquals(7L, EnumUtils.generateBitVector(Traffic.class, Traffic.RED, Traffic.AMBER, Traffic.GREEN, Traffic.GREEN));
++
++        // 64 values Enum (to test whether no int<->long jdk convertion issue exists)
++        assertEquals((1L << 31), EnumUtils.generateBitVector(Enum64.class, Enum64.A31));
++        assertEquals((1L << 32), EnumUtils.generateBitVector(Enum64.class, Enum64.A32));
++        assertEquals((1L << 63), EnumUtils.generateBitVector(Enum64.class, Enum64.A63));
++        assertEquals(Long.MIN_VALUE, EnumUtils.generateBitVector(Enum64.class, Enum64.A63));
+     }
+     
+     @Test
+@@ -255,6 +277,17 @@ public class EnumUtilsTest {
+         assertArrayEquals(EnumUtils.generateBitVectors(Traffic.class, Traffic.RED, Traffic.AMBER, Traffic.GREEN), 7L);
+         //gracefully handles duplicates:
+         assertArrayEquals(EnumUtils.generateBitVectors(Traffic.class, Traffic.RED, Traffic.AMBER, Traffic.GREEN, Traffic.GREEN), 7L);
++
++        // 64 values Enum (to test whether no int<->long jdk convertion issue exists)
++        assertArrayEquals(EnumUtils.generateBitVectors(Enum64.class, Enum64.A31), (1L << 31));
++        assertArrayEquals(EnumUtils.generateBitVectors(Enum64.class, Enum64.A32), (1L << 32));
++        assertArrayEquals(EnumUtils.generateBitVectors(Enum64.class, Enum64.A63), (1L << 63));
++        assertArrayEquals(EnumUtils.generateBitVectors(Enum64.class, Enum64.A63), Long.MIN_VALUE);
++
++        // More than 64 values Enum
++        assertArrayEquals(EnumUtils.generateBitVectors(TooMany.class, TooMany.M2), 1L, 0L);
++        assertArrayEquals(EnumUtils.generateBitVectors(TooMany.class, TooMany.L2, TooMany.M2), 1L, (1L << 63));
++
+     }
+ 
+     private void assertArrayEquals(final long[] actual, final long... expected) {
+@@ -283,6 +316,12 @@ public class EnumUtilsTest {
+         assertEquals(EnumSet.of(Traffic.RED, Traffic.GREEN), EnumUtils.processBitVector(Traffic.class, 5L));
+         assertEquals(EnumSet.of(Traffic.AMBER, Traffic.GREEN), EnumUtils.processBitVector(Traffic.class, 6L));
+         assertEquals(EnumSet.of(Traffic.RED, Traffic.AMBER, Traffic.GREEN), EnumUtils.processBitVector(Traffic.class, 7L));
++
++        // 64 values Enum (to test whether no int<->long jdk convertion issue exists)
++        assertEquals(EnumSet.of(Enum64.A31), EnumUtils.processBitVector(Enum64.class, (1L << 31)));
++        assertEquals(EnumSet.of(Enum64.A32), EnumUtils.processBitVector(Enum64.class, (1L << 32)));
++        assertEquals(EnumSet.of(Enum64.A63), EnumUtils.processBitVector(Enum64.class, (1L << 63)));
++        assertEquals(EnumSet.of(Enum64.A63), EnumUtils.processBitVector(Enum64.class, Long.MIN_VALUE));
+     }
+ 
+     @Test
+@@ -314,6 +353,12 @@ public class EnumUtilsTest {
+         assertEquals(EnumSet.of(Traffic.RED, Traffic.GREEN), EnumUtils.processBitVectors(Traffic.class, 666L, 5L));
+         assertEquals(EnumSet.of(Traffic.AMBER, Traffic.GREEN), EnumUtils.processBitVectors(Traffic.class, 666L, 6L));
+         assertEquals(EnumSet.of(Traffic.RED, Traffic.AMBER, Traffic.GREEN), EnumUtils.processBitVectors(Traffic.class, 666L, 7L));
++
++        // 64 values Enum (to test whether no int<->long jdk convertion issue exists)
++        assertEquals(EnumSet.of(Enum64.A31), EnumUtils.processBitVectors(Enum64.class, (1L << 31)));
++        assertEquals(EnumSet.of(Enum64.A32), EnumUtils.processBitVectors(Enum64.class, (1L << 32)));
++        assertEquals(EnumSet.of(Enum64.A63), EnumUtils.processBitVectors(Enum64.class, (1L << 63)));
++        assertEquals(EnumSet.of(Enum64.A63), EnumUtils.processBitVectors(Enum64.class, Long.MIN_VALUE));
+     }
+ 
+     @Test(expected=IllegalArgumentException.class)
+@@ -369,6 +414,12 @@ enum Traffic {
+     RED, AMBER, GREEN
+ }
+ 
++enum Enum64 {
++    A00, A01, A02, A03, A04, A05, A06, A07, A08, A09, A10, A11, A12, A13, A14, A15,
++    A16, A17, A18, A19, A20, A21, A22, A23, A24, A25, A26, A27, A28, A29, A30, A31,
++    A32, A33, A34, A35, A36, A37, A38, A39, A40, A41, A42, A43, A44, A45, A46, A47,
++    A48, A49, A50, A51, A52, A53, A54, A55, A56, A57, A58, A59, A60, A61, A62, A63;
++}
+ enum TooMany {
+     A,B,C,D,E,F,G,H,I,J,K,L,M,N,O,P,Q,R,S,T,U,V,W,X,Y,Z,
+     A1,B1,C1,D1,E1,F1,G1,H1,I1,J1,K1,L1,M1,N1,O1,P1,Q1,R1,S1,T1,U1,V1,W1,X1,Y1,Z1,
+diff --git a/src/test/java/org/apache/commons/lang3/StringUtilsTest.java b/src/test/java/org/apache/commons/lang3/StringUtilsTest.java
+index a83eed6c4e8e747ecc298367f9aa6a2a223f207e..49c95722c4ffdb354b306d3d91b665801a87b145 100644
+--- a/src/test/java/org/apache/commons/lang3/StringUtilsTest.java
++++ b/src/test/java/org/apache/commons/lang3/StringUtilsTest.java
+@@ -209,15 +209,37 @@ public class StringUtilsTest {
+         assertTrue(StringUtils.isNoneBlank("foo", "bar"));
+     }
+ 
+-    //-----------------------------------------------------------------------
+     @Test
+-    public void testCaseFunctions() {
++    public void testUpperCase() {
+         assertNull(StringUtils.upperCase(null));
+         assertNull(StringUtils.upperCase(null, Locale.ENGLISH));
++        assertEquals("upperCase(String) failed",
++                "FOO TEST THING", StringUtils.upperCase("fOo test THING"));
++        assertEquals("upperCase(empty-string) failed",
++                "", StringUtils.upperCase(""));
++        assertEquals("upperCase(String, Locale) failed",
++                "FOO TEST THING", StringUtils.upperCase("fOo test THING", Locale.ENGLISH));
++        assertEquals("upperCase(empty-string, Locale) failed",
++                "", StringUtils.upperCase("", Locale.ENGLISH));
++    }
++
++    @Test
++    public void testLowerCase() {
+         assertNull(StringUtils.lowerCase(null));
+         assertNull(StringUtils.lowerCase(null, Locale.ENGLISH));
++        assertEquals("lowerCase(String) failed",
++                "foo test thing", StringUtils.lowerCase("fOo test THING"));
++        assertEquals("lowerCase(empty-string) failed",
++                "", StringUtils.lowerCase(""));
++        assertEquals("lowerCase(String, Locale) failed",
++                "foo test thing", StringUtils.lowerCase("fOo test THING", Locale.ENGLISH));
++        assertEquals("lowerCase(empty-string, Locale) failed",
++                "", StringUtils.lowerCase("", Locale.ENGLISH));
++    }
++
++    @Test
++    public void testCapitalize() {
+         assertNull(StringUtils.capitalize(null));
+-        assertNull(StringUtils.uncapitalize(null));
+ 
+         assertEquals("capitalize(empty-string) failed",
+                 "", StringUtils.capitalize(""));
+@@ -228,6 +250,18 @@ public class StringUtilsTest {
+         assertEquals("capitalize(string) failed",
+                 FOO_CAP, StringUtils.capitalize(FOO_UNCAP));
+ 
++        // Javadoc examples
++        assertNull(StringUtils.capitalize(null));
++        assertEquals("", StringUtils.capitalize(""));
++        assertEquals("Cat", StringUtils.capitalize("cat"));
++        assertEquals("CAt", StringUtils.capitalize("cAt"));
++        assertEquals("'cat'", StringUtils.capitalize("'cat'"));
++    }
++
++    @Test
++    public void testUnCapitalize() {
++        assertNull(StringUtils.uncapitalize(null));
++
+         assertEquals("uncapitalize(String) failed",
+                 FOO_UNCAP, StringUtils.uncapitalize(FOO_CAP));
+         assertEquals("uncapitalize(string) failed",
+@@ -237,6 +271,14 @@ public class StringUtilsTest {
+         assertEquals("uncapitalize(single-char-string) failed",
+                 "x", StringUtils.uncapitalize("X"));
+ 
++        // Examples from uncapitalize Javadoc
++        assertEquals("cat", StringUtils.uncapitalize("cat"));
++        assertEquals("cat", StringUtils.uncapitalize("Cat"));
++        assertEquals("cAT", StringUtils.uncapitalize("CAT"));
++    }
++
++    @Test
++    public void testReCapitalize() {
+         // reflection type of tests: Sentences.
+         assertEquals("uncapitalize(capitalize(String)) failed",
+                 SENTENCE_UNCAP, StringUtils.uncapitalize(StringUtils.capitalize(SENTENCE_UNCAP)));
+@@ -248,29 +290,6 @@ public class StringUtilsTest {
+                 FOO_UNCAP, StringUtils.uncapitalize(StringUtils.capitalize(FOO_UNCAP)));
+         assertEquals("capitalize(uncapitalize(String)) failed",
+                 FOO_CAP, StringUtils.capitalize(StringUtils.uncapitalize(FOO_CAP)));
+-
+-        assertEquals("upperCase(String) failed",
+-                "FOO TEST THING", StringUtils.upperCase("fOo test THING"));
+-        assertEquals("upperCase(empty-string) failed",
+-                "", StringUtils.upperCase(""));
+-        assertEquals("lowerCase(String) failed",
+-                "foo test thing", StringUtils.lowerCase("fOo test THING"));
+-        assertEquals("lowerCase(empty-string) failed",
+-                "", StringUtils.lowerCase(""));
+-
+-        assertEquals("upperCase(String, Locale) failed",
+-                "FOO TEST THING", StringUtils.upperCase("fOo test THING", Locale.ENGLISH));
+-        assertEquals("upperCase(empty-string, Locale) failed",
+-                "", StringUtils.upperCase("", Locale.ENGLISH));
+-        assertEquals("lowerCase(String, Locale) failed",
+-                "foo test thing", StringUtils.lowerCase("fOo test THING", Locale.ENGLISH));
+-        assertEquals("lowerCase(empty-string, Locale) failed",
+-                "", StringUtils.lowerCase("", Locale.ENGLISH));
+-
+-        // Examples from uncapitalize Javadoc
+-        assertEquals("cat", StringUtils.uncapitalize("cat"));
+-        assertEquals("cat", StringUtils.uncapitalize("Cat"));
+-        assertEquals("cAT", StringUtils.uncapitalize("CAT"));
+     }
+ 
+     @Test
+diff --git a/src/test/java/org/apache/commons/lang3/text/WordUtilsTest.java b/src/test/java/org/apache/commons/lang3/text/WordUtilsTest.java
+index a34f5c6ee0a109ca9377922e238a59f38c34aa81..0da57dd58cd24c6576b425cb9af9e533013bc61c 100644
+--- a/src/test/java/org/apache/commons/lang3/text/WordUtilsTest.java
++++ b/src/test/java/org/apache/commons/lang3/text/WordUtilsTest.java
+@@ -24,6 +24,7 @@ import static org.junit.Assert.assertTrue;
+ import java.lang.reflect.Constructor;
+ import java.lang.reflect.Modifier;
+ 
++import org.apache.commons.lang3.SystemUtils;
+ import org.junit.Test;
+ 
+ /**
+@@ -52,7 +53,7 @@ public class WordUtilsTest {
+         assertEquals("", WordUtils.wrap("", -1));
+         
+         // normal
+-        final String systemNewLine = System.getProperty("line.separator");
++        final String systemNewLine = SystemUtils.LINE_SEPARATOR;
+         String input = "Here is one line of text that is going to be wrapped after 20 columns.";
+         String expected = "Here is one line of" + systemNewLine + "text that is going" 
+             + systemNewLine + "to be wrapped after" + systemNewLine + "20 columns.";
+@@ -114,7 +115,7 @@ public class WordUtilsTest {
+         assertEquals(expected, WordUtils.wrap(input, -1, "\n", false));
+ 
+         // system newline char
+-        final String systemNewLine = System.getProperty("line.separator");
++        final String systemNewLine = SystemUtils.LINE_SEPARATOR;
+         input = "Here is one line of text that is going to be wrapped after 20 columns.";
+         expected = "Here is one line of" + systemNewLine + "text that is going" + systemNewLine 
+             + "to be wrapped after" + systemNewLine + "20 columns.";
+@@ -281,6 +282,7 @@ public class WordUtilsTest {
+         assertEquals("I", WordUtils.initials("I"));
+         assertEquals("i", WordUtils.initials("i"));
+         assertEquals("BJL", WordUtils.initials("Ben John Lee"));
++        assertEquals("BJL", WordUtils.initials("   Ben \n   John\tLee\t"));
+         assertEquals("BJ", WordUtils.initials("Ben J.Lee"));
+         assertEquals("BJ.L", WordUtils.initials(" Ben   John  . Lee"));
+         assertEquals("iah1", WordUtils.initials("i am here 123"));
+@@ -297,6 +299,7 @@ public class WordUtilsTest {
+         assertEquals("i", WordUtils.initials("i", array));
+         assertEquals("S", WordUtils.initials("SJC", array));
+         assertEquals("BJL", WordUtils.initials("Ben John Lee", array));
++        assertEquals("BJL", WordUtils.initials("   Ben \n   John\tLee\t", array));
+         assertEquals("BJ", WordUtils.initials("Ben J.Lee", array));
+         assertEquals("BJ.L", WordUtils.initials(" Ben   John  . Lee", array));
+         assertEquals("KO", WordUtils.initials("Kay O'Murphy", array));
+@@ -310,6 +313,7 @@ public class WordUtilsTest {
+         assertEquals("", WordUtils.initials("i", array));
+         assertEquals("", WordUtils.initials("SJC", array));
+         assertEquals("", WordUtils.initials("Ben John Lee", array));
++        assertEquals("", WordUtils.initials("   Ben \n   John\tLee\t", array));
+         assertEquals("", WordUtils.initials("Ben J.Lee", array));
+         assertEquals("", WordUtils.initials(" Ben   John  . Lee", array));
+         assertEquals("", WordUtils.initials("Kay O'Murphy", array));
+@@ -324,6 +328,7 @@ public class WordUtilsTest {
+         assertEquals("S", WordUtils.initials("SJC", array));
+         assertEquals("BJL", WordUtils.initials("Ben John Lee", array));
+         assertEquals("BJ", WordUtils.initials("Ben J.Lee", array));
++        assertEquals("B\nJ", WordUtils.initials("   Ben \n   John\tLee\t", array));
+         assertEquals("BJ.L", WordUtils.initials(" Ben   John  . Lee", array));
+         assertEquals("KO", WordUtils.initials("Kay O'Murphy", array));
+         assertEquals("iah1", WordUtils.initials("i am here 123", array));
+diff --git a/src/test/java/org/apache/commons/lang3/time/FastDateParser_TimeZoneStrategyTest.java b/src/test/java/org/apache/commons/lang3/time/FastDateParser_TimeZoneStrategyTest.java
+index 7c557be7e9c5a5649992394abaa2e651da1f3495..34a67c01240bd39af4b379398a9b24fa1eb93270 100644
+--- a/src/test/java/org/apache/commons/lang3/time/FastDateParser_TimeZoneStrategyTest.java
++++ b/src/test/java/org/apache/commons/lang3/time/FastDateParser_TimeZoneStrategyTest.java
+@@ -38,10 +38,13 @@ public class FastDateParser_TimeZoneStrategyTest {
+                         parser.parse(tzDisplay);
+                     }
+                     catch(Exception ex) {
+-                        Assert.fail(tzDisplay
+-                                + " Locale: " + locale.getDisplayName()
++                        Assert.fail("'" + tzDisplay + "'"
++                                + " Locale: '" + locale.getDisplayName() + "'"
+                                 + " TimeZone: " + zone[0]
+-                                + " offset: " + t);
++                                + " offset: " + t
++                                + " defaultLocale: " + Locale.getDefault()
++                                + " defaultTimeZone: " + TimeZone.getDefault().getDisplayName()
++                                );
+                     }
+                 }
+             }

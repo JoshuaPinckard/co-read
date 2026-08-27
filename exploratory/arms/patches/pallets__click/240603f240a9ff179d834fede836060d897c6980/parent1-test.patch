@@ -1,0 +1,195 @@
+diff --git a/tests/test_arguments.py b/tests/test_arguments.py
+index 60152820d99430809c1c4ab30e8a923240b29e24..f4b452336a69883a06c0516e7b89371d525256c4 100644
+--- a/tests/test_arguments.py
++++ b/tests/test_arguments.py
+@@ -295,6 +295,50 @@ def test_implicit_non_required(runner):
+     assert result.output == "test\n"
+ 
+ 
++def test_argument_help(runner):
++    @click.command()
++    @click.argument("name", help="The name to print")
++    @click.option("--count", default=1, help="number of greetings")
++    def cli(name, count):
++        pass
++
++    result = runner.invoke(cli, ["--help"])
++    assert result.exit_code == 0, result.output
++    assert "Positional arguments:" in result.output
++    assert "NAME" in result.output
++    assert "The name to print" in result.output
++    assert "Options:" in result.output
++    assert "number of greetings" in result.output
++    assert result.output.index("Positional arguments:") < result.output.index(
++        "Options:"
++    )
++
++
++def test_argument_help_options_only_no_arguments_section(runner):
++    @click.command()
++    @click.option("--count", default=1, help="number of greetings")
++    def cli(count):
++        pass
++
++    result = runner.invoke(cli, ["--help"])
++    assert result.exit_code == 0, result.output
++    assert "Positional arguments:" not in result.output
++    assert "Options:" in result.output
++    assert "number of greetings" in result.output
++
++
++def test_argument_help_optional_metavar(runner):
++    @click.command()
++    @click.argument("name", required=False, default="", help="The name to print")
++    def cli(name):
++        pass
++
++    result = runner.invoke(cli, ["--help"])
++    assert result.exit_code == 0, result.output
++    assert "[NAME]" in result.output
++    assert "The name to print" in result.output
++
++
+ def test_deprecated_usage(runner):
+     @click.command()
+     @click.argument("f", required=False, deprecated=True)
+@@ -332,6 +376,50 @@ def test_argument_metavar_marks_optional(runner, kwargs, expected):
+     assert result.output.splitlines()[0] == f"Usage: cli [OPTIONS] {expected}"
+ 
+ 
++@pytest.mark.parametrize(
++    ("deprecated", "expected_label"),
++    [(True, "(DEPRECATED)"), ("use g instead", "(DEPRECATED: use g instead)")],
++)
++def test_deprecated_usage_help_record(runner, deprecated, expected_label):
++    @click.command()
++    @click.argument("f", required=False, deprecated=deprecated, help="path to the file")
++    def cli(f):
++        click.echo(f)
++
++    result = runner.invoke(cli, ["--help"])
++    assert result.exit_code == 0, result.output
++    assert "Positional arguments:" in result.output
++    assert "[F!]" in result.output
++    assert f"path to the file {expected_label}" in result.output
++
++
++def test_deprecated_usage_help_record_without_help(runner):
++    @click.command()
++    @click.argument("f", required=False, deprecated=True)
++    def cli(f):
++        click.echo(f)
++
++    result = runner.invoke(cli, ["--help"])
++    assert result.exit_code == 0, result.output
++    # Deprecation alone produces a help row with just the deprecation label.
++    assert "Positional arguments:" in result.output
++    assert "(DEPRECATED)" in result.output
++
++
++@pytest.mark.parametrize(
++    ("deprecated", "expected"),
++    [(True, "(DEPRECATED)"), ("USE B INSTEAD", "(DEPRECATED: USE B INSTEAD)")],
++)
++@pytest.mark.parametrize("help_text", ["", None])
++def test_deprecated_empty_help_no_leading_space(help_text, deprecated, expected):
++    """An argument with empty or missing help text must not gain a stray leading
++    space before the deprecation label.
++    """
++    arg = click.Argument(["foo"], required=False, help=help_text, deprecated=deprecated)
++    ctx = click.Context(click.Command("cli"))
++    assert arg.get_help_record(ctx)[1] == expected
++
++
+ @pytest.mark.parametrize("deprecated", [True, "USE B INSTEAD"])
+ def test_deprecated_warning(runner, deprecated):
+     @click.command()
+diff --git a/tests/test_info_dict.py b/tests/test_info_dict.py
+index 20fe68cc139d2cbff3928659bfc3999f37d35c3f..b434c3fc5851c45c5df97da6046d59fa82581cea 100644
+--- a/tests/test_info_dict.py
++++ b/tests/test_info_dict.py
+@@ -40,6 +40,7 @@ NAME_ARGUMENT = (
+         "multiple": False,
+         "default": None,
+         "envvar": None,
++        "help": None,
+     },
+ )
+ NUMBER_OPTION = (
+@@ -273,3 +274,42 @@ def test_paramtype_no_name():
+         pass
+ 
+     assert TestType().to_info_dict()["name"] == "TestType"
++
++
++@pytest.mark.parametrize(
++    ("help_in", "help_out"),
++    [
++        pytest.param(None, None, id="None"),
++        pytest.param("", "", id="empty"),
++        pytest.param("single line", "single line", id="single-line"),
++        pytest.param(
++            "\n    first line\n    second line\n    ",
++            "first line\nsecond line",
++            id="multi-line",
++        ),
++    ],
++)
++def test_argument_to_info_dict_help(help_in, help_out):
++    arg = click.Argument(["name"], help=help_in)
++    assert arg.to_info_dict()["help"] == help_out
++
++
++def test_argument_to_info_dict_nargs():
++    arg = click.Argument(["files"], nargs=-1, help="files to process")
++    info = arg.to_info_dict()
++    assert info["nargs"] == -1
++    assert info["help"] == "files to process"
++
++
++def test_command_to_info_dict_multiple_arguments():
++    @click.command()
++    @click.argument("src", help="source path")
++    @click.argument("dst", help="destination path")
++    def cli(src, dst):
++        pass
++
++    ctx = click.Context(cli)
++    params = cli.to_info_dict(ctx)["params"]
++    args = [p for p in params if p["param_type_name"] == "argument"]
++    assert [p["name"] for p in args] == ["src", "dst"]
++    assert [p["help"] for p in args] == ["source path", "destination path"]
+diff --git a/tests/test_utils.py b/tests/test_utils.py
+index 1aebf3cc5a6057e35922329b82678b3ef5be0c14..b7a4259e94977bba3f47bb1660bef14f9a4ec597 100644
+--- a/tests/test_utils.py
++++ b/tests/test_utils.py
+@@ -541,22 +541,18 @@ def test_echo_color_flag(monkeypatch, capfd):
+     out, err = capfd.readouterr()
+     assert out == f"{styled_text}\n"
+ 
+-    isatty = True
+     click.echo(styled_text)
+     out, err = capfd.readouterr()
+     assert out == f"{styled_text}\n"
+ 
+     isatty = False
+-    # Faking isatty() is not enough on Windows;
+-    # the implementation caches the colorama wrapped stream
+-    # so we have to use a new stream for each test
+-    stream = StringIO()
+-    click.echo(styled_text, file=stream)
+-    assert stream.getvalue() == f"{text}\n"
+-
+-    stream = StringIO()
+-    click.echo(styled_text, file=stream, color=True)
+-    assert stream.getvalue() == f"{styled_text}\n"
++    click.echo(styled_text)
++    out, err = capfd.readouterr()
++    assert out == f"{text}\n"
++
++    click.echo(styled_text, color=True)
++    out, err = capfd.readouterr()
++    assert out == f"{styled_text}\n"
+ 
+ 
+ def test_prompt_cast_default(capfd, monkeypatch):

@@ -1,0 +1,13 @@
+diff --git a/tests/test_utils.py b/tests/test_utils.py
+index 5dfeb022313653f11a040a7d3343d78d6c35d5b4..8b24c67f6e889f3bcb99728b6ba6f31f509da9fa 100644
+--- a/tests/test_utils.py
++++ b/tests/test_utils.py
+@@ -457,7 +457,7 @@ def test_expand_args(monkeypatch):
+     assert user in click.utils._expand_args(["~"])
+     monkeypatch.setenv("CLICK_TEST", "hello")
+     assert "hello" in click.utils._expand_args(["$CLICK_TEST"])
+-    assert "setup.cfg" in click.utils._expand_args(["*.cfg"])
++    assert "pyproject.toml" in click.utils._expand_args(["*.toml"])
+     assert os.path.join("docs", "conf.py") in click.utils._expand_args(["**/conf.py"])
+     assert "*.not-found" in click.utils._expand_args(["*.not-found"])
+     # a bad glob pattern, such as a pytest identifier, should return itself

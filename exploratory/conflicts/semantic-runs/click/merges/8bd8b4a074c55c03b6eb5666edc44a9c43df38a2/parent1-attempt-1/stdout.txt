@@ -1,0 +1,48 @@
+============================= test session starts =============================
+platform win32 -- Python 3.11.9, pytest-8.4.2, pluggy-1.6.0
+rootdir: C:\Users\joshp\Desktop\Blast-Radius-semantic-scratch-20260824\semantic-worktrees\8bd8b4a074c5-parent1-attempt-1
+configfile: pyproject.toml
+testpaths: tests
+collected 31460 items / 30000 deselected / 1460 selected
+
+tests\test_arguments.py ................................................ [  3%]
+...........................................                              [  6%]
+tests\test_basic.py .................................................... [  9%]
+....................................                                     [ 12%]
+tests\test_chain.py ...............x                                     [ 13%]
+tests\test_command_decorators.py .........                               [ 13%]
+tests\test_commands.py ................................................. [ 17%]
+..............................                                           [ 19%]
+tests\test_compat.py .                                                   [ 19%]
+tests\test_context.py ..............................                     [ 21%]
+tests\test_custom_classes.py ......                                      [ 21%]
+tests\test_defaults.py ..................................                [ 24%]
+tests\test_formatting.py .................                               [ 25%]
+tests\test_imports.py .                                                  [ 25%]
+tests\test_info_dict.py ......................                           [ 26%]
+tests\test_normalization.py ...                                          [ 27%]
+tests\test_options.py .................................................. [ 30%]
+........................................................................ [ 35%]
+........................................................................ [ 40%]
+........................................................................ [ 45%]
+........................................................................ [ 50%]
+........................................................................ [ 55%]
+........................................................................ [ 60%]
+........................................................................ [ 65%]
+.....                                                                    [ 65%]
+tests\test_parser.py .......                                             [ 65%]
+tests\test_shell_completion.py ......................................... [ 68%]
+...........                                                              [ 69%]
+tests\test_stream_lifecycle.py ........................                  [ 71%]
+tests\test_termui.py .....................................ss............ [ 74%]
+..............ss........................................................ [ 79%]
+........................................................................ [ 84%]
+.............                                                            [ 85%]
+tests\test_testing.py ..............................                     [ 87%]
+tests\test_types.py .................................s....s.             [ 90%]
+tests\test_utils.py ...........................................s.sssssss [ 93%]
+sssssssssssssssssssssssssssssssssssssssssssssssssssss..s.......sssss.... [ 98%]
+...................                                                      [100%]
+
+- generated xml file: C:\Users\joshp\Desktop\Blast-Radius\exploratory\conflicts\semantic-runs\click\merges\8bd8b4a074c55c03b6eb5666edc44a9c43df38a2\parent1-attempt-1\junit.xml -
+======== 1386 passed, 73 skipped, 30000 deselected, 1 xfailed in 7.56s ========

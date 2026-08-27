@@ -1,0 +1,31 @@
+Extract the OPERATIONAL PARAMETERS a build team needs to size the coordination substrate. The design (byte-interval regions, append-only event log, inverted read index, mechanical claims) is settled; what is missing is every number that turns it into capacity plans and defaults. Nobody has scraped the transcript corpus for these.
+
+## Data
+
+The Claude Code transcript corpus at the current user's `.claude/projects` tree (~5,900 JSONL files, ~4 GB). Prior extractions established: 99.6% of Read results carry `toolUseResult.file` with filePath/startLine/numLines; 98.7% of Edit/Write results carry structuredPatch + originalFile; agent identity is agentId else sessionId; subagents under `<sessionId>/subagents/`; ~200k Bash/PowerShell calls carry paths only in command strings (structured capture misses them). Reuse `instruments/hazard/extract_hazards.py` for the event walk; write new scripts under `instruments/build-params/`.
+
+Freeze the corpus byte-prefixes with a recorded SHA-256 as the oscillation study did (`exploratory/oscillation/RESULTS.md` shows the pattern).
+
+## Parameters to extract — each with distribution (p50/p90/p99/max), not just means
+
+1. **Event volume**: structured read/write/edit events per active session-hour, and corpus-wide totals. This sizes the event log's write path and retention.
+2. **Read window sizes**: startLine/numLines distributions, and byte sizes where computable from originalFile lengths. This sets default region granularity for read claims.
+3. **Edit region sizes**: hunk line counts and byte spans from structuredPatch. This sets write-claim granularity and the escalation budget's region definition.
+4. **Read multiplicity**: for each file, how many distinct sessions read it within a day / a week. The inverted read index's fan-out — its hot-key problem — lives here. Report the top-20 hottest files by multiplicity WITH their paths categorized (source/config/doc/log) but do not quote file contents.
+5. **Read-to-write intervals**: time from a session's first read of a file to its first write of the same file (claim-lifetime proxy), and time from last write to session end (how long claims would linger if released at session close). This sets claim lease defaults.
+6. **Observed concurrency**: distribution of simultaneously active sessions (sessions with events in the same minute), and simultaneously active on the SAME repository top-level directory. This is the N the shim must actually support, measured not assumed.
+7. **Index cardinality**: distinct files ever read; distinct (file, session) pairs; growth per week over the corpus's time span. Sizes the index.
+8. **Capture coverage**: structured events vs shell-command path mentions (recovered by a stated best-effort parser); report the parser's recovery rate on a hand-checked sample of 50 commands. The known ~5:1 shell dominance needs a build-grade number with a validation sample.
+9. **File-type mix** of reads and writes (source/config/markdown/json/lock/binary) — what the substrate must handle well vs merely tolerate.
+10. **Session length** distributions (events and wall-clock) — the unit of statelessness under one-shot dispatch.
+
+## Discipline
+
+- Every number carries its denominator and its blind spot. The shell channel gap (item 8) qualifies items 1-7 — say by how much, explicitly, per item.
+- One team, one harness, Node-dominated workload: state it up front; these are defaults for self-calibration (`@perrepo` seeds), not universal constants.
+- No file contents quoted; paths may appear, credential-bearing paths (vault, .env, tokens) must be redacted to their directory.
+- Read-only on the corpus. Do not fabricate.
+
+## Output
+
+`exploratory/build-params/PARAMETERS.md` — the parameter table first (name, value/distribution, what it sizes, blind spot), then per-item detail; plus machine-readable `parameters.json`. Mandatory sections: "Claims that could NOT be verified", "What would change this verdict", per-claim confidence with reasons.

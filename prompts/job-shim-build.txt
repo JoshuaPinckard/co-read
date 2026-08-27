@@ -1,0 +1,36 @@
+Build the ARMS SHIM and the CANARY: the harness that runs the confirmatory experiment. Read HYPOTHESES.md section C including Amendment 2 (six arms, approved) and the four preconditions first. This job builds and gates the instrument with SCRIPTED FAKE SUBJECTS ONLY. It launches no real-model draw. The only real model calls permitted are canary calibration probes (at most 8 short calls, codex or claude CLI).
+
+## What a draw is
+
+One draw = one site x one arm x two agent tasks. A site (exploratory/arms/sites.json, sites-go.json, sites-java.json, 19 validated) provides: base identity (tree hash), two sides, each with a source patch, a test patch, and frozen focal test targets. The task given to an agent is: its side's test patch is applied to the tree (visible, failing) and the agent must edit SOURCE files until those focal tests pass. The intent text is the side's commit subject and body from the mined corpus. Agents must not modify test files, and a completion that edits any test-patch file is recorded incorrect by rule.
+
+Correctness at integration: both sides' focal tests green on the final integrated tree, test files byte-identical to their patched state, tree otherwise buildable. Per-side completion: that side's focal tests green on that side's final tree.
+
+## The six arms
+
+1. sequential: A runs to completion on the tree, integrate, then B on the result. Correctness ceiling and concurrency-zero baseline.
+2. unmediated shared: A and B run concurrently in ONE working tree with no coordination.
+3. optimistic isolation: A and B in separate worktrees from the same base. At completion, mechanical merge (git merge-tree), suite validates the merged tree, and on textual conflict or red suite the LOSING side (fixed rule: the later finisher) is retried as a fresh agent on a base that includes the winner's result, at most 2 retries. Retried and discarded minutes are recorded as wasted compute.
+4. file locks: before launch, each side's agent is asked in one short preliminary CLI call to list the files it will modify for its task. Declared sets that overlap serialize the agents (A then B); disjoint sets run as arm 2 but with writes outside the declaration recorded as violations, never blocked (the field's systems would refuse; we record what refusal would have cost and what declaration missed). Declaration accuracy is data.
+5. coordinator: dispatch-time scheduling only. Predicted overlap (declared files from arm-4-style preliminary calls, plus paths named in the intent text) decides serialize vs parallel worktrees; no locks, no mid-flight checks; integration as arm 3 without retries.
+6. full system: separate worktrees, mechanical claims derived by the harness from each agent's actual file writes (filesystem snapshot diff at completion, plus a poll every 30 seconds during the run for timing data), contract screen at dispatch (contradictory-task sites must surface at issuance), harvest integration under the answer key, and the N=3 escalation budget: a region alternating between agents across retries three times stops the draw as an escalation, which is a recorded outcome, not a failure of the harness.
+
+## Subject adapters
+
+Adapters for three CLIs, each recording exact version and model identifier per draw: codex exec (workspace-write sandbox, cwd = the agent's tree), claude -p (acceptEdits, cwd likewise), gemini (present but NOT called in this job; adapter written to the same interface). Timeout 20 minutes per agent run (transcript p50 active span is 6.5 min), one timeout retry per the fairness rule: a subject that never finished is excluded and its slot redrawn, a finished-but-wrong result is data, everything stays on disk.
+
+## Event log
+
+Append-only JSONL per draw: schema_version, draw id, site, arm, stratum, principal (side A or B agent instance id), subject CLI + version + model, op (launch, poll, write-set, declare, merge, validate, retry, escalate, complete), paths with byte spans where the harness computed a diff, content hashes of changed regions, timestamps. The log is the attribution instrument (P4: 100% log-only attribution of contested writes) so nothing about writes comes from agent text output. FILES-READ style agent prose is never parsed.
+
+## Canary and clean room
+
+Subjects must run instruction-bare. Build: (a) an environment-manifest generator recording every instruction-file location each CLI reads (codex: CODEX_HOME and cwd AGENTS.md; claude: CLAUDE_CONFIG_DIR / user CLAUDE.md and cwd CLAUDE.md; gemini: its equivalents), with each location's existence and hash at draw time; (b) a planted-marker canary: a distinctive marker string placed in those locations must be detectable in a probe task's output (calibration, proves the channel fires), and after the controlled room is set (redirected HOME-equivalents to a clean directory) the same probe must not emit the marker. Run the calibration today with at most 8 short probes, write certificates (marker fired / marker absent, with hashes and timestamps) beside the canary code. The arms pilot will require a same-day canary pass before its first draw.
+
+## The shim gate (this job's exit criterion)
+
+Scripted fake subjects: deterministic scripts that pose as agents and make known edits (one benign pair, one colliding pair, one test-modifying cheater, one that stalls past timeout). Run the full pilot machinery with fake subjects across all six arms on 2 real sites (one Click byte-intersecting, one other stratum), each twice. Gate: the two runs produce identical event logs and metrics after timestamp normalization, the cheater is caught by the test-files-unchanged rule, the staller is excluded-and-redrawn by the fairness rule, arm 6's escalation fires on a scripted three-alternation sequence, and arm 3's retry accounting matches the scripted schedule. Report every gate check with its actual output.
+
+## Output
+
+instruments/arms/shim/ (source, no third-party deps beyond stdlib and git), instruments/arms/canary/ with certificates, and exploratory/arms/SHIM-GATE.md: first line the gate verdict, then per-check evidence, the fake-subject scripts' hashes, CLI versions detected, "Claims that could NOT be verified", "What would change this verdict", per-claim confidence with reasons. Do not run any real-model draw beyond the 8 canary probes. Do not modify fixture/, corpus mirrors, prompts/, or existing results.

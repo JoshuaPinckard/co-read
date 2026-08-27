@@ -1,0 +1,12 @@
+diff --git a/tests/test_imports.py b/tests/test_imports.py
+index b99d453d0626e9550b85e7703330d1ca0cd9d987..e309eac9338f43c5c73c6050e5d0d69332ed69f5 100644
+--- a/tests/test_imports.py
++++ b/tests/test_imports.py
+@@ -49,7 +49,6 @@ ALLOWED_IMPORTS = {
+     "fcntl",
+     "datetime",
+     "pipes",
+-    "shlex",
+ }
+ 
+ if WIN:

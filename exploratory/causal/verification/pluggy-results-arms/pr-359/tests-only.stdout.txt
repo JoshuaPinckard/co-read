@@ -1,0 +1,51 @@
+============================= test session starts =============================
+platform win32 -- Python 3.11.9, pytest-7.4.4, pluggy-unknown
+benchmark: 4.0.0 (defaults: timer=time.perf_counter disable_gc=False min_rounds=5 min_time=0.000005 max_time=1.0 calibration_precision=10 warmup=False warmup_iterations=100000)
+rootdir: C:\Users\joshp\AppData\Local\Temp\blast-radius-pluggy-causal\a359-bh13wr6s\t
+configfile: tox.ini
+testpaths: testing
+plugins: benchmark-4.0.0
+collected 86 items
+
+testing\test_details.py .....                                            [  5%]
+testing\test_helpers.py .....F                                           [ 12%]
+testing\test_hookcaller.py ....................                          [ 36%]
+testing\test_invocations.py .........                                    [ 46%]
+testing\test_multicall.py ..........                                     [ 58%]
+testing\test_pluginmanager.py ................................           [ 95%]
+testing\test_tracer.py ....                                              [100%]
+
+================================== FAILURES ===================================
+___________________________ test_varnames_decorator ___________________________
+
+    def test_varnames_decorator() -> None:
+        F = TypeVar("F", bound=Callable[..., Any])
+    
+        def my_decorator(func: F) -> F:
+            @wraps(func)
+            def wrapper(*args, **kwargs):
+                return func(*args, **kwargs)
+    
+            return cast(F, wrapper)
+    
+        @my_decorator
+        def example(a, b=123) -> None:
+            pass
+    
+        class Example:
+            @my_decorator
+            def example_method(self, x, y=1) -> None:
+                pass
+    
+        ex_inst = Example()
+    
+>       assert varnames(example) == (("a",), ("b",))
+E       AssertionError: assert ((), ()) == (('a',), ('b',))
+E         At index 0 diff: () != ('a',)
+E         Use -v to get more diff
+
+testing\test_helpers.py:110: AssertionError
+- generated xml file: C:\Users\joshp\Desktop\Blast-Radius\exploratory\causal\verification\pluggy-results-arms\pr-359\tests-only.xml -
+=========================== short test summary info ===========================
+FAILED testing/test_helpers.py::test_varnames_decorator - AssertionError: ass...
+======================== 1 failed, 85 passed in 0.68s =========================

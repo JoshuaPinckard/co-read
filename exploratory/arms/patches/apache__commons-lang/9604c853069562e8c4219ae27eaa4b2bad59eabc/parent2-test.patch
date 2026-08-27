@@ -1,0 +1,31 @@
+diff --git a/src/test/java/org/apache/commons/lang3/text/WordUtilsTest.java b/src/test/java/org/apache/commons/lang3/text/WordUtilsTest.java
+index 6be8ded7921495305586c6b3ec4103b946880a99..92d697118092dc990f6175dba536f68b7e677bef 100644
+--- a/src/test/java/org/apache/commons/lang3/text/WordUtilsTest.java
++++ b/src/test/java/org/apache/commons/lang3/text/WordUtilsTest.java
+@@ -221,6 +221,26 @@ public class WordUtilsTest {
+         assertEquals("I Am.fine", WordUtils.capitalizeFully("i am.fine", null) );
+     }
+ 
++    @Test
++    public void testContainsAllWords_StringString() {
++        assertFalse(WordUtils.containsAllWords(null, (String) null));
++        assertFalse(WordUtils.containsAllWords(null, ""));
++        assertFalse(WordUtils.containsAllWords(null, "ab"));
++
++        assertFalse(WordUtils.containsAllWords("", (String) null));
++        assertFalse(WordUtils.containsAllWords("", ""));
++        assertFalse(WordUtils.containsAllWords("", "ab"));
++
++        assertFalse(WordUtils.containsAllWords("foo", (String) null));
++        assertFalse(WordUtils.containsAllWords("bar", ""));
++        assertFalse(WordUtils.containsAllWords("zzabyycdxx", "by"));
++        assertTrue(WordUtils.containsAllWords("lorem ipsum dolor sit amet", "ipsum", "lorem", "dolor"));
++        assertFalse(WordUtils.containsAllWords("lorem ipsum dolor sit amet", "ipsum", null, "lorem", "dolor"));
++        assertFalse(WordUtils.containsAllWords("lorem ipsum null dolor sit amet", "ipsum", null, "lorem", "dolor"));
++        assertFalse(WordUtils.containsAllWords("ab", "b"));
++        assertFalse(WordUtils.containsAllWords("ab", "z"));
++    }
++
+     @Test
+     public void testUncapitalize_String() {
+         assertEquals(null, WordUtils.uncapitalize(null));

@@ -1,0 +1,310 @@
+============================= test session starts =============================
+platform win32 -- Python 3.11.9, pytest-7.4.4, pluggy-unknown
+benchmark: 4.0.0 (defaults: timer=time.perf_counter disable_gc=False min_rounds=5 min_time=0.000005 max_time=1.0 calibration_precision=10 warmup=False warmup_iterations=100000)
+rootdir: C:\Users\joshp\AppData\Local\Temp\blast-radius-pluggy-causal\a280-wd8myjcr\t
+configfile: tox.ini
+testpaths: testing
+plugins: benchmark-4.0.0
+collected 79 items
+
+testing\test_details.py .....                                            [  6%]
+testing\test_helpers.py .....                                            [ 12%]
+testing\test_hookcaller.py ...................                           [ 36%]
+testing\test_invocations.py ........                                     [ 46%]
+testing\test_multicall.py FFFFFF.FFF                                     [ 59%]
+testing\test_pluginmanager.py ............................               [ 94%]
+testing\test_tracer.py ....                                              [100%]
+
+================================== FAILURES ===================================
+______________________________ test_keyword_args ______________________________
+
+    def test_keyword_args():
+        @hookimpl
+        def f(x):
+            return x + 1
+    
+        class A:
+            @hookimpl
+            def f(self, x, y):
+                return x + y
+    
+>       reslist = MC([f, A().f], dict(x=23, y=24))
+
+testing\test_multicall.py:30: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+methods = [<function test_keyword_args.<locals>.f at 0x000002393AB8EC00>, <bound method test_keyword_args.<locals>.A.f of <test_multicall.test_keyword_args.<locals>.A object at 0x000002393B546E50>>]
+kwargs = {'x': 23, 'y': 24}, firstresult = False
+
+    def MC(methods, kwargs, firstresult=False):
+        caller = _multicall
+        hookfuncs = []
+        for method in methods:
+            f = HookImpl(None, "<temp>", method, method.example_impl)
+            hookfuncs.append(f)
+>       return caller("foo", hookfuncs, kwargs, firstresult)
+E       TypeError: _multicall() takes from 2 to 3 positional arguments but 4 were given
+
+testing\test_multicall.py:17: TypeError
+_____________________ test_keyword_args_with_defaultargs ______________________
+
+    def test_keyword_args_with_defaultargs():
+        @hookimpl
+        def f(x, z=1):
+            return x + z
+    
+>       reslist = MC([f], dict(x=23, y=24))
+
+testing\test_multicall.py:39: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+methods = [<function test_keyword_args_with_defaultargs.<locals>.f at 0x000002393AB4C220>]
+kwargs = {'x': 23, 'y': 24}, firstresult = False
+
+    def MC(methods, kwargs, firstresult=False):
+        caller = _multicall
+        hookfuncs = []
+        for method in methods:
+            f = HookImpl(None, "<temp>", method, method.example_impl)
+            hookfuncs.append(f)
+>       return caller("foo", hookfuncs, kwargs, firstresult)
+E       TypeError: _multicall() takes from 2 to 3 positional arguments but 4 were given
+
+testing\test_multicall.py:17: TypeError
+____________________________ test_tags_call_error _____________________________
+
+    def test_tags_call_error():
+        @hookimpl
+        def f(x):
+            return x
+    
+        with pytest.raises(HookCallError):
+>           MC([f], {})
+
+testing\test_multicall.py:49: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+methods = [<function test_tags_call_error.<locals>.f at 0x000002393AB8CE00>]
+kwargs = {}, firstresult = False
+
+    def MC(methods, kwargs, firstresult=False):
+        caller = _multicall
+        hookfuncs = []
+        for method in methods:
+            f = HookImpl(None, "<temp>", method, method.example_impl)
+            hookfuncs.append(f)
+>       return caller("foo", hookfuncs, kwargs, firstresult)
+E       TypeError: _multicall() takes from 2 to 3 positional arguments but 4 were given
+
+testing\test_multicall.py:17: TypeError
+_________________________ test_call_none_is_no_result _________________________
+
+    def test_call_none_is_no_result():
+        @hookimpl
+        def m1():
+            return 1
+    
+        @hookimpl
+        def m2():
+            return None
+    
+>       res = MC([m1, m2], {}, firstresult=True)
+
+testing\test_multicall.py:61: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+methods = [<function test_call_none_is_no_result.<locals>.m1 at 0x000002393AB8D440>, <function test_call_none_is_no_result.<locals>.m2 at 0x000002393AB8E3E0>]
+kwargs = {}, firstresult = True
+
+    def MC(methods, kwargs, firstresult=False):
+        caller = _multicall
+        hookfuncs = []
+        for method in methods:
+            f = HookImpl(None, "<temp>", method, method.example_impl)
+            hookfuncs.append(f)
+>       return caller("foo", hookfuncs, kwargs, firstresult)
+E       TypeError: _multicall() takes from 2 to 3 positional arguments but 4 were given
+
+testing\test_multicall.py:17: TypeError
+______________________________ test_hookwrapper _______________________________
+
+    def test_hookwrapper():
+        out = []
+    
+        @hookimpl(hookwrapper=True)
+        def m1():
+            out.append("m1 init")
+            yield None
+            out.append("m1 finish")
+    
+        @hookimpl
+        def m2():
+            out.append("m2")
+            return 2
+    
+>       res = MC([m2, m1], {})
+
+testing\test_multicall.py:81: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+methods = [<function test_hookwrapper.<locals>.m2 at 0x000002393AB2C400>, <function test_hookwrapper.<locals>.m1 at 0x000002393AB2C2C0>]
+kwargs = {}, firstresult = False
+
+    def MC(methods, kwargs, firstresult=False):
+        caller = _multicall
+        hookfuncs = []
+        for method in methods:
+            f = HookImpl(None, "<temp>", method, method.example_impl)
+            hookfuncs.append(f)
+>       return caller("foo", hookfuncs, kwargs, firstresult)
+E       TypeError: _multicall() takes from 2 to 3 positional arguments but 4 were given
+
+testing\test_multicall.py:17: TypeError
+___________________________ test_hookwrapper_order ____________________________
+
+    def test_hookwrapper_order():
+        out = []
+    
+        @hookimpl(hookwrapper=True)
+        def m1():
+            out.append("m1 init")
+            yield 1
+            out.append("m1 finish")
+    
+        @hookimpl(hookwrapper=True)
+        def m2():
+            out.append("m2 init")
+            yield 2
+            out.append("m2 finish")
+    
+>       res = MC([m2, m1], {})
+
+testing\test_multicall.py:105: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+methods = [<function test_hookwrapper_order.<locals>.m2 at 0x000002393AB2C540>, <function test_hookwrapper_order.<locals>.m1 at 0x000002393AB2C5E0>]
+kwargs = {}, firstresult = False
+
+    def MC(methods, kwargs, firstresult=False):
+        caller = _multicall
+        hookfuncs = []
+        for method in methods:
+            f = HookImpl(None, "<temp>", method, method.example_impl)
+            hookfuncs.append(f)
+>       return caller("foo", hookfuncs, kwargs, firstresult)
+E       TypeError: _multicall() takes from 2 to 3 positional arguments but 4 were given
+
+testing\test_multicall.py:17: TypeError
+_______________________ test_hookwrapper_too_many_yield _______________________
+
+    def test_hookwrapper_too_many_yield():
+        @hookimpl(hookwrapper=True)
+        def m1():
+            yield 1
+            yield 2
+    
+        with pytest.raises(RuntimeError) as ex:
+>           MC([m1], {})
+
+testing\test_multicall.py:126: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+methods = [<function test_hookwrapper_too_many_yield.<locals>.m1 at 0x000002393AB2CA40>]
+kwargs = {}, firstresult = False
+
+    def MC(methods, kwargs, firstresult=False):
+        caller = _multicall
+        hookfuncs = []
+        for method in methods:
+            f = HookImpl(None, "<temp>", method, method.example_impl)
+            hookfuncs.append(f)
+>       return caller("foo", hookfuncs, kwargs, firstresult)
+E       TypeError: _multicall() takes from 2 to 3 positional arguments but 4 were given
+
+testing\test_multicall.py:17: TypeError
+___________________ test_hookwrapper_exception[ValueError] ____________________
+
+exc = <class 'ValueError'>
+
+    @pytest.mark.parametrize("exc", [ValueError, SystemExit])
+    def test_hookwrapper_exception(exc):
+        out = []
+    
+        @hookimpl(hookwrapper=True)
+        def m1():
+            out.append("m1 init")
+            yield None
+            out.append("m1 finish")
+    
+        @hookimpl
+        def m2():
+            raise exc
+    
+        with pytest.raises(exc):
+>           MC([m2, m1], {})
+
+testing\test_multicall.py:146: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+methods = [<function test_hookwrapper_exception.<locals>.m2 at 0x000002393AB4D3A0>, <function test_hookwrapper_exception.<locals>.m1 at 0x000002393AB4C220>]
+kwargs = {}, firstresult = False
+
+    def MC(methods, kwargs, firstresult=False):
+        caller = _multicall
+        hookfuncs = []
+        for method in methods:
+            f = HookImpl(None, "<temp>", method, method.example_impl)
+            hookfuncs.append(f)
+>       return caller("foo", hookfuncs, kwargs, firstresult)
+E       TypeError: _multicall() takes from 2 to 3 positional arguments but 4 were given
+
+testing\test_multicall.py:17: TypeError
+___________________ test_hookwrapper_exception[SystemExit] ____________________
+
+exc = <class 'SystemExit'>
+
+    @pytest.mark.parametrize("exc", [ValueError, SystemExit])
+    def test_hookwrapper_exception(exc):
+        out = []
+    
+        @hookimpl(hookwrapper=True)
+        def m1():
+            out.append("m1 init")
+            yield None
+            out.append("m1 finish")
+    
+        @hookimpl
+        def m2():
+            raise exc
+    
+        with pytest.raises(exc):
+>           MC([m2, m1], {})
+
+testing\test_multicall.py:146: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+methods = [<function test_hookwrapper_exception.<locals>.m2 at 0x000002393AB2C5E0>, <function test_hookwrapper_exception.<locals>.m1 at 0x000002393AB2CE00>]
+kwargs = {}, firstresult = False
+
+    def MC(methods, kwargs, firstresult=False):
+        caller = _multicall
+        hookfuncs = []
+        for method in methods:
+            f = HookImpl(None, "<temp>", method, method.example_impl)
+            hookfuncs.append(f)
+>       return caller("foo", hookfuncs, kwargs, firstresult)
+E       TypeError: _multicall() takes from 2 to 3 positional arguments but 4 were given
+
+testing\test_multicall.py:17: TypeError
+- generated xml file: C:\Users\joshp\Desktop\Blast-Radius\exploratory\causal\verification\pluggy-results-arms\pr-280\tests-only.xml -
+=========================== short test summary info ===========================
+FAILED testing/test_multicall.py::test_keyword_args - TypeError: _multicall()...
+FAILED testing/test_multicall.py::test_keyword_args_with_defaultargs - TypeEr...
+FAILED testing/test_multicall.py::test_tags_call_error - TypeError: _multical...
+FAILED testing/test_multicall.py::test_call_none_is_no_result - TypeError: _m...
+FAILED testing/test_multicall.py::test_hookwrapper - TypeError: _multicall() ...
+FAILED testing/test_multicall.py::test_hookwrapper_order - TypeError: _multic...
+FAILED testing/test_multicall.py::test_hookwrapper_too_many_yield - TypeError...
+FAILED testing/test_multicall.py::test_hookwrapper_exception[ValueError] - Ty...
+FAILED testing/test_multicall.py::test_hookwrapper_exception[SystemExit] - Ty...
+======================== 9 failed, 70 passed in 0.42s =========================

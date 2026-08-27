@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?><testsuites name="pytest tests"><testsuite name="pytest" errors="0" failures="4" skipped="0" tests="4" time="0.131" timestamp="2026-08-24T08:28:24.509460-07:00" hostname="JoshP"><testcase classname="tests.snippets.elpi.test_func.txt" name="" time="0.018"><failure message="The tokens produced by the &quot;elpi&quot; lexer differ from the expected ones in the file &quot;tests\snippets\elpi\test_func.txt&quot;.&#10;Run `tox -- tests\snippets --update-goldens` to update it.&#10;&#10;  &#10;  - 'func'        Keyword.Declaration&#10;  + 'func'        Text&#10;    ' '           Text.Whitespace&#10;  - 'map'         Name.Function&#10;  + 'map'         Text&#10;    ' '           Text.Whitespace...&#10;  &#10;  ...Full output truncated (67 lines hidden), use '-vv' to show">The tokens produced by the "elpi" lexer differ from the expected ones in the file "tests\snippets\elpi\test_func.txt".
+Run `tox -- tests\snippets --update-goldens` to update it.
+
+  
+  - 'func'        Keyword.Declaration
+  + 'func'        Text
+    ' '           Text.Whitespace
+  - 'map'         Name.Function
+  + 'map'         Text
+    ' '           Text.Whitespace...
+  
+  ...Full output truncated (67 lines hidden), use '-vv' to show</failure></testcase><testcase classname="tests.snippets.elpi.test_pred.txt" name="" time="0.001"><failure message="The tokens produced by the &quot;elpi&quot; lexer differ from the expected ones in the file &quot;tests\snippets\elpi\test_pred.txt&quot;.&#10;Run `tox -- tests\snippets --update-goldens` to update it.&#10;&#10;  &#10;  Skipping 322 identical leading characters in diff, use -v to show&#10;  -           Keyword.Mode&#10;  +           Text&#10;    ' '           Text.Whitespace&#10;    'o:'          Keyword.Mode&#10;    'list'        Keyword.Type...&#10;  &#10;  ...Full output truncated (38 lines hidden), use '-vv' to show">The tokens produced by the "elpi" lexer differ from the expected ones in the file "tests\snippets\elpi\test_pred.txt".
+Run `tox -- tests\snippets --update-goldens` to update it.
+
+  
+  Skipping 322 identical leading characters in diff, use -v to show
+  -           Keyword.Mode
+  +           Text
+    ' '           Text.Whitespace
+    'o:'          Keyword.Mode
+    'list'        Keyword.Type...
+  
+  ...Full output truncated (38 lines hidden), use '-vv' to show</failure></testcase><testcase classname="tests.snippets.elpi.test_quotations.txt" name="" time="0.007"><failure message="The tokens produced by the &quot;elpi&quot; lexer differ from the expected ones in the file &quot;tests\snippets\elpi\test_quotations.txt&quot;.&#10;Run `tox -- tests\snippets --update-goldens` to update it.&#10;&#10;  &#10;  Skipping 2392 identical leading characters in diff, use -v to show&#10;  -           Keyword.Mode&#10;  +           Text&#10;    ' '           Text.Whitespace&#10;    'o:'          Keyword.Mode&#10;    'term'        Keyword.Type...&#10;  &#10;  ...Full output truncated (108 lines hidden), use '-vv' to show">The tokens produced by the "elpi" lexer differ from the expected ones in the file "tests\snippets\elpi\test_quotations.txt".
+Run `tox -- tests\snippets --update-goldens` to update it.
+
+  
+  Skipping 2392 identical leading characters in diff, use -v to show
+  -           Keyword.Mode
+  +           Text
+    ' '           Text.Whitespace
+    'o:'          Keyword.Mode
+    'term'        Keyword.Type...
+  
+  ...Full output truncated (108 lines hidden), use '-vv' to show</failure></testcase><testcase classname="tests.snippets.elpi.test_type.txt" name="" time="0.001"><failure message="The tokens produced by the &quot;elpi&quot; lexer differ from the expected ones in the file &quot;tests\snippets\elpi\test_type.txt&quot;.&#10;Run `tox -- tests\snippets --update-goldens` to update it.&#10;&#10;  &#10;  Skipping 2565 identical leading characters in diff, use -v to show&#10;  -           Keyword.Mode&#10;  +           Text&#10;    ' '           Text.Whitespace&#10;    'o:'          Keyword.Mode&#10;    'tm'          Keyword.Type&#10;    '.'           Text&#10;    '\n'          Text.Whitespace">The tokens produced by the "elpi" lexer differ from the expected ones in the file "tests\snippets\elpi\test_type.txt".
+Run `tox -- tests\snippets --update-goldens` to update it.
+
+  
+  Skipping 2565 identical leading characters in diff, use -v to show
+  -           Keyword.Mode
+  +           Text
+    ' '           Text.Whitespace
+    'o:'          Keyword.Mode
+    'tm'          Keyword.Type
+    '.'           Text
+    '\n'          Text.Whitespace</failure></testcase></testsuite></testsuites>

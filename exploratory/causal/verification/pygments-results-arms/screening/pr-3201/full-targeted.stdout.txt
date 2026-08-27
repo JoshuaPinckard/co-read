@@ -1,0 +1,10 @@
+============================= test session starts =============================
+platform win32 -- Python 3.11.9, pytest-8.4.2, pluggy-1.6.0
+rootdir: C:\Users\joshp\AppData\Local\Temp\blast-radius-pygments-causal-opbff12g\screen-pr-3201-882saa76\full
+configfile: pyproject.toml
+collected 3 items
+
+tests\test_groff_formatter.py ...                                        [100%]
+
+- generated xml file: C:\Users\joshp\Desktop\Blast-Radius\exploratory\causal\verification\pygments-results-arms\screening\pr-3201\full-targeted.xml -
+============================== 3 passed in 0.10s ==============================

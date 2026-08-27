@@ -1,0 +1,47 @@
+Test whether co-read predicts change risk better than co-change does. This is the question the unification test did NOT answer, and it is now the more promising one.
+
+Read first: `exploratory/unification/RESULTS.md` and `exploratory/language-hole/RESULTS.md`.
+
+## The distinction that matters
+
+The unification test rejected a specific hypothesis: that co-change can substitute for co-read. Overlap was 7.82%, below a popularity-only null, with union-support Spearman −0.505, and the qualitative split was interpretable — co-read surfaces architectural context pairs (an implementation with its contract, parallel provider implementations) while co-change surfaces bookkeeping (a manifest with a lockfile, a ledger with its config).
+
+**It never tested whether a read-based score is a better blast-radius predictor than a commit-based one.** That is a different question and it is open. If reads win, then one read-derived index serves both retrieval and change impact, and the co-change machinery is the wrong foundation for both.
+
+## The test
+
+Use the replay protocol from `instruments/replay/SPEC.md` **unchanged**, on `toolsenabled-current`, which is the one repository where both signals exist. Strict temporal replay: at commit *i* the model sees only information from strictly before *i*. Task: given one changed file as seed, predict the other files changed in that same commit, excluding files the commit created.
+
+Arms:
+
+| Arm | Built from |
+|---|---|
+| `cochange` | Commit history, time-decayed confidence — the current baseline |
+| `coread` | Agent co-read association from the transcript corpus |
+| `fused` | Reciprocal-rank fusion of the two |
+| `popularity` | Control |
+| `random` | Control |
+
+Both controls are mandatory. An arm that beats nothing is not a result.
+
+## The temporal constraint that decides whether this is valid
+
+**The co-read index at commit *i* must be built only from reads that occurred before commit *i*'s timestamp.** Transcript records carry `timestamp`; commits carry author and commit dates. Assert this in code, not in prose — a leak here manufactures the result and would be invisible in the output.
+
+The transcript corpus spans 2026-07-17 to the present. Commits before that window have no co-read data at all. **Restrict the evaluation to commits inside the window where both signals can be populated, and report how many commits that leaves.** If it is too few to support a comparison, that is the finding — say so and stop rather than reporting a thin number.
+
+## Metrics
+
+Precision-at-1 and precision-at-10 as primary. Report recall-at-10 and recall-at-20 **next to mean ground-truth set size** — the ten-repository run established that recall tracks ground-truth size almost monotonically and is uninterpretable without it.
+
+No query-level confidence intervals; commits generate cliques of dependent pairs. Resample whole commits or omit intervals with that reason stated.
+
+## Output
+
+`exploratory/unification/PREDICTOR.md`. Write new scripts under `instruments/unification/`; **do not modify `extract_reads.py` or `analyze.py`**, another analysis reads them. Do not modify anything under `instruments/replay/`.
+
+Answer in the first section: **does co-read beat co-change at predicting what changes together?** If it loses, say it loses — that is a clean and useful negative, and it would mean reads are the better retrieval signal but not the better change-impact signal, which is a sharper finding than either alternative.
+
+Required sections: **"Claims that could NOT be verified"** and **"What would change this verdict"**. Per-claim confidence with its reason.
+
+Read-only on the transcript corpus and on `toolsenabled-current`. Do not fabricate.

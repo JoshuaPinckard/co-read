@@ -1,0 +1,44 @@
+============================= test session starts =============================
+platform win32 -- Python 3.11.9, pytest-8.4.2, pluggy-1.6.0
+rootdir: C:\Users\joshp\AppData\Local\Temp\blast-radius-pygments-causal-opbff12g\screen-pr-3215-x2snphnc\tests-only
+configfile: pyproject.toml
+collected 3 items
+
+tests\test_raw_token.py ..F                                              [100%]
+
+================================== FAILURES ===================================
+_________________________ test_raw_token_error_color __________________________
+
+    def test_raw_token_error_color():
+        # ``error_color`` wraps Error tokens in an ANSI color. The output stream is
+        # binary, so the colorized line must stay bytes (regression test for the
+        # ``str``/``bytes`` mix that crashed the formatter).
+        from pygments.console import codes
+    
+>       out = highlight("$", PythonLexer(), RawTokenFormatter(error_color="red"))
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests\test_raw_token.py:77: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+pygments\__init__.py:82: in highlight
+    return format(lex(code, lexer), formatter, outfile)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+pygments\__init__.py:64: in format
+    formatter.format(tokens, realoutfile)
+pygments\formatters\other.py:109: in format
+    write(colorize(self.error_color, line))
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+color_key = 'red', text = b"Token.Error\t'$'\n"
+
+    def colorize(color_key, text):
+>       return codes[color_key] + text + codes["reset"]
+               ^^^^^^^^^^^^^^^^^^^^^^^
+E       TypeError: can only concatenate str (not "bytes") to str
+
+pygments\console.py:45: TypeError
+- generated xml file: C:\Users\joshp\Desktop\Blast-Radius\exploratory\causal\verification\pygments-results-arms\screening\pr-3215\tests-only-targeted.xml -
+=========================== short test summary info ===========================
+FAILED tests/test_raw_token.py::test_raw_token_error_color - TypeError: can o...
+========================= 1 failed, 2 passed in 0.25s =========================

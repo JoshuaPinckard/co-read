@@ -1,0 +1,14 @@
+diff --git a/tests/snippets/googlesql/test_leading_substring_set_not_keyword.txt b/tests/snippets/googlesql/test_leading_substring_set_not_keyword.txt
+new file mode 100644
+index 0000000000000000000000000000000000000000..78514d4e71e4e854e54471729213c218cb1be10b
+--- /dev/null
++++ b/tests/snippets/googlesql/test_leading_substring_set_not_keyword.txt
+@@ -0,0 +1,8 @@
++---input---
++select settings
++
++---tokens---
++'select'      Keyword
++' '           Text.Whitespace
++'settings'    Name
++'\n'          Text.Whitespace

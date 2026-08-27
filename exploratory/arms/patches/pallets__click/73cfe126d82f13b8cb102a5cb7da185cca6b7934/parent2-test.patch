@@ -1,0 +1,132 @@
+diff --git a/tests/test_defaults.py b/tests/test_defaults.py
+index 8ef5ea2922d36fbef406a5daad8073ddddb24c03..5ab05edb8002b2a93a49f3c8493c1ae8a4ba07ff 100644
+--- a/tests/test_defaults.py
++++ b/tests/test_defaults.py
+@@ -5,7 +5,7 @@ def test_basic_defaults(runner):
+     @click.command()
+     @click.option("--foo", default=42, type=click.FLOAT)
+     def cli(foo):
+-        assert type(foo) is float
++        assert type(foo) is float  # noqa E721
+         click.echo(f"FOO:[{foo}]")
+ 
+     result = runner.invoke(cli, [])
+@@ -18,7 +18,7 @@ def test_multiple_defaults(runner):
+     @click.option("--foo", default=[23, 42], type=click.FLOAT, multiple=True)
+     def cli(foo):
+         for item in foo:
+-            assert type(item) is float
++            assert type(item) is float  # noqa E721
+             click.echo(item)
+ 
+     result = runner.invoke(cli, [])
+diff --git a/tests/test_imports.py b/tests/test_imports.py
+index ec32fcafd9ff6767ca54ff3539cf57fbb8e2ce56..453ffeee088935b6ccdaa6049c104bd753eba536 100644
+--- a/tests/test_imports.py
++++ b/tests/test_imports.py
+@@ -4,7 +4,6 @@ import sys
+ 
+ from click._compat import WIN
+ 
+-
+ IMPORT_TEST = b"""\
+ import builtins
+ 
+diff --git a/tests/test_normalization.py b/tests/test_normalization.py
+index 32df098e9bb08f9bbc36b77abe62f06a032db1b6..502e654a3774a159ddf20596d0036d65dd633110 100644
+--- a/tests/test_normalization.py
++++ b/tests/test_normalization.py
+@@ -1,6 +1,5 @@
+ import click
+ 
+-
+ CONTEXT_SETTINGS = dict(token_normalize_func=lambda x: x.lower())
+ 
+ 
+diff --git a/tests/test_testing.py b/tests/test_testing.py
+index 9f294b3a133f81a02ffa3c6e092be5066bed2a12..4733221be4b2a54f1ed6508486aaad9476214d1f 100644
+--- a/tests/test_testing.py
++++ b/tests/test_testing.py
+@@ -321,7 +321,7 @@ def test_stderr():
+     assert result_mix.stdout == "stdout\nstderr\n"
+ 
+     with pytest.raises(ValueError):
+-        result_mix.stderr
++        result_mix.stderr  # noqa B018
+ 
+     @click.command()
+     def cli_empty_stderr():
+diff --git a/tests/test_utils.py b/tests/test_utils.py
+index 12709a1d8b75f6fe8c0270daf3fba7b710505807..fd099e9b20ca1cec3ff24e346d913525d44e76fe 100644
+--- a/tests/test_utils.py
++++ b/tests/test_utils.py
+@@ -241,7 +241,7 @@ def test_prompt_cast_default(capfd, monkeypatch):
+     monkeypatch.setattr(sys, "stdin", StringIO("\n"))
+     value = click.prompt("value", default="100", type=int)
+     capfd.readouterr()
+-    assert type(value) is int
++    assert type(value) is int  # noqa E721
+ 
+ 
+ @pytest.mark.skipif(WIN, reason="Test too complex to make work windows.")
+@@ -464,7 +464,7 @@ def test_expand_args(monkeypatch):
+     assert user in click.utils._expand_args(["~"])
+     monkeypatch.setenv("CLICK_TEST", "hello")
+     assert "hello" in click.utils._expand_args(["$CLICK_TEST"])
+-    assert "setup.cfg" in click.utils._expand_args(["*.cfg"])
++    assert "pyproject.toml" in click.utils._expand_args(["*.toml"])
+     assert os.path.join("docs", "conf.py") in click.utils._expand_args(["**/conf.py"])
+     assert "*.not-found" in click.utils._expand_args(["*.not-found"])
+     # a bad glob pattern, such as a pytest identifier, should return itself
+diff --git a/tests/typing/typing_aliased_group.py b/tests/typing/typing_aliased_group.py
+index ccc706bc53fab561e45f2cdd4730418a88388539..a1fdac4b22b8ad0d0fb7cbad3d7a09971f9c5b6a 100644
+--- a/tests/typing/typing_aliased_group.py
++++ b/tests/typing/typing_aliased_group.py
+@@ -1,4 +1,5 @@
+ """Example from https://click.palletsprojects.com/en/8.1.x/advanced/#command-aliases"""
++
+ from __future__ import annotations
+ 
+ from typing_extensions import assert_type
+diff --git a/tests/typing/typing_confirmation_option.py b/tests/typing/typing_confirmation_option.py
+index 09ecaa96daa834599e1750ca9b148eb2c8cd45c6..a568a6ad06ee0cd33678452843a189bd62348332 100644
+--- a/tests/typing/typing_confirmation_option.py
++++ b/tests/typing/typing_confirmation_option.py
+@@ -1,4 +1,5 @@
+ """From https://click.palletsprojects.com/en/8.1.x/options/#yes-parameters"""
++
+ from typing_extensions import assert_type
+ 
+ import click
+diff --git a/tests/typing/typing_options.py b/tests/typing/typing_options.py
+index 6a6611928ef04d42404921567fa8d396a563b3da..613e8d43de1eed889dcf171e9538874b122d783b 100644
+--- a/tests/typing/typing_options.py
++++ b/tests/typing/typing_options.py
+@@ -1,4 +1,5 @@
+ """From https://click.palletsprojects.com/en/8.1.x/quickstart/#adding-parameters"""
++
+ from typing_extensions import assert_type
+ 
+ import click
+diff --git a/tests/typing/typing_simple_example.py b/tests/typing/typing_simple_example.py
+index 0a94b8cb7872309780ea8db02484ce5d27b4cf3b..641937c5dc65f331de508ea7c23b11d99d479a90 100644
+--- a/tests/typing/typing_simple_example.py
++++ b/tests/typing/typing_simple_example.py
+@@ -1,4 +1,5 @@
+ """The simple example from https://github.com/pallets/click#a-simple-example."""
++
+ from typing_extensions import assert_type
+ 
+ import click
+diff --git a/tests/typing/typing_version_option.py b/tests/typing/typing_version_option.py
+index fd473a001bd96b72996e3a331ad02eff5a0506b9..7ff37a75fb03f705265a5484dbbf71e81483285a 100644
+--- a/tests/typing/typing_version_option.py
++++ b/tests/typing/typing_version_option.py
+@@ -1,6 +1,7 @@
+ """
+ From https://click.palletsprojects.com/en/8.1.x/options/#callbacks-and-eager-options.
+ """
++
+ from typing_extensions import assert_type
+ 
+ import click

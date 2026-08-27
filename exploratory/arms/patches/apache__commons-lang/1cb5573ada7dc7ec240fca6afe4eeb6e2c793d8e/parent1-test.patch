@@ -1,0 +1,162 @@
+diff --git a/src/test/java/org/apache/commons/lang3/builder/EqualsBuilderTest.java b/src/test/java/org/apache/commons/lang3/builder/EqualsBuilderTest.java
+index 30e2e22f38309b4cea09497eac2fa0ce0e32aa14..702c5a2c884dd560cc18c852215d7c54225401ab 100644
+--- a/src/test/java/org/apache/commons/lang3/builder/EqualsBuilderTest.java
++++ b/src/test/java/org/apache/commons/lang3/builder/EqualsBuilderTest.java
+@@ -1150,5 +1150,37 @@ public class EqualsBuilderTest {
+         assertTrue(EqualsBuilder.reflectionEquals(d1, d3));
+     }
+ 
++    static class TestObjectEqualsExclude {
++        @EqualsExclude
++        private int a;
++        private int b;
++
++        public TestObjectEqualsExclude(int a, int b) {
++            this.a = a;
++            this.b = b;
++        }
++
++        public int getA() {
++            return a;
++        }
++
++        public int getB() {
++            return b;
++        }
++    }
++
++    @Test
++    public void testToEqualsExclude() {
++        TestObjectEqualsExclude one = new TestObjectEqualsExclude(1, 2);
++        TestObjectEqualsExclude two = new TestObjectEqualsExclude(1, 3);
++
++        assertFalse(EqualsBuilder.reflectionEquals(one, two));
++
++        one = new TestObjectEqualsExclude(1, 2);
++        two = new TestObjectEqualsExclude(2, 2);
++
++        assertTrue(EqualsBuilder.reflectionEquals(one, two));
++    }
++
+ }
+ 
+diff --git a/src/test/java/org/apache/commons/lang3/builder/HashCodeBuilderTest.java b/src/test/java/org/apache/commons/lang3/builder/HashCodeBuilderTest.java
+index 12aba9ee336e6f9cb52fb3a7616462b5d8844385..9009fbde4a9d63cc76df9b3ccd407ab37af32b92 100644
+--- a/src/test/java/org/apache/commons/lang3/builder/HashCodeBuilderTest.java
++++ b/src/test/java/org/apache/commons/lang3/builder/HashCodeBuilderTest.java
+@@ -622,4 +622,51 @@ public class HashCodeBuilderTest {
+                      hcb.toHashCode(), hcb.hashCode());
+     }
+ 
++    static class TestObjectHashCodeExclude {
++        @HashCodeExclude
++        private int a;
++        private int b;
++
++        public TestObjectHashCodeExclude(int a, int b) {
++            this.a = a;
++            this.b = b;
++        }
++
++        public int getA() {
++            return a;
++        }
++
++        public int getB() {
++            return b;
++        }
++    }
++
++    static class TestObjectHashCodeExclude2 {
++        @HashCodeExclude
++        private int a;
++        @HashCodeExclude
++        private int b;
++
++        public TestObjectHashCodeExclude2(int a, int b) {
++            this.a = a;
++            this.b = b;
++        }
++
++        public int getA() {
++            return a;
++        }
++
++        public int getB() {
++            return b;
++        }
++    }
++
++    @Test
++    public void testToHashCodeExclude() {
++        TestObjectHashCodeExclude one = new TestObjectHashCodeExclude(1, 2);
++        TestObjectHashCodeExclude2 two = new TestObjectHashCodeExclude2(1, 2);
++        assertEquals(17 * 37 + 2, HashCodeBuilder.reflectionHashCode(one));
++        assertEquals(17, HashCodeBuilder.reflectionHashCode(two));
++    }
++
+ }
+diff --git a/src/test/java/org/apache/commons/lang3/builder/ReflectionToStringBuilderExcludeWithAnnotationTest.java b/src/test/java/org/apache/commons/lang3/builder/ReflectionToStringBuilderExcludeWithAnnotationTest.java
+new file mode 100755
+index 0000000000000000000000000000000000000000..58946cfb5078838d94f1831f41c4bc8dd60026ac
+--- /dev/null
++++ b/src/test/java/org/apache/commons/lang3/builder/ReflectionToStringBuilderExcludeWithAnnotationTest.java
+@@ -0,0 +1,58 @@
++/*
++ * Licensed to the Apache Software Foundation (ASF) under one or more
++ * contributor license agreements.  See the NOTICE file distributed with
++ * this work for additional information regarding copyright ownership.
++ * The ASF licenses this file to You under the Apache License, Version 2.0
++ * (the "License"); you may not use this file except in compliance with
++ * the License.  You may obtain a copy of the License at
++ * 
++ *      http://www.apache.org/licenses/LICENSE-2.0
++ * 
++ * Unless required by applicable law or agreed to in writing, software
++ * distributed under the License is distributed on an "AS IS" BASIS,
++ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
++ * See the License for the specific language governing permissions and
++ * limitations under the License.
++ */
++
++package org.apache.commons.lang3.builder;
++
++import static org.hamcrest.Matchers.containsString;
++import static org.hamcrest.Matchers.not;
++import static org.junit.Assert.assertThat;
++
++import org.junit.Test;
++
++/**
++ * Test class for ToStringExclude annotation
++ * @version $Id$
++ */
++public class ReflectionToStringBuilderExcludeWithAnnotationTest {
++
++    class TestFixture {
++        @ToStringExclude
++        private final String excludedField = EXCLUDED_FIELD_VALUE;
++
++        @SuppressWarnings("unused")
++        private final String includedField = INCLUDED_FIELD_VALUE;
++    }
++
++    private static final String INCLUDED_FIELD_NAME = "includedField";
++
++    private static final String INCLUDED_FIELD_VALUE = "Hello World!";
++
++    private static final String EXCLUDED_FIELD_NAME = "excludedField";
++
++    private static final String EXCLUDED_FIELD_VALUE = "excluded field value";
++
++    @Test
++    public void test_toStringExclude() {
++        final String toString = ReflectionToStringBuilder.toString(new TestFixture());
++
++        assertThat(toString, not(containsString(EXCLUDED_FIELD_NAME)));
++        assertThat(toString, not(containsString(EXCLUDED_FIELD_VALUE)));
++        assertThat(toString, containsString(INCLUDED_FIELD_NAME));
++        assertThat(toString, containsString(INCLUDED_FIELD_VALUE));
++    }
++
++}

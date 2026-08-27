@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?><testsuites name="pytest tests"><testsuite name="pytest" errors="0" failures="1" skipped="0" tests="1" time="0.132" timestamp="2026-08-24T08:20:17.298293-07:00" hostname="JoshP"><testcase classname="tests.snippets.ruby.test_shift_operator.txt" name="" time="0.019"><failure message="The tokens produced by the &quot;ruby&quot; lexer differ from the expected ones in the file &quot;tests\snippets\ruby\test_shift_operator.txt&quot;.&#10;Run `tox -- tests\snippets --update-goldens` to update it.&#10;&#10;  &#10;  Skipping 60 identical leading characters in diff, use -v to show&#10;    Operator&#10;  - 'a'           Name&#10;  + ''            Literal.String.Heredoc&#10;  + 'a'           Literal.String.Delimiter&#10;  + ''            Literal.String.Heredoc&#10;    '\n'          Text.Whitespace">The tokens produced by the "ruby" lexer differ from the expected ones in the file "tests\snippets\ruby\test_shift_operator.txt".
+Run `tox -- tests\snippets --update-goldens` to update it.
+
+  
+  Skipping 60 identical leading characters in diff, use -v to show
+    Operator
+  - 'a'           Name
+  + ''            Literal.String.Heredoc
+  + 'a'           Literal.String.Delimiter
+  + ''            Literal.String.Heredoc
+    '\n'          Text.Whitespace</failure></testcase></testsuite></testsuites>

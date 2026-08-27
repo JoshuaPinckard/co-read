@@ -1,0 +1,26 @@
+============================= test session starts =============================
+platform win32 -- Python 3.11.9, pytest-8.4.2, pluggy-1.6.0
+rootdir: C:\Users\joshp\AppData\Local\Temp\blast-radius-pygments-causal-opbff12g\screen-pr-3210-a5ez163h\tests-only
+configfile: pyproject.toml
+collected 1 item
+
+tests\snippets\scss\2818.txt F                                           [100%]
+
+================================== FAILURES ===================================
+________________________ tests\snippets\scss\2818.txt _________________________
+The tokens produced by the "scss" lexer differ from the expected ones in the file "tests\snippets\scss\2818.txt".
+Run `tox -- tests\snippets --update-goldens` to update it.
+
+  
+  Skipping 577 identical leading characters in diff, use -v to show
+    tespace
+  + '$'           Error
+  - '$border-radius' Name.Variable
+  ?  -                    ^ ^^^^^^
+  + 'border-radius' Name.Tag...
+  
+  ...Full output truncated (14 lines hidden), use '-vv' to show
+- generated xml file: C:\Users\joshp\Desktop\Blast-Radius\exploratory\causal\verification\pygments-results-arms\screening\pr-3210\tests-only-targeted.xml -
+=========================== short test summary info ===========================
+FAILED tests/snippets/scss/2818.txt::
+============================== 1 failed in 0.28s ==============================

@@ -1,0 +1,55 @@
+Measure the abort rate under concurrent agent editing. This is the number that sets the enforcement policy of a production system, and it is currently unmeasured. It decides whether an estimator is essential or nearly irrelevant.
+
+## Why it decides the design
+
+The design under consideration is optimistic concurrency: each agent records the regions it reads, and when it writes, the system checks whether anything in that read set changed since. If it did, the agent is handed the diff and reconciles.
+
+If that check fires **rarely**, the design is easy and the risk estimator barely matters — you can hold on almost anything without hurting throughput. If it fires **often**, aborts and rework dominate, and the estimator's job becomes suppression, with tight tier boundaries. Nobody has this number.
+
+Two sub-questions matter as much as the headline:
+
+1. **What does byte granularity buy over file granularity?** Compute the abort rate both ways on the same runs. STORM names file-granularity false rejection as its own failure mode and does not quantify it. In the ToolsEnabled tree, `package.json:89` is one line changed in 97 of the last 122 commits, but the real edits land at twenty distinct offsets. **The ratio between the two rates is the strongest single justification for the whole byte-interval architecture, and it is currently asserted rather than measured.**
+2. **How does the rate scale with concurrency?** Two agents, four, eight.
+
+## Prerequisites already in place
+
+`exploratory/posture/` holds a repository gate on `pallets/click` — 2,016 tests, 13–15 seconds, five consecutive runs with an identical normalised result hash — plus task construction with overlapping bundles whose ground-truth change sets deliberately share files, and independent-control bundles that are path-disjoint. `exploratory/posture/REPO-SELECTION.md` and `TASK-CONSTRUCTION.md` record the rules, fixed before any outcome was seen. Reuse all of it. Do not rebuild the gate.
+
+`instruments/posture/shim.py`, `radius.py` and `pilot.py` exist from the earlier attempt, which died on a Codex usage limit before running a single draw. Reuse or replace as you judge, but read them first.
+
+## The measurement
+
+Run N agents concurrently on the same working tree through a mediating shim, on the overlapping bundles (which are designed to collide) and the independent control bundles (which are designed not to). Agents are `codex exec -m gpt-5.6-sol -c model_reasoning_effort="high"` — note **high**, not ultra, because this needs many draws rather than deep ones.
+
+The shim must record, for every agent: regions read with byte offsets, regions written with byte offsets, and at write time whether any region in its read set had been written by a different agent since it was read.
+
+Report, at N = 2, 4 and 8:
+
+- **Realised collision rate** — fraction of writes whose read set was invalidated — computed at **byte granularity** and again at **file granularity** over the identical event stream. Report both and their ratio.
+- Time between a read and its invalidating write, distribution.
+- How much of each agent's read set was actually invalidated when it was — one region or many.
+- Tasks completed, and completion rate per arm.
+- Wall-clock and total agent-minutes.
+
+**Report the realised collision rate first.** If it is near zero on the overlapping bundles — which were *constructed* to collide — then the measurement failed to exercise the phenomenon and that is the entire finding. Say so at the top and stop rather than reporting downstream numbers.
+
+## Discipline
+
+Apply the fairness rule already recorded in this project: a draw where the model never finished is excluded and retried, slot-based rather than attempt-based; a finished-but-bad response is data; everything is kept on disk regardless. Reset the tree to the same commit before every draw and verify by tree hash. Randomise bundle order.
+
+Pilot at n=3 draws per cell before committing to more. If the pilot shows a near-zero collision rate or a flaky suite, more draws waste a day discovering it.
+
+## Output
+
+`exploratory/posture/ABORT-RATE.md`:
+
+1. **The realised collision rate**, per concurrency level, byte and file granularity, and the ratio. First.
+2. Whether the phenomenon was exercised at all.
+3. The distributions above.
+4. **What this implies for enforcement policy** — specifically, at the measured rate, is an accurate risk estimator essential or nearly irrelevant? Answer it directly; that is what the measurement is for.
+5. **"Claims that could NOT be verified"** and **"What would change this verdict"**.
+6. Per-claim confidence with its reason, not a document-level label.
+
+State plainly that this is one repository, one harness, and synthetic-but-designed contention, so it bounds the design decision rather than measuring software in general.
+
+Do not fabricate. A near-zero collision rate honestly reported is a complete and valuable result. Do not tune the bundles to manufacture collisions.

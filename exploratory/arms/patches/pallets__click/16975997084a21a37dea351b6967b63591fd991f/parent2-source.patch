@@ -1,0 +1,41 @@
+diff --git a/CHANGES b/CHANGES
+index f5555787851e2aad419faeaaa48ce01a746c5bcb..26cef5ad64d738df058ecdaef592accbf21b2c65 100644
+--- a/CHANGES
++++ b/CHANGES
+@@ -3,6 +3,13 @@ Click Changelog
+ 
+ This contains all major version changes between click releases.
+ 
++Version 2.3
++-----------
++
++(bugfix release, release date to be decided)
++
++- Fixed an incorrectly formatted help record for count options.'
++
+ Version 2.2
+ -----------
+ 
+diff --git a/click/__init__.py b/click/__init__.py
+index 05f1b52877215f07ab3fd6374b63bcc199f6e871..f62a313325fde59e63fa1c88995612012218ec01 100644
+--- a/click/__init__.py
++++ b/click/__init__.py
+@@ -82,4 +82,4 @@ __all__ = [
+ ]
+ 
+ 
+-__version__ = '2.2'
++__version__ = '2.3-dev'
+diff --git a/click/core.py b/click/core.py
+index 7d70d0ba17853d6c79e564ea90e15b10b5a0662c..8f9b7a31c955327424b96a67c2565f778e982bb3 100644
+--- a/click/core.py
++++ b/click/core.py
+@@ -1200,7 +1200,7 @@ class Option(Parameter):
+             rv, any_slashes = join_options(opts)
+             if any_slashes:
+                 any_prefix_is_slash[:] = [True]
+-            if not self.is_flag:
++            if not self.is_flag and not self.count:
+                 rv += ' ' + self.make_metavar()
+             return rv
+ 

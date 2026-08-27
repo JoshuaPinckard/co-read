@@ -1,0 +1,69 @@
+diff --git a/CHANGES b/CHANGES
+index 0a12ec56a2abf8fd6fc49d0b5c03c5f78ad3685e..9c4370961743b6660c34b3378b4d3e79ac838c2c 100644
+--- a/CHANGES
++++ b/CHANGES
+@@ -3,6 +3,13 @@ Click Changelog
+ 
+ This contains all major version changes between Click releases.
+ 
++Version 6.5
++-----------
++
++(bugfix release; not yet released)
++
++- Fix bug in `click.Path` where it would crash when passed a `-`. See #551.
++
+ Version 6.4
+ -----------
+ 
+diff --git a/click/types.py b/click/types.py
+index 7a247471d6dcce8c8d33547193a3aa8e670b9877..36390026dcd1784f6d85f854730faa31ebf95b55 100644
+--- a/click/types.py
++++ b/click/types.py
+@@ -418,26 +418,26 @@ class Path(ParamType):
+                     filename_to_ui(value)
+                 ), param, ctx)
+ 
+-        if not self.file_okay and stat.S_ISREG(st.st_mode):
+-            self.fail('%s "%s" is a file.' % (
+-                self.path_type,
+-                filename_to_ui(value)
+-            ), param, ctx)
+-        if not self.dir_okay and stat.S_ISDIR(st.st_mode):
+-            self.fail('%s "%s" is a directory.' % (
+-                self.path_type,
+-                filename_to_ui(value)
+-            ), param, ctx)
+-        if self.writable and not os.access(value, os.W_OK):
+-            self.fail('%s "%s" is not writable.' % (
+-                self.path_type,
+-                filename_to_ui(value)
+-            ), param, ctx)
+-        if self.readable and not os.access(value, os.R_OK):
+-            self.fail('%s "%s" is not readable.' % (
+-                self.path_type,
+-                filename_to_ui(value)
+-            ), param, ctx)
++            if not self.file_okay and stat.S_ISREG(st.st_mode):
++                self.fail('%s "%s" is a file.' % (
++                    self.path_type,
++                    filename_to_ui(value)
++                ), param, ctx)
++            if not self.dir_okay and stat.S_ISDIR(st.st_mode):
++                self.fail('%s "%s" is a directory.' % (
++                    self.path_type,
++                    filename_to_ui(value)
++                ), param, ctx)
++            if self.writable and not os.access(value, os.W_OK):
++                self.fail('%s "%s" is not writable.' % (
++                    self.path_type,
++                    filename_to_ui(value)
++                ), param, ctx)
++            if self.readable and not os.access(value, os.R_OK):
++                self.fail('%s "%s" is not readable.' % (
++                    self.path_type,
++                    filename_to_ui(value)
++                ), param, ctx)
+ 
+         return self.coerce_path_result(rv)
+ 

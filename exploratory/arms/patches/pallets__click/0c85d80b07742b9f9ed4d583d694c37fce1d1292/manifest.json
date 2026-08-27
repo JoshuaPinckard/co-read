@@ -1,0 +1,122 @@
+{
+  "base": "41f5b7a7967bb65910e8837bd4e8542a18feec6c",
+  "canonical_merge_tree": {
+    "exit_code": 1,
+    "matches_canonical_row": true,
+    "result_tree": "7acf956c89900a85356d4b84b8d947f4ff82ea6a",
+    "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "stdout_sha256": "595d0779e3086cf42ac8512da631b28dd1e49545a044c9b9044cb7ab4b48268d"
+  },
+  "conflicted_paths": [
+    "CHANGES.rst"
+  ],
+  "corpus_line": 52,
+  "joint_source": {
+    "constructible": false,
+    "patch": null,
+    "reason": "canonical textual conflict intersects source union",
+    "source_conflict_paths": [
+      "CHANGES.rst"
+    ],
+    "source_paths": [
+      ".gitignore",
+      "CHANGES.rst",
+      "docs/.DS_Store",
+      "docs/options.rst",
+      "examples/README",
+      "setup.cfg",
+      "src/click/__init__.py",
+      "src/click/_compat.py",
+      "src/click/core.py",
+      "src/click/types.py",
+      "src/click/utils.py"
+    ]
+  },
+  "merge": "0c85d80b07742b9f9ed4d583d694c37fce1d1292",
+  "parents": [
+    "65eceb08e392e74dcc761be2090e951274ccbe36",
+    "e415d3a811fda506c8d7917e615b97ae9dcd1194"
+  ],
+  "prepared_at_utc": "2026-08-25T16:25:53.340+00:00",
+  "protocol_sha256": "fb1c0a9f9c7b48c30178d8a7e737250e18535ada63959c49c73c180505c69828",
+  "repo_slug": "pallets__click",
+  "repository": "pallets/click",
+  "result_tree": "7acf956c89900a85356d4b84b8d947f4ff82ea6a",
+  "runner_sha256": "e04bc99409e584636ce8cb81cc22f6a7ca9c917f9ec9e46ab68a4c2328b6b6c6",
+  "schema_version": 1,
+  "sides": {
+    "parent1": {
+      "changed_paths": [
+        ".gitignore",
+        "CHANGES.rst",
+        "docs/.DS_Store",
+        "docs/options.rst",
+        "examples/README",
+        "setup.cfg",
+        "src/click/__init__.py",
+        "src/click/core.py",
+        "tests/test_formatting.py",
+        "tests/test_options.py"
+      ],
+      "parent": "65eceb08e392e74dcc761be2090e951274ccbe36",
+      "reconstructed_parent_tree": "32d29455afd15ba6239ba3399f23c56e18abdb85",
+      "source_patch": {
+        "bytes": 7642,
+        "path": "exploratory/arms/patches/pallets__click/0c85d80b07742b9f9ed4d583d694c37fce1d1292/parent1-source.patch",
+        "sha256": "52a7715d440d9d571ba2fc60da5a19eec774243083241b12ad30187b389bdad6"
+      },
+      "source_paths": [
+        ".gitignore",
+        "CHANGES.rst",
+        "docs/.DS_Store",
+        "docs/options.rst",
+        "examples/README",
+        "setup.cfg",
+        "src/click/__init__.py",
+        "src/click/core.py"
+      ],
+      "test_patch": {
+        "bytes": 2405,
+        "path": "exploratory/arms/patches/pallets__click/0c85d80b07742b9f9ed4d583d694c37fce1d1292/parent1-test.patch",
+        "sha256": "4abb98cc27b9cd59fa0c893304448c4bdbdccc1e9cb9b0c734e29c6bb8e5a1a9"
+      },
+      "test_paths": [
+        "tests/test_formatting.py",
+        "tests/test_options.py"
+      ]
+    },
+    "parent2": {
+      "changed_paths": [
+        "CHANGES.rst",
+        "src/click/_compat.py",
+        "src/click/types.py",
+        "src/click/utils.py",
+        "tests/test_arguments.py",
+        "tests/test_utils.py"
+      ],
+      "parent": "e415d3a811fda506c8d7917e615b97ae9dcd1194",
+      "reconstructed_parent_tree": "bcbc056122aae748ce70bcd6dcf9b191d3c6348d",
+      "source_patch": {
+        "bytes": 6560,
+        "path": "exploratory/arms/patches/pallets__click/0c85d80b07742b9f9ed4d583d694c37fce1d1292/parent2-source.patch",
+        "sha256": "926e550376e30dd76482feca65186d6f61f6b8c3ef50d257a6d5f9e4e2e83560"
+      },
+      "source_paths": [
+        "CHANGES.rst",
+        "src/click/_compat.py",
+        "src/click/types.py",
+        "src/click/utils.py"
+      ],
+      "test_patch": {
+        "bytes": 1480,
+        "path": "exploratory/arms/patches/pallets__click/0c85d80b07742b9f9ed4d583d694c37fce1d1292/parent2-test.patch",
+        "sha256": "42ae5c6e4e6b59922a480ed8e36d5087b56be469d26437f6f971932d4a6c3ce1"
+      },
+      "test_paths": [
+        "tests/test_arguments.py",
+        "tests/test_utils.py"
+      ]
+    }
+  },
+  "site_index": 16
+}

@@ -1,0 +1,53 @@
+{
+  "command": [
+    "mvn",
+    "-q",
+    "-o",
+    "-s",
+    "<project>/tools/java/maven-settings.xml",
+    "-gs",
+    "<project>/tools/java/maven-settings.xml",
+    "-Dmaven.repo.local=<project>/tools/maven-repository",
+    "test",
+    "-Dtest=ArrayUtilsTest,StringUtilsTest,TypeUtilsTest",
+    "-DfailIfNoTests=false"
+  ],
+  "elapsed_seconds": 24.579,
+  "label": "run-2",
+  "normalized": {
+    "normalized_sha256": "c9291f0261a7e4c6bd5e9dfbc8cac4fc130ba8f76978c4b4c7c75a4a028378d3",
+    "outcome_counts": {
+      "pass": 352
+    },
+    "parse_errors": [],
+    "path": "exploratory/arms/java-gates/br-java-v4/640953167adf3580a2c21077d78e7e7ce84ead03/run-2.normalized.json",
+    "sha256": "2651d2ebf0138952df683ed7a2a6ffb3cfcbcb013e79f57987ced266609b7599",
+    "test_count": 352
+  },
+  "reports_archive": "exploratory/arms/java-gates/br-java-v4/640953167adf3580a2c21077d78e7e7ce84ead03/run-2.reports.zip",
+  "reports_archive_sha256": "e5d5d941a61ce83bc36919693d13ad408ddb72f40fd78bbd69fca7351887f49f",
+  "returncode": 0,
+  "source_export": {
+    "base": "63d8a025e6f38ddfc966c4104ac783bcb59031e0",
+    "clean_including_untracked_before": true,
+    "head_after": "63d8a025e6f38ddfc966c4104ac783bcb59031e0",
+    "head_before": "63d8a025e6f38ddfc966c4104ac783bcb59031e0",
+    "path": "C:/br-java-v4/a/f/640953167adf/63d8a025e6f3/r2",
+    "tracked_after": {
+      "tracked_file_count": 347,
+      "tracked_manifest_sha256": "6770bed56e4f0815115173b4529ae6c4ebef45fa0cc1162f10d8c98162f7e87d"
+    },
+    "tracked_before": {
+      "tracked_file_count": 347,
+      "tracked_manifest_sha256": "6770bed56e4f0815115173b4529ae6c4ebef45fa0cc1162f10d8c98162f7e87d"
+    },
+    "tracked_status_after": "",
+    "tracked_unchanged": true
+  },
+  "stderr": "exploratory/arms/java-gates/br-java-v4/640953167adf3580a2c21077d78e7e7ce84ead03/run-2.stderr.bin",
+  "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "stdout": "exploratory/arms/java-gates/br-java-v4/640953167adf3580a2c21077d78e7e7ce84ead03/run-2.stdout.bin",
+  "stdout_sha256": "018a6af91a5b28863e7149a35ded24989758d59994c28c0b9663a9a13a61d368",
+  "timed_out": false,
+  "timeout_termination": null
+}

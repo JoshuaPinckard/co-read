@@ -1,0 +1,16 @@
+Determinism replication of the ORIGINAL 13-task causal sweep. One task in that sweep did not reproduce between two runs (pr-2972: 9/31 vs 10/31 depended files), and instrument determinism gates build item 11 of the redesign. This run measures reproduction directly.
+
+Read exploratory/causal/RESULTS.md (the original protocol and its per-task results) and fixture/click/README.md, GATE.md, TASKS.md.
+
+Re-run the EXACT original sweep on the original 13 tasks (pr-787, 973, 994, 999, 1014, 1061, 2972, 2991, 3013, 3137, 3239, 3299, 3330) with the recorded protocol: same bases (base-overlap, base-control, base-pr-787, base-pr-1061 as TASKS.md assigns), same enumeration rule, same operator, same focal tests, fixed deterministic order. Additionally run pr-2972 a SECOND time within this job.
+
+Output exploratory/causal/RERUN-13.md:
+1. First line: how many of the 13 tasks reproduced RESULTS.md's per-task depended-file SETS exactly (compare file sets, not counts).
+2. Per-task table: original set vs this run's set, identical yes/no, and the exact differing files where not.
+3. pr-2972 three-way comparison: original run, this run, this run's repeat — which files flip, and whether the flip is stable within one environment.
+4. Any task failing green verification, with actual pytest output.
+5. "Claims that could NOT be verified", "What would change this verdict", per-claim confidence with reasons.
+
+Also emit exploratory/causal/LABELS-rerun13.json, same schema as LABELS.json.
+
+A flip is a finding about the instrument, not a failure of yours. Do not fabricate. Do not modify fixture/, prompts/, or existing results.

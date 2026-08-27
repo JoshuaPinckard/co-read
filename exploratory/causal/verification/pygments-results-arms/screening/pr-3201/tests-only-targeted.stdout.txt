@@ -1,0 +1,31 @@
+============================= test session starts =============================
+platform win32 -- Python 3.11.9, pytest-8.4.2, pluggy-1.6.0
+rootdir: C:\Users\joshp\AppData\Local\Temp\blast-radius-pygments-causal-opbff12g\screen-pr-3201-882saa76\tests-only
+configfile: pyproject.toml
+collected 3 items
+
+tests\test_groff_formatter.py ..F                                        [100%]
+
+================================== FAILURES ===================================
+___________________ test_wrap_does_not_duplicate_characters ___________________
+
+    def test_wrap_does_not_duplicate_characters():
+        # A piece longer than ``wrap`` that does not end in a newline must not
+        # have a character duplicated when it is soft-wrapped. The tail slice used
+        # to reach one character too far to the left when there was no trailing
+        # newline, repeating the last character of the preceding full chunk.
+        fmt = GroffFormatter(wrap=4)
+>       assert fmt._wrap_line("abcdefghij") == "abcd\nefgh\nij"
+E       AssertionError: assert 'abcd\nefgh\nhij' == 'abcd\nefgh\nij'
+E         
+E           abcd
+E           efgh
+E         - ij
+E         + hij
+E         ? +
+
+tests\test_groff_formatter.py:89: AssertionError
+- generated xml file: C:\Users\joshp\Desktop\Blast-Radius\exploratory\causal\verification\pygments-results-arms\screening\pr-3201\tests-only-targeted.xml -
+=========================== short test summary info ===========================
+FAILED tests/test_groff_formatter.py::test_wrap_does_not_duplicate_characters
+========================= 1 failed, 2 passed in 0.16s =========================

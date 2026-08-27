@@ -1,0 +1,170 @@
+{
+  "base": "68c93287a8195af539c85656927f5c67ba5631d5",
+  "canonical_merge_tree": {
+    "exit_code": 1,
+    "matches_canonical_row": true,
+    "result_tree": "482c4c49d9c1b79083b619a2ad9df3014e4205f5",
+    "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "stdout_sha256": "04424aa23388a8887a9d51949b563f66ab21ce64c813b54e92b960a2362b344b"
+  },
+  "conflicted_paths": [
+    "CHANGES.rst"
+  ],
+  "corpus_line": 39,
+  "joint_source": {
+    "constructible": false,
+    "patch": null,
+    "reason": "canonical textual conflict intersects source union",
+    "source_conflict_paths": [
+      "CHANGES.rst"
+    ],
+    "source_paths": [
+      "CHANGES.rst",
+      "CODE_OF_CONDUCT.md",
+      "LICENSE.rst",
+      "click/__init__.py",
+      "click/_bashcomplete.py",
+      "click/_compat.py",
+      "click/_termui_impl.py",
+      "click/_winconsole.py",
+      "click/core.py",
+      "click/parser.py",
+      "click/termui.py",
+      "click/types.py",
+      "docs/advanced.rst",
+      "docs/bashcomplete.rst",
+      "docs/changelog.rst",
+      "docs/commands.rst",
+      "docs/conf.py",
+      "docs/options.rst",
+      "docs/python3.rst",
+      "docs/quickstart.rst",
+      "docs/requirements.txt",
+      "docs/setuptools.rst",
+      "docs/why.rst",
+      "examples/aliases/aliases.py",
+      "setup.py"
+    ]
+  },
+  "merge": "11abf2bff0f48b7f7b04b38b6a70fb102ef17662",
+  "parents": [
+    "9c5769e2c372e506c6efa16d4da0f08150ea1a34",
+    "02756dd41714939ae877cba89b04c1fdc6e0ff21"
+  ],
+  "prepared_at_utc": "2026-08-25T16:22:35.623+00:00",
+  "protocol_sha256": "fb1c0a9f9c7b48c30178d8a7e737250e18535ada63959c49c73c180505c69828",
+  "repo_slug": "pallets__click",
+  "repository": "pallets/click",
+  "result_tree": "482c4c49d9c1b79083b619a2ad9df3014e4205f5",
+  "runner_sha256": "e04bc99409e584636ce8cb81cc22f6a7ca9c917f9ec9e46ab68a4c2328b6b6c6",
+  "schema_version": 1,
+  "sides": {
+    "parent1": {
+      "changed_paths": [
+        "CHANGES.rst",
+        "CODE_OF_CONDUCT.md",
+        "LICENSE.rst",
+        "click/__init__.py",
+        "click/_bashcomplete.py",
+        "click/_compat.py",
+        "click/_termui_impl.py",
+        "click/_winconsole.py",
+        "click/core.py",
+        "click/parser.py",
+        "click/termui.py",
+        "docs/advanced.rst",
+        "docs/bashcomplete.rst",
+        "docs/commands.rst",
+        "docs/quickstart.rst",
+        "docs/setuptools.rst",
+        "examples/aliases/aliases.py",
+        "setup.py",
+        "tests/test_basic.py",
+        "tests/test_compat.py",
+        "tests/test_context.py",
+        "tests/test_termui.py"
+      ],
+      "parent": "9c5769e2c372e506c6efa16d4da0f08150ea1a34",
+      "reconstructed_parent_tree": "a2ae528ad9ef79dab49251802077d6e760ed0d53",
+      "source_patch": {
+        "bytes": 29742,
+        "path": "exploratory/arms/patches/pallets__click/11abf2bff0f48b7f7b04b38b6a70fb102ef17662/parent1-source.patch",
+        "sha256": "f2baaa24382da80e8a58dd922b047d1d0c5aed742945cf16c6ce24560ed618eb"
+      },
+      "source_paths": [
+        "CHANGES.rst",
+        "CODE_OF_CONDUCT.md",
+        "LICENSE.rst",
+        "click/__init__.py",
+        "click/_bashcomplete.py",
+        "click/_compat.py",
+        "click/_termui_impl.py",
+        "click/_winconsole.py",
+        "click/core.py",
+        "click/parser.py",
+        "click/termui.py",
+        "docs/advanced.rst",
+        "docs/bashcomplete.rst",
+        "docs/commands.rst",
+        "docs/quickstart.rst",
+        "docs/setuptools.rst",
+        "examples/aliases/aliases.py",
+        "setup.py"
+      ],
+      "test_patch": {
+        "bytes": 6205,
+        "path": "exploratory/arms/patches/pallets__click/11abf2bff0f48b7f7b04b38b6a70fb102ef17662/parent1-test.patch",
+        "sha256": "4caca817856be7759f25831132cef3af3db18bf0ad35fb00398099687c43005f"
+      },
+      "test_paths": [
+        "tests/test_basic.py",
+        "tests/test_compat.py",
+        "tests/test_context.py",
+        "tests/test_termui.py"
+      ]
+    },
+    "parent2": {
+      "changed_paths": [
+        "CHANGES.rst",
+        "click/types.py",
+        "docs/changelog.rst",
+        "docs/conf.py",
+        "docs/options.rst",
+        "docs/python3.rst",
+        "docs/quickstart.rst",
+        "docs/requirements.txt",
+        "docs/why.rst",
+        "tests/test_normalization.py",
+        "tests/test_options.py"
+      ],
+      "parent": "02756dd41714939ae877cba89b04c1fdc6e0ff21",
+      "reconstructed_parent_tree": "f3c2af2423ac3419e90fe1a5ed68847b803db26a",
+      "source_patch": {
+        "bytes": 56863,
+        "path": "exploratory/arms/patches/pallets__click/11abf2bff0f48b7f7b04b38b6a70fb102ef17662/parent2-source.patch",
+        "sha256": "901f617f7f76eb1db5b0f132ead7d02fbee224e7c6a3787b8186f2f3d975c3ed"
+      },
+      "source_paths": [
+        "CHANGES.rst",
+        "click/types.py",
+        "docs/changelog.rst",
+        "docs/conf.py",
+        "docs/options.rst",
+        "docs/python3.rst",
+        "docs/quickstart.rst",
+        "docs/requirements.txt",
+        "docs/why.rst"
+      ],
+      "test_patch": {
+        "bytes": 1888,
+        "path": "exploratory/arms/patches/pallets__click/11abf2bff0f48b7f7b04b38b6a70fb102ef17662/parent2-test.patch",
+        "sha256": "9baf8996bb18e21155b089a3f51ab30e39ff8a0d8e038d51ae4eb08ca46e11c3"
+      },
+      "test_paths": [
+        "tests/test_normalization.py",
+        "tests/test_options.py"
+      ]
+    }
+  },
+  "site_index": 5
+}

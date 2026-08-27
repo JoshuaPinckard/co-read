@@ -1,0 +1,29 @@
+diff --git a/src/test/java/org/apache/commons/lang3/StreamsTest.java b/src/test/java/org/apache/commons/lang3/StreamsTest.java
+index 3ce713d9321dd07e43b492ec93cb148779841e8e..da98397d31dcdeb9cf0e8d389d1f3e22ed601274 100644
+--- a/src/test/java/org/apache/commons/lang3/StreamsTest.java
++++ b/src/test/java/org/apache/commons/lang3/StreamsTest.java
+@@ -17,6 +17,7 @@
+ package org.apache.commons.lang3;
+ 
+ import static org.junit.jupiter.api.Assertions.assertEquals;
++import static org.junit.jupiter.api.Assertions.assertNotNull;
+ import static org.junit.jupiter.api.Assertions.assertSame;
+ import static org.junit.jupiter.api.Assertions.fail;
+ 
+@@ -64,6 +65,16 @@ class StreamsTest {
+         }
+     }
+ 
++    @Test
++    void testToArray() {
++        final String[] array = Arrays.asList("2", "3", "1").stream().collect(Streams.toArray(String.class));
++        assertNotNull(array);
++        assertEquals(3, array.length);
++        assertEquals("2", array[0]);
++        assertEquals("3", array[1]);
++        assertEquals("1", array[2]);
++    }
++
+     protected <T extends Throwable> FailableConsumer<String, T> asIntConsumer(T pThrowable) {
+         return (s) -> {
+             final Integer i = Integer.valueOf(s);

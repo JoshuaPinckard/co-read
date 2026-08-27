@@ -1,0 +1,15 @@
+============================= test session starts =============================
+platform win32 -- Python 3.11.9, pytest-8.4.2, pluggy-1.6.0
+rootdir: C:\Users\joshp\AppData\Local\Temp\blast-radius-pygments-causal-opbff12g\screen-pr-3163-ocgwxvr7\tests-only
+configfile: pyproject.toml
+collected 1 item
+
+tests\snippets\d\test_unicode_identifiers.txt F                          [100%]
+
+================================== FAILURES ===================================
+________________ tests\snippets\d\test_unicode_identifiers.txt ________________
+The tokens produced by the "d" lexer differ from the expected ones in the file "tests\\snippets\\d\\test_unicode_identifiers.txt".\nRun `tox -- tests\\snippets --update-goldens` to update it.\n\n  \n  Skipping 393 identical leading characters in diff, use -v to show\n    tespace\n  + '\u011f'           Error\n  + '\u011e'           Error\n  - '\u011f\u011eiletiG\xf6ster' Name\n  ?  --...\n  \n  ...Full output truncated (10 lines hidden), use '-vv' to show
+- generated xml file: C:\Users\joshp\Desktop\Blast-Radius\exploratory\causal\verification\pygments-results-arms\screening\pr-3163\tests-only-targeted.xml -
+=========================== short test summary info ===========================
+FAILED tests/snippets/d/test_unicode_identifiers.txt::
+============================== 1 failed in 0.13s ==============================

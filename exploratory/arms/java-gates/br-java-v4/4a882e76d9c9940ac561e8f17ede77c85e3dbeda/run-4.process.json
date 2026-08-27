@@ -1,0 +1,54 @@
+{
+  "command": [
+    "mvn",
+    "-q",
+    "-o",
+    "-s",
+    "<project>/tools/java/maven-settings.xml",
+    "-gs",
+    "<project>/tools/java/maven-settings.xml",
+    "-Dmaven.repo.local=<project>/tools/maven-repository",
+    "test",
+    "-Dtest=DateFormatUtilsTest,DateUtilsTest,DurationFormatUtilsTest,FastDateParserTest,FastDatePrinterTest,FastDatePrinterTimeZonesTest,HashCodeBuilderTest,JsonToStringStyleTest,TypeUtilsTest",
+    "-DfailIfNoTests=false"
+  ],
+  "elapsed_seconds": 44.281,
+  "label": "run-4",
+  "normalized": {
+    "normalized_sha256": "0ff05ce682bad233ae09b9ce5ee7a60ddc2a004f4377686813ae665ae73b2d89",
+    "outcome_counts": {
+      "error": 3,
+      "pass": 834
+    },
+    "parse_errors": [],
+    "path": "exploratory/arms/java-gates/br-java-v4/4a882e76d9c9940ac561e8f17ede77c85e3dbeda/run-4.normalized.json",
+    "sha256": "c369ed675afe76a3f57e1d2cb808d2e700cfd111bdd0be076f77835fd6735045",
+    "test_count": 837
+  },
+  "reports_archive": "exploratory/arms/java-gates/br-java-v4/4a882e76d9c9940ac561e8f17ede77c85e3dbeda/run-4.reports.zip",
+  "reports_archive_sha256": "6ed7a2247b1a0108691f12761a61b0ab669408fc848b1171477aad81daabf59c",
+  "returncode": 1,
+  "source_export": {
+    "base": "102b75cd923c30fb81047211ea1eb0b12cfe1a43",
+    "clean_including_untracked_before": true,
+    "head_after": "102b75cd923c30fb81047211ea1eb0b12cfe1a43",
+    "head_before": "102b75cd923c30fb81047211ea1eb0b12cfe1a43",
+    "path": "C:/br-java-v4/a/f/4a882e76d9c9/102b75cd923c/r4",
+    "tracked_after": {
+      "tracked_file_count": 347,
+      "tracked_manifest_sha256": "5e6ae66d43fcd58e072513d325069f6c6af8a3e36902ba7aed1276e205205eb6"
+    },
+    "tracked_before": {
+      "tracked_file_count": 347,
+      "tracked_manifest_sha256": "5e6ae66d43fcd58e072513d325069f6c6af8a3e36902ba7aed1276e205205eb6"
+    },
+    "tracked_status_after": "",
+    "tracked_unchanged": true
+  },
+  "stderr": "exploratory/arms/java-gates/br-java-v4/4a882e76d9c9940ac561e8f17ede77c85e3dbeda/run-4.stderr.bin",
+  "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "stdout": "exploratory/arms/java-gates/br-java-v4/4a882e76d9c9940ac561e8f17ede77c85e3dbeda/run-4.stdout.bin",
+  "stdout_sha256": "9f8868753c7ffa7d456c61e965d86fdd2a48c56be3edcc55742bb8a200ce4e26",
+  "timed_out": false,
+  "timeout_termination": null
+}

@@ -1,0 +1,19 @@
+Run the causal perturbation sweep on the SECOND repository: the 30 validated tasks in fixture/pygments. This is the cross-repository replication of the Click sweep — the single measurement that decides whether the causal method generalizes beyond one codebase.
+
+Read first: fixture/pygments/README.md and GATE.md, fixture/pygments/TASKS.md (30 tasks, green-red-green verified), exploratory/causal/SECOND-REPO.md (how this fixture was built and gated), exploratory/causal/RESULTS.md (the established Click protocol — REPLICATE it; adapt only what the repository forces, and record every adaptation explicitly as a deviation).
+
+Protocol per task:
+1. Materialize the task's base tree; verify by tree hash.
+2. Apply the task's source and test patches; verify its focal tests pass. A task failing this is recorded and excluded, not repaired.
+3. Sweep set: fix the enumeration rule BEFORE running any perturbation, state it in the report, and keep it as close to the Click rule as Pygments' layout allows. Pygments is large (hundreds of lexer modules); if you bound the sweep set, the bound is outcome-blind (e.g., by module category or deterministic sample fixed in advance), stated, and the dropped remainder is counted — no silent caps.
+4. Per sweep file: AST-insert `raise RuntimeError("perturbed")` as the first statement of every function body, run the task's focal tests only, record red or green, restore exactly. Fixed deterministic order; tree hash before and after every task.
+
+Environment: no network egress; Python and pytest preinstalled; everything needed is committed. The Pygments gate evidence (5,330 passed, 16 skipped, five identical runs) is at the fixture anchor.
+
+Output, committed as your task result:
+- exploratory/causal/PYGMENTS-RESULTS.md — per-task rates with numerators and denominators; the headline comparison against Click's measured range (9.5%–29% of swept files per change): does Pygments fall inside it, and where? Every protocol deviation from Click listed in its own section.
+- exploratory/causal/LABELS-pygments.json — same schema as exploratory/causal/LABELS.json.
+
+Mandatory report sections: "Claims that could NOT be verified", "What would change this verdict", per-claim confidence with its reason. If compute allows, run one task twice and report whether its label set is byte-identical — the Click instrument had one non-reproducing task and determinism is under active scrutiny.
+
+Do not fabricate. A task that cannot run is a recorded result. Do not modify fixture/, prompts/, or any existing result document.

@@ -1,0 +1,175 @@
+diff --git a/src/changes/changes.xml b/src/changes/changes.xml
+index c848755c62ddd0e5949f5d6171be325041859686..5f542623b6af373629c5452013436d7e84538c97 100644
+--- a/src/changes/changes.xml
++++ b/src/changes/changes.xml
+@@ -22,6 +22,8 @@
+   <body>
+ 
+   <release version="3.5" date="tba" description="tba">
++    <action issue="LANG-1147" type="fix" dev="sebb" due-to="Loic Guibert">EnumUtils *BitVector issue with more than 32 values Enum</action>
++    <action issue="LANG-1059" type="fix" dev="sebb" due-to="Colin Casey">Capitalize javadoc is incorrect</action>
+     <action issue="LANG-1137" type="add" dev="britter" due-to="Matthew Aguirre">Add check for duplicate event listener in EventListenerSupport</action>
+     <action issue="LANG-1133" type="bug" dev="chas" due-to="Pascal Schumacher">FastDateParser_TimeZoneStrategyTest#testTimeZoneStrategyPattern fails on Windows with German Locale</action>
+     <action issue="LANG-1135" type="add" dev="britter" due-to="Eduardo Martins">Add method containsAllWords to WordUtils</action>
+diff --git a/src/main/java/org/apache/commons/lang3/EnumUtils.java b/src/main/java/org/apache/commons/lang3/EnumUtils.java
+index f98506208d0e2aebfac2d656fb3a998d63fb47ac..699a21539374885be873f0deec8c659caff8b1ef 100644
+--- a/src/main/java/org/apache/commons/lang3/EnumUtils.java
++++ b/src/main/java/org/apache/commons/lang3/EnumUtils.java
+@@ -144,7 +144,7 @@ public class EnumUtils {
+         long total = 0;
+         for (final E constant : values) {
+             Validate.isTrue(constant != null, NULL_ELEMENTS_NOT_PERMITTED);
+-            total |= 1 << constant.ordinal();
++            total |= 1L << constant.ordinal();
+         }
+         return total;
+     }
+@@ -175,7 +175,7 @@ public class EnumUtils {
+         }
+         final long[] result = new long[(enumClass.getEnumConstants().length - 1) / Long.SIZE + 1];
+         for (final E value : condensed) {
+-            result[value.ordinal() / Long.SIZE] |= 1 << (value.ordinal() % Long.SIZE);
++            result[value.ordinal() / Long.SIZE] |= 1L << (value.ordinal() % Long.SIZE);
+         }
+         ArrayUtils.reverse(result);
+         return result;
+@@ -226,7 +226,7 @@ public class EnumUtils {
+         Collections.addAll(condensed, values);
+         final long[] result = new long[(enumClass.getEnumConstants().length - 1) / Long.SIZE + 1];
+         for (final E value : condensed) {
+-            result[value.ordinal() / Long.SIZE] |= 1 << (value.ordinal() % Long.SIZE);
++            result[value.ordinal() / Long.SIZE] |= 1L << (value.ordinal() % Long.SIZE);
+         }
+         ArrayUtils.reverse(result);
+         return result;
+@@ -269,7 +269,7 @@ public class EnumUtils {
+         ArrayUtils.reverse(lvalues);
+         for (final E constant : enumClass.getEnumConstants()) {
+             final int block = constant.ordinal() / Long.SIZE;
+-            if (block < lvalues.length && (lvalues[block] & 1 << (constant.ordinal() % Long.SIZE)) != 0) {
++            if (block < lvalues.length && (lvalues[block] & 1L << (constant.ordinal() % Long.SIZE)) != 0) {
+                 results.add(constant);
+             }
+         }
+diff --git a/src/main/java/org/apache/commons/lang3/StringUtils.java b/src/main/java/org/apache/commons/lang3/StringUtils.java
+index 29d709891d763729f042950dee69c93d85a14604..968093a113cfdf2d10e81e11bd86fa011caaeff6 100644
+--- a/src/main/java/org/apache/commons/lang3/StringUtils.java
++++ b/src/main/java/org/apache/commons/lang3/StringUtils.java
+@@ -5738,8 +5738,8 @@ public class StringUtils {
+     }
+ 
+     /**
+-     * <p>Capitalizes a String changing the first letter to title case as
+-     * per {@link Character#toTitleCase(char)}. No other letters are changed.</p>
++     * <p>Capitalizes a String changing the first character to title case as
++     * per {@link Character#toTitleCase(char)}. No other characters are changed.</p>
+      *
+      * <p>For a word based algorithm, see {@link org.apache.commons.lang3.text.WordUtils#capitalize(String)}.
+      * A {@code null} input String returns {@code null}.</p>
+@@ -5749,6 +5749,7 @@ public class StringUtils {
+      * StringUtils.capitalize("")    = ""
+      * StringUtils.capitalize("cat") = "Cat"
+      * StringUtils.capitalize("cAt") = "CAt"
++     * StringUtils.capitalize("'cat'") = "'cat'"
+      * </pre>
+      *
+      * @param str the String to capitalize, may be null
+@@ -5777,8 +5778,8 @@ public class StringUtils {
+     }
+ 
+     /**
+-     * <p>Uncapitalizes a String, changing the first letter to lower case as
+-     * per {@link Character#toLowerCase(char)}. No other letters are changed.</p>
++     * <p>Uncapitalizes a String, changing the first character to lower case as
++     * per {@link Character#toLowerCase(char)}. No other characters are changed.</p>
+      *
+      * <p>For a word based algorithm, see {@link org.apache.commons.lang3.text.WordUtils#uncapitalize(String)}.
+      * A {@code null} input String returns {@code null}.</p>
+diff --git a/src/main/java/org/apache/commons/lang3/text/StrLookup.java b/src/main/java/org/apache/commons/lang3/text/StrLookup.java
+index c4d42b3eed47183d7bfebf2f773df8d6f10ef04f..e1f6db144370c8fb93226464cf4ed83ee308ba10 100644
+--- a/src/main/java/org/apache/commons/lang3/text/StrLookup.java
++++ b/src/main/java/org/apache/commons/lang3/text/StrLookup.java
+@@ -96,7 +96,7 @@ public abstract class StrLookup<V> {
+         }
+ 
+         Properties properties = copyProperties(systemProperties);
+-        @SuppressWarnings("unchecked") // System property keys and values are always Strings
++        @SuppressWarnings({ "unchecked", "rawtypes" }) // System property keys and values are always Strings
+         final Map<String, String> propertiesMap = (Map) properties;
+ 
+         return new MapStrLookup<String>(propertiesMap);
+diff --git a/src/main/java/org/apache/commons/lang3/text/WordUtils.java b/src/main/java/org/apache/commons/lang3/text/WordUtils.java
+index bc4d43811e9e8e0db579c8976fce358316c1f0d2..3d805c26c52631ff442ce35ced895ad3e7a11392 100644
+--- a/src/main/java/org/apache/commons/lang3/text/WordUtils.java
++++ b/src/main/java/org/apache/commons/lang3/text/WordUtils.java
+@@ -234,7 +234,7 @@ public class WordUtils {
+     //-----------------------------------------------------------------------
+     /**
+      * <p>Capitalizes all the whitespace separated words in a String.
+-     * Only the first letter of each word is changed. To convert the 
++     * Only the first character of each word is changed. To convert the 
+      * rest of each word to lowercase at the same time, 
+      * use {@link #capitalizeFully(String)}.</p>
+      *
+@@ -260,7 +260,7 @@ public class WordUtils {
+ 
+     /**
+      * <p>Capitalizes all the delimiter separated words in a String.
+-     * Only the first letter of each word is changed. To convert the 
++     * Only the first character of each word is changed. To convert the 
+      * rest of each word to lowercase at the same time, 
+      * use {@link #capitalizeFully(String, char[])}.</p>
+      *
+@@ -368,7 +368,7 @@ public class WordUtils {
+     //-----------------------------------------------------------------------
+     /**
+      * <p>Uncapitalizes all the whitespace separated words in a String.
+-     * Only the first letter of each word is changed.</p>
++     * Only the first character of each word is changed.</p>
+      *
+      * <p>Whitespace is defined by {@link Character#isWhitespace(char)}.
+      * A <code>null</code> input String returns <code>null</code>.</p>
+@@ -389,7 +389,7 @@ public class WordUtils {
+ 
+     /**
+      * <p>Uncapitalizes all the whitespace separated words in a String.
+-     * Only the first letter of each word is changed.</p>
++     * Only the first character of each word is changed.</p>
+      *
+      * <p>The delimiters represent a set of characters understood to separate words.
+      * The first string character and the first non-delimiter character after a
+@@ -486,10 +486,9 @@ public class WordUtils {
+ 
+     //-----------------------------------------------------------------------
+     /**
+-     * <p>Extracts the initial letters from each word in the String.</p>
++     * <p>Extracts the initial characters from each word in the String.</p>
+      * 
+-     * <p>The first letter of the string and all first letters after
+-     * whitespace are returned as a new string.
++     * <p>All first characters after whitespace are returned as a new string.
+      * Their case is not changed.</p>
+      *
+      * <p>Whitespace is defined by {@link Character#isWhitespace(char)}.
+@@ -512,10 +511,9 @@ public class WordUtils {
+     }
+ 
+     /**
+-     * <p>Extracts the initial letters from each word in the String.</p>
++     * <p>Extracts the initial characters from each word in the String.</p>
+      * 
+-     * <p>The first letter of the string and all first letters after the
+-     * defined delimiters are returned as a new string.
++     * <p>All first characters after the defined delimiters are returned as a new string.
+      * Their case is not changed.</p>
+      *
+      * <p>If the delimiters array is null, then Whitespace is used.
+@@ -534,7 +532,7 @@ public class WordUtils {
+      * 
+      * @param str  the String to get initials from, may be null
+      * @param delimiters  set of characters to determine words, null means whitespace
+-     * @return String of initial letters, <code>null</code> if null String input
++     * @return String of initial characters, <code>null</code> if null String input
+      * @see #initials(String)
+      * @since 2.2
+      */

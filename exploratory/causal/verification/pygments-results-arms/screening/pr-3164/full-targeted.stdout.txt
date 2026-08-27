@@ -1,0 +1,10 @@
+============================= test session starts =============================
+platform win32 -- Python 3.11.9, pytest-8.4.2, pluggy-1.6.0
+rootdir: C:\Users\joshp\AppData\Local\Temp\blast-radius-pygments-causal-opbff12g\screen-pr-3164-gdqxpy_g\full
+configfile: pyproject.toml
+collected 1 item
+
+tests\snippets\matlab\test_function_definition_line_continuation.txt .   [100%]
+
+- generated xml file: C:\Users\joshp\Desktop\Blast-Radius\exploratory\causal\verification\pygments-results-arms\screening\pr-3164\full-targeted.xml -
+============================== 1 passed in 0.19s ==============================

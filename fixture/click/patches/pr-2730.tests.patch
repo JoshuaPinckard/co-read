@@ -1,0 +1,33 @@
+diff --git a/tests/test_defaults.py b/tests/test_defaults.py
+index 8ef5ea2922d36fbef406a5daad8073ddddb24c03..c7f4d00029bb37bede68a1b0f3ba0ae510d395a0 100644
+--- a/tests/test_defaults.py
++++ b/tests/test_defaults.py
+@@ -59,3 +59,28 @@ def test_multiple_flag_default(runner):
+ 
+     result = runner.invoke(cli, ["-y", "-n", "-f", "-v", "-q"], standalone_mode=False)
+     assert result.return_value == ((True, False), (True,), (1, -1))
++
++
++def test_flag_default_map(runner):
++    """test flag with default map"""
++
++    @click.group()
++    def cli():
++        pass
++
++    @cli.command()
++    @click.option("--name/--no-name", is_flag=True, show_default=True, help="name flag")
++    def foo(name):
++        click.echo(name)
++
++    result = runner.invoke(cli, ["foo"])
++    assert "False" in result.output
++
++    result = runner.invoke(cli, ["foo", "--help"])
++    assert "default: no-name" in result.output
++
++    result = runner.invoke(cli, ["foo"], default_map={"foo": {"name": True}})
++    assert "True" in result.output
++
++    result = runner.invoke(cli, ["foo", "--help"], default_map={"foo": {"name": True}})
++    assert "default: name" in result.output

@@ -1,0 +1,34 @@
+{
+  "command": [
+    "mvn",
+    "-q",
+    "-s",
+    "<project>/tools/java/maven-settings.xml",
+    "-gs",
+    "<project>/tools/java/maven-settings.xml",
+    "-Dmaven.repo.local=<project>/tools/maven-repository",
+    "test",
+    "-Dtest=ArrayUtilsTest,StringUtilsTest,TypeUtilsTest",
+    "-DfailIfNoTests=false"
+  ],
+  "elapsed_seconds": 52.329,
+  "label": "warmup-online",
+  "normalized": {
+    "normalized_sha256": "98e76c3c96d304fa98a0c3f91e90ae2ab89ecb10a3d96be6b5bebf4c261cfc46",
+    "outcome_counts": {
+      "pass": 352
+    },
+    "parse_errors": [],
+    "path": "exploratory/arms/java-gates/640953167adf3580a2c21077d78e7e7ce84ead03/warmup-online.normalized.json",
+    "sha256": "c7bcac348a8ed0d3fe3b3dbaf7e4fc00b953891f6e58363deb185dc97d76f0a5",
+    "test_count": 352
+  },
+  "reports_archive": "exploratory/arms/java-gates/640953167adf3580a2c21077d78e7e7ce84ead03/warmup-online.reports.zip",
+  "reports_archive_sha256": "fdba4a9d1376b287e8d0044e32d7eb9c35697473e3e716b0932c574b891ba845",
+  "returncode": 0,
+  "stderr": "exploratory/arms/java-gates/640953167adf3580a2c21077d78e7e7ce84ead03/warmup-online.stderr.bin",
+  "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "stdout": "exploratory/arms/java-gates/640953167adf3580a2c21077d78e7e7ce84ead03/warmup-online.stdout.bin",
+  "stdout_sha256": "a695ac25355b365dcf6141a9bee9825629f2adf16e528adcc8bdcead93dbb4c8",
+  "timed_out": false
+}

@@ -1,0 +1,27 @@
+diff --git a/pygments/lexers/sql.py b/pygments/lexers/sql.py
+index 201262bcd4cf1681a00c149d4c94e910cba55407..3492055790dda22219db4a1b7f6cc59813037c55 100644
+--- a/pygments/lexers/sql.py
++++ b/pygments/lexers/sql.py
+@@ -951,7 +951,7 @@ class GoogleSqlLexer(RegexLexer):
+             (r'\?', Name.Variable),  # For demonstrating prepared statements
+ 
+             # Exceptions; these words tokenize differently in different contexts.
+-            (r'\b(set)(?!\s*\()', Keyword),
++            (r'\b(set)\b(?!\s*\()', Keyword),
+             (r'\b(character)(\s+)(set)\b', bygroups(Keyword, Whitespace, Keyword)),
+ 
+             # Constants, types, keywords, functions, operators
+diff --git a/tests/snippets/googlesql/test_leading_substring_set_not_keyword.txt b/tests/snippets/googlesql/test_leading_substring_set_not_keyword.txt
+new file mode 100644
+index 0000000000000000000000000000000000000000..78514d4e71e4e854e54471729213c218cb1be10b
+--- /dev/null
++++ b/tests/snippets/googlesql/test_leading_substring_set_not_keyword.txt
+@@ -0,0 +1,8 @@
++---input---
++select settings
++
++---tokens---
++'select'      Keyword
++' '           Text.Whitespace
++'settings'    Name
++'\n'          Text.Whitespace

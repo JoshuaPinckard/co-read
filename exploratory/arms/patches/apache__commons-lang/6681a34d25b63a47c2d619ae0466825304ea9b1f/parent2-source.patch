@@ -1,0 +1,421 @@
+diff --git a/.github/workflows/codeql-analysis.yml b/.github/workflows/codeql-analysis.yml
+index fb441b86fe2018687b54611d79debb57f14774c5..95f30b7f17002198ddc0b1cba896ee1a0b8d0e2a 100644
+--- a/.github/workflows/codeql-analysis.yml
++++ b/.github/workflows/codeql-analysis.yml
+@@ -45,10 +45,10 @@ jobs:
+ 
+     steps:
+     - name: Checkout repository
+-      uses: actions/checkout@eef61447b9ff4aafe5dcd4e0bbf5d482be7e7871 # 4.2.1
++      uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # 4.2.2
+       with:
+         persist-credentials: false
+-    - uses: actions/cache@3624ceb22c1c5a301c8db4169662070a689d9ea8 # v4.1.1
++    - uses: actions/cache@6849a6489940f00c2f30c0fb92c6274307ccb58a # v4.1.2
+       with:
+         path: ~/.m2/repository
+         key: ${{ runner.os }}-maven-${{ hashFiles('**/pom.xml') }}
+@@ -57,7 +57,7 @@ jobs:
+ 
+     # Initializes the CodeQL tools for scanning.
+     - name: Initialize CodeQL
+-      uses: github/codeql-action/init@f779452ac5af1c261dce0346a8f964149f49322b    # 3.26.13
++      uses: github/codeql-action/init@662472033e021d55d94146f66f6058822b0b39fd    # 3.27.0
+       with:
+         languages: ${{ matrix.language }}
+         # If you wish to specify custom queries, you can do so here or in a config file.
+@@ -68,7 +68,7 @@ jobs:
+     # Autobuild attempts to build any compiled languages  (C/C++, C#, or Java).
+     # If this step fails, then you should remove it and run the build manually (see below)
+     - name: Autobuild
+-      uses: github/codeql-action/autobuild@f779452ac5af1c261dce0346a8f964149f49322b    # 3.26.13
++      uses: github/codeql-action/autobuild@662472033e021d55d94146f66f6058822b0b39fd    # 3.27.0
+ 
+     # ℹ️ Command-line programs to run using the OS shell.
+     # 📚 https://git.io/JvXDl
+@@ -82,4 +82,4 @@ jobs:
+     #   make release
+ 
+     - name: Perform CodeQL Analysis
+-      uses: github/codeql-action/analyze@f779452ac5af1c261dce0346a8f964149f49322b    # 3.26.13
++      uses: github/codeql-action/analyze@662472033e021d55d94146f66f6058822b0b39fd    # 3.27.0
+diff --git a/.github/workflows/dependency-review.yml b/.github/workflows/dependency-review.yml
+index 21e60b1a96fcc77f184317dd0a4ab39900ff5978..154ab4304039dae53699eabd519a951eb9c536a6 100644
+--- a/.github/workflows/dependency-review.yml
++++ b/.github/workflows/dependency-review.yml
+@@ -16,7 +16,7 @@
+ # under the License.
+ 
+ name: 'Dependency Review'
+-on: [push, pull_request]
++on: [pull_request]
+ 
+ permissions:
+   contents: read
+@@ -26,9 +26,9 @@ jobs:
+     runs-on: ubuntu-latest
+     steps:
+       - name: 'Checkout Repository'
+-        uses: actions/checkout@eef61447b9ff4aafe5dcd4e0bbf5d482be7e7871 # v4.2.1
++        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+       - name: 'Dependency Review PR'
+-        uses: actions/dependency-review-action@5a2ce3f5b92ee19cbb1541a4984c76d921601d7c # v4.3.4
++        uses: actions/dependency-review-action@4081bf99e2866ebe428fc0477b69eb4fcda7220a # v4.4.0
+         with:
+           base-ref: ${{ github.event.before }}
+           head-ref: ${{ github.sha }}
+diff --git a/.github/workflows/maven.yml b/.github/workflows/maven.yml
+index 877a48c684ef3c4b43276ca5c31a3431b766a725..227b52fe9dacb3123082f01dacce9837ea0ea515 100644
+--- a/.github/workflows/maven.yml
++++ b/.github/workflows/maven.yml
+@@ -39,17 +39,17 @@ jobs:
+             os: ubuntu-latest
+ 
+     steps:
+-    - uses: actions/checkout@eef61447b9ff4aafe5dcd4e0bbf5d482be7e7871 # v4.2.1
++    - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+       with:
+         persist-credentials: false
+-    - uses: actions/cache@3624ceb22c1c5a301c8db4169662070a689d9ea8 # v4.1.1
++    - uses: actions/cache@6849a6489940f00c2f30c0fb92c6274307ccb58a # v4.1.2
+       with:
+         path: ~/.m2/repository
+         key: ${{ runner.os }}-maven-${{ hashFiles('**/pom.xml') }}
+         restore-keys: |
+           ${{ runner.os }}-maven-
+     - name: Set up JDK ${{ matrix.java }}
+-      uses: actions/setup-java@b36c23c0d998641eff861008f374ee103c25ac73 # v4.4.0
++      uses: actions/setup-java@8df1039502a15bceb9433410b1a100fbe190c53b # v4.5.0
+       with:
+         distribution: 'temurin'      
+         java-version: ${{ matrix.java }}
+diff --git a/.github/workflows/scorecards-analysis.yml b/.github/workflows/scorecards-analysis.yml
+index d0a9cefe581dc4b4b5e5b9ea1f23b73840df78da..b3e2bbcc6ab577acc1d59f2846b550f19e0ebcb0 100644
+--- a/.github/workflows/scorecards-analysis.yml
++++ b/.github/workflows/scorecards-analysis.yml
+@@ -40,7 +40,7 @@ jobs:
+     steps:
+ 
+       - name: "Checkout code"
+-        uses: actions/checkout@eef61447b9ff4aafe5dcd4e0bbf5d482be7e7871   # 4.2.1
++        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683   # 4.2.2
+         with:
+           persist-credentials: false
+ 
+@@ -64,6 +64,6 @@ jobs:
+           retention-days: 5
+ 
+       - name: "Upload to code-scanning"
+-        uses: github/codeql-action/upload-sarif@f779452ac5af1c261dce0346a8f964149f49322b    # 3.26.13
++        uses: github/codeql-action/upload-sarif@662472033e021d55d94146f66f6058822b0b39fd    # 3.27.0
+         with:
+           sarif_file: results.sarif
+diff --git a/src/changes/changes.xml b/src/changes/changes.xml
+index e3a149a22eb167dfb5ea0fe8a68ff98216c598e5..1b1aa4551e7d2f391d48e30d40d82b5877c795e8 100644
+--- a/src/changes/changes.xml
++++ b/src/changes/changes.xml
+@@ -61,6 +61,7 @@ The <action> type attribute can be add,update,fix,remove.
+     <action issue="LANG-1753" type="fix" dev="ggregory" due-to="Capt. Cutlass">StringUtils.replaceEachRepeatedly regression in 3.11+ #1297.</action>
+     <action                   type="fix" dev="ggregory" due-to="Capt. Cutlass">Use simplified JUnit assertion methods #1298.</action>
+     <action issue="LANG-1682" type="fix" dev="ggregory" due-to="Capt. Cutlass">Javadoc and test: Use Strings.CI.startsWithAny method instead #1299.</action>
++    <action                   type="fix" dev="ggregory" due-to="Gary Gregory">Fix NullPointerException in FastDateParser.TimeZoneStrategy.setCalendar(FastDateParser, Calendar, String) on Java 23.</action>
+     <!-- ADD -->
+     <action                   type="add" dev="ggregory" due-to="Gary Gregory">Add Strings and refactor StringUtils.</action>
+     <action issue="LANG-1747" type="add" dev="ggregory" due-to="Oliver B. Fischer, Gary Gregory">Add StopWatch.run([Failable]Runnable) and get([Failable]Supplier).</action>
+@@ -68,6 +69,8 @@ The <action> type attribute can be add,update,fix,remove.
+     <action                   type="add" dev="ggregory" due-to="Gary Gregory">Add SystemUtils.IS_JAVA_23.</action>
+     <action                   type="add" dev="ggregory" due-to="Gary Gregory">Add IntegerRange.toIntStream().</action>
+     <action                   type="add" dev="ggregory" due-to="Gary Gregory">Add LongRange.toLongStream().</action>
++    <action                   type="add" dev="ggregory" due-to="Gary Gregory">Add IntStrams.of(int...).</action>
++    <action                   type="add" dev="ggregory" due-to="Gary Gregory">Add ArrayUtils.containsAny(int[], int...).</action>
+     <!-- UPDATE -->
+     <action                   type="update" dev="ggregory" due-to="Gary Gregory, Dependabot">Bump org.apache.commons:commons-parent from 73 to 78 #1267, #1277, #1283, #1288, #1302.</action>
+     <action                   type="update" dev="ggregory" due-to="Gary Gregory, Dependabot">Bump org.codehaus.mojo:taglist-maven-plugin from 3.1.0 to 3.2.1 #1300.</action> 
+diff --git a/src/main/java/org/apache/commons/lang3/ArrayUtils.java b/src/main/java/org/apache/commons/lang3/ArrayUtils.java
+index b2ca091e7ba3692109d08ea739a0b463d12d6e23..fa90a927bbbc8a02708750fe6757ac07af123305 100644
+--- a/src/main/java/org/apache/commons/lang3/ArrayUtils.java
++++ b/src/main/java/org/apache/commons/lang3/ArrayUtils.java
+@@ -39,6 +39,7 @@ import org.apache.commons.lang3.builder.ToStringBuilder;
+ import org.apache.commons.lang3.builder.ToStringStyle;
+ import org.apache.commons.lang3.math.NumberUtils;
+ import org.apache.commons.lang3.mutable.MutableInt;
++import org.apache.commons.lang3.stream.IntStreams;
+ import org.apache.commons.lang3.stream.Streams;
+ 
+ /**
+@@ -1572,6 +1573,10 @@ public class ArrayUtils {
+      * <p>
+      * The method returns {@code false} if a {@code null} array is passed in.
+      * </p>
++     * <p>
++     * If the {@code array} elements you are searching implement {@link Comparator}, consider whether it is worth using
++     * {@link Arrays#sort(byte[])} and {@link Arrays#binarySearch(byte[], byte)}.
++     * </p>
+      *
+      * @param array  the array to search through
+      * @param valueToFind  the value to find
+@@ -1586,6 +1591,10 @@ public class ArrayUtils {
+      * <p>
+      * The method returns {@code false} if a {@code null} array is passed in.
+      * </p>
++     * <p>
++     * If the {@code array} elements you are searching implement {@link Comparator}, consider whether it is worth using
++     * {@link Arrays#sort(char[])} and {@link Arrays#binarySearch(char[], char)}.
++     * </p>
+      *
+      * @param array  the array to search through
+      * @param valueToFind  the value to find
+@@ -1601,6 +1610,10 @@ public class ArrayUtils {
+      * <p>
+      * The method returns {@code false} if a {@code null} array is passed in.
+      * </p>
++     * <p>
++     * If the {@code array} elements you are searching implement {@link Comparator}, consider whether it is worth using
++     * {@link Arrays#sort(double[])} and {@link Arrays#binarySearch(double[], double)}.
++     * </p>
+      *
+      * @param array  the array to search through
+      * @param valueToFind  the value to find
+@@ -1618,6 +1631,10 @@ public class ArrayUtils {
+      * The method returns {@code false} if a {@code null} array
+      * is passed in.
+      * </p>
++     * <p>
++     * If the {@code array} elements you are searching implement {@link Comparator}, consider whether it is worth using
++     * {@link Arrays#sort(double[])} and {@link Arrays#binarySearch(double[], double)}.
++     * </p>
+      *
+      * @param array  the array to search
+      * @param valueToFind  the value to find
+@@ -1633,6 +1650,10 @@ public class ArrayUtils {
+      * <p>
+      * The method returns {@code false} if a {@code null} array is passed in.
+      * </p>
++     * <p>
++     * If the {@code array} elements you are searching implement {@link Comparator}, consider whether it is worth using
++     * {@link Arrays#sort(float[])} and {@link Arrays#binarySearch(float[], float)}.
++     * </p>
+      *
+      * @param array  the array to search through
+      * @param valueToFind  the value to find
+@@ -1647,6 +1668,10 @@ public class ArrayUtils {
+      * <p>
+      * The method returns {@code false} if a {@code null} array is passed in.
+      * </p>
++     * <p>
++     * If the {@code array} elements you are searching implement {@link Comparator}, consider whether it is worth using
++     * {@link Arrays#sort(int[])} and {@link Arrays#binarySearch(int[], int)}.
++     * </p>
+      *
+      * @param array  the array to search through
+      * @param valueToFind  the value to find
+@@ -1661,6 +1686,10 @@ public class ArrayUtils {
+      * <p>
+      * The method returns {@code false} if a {@code null} array is passed in.
+      * </p>
++     * <p>
++     * If the {@code array} elements you are searching implement {@link Comparator}, consider whether it is worth using
++     * {@link Arrays#sort(long[])} and {@link Arrays#binarySearch(long[], long)}.
++     * </p>
+      *
+      * @param array  the array to search through
+      * @param valueToFind  the value to find
+@@ -1675,6 +1704,10 @@ public class ArrayUtils {
+      * <p>
+      * The method returns {@code false} if a {@code null} array is passed in.
+      * </p>
++     * <p>
++     * If the {@code array} elements you are searching implement {@link Comparator}, consider whether it is worth using
++     * {@link Arrays#sort(Object[], Comparator)} and {@link Arrays#binarySearch(Object[], Object)}.
++     * </p>
+      *
+      * @param array  the array to search through
+      * @param objectToFind  the object to find
+@@ -1689,6 +1722,10 @@ public class ArrayUtils {
+      * <p>
+      * The method returns {@code false} if a {@code null} array is passed in.
+      * </p>
++     * <p>
++     * If the {@code array} elements you are searching implement {@link Comparator}, consider whether it is worth using
++     * {@link Arrays#sort(short[])} and {@link Arrays#binarySearch(short[], short)}.
++     * </p>
+      *
+      * @param array  the array to search through
+      * @param valueToFind  the value to find
+@@ -1698,14 +1735,37 @@ public class ArrayUtils {
+         return indexOf(array, valueToFind) != INDEX_NOT_FOUND;
+     }
+ 
++    /**
++     * Checks if any of the ints are in the given array.
++     * <p>
++     * The method returns {@code false} if a {@code null} array is passed in.
++     * </p>
++     * <p>
++     * If the {@code array} elements you are searching implement {@link Comparator}, consider whether it is worth using
++     * {@link Arrays#sort(int[])} and {@link Arrays#binarySearch(int[], int)}.
++     * </p>
++     *
++     * @param array         the array to search through
++     * @param objectsToFind any of the ints to find
++     * @return {@code true} if the array contains any of the ints
++     * @since 3.18.0
++     */
++    public static boolean containsAny(final int[] array, final int... objectsToFind) {
++        return IntStreams.of(objectsToFind).anyMatch(e -> contains(array, e));
++    }
++
+     /**
+      * Checks if any of the objects are in the given array.
+      * <p>
+      * The method returns {@code false} if a {@code null} array is passed in.
+      * </p>
++     * <p>
++     * If the {@code array} elements you are searching implement {@link Comparator}, consider whether it is worth using
++     * {@link Arrays#sort(Object[], Comparator)} and {@link Arrays#binarySearch(Object[], Object)}.
++     * </p>
+      *
+-     * @param array  the array to search through
+-     * @param objectsToFind  any of the objects to find
++     * @param array         the array to search through
++     * @param objectsToFind any of the objects to find
+      * @return {@code true} if the array contains any of the objects
+      * @since 3.13.0
+      */
+diff --git a/src/main/java/org/apache/commons/lang3/stream/IntStreams.java b/src/main/java/org/apache/commons/lang3/stream/IntStreams.java
+index 132e0ffa8bd8a01aed2cce20b825aa8262b48082..d11c13e520059be40244905a3eabef9272c221a5 100644
+--- a/src/main/java/org/apache/commons/lang3/stream/IntStreams.java
++++ b/src/main/java/org/apache/commons/lang3/stream/IntStreams.java
+@@ -28,6 +28,18 @@ import java.util.stream.IntStream;
+  */
+ public class IntStreams {
+ 
++    /**
++     * Null-safe version of {@link IntStream#of(int[])}.
++     *
++     * @param values the elements of the new stream, may be {@code null}.
++     * @return the new stream on {@code values} or {@link IntStream#empty()}.
++     * @since 3.18.0
++     */
++    @SafeVarargs // Creating a stream from an array is safe
++    public static IntStream of(final int... values) {
++        return values == null ? IntStream.empty() : IntStream.of(values);
++    }
++
+     /**
+      * Shorthand for {@code IntStream.range(0, i)}.
+      *
+diff --git a/src/main/java/org/apache/commons/lang3/time/FastDateParser.java b/src/main/java/org/apache/commons/lang3/time/FastDateParser.java
+index 8b7830cb030807bc526b03a7df86c6c2f7081b64..ff0ad34dc22e1994fd5d914aedfaf47c10fac4ca 100644
+--- a/src/main/java/org/apache/commons/lang3/time/FastDateParser.java
++++ b/src/main/java/org/apache/commons/lang3/time/FastDateParser.java
+@@ -24,6 +24,7 @@ import java.text.ParseException;
+ import java.text.ParsePosition;
+ import java.text.SimpleDateFormat;
+ import java.util.ArrayList;
++import java.util.Arrays;
+ import java.util.Calendar;
+ import java.util.Comparator;
+ import java.util.Date;
+@@ -35,12 +36,14 @@ import java.util.Map;
+ import java.util.Objects;
+ import java.util.Set;
+ import java.util.TimeZone;
++import java.util.TreeMap;
+ import java.util.TreeSet;
+ import java.util.concurrent.ConcurrentHashMap;
+ import java.util.concurrent.ConcurrentMap;
+ import java.util.regex.Matcher;
+ import java.util.regex.Pattern;
+ 
++import org.apache.commons.lang3.ArraySorter;
+ import org.apache.commons.lang3.LocaleUtils;
+ 
+ /**
+@@ -494,14 +497,19 @@ public class FastDateParser implements DateParser, Serializable {
+         private static final String RFC_822_TIME_ZONE = "[+-]\\d{4}";
+ 
+         private static final String GMT_OPTION = TimeZones.GMT_ID + "[+-]\\d{1,2}:\\d{2}";
++
+         /**
+-         * Index of zone id
++         * Index of zone id from {@link DateFormatSymbols#getZoneStrings()}.
+          */
+         private static final int ID = 0;
+ 
+         private final Locale locale;
+ 
+-        private final Map<String, TzInfo> tzNames = new HashMap<>();
++        /**
++         * Using lower case only or upper case only will cause problems with some Locales like Turkey, Armenia, Colognian and also depending on the Java
++         * version. For details, see https://garygregory.wordpress.com/2015/11/03/java-lowercase-conversion-turkey/
++         */
++        private final Map<String, TzInfo> tzNames = new TreeMap<>(String.CASE_INSENSITIVE_ORDER);
+ 
+         /**
+          * Constructs a Strategy that parses a TimeZone
+@@ -543,30 +551,23 @@ public class FastDateParser implements DateParser, Serializable {
+                         break;
+                     }
+                     final String zoneName = zoneNames[i];
+-                    if (zoneName != null) {
+-                        final String key = zoneName.toLowerCase(locale);
+-                        // ignore the data associated with duplicates supplied in
+-                        // the additional names
+-                        if (sorted.add(key)) {
+-                            tzNames.put(key, tzInfo);
+-                        }
++                    // ignore the data associated with duplicates supplied in the additional names
++                    if (zoneName != null && sorted.add(zoneName)) {
++                        tzNames.put(zoneName, tzInfo);
+                     }
+                 }
+             }
+-
+             // Order is undefined.
+-            for (final String tzId : TimeZone.getAvailableIDs()) {
++            for (final String tzId : ArraySorter.sort(TimeZone.getAvailableIDs())) {
+                 if (tzId.equalsIgnoreCase(TimeZones.GMT_ID)) {
+                     continue;
+                 }
+                 final TimeZone tz = TimeZone.getTimeZone(tzId);
+                 final String zoneName = tz.getDisplayName(locale);
+-                final String key = zoneName.toLowerCase(locale);
+-                if (sorted.add(key)) {
+-                    tzNames.put(key, new TzInfo(tz, tz.observesDaylightTime()));
++                if (sorted.add(zoneName)) {
++                    tzNames.put(zoneName, new TzInfo(tz, tz.observesDaylightTime()));
+                 }
+             }
+-
+             // order the regex alternatives with longer strings first, greedy
+             // match will ensure the longest string will be consumed
+             sorted.forEach(zoneName -> simpleQuote(sb.append('|'), zoneName));
+@@ -583,11 +584,16 @@ public class FastDateParser implements DateParser, Serializable {
+             if (tz != null) {
+                 calendar.setTimeZone(tz);
+             } else {
+-                final String lowerCase = timeZone.toLowerCase(locale);
+-                TzInfo tzInfo = tzNames.get(lowerCase);
++                TzInfo tzInfo = tzNames.get(timeZone);
+                 if (tzInfo == null) {
+                     // match missing the optional trailing period
+-                    tzInfo = tzNames.get(lowerCase + '.');
++                    tzInfo = tzNames.get(timeZone + '.');
++                    if (tzInfo == null) {
++                        // show chars in case this is multiple byte character issue
++                        final char[] charArray = timeZone.toCharArray();
++                        throw new IllegalStateException(String.format("Can't find time zone '%s' (%d %s) in %s", timeZone, charArray.length,
++                                Arrays.toString(charArray), new TreeSet<>(tzNames.keySet())));
++                    }
+                 }
+                 calendar.set(Calendar.DST_OFFSET, tzInfo.dstOffset);
+                 calendar.set(Calendar.ZONE_OFFSET, tzInfo.zone.getRawOffset());
+@@ -1079,6 +1085,7 @@ public class FastDateParser implements DateParser, Serializable {
+     public String toString() {
+         return "FastDateParser[" + pattern + ", " + locale + ", " + timeZone.getID() + "]";
+     }
++
+     /**
+      * Converts all state of this instance to a String handy for debugging.
+      *

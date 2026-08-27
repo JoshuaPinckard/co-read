@@ -1,0 +1,193 @@
+{
+  "baseline": {
+    "head": "0c05c83d8a0602bef2520e54f5fd62c2f8ccc955",
+    "head_tree": "6934a27166006eff7adfd7551d7381d2d9707e26",
+    "index_tree": "6934a27166006eff7adfd7551d7381d2d9707e26",
+    "tracked_diff_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "tracked_status": ""
+  },
+  "completed_at_utc": "2026-08-24T13:03:26.984+00:00",
+  "identical_normalized_results": true,
+  "measurement": "posture-repository-eligibility-gate",
+  "normalized_signatures": [
+    null,
+    null,
+    null,
+    null,
+    null
+  ],
+  "protocol": {
+    "determinism_signature": "sorted JUnit testcase (classname, name, outcome, failure/error type or message)",
+    "environment": {
+      "PYTHONDONTWRITEBYTECODE": "1",
+      "PYTHONPATH": "C:\\Users\\joshp\\Desktop\\Blast-Radius\\exploratory\\causal\\repositories\\marshmallow\\src",
+      "platform": "Windows-10-10.0.26200-SP0",
+      "python_executable": "C:\\Users\\joshp\\Desktop\\Blast-Radius\\exploratory\\causal\\envs\\marshmallow\\Scripts\\python.exe",
+      "python_version": "3.11.9"
+    },
+    "required_runs": 5,
+    "runtime_ceiling_seconds": 120.0,
+    "timeout_seconds": 150.0
+  },
+  "repository": "C:\\Users\\joshp\\Desktop\\Blast-Radius\\exploratory\\causal\\repositories\\marshmallow",
+  "repository_name": "marshmallow_code__marshmallow",
+  "runs": [
+    {
+      "after": {
+        "head": "0c05c83d8a0602bef2520e54f5fd62c2f8ccc955",
+        "head_tree": "6934a27166006eff7adfd7551d7381d2d9707e26",
+        "index_tree": "6934a27166006eff7adfd7551d7381d2d9707e26",
+        "tracked_diff_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "tracked_status": ""
+      },
+      "before": {
+        "head": "0c05c83d8a0602bef2520e54f5fd62c2f8ccc955",
+        "head_tree": "6934a27166006eff7adfd7551d7381d2d9707e26",
+        "index_tree": "6934a27166006eff7adfd7551d7381d2d9707e26",
+        "tracked_diff_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "tracked_status": ""
+      },
+      "command": [
+        "C:\\Users\\joshp\\Desktop\\Blast-Radius\\exploratory\\causal\\envs\\marshmallow\\Scripts\\python.exe",
+        "-m",
+        "pytest",
+        "--junitxml=C:\\Users\\joshp\\Desktop\\Blast-Radius\\exploratory\\causal\\gates\\marshmallow_code__marshmallow\\run-1.xml"
+      ],
+      "completed_at_utc": "2026-08-24T13:02:57.335+00:00",
+      "elapsed_seconds": 1.7081894000293687,
+      "normalized": null,
+      "returncode": 4,
+      "run": 1,
+      "started_at_utc": "2026-08-24T13:02:52.812+00:00",
+      "state_matches_baseline_after": true,
+      "state_matches_baseline_before": true,
+      "timed_out": false
+    },
+    {
+      "after": {
+        "head": "0c05c83d8a0602bef2520e54f5fd62c2f8ccc955",
+        "head_tree": "6934a27166006eff7adfd7551d7381d2d9707e26",
+        "index_tree": "6934a27166006eff7adfd7551d7381d2d9707e26",
+        "tracked_diff_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "tracked_status": ""
+      },
+      "before": {
+        "head": "0c05c83d8a0602bef2520e54f5fd62c2f8ccc955",
+        "head_tree": "6934a27166006eff7adfd7551d7381d2d9707e26",
+        "index_tree": "6934a27166006eff7adfd7551d7381d2d9707e26",
+        "tracked_diff_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "tracked_status": ""
+      },
+      "command": [
+        "C:\\Users\\joshp\\Desktop\\Blast-Radius\\exploratory\\causal\\envs\\marshmallow\\Scripts\\python.exe",
+        "-m",
+        "pytest",
+        "--junitxml=C:\\Users\\joshp\\Desktop\\Blast-Radius\\exploratory\\causal\\gates\\marshmallow_code__marshmallow\\run-2.xml"
+      ],
+      "completed_at_utc": "2026-08-24T13:03:08.592+00:00",
+      "elapsed_seconds": 2.7388102000113577,
+      "normalized": null,
+      "returncode": 4,
+      "run": 2,
+      "started_at_utc": "2026-08-24T13:03:02.424+00:00",
+      "state_matches_baseline_after": true,
+      "state_matches_baseline_before": true,
+      "timed_out": false
+    },
+    {
+      "after": {
+        "head": "0c05c83d8a0602bef2520e54f5fd62c2f8ccc955",
+        "head_tree": "6934a27166006eff7adfd7551d7381d2d9707e26",
+        "index_tree": "6934a27166006eff7adfd7551d7381d2d9707e26",
+        "tracked_diff_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "tracked_status": ""
+      },
+      "before": {
+        "head": "0c05c83d8a0602bef2520e54f5fd62c2f8ccc955",
+        "head_tree": "6934a27166006eff7adfd7551d7381d2d9707e26",
+        "index_tree": "6934a27166006eff7adfd7551d7381d2d9707e26",
+        "tracked_diff_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "tracked_status": ""
+      },
+      "command": [
+        "C:\\Users\\joshp\\Desktop\\Blast-Radius\\exploratory\\causal\\envs\\marshmallow\\Scripts\\python.exe",
+        "-m",
+        "pytest",
+        "--junitxml=C:\\Users\\joshp\\Desktop\\Blast-Radius\\exploratory\\causal\\gates\\marshmallow_code__marshmallow\\run-3.xml"
+      ],
+      "completed_at_utc": "2026-08-24T13:03:12.689+00:00",
+      "elapsed_seconds": 0.9758310000179335,
+      "normalized": null,
+      "returncode": 4,
+      "run": 3,
+      "started_at_utc": "2026-08-24T13:03:10.039+00:00",
+      "state_matches_baseline_after": true,
+      "state_matches_baseline_before": true,
+      "timed_out": false
+    },
+    {
+      "after": {
+        "head": "0c05c83d8a0602bef2520e54f5fd62c2f8ccc955",
+        "head_tree": "6934a27166006eff7adfd7551d7381d2d9707e26",
+        "index_tree": "6934a27166006eff7adfd7551d7381d2d9707e26",
+        "tracked_diff_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "tracked_status": ""
+      },
+      "before": {
+        "head": "0c05c83d8a0602bef2520e54f5fd62c2f8ccc955",
+        "head_tree": "6934a27166006eff7adfd7551d7381d2d9707e26",
+        "index_tree": "6934a27166006eff7adfd7551d7381d2d9707e26",
+        "tracked_diff_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "tracked_status": ""
+      },
+      "command": [
+        "C:\\Users\\joshp\\Desktop\\Blast-Radius\\exploratory\\causal\\envs\\marshmallow\\Scripts\\python.exe",
+        "-m",
+        "pytest",
+        "--junitxml=C:\\Users\\joshp\\Desktop\\Blast-Radius\\exploratory\\causal\\gates\\marshmallow_code__marshmallow\\run-4.xml"
+      ],
+      "completed_at_utc": "2026-08-24T13:03:21.401+00:00",
+      "elapsed_seconds": 1.5868961999658495,
+      "normalized": null,
+      "returncode": 4,
+      "run": 4,
+      "started_at_utc": "2026-08-24T13:03:15.021+00:00",
+      "state_matches_baseline_after": true,
+      "state_matches_baseline_before": true,
+      "timed_out": false
+    },
+    {
+      "after": {
+        "head": "0c05c83d8a0602bef2520e54f5fd62c2f8ccc955",
+        "head_tree": "6934a27166006eff7adfd7551d7381d2d9707e26",
+        "index_tree": "6934a27166006eff7adfd7551d7381d2d9707e26",
+        "tracked_diff_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "tracked_status": ""
+      },
+      "before": {
+        "head": "0c05c83d8a0602bef2520e54f5fd62c2f8ccc955",
+        "head_tree": "6934a27166006eff7adfd7551d7381d2d9707e26",
+        "index_tree": "6934a27166006eff7adfd7551d7381d2d9707e26",
+        "tracked_diff_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "tracked_status": ""
+      },
+      "command": [
+        "C:\\Users\\joshp\\Desktop\\Blast-Radius\\exploratory\\causal\\envs\\marshmallow\\Scripts\\python.exe",
+        "-m",
+        "pytest",
+        "--junitxml=C:\\Users\\joshp\\Desktop\\Blast-Radius\\exploratory\\causal\\gates\\marshmallow_code__marshmallow\\run-5.xml"
+      ],
+      "completed_at_utc": "2026-08-24T13:03:26.119+00:00",
+      "elapsed_seconds": 1.1415215999586508,
+      "normalized": null,
+      "returncode": 4,
+      "run": 5,
+      "started_at_utc": "2026-08-24T13:03:22.737+00:00",
+      "state_matches_baseline_after": true,
+      "state_matches_baseline_before": true,
+      "timed_out": false
+    }
+  ],
+  "schema_version": 1,
+  "status": "rejected"
+}

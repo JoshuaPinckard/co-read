@@ -1,0 +1,71 @@
+diff --git a/tests/test_termui.py b/tests/test_termui.py
+index 7cfa939949f9d4ba1fe1f685acccf9f2182ff9f0..d63851fa770ea90e76ecda69c133c17def091a4c 100644
+--- a/tests/test_termui.py
++++ b/tests/test_termui.py
+@@ -246,7 +246,7 @@ def test_secho(runner):
+     ("value", "expect"), [(123, b"\x1b[45m123\x1b[0m"), (b"test", b"test")]
+ )
+ def test_secho_non_text(runner, value, expect):
+-    with runner.isolation() as (out, _):
++    with runner.isolation() as (out, _, _):
+         click.secho(value, nl=False, color=True, bg="magenta")
+         result = out.getvalue()
+         assert result == expect
+diff --git a/tests/test_testing.py b/tests/test_testing.py
+index e67b3a91159fc0865a966d97c63a6390f76262a0..afb5ef9a22104a9cf96efba5faed5d95caef4e18 100644
+--- a/tests/test_testing.py
++++ b/tests/test_testing.py
+@@ -301,32 +301,23 @@ def test_env():
+ def test_stderr():
+     @click.command()
+     def cli_stderr():
+-        click.echo("stdout")
+-        click.echo("stderr", err=True)
+-
+-    runner = CliRunner(mix_stderr=False)
+-
+-    result = runner.invoke(cli_stderr)
+-
+-    assert result.output == "stdout\n"
+-    assert result.stdout == "stdout\n"
+-    assert result.stderr == "stderr\n"
++        click.echo("1 - stdout")
++        click.echo("2 - stderr", err=True)
++        click.echo("3 - stdout")
++        click.echo("4 - stderr", err=True)
+ 
+-    runner_mix = CliRunner(mix_stderr=True)
++    runner_mix = CliRunner()
+     result_mix = runner_mix.invoke(cli_stderr)
+ 
+-    assert result_mix.output == "stdout\nstderr\n"
+-    assert result_mix.stdout == "stdout\nstderr\n"
+-
+-    with pytest.raises(ValueError):
+-        assert result_mix.stderr  # noqa B018
++    assert result_mix.output == "1 - stdout\n2 - stderr\n3 - stdout\n4 - stderr\n"
++    assert result_mix.stdout == "1 - stdout\n3 - stdout\n"
++    assert result_mix.stderr == "2 - stderr\n4 - stderr\n"
+ 
+     @click.command()
+     def cli_empty_stderr():
+         click.echo("stdout")
+ 
+-    runner = CliRunner(mix_stderr=False)
+-
++    runner = CliRunner()
+     result = runner.invoke(cli_empty_stderr)
+ 
+     assert result.output == "stdout\n"
+@@ -410,9 +401,9 @@ def test_isolation_stderr_errors():
+     """Writing to stderr should escape invalid characters instead of
+     raising a UnicodeEncodeError.
+     """
+-    runner = CliRunner(mix_stderr=False)
++    runner = CliRunner()
+ 
+-    with runner.isolation() as (_, err):
++    with runner.isolation() as (_, err, _):
+         click.echo("\udce2", err=True, nl=False)
+ 
+     assert err.getvalue() == b"\\udce2"

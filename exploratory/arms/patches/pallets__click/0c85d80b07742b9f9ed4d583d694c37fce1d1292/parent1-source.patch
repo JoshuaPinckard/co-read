@@ -1,0 +1,185 @@
+diff --git a/.gitignore b/.gitignore
+index fc5a65f293d02ccd0c8959cc1f8078c9f4e2dd9e..c1a1723d470beff99526e17e18b9987ee3ef9a82 100644
+--- a/.gitignore
++++ b/.gitignore
+@@ -1,5 +1,6 @@
+ /.idea/
+ /.vscode/
++.DS_Store/
+ /env/
+ /venv/
+ __pycache__/
+diff --git a/CHANGES.rst b/CHANGES.rst
+index b65e91df4864cbf1b5be52f0eb7028e832561682..251b2e4b505f9ed6e70eca3a6d087948673f45d0 100644
+--- a/CHANGES.rst
++++ b/CHANGES.rst
+@@ -1,5 +1,14 @@
+ .. currentmodule:: click
+ 
++Version 8.1.0
++-------------
++
++Unreleased
++
++-   Single options boolean flags with ``show_default=True`` only show
++    the default if it is ``True``. :issue:`1971`:
++
++
+ Version 8.0.3
+ -------------
+ 
+diff --git a/docs/.DS_Store b/docs/.DS_Store
+deleted file mode 100644
+index 5a9186236dc8dcd3dbbd29203f0d81d33a83f323..0000000000000000000000000000000000000000
+GIT binary patch
+literal 0
+HcmV?d00001
+
+literal 8196
+zcmeHM&2G~`5T0!dagw$aQK>y4UywMosHM;%A*3jjLk~zuL4X9PjpH<laBY*HrX>XB
+z!aD$Oz@zX4yaIO~pnNlHik;XMCxn#UXm>XDd^<be&aN{K5vg*|-6UEiA`6w}QV~r`
+z;rm=C%1m_SI-~-g$Rl^p3u=xRI1}3Df?>cgU>GnA7zPXj{{sVfW^=JJp8NW)X$=F0
+zfvIGG&j%ZoWhs&)E#>GyBPjsn94<>iA9;Xa>`0a(Inq*~7*l5tDuSvg#ZVfK`!=gX
+zmLfUQQo~7UIH}08iZT=>)`7D{om5Fn(;5a01CtDJ?tYo}$)O&##`1UGO7~H3o=FjK
+zLf7ec!YJ4O=7e6W)7{wku4ZQEE?v%9R>3MP6kb=FLBG<ic6*(2wf&O6J*jq^PSk%I
+z1m1bS>O5=J`}<4F4+FnjZTa=KfLm@IDzBcmd^hNqgP!kpWSok=VOe=AzrVCP7~H+L
+zxn^%|-yW{ngPom?HT%xi_HdZDR&H!Q*gH5neK&YN{P0=aAQhb>bVYwZZ@-|IaPqj)
+z_PxMw;5uV+Age=Ns-m{27JJ>nbbUpQ(=`u0myXf;RHHijx2VndBu=f2;c`HP7(ZS6
+z<CyjWwA<9c5+1>ZkC}BckUuAoHEPQ28bEp!V3bsw5(uASfiMq$0@ynew3}s77>VPG
+z5iW$aI-R6j6F%aooS=L<gnme;W9%^>acymbd1!+}C&LDF5l3Cc>IAU!hef@{0T|8X
+zL|HLT7R4i8=TM@9kr^w&yd<!B%+$vWF61PED1t#mAP{V&o<2tfZW1U<R_u-FJ6OB%
+zNCYcm`j4T-`iHQFHA`~OaiLCP92CLf-+3QLEds+aT$Kp!!W!?ARMt5*#w>===2&FA
+zSt#ZqY4NQbc{TW^_j4QQbc@VM63cvdfoF>WK3<kx;paz;pJiw^f%foOPwWLgPqJf;
+z<0U>$5ti#RbB>#gT`OG0QP(hMU!o?ESX;*k>_rI6+5R(k@lh58(~$LYF<Q2LW-gA*
+z1Id0~$k)t^7+*Q+gRj%{mEm2K&@Mom=Tk#8TyWMVFgOOLv&?F@S2_QGl>PpHI>|9!
+z8wRF?0X4T<*)7A_-@l2+{pMWTMm<2~!g?bu1%gJ>aY#wWA<zFXMBj!gV@i=6X^AT+
+a|NKS3*_qf~B=h{Q;}?i|{!2JaUGodK|9@rx
+
+diff --git a/docs/options.rst b/docs/options.rst
+index 277a98baa868d5dc8b2c8edd58cb471ccc577b3e..b54fbba0e8183d8fad7360699863405dc8f7cf74 100644
+--- a/docs/options.rst
++++ b/docs/options.rst
+@@ -109,6 +109,27 @@ To show the default values when showing command help, use ``show_default=True``
+ 
+    invoke(dots, args=['--help'])
+ 
++For single option boolean flags, the default remains hidden if the default
++value is False.
++
++.. click:example::
++
++    @click.command()
++    @click.option('--n', default=1, show_default=True)
++    @click.option("--gr", is_flag=True, show_default=True, default=False, help="Greet the world.")
++    @click.option("--br", is_flag=True, show_default=True, default=True, help="Add a thematic break")
++    def dots(n, gr, br):
++        if gr:
++            click.echo('Hello world!')
++        click.echo('.' * n)
++        if br:
++            click.echo('-' * n)
++
++.. click:run::
++
++   invoke(dots, args=['--help'])
++
++
+ Multi Value Options
+ -------------------
+ 
+diff --git a/examples/README b/examples/README
+index 6be32961f4d32a6ef85e6bca9c74d2f7b99dfd4f..566153fc9cb296fc7b07e3729569c8d4a7a8766d 100644
+--- a/examples/README
++++ b/examples/README
+@@ -9,4 +9,4 @@ Click Examples
+   through the wrong interpreter.
+ 
+   For more information about this see the documentation:
+-    https://click.palletsprojects.com/en/7.x/setuptools/
++    https://click.palletsprojects.com/setuptools/
+diff --git a/setup.cfg b/setup.cfg
+index 45c6b894bee22e7eee313beeea04323558c9ac1c..2a66b784c1a4fc8266ec399f151f320dbcb054e1 100644
+--- a/setup.cfg
++++ b/setup.cfg
+@@ -69,6 +69,7 @@ ignore =
+     E722
+     # bin op line break, invalid
+     W503
++
+ # up to 88 allowed by bugbear B950
+ max-line-length = 80
+ per-file-ignores =
+diff --git a/src/click/__init__.py b/src/click/__init__.py
+index a2ed5d135734e00738982c93b39cc2c2455c1ad1..87908779f2c2d44c4c87bd9cbce3b59866ffa64e 100644
+--- a/src/click/__init__.py
++++ b/src/click/__init__.py
+@@ -72,4 +72,4 @@ from .utils import get_os_args as get_os_args
+ from .utils import get_text_stream as get_text_stream
+ from .utils import open_file as open_file
+ 
+-__version__ = "8.0.3"
++__version__ = "8.1.0.dev0"
+diff --git a/src/click/core.py b/src/click/core.py
+index f2263544ada420d646f74b2e1e4bf16d1d125192..5a4129c7df09431d9aa61d8ed5eee0941aac0cf8 100644
+--- a/src/click/core.py
++++ b/src/click/core.py
+@@ -2399,25 +2399,26 @@ class Option(Parameter):
+ 
+     All other parameters are passed onwards to the parameter constructor.
+ 
+-    :param show_default: controls if the default value should be shown on the
+-                         help page. Normally, defaults are not shown. If this
+-                         value is a string, it shows the string instead of the
+-                         value. This is particularly useful for dynamic options.
+-    :param show_envvar: controls if an environment variable should be shown on
+-                        the help page.  Normally, environment variables
+-                        are not shown.
+-    :param prompt: if set to `True` or a non empty string then the user will be
+-                   prompted for input.  If set to `True` the prompt will be the
+-                   option name capitalized.
++    :param show_default: Controls if the default value should be shown
++        on the help page. Normally, defaults are not shown. If this
++        value is a string, it shows that string in parentheses instead
++        of the actual value. This is particularly useful for dynamic
++        options. For single option boolean flags, the default remains
++        hidden if its value is ``False``.
++    :param show_envvar: Controls if an environment variable should be
++        shown on the help page. Normally, environment ariables are not
++        shown.
++    :param prompt: If set to ``True`` or a non empty string then the
++        user will be prompted for input. If set to ``True`` the prompt
++        will be the option name capitalized.
+     :param confirmation_prompt: Prompt a second time to confirm the
+         value if it was prompted for. Can be set to a string instead of
+         ``True`` to customize the message.
+     :param prompt_required: If set to ``False``, the user will be
+         prompted for input only when the option was specified as a flag
+         without a value.
+-    :param hide_input: if this is `True` then the input on the prompt will be
+-                       hidden from the user.  This is useful for password
+-                       input.
++    :param hide_input: If this is ``True`` then the input on the prompt
++        will be hidden from the user. This is useful for password input.
+     :param is_flag: forces this option to act as a flag.  The default is
+                     auto detection.
+     :param flag_value: which value should be used for this flag if it's
+@@ -2435,6 +2436,10 @@ class Option(Parameter):
+     :param help: the help string.
+     :param hidden: hide this option from help outputs.
+ 
++    .. versionchanged:: 8.1.0
++        The default of a single option boolean flag is not shown if the
++        default value is ``False``.
++
+     .. versionchanged:: 8.0.1
+         ``type`` is detected from ``flag_value`` if given.
+     """
+@@ -2728,6 +2733,8 @@ class Option(Parameter):
+                 default_string = split_opt(
+                     (self.opts if self.default else self.secondary_opts)[0]
+                 )[1]
++            elif self.is_bool_flag and not self.secondary_opts and not default_value:
++                default_string = ""
+             else:
+                 default_string = str(default_value)
+ 

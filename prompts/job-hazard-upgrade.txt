@@ -1,0 +1,45 @@
+Convert an exposure rate into a confirmed-invalidation rate. This answers the question that has blocked this project's central claim all along: **is reading depending?**
+
+Read first: `exploratory/hazard/FINDING-hazard-replication.md`.
+
+## What exists
+
+A read-then-foreign-write hazard measurement, replicated by two independent implementations that agreed on paths and agents: at the one-hour window, 553 code paths where agent A read a file and a *different* agent B then wrote it. 553 paths, 854 distinct readers, 392 distinct writers.
+
+Its stated limitation, and it is the important one: **this is exposure, not invalidation.** It counts when the precondition for semantic invalidation occurred. It does not establish that the reading agent's work was subsequently wrong. Phrasing it as "how often agents break each other" would be false.
+
+## Why it can be upgraded from data already on disk
+
+The Claude Code transcript corpus at `C:/Users/USER/.claude/projects/` carries, verified by measurement over the 25 largest transcripts:
+
+- **99.6% of Read results** carry `toolUseResult.file` with `filePath`, `startLine`, `numLines`, `totalLines` — so reads are localised to line windows, including reads issued with no offset argument. Use the RESULT, not the input arguments; the input's `offset`/`limit` appear only about half the time.
+- **98.7% of Edit and Write results** carry both `structuredPatch` (hunk line offsets) and `originalFile` (the complete file content before the edit).
+
+So for each hazard you have the region A read, the exact bytes B changed, and — crucially — what A did *next*, with A's own pre-image and patch.
+
+## The job
+
+For each hazard event, join forward and classify the reading agent's subsequent behaviour:
+
+1. **Did A's read region and B's write region actually overlap?** A read line window and a structured patch both give line ranges. A hazard where B changed lines nowhere near what A read is a false positive of the file-granularity measurement — and quantifying that is itself a result, because it measures directly what sub-file claim granularity buys. Report the overlap rate.
+2. **Did A subsequently edit, and did that edit touch the region it had read?**
+3. **Was A's edit later reverted, re-edited by A, or superseded within the session?** Rework is the observable proxy for the work having been wrong.
+4. **Did A re-read the changed region after B wrote it?** A re-read is evidence A noticed; no re-read followed by an edit is evidence A proceeded on stale information.
+
+Produce a contingency table over hazards: region-overlapping versus file-only, and rework-followed versus clean-followed.
+
+## The number this exists to produce
+
+**Of hazards where the read and write regions genuinely overlapped, what fraction show downstream rework?** That is the closest thing to a confirmed-invalidation rate obtainable without running tests, and no published work has it.
+
+State plainly that rework is a proxy for wrongness, not wrongness itself — an agent may rework for unrelated reasons, and may fail to rework when it should have. Give the direction of both biases.
+
+## Output
+
+`exploratory/hazard/INVALIDATION.md`. Write new scripts under `instruments/hazard/`; **do not modify `extract_hazards.py`**, another analysis reads it.
+
+Required sections: **"Claims that could NOT be verified"** and **"What would change this verdict"**. Per-claim confidence with its reason, not a document-level label.
+
+Limits to state: one team, one harness, Node-dominated; 167,459 Bash and 15,414 PowerShell calls carry paths only inside command strings and are not counted, so every figure is a lower bound.
+
+Read-only on the transcript corpus. Do not fabricate. If the joined population is too small to support a rate, say so and stop rather than reporting one.

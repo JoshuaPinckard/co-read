@@ -1,0 +1,12 @@
+diff --git a/tests/test_cmdline.py b/tests/test_cmdline.py
+index 2bae794cf303a64f97f103946b1f95cd0ccc6985..e245d7328d42ab036b0572e02982cc101759c6ca 100644
+--- a/tests/test_cmdline.py
++++ b/tests/test_cmdline.py
+@@ -162,6 +162,7 @@ def test_L_opt():
+     o = check_success('-L', 'lexer')
+     assert 'Lexers' in o and 'Formatters' not in o
+     check_success('-L', 'lexers')
++    check_failure('-L', 'invalid-kind', code=2)
+ 
+ 
+ def test_O_opt():

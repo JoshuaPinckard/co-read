@@ -1,0 +1,13 @@
+diff --git a/pygments/lexers/shell.py b/pygments/lexers/shell.py
+index 713d432111ab8f15b08e60cf4750e855f94d4e15..daef1f39acd6df2eb8eda9afadfd7eeec54dda2f 100644
+--- a/pygments/lexers/shell.py
++++ b/pygments/lexers/shell.py
+@@ -232,7 +232,7 @@ class BashSessionLexer(ShellSessionBaseLexer):
+     _innerLexerCls = BashLexer
+     _ps1rgx = re.compile(
+         r'^((?:(?:\[.*?\])|(?:\(\S+\))?(?:| |sh\S*?|\w+\S+[@:]\S+(?:\s+\S+)' \
+-        r'?|\[\S+[@:][^\n]+\].+))\s*[$#%])(.*\n?)')
++        r'?|\[\S+[@:][^\n]+\].+))\s*[$#%]\s*)(.*\n?)')
+     _ps2 = '>'
+ 
+ 

@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?><testsuites name="pytest tests"><testsuite name="pytest" errors="0" failures="2" skipped="0" tests="3" time="0.112" timestamp="2026-08-24T08:22:44.880305-07:00" hostname="JoshP"><testcase classname="tests.snippets.lua.attributes.txt" name="" time="0.015"><failure message="The tokens produced by the &quot;lua&quot; lexer differ from the expected ones in the file &quot;tests\snippets\lua\attributes.txt&quot;.&#10;Run `tox -- tests\snippets --update-goldens` to update it.&#10;&#10;  &#10;  Skipping 126 identical leading characters in diff, use -v to show&#10;  -           Punctuation&#10;  +           Operator&#10;    ' '           Text.Whitespace&#10;  - 'const'       Name.Attribute&#10;  ?                    ^^^   ^^...&#10;  &#10;  ...Full output truncated (40 lines hidden), use '-vv' to show">The tokens produced by the "lua" lexer differ from the expected ones in the file "tests\snippets\lua\attributes.txt".
+Run `tox -- tests\snippets --update-goldens` to update it.
+
+  
+  Skipping 126 identical leading characters in diff, use -v to show
+  -           Punctuation
+  +           Operator
+    ' '           Text.Whitespace
+  - 'const'       Name.Attribute
+  ?                    ^^^   ^^...
+  
+  ...Full output truncated (40 lines hidden), use '-vv' to show</failure></testcase><testcase classname="tests.snippets.lua.test_separate_operators.txt" name="" time="0.001"><failure message="The tokens produced by the &quot;lua&quot; lexer differ from the expected ones in the file &quot;tests\snippets\lua\test_separate_operators.txt&quot;.&#10;Run `tox -- tests\snippets --update-goldens` to update it.&#10;&#10;  &#10;  Skipping 50 identical leading characters in diff, use -v to show&#10;    tespace&#10;  - '='           Operator&#10;  ?    -&#10;  + '=-'          Operator&#10;  ?   +...&#10;  &#10;  ...Full output truncated (27 lines hidden), use '-vv' to show">The tokens produced by the "lua" lexer differ from the expected ones in the file "tests\snippets\lua\test_separate_operators.txt".
+Run `tox -- tests\snippets --update-goldens` to update it.
+
+  
+  Skipping 50 identical leading characters in diff, use -v to show
+    tespace
+  - '='           Operator
+  ?    -
+  + '=-'          Operator
+  ?   +...
+  
+  ...Full output truncated (27 lines hidden), use '-vv' to show</failure></testcase><testcase classname="tests.snippets.lua.test_single_operators.txt" name="" time="0.001" /></testsuite></testsuites>

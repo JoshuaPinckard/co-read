@@ -1,0 +1,97 @@
+============================= test session starts =============================
+platform win32 -- Python 3.11.9, pytest-8.4.1, pluggy-1.6.0
+rootdir: C:\Users\joshp\Desktop\Blast-Radius\exploratory\causal\repositories\encode-httpx
+configfile: pyproject.toml
+plugins: anyio-4.14.2
+collected 1418 items / 5 deselected / 1413 selected
+
+tests\client\test_async_client.py ...................................... [  2%]
+..............                                                           [  3%]
+tests\client\test_auth.py .............................................. [  6%]
+..........................s.......                                       [  9%]
+tests\client\test_client.py ...................................          [ 11%]
+tests\client\test_cookies.py .......                                     [ 12%]
+tests\client\test_event_hooks.py .........                               [ 12%]
+tests\client\test_headers.py .................                           [ 14%]
+tests\client\test_properties.py ........                                 [ 14%]
+tests\client\test_proxies.py ........................................... [ 17%]
+.......................                                                  [ 19%]
+tests\client\test_queryparams.py ...                                     [ 19%]
+tests\client\test_redirects.py ...............................           [ 21%]
+tests\models\test_cookies.py .......                                     [ 22%]
+tests\models\test_headers.py ...........................                 [ 24%]
+tests\models\test_queryparams.py ..............                          [ 25%]
+tests\models\test_requests.py ........................                   [ 26%]
+tests\models\test_responses.py ......................................... [ 29%]
+.................................................................        [ 34%]
+tests\models\test_url.py ............................................... [ 37%]
+...........................................                              [ 40%]
+tests\models\test_whatwg.py ............................................ [ 43%]
+........................................................................ [ 48%]
+........................................................................ [ 54%]
+........................................................................ [ 59%]
+........................................................................ [ 64%]
+........................................................................ [ 69%]
+........................................................................ [ 74%]
+........................................................................ [ 79%]
+...............                                                          [ 80%]
+tests\test_api.py ............                                           [ 81%]
+tests\test_asgi.py ........................                              [ 83%]
+tests\test_auth.py ........                                              [ 83%]
+tests\test_config.py ............................                        [ 85%]
+tests\test_content.py ...........................................        [ 88%]
+tests\test_decoders.py ........................................          [ 91%]
+tests\test_exceptions.py ...                                             [ 91%]
+tests\test_exported_members.py .                                         [ 91%]
+tests\test_main.py ...........                                           [ 92%]
+tests\test_multipart.py ...............................F......           [ 95%]
+tests\test_status_codes.py ......                                        [ 95%]
+tests\test_timeouts.py .F...F..                                          [ 96%]
+tests\test_utils.py ........................................             [ 99%]
+tests\test_wsgi.py ............                                          [100%]
+
+================================== FAILURES ===================================
+______ test_multipart_encode_files_raises_exception_with_text_mode_file _______
+
+    def test_multipart_encode_files_raises_exception_with_text_mode_file() -> None:
+        url = "https://www.example.com"
+        with tempfile.TemporaryFile(mode="w") as upload:
+            files = {"file": ("test.txt", upload, "text/plain")}
+>           with pytest.raises(TypeError):
+E           Failed: DID NOT RAISE <class 'TypeError'>
+
+tests\test_multipart.py:378: Failed
+_________________________ test_write_timeout[asyncio] _________________________
+
+server = <tests.conftest.TestServer object at 0x0000022F24FD9B90>
+
+    @pytest.mark.anyio
+    async def test_write_timeout(server):
+        timeout = httpx.Timeout(None, write=1e-6)
+    
+        async with httpx.AsyncClient(timeout=timeout) as client:
+>           with pytest.raises(httpx.WriteTimeout):
+E           Failed: DID NOT RAISE <class 'httpx.WriteTimeout'>
+
+tests\test_timeouts.py:20: Failed
+---------------------------- Captured stdout call -----------------------------
+INFO:     127.0.0.1:54644 - "PUT /slow_response HTTP/1.1" 200 OK
+__________________________ test_write_timeout[trio] ___________________________
+
+server = <tests.conftest.TestServer object at 0x0000022F24FD9B90>
+
+    @pytest.mark.anyio
+    async def test_write_timeout(server):
+        timeout = httpx.Timeout(None, write=1e-6)
+    
+        async with httpx.AsyncClient(timeout=timeout) as client:
+>           with pytest.raises(httpx.WriteTimeout):
+E           Failed: DID NOT RAISE <class 'httpx.WriteTimeout'>
+
+tests\test_timeouts.py:20: Failed
+---------------------------- Captured stdout call -----------------------------
+INFO:     127.0.0.1:54659 - "PUT /slow_response HTTP/1.1" 200 OK
+- generated xml file: C:\Users\joshp\Desktop\Blast-Radius\exploratory\causal\gates\encode__httpx\run-1.xml -
+=========================== short test summary info ===========================
+SKIPPED [1] tests\client\test_auth.py:273: netrc files without a password are valid from Python >= 3.11
+===== 3 failed, 1409 passed, 1 skipped, 5 deselected in 122.40s (0:02:02) =====

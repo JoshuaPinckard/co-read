@@ -1,0 +1,903 @@
+diff --git a/.azure-pipelines.yml b/.azure-pipelines.yml
+index 00e732dde667043335565f14dc96242e41767438..d88465a5ee237501d3ec49a48d5c26ffc7350731 100644
+--- a/.azure-pipelines.yml
++++ b/.azure-pipelines.yml
+@@ -1,35 +1,35 @@
+ trigger:
+   - master
+-  - "*.x"
++  - '*.x'
+ 
+ variables:
+   vmImage: ubuntu-latest
+-  python.version: "3.7"
+-  TOXENV: py,coverage-ci
+-  hasTestResults: true
++  python.version: '3.8'
++  TOXENV: py
+ 
+ strategy:
+   matrix:
+-    Python 3.7 Linux:
++    Python 3.8 Linux:
+       vmImage: ubuntu-latest
+-    Python 3.7 Windows:
++    Python 3.8 Windows:
+       vmImage: windows-latest
+-    Python 3.7 Mac:
++    Python 3.8 Mac:
+       vmImage: macos-latest
+     PyPy 3 Linux:
+       python.version: pypy3
++    Python 3.7 Linux:
++      python.version: '3.7'
+     Python 3.6 Linux:
+-      python.version: 3.6
++      python.version: '3.6'
+     Python 3.5 Linux:
+-      python.version: 3.5
++      python.version: '3.5'
+     Python 2.7 Linux:
+-      python.version: 2.7
++      python.version: '2.7'
+     Python 2.7 Windows:
+-      python.version: 2.7
+       vmImage: windows-latest
++      python.version: '2.7'
+     Docs:
+       TOXENV: docs
+-      hasTestResults: false
+ 
+ pool:
+   vmImage: $(vmImage)
+diff --git a/.gitignore b/.gitignore
+index 33ed8303a904aad46e579ce26f608d8f222cf5e8..fc5a65f293d02ccd0c8959cc1f8078c9f4e2dd9e 100644
+--- a/.gitignore
++++ b/.gitignore
+@@ -1,18 +1,15 @@
+-*.pyc
+-*.pyo
++/.idea/
++/.vscode/
++/env/
++/venv/
+ __pycache__/
+-.idea/
+-.ropeproject
+-.DS_Store
+-env/
+-venv/
++*.pyc
+ *.egg-info/
+-*.eggs/
+-build/
+-dist/
+-docs/_build/
+-.pytest_cache/
+-.tox/
++/build/
++/dist/
++/.pytest_cache/
++/.tox/
+ .coverage
+ .coverage.*
+-htmlcov/
++/htmlcov/
++/docs/_build/
+diff --git a/CHANGES.rst b/CHANGES.rst
+index 8beb27d8f2c3b4a8d4a68592d4493669a2c49c76..c671929e687428dfa50611e3128b7a960c1587a9 100644
+--- a/CHANGES.rst
++++ b/CHANGES.rst
+@@ -58,6 +58,15 @@ Unreleased
+ -   Arguments to system calls such as the executable path passed to
+     ``click.edit`` can contains spaces. :pr:`1470`
+ -   Add ZSH completion autoloading and error handling. :issue:`1348`
++-   Add a repr to ``Command``, ``Group``, ``Option``, and ``Argument``,
++    showing the name for friendlier debugging. :issue:`1267`
++-   Completion doesn't consider option names if a value starts with
++    ``-`` after the ``--`` separator. :issue:`1247`
++-   ZSH completion escapes special characters in values. :pr:`1418`
++-   Add completion support for Fish shell. :pr:`1423`
++-   Decoding bytes option values falls back to UTF-8 in more cases.
++    :pr:`1468`
++
+ 
+ Version 7.0
+ -----------
+diff --git a/LICENSE.rst b/LICENSE.rst
+index 87ce152aafba76f0200eae513fd0541f4f767acd..d12a849186982399c537c5b9a8fd77bf2edd5eab 100644
+--- a/LICENSE.rst
++++ b/LICENSE.rst
+@@ -1,39 +1,28 @@
+-Copyright © 2014 by the Pallets team.
++Copyright 2014 Pallets
+ 
+-Some rights reserved.
++Redistribution and use in source and binary forms, with or without
++modification, are permitted provided that the following conditions are
++met:
+ 
+-Redistribution and use in source and binary forms of the software as
+-well as documentation, with or without modification, are permitted
+-provided that the following conditions are met:
+-
+--   Redistributions of source code must retain the above copyright
++1.  Redistributions of source code must retain the above copyright
+     notice, this list of conditions and the following disclaimer.
+ 
+--   Redistributions in binary form must reproduce the above copyright
++2.  Redistributions in binary form must reproduce the above copyright
+     notice, this list of conditions and the following disclaimer in the
+     documentation and/or other materials provided with the distribution.
+ 
+--   Neither the name of the copyright holder nor the names of its
++3.  Neither the name of the copyright holder nor the names of its
+     contributors may be used to endorse or promote products derived from
+     this software without specific prior written permission.
+ 
+-THIS SOFTWARE AND DOCUMENTATION IS PROVIDED BY THE COPYRIGHT HOLDERS AND
+-CONTRIBUTORS "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING,
+-BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND
+-FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE
+-COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT,
+-INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT
+-NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF
+-USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON
+-ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+-(INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
+-THIS SOFTWARE AND DOCUMENTATION, EVEN IF ADVISED OF THE POSSIBILITY OF
+-SUCH DAMAGE.
+-
+-----
+-
+-Click uses parts of optparse written by Gregory P. Ward and maintained
+-by the Python Software Foundation. This is limited to code in parser.py.
+-
+-Copyright © 2001-2006 Gregory P. Ward. All rights reserved.
+-Copyright © 2002-2006 Python Software Foundation. All rights reserved.
++THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
++"AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
++LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A
++PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
++HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
++SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED
++TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR
++PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF
++LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING
++NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
++SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+diff --git a/MANIFEST.in b/MANIFEST.in
+index 33a336f26ab78583499fe89048821cc80ee24c4b..b130d04454b68c8022d5d671d1e43b429df70d09 100644
+--- a/MANIFEST.in
++++ b/MANIFEST.in
+@@ -1,11 +1,8 @@
+ include CHANGES.rst
+-include CONTRIBUTING.rst
+-include LICENSE.rst
+-include README.rst
+ include tox.ini
+ graft artwork
+ graft docs
+ prune docs/_build
+ graft examples
+ graft tests
+-global-exclude *.py[co] .DS_Store
++global-exclude *.pyc
+diff --git a/README.rst b/README.rst
+index 41fb7128be1f0848f84118f9bf37526b7e2d3173..4cade9e5705a38ace616ca00069fda9b15e94b50 100644
+--- a/README.rst
++++ b/README.rst
+@@ -24,9 +24,7 @@ Install and update using `pip`_:
+ 
+ .. code-block:: text
+ 
+-    $ pip install click
+-
+-Click supports Python 3.4 and newer, Python 2.7, and PyPy.
++    $ pip install -U click
+ 
+ .. _pip: https://pip.pypa.io/en/stable/quickstart/
+ 
+@@ -34,8 +32,6 @@ Click supports Python 3.4 and newer, Python 2.7, and PyPy.
+ A Simple Example
+ ----------------
+ 
+-What does it look like? Here is an example of a simple Click program:
+-
+ .. code-block:: python
+ 
+     import click
+@@ -52,8 +48,6 @@ What does it look like? Here is an example of a simple Click program:
+     if __name__ == '__main__':
+         hello()
+ 
+-And what it looks like when run:
+-
+ .. code-block:: text
+ 
+     $ python hello.py --count=3
+@@ -77,11 +71,10 @@ donate today`_.
+ Links
+ -----
+ 
+-*   Website: https://palletsprojects.com/p/click/
+-*   Documentation: https://click.palletsprojects.com/
+-*   License: `BSD <https://github.com/pallets/click/blob/master/LICENSE.rst>`_
+-*   Releases: https://pypi.org/project/click/
+-*   Code: https://github.com/pallets/click
+-*   Issue tracker: https://github.com/pallets/click/issues
+-*   Test status: https://dev.azure.com/pallets/click/_build
+-*   Official chat: https://discord.gg/t6rrQZH
++-   Website: https://palletsprojects.com/p/click/
++-   Documentation: https://click.palletsprojects.com/
++-   Releases: https://pypi.org/project/click/
++-   Code: https://github.com/pallets/click
++-   Issue tracker: https://github.com/pallets/click/issues
++-   Test status: https://dev.azure.com/pallets/click/_build
++-   Official chat: https://discord.gg/t6rrQZH
+diff --git a/click/__init__.py b/click/__init__.py
+index 0fa5e3b81a2ddbf7b6dcead4a9e3aefe5b63ebbf..02807b030f68a78c13affa35aaf9064936c0495a 100644
+--- a/click/__init__.py
++++ b/click/__init__.py
+@@ -1,15 +1,9 @@
+ # -*- coding: utf-8 -*-
+ """
+-click
+-~~~~~
+-
+ Click is a simple Python module inspired by the stdlib optparse to make
+ writing command line scripts fun. Unlike other modules, it's based
+ around a simple API that does not come with too much magic and is
+ composable.
+-
+-:copyright: © 2014 by the Pallets team.
+-:license: BSD, see LICENSE.rst for more details.
+ """
+ 
+ # Core classes
+diff --git a/click/_bashcomplete.py b/click/_bashcomplete.py
+index e97c539884c344daa8e82934434f19df89dbf107..9ba893c7ef7113320a406e17ecea5bd32817ce7f 100644
+--- a/click/_bashcomplete.py
++++ b/click/_bashcomplete.py
+@@ -61,11 +61,11 @@ COMPLETION_SCRIPT_ZSH = '''
+     done
+ 
+     if [ -n "$completions_with_descriptions" ]; then
+-        _describe -V unsorted completions_with_descriptions -U -Q
++        _describe -V unsorted completions_with_descriptions -U
+     fi
+ 
+     if [ -n "$completions" ]; then
+-        compadd -U -V unsorted -Q -a completions
++        compadd -U -V unsorted -a completions
+     fi
+     compstate[insert]="automenu"
+ }
+@@ -73,12 +73,22 @@ COMPLETION_SCRIPT_ZSH = '''
+ compdef %(complete_func)s %(script_names)s
+ '''
+ 
++COMPLETION_SCRIPT_FISH = '''
++complete --no-files --command %(script_names)s --arguments "(env %(autocomplete_var)s=complete_fish COMP_WORDS=(commandline -cp) COMP_CWORD=(commandline -t) %(script_names)s)"
++'''
++
++_completion_scripts = {
++    "bash": COMPLETION_SCRIPT_BASH,
++    "zsh": COMPLETION_SCRIPT_ZSH,
++    "fish": COMPLETION_SCRIPT_FISH,
++}
++
+ _invalid_ident_char_re = re.compile(r'[^a-zA-Z0-9_]')
+ 
+ 
+ def get_completion_script(prog_name, complete_var, shell):
+     cf_name = _invalid_ident_char_re.sub('', prog_name.replace('-', '_'))
+-    script = COMPLETION_SCRIPT_ZSH if shell == 'zsh' else COMPLETION_SCRIPT_BASH
++    script = _completion_scripts.get(shell, COMPLETION_SCRIPT_BASH)
+     return (script % {
+         'complete_func': '_%s_completion' % cf_name,
+         'script_names': prog_name,
+@@ -237,6 +247,8 @@ def get_choices(cli, prog_name, args, incomplete):
+     if ctx is None:
+         return []
+ 
++    has_double_dash = "--" in all_args
++
+     # In newer versions of bash long opts with '='s are partitioned, but it's easier to parse
+     # without the '='
+     if start_of_option(incomplete) and WORDBREAK in incomplete:
+@@ -247,7 +259,7 @@ def get_choices(cli, prog_name, args, incomplete):
+         incomplete = ''
+ 
+     completions = []
+-    if start_of_option(incomplete):
++    if not has_double_dash and start_of_option(incomplete):
+         # completions for partial options
+         for param in ctx.command.params:
+             if isinstance(param, Option) and not param.hidden:
+@@ -281,17 +293,42 @@ def do_complete(cli, prog_name, include_descriptions):
+     for item in get_choices(cli, prog_name, args, incomplete):
+         echo(item[0])
+         if include_descriptions:
+-            # ZSH has trouble dealing with empty array parameters when returned from commands, so use a well defined character '_' to indicate no description is present.
++            # ZSH has trouble dealing with empty array parameters when
++            # returned from commands, use '_' to indicate no description
++            # is present.
+             echo(item[1] if item[1] else '_')
+ 
+     return True
+ 
+ 
++def do_complete_fish(cli, prog_name):
++    cwords = split_arg_string(os.environ["COMP_WORDS"])
++    incomplete = os.environ["COMP_CWORD"]
++    args = cwords[1:]
++
++    for item in get_choices(cli, prog_name, args, incomplete):
++        if item[1]:
++            echo("%(arg)s\t%(desc)s" % {"arg": item[0], "desc": item[1]})
++        else:
++            echo(item[0])
++
++    return True
++
++
+ def bashcomplete(cli, prog_name, complete_var, complete_instr):
+-    if complete_instr.startswith('source'):
+-        shell = 'zsh' if complete_instr == 'source_zsh' else 'bash'
++    if "_" in complete_instr:
++        command, shell = complete_instr.split("_", 1)
++    else:
++        command = complete_instr
++        shell = "bash"
++
++    if command == "source":
+         echo(get_completion_script(prog_name, complete_var, shell))
+         return True
+-    elif complete_instr == 'complete' or complete_instr == 'complete_zsh':
+-        return do_complete(cli, prog_name, complete_instr == 'complete_zsh')
++    elif command == "complete":
++        if shell == "fish":
++            return do_complete_fish(cli, prog_name)
++        elif shell in {"bash", "zsh"}:
++            return do_complete(cli, prog_name, shell == "zsh")
++
+     return False
+diff --git a/click/_termui_impl.py b/click/_termui_impl.py
+index 09e9fbb12610dfe346f4ba3616531e69b15bb4a2..3fbf4779ceb4ac865c500a0fafab2580e877cbca 100644
+--- a/click/_termui_impl.py
++++ b/click/_termui_impl.py
+@@ -1,14 +1,8 @@
+ # -*- coding: utf-8 -*-
+ """
+-click._termui_impl
+-~~~~~~~~~~~~~~~~~~
+-
+ This module contains implementations for the termui module. To keep the
+ import time of Click down, some infrequently used functionality is
+ placed in this module and only imported as needed.
+-
+-:copyright: © 2014 by the Pallets team.
+-:license: BSD, see LICENSE.rst for more details.
+ """
+ 
+ import os
+diff --git a/click/core.py b/click/core.py
+index 95c07b01cb997f16e54b898af04953a503a5481a..7066cacbe717e11f8de8b834af62d68e2c7e4a6e 100644
+--- a/click/core.py
++++ b/click/core.py
+@@ -622,6 +622,9 @@ class BaseCommand(object):
+         #: an optional dictionary with defaults passed to the context.
+         self.context_settings = context_settings
+ 
++    def __repr__(self):
++        return "<%s %s>" % (self.__class__.__name__, self.name)
++
+     def get_usage(self, ctx):
+         raise NotImplementedError('Base commands cannot get usage')
+ 
+@@ -1393,6 +1396,9 @@ class Parameter(object):
+         self.envvar = envvar
+         self.autocompletion = autocompletion
+ 
++    def __repr__(self):
++        return "<%s %s>" % (self.__class__.__name__, self.name)
++
+     @property
+     def human_readable_name(self):
+         """Returns the human readable name of this parameter.  This is the
+diff --git a/click/parser.py b/click/parser.py
+index 1c3ae9c8efd453aecda98026cf65208b789b948b..6f2600fd267bbc2824d79b63d83433453c37673a 100644
+--- a/click/parser.py
++++ b/click/parser.py
+@@ -1,8 +1,5 @@
+ # -*- coding: utf-8 -*-
+ """
+-click.parser
+-~~~~~~~~~~~~
+-
+ This module started out as largely a copy paste from the stdlib's
+ optparse module with the features removed that we do not need from
+ optparse because we implement them in Click on a higher level (for
+@@ -14,6 +11,12 @@ The reason this is a different module and not optparse from the stdlib
+ is that there are differences in 2.x and 3.x about the error messages
+ generated and optparse in the stdlib uses gettext for no good reason
+ and might cause us issues.
++
++Click uses parts of optparse written by Gregory P. Ward and maintained
++by the Python Software Foundation. This is limited to code in parser.py.
++
++Copyright 2001-2006 Gregory P. Ward. All rights reserved.
++Copyright 2002-2006 Python Software Foundation. All rights reserved.
+ """
+ 
+ import re
+diff --git a/click/types.py b/click/types.py
+index b88d15ee18e5ac5bd873c4492b01ee3e4b3f89c4..f5d06a129e17b6905ee510bdaa88a2ee09070ac6 100644
+--- a/click/types.py
++++ b/click/types.py
+@@ -119,6 +119,8 @@ class StringParamType(ParamType):
+                         value = value.decode(fs_enc)
+                     except UnicodeError:
+                         value = value.decode('utf-8', 'replace')
++                else:
++                    value = value.decode('utf-8', 'replace')
+             return value
+         return value
+ 
+diff --git a/docs/bashcomplete.rst b/docs/bashcomplete.rst
+index 64eede82cc364fd9192651ab455a9409cdf5b242..b2bb1b646a7195c5714bbd9a3dece853d9b54855 100644
+--- a/docs/bashcomplete.rst
++++ b/docs/bashcomplete.rst
+@@ -1,47 +1,46 @@
+-Bash Complete
+-=============
++Shell Completion
++================
+ 
+ .. versionadded:: 2.0
+ 
+-As of Click 2.0, there is built-in support for Bash completion for
+-any Click script.  There are certain restrictions on when this completion
+-is available, but for the most part it should just work.
++Click can provide tab completion for commands, options, and choice
++values. Bash, Zsh, and Fish are supported
+ 
+-Limitations
+------------
++Completion is only available if a script is installed and invoked
++through an entry point, not through the ``python`` command. See
++:ref:`setuptools-integration`.
+ 
+-Bash completion is only available if a script has been installed properly,
+-and not executed through the ``python`` command.  For information about
+-how to do that, see :ref:`setuptools-integration`.  Click currently
+-only supports completion for Bash and Zsh.
+ 
+ What it Completes
+ -----------------
+ 
+-Generally, the Bash completion support will complete subcommands,
++Generally, the shell completion support will complete commands,
+ options, and any option or argument values where the type is
+-:class:`click.Choice`. Subcommands and choices are always listed whereas
+-options are only listed if at least a dash has been provided. ::
++:class:`click.Choice`. Options are only listed if at least a dash has
++been entered.
++
++.. code-block:: text
+ 
+     $ repo <TAB><TAB>
+     clone    commit   copy     delete   setuser
+     $ repo clone -<TAB><TAB>
+     --deep     --help     --rev      --shallow  -r
+ 
+-Additionally, custom suggestions can be provided for arguments and options with
+-the ``autocompletion`` parameter.  ``autocompletion`` should a callback function
+-that returns a list of strings. This is useful when the suggestions need to be
+-dynamically generated at bash completion time. The callback function will be
+-passed 3 keyword arguments:
++Custom completions can be provided for argument and option values by
++providing an ``autocompletion`` function that returns a list of strings.
++This is useful when the suggestions need to be dynamically generated
++completion time. The callback function will be passed 3 keyword
++arguments:
+ 
+-- ``ctx`` - The current click context.
+-- ``args`` - The list of arguments passed in.
+-- ``incomplete`` - The partial word that is being completed, as a string.  May
+-  be an empty string ``''`` if no characters have been entered yet.
++-   ``ctx`` - The current command context.
++-   ``args`` - The list of arguments passed in.
++-   ``incomplete`` - The partial word that is being completed. May
++    be an empty string if no characters have been entered yet.
+ 
+-Here is an example of using a callback function to generate dynamic suggestions:
++Here is an example of using a callback function to generate dynamic
++suggestions:
+ 
+-.. click:example::
++.. code-block:: python
+ 
+     import os
+ 
+@@ -55,25 +54,26 @@ Here is an example of using a callback function to generate dynamic suggestions:
+         click.echo('Value: %s' % os.environ[envvar])
+ 
+ 
+-Completion help strings (ZSH only)
+-----------------------------------
++Completion help strings
++-----------------------
+ 
+-ZSH supports showing documentation strings for completions. These are taken
+-from the help parameters of options and subcommands. For dynamically generated
+-completions a help string can be provided by returning a tuple instead of a
+-string. The first element of the tuple is the completion and the second is the
+-help string to display.
++ZSH and fish support showing documentation strings for completions.
++These are taken from the help parameters of options and subcommands. For
++dynamically generated completions a help string can be provided by
++returning a tuple instead of a string. The first element of the tuple is
++the completion and the second is the help string to display.
+ 
+-Here is an example of using a callback function to generate dynamic suggestions with help strings:
++Here is an example of using a callback function to generate dynamic
++suggestions with help strings:
+ 
+-.. click:example::
++.. code-block:: python
+ 
+     import os
+ 
+     def get_colors(ctx, args, incomplete):
+-        colors = [('red', 'help string for the color red'),
+-                  ('blue', 'help string for the color blue'),
+-                  ('green', 'help string for the color green')]
++        colors = [('red', 'a warm color'),
++                  ('blue', 'a cool color'),
++                  ('green', 'the other starter color')]
+         return [c for c in colors if incomplete in c[0]]
+ 
+     @click.command()
+@@ -85,47 +85,79 @@ Here is an example of using a callback function to generate dynamic suggestions
+ Activation
+ ----------
+ 
+-In order to activate Bash completion, you need to inform Bash that
+-completion is available for your script, and how.  Any Click application
+-automatically provides support for that.  The general way this works is
+-through a magic environment variable called ``_<PROG_NAME>_COMPLETE``,
+-where ``<PROG_NAME>`` is your application executable name in uppercase
+-with dashes replaced by underscores.
++In order to activate shell completion, you need to inform your shell
++that completion is available for your script. Any Click application
++automatically provides support for that. If the program is executed with
++a special ``_<PROG_NAME>_COMPLETE`` variable, the completion mechanism
++is triggered instead of the normal command. ``<PROG_NAME>`` is the
++executable name in uppercase with dashes replaced by underscores.
++
++If your tool is called ``foo-bar``, then the variable is called
++``_FOO_BAR_COMPLETE``. By exporting it with the ``source_{shell}``
++value it will output the activation script to evaluate.
++
++Here are examples for a ``foo-bar`` script.
+ 
+-If your tool is called ``foo-bar``, then the magic variable is called
+-``_FOO_BAR_COMPLETE``.  By exporting it with the ``source`` value it will
+-spit out the activation script which can be trivially activated.
++For Bash, add this to ``~/.bashrc``:
+ 
+-For instance, to enable Bash completion for your ``foo-bar`` script, this
+-is what you would need to put into your ``.bashrc``::
++.. code-block:: text
+ 
+-    eval "$(_FOO_BAR_COMPLETE=source foo-bar)"
++    eval "$(_FOO_BAR_COMPLETE=source_bash foo-bar)"
+ 
+-For zsh users add this to your ``.zshrc``::
++For Zsh, add this to ``~/.zshrc``:
++
++.. code-block:: text
+ 
+     eval "$(_FOO_BAR_COMPLETE=source_zsh foo-bar)"
+ 
+-From this point onwards, your script will have autocompletion enabled.
++For Fish, add this to ``~/.config/fish/completions/foo-bar.fish``:
++
++.. code-block:: text
++
++    eval (env _FOO_BAR_COMPLETE=source_fish foo-bar)
++
++Open a new shell to enable completion. Or run the ``eval`` command
++directly in your current shell to enable it temporarily.
++
+ 
+ Activation Script
+ -----------------
+ 
+-The above activation example will always invoke your application on
+-startup.  This might be slowing down the shell activation time
+-significantly if you have many applications.  Alternatively, you could also
+-ship a file with the contents of that, which is what Git and other systems
+-are doing.
++The above ``eval`` examples will invoke your application every time a
++shell is started. This may slow down shell startup time significantly.
++
++Alternatively, export the generated completion code as a static script
++to be executed. You can ship this file with your builds; tools like Git
++do this. At least Zsh will also cache the results of completion files,
++but not ``eval`` scripts.
+ 
+-This can be easily accomplished::
++For Bash:
+ 
+-    _FOO_BAR_COMPLETE=source foo-bar > foo-bar-complete.sh
++.. code-block:: text
+ 
+-For zsh:
++    _FOO_BAR_COMPLETE=source_bash foo-bar > foo-bar-complete.sh
++
++For Zsh:
++
++.. code-block:: text
++
++    _FOO_BAR_COMPLETE=source_zsh foo-bar > foo-bar-complete.sh
++
++For Fish:
++
++.. code-block:: text
+ 
+     _FOO_BAR_COMPLETE=source_zsh foo-bar > foo-bar-complete.sh
+ 
+-And then you would put this into your .bashrc or .zshrc instead::
++In ``.bashrc`` or ``.zshrc``, source the script instead of the ``eval``
++command:
++
++.. code-block:: text
+ 
+     . /path/to/foo-bar-complete.sh
+ 
++For Fish, add the file to the completions directory:
++
++.. code-block:: text
+ 
++    _FOO_BAR_COMPLETE=source_fish foo-bar > ~/.config/fish/completions/foo-bar-complete.fish
+diff --git a/docs/changelog.rst b/docs/changelog.rst
+index 218fe3339b3c747d3f7d208d34ad005095ff0ea3..955deaf27bc821a6367e818f36c016892fed3d33 100644
+--- a/docs/changelog.rst
++++ b/docs/changelog.rst
+@@ -1,4 +1,4 @@
+-Changelog
+-=========
++Changes
++=======
+ 
+ .. include:: ../CHANGES.rst
+diff --git a/docs/license.rst b/docs/license.rst
+index 13eb7262cd191e8c60a195c549d2e952075366ba..a53a98cf3d4b093c6696becd3df4e1c6c0660fc9 100644
+--- a/docs/license.rst
++++ b/docs/license.rst
+@@ -1,14 +1,4 @@
+-License
+-=======
+-
+-Click is licensed under a three-clause BSD License.  It basically means:
+-do whatever you want with it as long as the copyright in Click sticks
+-around, the conditions are not modified and the disclaimer is present.
+-Furthermore, you must not use the names of the authors to promote derivatives
+-of the software without written consent.
+-
+-License Text
+-------------
++BSD-3-Clause License
++====================
+ 
+ .. include:: ../LICENSE.rst
+-
+diff --git a/docs/options.rst b/docs/options.rst
+index c60b45f36a1fe06b2eba21c7a81592f78f83c723..4942c8a2b2123723f680df2064f95db671c0298b 100644
+--- a/docs/options.rst
++++ b/docs/options.rst
+@@ -13,25 +13,45 @@ distinct from :ref:`positional arguments <arguments>`.
+ Name Your Options
+ -----------------
+ 
+-The naming rules can be found in :ref:`parameter_names`. In short, you
+-can refer the option **implicitly** by the longest dash-prefixed argument:
++Options have a name that will be used as the Python argument name when
++calling the decorated function. This can be inferred from the option
++names or given explicitly. Names are given as position arguments to the
++decorator.
+ 
+-.. click:example::
++A name is chosen in the following order
++
++1.  If a name is not prefixed, it is used as the Python argument name
++    and not treated as an option name on the command line.
++2.  If there is at least one name prefixed with two dashes, the first
++    one given is used as the name.
++3.  The first name prefixed with one dash is used otherwise.
++
++To get the Python argument name, the chosen name is converted to lower
++case, up to two dashes are removed as the prefix, and other dashes are
++converted to underscores.
++
++.. code-block:: python
+ 
+     @click.command()
+     @click.option('-s', '--string-to-echo')
+     def echo(string_to_echo):
+         click.echo(string_to_echo)
+ 
+-Or, **explicitly**, by giving one non-dash-prefixed argument:
+-
+-.. click:example::
++.. code-block:: python
+ 
+     @click.command()
+     @click.option('-s', '--string-to-echo', 'string')
+     def echo(string):
+         click.echo(string)
+ 
++-   ``"-f", "--foo-bar"``, the name is ``foo_bar``
++-   ``"-x"``, the name is ``x``
++-   ``"-f", "--filename", "dest"``, the name is  ``dest``
++-   ``"--CamelCase"``, the name is ``camelcase``
++-   ``"-f", "-fb"``, the name is ``f``
++-   ``"--f", "--foo-bar"``, the name is ``f``
++-   ``"---f"``, the name is ``_f``
++
+ Basic Value Options
+ -------------------
+ 
+diff --git a/docs/parameters.rst b/docs/parameters.rst
+index 7ee145cb7ce68a9be06708ce3e61d0d6176265e5..f5f181fb5970312c2161beaf1c6005c24e95204a 100644
+--- a/docs/parameters.rst
++++ b/docs/parameters.rst
+@@ -83,29 +83,21 @@ fails with a `ValueError` is also supported, though discouraged.
+ Parameter Names
+ ---------------
+ 
+-Parameters (both options and arguments) accept a number of positional arguments
+-which are passed to the command function as parameters. Each string with a
+-single dash is added as a short argument; each string starting with a double
+-dash as a long one.
++Parameters (both options and arguments) have a name that will be used as
++the Python argument name when calling the decorated function with
++values.
+ 
+-If a string is added without any dashes, it becomes the internal parameter name
+-which is also used as variable name.
++Arguments take only one positional name. To provide a different name for
++use in help text, see :ref:`doc-meta-variables`.
+ 
+-If all names for a parameter contain dashes, the internal name is generated
+-automatically by taking the longest argument and converting all dashes to
+-underscores.
++Options can have many names that may be prefixed with one or two dashes.
++Names with one dash are parsed as short options, names with two are
++parsed as long options. If a name is not prefixed, it is used as the
++Python argument name and not parsed as an option name. Otherwise, the
++first name with a two dash prefix is used, or the first with a one dash
++prefix if there are none with two. The prefix is removed and dashes are
++converted to underscores to get the Python argument name.
+ 
+-The internal name is converted to lowercase.
+-
+-Examples:
+-
+-* For an option with ``('-f', '--foo-bar')``, the parameter name is `foo_bar`.
+-* For an option with ``('-x',)``, the parameter is `x`.
+-* For an option with ``('-f', '--filename', 'dest')``, the parameter name is  `dest`.
+-* For an option with ``('--CamelCaseOption',)``, the parameter is `camelcaseoption`.
+-* For an arguments with ``(`foogle`)``, the parameter name is `foogle`. To
+-  provide a different human readable name for use in help text, see the section
+-  about :ref:`doc-meta-variables`.
+ 
+ Implementing Custom Types
+ -------------------------
+diff --git a/setup.cfg b/setup.cfg
+index d4c23437b7395848a34bdc3325707b8c24eda7fa..a6751157d777bdb393def2de7798a497add897ee 100644
+--- a/setup.cfg
++++ b/setup.cfg
+@@ -6,6 +6,8 @@ universal = 1
+ 
+ [tool:pytest]
+ testpaths = tests
++filterwarnings =
++    error
+ 
+ [coverage:run]
+ branch = True
+@@ -16,5 +18,4 @@ source =
+ [coverage:paths]
+ source =
+     click
+-    .tox/*/lib/python*/site-packages/click
+-    .tox/pypy/site-packages/click
++    */site-packages
+diff --git a/setup.py b/setup.py
+index a6e0a94774b976bd8eb3080d4b76f567f68b02bd..b038a5cf8daf8cf97b7360effc3d3c420c852e91 100644
+--- a/setup.py
++++ b/setup.py
+@@ -6,7 +6,7 @@ with io.open("README.rst", "rt", encoding="utf8") as f:
+     readme = f.read()
+ 
+ with io.open("click/__init__.py", "rt", encoding="utf8") as f:
+-    version = re.search(r"__version__ = \'(.*?)\'", f.read()).group(1)
++    version = re.search(r"__version__ = '(.*?)'", f.read()).group(1)
+ 
+ setup(
+     name="click",
+@@ -17,16 +17,14 @@ setup(
+         "Code": "https://github.com/pallets/click",
+         "Issue tracker": "https://github.com/pallets/click/issues",
+     },
+-    license="BSD",
+-    author="Armin Ronacher",
+-    author_email="armin.ronacher@active-4.com",
+-    maintainer="Pallets Team",
++    license="BSD-3-Clause",
++    maintainer="Pallets",
+     maintainer_email="contact@palletsprojects.com",
+     description="Composable command line interface toolkit",
+     long_description=readme,
+     packages=["click"],
+     include_package_data=True,
+-    python_requires=">=2.7, !=3.0.*, !=3.1.*, !=3.2.*, !=3.3.*",
++    python_requires=">=2.7, !=3.0.*, !=3.1.*, !=3.2.*, !=3.3.*, !=3.4.*",
+     classifiers=[
+         "Development Status :: 5 - Production/Stable",
+         "Intended Audience :: Developers",
+@@ -34,11 +32,6 @@ setup(
+         "Operating System :: OS Independent",
+         "Programming Language :: Python",
+         "Programming Language :: Python :: 2",
+-        "Programming Language :: Python :: 2.7",
+         "Programming Language :: Python :: 3",
+-        "Programming Language :: Python :: 3.4",
+-        "Programming Language :: Python :: 3.5",
+-        "Programming Language :: Python :: 3.6",
+-        "Programming Language :: Python :: 3.7",
+     ],
+ )
+diff --git a/tox.ini b/tox.ini
+index 51ba92a0079f1d6f1e3a144e96dd1ec511603cfd..30c16dad36f1093322044524c5b7da92b0c0d932 100644
+--- a/tox.ini
++++ b/tox.ini
+@@ -1,32 +1,15 @@
+ [tox]
+ envlist =
+-    py{37,36,35,27,py3,py}
++    py{38,37,36,35,27,py3,py}
+     docs
+-    coverage
+ skip_missing_interpreters = true
+ 
+ [testenv]
+ deps =
+     pytest
+-    coverage
+     colorama
+-commands = coverage run -p -m pytest --tb=short -Werror --basetemp={envtmpdir} {posargs}
++commands = pytest --tb=short --basetemp={envtmpdir} {posargs}
+ 
+ [testenv:docs]
+ deps = -r docs/requirements.txt
+ commands = sphinx-build -W -b html -d {envtmpdir}/doctrees docs {envtmpdir}/html
+-
+-[testenv:coverage]
+-deps = coverage
+-skip_install = true
+-commands =
+-    coverage combine
+-    coverage html
+-    coverage report
+-
+-[testenv:coverage-ci]
+-deps = codecov
+-skip_install = true
+-commands =
+-    coverage combine
+-    coverage xml

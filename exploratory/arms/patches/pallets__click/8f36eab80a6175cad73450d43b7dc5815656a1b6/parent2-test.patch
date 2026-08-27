@@ -1,0 +1,111 @@
+diff --git a/tests/test_arguments.py b/tests/test_arguments.py
+index 4428042d8060dc44eb09ac12955963f890d026bd..65d9a1e03f781ed966786fd69ea97b8292bbc057 100644
+--- a/tests/test_arguments.py
++++ b/tests/test_arguments.py
+@@ -1,7 +1,8 @@
+ # -*- coding: utf-8 -*-
+ import pytest
+ import click
+-from click._compat import PY2
++import sys
++from click._compat import PY2, text_type
+ 
+ 
+ def test_nargs_star(runner):
+@@ -84,6 +85,26 @@ def test_nargs_err(runner):
+     assert 'Got unexpected extra argument (bar)' in result.output
+ 
+ 
++def test_bytes_args(runner, monkeypatch):
++    @click.command()
++    @click.argument('arg')
++    def from_bytes(arg):
++        assert isinstance(arg, text_type), "UTF-8 encoded argument should be implicitly converted to Unicode"
++
++    # Simulate empty locale environment variables
++    if PY2:
++        monkeypatch.setattr(sys.stdin, 'encoding', 'ANSI_X3.4-1968')
++        monkeypatch.setattr(sys, 'getfilesystemencoding', lambda: 'ANSI_X3.4-1968')
++        monkeypatch.setattr(sys, 'getdefaultencoding', lambda: 'ascii')
++    else:
++        monkeypatch.setattr(sys.stdin, 'encoding', 'utf-8')
++        monkeypatch.setattr(sys, 'getfilesystemencoding', lambda: 'utf-8')
++        monkeypatch.setattr(sys, 'getdefaultencoding', lambda: 'utf-8')
++
++    runner.invoke(from_bytes, [u'Something outside of ASCII range: 林'.encode('UTF-8')],
++            catch_exceptions=False)
++
++
+ def test_file_args(runner):
+     @click.command()
+     @click.argument('input', type=click.File('rb'))
+diff --git a/tests/test_bashcomplete.py b/tests/test_bashcomplete.py
+index 7214d1a9193166a32e1cc56d6b1f1a17cf652582..5eb4068aa70f76c1f7f28ce8da948ec0385a467a 100644
+--- a/tests/test_bashcomplete.py
++++ b/tests/test_bashcomplete.py
+@@ -1,5 +1,7 @@
+ # -*- coding: utf-8 -*-
+ 
++import pytest
++
+ import click
+ from click._bashcomplete import get_choices
+ 
+@@ -407,3 +409,28 @@ def test_hidden():
+     # If the user exactly types out the hidden command, complete its subcommands.
+     assert choices_without_help(cli, ['hgroup'], '') == ['hgroupsub']
+     assert choices_without_help(cli, ['hsub'], '--h') == ['--hname']
++
++
++@pytest.mark.parametrize(
++    ("args", "part", "expect"),
++    [
++        ([], "-", ["--opt"]),
++        (["value"], "--", ["--opt"]),
++        ([], "-o", []),
++        (["--opt"], "-o", []),
++        (["--"], "", ["name", "-o", "--opt", "--"]),
++        (["--"], "--o", ["--opt"]),
++    ],
++)
++def test_args_with_double_dash_complete(args, part, expect):
++    def _complete(ctx, args, incomplete):
++        values = ["name", "-o", "--opt", "--"]
++        return [x for x in values if x.startswith(incomplete)]
++
++    @click.command()
++    @click.option("--opt")
++    @click.argument("args", nargs=-1, autocompletion=_complete)
++    def cli(opt, args):
++        pass
++
++    assert choices_without_help(cli, args, part) == expect
+diff --git a/tests/test_basic.py b/tests/test_basic.py
+index 8de6301a8cb7c38ae0e973afef2683388b953395..f800b4d20d0f088e6bd451004e778877f567e58d 100644
+--- a/tests/test_basic.py
++++ b/tests/test_basic.py
+@@ -23,6 +23,24 @@ def test_basic_functionality(runner):
+     assert result.exit_code == 0
+ 
+ 
++def test_repr():
++    @click.command()
++    def command():
++        pass
++
++    @click.group()
++    def group():
++        pass
++
++    @group.command()
++    def subcommand():
++        pass
++
++    assert repr(command) == '<Command command>'
++    assert repr(group) == '<Group group>'
++    assert repr(subcommand) == '<Command subcommand>'
++
++
+ def test_return_values():
+     @click.command()
+     def cli():

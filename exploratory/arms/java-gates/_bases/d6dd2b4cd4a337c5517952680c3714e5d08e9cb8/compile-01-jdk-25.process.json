@@ -1,0 +1,21 @@
+{
+  "command": [
+    "mvn",
+    "-q",
+    "-s",
+    "<project>/tools/java/maven-settings.xml",
+    "-gs",
+    "<project>/tools/java/maven-settings.xml",
+    "-Dmaven.repo.local=<project>/tools/maven-repository",
+    "-DskipTests",
+    "test"
+  ],
+  "elapsed_seconds": 15.531,
+  "label": "compile-01-jdk-25",
+  "returncode": 1,
+  "stderr": "exploratory/arms/java-gates/_bases/d6dd2b4cd4a337c5517952680c3714e5d08e9cb8/compile-01-jdk-25.stderr.bin",
+  "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "stdout": "exploratory/arms/java-gates/_bases/d6dd2b4cd4a337c5517952680c3714e5d08e9cb8/compile-01-jdk-25.stdout.bin",
+  "stdout_sha256": "f82c2ef2acf5e46d4bb87012136a8b5b574c224875151e5b70b106c3f55611e5",
+  "timed_out": false
+}

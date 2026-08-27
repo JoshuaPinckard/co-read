@@ -1,0 +1,39 @@
+{
+  "command": [
+    "mvn",
+    "-q",
+    "-s",
+    "<project>/tools/java/maven-settings.xml",
+    "-gs",
+    "<project>/tools/java/maven-settings.xml",
+    "-Dmaven.repo.local=<project>/tools/maven-repository",
+    "-DskipTests",
+    "test"
+  ],
+  "elapsed_seconds": 14.453,
+  "label": "compile-01-jdk-25",
+  "returncode": 1,
+  "source_export": {
+    "base": "f30c4607a2b6dcc7dc4476d321fc1de32ce9b780",
+    "clean_including_untracked_before": true,
+    "head_after": "f30c4607a2b6dcc7dc4476d321fc1de32ce9b780",
+    "head_before": "f30c4607a2b6dcc7dc4476d321fc1de32ce9b780",
+    "path": "C:/Users/joshp/Desktop/Blast-Radius-java-gate-scratch-20260825-1400-v3/attempts/compile/f30c4607a2b6/compile-01-jdk-25",
+    "tracked_after": {
+      "tracked_file_count": 372,
+      "tracked_manifest_sha256": "24aef7088ccbe14a0bd562eb834a10226f4c279ac62ada056e6b16bcd229b1ba"
+    },
+    "tracked_before": {
+      "tracked_file_count": 372,
+      "tracked_manifest_sha256": "24aef7088ccbe14a0bd562eb834a10226f4c279ac62ada056e6b16bcd229b1ba"
+    },
+    "tracked_status_after": "",
+    "tracked_unchanged": true
+  },
+  "stderr": "exploratory/arms/java-gates/Blast-Radius-java-gate-scratch-20260825-1400-v3/_bases/f30c4607a2b6dcc7dc4476d321fc1de32ce9b780/compile-01-jdk-25.stderr.bin",
+  "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "stdout": "exploratory/arms/java-gates/Blast-Radius-java-gate-scratch-20260825-1400-v3/_bases/f30c4607a2b6dcc7dc4476d321fc1de32ce9b780/compile-01-jdk-25.stdout.bin",
+  "stdout_sha256": "c1182956f13d0688f38ea36494f1f1b5f508cd047ee15ef863307af7e8f68ab9",
+  "timed_out": false,
+  "timeout_termination": null
+}

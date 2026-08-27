@@ -1,0 +1,12 @@
+ImportError while loading conftest 'C:\Users\joshp\AppData\Local\Temp\blast-radius-jinja-causal\a624-wbx87agw\b\tests\conftest.py'.
+tests\conftest.py:17: in <module>
+    from jinja2 import loaders
+jinja2\__init__.py:33: in <module>
+    from jinja2.environment import Environment, Template
+jinja2\environment.py:16: in <module>
+    from jinja2.defaults import BLOCK_START_STRING, \
+jinja2\defaults.py:32: in <module>
+    from jinja2.tests import TESTS as DEFAULT_TESTS
+jinja2\tests.py:12: in <module>
+    from collections import Mapping
+E   ImportError: cannot import name 'Mapping' from 'collections' (C:\Users\joshp\AppData\Local\Programs\Python\Python311\Lib\collections\__init__.py)

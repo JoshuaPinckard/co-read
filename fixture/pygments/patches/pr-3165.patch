@@ -1,0 +1,38 @@
+diff --git a/pygments/lexers/tcl.py b/pygments/lexers/tcl.py
+index 9bba7367dee8ff1e61e3040fd9fc77c5f4245304..00836811da67e1d2752d528ce5303552e3edbed7 100644
+--- a/pygments/lexers/tcl.py
++++ b/pygments/lexers/tcl.py
+@@ -87,7 +87,9 @@ class TclLexer(RegexLexer):
+             (r'0[0-7]+', Number.Oct),
+             (r'\d+\.\d+', Number.Float),
+             (r'\d+', Number.Integer),
+-            (r'\$[\w.:-]+', Name.Variable),
++            # `$name` notation stops at a dash (e.g. `$foo-bar` reads `$foo`),
++            # whereas the braced `${name}` form may contain dashes.
++            (r'\$[\w.:]+', Name.Variable),
+             (r'\$\{[\w.:-]+\}', Name.Variable),
+             (r'[\w.,@:-]+', Text),
+         ],
+diff --git a/tests/snippets/tcl/test_variable_dash.txt b/tests/snippets/tcl/test_variable_dash.txt
+new file mode 100644
+index 0000000000000000000000000000000000000000..6007b6d0823a2f5058d0a421f8d414258df7755b
+--- /dev/null
++++ b/tests/snippets/tcl/test_variable_dash.txt
+@@ -0,0 +1,17 @@
++---input---
++puts a-$foo-b
++puts ${foo-bar}
++
++---tokens---
++'puts'        Name.Builtin
++' '           Text.Whitespace
++'a-'          Text
++'$foo'        Name.Variable
++'-'           Operator
++'b'           Text
++'\n'          Text
++
++'puts'        Name.Builtin
++' '           Text.Whitespace
++'${foo-bar}'  Name.Variable
++'\n'          Text

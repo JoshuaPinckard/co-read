@@ -1,0 +1,376 @@
+diff --git a/tests/test_arguments.py b/tests/test_arguments.py
+index ca48fed0d56484e41dd3474404345b352a54872a..4428042d8060dc44eb09ac12955963f890d026bd 100644
+--- a/tests/test_arguments.py
++++ b/tests/test_arguments.py
+@@ -203,6 +203,15 @@ def test_missing_arg(runner):
+     assert 'Missing argument "ARG".' in result.output
+ 
+ 
++def test_missing_argument_string_cast():
++    ctx = click.Context(click.Command(""))
++
++    with pytest.raises(click.MissingParameter) as excinfo:
++        click.Argument(["a"], required=True).full_process_value(ctx, None)
++
++    assert str(excinfo.value) == "missing parameter: a"
++
++
+ def test_implicit_non_required(runner):
+     @click.command()
+     @click.argument('f', default='test')
+diff --git a/tests/test_options.py b/tests/test_options.py
+index 14a7a1786cb3bab4ede3ee0d0eaeda2b612e5420..4ad7f3ce7f6a792f5a2ad58d4902857b81d431f0 100644
+--- a/tests/test_options.py
++++ b/tests/test_options.py
+@@ -113,6 +113,17 @@ def test_multiple_required(runner):
+     assert 'Error: Missing option "-m" / "--message".' in result.output
+ 
+ 
++def test_empty_envvar(runner):
++    @click.command()
++    @click.option('--mypath', type=click.Path(exists=True), envvar='MYPATH')
++    def cli(mypath):
++        click.echo('mypath: %s' % mypath)
++
++    result = runner.invoke(cli, [], env={'MYPATH': ''})
++    assert result.exit_code == 0
++    assert result.output == 'mypath: None\n'
++
++
+ def test_multiple_envvar(runner):
+     @click.command()
+     @click.option('--arg', multiple=True)
+@@ -310,6 +321,15 @@ def test_legacy_options(runner):
+     assert result.output == '23\n'
+ 
+ 
++def test_missing_option_string_cast():
++    ctx = click.Context(click.Command(""))
++
++    with pytest.raises(click.MissingParameter) as excinfo:
++        click.Option(['-a'], required=True).full_process_value(ctx, None)
++
++    assert str(excinfo.value) == "missing parameter: a"
++
++
+ def test_missing_choice(runner):
+     @click.command()
+     @click.option('--foo', type=click.Choice(['foo', 'bar']),
+@@ -387,9 +407,7 @@ def test_multiline_help(runner):
+     result = runner.invoke(cmd, ['--help'])
+     assert result.exit_code == 0
+     out = result.output.splitlines()
+-    assert '  --foo TEXT  hello' in out
+-    assert '              i am' in out
+-    assert '              multiline' in out
++    assert '  --foo TEXT  hello  i am  multiline' in out
+ 
+ def test_argument_custom_class(runner):
+     class CustomArgument(click.Argument):
+@@ -452,6 +470,16 @@ def test_option_custom_class_reusable(runner):
+         assert 'you wont see me' not in result.output
+ 
+ 
++def test_bool_flag_with_type(runner):
++    @click.command()
++    @click.option('--shout/--no-shout', default=False, type=bool)
++    def cmd(shout):
++        pass
++
++    result = runner.invoke(cmd)
++    assert not result.exception
++
++
+ def test_aliases_for_flags(runner):
+     @click.command()
+     @click.option('--warnings/--no-warnings', ' /-W', default=True)
+diff --git a/tests/test_termui.py b/tests/test_termui.py
+index 79fb7c6f5d1937a09a8931cc9e6508738ecedb91..c6e06b63bf8c8160d2abeb346d2264d605858efd 100644
+--- a/tests/test_termui.py
++++ b/tests/test_termui.py
+@@ -185,6 +185,26 @@ def test_progressbar_iter_outside_with_exceptions(runner):
+         assert False, 'Expected an exception because of abort-related inputs.'
+ 
+ 
++def test_progressbar_is_iterator(runner, monkeypatch):
++    fake_clock = FakeClock()
++
++    @click.command()
++    def cli():
++        with click.progressbar(range(10), label='test') as progress:
++            while True:
++                try:
++                    next(progress)
++                    fake_clock.advance_time()
++                except StopIteration:
++                    break
++
++    monkeypatch.setattr(time, 'time', fake_clock.time)
++    monkeypatch.setattr(click._termui_impl, 'isatty', lambda _: True)
++
++    result = runner.invoke(cli, [])
++    assert result.exception is None
++
++
+ def test_choices_list_in_prompt(runner, monkeypatch):
+     @click.command()
+     @click.option('-g', type=click.Choice(['none', 'day', 'week', 'month']),
+@@ -205,6 +225,24 @@ def test_choices_list_in_prompt(runner, monkeypatch):
+     assert '(none, day, week, month)' not in result.output
+ 
+ 
++@pytest.mark.parametrize(
++    "file_kwargs",
++    [
++        {"mode": "rt"},
++        {"mode": "rb"},
++        {"lazy": True},
++    ]
++)
++def test_file_prompt_default_format(runner, file_kwargs):
++    @click.command()
++    @click.option("-f", default=__file__, prompt="file", type=click.File(**file_kwargs))
++    def cli(f):
++        click.echo(f.name)
++
++    result = runner.invoke(cli)
++    assert result.output == "file [{0}]: \n{0}\n".format(__file__)
++
++
+ def test_secho(runner):
+     with runner.isolation() as outstreams:
+         click.secho(None, nl=False)
+diff --git a/tests/test_testing.py b/tests/test_testing.py
+index b8565adbc510e4cf3bb83ef0623c1acf17e9f86d..7b03947d007bf7fe10039e79e81ea709527b2f17 100644
+--- a/tests/test_testing.py
++++ b/tests/test_testing.py
+@@ -257,6 +257,18 @@ def test_stderr():
+     with pytest.raises(ValueError):
+         result_mix.stderr
+ 
++    @click.command()
++    def cli_empty_stderr():
++        click.echo("stdout")
++
++    runner = CliRunner(mix_stderr=False)
++
++    result = runner.invoke(cli_empty_stderr)
++
++    assert result.output == 'stdout\n'
++    assert result.stdout == 'stdout\n'
++    assert result.stderr == ''
++
+ 
+ @pytest.mark.parametrize('args, expected_output', [
+     (None, 'bar\n'),
+diff --git a/tests/test_utils.py b/tests/test_utils.py
+index 4fd7cbbc3f32912dd4272ba42adcf8e2e84212d6..93f1ca087d32312eeb780c08de4d1178ba7c2955 100644
+--- a/tests/test_utils.py
++++ b/tests/test_utils.py
+@@ -1,4 +1,5 @@
+ import os
++import stat
+ import sys
+ 
+ import pytest
+@@ -50,32 +51,45 @@ def test_echo_custom_file():
+     assert f.getvalue() == u'hello\n'
+ 
+ 
+-def test_styling():
+-    examples = [
+-        ('x', dict(fg='black'), '\x1b[30mx\x1b[0m'),
+-        ('x', dict(fg='red'), '\x1b[31mx\x1b[0m'),
+-        ('x', dict(fg='green'), '\x1b[32mx\x1b[0m'),
+-        ('x', dict(fg='yellow'), '\x1b[33mx\x1b[0m'),
+-        ('x', dict(fg='blue'), '\x1b[34mx\x1b[0m'),
+-        ('x', dict(fg='magenta'), '\x1b[35mx\x1b[0m'),
+-        ('x', dict(fg='cyan'), '\x1b[36mx\x1b[0m'),
+-        ('x', dict(fg='white'), '\x1b[37mx\x1b[0m'),
+-        ('x', dict(bg='black'), '\x1b[40mx\x1b[0m'),
+-        ('x', dict(bg='red'), '\x1b[41mx\x1b[0m'),
+-        ('x', dict(bg='green'), '\x1b[42mx\x1b[0m'),
+-        ('x', dict(bg='yellow'), '\x1b[43mx\x1b[0m'),
+-        ('x', dict(bg='blue'), '\x1b[44mx\x1b[0m'),
+-        ('x', dict(bg='magenta'), '\x1b[45mx\x1b[0m'),
+-        ('x', dict(bg='cyan'), '\x1b[46mx\x1b[0m'),
+-        ('x', dict(bg='white'), '\x1b[47mx\x1b[0m'),
+-        ('foo bar', dict(blink=True), '\x1b[5mfoo bar\x1b[0m'),
+-        ('foo bar', dict(underline=True), '\x1b[4mfoo bar\x1b[0m'),
+-        ('foo bar', dict(bold=True), '\x1b[1mfoo bar\x1b[0m'),
+-        ('foo bar', dict(dim=True), '\x1b[2mfoo bar\x1b[0m'),
++@pytest.mark.parametrize(
++    ("styles", "ref"),
++    [
++        ({"fg": "black"}, "\x1b[30mx y\x1b[0m"),
++        ({"fg": "red"}, "\x1b[31mx y\x1b[0m"),
++        ({"fg": "green"}, "\x1b[32mx y\x1b[0m"),
++        ({"fg": "yellow"}, "\x1b[33mx y\x1b[0m"),
++        ({"fg": "blue"}, "\x1b[34mx y\x1b[0m"),
++        ({"fg": "magenta"}, "\x1b[35mx y\x1b[0m"),
++        ({"fg": "cyan"}, "\x1b[36mx y\x1b[0m"),
++        ({"fg": "white"}, "\x1b[37mx y\x1b[0m"),
++        ({"bg": "black"}, "\x1b[40mx y\x1b[0m"),
++        ({"bg": "red"}, "\x1b[41mx y\x1b[0m"),
++        ({"bg": "green"}, "\x1b[42mx y\x1b[0m"),
++        ({"bg": "yellow"}, "\x1b[43mx y\x1b[0m"),
++        ({"bg": "blue"}, "\x1b[44mx y\x1b[0m"),
++        ({"bg": "magenta"}, "\x1b[45mx y\x1b[0m"),
++        ({"bg": "cyan"}, "\x1b[46mx y\x1b[0m"),
++        ({"bg": "white"}, "\x1b[47mx y\x1b[0m"),
++        ({"blink": True}, "\x1b[5mx y\x1b[0m"),
++        ({"underline": True}, "\x1b[4mx y\x1b[0m"),
++        ({"bold": True}, "\x1b[1mx y\x1b[0m"),
++        ({"dim": True}, "\x1b[2mx y\x1b[0m"),
++    ],
++)
++def test_styling(styles, ref):
++    assert click.style("x y", **styles) == ref
++    assert click.unstyle(ref) == "x y"
++
++
++@pytest.mark.parametrize(
++    ("text", "expect"),
++    [
++        ("\x1b[?25lx y\x1b[?25h", "x y"),
+     ]
+-    for text, styles, ref in examples:
+-        assert click.style(text, **styles) == ref
+-        assert click.unstyle(ref) == text
++)
++def test_unstyle_other_ansi(text, expect):
++    assert click.unstyle(text) == expect
++
+ 
+ 
+ def test_filename_formatting():
+@@ -265,17 +279,18 @@ def test_echo_writing_to_standard_error(capfd, monkeypatch):
+ 
+ 
+ def test_open_file(runner):
++    @click.command()
++    @click.argument('filename')
++    def cli(filename):
++        with click.open_file(filename) as f:
++            click.echo(f.read())
++
++        click.echo('meep')
++
+     with runner.isolated_filesystem():
+         with open('hello.txt', 'w') as f:
+             f.write('Cool stuff')
+ 
+-        @click.command()
+-        @click.argument('filename')
+-        def cli(filename):
+-            with click.open_file(filename) as f:
+-                click.echo(f.read())
+-            click.echo('meep')
+-
+         result = runner.invoke(cli, ['hello.txt'])
+         assert result.exception is None
+         assert result.output == 'Cool stuff\nmeep\n'
+@@ -285,21 +300,99 @@ def test_open_file(runner):
+         assert result.output == 'foobar\nmeep\n'
+ 
+ 
+-@pytest.mark.xfail(WIN and not PY2, reason='God knows ...')
++def test_open_file_ignore_errors_stdin(runner):
++    @click.command()
++    @click.argument("filename")
++    def cli(filename):
++        with click.open_file(filename, errors="ignore") as f:
++            click.echo(f.read())
++
++    result = runner.invoke(cli, ["-"], input=os.urandom(16))
++    assert result.exception is None
++
++
++def test_open_file_respects_ignore(runner):
++    with runner.isolated_filesystem():
++        with open("test.txt", "w") as f:
++            f.write("Hello world!")
++
++        with click.open_file("test.txt", encoding="utf8", errors="ignore") as f:
++            assert f.errors == "ignore"
++
++
++def test_open_file_ignore_invalid_utf8(runner):
++    with runner.isolated_filesystem():
++        with open("test.txt", "wb") as f:
++            f.write(b"\xe2\x28\xa1")
++
++        with click.open_file("test.txt", encoding="utf8", errors="ignore") as f:
++            f.read()
++
++
++def test_open_file_ignore_no_encoding(runner):
++    with runner.isolated_filesystem():
++        with open("test.bin", "wb") as f:
++            f.write(os.urandom(16))
++
++        with click.open_file("test.bin", errors="ignore") as f:
++            f.read()
++
++
++@pytest.mark.skipif(WIN, reason='os.chmod() is not fully supported on Windows.')
++@pytest.mark.parametrize('permissions', [
++    0o400,
++    0o444,
++    0o600,
++    0o644,
++ ])
++def test_open_file_atomic_permissions_existing_file(runner, permissions):
++    with runner.isolated_filesystem():
++        with open('existing.txt', 'w') as f:
++            f.write('content')
++        os.chmod('existing.txt', permissions)
++
++        @click.command()
++        @click.argument('filename')
++        def cli(filename):
++           click.open_file(filename, 'w', atomic=True).close()
++
++        result = runner.invoke(cli, ['existing.txt'])
++        assert result.exception is None
++        assert stat.S_IMODE(os.stat('existing.txt').st_mode) == permissions
++
++
++@pytest.mark.skipif(WIN, reason='os.stat() is not fully supported on Windows.')
++def test_open_file_atomic_permissions_new_file(runner):
++    with runner.isolated_filesystem():
++        @click.command()
++        @click.argument('filename')
++        def cli(filename):
++            click.open_file(filename, 'w', atomic=True).close()
++
++        # Create a test file to get the expected permissions for new files
++        # according to the current umask.
++        with open('test.txt', 'w'):
++            pass
++        permissions = stat.S_IMODE(os.stat('test.txt').st_mode)
++
++        result = runner.invoke(cli, ['new.txt'])
++        assert result.exception is None
++        assert stat.S_IMODE(os.stat('new.txt').st_mode) == permissions
++
++
+ def test_iter_keepopenfile(tmpdir):
+     expected = list(map(str, range(10)))
+     p = tmpdir.mkdir('testdir').join('testfile')
+-    p.write(os.linesep.join(expected))
++    p.write("\n".join(expected))
+     with p.open() as f:
+         for e_line, a_line in zip(expected, click.utils.KeepOpenFile(f)):
+             assert e_line == a_line.strip()
+ 
+ 
+-@pytest.mark.xfail(WIN and not PY2, reason='God knows ...')
+ def test_iter_lazyfile(tmpdir):
+     expected = list(map(str, range(10)))
+     p = tmpdir.mkdir('testdir').join('testfile')
+-    p.write(os.linesep.join(expected))
++    p.write("\n".join(expected))
+     with p.open() as f:
+         with click.utils.LazyFile(f.name) as lf:
+             for e_line, a_line in zip(expected, lf):

@@ -1,0 +1,102 @@
+diff --git a/src/test/java/org/apache/commons/lang3/builder/JsonToStringStyleTest.java b/src/test/java/org/apache/commons/lang3/builder/JsonToStringStyleTest.java
+index 530e6793f358bb7dd4b6b95157f799377ba1c20a..f5fadace02930fd27a5afac04e232a46aa553710 100644
+--- a/src/test/java/org/apache/commons/lang3/builder/JsonToStringStyleTest.java
++++ b/src/test/java/org/apache/commons/lang3/builder/JsonToStringStyleTest.java
+@@ -20,6 +20,7 @@ import static org.junit.Assert.assertEquals;
+ import static org.junit.Assert.fail;
+ 
+ import java.util.ArrayList;
++import java.util.Date;
+ import java.util.HashMap;
+ 
+ import org.apache.commons.lang3.SystemUtils;
+@@ -91,6 +92,37 @@ public class JsonToStringStyleTest {
+                 .appendSuper("{\"a\":\"hello\"}").append("b", "world").toString());
+     }
+ 
++    @Test
++    public void testChar() {
++        try {
++            new ToStringBuilder(base).append('A').toString();
++            fail("Should have generated UnsupportedOperationException");
++        } catch (UnsupportedOperationException e) {
++        }
++
++        assertEquals("{\"a\":\"A\"}", new ToStringBuilder(base).append("a", 'A')
++                .toString());
++        assertEquals("{\"a\":\"A\",\"b\":\"B\"}", new ToStringBuilder(base).append("a", 'A').append("b", 'B')
++                .toString());
++    }
++
++    @Test
++    public void testDate() {
++        final Date now = new Date();
++        final Date afterNow = new Date(System.currentTimeMillis() + 1);
++
++        try {
++            new ToStringBuilder(base).append(now).toString();
++            fail("Should have generated UnsupportedOperationException");
++        } catch (UnsupportedOperationException e) {
++        }
++
++        assertEquals("{\"now\":\"" + now.toString() +"\"}", new ToStringBuilder(base).append("now", now)
++                .toString());
++        assertEquals("{\"now\":\"" + now.toString() +"\",\"after\":\"" + afterNow.toString() + "\"}", new ToStringBuilder(base).append("now", now).append("after", afterNow)
++                .toString());
++    }
++
+     @Test
+     public void testObject() {
+ 
+@@ -195,6 +227,30 @@ public class JsonToStringStyleTest {
+                         .append("age", p.age).append("smoker", p.smoker)
+                         .toString());
+     }
++    
++    @Test
++    public void testNestingPerson() {
++        final Person p = new Person(){
++            public String toString(){
++                return new ToStringBuilder(this).append("name", this.name)
++                    .append("age", this.age).append("smoker", this.smoker)
++                    .toString();
++            }
++        };
++        p.name = "Jane Doe";
++        p.age = 25;
++        p.smoker = true;
++
++        final NestingPerson nestP = new NestingPerson();
++        nestP.pid="#1@Jane";
++        nestP.person = p;
++
++        assertEquals(
++                "{\"pid\":\"#1@Jane\",\"person\":{\"name\":\"Jane Doe\",\"age\":25,\"smoker\":true}}",
++                new ToStringBuilder(nestP).append("pid", nestP.pid)
++                        .append("person", nestP.person)
++                        .toString());
++    }
+ 
+     @Test
+     public void testLong() {
+@@ -303,4 +359,20 @@ public class JsonToStringStyleTest {
+         } catch (UnsupportedOperationException e) {
+         }
+     }
++    
++    /**
++     * An object with nested object structures used to test {@link JsonToStringStyle}.
++     * 
++     */
++    static class NestingPerson {
++        /**
++         * Test String field.
++         */
++        String pid;
++
++        /**
++         * Test nested object field.
++         */
++        Person person;
++    }
+ }

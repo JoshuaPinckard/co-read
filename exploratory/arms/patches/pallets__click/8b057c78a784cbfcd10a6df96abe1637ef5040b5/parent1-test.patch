@@ -1,0 +1,59 @@
+diff --git a/tests/test_arguments.py b/tests/test_arguments.py
+index 13d1c250dc2639b9b1a6fc78c88e92759ac13998..264d505d2fda3453e68583a4505ae8dfb531b8b7 100644
+--- a/tests/test_arguments.py
++++ b/tests/test_arguments.py
+@@ -72,6 +72,26 @@ def test_file_args(runner):
+         assert result.exit_code == 0
+ 
+ 
++def test_file_atomics(runner):
++    @click.command()
++    @click.argument('output', type=click.File('wb', atomic=True))
++    def inout(output):
++        output.write(b'Foo bar baz\n')
++        output.flush()
++        with open(output.name, 'rb') as f:
++            old_content = f.read()
++            assert old_content == b'OLD\n'
++
++    with runner.isolated_filesystem():
++        with open('foo.txt', 'wb') as f:
++            f.write(b'OLD\n')
++        result = runner.invoke(inout, ['foo.txt'], input='Hey!')
++        assert result.output == ''
++        assert result.exit_code == 0
++        with open('foo.txt', 'rb') as f:
++            assert f.read() == b'Foo bar baz\n'
++
++
+ def test_nargs_envvar(runner):
+     @click.command()
+     @click.option('--arg', nargs=-1)
+@@ -91,3 +111,27 @@ def test_nargs_envvar(runner):
+     result = runner.invoke(cmd, [], env={'X': 'foo bar'})
+     assert not result.exception
+     assert result.output == 'foo|bar\n'
++
++
++def test_eat_options(runner):
++    @click.command()
++    @click.option('-f')
++    @click.argument('files', nargs=-1)
++    def cmd(f, files):
++        for filename in files:
++            click.echo(filename)
++        click.echo(f)
++
++    result = runner.invoke(cmd, ['--', '-foo', 'bar'])
++    assert result.output.splitlines() == [
++        '-foo',
++        'bar',
++        '',
++    ]
++
++    result = runner.invoke(cmd, ['-f', '-x', '--', '-foo', 'bar'])
++    assert result.output.splitlines() == [
++        '-foo',
++        'bar',
++        '-x',
++    ]

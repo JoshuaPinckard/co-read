@@ -1,0 +1,2220 @@
+{
+  "candidates": [
+    {
+      "commit_tree": "7116532123a508df15a14e9830cc93d29667c018",
+      "committed_at": "2026-08-11T13:19:14-07:00",
+      "full_patch_bytes": 2309,
+      "full_patch_sha256": "bdc51adefb75053fce42c1f9f67ae540d7b767d703466bfb168eebb6c750f4b5",
+      "history_position": 3,
+      "order": 1,
+      "parent": "3596b1ab61cea85edb8970e83ff61daa073facf8",
+      "parent_tree": "3a23fde1c1d5ce46748e9a28683232bb81c6e039",
+      "paths": [
+        "CHANGES.rst",
+        "src/flask/sansio/scaffold.py",
+        "tests/test_basic.py"
+      ],
+      "pr": 6133,
+      "pr_identity_provenance": "2-parent PR-title subject suffix; remote PR page not queried",
+      "pr_url": "https://github.com/pallets/flask/pull/6133",
+      "python_test_paths": [
+        "tests/test_basic.py"
+      ],
+      "sha": "d8eaaba824655046958d1a97f11780de460c3271",
+      "source_python_paths": [
+        "src/flask/sansio/scaffold.py"
+      ],
+      "subject": "add `app.query` route decorator (#6133)",
+      "task_id": "pr-6133",
+      "test_patch_bytes": 1024,
+      "test_patch_sha256": "f3a08611f1e23eec964ef586f8f034db524495858fe68964809be57355e37da9",
+      "test_paths": [
+        "tests/test_basic.py"
+      ],
+      "timestamp": 1786479554
+    },
+    {
+      "commit_tree": "4eb11319bd4fe0d074eb1444513ff262a0679cac",
+      "committed_at": "2026-08-11T12:48:40-07:00",
+      "full_patch_bytes": 3327,
+      "full_patch_sha256": "8cc2140b3c9f8ffe48cad1c3b35fe467757750b48f46f32f085d91da4200cdc0",
+      "history_position": 5,
+      "order": 2,
+      "parent": "514fc6b3e8402e4c646d5284e97a4f0ab50a7c4b",
+      "parent_tree": "c7ec5b743fd39ea74136f6504ddd65787c8a5eec",
+      "paths": [
+        "src/flask/app.py",
+        "src/flask/testing.py",
+        "tests/test_basic.py",
+        "tests/test_testing.py"
+      ],
+      "pr": 6096,
+      "pr_identity_provenance": "2-parent PR-title subject suffix; remote PR page not queried",
+      "pr_url": "https://github.com/pallets/flask/pull/6096",
+      "python_test_paths": [
+        "tests/test_basic.py",
+        "tests/test_testing.py"
+      ],
+      "sha": "05e9c6bd630ecf4ec0ec884b1fc7901663737bc7",
+      "source_python_paths": [
+        "src/flask/app.py",
+        "src/flask/testing.py"
+      ],
+      "subject": "Fix `.partition(\":\")` usage on potential IPv6 addresses (#6096)",
+      "task_id": "pr-6096",
+      "test_patch_bytes": 1296,
+      "test_patch_sha256": "e451db3cbdda9383939c892366860cf6e972791360b533faf9797ef4d850d628",
+      "test_paths": [
+        "tests/test_basic.py",
+        "tests/test_testing.py"
+      ],
+      "timestamp": 1786477720
+    },
+    {
+      "commit_tree": "3d03484e2ba50656a24f15767447b1e726bc8a69",
+      "committed_at": "2026-02-12T13:07:50-08:00",
+      "full_patch_bytes": 11995,
+      "full_patch_sha256": "8c27785704808f46a1e736e134bf47ffd54f79ef6738212d588537da3a2c1821",
+      "history_position": 26,
+      "order": 3,
+      "parent": "d3b78fd18a8d9e224cb9ef58a23cec9b1ffc9ce9",
+      "parent_tree": "eba06e3660cafd2d5ae16342bed8656330759409",
+      "paths": [
+        "CHANGES.rst",
+        "docs/config.rst",
+        "src/flask/sansio/app.py",
+        "tests/test_basic.py",
+        "tests/test_blueprints.py",
+        "tests/test_cli.py",
+        "tests/test_views.py"
+      ],
+      "pr": 5917,
+      "pr_identity_provenance": "2-parent PR-title subject suffix; remote PR page not queried",
+      "pr_url": "https://github.com/pallets/flask/pull/5917",
+      "python_test_paths": [
+        "tests/test_basic.py",
+        "tests/test_blueprints.py",
+        "tests/test_cli.py",
+        "tests/test_views.py"
+      ],
+      "sha": "12e95c93b488725f80753f34b2e0d24838ca4646",
+      "source_python_paths": [
+        "src/flask/sansio/app.py"
+      ],
+      "subject": "fix provide_automatic_options override (#5917)",
+      "task_id": "pr-5917",
+      "test_patch_bytes": 9537,
+      "test_patch_sha256": "12f2141d0752c44a8ffeca6567bac3476c66f3e9b269f7338eb0c91ede90fc11",
+      "test_paths": [
+        "tests/test_basic.py",
+        "tests/test_blueprints.py",
+        "tests/test_cli.py",
+        "tests/test_views.py"
+      ],
+      "timestamp": 1770930470
+    },
+    {
+      "commit_tree": "b63807a3360e691971f8b15c472ac89c5391b723",
+      "committed_at": "2025-11-17T08:49:53-08:00",
+      "full_patch_bytes": 23216,
+      "full_patch_sha256": "c54e27b506adc634358d6a050b816e43173b659a1b00a192588f61bb99442c22",
+      "history_position": 42,
+      "order": 4,
+      "parent": "88a65bb374e87a18816a780dbd4ae69d307aa85c",
+      "parent_tree": "f6ee40c816b4f237564237115bc44f500373b661",
+      "paths": [
+        "CHANGES.rst",
+        "src/flask/app.py",
+        "src/flask/ctx.py",
+        "src/flask/templating.py",
+        "tests/test_reqctx.py",
+        "tests/test_subclassing.py"
+      ],
+      "pr": 5818,
+      "pr_identity_provenance": "2-parent PR-title subject suffix; remote PR page not queried",
+      "pr_url": "https://github.com/pallets/flask/pull/5818",
+      "python_test_paths": [
+        "tests/test_reqctx.py",
+        "tests/test_subclassing.py"
+      ],
+      "sha": "70d04b5a2620705011e65f79ccfd52caa86f5d6a",
+      "source_python_paths": [
+        "src/flask/app.py",
+        "src/flask/ctx.py",
+        "src/flask/templating.py"
+      ],
+      "subject": "pass context through dispatch methods (#5818)",
+      "task_id": "pr-5818",
+      "test_patch_bytes": 1489,
+      "test_patch_sha256": "89d171fc1e4d70d6495a84a2a0b624c1172eb7fb2c79474ccfebf73a4e05be68",
+      "test_paths": [
+        "tests/test_reqctx.py",
+        "tests/test_subclassing.py"
+      ],
+      "timestamp": 1763398193
+    },
+    {
+      "commit_tree": "f05446667bcad75a2694efbe624fb4e7d5f5c233",
+      "committed_at": "2025-08-19T12:36:00-07:00",
+      "full_patch_bytes": 30128,
+      "full_patch_sha256": "600d03bd02da8c94e6631908e75fe64ab04dc0995a3ec477ed1c98325af21d50",
+      "history_position": 46,
+      "order": 5,
+      "parent": "85c5d93cbd049c4bd0679c36fd1ddcae8c37b642",
+      "parent_tree": "d810397b68ae5f5789925b7b5709d05e6bb5c9b8",
+      "paths": [
+        "CHANGES.rst",
+        "docs/templating.rst",
+        "src/flask/sansio/app.py",
+        "src/flask/sansio/blueprints.py",
+        "tests/test_blueprints.py",
+        "tests/test_templating.py"
+      ],
+      "pr": 5736,
+      "pr_identity_provenance": "2-parent PR-title subject suffix; remote PR page not queried",
+      "pr_url": "https://github.com/pallets/flask/pull/5736",
+      "python_test_paths": [
+        "tests/test_blueprints.py",
+        "tests/test_templating.py"
+      ],
+      "sha": "ed1c9e953e2d67c0994e32e6c8d878291e36d4f7",
+      "source_python_paths": [
+        "src/flask/sansio/app.py",
+        "src/flask/sansio/blueprints.py"
+      ],
+      "subject": "support call template_filter without parens (#5736)",
+      "task_id": "pr-5736",
+      "test_patch_bytes": 8980,
+      "test_patch_sha256": "228f816dd15d689dc37a545a339eb3dcec6c241871e8002beac0226298619e4a",
+      "test_paths": [
+        "tests/test_blueprints.py",
+        "tests/test_templating.py"
+      ],
+      "timestamp": 1755632160
+    },
+    {
+      "commit_tree": "33c2a4451ff7c2b36ecea74bf4ce547fc37f5f04",
+      "committed_at": "2024-11-12T21:03:23-08:00",
+      "full_patch_bytes": 3712,
+      "full_patch_sha256": "7c65d867140acde40c9d20691b14b7075f78bc4166481d54a76840be0be49e25",
+      "history_position": 68,
+      "order": 6,
+      "parent": "10bdf61a0f751f3cb000f8f8ac5ac5b4bb535677",
+      "parent_tree": "b628cf247039fe5f84e05a15d72073cdad60cabd",
+      "paths": [
+        "CHANGES.rst",
+        "docs/config.rst",
+        "src/flask/app.py",
+        "tests/test_request.py"
+      ],
+      "pr": 5637,
+      "pr_identity_provenance": "2-parent PR-title subject suffix; remote PR page not queried",
+      "pr_url": "https://github.com/pallets/flask/pull/5637",
+      "python_test_paths": [
+        "tests/test_request.py"
+      ],
+      "sha": "7b21d43d4c763b874bc86d4c2d69a48ee492dc22",
+      "source_python_paths": [
+        "src/flask/app.py"
+      ],
+      "subject": "configure and check `request.trusted_hosts` (#5637)",
+      "task_id": "pr-5637",
+      "test_patch_bytes": 864,
+      "test_patch_sha256": "aa62f02c2bb367aa55fbf02008c1bd144fc4518b7161ddd571734136b29c6521",
+      "test_paths": [
+        "tests/test_request.py"
+      ],
+      "timestamp": 1731474203
+    },
+    {
+      "commit_tree": "b628cf247039fe5f84e05a15d72073cdad60cabd",
+      "committed_at": "2024-11-12T10:13:39-08:00",
+      "full_patch_bytes": 8840,
+      "full_patch_sha256": "40903e4f91d79ca892672b29deb15ec67d9ed127f38c5372564d3cdd800d58b9",
+      "history_position": 69,
+      "order": 7,
+      "parent": "07c7d5730a2685ef2281cc635e289685e5c3d478",
+      "parent_tree": "ec03ac4df204fdb6a7b4e6315a0e3936ff4395f0",
+      "paths": [
+        "CHANGES.rst",
+        "docs/config.rst",
+        "src/flask/app.py",
+        "tests/test_basic.py",
+        "tests/test_blueprints.py"
+      ],
+      "pr": 5634,
+      "pr_identity_provenance": "2-parent PR-title subject suffix; remote PR page not queried",
+      "pr_url": "https://github.com/pallets/flask/pull/5634",
+      "python_test_paths": [
+        "tests/test_basic.py",
+        "tests/test_blueprints.py"
+      ],
+      "sha": "10bdf61a0f751f3cb000f8f8ac5ac5b4bb535677",
+      "source_python_paths": [
+        "src/flask/app.py"
+      ],
+      "subject": "setting `SERVER_NAME` does not restrict routing for both `subdomain_matching` and `host_matching` (#5634)",
+      "task_id": "pr-5634",
+      "test_patch_bytes": 4301,
+      "test_patch_sha256": "e6225d958b50cae919fb24613257f44321c02cfebc9421d64fa52b8e83a473f3",
+      "test_paths": [
+        "tests/test_basic.py",
+        "tests/test_blueprints.py"
+      ],
+      "timestamp": 1731435219
+    },
+    {
+      "commit_tree": "a153be3df481878253fd62874105b4cccab04556",
+      "committed_at": "2024-11-07T11:56:26-08:00",
+      "full_patch_bytes": 10313,
+      "full_patch_sha256": "9e49e89d8cfe01504d2f8e1a7dcf8fc502e60e712b2b74f3ec35e0859d982a94",
+      "history_position": 72,
+      "order": 8,
+      "parent": "ce08bc704e24c01582052f5c544fae181d08386f",
+      "parent_tree": "a098f5ea0c6dc036256d936d6da119d28dcf8e86",
+      "paths": [
+        "CHANGES.rst",
+        "src/flask/cli.py",
+        "tests/test_cli.py"
+      ],
+      "pr": 5630,
+      "pr_identity_provenance": "2-parent PR-title subject suffix; remote PR page not queried",
+      "pr_url": "https://github.com/pallets/flask/pull/5630",
+      "python_test_paths": [
+        "tests/test_cli.py"
+      ],
+      "sha": "7522c4bcdb10449dc919e0ffbdebb92fe66822b5",
+      "source_python_paths": [
+        "src/flask/cli.py"
+      ],
+      "subject": "update env file precedence (#5630)",
+      "task_id": "pr-5630",
+      "test_patch_bytes": 1872,
+      "test_patch_sha256": "2770f12593e904422cd93452365023bbae52d54d63ac7e3c725ab44b7c3d04d4",
+      "test_paths": [
+        "tests/test_cli.py"
+      ],
+      "timestamp": 1731009386
+    },
+    {
+      "commit_tree": "a098f5ea0c6dc036256d936d6da119d28dcf8e86",
+      "committed_at": "2024-11-01T16:26:37-07:00",
+      "full_patch_bytes": 5177,
+      "full_patch_sha256": "bea62775787b2e3056109cb37d1c75bc3c42fe134c54175d92763bbe3a649514",
+      "history_position": 73,
+      "order": 9,
+      "parent": "6f2014d353d514e404c1f40e8f0a24e2bf62b941",
+      "parent_tree": "023914d975eabe2378f5a57fd22c7a645de86641",
+      "paths": [
+        "CHANGES.rst",
+        "docs/config.rst",
+        "src/flask/app.py",
+        "src/flask/sessions.py",
+        "tests/test_basic.py"
+      ],
+      "pr": 5499,
+      "pr_identity_provenance": "2-parent PR-title subject suffix; remote PR page not queried",
+      "pr_url": "https://github.com/pallets/flask/pull/5499",
+      "python_test_paths": [
+        "tests/test_basic.py"
+      ],
+      "sha": "ce08bc704e24c01582052f5c544fae181d08386f",
+      "source_python_paths": [
+        "src/flask/app.py",
+        "src/flask/sessions.py"
+      ],
+      "subject": "add SESSION_COOKIE_PARTITIONED config (#5499)",
+      "task_id": "pr-5499",
+      "test_patch_bytes": 1118,
+      "test_patch_sha256": "314c0b24bcb3f70e630fd4c90ba895e9a7f2d065aa4b70b5e383fb9b7ca30ad9",
+      "test_paths": [
+        "tests/test_basic.py"
+      ],
+      "timestamp": 1730503597
+    },
+    {
+      "commit_tree": "023914d975eabe2378f5a57fd22c7a645de86641",
+      "committed_at": "2024-11-01T13:21:35-07:00",
+      "full_patch_bytes": 13967,
+      "full_patch_sha256": "7f299d11d0f404407a4586613e6b17417e1e0197a8fb5368dbef6288552bb727",
+      "history_position": 74,
+      "order": 10,
+      "parent": "62c56e08c43f5eb174d15dd050591cfba9aed548",
+      "parent_tree": "10448dddc82481cff4199c96898da2fe993cf84d",
+      "paths": [
+        "CHANGES.rst",
+        "docs/config.rst",
+        "docs/web-security.rst",
+        "src/flask/app.py",
+        "src/flask/wrappers.py",
+        "tests/test_basic.py",
+        "tests/test_request.py"
+      ],
+      "pr": 5626,
+      "pr_identity_provenance": "2-parent PR-title subject suffix; remote PR page not queried",
+      "pr_url": "https://github.com/pallets/flask/pull/5626",
+      "python_test_paths": [
+        "tests/test_basic.py",
+        "tests/test_request.py"
+      ],
+      "sha": "6f2014d353d514e404c1f40e8f0a24e2bf62b941",
+      "source_python_paths": [
+        "src/flask/app.py",
+        "src/flask/wrappers.py"
+      ],
+      "subject": "add config and docs for limits (#5626)",
+      "task_id": "pr-5626",
+      "test_patch_bytes": 2694,
+      "test_patch_sha256": "3e18402f0a3150579b54f202c8aba00c573f1c663a6b27b0c3ef02ea1ecbdd28",
+      "test_paths": [
+        "tests/test_basic.py",
+        "tests/test_request.py"
+      ],
+      "timestamp": 1730492495
+    },
+    {
+      "commit_tree": "ad3195697313cbc5c3c951b694f81b1aeb6f3890",
+      "committed_at": "2024-07-10T19:16:46-07:00",
+      "full_patch_bytes": 8195,
+      "full_patch_sha256": "8646d5a10922442e6e94cb4dc125b8d9da37796f85f0f03ae55a7a6690ea3d4a",
+      "history_position": 93,
+      "order": 11,
+      "parent": "66af0e55ef6631d05c691707da19d0f1c46921ea",
+      "parent_tree": "3470102c0107b94c5b533d74807e72979bcc390c",
+      "paths": [
+        "CHANGES.rst",
+        "src/flask/app.py",
+        "src/flask/blueprints.py",
+        "tests/test_helpers.py"
+      ],
+      "pr": 5526,
+      "pr_identity_provenance": "2-parent PR-title subject suffix; remote PR page not queried",
+      "pr_url": "https://github.com/pallets/flask/pull/5526",
+      "python_test_paths": [
+        "tests/test_helpers.py"
+      ],
+      "sha": "a8956feba1e40105e7bc78fa62ce36c58d1c91e1",
+      "source_python_paths": [
+        "src/flask/app.py",
+        "src/flask/blueprints.py"
+      ],
+      "subject": "Add encoding parameter to open resource (#5526)",
+      "task_id": "pr-5526",
+      "test_patch_bytes": 1680,
+      "test_patch_sha256": "408d9f083e077eeba4f7c197d36cbd8345961df5cec71d0843450d1f0f72ca94",
+      "test_paths": [
+        "tests/test_helpers.py"
+      ],
+      "timestamp": 1720664206
+    },
+    {
+      "commit_tree": "db764e5e40b3f336b860a3473d3b1cb9f33242ae",
+      "committed_at": "2023-04-14T09:45:20-07:00",
+      "full_patch_bytes": 6901,
+      "full_patch_sha256": "96aa03726107f6705f6bbae2be82a60af83a2bcab63043344fd3f0bd24f0aad0",
+      "history_position": 205,
+      "order": 12,
+      "parent": "182ce3dd15dfa3537391c3efaf9c3ff407d134d4",
+      "parent_tree": "6010802cbb9ef8687889574e305c9d517e445979",
+      "paths": [
+        "CHANGES.rst",
+        "src/flask/cli.py",
+        "tests/test_cli.py"
+      ],
+      "pr": 5063,
+      "pr_identity_provenance": "two-parent merge subject prefix; remote PR page not queried",
+      "pr_url": "https://github.com/pallets/flask/pull/5063",
+      "python_test_paths": [
+        "tests/test_cli.py"
+      ],
+      "sha": "6931b252935188744415b301ab2e3d3bd5ee5498",
+      "source_python_paths": [
+        "src/flask/cli.py"
+      ],
+      "subject": "Merge pull request #5063 from pallets/cli-routes-domain",
+      "task_id": "pr-5063",
+      "test_patch_bytes": 2816,
+      "test_patch_sha256": "8c6b3ea1687d00b454ddcb18c511dae16e3b93bea34498264d699e58624c33b9",
+      "test_paths": [
+        "tests/test_cli.py"
+      ],
+      "timestamp": 1681490720
+    },
+    {
+      "commit_tree": "15da16dd2fe9b6f1779ad67827909fe51c1b6644",
+      "committed_at": "2023-04-12T13:10:34-07:00",
+      "full_patch_bytes": 9930,
+      "full_patch_sha256": "acf7641cc5a724e986b5485c5bc51a36dd5624e2084b2d97dc86329aa6da3b91",
+      "history_position": 211,
+      "order": 13,
+      "parent": "fa0ceb62f26579c3c7d9e18926af3e6f3e6e425c",
+      "parent_tree": "a1fa2bff89cc0aed450f1702a8ec0585b73b3d74",
+      "paths": [
+        "CHANGES.rst",
+        "docs/config.rst",
+        "src/flask/helpers.py",
+        "src/flask/sessions.py",
+        "tests/test_basic.py"
+      ],
+      "pr": 5054,
+      "pr_identity_provenance": "two-parent merge subject prefix; remote PR page not queried",
+      "pr_url": "https://github.com/pallets/flask/pull/5054",
+      "python_test_paths": [
+        "tests/test_basic.py"
+      ],
+      "sha": "c9a5660cfd0be150b598325697f6f19019af0ef8",
+      "source_python_paths": [
+        "src/flask/helpers.py",
+        "src/flask/sessions.py"
+      ],
+      "subject": "Merge pull request #5054 from pallets/session-domain",
+      "task_id": "pr-5054",
+      "test_patch_bytes": 2918,
+      "test_patch_sha256": "d53c1c73cb8899d66390828200eae103c532e2b5273dad2985ae648c1f4173eb",
+      "test_paths": [
+        "tests/test_basic.py"
+      ],
+      "timestamp": 1681330234
+    },
+    {
+      "commit_tree": "66d0af482a90889a305eb35719715110294f580d",
+      "committed_at": "2023-03-11T08:34:56-08:00",
+      "full_patch_bytes": 1574,
+      "full_patch_sha256": "9c050565f6e2a6f10a1ca7b94301d36af3d2a56cab693ce810d995026bdaf54c",
+      "history_position": 219,
+      "order": 14,
+      "parent": "7ee9ceb71e868944a46e1ff00b506772a53a4f1d",
+      "parent_tree": "c3d16a156c9206389b230b2884557c486e871589",
+      "paths": [
+        "CHANGES.rst",
+        "src/flask/blueprints.py",
+        "tests/test_blueprints.py"
+      ],
+      "pr": 5014,
+      "pr_identity_provenance": "two-parent merge subject prefix; remote PR page not queried",
+      "pr_url": "https://github.com/pallets/flask/pull/5014",
+      "python_test_paths": [
+        "tests/test_blueprints.py"
+      ],
+      "sha": "7ed89d3f9d2207c9a607f5dcdce106c0278e1332",
+      "source_python_paths": [
+        "src/flask/blueprints.py"
+      ],
+      "subject": "Merge pull request #5014 from evgenymozhaev/require-a-non-empty-name-for-blueprints",
+      "task_id": "pr-5014",
+      "test_patch_bytes": 561,
+      "test_patch_sha256": "d5320d977a075aec48d19affff2e941b12586f9616cd4d85e84ef9ba61e78b90",
+      "test_paths": [
+        "tests/test_blueprints.py"
+      ],
+      "timestamp": 1678552496
+    },
+    {
+      "commit_tree": "bddf2fbde31b156dcd466d84dab0855bdeabd304",
+      "committed_at": "2023-02-23T11:13:18-08:00",
+      "full_patch_bytes": 3767,
+      "full_patch_sha256": "f8b7de990a2dcee7169b30958a259688d6d6fed456cbf78bbad973a52b6e8279",
+      "history_position": 224,
+      "order": 15,
+      "parent": "4c288bc97ea371817199908d0d9b12de9dae327e",
+      "parent_tree": "2ba551370f1a4204efbab1f82ba6cfd611634723",
+      "paths": [
+        "CHANGES.rst",
+        "src/flask/config.py",
+        "tests/static/config.toml",
+        "tests/test_config.py"
+      ],
+      "pr": 4992,
+      "pr_identity_provenance": "two-parent merge subject prefix; remote PR page not queried",
+      "pr_url": "https://github.com/pallets/flask/pull/4992",
+      "python_test_paths": [
+        "tests/test_config.py"
+      ],
+      "sha": "2ad4d8d717dfe1e15b8205a825a5d3a8cb106acc",
+      "source_python_paths": [
+        "src/flask/config.py"
+      ],
+      "subject": "Merge pull request #4992 from AntoineMath/file_mode",
+      "task_id": "pr-4992",
+      "test_patch_bytes": 1474,
+      "test_patch_sha256": "78e5d5cf6726577c99c806fdcae14244a70b9c4e765931fdc7b59c26ba3f987f",
+      "test_paths": [
+        "tests/static/config.toml",
+        "tests/test_config.py"
+      ],
+      "timestamp": 1677179598
+    },
+    {
+      "commit_tree": "65edd4508ef1cbc068910db2bc3b2ed26d65e63d",
+      "committed_at": "2023-02-23T09:34:17-08:00",
+      "full_patch_bytes": 4260,
+      "full_patch_sha256": "c733ac1305183d85a0d8bab11b71e69fdc287e16801710007b382663eba0ec97",
+      "history_position": 226,
+      "order": 16,
+      "parent": "704b68948f7bb94a3a4fa15e99243d4ed82081c5",
+      "parent_tree": "31ade2198bb0ca57e19b1d5a9c4b6d8e7c0322e7",
+      "paths": [
+        "CHANGES.rst",
+        "src/flask/app.py",
+        "src/flask/blueprints.py",
+        "tests/test_basic.py"
+      ],
+      "pr": 4997,
+      "pr_identity_provenance": "two-parent merge subject prefix; remote PR page not queried",
+      "pr_url": "https://github.com/pallets/flask/pull/4997",
+      "python_test_paths": [
+        "tests/test_basic.py"
+      ],
+      "sha": "c690f529f28a8fd7ecdac90939944475613760a5",
+      "source_python_paths": [
+        "src/flask/app.py",
+        "src/flask/blueprints.py"
+      ],
+      "subject": "Merge pull request #4997 from pallets/deprecate-got_first_request",
+      "task_id": "pr-4997",
+      "test_patch_bytes": 463,
+      "test_patch_sha256": "f87a47a71c46579c16e2dafb693c7353922c048c22ec79025f1b39e4b0f9b13c",
+      "test_paths": [
+        "tests/test_basic.py"
+      ],
+      "timestamp": 1677173657
+    },
+    {
+      "commit_tree": "31ade2198bb0ca57e19b1d5a9c4b6d8e7c0322e7",
+      "committed_at": "2023-02-23T08:59:37-08:00",
+      "full_patch_bytes": 8035,
+      "full_patch_sha256": "a38a4da77b2eb5ee958fca33d0f7785f64e0d390f0cd8238def5d0061d1f3b82",
+      "history_position": 227,
+      "order": 17,
+      "parent": "1ee22e1736ffd12c2222cd6215ed04ec1592adaa",
+      "parent_tree": "4fbff502af50803dead14c63d383806f003e6aa6",
+      "paths": [
+        "CHANGES.rst",
+        "docs/api.rst",
+        "docs/security.rst",
+        "docs/templating.rst",
+        "src/flask/__init__.py",
+        "tests/test_basic.py",
+        "tests/test_json_tag.py",
+        "tests/test_templating.py"
+      ],
+      "pr": 4996,
+      "pr_identity_provenance": "two-parent merge subject prefix; remote PR page not queried",
+      "pr_url": "https://github.com/pallets/flask/pull/4996",
+      "python_test_paths": [
+        "tests/test_basic.py",
+        "tests/test_json_tag.py",
+        "tests/test_templating.py"
+      ],
+      "sha": "704b68948f7bb94a3a4fa15e99243d4ed82081c5",
+      "source_python_paths": [
+        "src/flask/__init__.py"
+      ],
+      "subject": "Merge pull request #4996 from pallets/deprecate-markupsafe-export",
+      "task_id": "pr-4996",
+      "test_patch_bytes": 4458,
+      "test_patch_sha256": "d74b9cd7297475ede958e3319330655cc2d185dfd0cbcc2d6d3d498b9d1344b9",
+      "test_paths": [
+        "tests/test_basic.py",
+        "tests/test_json_tag.py",
+        "tests/test_templating.py"
+      ],
+      "timestamp": 1677171577
+    },
+    {
+      "commit_tree": "e0621ece3a1644cb054968605697fc9a29c51f20",
+      "committed_at": "2023-01-04T14:06:35-07:00",
+      "full_patch_bytes": 4669,
+      "full_patch_sha256": "b46e6c31dbfd799c1ae9abc5679fe49b1cb4a9d8347c94432cf230689dfee19a",
+      "history_position": 241,
+      "order": 18,
+      "parent": "fa1ee7066807c21256e90089731c548b313394d2",
+      "parent_tree": "92adbd1f5f6141adb1931ebe3811a12a7391cf02",
+      "paths": [
+        "CHANGES.rst",
+        "docs/blueprints.rst",
+        "src/flask/blueprints.py",
+        "tests/test_blueprints.py"
+      ],
+      "pr": 4935,
+      "pr_identity_provenance": "two-parent merge subject prefix; remote PR page not queried",
+      "pr_url": "https://github.com/pallets/flask/pull/4935",
+      "python_test_paths": [
+        "tests/test_blueprints.py"
+      ],
+      "sha": "836866dc19218832cf02f8b04911060ac92bfc0b",
+      "source_python_paths": [
+        "src/flask/blueprints.py"
+      ],
+      "subject": "Merge pull request #4935 from pgjones/subdomain",
+      "task_id": "pr-4935",
+      "test_patch_bytes": 1886,
+      "test_patch_sha256": "869d6df9b7aca73c60d9b415345365584f28d0b3046f1243461451fa98adcc79",
+      "test_paths": [
+        "tests/test_blueprints.py"
+      ],
+      "timestamp": 1672866395
+    },
+    {
+      "commit_tree": "abb687fd6bea4032013e4a2b0551fdf93749ad33",
+      "committed_at": "2022-08-01T17:04:12-07:00",
+      "full_patch_bytes": 14659,
+      "full_patch_sha256": "58a2620ac419ed120e218fd7855ab1f4eccbfbcb78d7874f821da50f4ab25243",
+      "history_position": 265,
+      "order": 19,
+      "parent": "98ca00d54532bfdf858fe663f8fb3cc260c2048b",
+      "parent_tree": "167164861eeb3d077ea6edf5aceeb4dc73ff432f",
+      "paths": [
+        "CHANGES.rst",
+        "docs/api.rst",
+        "src/flask/app.py",
+        "src/flask/helpers.py",
+        "src/flask/scaffold.py",
+        "src/flask/sessions.py",
+        "tests/test_config.py",
+        "tests/test_templating.py"
+      ],
+      "pr": 4722,
+      "pr_identity_provenance": "two-parent merge subject prefix; remote PR page not queried",
+      "pr_url": "https://github.com/pallets/flask/pull/4722",
+      "python_test_paths": [
+        "tests/test_config.py",
+        "tests/test_templating.py"
+      ],
+      "sha": "cfd5783a984c81828e79641b5d761a56633fa0e8",
+      "source_python_paths": [
+        "src/flask/app.py",
+        "src/flask/helpers.py",
+        "src/flask/scaffold.py",
+        "src/flask/sessions.py"
+      ],
+      "subject": "Merge pull request #4722 from pallets/deprecate-config-attrs",
+      "task_id": "pr-4722",
+      "test_patch_bytes": 1423,
+      "test_patch_sha256": "bb1b8e85c2369ec2cbdf36a25080863d9c6567811956346c47fe30cf72988d66",
+      "test_paths": [
+        "tests/test_config.py",
+        "tests/test_templating.py"
+      ],
+      "timestamp": 1659398652
+    },
+    {
+      "commit_tree": "1957f1c367890b7781624f8ef228b2722d7fc9f7",
+      "committed_at": "2022-08-01T10:44:31-07:00",
+      "full_patch_bytes": 10221,
+      "full_patch_sha256": "19446cbe1b79974a715c9fb772ef624f5143b9a6b89ce6de53355ff294b30313",
+      "history_position": 268,
+      "order": 20,
+      "parent": "095651be9eec58ddb0c2eb6158318b1c703c67c5",
+      "parent_tree": "b2c9ffe2e32859388a27a1352f0275b5bb5f67e8",
+      "paths": [
+        "CHANGES.rst",
+        "docs/quickstart.rst",
+        "docs/server.rst",
+        "src/flask/app.py",
+        "src/flask/cli.py",
+        "tests/test_cli.py"
+      ],
+      "pr": 4718,
+      "pr_identity_provenance": "two-parent merge subject prefix; remote PR page not queried",
+      "pr_url": "https://github.com/pallets/flask/pull/4718",
+      "python_test_paths": [
+        "tests/test_cli.py"
+      ],
+      "sha": "633f421031c9c18b56177b0d42adcb505b4627b1",
+      "source_python_paths": [
+        "src/flask/app.py",
+        "src/flask/cli.py"
+      ],
+      "subject": "Merge pull request #4718 from pallets/remove-lazy-option",
+      "task_id": "pr-4718",
+      "test_patch_bytes": 1486,
+      "test_patch_sha256": "aa6c7e5c7dafc41cdb1da5b9a8626e7a154c38829e408a021edcac88eb3ef037",
+      "test_paths": [
+        "tests/test_cli.py"
+      ],
+      "timestamp": 1659375871
+    },
+    {
+      "commit_tree": "2d33859c97d9cdbddf3434870e74fb2f53646f13",
+      "committed_at": "2022-07-14T14:17:38-07:00",
+      "full_patch_bytes": 1759,
+      "full_patch_sha256": "916a01dacc2379b0c76bec0d971debc7c6473c8a28f51e5b2a23d5b5dd63f49c",
+      "history_position": 272,
+      "order": 21,
+      "parent": "76a6b4f2b56bebf1262377ba5b39b7951155b54d",
+      "parent_tree": "5cfa74bdedaffeaa2035b6a8eed15b0721372221",
+      "paths": [
+        "CHANGES.rst",
+        "src/flask/typing.py",
+        "tests/typing/typing_route.py"
+      ],
+      "pr": 4695,
+      "pr_identity_provenance": "two-parent merge subject prefix; remote PR page not queried",
+      "pr_url": "https://github.com/pallets/flask/pull/4695",
+      "python_test_paths": [
+        "tests/typing/typing_route.py"
+      ],
+      "sha": "900e11850a201717599fb12fb7cd76c37078206d",
+      "source_python_paths": [
+        "src/flask/typing.py"
+      ],
+      "subject": "Merge pull request #4695 from zr40/allow-typeddict-as-responsevalue",
+      "task_id": "pr-4695",
+      "test_patch_bytes": 860,
+      "test_patch_sha256": "6dc873693a494385ec3e37e0f7cf22d74434a3123bf87a469da5518c0db10125",
+      "test_paths": [
+        "tests/typing/typing_route.py"
+      ],
+      "timestamp": 1657833458
+    },
+    {
+      "commit_tree": "04d97b1fd70b15120fdd7f98790738d08ac41144",
+      "committed_at": "2022-07-09T05:44:52-07:00",
+      "full_patch_bytes": 8587,
+      "full_patch_sha256": "25596de864bff9a732f4a7d8f91b5b307f77821a9f66f2f41ee1bd0e92ade5b8",
+      "history_position": 278,
+      "order": 22,
+      "parent": "979e0adbacfb3c5cc1ac678b4ef5373dadde83d3",
+      "parent_tree": "94b3c9090c5bc989dbd25e77c5e321279dcff5f9",
+      "paths": [
+        "src/flask/app.py",
+        "src/flask/ctx.py",
+        "src/flask/globals.py",
+        "src/flask/helpers.py",
+        "src/flask/templating.py",
+        "src/flask/testing.py",
+        "tests/test_testing.py"
+      ],
+      "pr": 4685,
+      "pr_identity_provenance": "two-parent merge subject prefix; remote PR page not queried",
+      "pr_url": "https://github.com/pallets/flask/pull/4685",
+      "python_test_paths": [
+        "tests/test_testing.py"
+      ],
+      "sha": "5775d1e9b1a031c7bc3bf1463acb3289594ab3e4",
+      "source_python_paths": [
+        "src/flask/app.py",
+        "src/flask/ctx.py",
+        "src/flask/globals.py",
+        "src/flask/helpers.py",
+        "src/flask/templating.py",
+        "src/flask/testing.py"
+      ],
+      "subject": "Merge pull request #4685 from pgjones/name",
+      "task_id": "pr-4685",
+      "test_patch_bytes": 825,
+      "test_patch_sha256": "0e9061356d6d8f4aa4087a48b05c2a7a1ecb3422d9add185b38140ff01574779",
+      "test_paths": [
+        "tests/test_testing.py"
+      ],
+      "timestamp": 1657370692
+    },
+    {
+      "commit_tree": "d151286319c8037051fcf7b2bee9597959423579",
+      "committed_at": "2022-07-06T14:05:20-07:00",
+      "full_patch_bytes": 24992,
+      "full_patch_sha256": "cdb21280f2dbefdb8febf97fedeb445bbf7693e0b43b816423859275ae9f503b",
+      "history_position": 282,
+      "order": 23,
+      "parent": "d7482cd765351e7495bfce45f9fb55732e91ab3a",
+      "parent_tree": "6fda38289d274edeec16759efee977ff0cae3e0f",
+      "paths": [
+        "src/flask/app.py",
+        "src/flask/blueprints.py",
+        "src/flask/scaffold.py",
+        "src/flask/typing.py",
+        "src/flask/views.py",
+        "tests/typing/typing_route.py"
+      ],
+      "pr": 4676,
+      "pr_identity_provenance": "1-parent PR-title subject suffix; remote PR page not queried",
+      "pr_url": "https://github.com/pallets/flask/pull/4676",
+      "python_test_paths": [
+        "tests/typing/typing_route.py"
+      ],
+      "sha": "9b44bf2818d8e3cde422ad7f43fb33dfc6737289",
+      "source_python_paths": [
+        "src/flask/app.py",
+        "src/flask/blueprints.py",
+        "src/flask/scaffold.py",
+        "src/flask/typing.py",
+        "src/flask/views.py"
+      ],
+      "subject": "Improve decorator typing (#4676)",
+      "task_id": "pr-4676",
+      "test_patch_bytes": 596,
+      "test_patch_sha256": "7f488337c2c304c607d9dab7d25bd286f6283b258c9035eaa052d742a4cc7b5f",
+      "test_paths": [
+        "tests/typing/typing_route.py"
+      ],
+      "timestamp": 1657141520
+    },
+    {
+      "commit_tree": "1f9d620458b75e976f66b4cecc30c0f2bef0a982",
+      "committed_at": "2022-07-02T21:48:06-07:00",
+      "full_patch_bytes": 8822,
+      "full_patch_sha256": "b440ad43bbb369a56d0b951cc4cf9fb50966a0eb5f72dbe0c22b2481918f9dc8",
+      "history_position": 285,
+      "order": 24,
+      "parent": "1626aff602e3316642e69927333041370095c321",
+      "parent_tree": "e257ccfc2bb532599ce642a790bf67d989a2ef30",
+      "paths": [
+        "CHANGES.rst",
+        "docs/quickstart.rst",
+        "src/flask/app.py",
+        "src/flask/typing.py",
+        "tests/test_basic.py",
+        "tests/typing/typing_route.py"
+      ],
+      "pr": 4672,
+      "pr_identity_provenance": "two-parent merge subject prefix; remote PR page not queried",
+      "pr_url": "https://github.com/pallets/flask/pull/4672",
+      "python_test_paths": [
+        "tests/test_basic.py",
+        "tests/typing/typing_route.py"
+      ],
+      "sha": "559a8458c4187b3cc12b1ea5a92a393c7fbdc765",
+      "source_python_paths": [
+        "src/flask/app.py",
+        "src/flask/typing.py"
+      ],
+      "subject": "Merge pull request #4672 from greyli/return-list",
+      "task_id": "pr-4672",
+      "test_patch_bytes": 1554,
+      "test_patch_sha256": "595f4f23a5bea78486bad31e527cdbc41c591d14f3c37b99139a173796dbf863",
+      "test_paths": [
+        "tests/test_basic.py",
+        "tests/typing/typing_route.py"
+      ],
+      "timestamp": 1656823686
+    },
+    {
+      "commit_tree": "e1722104df10dd404d7413ead56adc5eb3e07bc5",
+      "committed_at": "2022-07-01T12:35:24-07:00",
+      "full_patch_bytes": 20620,
+      "full_patch_sha256": "b04477e6d916ceea75a1545ef4651be17d857e2d943eee1bdd16a602e1ddb48c",
+      "history_position": 289,
+      "order": 25,
+      "parent": "57a95e82b7194f1809ac9f626140ab1e497e121f",
+      "parent_tree": "0913e2cbd4003c86387e43dcfef30aa3fca7dd29",
+      "paths": [
+        "CHANGES.rst",
+        "docs/config.rst",
+        "docs/reqcontext.rst",
+        "src/flask/app.py",
+        "src/flask/ctx.py",
+        "src/flask/scaffold.py",
+        "src/flask/testing.py",
+        "tests/test_basic.py",
+        "tests/test_signals.py",
+        "tests/test_testing.py"
+      ],
+      "pr": 4666,
+      "pr_identity_provenance": "two-parent merge subject prefix; remote PR page not queried",
+      "pr_url": "https://github.com/pallets/flask/pull/4666",
+      "python_test_paths": [
+        "tests/test_basic.py",
+        "tests/test_signals.py",
+        "tests/test_testing.py"
+      ],
+      "sha": "6916697a982df775a66a1ac9971985e5fa213f2b",
+      "source_python_paths": [
+        "src/flask/app.py",
+        "src/flask/ctx.py",
+        "src/flask/scaffold.py",
+        "src/flask/testing.py"
+      ],
+      "subject": "Merge pull request #4666 from pallets/debug-context",
+      "task_id": "pr-4666",
+      "test_patch_bytes": 6431,
+      "test_patch_sha256": "7813b0ca79f6a207827543ac91c8ca110ad4132f5d1bb86809ed60a78378163b",
+      "test_paths": [
+        "tests/test_basic.py",
+        "tests/test_signals.py",
+        "tests/test_testing.py"
+      ],
+      "timestamp": 1656704124
+    },
+    {
+      "commit_tree": "6ede261fcb0ee75ecb97b84cd31efbd3f4ffe107",
+      "committed_at": "2022-06-29T21:21:52-07:00",
+      "full_patch_bytes": 2684,
+      "full_patch_sha256": "d9a4d270bf25ef8e5e697ca6d1fa7d5d77d45c968626876c9b9779f80e7bec34",
+      "history_position": 291,
+      "order": 26,
+      "parent": "ab36542260c61f178b6e8f61312b706ac4c5f73e",
+      "parent_tree": "6cc0ca3b96732ea91da392188e5219aae19723e1",
+      "paths": [
+        "src/flask/app.py",
+        "src/flask/cli.py",
+        "tests/test_cli.py"
+      ],
+      "pr": 4662,
+      "pr_identity_provenance": "two-parent merge subject prefix; remote PR page not queried",
+      "pr_url": "https://github.com/pallets/flask/pull/4662",
+      "python_test_paths": [
+        "tests/test_cli.py"
+      ],
+      "sha": "3635583ce27f70a3d9efd1e2212d5efc1d256333",
+      "source_python_paths": [
+        "src/flask/app.py",
+        "src/flask/cli.py"
+      ],
+      "subject": "Merge pull request #4662 from pallets/fix-run-skip",
+      "task_id": "pr-4662",
+      "test_patch_bytes": 1111,
+      "test_patch_sha256": "e8c1c2a2428927d3adeb677390b46ddd8d38d4a9b5f74afa80b0b5fb036bd69c",
+      "test_paths": [
+        "tests/test_cli.py"
+      ],
+      "timestamp": 1656562912
+    },
+    {
+      "commit_tree": "6cc0ca3b96732ea91da392188e5219aae19723e1",
+      "committed_at": "2022-06-18T12:24:13-07:00",
+      "full_patch_bytes": 15902,
+      "full_patch_sha256": "238d6cbfe32c7992b3f58731164db478ebb1f41ec028b25ac3e027ba47c0f223",
+      "history_position": 292,
+      "order": 27,
+      "parent": "7f2a0f4806e40fb5c139b5b20ca443948ce1f4dd",
+      "parent_tree": "459db7a548485cd5b32edee95112384b45a586de",
+      "paths": [
+        "CHANGES.rst",
+        "docs/api.rst",
+        "docs/patterns/streaming.rst",
+        "docs/templating.rst",
+        "src/flask/__init__.py",
+        "src/flask/app.py",
+        "src/flask/templating.py",
+        "src/flask/typing.py",
+        "tests/test_basic.py",
+        "tests/test_templating.py",
+        "tests/typing/typing_route.py"
+      ],
+      "pr": 4629,
+      "pr_identity_provenance": "two-parent merge subject prefix; remote PR page not queried",
+      "pr_url": "https://github.com/pallets/flask/pull/4629",
+      "python_test_paths": [
+        "tests/test_basic.py",
+        "tests/test_templating.py",
+        "tests/typing/typing_route.py"
+      ],
+      "sha": "ab36542260c61f178b6e8f61312b706ac4c5f73e",
+      "source_python_paths": [
+        "src/flask/__init__.py",
+        "src/flask/app.py",
+        "src/flask/templating.py",
+        "src/flask/typing.py"
+      ],
+      "subject": "Merge pull request #4629 from pgjones/generate",
+      "task_id": "pr-4629",
+      "test_patch_bytes": 2922,
+      "test_patch_sha256": "68ae71127dffe0db7559f4f5245ffa5cc762a6419e710e279118c80a49aa404a",
+      "test_paths": [
+        "tests/test_basic.py",
+        "tests/test_templating.py",
+        "tests/typing/typing_route.py"
+      ],
+      "timestamp": 1655580253
+    },
+    {
+      "commit_tree": "459db7a548485cd5b32edee95112384b45a586de",
+      "committed_at": "2022-06-17T12:05:19-07:00",
+      "full_patch_bytes": 2527,
+      "full_patch_sha256": "f5128478c30cb88fc9f88fd5ba0075086ad1b0e4fb0c79728fa93c2dea838743",
+      "history_position": 293,
+      "order": 28,
+      "parent": "cec5f74110a7369992be1651c24b695d9fe55ab3",
+      "parent_tree": "9866b15bedaddc2812efa4ea925fe109a71fe0c5",
+      "paths": [
+        "CHANGES.rst",
+        "src/flask/sessions.py",
+        "tests/test_basic.py"
+      ],
+      "pr": 4645,
+      "pr_identity_provenance": "two-parent merge subject prefix; remote PR page not queried",
+      "pr_url": "https://github.com/pallets/flask/pull/4645",
+      "python_test_paths": [
+        "tests/test_basic.py"
+      ],
+      "sha": "7f2a0f4806e40fb5c139b5b20ca443948ce1f4dd",
+      "source_python_paths": [
+        "src/flask/sessions.py"
+      ],
+      "subject": "Merge pull request #4645 from kkirsche/patch-2",
+      "task_id": "pr-4645",
+      "test_patch_bytes": 1166,
+      "test_patch_sha256": "48ce1873838a77c7b2ce33b488a9476605ef75bcad17eaec133ded2dbf8759c6",
+      "test_paths": [
+        "tests/test_basic.py"
+      ],
+      "timestamp": 1655492719
+    },
+    {
+      "commit_tree": "3750d449ef7c0085a8a61d7c3957a144f55c31e7",
+      "committed_at": "2022-06-15T14:17:45-07:00",
+      "full_patch_bytes": 8196,
+      "full_patch_sha256": "279dbe775639c77858ba2ef47a80fa935e0831759173d13bbd7f3b76496c61fb",
+      "history_position": 296,
+      "order": 29,
+      "parent": "97298e06fe19298c3ff9d2e0ed9ba70bb3fda2c8",
+      "parent_tree": "80060d3edb0d1031c9c8ba6878746c6db9b106ee",
+      "paths": [
+        "CHANGES.rst",
+        "src/flask/app.py",
+        "src/flask/cli.py",
+        "src/flask/debughelpers.py",
+        "tests/test_cli.py"
+      ],
+      "pr": 4642,
+      "pr_identity_provenance": "two-parent merge subject prefix; remote PR page not queried",
+      "pr_url": "https://github.com/pallets/flask/pull/4642",
+      "python_test_paths": [
+        "tests/test_cli.py"
+      ],
+      "sha": "fe4003b3c998fde4c9ad8b2340f773f50079ede1",
+      "source_python_paths": [
+        "src/flask/app.py",
+        "src/flask/cli.py",
+        "src/flask/debughelpers.py"
+      ],
+      "subject": "Merge pull request #4642 from pallets/cli-nest",
+      "task_id": "pr-4642",
+      "test_patch_bytes": 763,
+      "test_patch_sha256": "995efef4380a612787cd2a0d6428494e63ef265070c85e4f8e6b16cc28a68556",
+      "test_paths": [
+        "tests/test_cli.py"
+      ],
+      "timestamp": 1655327865
+    },
+    {
+      "commit_tree": "7af57bcb951d089b2eb6bd535284f9cb50b8e103",
+      "committed_at": "2022-06-06T15:52:48-07:00",
+      "full_patch_bytes": 30413,
+      "full_patch_sha256": "7090c4617f991cc9b3092d54d87ed9998c53da29c1e85298d6329004ee19fd6a",
+      "history_position": 300,
+      "order": 30,
+      "parent": "aab1d9935e17e40104a28c89d4c669f7ab3cc579",
+      "parent_tree": "08b4725467e7098c472acd47ef1ade6725e6f1a1",
+      "paths": [
+        "CHANGES.rst",
+        "docs/views.rst",
+        "src/flask/views.py",
+        "tests/test_views.py"
+      ],
+      "pr": 4624,
+      "pr_identity_provenance": "two-parent merge subject prefix; remote PR page not queried",
+      "pr_url": "https://github.com/pallets/flask/pull/4624",
+      "python_test_paths": [
+        "tests/test_views.py"
+      ],
+      "sha": "db3187fd7ab324d9175d8a1dd8c3919cec58d3b9",
+      "source_python_paths": [
+        "src/flask/views.py"
+      ],
+      "subject": "Merge pull request #4624 from pallets/view-init-scope",
+      "task_id": "pr-4624",
+      "test_patch_bytes": 825,
+      "test_patch_sha256": "b7941800dd20133b36a885bcffc2503676723bdf8a838cd2f22899440e3bed92",
+      "test_paths": [
+        "tests/test_views.py"
+      ],
+      "timestamp": 1654555968
+    },
+    {
+      "commit_tree": "08b4725467e7098c472acd47ef1ade6725e6f1a1",
+      "committed_at": "2022-06-06T10:11:00-07:00",
+      "full_patch_bytes": 7491,
+      "full_patch_sha256": "53e52dad5ad002d274cfc456ffdb027d8d47d9cfba6e5984950eab0a7a445ff2",
+      "history_position": 301,
+      "order": 31,
+      "parent": "7a2d5fb6df1f2c066b94dd88686137353ada9cc6",
+      "parent_tree": "2a88ae2b8196c092dc916885cc878433e119c6e2",
+      "paths": [
+        "CHANGES.rst",
+        "src/flask/app.py",
+        "src/flask/blueprints.py",
+        "tests/test_async.py",
+        "tests/test_basic.py",
+        "tests/test_blueprints.py"
+      ],
+      "pr": 4621,
+      "pr_identity_provenance": "two-parent merge subject prefix; remote PR page not queried",
+      "pr_url": "https://github.com/pallets/flask/pull/4621",
+      "python_test_paths": [
+        "tests/test_async.py",
+        "tests/test_basic.py",
+        "tests/test_blueprints.py"
+      ],
+      "sha": "aab1d9935e17e40104a28c89d4c669f7ab3cc579",
+      "source_python_paths": [
+        "src/flask/app.py",
+        "src/flask/blueprints.py"
+      ],
+      "subject": "Merge pull request #4621 from pallets/deprecate-before_first_request",
+      "task_id": "pr-4621",
+      "test_patch_bytes": 2363,
+      "test_patch_sha256": "ecb4aab3d478f0cb288e827c3320982b937ffd8ffd4a12d41cd87131417a2e36",
+      "test_paths": [
+        "tests/test_async.py",
+        "tests/test_basic.py",
+        "tests/test_blueprints.py"
+      ],
+      "timestamp": 1654535460
+    },
+    {
+      "commit_tree": "f641a5b875014bf7e799ca84e049a814ecba834f",
+      "committed_at": "2022-05-23T09:12:45-07:00",
+      "full_patch_bytes": 17601,
+      "full_patch_sha256": "a26b4fe4753c6a88ae84b673423f6791dc2f8851c1381f33e83241c3e95325a6",
+      "history_position": 306,
+      "order": 32,
+      "parent": "ca8e6217fe450435e024bcff3082d2a37445f7e1",
+      "parent_tree": "b8ea24fb0789e30f8fce572a29c7c2a68b93d782",
+      "paths": [
+        "CHANGES.rst",
+        "src/flask/app.py",
+        "src/flask/blueprints.py",
+        "src/flask/scaffold.py",
+        "tests/test_basic.py"
+      ],
+      "pr": 4577,
+      "pr_identity_provenance": "two-parent merge subject prefix; remote PR page not queried",
+      "pr_url": "https://github.com/pallets/flask/pull/4577",
+      "python_test_paths": [
+        "tests/test_basic.py"
+      ],
+      "sha": "a52a7db6c9760adba6ceefa038b6ab69c207d7f9",
+      "source_python_paths": [
+        "src/flask/app.py",
+        "src/flask/blueprints.py",
+        "src/flask/scaffold.py"
+      ],
+      "subject": "Merge pull request #4577 from hallacy/hallacy/fix_4571",
+      "task_id": "pr-4577",
+      "test_patch_bytes": 5400,
+      "test_patch_sha256": "99d0b2d198ad0a35993ba88c0136ec960bc1387da3d4b6c01aa8a7004722012c",
+      "test_paths": [
+        "tests/test_basic.py"
+      ],
+      "timestamp": 1653322365
+    },
+    {
+      "commit_tree": "27b5d6b47d13ba6f90cf19bf9a9df925e4a199d6",
+      "committed_at": "2022-05-14T12:50:37-07:00",
+      "full_patch_bytes": 18590,
+      "full_patch_sha256": "ee070ef0d2222ac2341ecdc3acba2ed678ab6e11d3c9c2047b50ea5cb9731f80",
+      "history_position": 308,
+      "order": 33,
+      "parent": "fac630379d31baaa1667894c2b5613304285a4bb",
+      "parent_tree": "04ab866c53c1d5c61df39272129eefbb08c58388",
+      "paths": [
+        "src/flask/app.py",
+        "src/flask/helpers.py",
+        "tests/test_helpers.py"
+      ],
+      "pr": 4580,
+      "pr_identity_provenance": "two-parent merge subject prefix; remote PR page not queried",
+      "pr_url": "https://github.com/pallets/flask/pull/4580",
+      "python_test_paths": [
+        "tests/test_helpers.py"
+      ],
+      "sha": "00e2aac9371d94011279a6340ec3e7ecc86f097e",
+      "source_python_paths": [
+        "src/flask/app.py",
+        "src/flask/helpers.py"
+      ],
+      "subject": "Merge pull request #4580 from ionesu/move_url_for_to_the_flask_app_object",
+      "task_id": "pr-4580",
+      "test_patch_bytes": 929,
+      "test_patch_sha256": "60a7bd90620f094c94dc72cb911d9f29efd50da57eb727f8bdb92eb13a8d8fd4",
+      "test_paths": [
+        "tests/test_helpers.py"
+      ],
+      "timestamp": 1652557837
+    },
+    {
+      "commit_tree": "71c5a05fd956d1e8ea1206b5ffdaca9824b7540d",
+      "committed_at": "2022-05-12T13:45:37-07:00",
+      "full_patch_bytes": 7119,
+      "full_patch_sha256": "8f802159f7d0655d2fc83928db27142688e7815ec91cd28a4c8d094793d8bbda",
+      "history_position": 310,
+      "order": 34,
+      "parent": "a25d234cdddf584528dd6af21db736b6faad27af",
+      "parent_tree": "e834d9477f69aa2c1b52bb799b1576dc87fa5eab",
+      "paths": [
+        "CHANGES.rst",
+        "src/flask/__init__.py",
+        "src/flask/app.py",
+        "src/flask/helpers.py",
+        "tests/test_helpers.py"
+      ],
+      "pr": 4576,
+      "pr_identity_provenance": "two-parent merge subject prefix; remote PR page not queried",
+      "pr_url": "https://github.com/pallets/flask/pull/4576",
+      "python_test_paths": [
+        "tests/test_helpers.py"
+      ],
+      "sha": "5512a6688193758a24ef0b6825217030da9fed21",
+      "source_python_paths": [
+        "src/flask/__init__.py",
+        "src/flask/app.py",
+        "src/flask/helpers.py"
+      ],
+      "subject": "Merge pull request #4576 from dzcode/dzcode/4567/abort-implementation",
+      "task_id": "pr-4576",
+      "test_patch_bytes": 1185,
+      "test_patch_sha256": "b3b244f952e283112e354fa80b7262a1c013791a441336c33f18a4dc535369fe",
+      "test_paths": [
+        "tests/test_helpers.py"
+      ],
+      "timestamp": 1652388337
+    },
+    {
+      "commit_tree": "771b4e253f9bbb00b0830cb0bd2c8dcf0bebca5a",
+      "committed_at": "2022-05-11T09:22:19-07:00",
+      "full_patch_bytes": 5146,
+      "full_patch_sha256": "edb6154d48f580013425495d85c89f039e3089bbc8d6996082f40e9720fae46c",
+      "history_position": 312,
+      "order": 35,
+      "parent": "bd56d19b167822a9a23e2e9e2a07ccccc36baa8d",
+      "parent_tree": "fe7f67e5c5928f062b7f87720e34a6d4218f0d69",
+      "paths": [
+        "CHANGES.rst",
+        "src/flask/__init__.py",
+        "src/flask/app.py",
+        "src/flask/helpers.py",
+        "tests/test_helpers.py"
+      ],
+      "pr": 4575,
+      "pr_identity_provenance": "two-parent merge subject prefix; remote PR page not queried",
+      "pr_url": "https://github.com/pallets/flask/pull/4575",
+      "python_test_paths": [
+        "tests/test_helpers.py"
+      ],
+      "sha": "542cf30e48881e9e206ec03c507335e5806d127d",
+      "source_python_paths": [
+        "src/flask/__init__.py",
+        "src/flask/app.py",
+        "src/flask/helpers.py"
+      ],
+      "subject": "Merge pull request #4575 from thoagland/Issue_4569_add_redirect_to_Flask_App",
+      "task_id": "pr-4575",
+      "test_patch_bytes": 810,
+      "test_patch_sha256": "ef13273bc9671e967ef9a7dda3a3271238039ede92ea72871708a61e04102b71",
+      "test_paths": [
+        "tests/test_helpers.py"
+      ],
+      "timestamp": 1652286139
+    },
+    {
+      "commit_tree": "7dcccfc86f294f880a9c83613df800c5f3409658",
+      "committed_at": "2022-05-03T11:56:11-06:00",
+      "full_patch_bytes": 5385,
+      "full_patch_sha256": "530168868a785766888a0a230be43e93e86a2b258028e2165ba2a9a94753cff5",
+      "history_position": 314,
+      "order": 36,
+      "parent": "f976d5bb88216e921a96998f767df31d7039e4ef",
+      "parent_tree": "96cbda90ad05a95fd5e421a35599605ea17cbd27",
+      "paths": [
+        "CHANGES.rst",
+        "src/flask/scaffold.py",
+        "tests/test_basic.py",
+        "tests/test_user_error_handler.py"
+      ],
+      "pr": 4560,
+      "pr_identity_provenance": "two-parent merge subject prefix; remote PR page not queried",
+      "pr_url": "https://github.com/pallets/flask/pull/4560",
+      "python_test_paths": [
+        "tests/test_basic.py",
+        "tests/test_user_error_handler.py"
+      ],
+      "sha": "127df57a06ec7b1a8b698206b1bdefc93248de5a",
+      "source_python_paths": [
+        "src/flask/scaffold.py"
+      ],
+      "subject": "Merge pull request #4560 from qingpeng9802/fix-old-behavior",
+      "task_id": "pr-4560",
+      "test_patch_bytes": 2408,
+      "test_patch_sha256": "8af0e0a4240bd8543ba7a11b51832e2d77701b68b934e9dbae6c671f349a9916",
+      "test_paths": [
+        "tests/test_basic.py",
+        "tests/test_user_error_handler.py"
+      ],
+      "timestamp": 1651600571
+    },
+    {
+      "commit_tree": "66c882bba885b7cff20275f167f89c6dcf1bd4a8",
+      "committed_at": "2022-03-25T12:14:29-07:00",
+      "full_patch_bytes": 12304,
+      "full_patch_sha256": "b4e654a53a8a31df6a1199d439233ee32d7fd6a399b21ec23dbab55861ece8b1",
+      "history_position": 326,
+      "order": 37,
+      "parent": "425a62686f094de236a5a9eb1d6885de4730efa5",
+      "parent_tree": "78f89823bf0af4ba8c39aef3ecaa77acee6e9581",
+      "paths": [
+        "CHANGES.rst",
+        "docs/config.rst",
+        "src/flask/config.py",
+        "tests/test_config.py"
+      ],
+      "pr": 4479,
+      "pr_identity_provenance": "two-parent merge subject prefix; remote PR page not queried",
+      "pr_url": "https://github.com/pallets/flask/pull/4479",
+      "python_test_paths": [
+        "tests/test_config.py"
+      ],
+      "sha": "2f5a2ab82ee17f5e14b8ecf0a4b3b07ceafeee98",
+      "source_python_paths": [
+        "src/flask/config.py"
+      ],
+      "subject": "Merge pull request #4479 from pgjones/env_config",
+      "task_id": "pr-4479",
+      "test_patch_bytes": 2412,
+      "test_patch_sha256": "7f9737fbe6aefd72c2be9644789ad2e8aefaf9a9c2ec0eb422c1f1ad54eb1e26",
+      "test_paths": [
+        "tests/test_config.py"
+      ],
+      "timestamp": 1648235669
+    },
+    {
+      "commit_tree": "bdd1b66be3412768933388a766065ad365cb704d",
+      "committed_at": "2022-03-23T09:18:20-07:00",
+      "full_patch_bytes": 8339,
+      "full_patch_sha256": "6cb5d4bd5c55b897c3ec308955060391843223a24adf3e69c7e1bc800764d28f",
+      "history_position": 328,
+      "order": 38,
+      "parent": "598afa0083add33a088c58183924a370be6635d5",
+      "parent_tree": "1c283d20f7029f872d64727e24b04518347418d3",
+      "paths": [
+        "src/flask/app.py",
+        "src/flask/debughelpers.py",
+        "src/flask/wrappers.py",
+        "tests/test_basic.py"
+      ],
+      "pr": 4492,
+      "pr_identity_provenance": "two-parent merge subject prefix; remote PR page not queried",
+      "pr_url": "https://github.com/pallets/flask/pull/4492",
+      "python_test_paths": [
+        "tests/test_basic.py"
+      ],
+      "sha": "ce7b884b73621b59ba184aa89b67d5c5780f50eb",
+      "source_python_paths": [
+        "src/flask/app.py",
+        "src/flask/debughelpers.py",
+        "src/flask/wrappers.py"
+      ],
+      "subject": "Merge pull request #4492 from pallets/debug-messages",
+      "task_id": "pr-4492",
+      "test_patch_bytes": 1866,
+      "test_patch_sha256": "90ca221f2bc09ab991595c1c06a337ae3272d67f3efaa4f847bc6383030b8743",
+      "test_paths": [
+        "tests/test_basic.py"
+      ],
+      "timestamp": 1648052300
+    },
+    {
+      "commit_tree": "522a7ac1d4489ea917837dedaacd205c37956216",
+      "committed_at": "2021-11-12T09:54:10-08:00",
+      "full_patch_bytes": 23856,
+      "full_patch_sha256": "30755c2a23a9e09448076996048248cbbbef431570a9f8e1717adb9686162be6",
+      "history_position": 362,
+      "order": 39,
+      "parent": "ea93a52d7d94ba093bbce4680c622cc4fc9771d8",
+      "parent_tree": "d007f940831097f80803fbf87f7cf98620959c14",
+      "paths": [
+        "CHANGES.rst",
+        "docs/api.rst",
+        "src/flask/__init__.py",
+        "src/flask/blueprints.py",
+        "src/flask/cli.py",
+        "src/flask/config.py",
+        "src/flask/helpers.py",
+        "src/flask/json/__init__.py",
+        "tests/test_blueprints.py",
+        "tests/test_cli.py"
+      ],
+      "pr": 4337,
+      "pr_identity_provenance": "two-parent merge subject prefix; remote PR page not queried",
+      "pr_url": "https://github.com/pallets/flask/pull/4337",
+      "python_test_paths": [
+        "tests/test_blueprints.py",
+        "tests/test_cli.py"
+      ],
+      "sha": "7620cb70dbcbf71bca651e6f2eef3cbb05999272",
+      "source_python_paths": [
+        "src/flask/__init__.py",
+        "src/flask/blueprints.py",
+        "src/flask/cli.py",
+        "src/flask/config.py",
+        "src/flask/helpers.py",
+        "src/flask/json/__init__.py"
+      ],
+      "subject": "Merge pull request #4337 from pallets/remove-deprecated-code",
+      "task_id": "pr-4337",
+      "test_patch_bytes": 5433,
+      "test_patch_sha256": "2964ae489d70328c2e7942afbc59b386408c3b93812d3df22fe7df2942c6f3d4",
+      "test_paths": [
+        "tests/test_blueprints.py",
+        "tests/test_cli.py"
+      ],
+      "timestamp": 1636739650
+    },
+    {
+      "commit_tree": "276fccc49bffab5d12155cdbecd09838902125e5",
+      "committed_at": "2021-05-14T08:17:37-07:00",
+      "full_patch_bytes": 4129,
+      "full_patch_sha256": "85b5bb7d02f900e7efa1ec61abbc38f9d2d97605b9022972f56493f2e1bc87a3",
+      "history_position": 402,
+      "order": 40,
+      "parent": "636f195bb538864053bd0cc8b37844818a1fcd3d",
+      "parent_tree": "6262f84549f82d01b0c6412fd4bd8eb24644587e",
+      "paths": [
+        "CHANGES.rst",
+        "src/flask/ctx.py",
+        "tests/test_converters.py",
+        "tests/test_session_interface.py"
+      ],
+      "pr": 4055,
+      "pr_identity_provenance": "two-parent merge subject prefix; remote PR page not queried",
+      "pr_url": "https://github.com/pallets/flask/pull/4055",
+      "python_test_paths": [
+        "tests/test_converters.py",
+        "tests/test_session_interface.py"
+      ],
+      "sha": "9039534eee6a87da98a1dee9e4338d1b73e861f8",
+      "source_python_paths": [
+        "src/flask/ctx.py"
+      ],
+      "subject": "Merge pull request #4055 from pallets/converter-session",
+      "task_id": "pr-4055",
+      "test_patch_bytes": 2365,
+      "test_patch_sha256": "37c16e0af1a78705f551245dd2659537fe8782c0f27cb25b7619a2f97802544d",
+      "test_paths": [
+        "tests/test_converters.py",
+        "tests/test_session_interface.py"
+      ],
+      "timestamp": 1621005457
+    },
+    {
+      "commit_tree": "4cc2d7972e89ea74f7f2230db86f3d7c3f6e4e8f",
+      "committed_at": "2021-05-03T06:23:00-07:00",
+      "full_patch_bytes": 17213,
+      "full_patch_sha256": "27e17369ca82a9130bf8ee6937086eae9bac444de3a1b95218ace65761d0baa0",
+      "history_position": 419,
+      "order": 41,
+      "parent": "188f4785adc4eddd0b185f33b400c2812915624f",
+      "parent_tree": "e5b96b70521dfe271e8acd4ab1e3edcec02e620b",
+      "paths": [
+        "docs/async-await.rst",
+        "src/flask/app.py",
+        "src/flask/blueprints.py",
+        "src/flask/helpers.py",
+        "src/flask/scaffold.py",
+        "tests/test_async.py"
+      ],
+      "pr": 3989,
+      "pr_identity_provenance": "two-parent merge subject prefix; remote PR page not queried",
+      "pr_url": "https://github.com/pallets/flask/pull/3989",
+      "python_test_paths": [
+        "tests/test_async.py"
+      ],
+      "sha": "47f0e799db8d8e379a1fd9bf48ce3a8b7d5bfe73",
+      "source_python_paths": [
+        "src/flask/app.py",
+        "src/flask/blueprints.py",
+        "src/flask/helpers.py",
+        "src/flask/scaffold.py"
+      ],
+      "subject": "Merge pull request #3989 from pgjones/async",
+      "task_id": "pr-3989",
+      "test_patch_bytes": 695,
+      "test_patch_sha256": "fb53a040a7c4f0d5682b4e67f9ca6ea1fb3b262d6bbbcaf0f84edd631c4d0f46",
+      "test_paths": [
+        "tests/test_async.py"
+      ],
+      "timestamp": 1620048180
+    },
+    {
+      "commit_tree": "4a3df195ff3ff75cc39fb8507bbfd86f05158229",
+      "committed_at": "2021-04-16T06:28:53-07:00",
+      "full_patch_bytes": 1812,
+      "full_patch_sha256": "b40b15c83772d05a25d3135552f22bdbe846f8ff21b6fd745ebf5c082ccfe042",
+      "history_position": 434,
+      "order": 42,
+      "parent": "fab26dcbe9215492420d28c47d50167716faaf4f",
+      "parent_tree": "294e78526c1d103d8c9585e1c3fbadfd811cb911",
+      "paths": [
+        "src/flask/app.py",
+        "src/flask/helpers.py",
+        "tests/test_async.py"
+      ],
+      "pr": 3964,
+      "pr_identity_provenance": "two-parent merge subject prefix; remote PR page not queried",
+      "pr_url": "https://github.com/pallets/flask/pull/3964",
+      "python_test_paths": [
+        "tests/test_async.py"
+      ],
+      "sha": "39887ee4dfafb172312ba7db8c60728dd7181f9f",
+      "source_python_paths": [
+        "src/flask/app.py",
+        "src/flask/helpers.py"
+      ],
+      "subject": "Merge pull request #3964 from pgjones/fix",
+      "task_id": "pr-3964",
+      "test_patch_bytes": 800,
+      "test_patch_sha256": "e595be95dbd4d1a24fd7818353a06859fb884971a62e3def782237c5383c93ac",
+      "test_paths": [
+        "tests/test_async.py"
+      ],
+      "timestamp": 1618579733
+    },
+    {
+      "commit_tree": "9638cdea36e0295a92babdd60f167c816d7413d1",
+      "committed_at": "2021-04-14T09:30:48-07:00",
+      "full_patch_bytes": 13698,
+      "full_patch_sha256": "23b05382d59ed95adbf7c35d49edd820227d444cc70306151d01403790d0a8b9",
+      "history_position": 439,
+      "order": 43,
+      "parent": "85dce2c836fe03aefc07b7f4e0aec575e170f1cd",
+      "parent_tree": "e66751d8aca17484ed83547f909a4733400567f0",
+      "paths": [
+        "CHANGES.rst",
+        "docs/blueprints.rst",
+        "src/flask/app.py",
+        "src/flask/blueprints.py",
+        "tests/test_blueprints.py"
+      ],
+      "pr": 3923,
+      "pr_identity_provenance": "two-parent merge subject prefix; remote PR page not queried",
+      "pr_url": "https://github.com/pallets/flask/pull/3923",
+      "python_test_paths": [
+        "tests/test_blueprints.py"
+      ],
+      "sha": "64213fc0214c1044fa2c9e60d0e2683e75d125c0",
+      "source_python_paths": [
+        "src/flask/app.py",
+        "src/flask/blueprints.py"
+      ],
+      "subject": "Merge pull request #3923 from pgjones/nested",
+      "task_id": "pr-3923",
+      "test_patch_bytes": 1860,
+      "test_patch_sha256": "d8aad0037d0b34ce04f0fed2a81045102e298fee39baf438d885ee3e5def1186",
+      "test_paths": [
+        "tests/test_blueprints.py"
+      ],
+      "timestamp": 1618417848
+    },
+    {
+      "commit_tree": "061181fe500506ad0d8e38b3dd9cbdc929bcfa86",
+      "committed_at": "2021-03-10T06:30:24-08:00",
+      "full_patch_bytes": 2271,
+      "full_patch_sha256": "d106d7b574ff67c8f66a4eaa87bf3ce3e3c6d28bf171171ac55b2c728d32943a",
+      "history_position": 448,
+      "order": 44,
+      "parent": "6d9d79c70da0104474564dfed510fc74eef1cb85",
+      "parent_tree": "a20f44058bb0ea1964baca1bebd1e537e83c8dba",
+      "paths": [
+        "src/flask/cli.py",
+        "tests/test_apps/.env",
+        "tests/test_cli.py"
+      ],
+      "pr": 3932,
+      "pr_identity_provenance": "two-parent merge subject prefix; remote PR page not queried",
+      "pr_url": "https://github.com/pallets/flask/pull/3932",
+      "python_test_paths": [
+        "tests/test_cli.py"
+      ],
+      "sha": "3316604822644889a373018490f2534a1dafd9aa",
+      "source_python_paths": [
+        "src/flask/cli.py"
+      ],
+      "subject": "Merge pull request #3932 from greyli/set-encoding",
+      "task_id": "pr-3932",
+      "test_patch_bytes": 1207,
+      "test_patch_sha256": "75ce3baf74cbac33f801e9d479996549fc7eca30bdb60e3f33742934d5e4f71a",
+      "test_paths": [
+        "tests/test_apps/.env",
+        "tests/test_cli.py"
+      ],
+      "timestamp": 1615386624
+    },
+    {
+      "commit_tree": "c8a8111cd1e0de4a6821618d896a04117ba3b88e",
+      "committed_at": "2021-03-08T08:57:58-08:00",
+      "full_patch_bytes": 3282,
+      "full_patch_sha256": "cf55a227604129211fa71d1684d1e32c298ef6d9ad17be3acab2c2bf15fc160f",
+      "history_position": 450,
+      "order": 45,
+      "parent": "82d69cd06c7ff738774c5ab7ef48bc6251f5c014",
+      "parent_tree": "22e8c574c069c2150ae2f8c0b549d62ff372d097",
+      "paths": [
+        "CHANGES.rst",
+        "src/flask/scaffold.py",
+        "tests/test_basic.py"
+      ],
+      "pr": 3907,
+      "pr_identity_provenance": "two-parent merge subject prefix; remote PR page not queried",
+      "pr_url": "https://github.com/pallets/flask/pull/3907",
+      "python_test_paths": [
+        "tests/test_basic.py"
+      ],
+      "sha": "5fea7caba29b872e5b2e3511d1c1732d0fe1ba3e",
+      "source_python_paths": [
+        "src/flask/scaffold.py"
+      ],
+      "subject": "Merge pull request #3907 from pgjones/sugar",
+      "task_id": "pr-3907",
+      "test_patch_bytes": 887,
+      "test_patch_sha256": "14bd37588efa919bb4a3720ea2ecb77a5c7d0c95f9f927ec6e89879e4c4478b7",
+      "test_paths": [
+        "tests/test_basic.py"
+      ],
+      "timestamp": 1615222678
+    },
+    {
+      "commit_tree": "ca6d015ffa37342568fd53bcfbbe8ad707bad3ee",
+      "committed_at": "2021-02-25T09:51:58-08:00",
+      "full_patch_bytes": 2800,
+      "full_patch_sha256": "9d2bef319f9e8005e0e8885b430c889eeb83ee8fb0b062ed7f92c7ee35b090ad",
+      "history_position": 453,
+      "order": 46,
+      "parent": "dcd3b5c8f86c70c34a4487a943300cbf6adce9aa",
+      "parent_tree": "bea6003b957f698d3265b569f9cf9aed591c6cae",
+      "paths": [
+        "src/flask/json/__init__.py",
+        "tests/test_json.py",
+        "tests/test_json_tag.py"
+      ],
+      "pr": 3917,
+      "pr_identity_provenance": "two-parent merge subject prefix; remote PR page not queried",
+      "pr_url": "https://github.com/pallets/flask/pull/3917",
+      "python_test_paths": [
+        "tests/test_json.py",
+        "tests/test_json_tag.py"
+      ],
+      "sha": "4846e25e92638a1db5aa2b41f65eed7585366109",
+      "source_python_paths": [
+        "src/flask/json/__init__.py"
+      ],
+      "subject": "Merge pull request #3917 from greyli/fix-date-parse",
+      "task_id": "pr-3917",
+      "test_patch_bytes": 1823,
+      "test_patch_sha256": "ec5ec340aec5f7e07baa3627e2f2e6d17a6f11f950204035830b7723b9b74b97",
+      "test_paths": [
+        "tests/test_json.py",
+        "tests/test_json_tag.py"
+      ],
+      "timestamp": 1614275518
+    },
+    {
+      "commit_tree": "ee79d8f35988c1f8726ca62a7ed93827cc92085f",
+      "committed_at": "2021-02-01T22:57:42-08:00",
+      "full_patch_bytes": 8459,
+      "full_patch_sha256": "e7f5dba961b2e78a48186c01e16e97cad69fa3ff95c65216624c105fa7c46b52",
+      "history_position": 459,
+      "order": 47,
+      "parent": "fdf5d11b515aa2d0937ccc31ef7f20b94d3a8794",
+      "parent_tree": "8a787031a997482ff241a2cacbb52738db4a7312",
+      "paths": [
+        "CHANGES.rst",
+        "docs/api.rst",
+        "docs/patterns/jquery.rst",
+        "docs/templating.rst",
+        "src/flask/app.py",
+        "src/flask/json/__init__.py",
+        "tests/test_json.py"
+      ],
+      "pr": 3895,
+      "pr_identity_provenance": "two-parent merge subject prefix; remote PR page not queried",
+      "pr_url": "https://github.com/pallets/flask/pull/3895",
+      "python_test_paths": [
+        "tests/test_json.py"
+      ],
+      "sha": "192f4ae0b2a4e7d73c0b0472e53e33250175d786",
+      "source_python_paths": [
+        "src/flask/app.py",
+        "src/flask/json/__init__.py"
+      ],
+      "subject": "Merge pull request #3895 from pallets/jinja-tojson",
+      "task_id": "pr-3895",
+      "test_patch_bytes": 1561,
+      "test_patch_sha256": "2fcb431113c07584cd5963f6274ec3dd7e39023d51b9b901ac239927115ae09f",
+      "test_paths": [
+        "tests/test_json.py"
+      ],
+      "timestamp": 1612249062
+    },
+    {
+      "commit_tree": "8a787031a997482ff241a2cacbb52738db4a7312",
+      "committed_at": "2021-02-01T20:45:02-08:00",
+      "full_patch_bytes": 2541,
+      "full_patch_sha256": "bf1ebf8a09370ad10c4cf5eebdffd8a19749a69b6a1485edd911b7d4c47950e5",
+      "history_position": 460,
+      "order": 48,
+      "parent": "15f0fc2d24a6e5cc35216b81b360be6ab89a7a4c",
+      "parent_tree": "351ad64ac56340a648270c11ae3e98ce62c95a4b",
+      "paths": [
+        "CHANGES.rst",
+        "src/flask/ctx.py",
+        "tests/test_session_interface.py"
+      ],
+      "pr": 3794,
+      "pr_identity_provenance": "two-parent merge subject prefix; remote PR page not queried",
+      "pr_url": "https://github.com/pallets/flask/pull/3794",
+      "python_test_paths": [
+        "tests/test_session_interface.py"
+      ],
+      "sha": "fdf5d11b515aa2d0937ccc31ef7f20b94d3a8794",
+      "source_python_paths": [
+        "src/flask/ctx.py"
+      ],
+      "subject": "Merge pull request #3794 from mbpreble/open-session-request-endpoint-none",
+      "task_id": "pr-3794",
+      "test_patch_bytes": 959,
+      "test_patch_sha256": "92b32699684a06672da05ba1b89c72523d3b0cb55883f492903a3fe4ddaef5bd",
+      "test_paths": [
+        "tests/test_session_interface.py"
+      ],
+      "timestamp": 1612241102
+    },
+    {
+      "commit_tree": "373f9a98e6eb1d1833101396966a7a4440fd5a47",
+      "committed_at": "2020-11-05T09:33:13-08:00",
+      "full_patch_bytes": 46133,
+      "full_patch_sha256": "744eaa7c5d2d732497f68b264ceb277a8e3e2886759b5488baa2ca4366b6a13a",
+      "history_position": 489,
+      "order": 49,
+      "parent": "15a49e72977d7a44ec4f54de7078053fbfb4f3b6",
+      "parent_tree": "c328310593eedf55271d70574d24f2163fca603b",
+      "paths": [
+        "CHANGES.rst",
+        "docs/config.rst",
+        "docs/patterns/fileuploads.rst",
+        "src/flask/app.py",
+        "src/flask/helpers.py",
+        "tests/test_blueprints.py",
+        "tests/test_helpers.py",
+        "tests/test_regression.py"
+      ],
+      "pr": 3828,
+      "pr_identity_provenance": "two-parent merge subject prefix; remote PR page not queried",
+      "pr_url": "https://github.com/pallets/flask/pull/3828",
+      "python_test_paths": [
+        "tests/test_blueprints.py",
+        "tests/test_helpers.py",
+        "tests/test_regression.py"
+      ],
+      "sha": "bbb273bb761461ab329f03ff2d9002f6cb81e2a4",
+      "source_python_paths": [
+        "src/flask/app.py",
+        "src/flask/helpers.py"
+      ],
+      "subject": "Merge pull request #3828 from pallets/move-send-file",
+      "task_id": "pr-3828",
+      "test_patch_bytes": 16002,
+      "test_patch_sha256": "c4c0cfd30377f8f6240f76571e90469d143e691e5bf19827e9cffd5e3def9a4f",
+      "test_paths": [
+        "tests/test_blueprints.py",
+        "tests/test_helpers.py",
+        "tests/test_regression.py"
+      ],
+      "timestamp": 1604597593
+    },
+    {
+      "commit_tree": "15a3af9d5d2693cc3ce589f51fd9ba869b1374e6",
+      "committed_at": "2020-11-04T18:16:05-08:00",
+      "full_patch_bytes": 2675,
+      "full_patch_sha256": "108180f111ae1c36b24368dd07c5efb71eeb6e4066f0172b90fbd8f96234dada",
+      "history_position": 491,
+      "order": 50,
+      "parent": "7a444c5dab97d640282ec8fc4838bef2c128273f",
+      "parent_tree": "86e7793766fb1a99d2f163ab4068bb56bbba7f32",
+      "paths": [
+        "CHANGES.rst",
+        "src/flask/sessions.py",
+        "tests/test_basic.py"
+      ],
+      "pr": 3726,
+      "pr_identity_provenance": "1-parent PR-title subject suffix; remote PR page not queried",
+      "pr_url": "https://github.com/pallets/flask/pull/3726",
+      "python_test_paths": [
+        "tests/test_basic.py"
+      ],
+      "sha": "22987b68173e9bf56cc450cb7aeb93f5480a2660",
+      "source_python_paths": [
+        "src/flask/sessions.py"
+      ],
+      "subject": "include samesite and secure when removing session cookie (#3726)",
+      "task_id": "pr-3726",
+      "test_patch_bytes": 842,
+      "test_patch_sha256": "549c7fcb493643008197082a02b62d376901589ff63d639a5ea33adb65374275",
+      "test_paths": [
+        "tests/test_basic.py"
+      ],
+      "timestamp": 1604542565
+    },
+    {
+      "commit_tree": "ac0e99b8155308bb6bbf9aee8056f8c67186447e",
+      "committed_at": "2020-07-30T18:48:45-07:00",
+      "full_patch_bytes": 6432,
+      "full_patch_sha256": "5ec821e5bb2af905519ee141acdbe07e3c2a6c8bfb7f5365a9bc9830cab18204",
+      "history_position": 527,
+      "order": 51,
+      "parent": "fd0a6084498e9d1990ddcf96366e8ac27b63428a",
+      "parent_tree": "c582780053f4892d7aa1f4a9de71fd53b71db70a",
+      "paths": [
+        "CHANGES.rst",
+        "src/flask/cli.py",
+        "tests/conftest.py",
+        "tests/test_cli.py"
+      ],
+      "pr": 3711,
+      "pr_identity_provenance": "two-parent merge subject prefix; remote PR page not queried",
+      "pr_url": "https://github.com/pallets/flask/pull/3711",
+      "python_test_paths": [
+        "tests/conftest.py",
+        "tests/test_cli.py"
+      ],
+      "sha": "6638432457320fd2db9c74b9135afef370ed96f0",
+      "source_python_paths": [
+        "src/flask/cli.py"
+      ],
+      "subject": "Merge pull request #3711 from pallets/cli-loading-error",
+      "task_id": "pr-3711",
+      "test_patch_bytes": 2695,
+      "test_patch_sha256": "ce1052b98af7dc26ec6f4bdf78636b1bbac7a031a596f2cd0a11abf626f79886",
+      "test_paths": [
+        "tests/conftest.py",
+        "tests/test_cli.py"
+      ],
+      "timestamp": 1596160125
+    },
+    {
+      "commit_tree": "9983048255842ef5b7c8206b14c61eca0046e087",
+      "committed_at": "2020-07-23T16:57:19-07:00",
+      "full_patch_bytes": 2564,
+      "full_patch_sha256": "ab60b3bd0ca79667e40bc1fbe08d0ad69bad63989fd9df9d8ed8b453d878ab2f",
+      "history_position": 536,
+      "order": 52,
+      "parent": "6f2fdc5ac4ad869a21c4c0281d7fa1eb8aa5a689",
+      "parent_tree": "3f584ea9e128279ed95c39f7c6de0a5628c7b54e",
+      "paths": [
+        "CHANGES.rst",
+        "src/flask/app.py",
+        "tests/test_basic.py"
+      ],
+      "pr": 3684,
+      "pr_identity_provenance": "two-parent merge subject prefix; remote PR page not queried",
+      "pr_url": "https://github.com/pallets/flask/pull/3684",
+      "python_test_paths": [
+        "tests/test_basic.py"
+      ],
+      "sha": "2fa8eb3cfebd7d797f8d27bfd05ea5f63985665f",
+      "source_python_paths": [
+        "src/flask/app.py"
+      ],
+      "subject": "Merge pull request #3684 from MLH-Fellowship/3628-duplicate-headers",
+      "task_id": "pr-3684",
+      "test_patch_bytes": 1093,
+      "test_patch_sha256": "8a81cb37ffe1e97639a05022b5633319b2917d31d90df2caddd14188fb5810b8",
+      "test_paths": [
+        "tests/test_basic.py"
+      ],
+      "timestamp": 1595548639
+    },
+    {
+      "commit_tree": "2e098bec9c104ae2bea42f2a27e778c0656da5c3",
+      "committed_at": "2020-07-18T13:14:09-04:00",
+      "full_patch_bytes": 2112,
+      "full_patch_sha256": "bb7e1b7132472fa71aa1187768fa11b97bf1c36d1105770ff3e85a20c1f91f04",
+      "history_position": 539,
+      "order": 53,
+      "parent": "65a0a4b585781b5dd3db4009de3195e2ac7f049f",
+      "parent_tree": "788306e4745f701cc5f9309f967ae2cf681a8d7f",
+      "paths": [
+        "CHANGES.rst",
+        "src/flask/cli.py",
+        "tests/test_cli.py"
+      ],
+      "pr": 3560,
+      "pr_identity_provenance": "two-parent merge subject prefix; remote PR page not queried",
+      "pr_url": "https://github.com/pallets/flask/pull/3560",
+      "python_test_paths": [
+        "tests/test_cli.py"
+      ],
+      "sha": "a40c381ffdc4c28a19a0910c4da8ec54e3ae63cf",
+      "source_python_paths": [
+        "src/flask/cli.py"
+      ],
+      "subject": "Merge pull request #3560 from greyli/fix-env-chdir",
+      "task_id": "pr-3560",
+      "test_patch_bytes": 559,
+      "test_patch_sha256": "9b2aa558e8f3c5a02acb535d26114e42688813176c8505adab1c30683a1594ab",
+      "test_paths": [
+        "tests/test_cli.py"
+      ],
+      "timestamp": 1595092449
+    },
+    {
+      "commit_tree": "c20275a5391c351298098eb34cc5d70a04065dce",
+      "committed_at": "2020-07-06T13:45:03-04:00",
+      "full_patch_bytes": 1702,
+      "full_patch_sha256": "d6a721862a1e938b7d9426fc9cc2923f715764d4286eb8dad474419cfee86d1c",
+      "history_position": 544,
+      "order": 54,
+      "parent": "b82cca728341926399ef4c06a7342867f5c43c72",
+      "parent_tree": "84f369f2a9edcc35e201ad89b2d1230e51830521",
+      "paths": [
+        "CHANGES.rst",
+        "src/flask/helpers.py",
+        "tests/test_basic.py"
+      ],
+      "pr": 3579,
+      "pr_identity_provenance": "two-parent merge subject prefix; remote PR page not queried",
+      "pr_url": "https://github.com/pallets/flask/pull/3579",
+      "python_test_paths": [
+        "tests/test_basic.py"
+      ],
+      "sha": "cf5b1d028342a2f7c929a23d53367addf106064e",
+      "source_python_paths": [
+        "src/flask/helpers.py"
+      ],
+      "subject": "Merge pull request #3579 from jab/pathlib-for-static_folder",
+      "task_id": "pr-3579",
+      "test_patch_bytes": 743,
+      "test_patch_sha256": "27d52c03fc709c2d7893602a5ae8fdba143623b3ea58ab907b3c93a17c2a2d7a",
+      "test_paths": [
+        "tests/test_basic.py"
+      ],
+      "timestamp": 1594057503
+    },
+    {
+      "commit_tree": "3011fb2b1a7501346a41b9f9b1648a95961ceb2a",
+      "committed_at": "2020-04-16T10:52:06-07:00",
+      "full_patch_bytes": 1473,
+      "full_patch_sha256": "a9d25f64f66e537afdd2fc0791d25a5edf0dae6bb4a8db61559d14d75244cf2d",
+      "history_position": 573,
+      "order": 55,
+      "parent": "2062d984abd3364557a6dcbd3300cfe3e4ecf156",
+      "parent_tree": "116f27f6c4989f93f28ca88bebe7b8eb3ee13faf",
+      "paths": [
+        "src/flask/app.py",
+        "tests/test_user_error_handler.py"
+      ],
+      "pr": 3574,
+      "pr_identity_provenance": "two-parent merge subject prefix; remote PR page not queried",
+      "pr_url": "https://github.com/pallets/flask/pull/3574",
+      "python_test_paths": [
+        "tests/test_user_error_handler.py"
+      ],
+      "sha": "d091bb00c0358e9f30006a064f3dbb671b99aeae",
+      "source_python_paths": [
+        "src/flask/app.py"
+      ],
+      "subject": "Merge pull request #3574 from jackwardell/adding-error-message-to-assert",
+      "task_id": "pr-3574",
+      "test_patch_bytes": 892,
+      "test_patch_sha256": "477ec336297ba9918ac121394a95ba09720e4c00c3ce5023cd28fb85e3c9e380",
+      "test_paths": [
+        "tests/test_user_error_handler.py"
+      ],
+      "timestamp": 1587059526
+    },
+    {
+      "commit_tree": "116f27f6c4989f93f28ca88bebe7b8eb3ee13faf",
+      "committed_at": "2020-04-07T18:01:55-07:00",
+      "full_patch_bytes": 7969,
+      "full_patch_sha256": "136a173309ff014bdd65ec071f36372c29365b7e253bcd4016604712b078e185",
+      "history_position": 574,
+      "order": 56,
+      "parent": "0d04b40d130a49cef0609ac95be48013528e97d9",
+      "parent_tree": "722bc7afe5e26fed8d659e17548a17b2359a1fb6",
+      "paths": [
+        "CHANGES.rst",
+        "docs/cli.rst",
+        "src/flask/cli.py",
+        "tests/test_cli.py"
+      ],
+      "pr": 3564,
+      "pr_identity_provenance": "two-parent merge subject prefix; remote PR page not queried",
+      "pr_url": "https://github.com/pallets/flask/pull/3564",
+      "python_test_paths": [
+        "tests/test_cli.py"
+      ],
+      "sha": "2062d984abd3364557a6dcbd3300cfe3e4ecf156",
+      "source_python_paths": [
+        "src/flask/cli.py"
+      ],
+      "subject": "Merge pull request #3564 from pallets/cli-ast-parse",
+      "task_id": "pr-3564",
+      "test_patch_bytes": 622,
+      "test_patch_sha256": "47b283c49910b1e542f6509d8e66285035749c1f5174e49003b582956b676028",
+      "test_paths": [
+        "tests/test_cli.py"
+      ],
+      "timestamp": 1586307715
+    },
+    {
+      "commit_tree": "722bc7afe5e26fed8d659e17548a17b2359a1fb6",
+      "committed_at": "2020-04-07T15:57:45-07:00",
+      "full_patch_bytes": 9144,
+      "full_patch_sha256": "2c612612d9b86c8025f3f5311fe97f7f05210df4d7bb613f89c9f3d9c9458180",
+      "history_position": 575,
+      "order": 57,
+      "parent": "7e3b8abf992be711e2961bd9155bf1ae96c81b74",
+      "parent_tree": "646ba59e1fdec3253147c5603194721fb0361371",
+      "paths": [
+        "CHANGES.rst",
+        "docs/cli.rst",
+        "src/flask/cli.py",
+        "tests/test_apps/cliapp/factory.py",
+        "tests/test_cli.py"
+      ],
+      "pr": 3563,
+      "pr_identity_provenance": "two-parent merge subject prefix; remote PR page not queried",
+      "pr_url": "https://github.com/pallets/flask/pull/3563",
+      "python_test_paths": [
+        "tests/test_apps/cliapp/factory.py",
+        "tests/test_cli.py"
+      ],
+      "sha": "0d04b40d130a49cef0609ac95be48013528e97d9",
+      "source_python_paths": [
+        "src/flask/cli.py"
+      ],
+      "subject": "Merge pull request #3563 from pallets/deprecate-script-info-arg",
+      "task_id": "pr-3563",
+      "test_patch_bytes": 5170,
+      "test_patch_sha256": "fca8413689631a518211df19c0aa80e12014f6e093556ca6af055c1044ef1708",
+      "test_paths": [
+        "tests/test_apps/cliapp/factory.py",
+        "tests/test_cli.py"
+      ],
+      "timestamp": 1586300265
+    },
+    {
+      "commit_tree": "d9328c6c9f9d8ce45f085882f16c484167612815",
+      "committed_at": "2020-02-10T17:56:11-08:00",
+      "full_patch_bytes": 2554,
+      "full_patch_sha256": "ac20943ef50e8be880164fb133f68499eeb3b1c1f47aece06af79f4dfc1a6e9c",
+      "history_position": 591,
+      "order": 58,
+      "parent": "982663d0631e1cb3bf4e66d567dc83373a3046dd",
+      "parent_tree": "539d7a8c38bba40674f871636370446e3f08ce93",
+      "paths": [
+        "CHANGES.rst",
+        "src/flask/cli.py",
+        "tests/test_cli.py"
+      ],
+      "pr": 3492,
+      "pr_identity_provenance": "two-parent merge subject prefix; remote PR page not queried",
+      "pr_url": "https://github.com/pallets/flask/pull/3492",
+      "python_test_paths": [
+        "tests/test_cli.py"
+      ],
+      "sha": "b074a2eec95aefd252af9be120078cfa6854a2d9",
+      "source_python_paths": [
+        "src/flask/cli.py"
+      ],
+      "subject": "Merge pull request #3492 from pallets/cryptography",
+      "task_id": "pr-3492",
+      "test_patch_bytes": 908,
+      "test_patch_sha256": "e6db865941b6f75fd16185935aec39f1b05b90a7af727ef9c7e394c66c2f9054",
+      "test_paths": [
+        "tests/test_cli.py"
+      ],
+      "timestamp": 1581386171
+    },
+    {
+      "commit_tree": "74f5b61e0474f4571e6b9fa8bf7c64790dc2c331",
+      "committed_at": "2020-02-10T17:28:14-08:00",
+      "full_patch_bytes": 1188,
+      "full_patch_sha256": "93f80820d9fe9d0bd01a43d1f8ed52b42872490d9fc3e6df989f7bde815c8c89",
+      "history_position": 593,
+      "order": 59,
+      "parent": "28d09ae0fc518f2b3e9138f0fdfc2566459a52e3",
+      "parent_tree": "3a862fc3811ca6d057809296b5b4f6e250a7c544",
+      "paths": [
+        "src/flask/ctx.py",
+        "tests/test_basic.py"
+      ],
+      "pr": 3453,
+      "pr_identity_provenance": "two-parent merge subject prefix; remote PR page not queried",
+      "pr_url": "https://github.com/pallets/flask/pull/3453",
+      "python_test_paths": [
+        "tests/test_basic.py"
+      ],
+      "sha": "986871bf4eb85ae62124e71ed579b6baa0ddaeae",
+      "source_python_paths": [
+        "src/flask/ctx.py"
+      ],
+      "subject": "Merge pull request #3453 from noviluni/remove_redundant_parentheses",
+      "task_id": "pr-3453",
+      "test_patch_bytes": 625,
+      "test_patch_sha256": "efb6ce6f68f817c5c875898ae922bc23e6251adf9ac27c9fd83d373535a001d9",
+      "test_paths": [
+        "tests/test_basic.py"
+      ],
+      "timestamp": 1581384494
+    },
+    {
+      "commit_tree": "4d604ca3aeb728fe30d8e971151a4651b993ce80",
+      "committed_at": "2020-02-10T13:15:24-08:00",
+      "full_patch_bytes": 1231,
+      "full_patch_sha256": "a0846e90198a12174cd17ea6337bd22700ca895f34112d0c817f608e8fd5f47f",
+      "history_position": 596,
+      "order": 60,
+      "parent": "5ceb0a59dd189675710da58f88719683a4edcb66",
+      "parent_tree": "be5bce935e52d16113c02280ad9685c8fb4b1d50",
+      "paths": [
+        "src/flask/app.py",
+        "tests/test_basic.py"
+      ],
+      "pr": 3498,
+      "pr_identity_provenance": "two-parent merge subject prefix; remote PR page not queried",
+      "pr_url": "https://github.com/pallets/flask/pull/3498",
+      "python_test_paths": [
+        "tests/test_basic.py"
+      ],
+      "sha": "a3e4395a42574386a15ef6ca1afa83ff9787608f",
+      "source_python_paths": [
+        "src/flask/app.py"
+      ],
+      "subject": "Merge pull request #3498 from raymond-devries/3445-traceback-for-none",
+      "task_id": "pr-3498",
+      "test_patch_bytes": 489,
+      "test_patch_sha256": "673d5bc5f1c965a003604b42386a58e5078f8047d87e368152ae959300a194d1",
+      "test_paths": [
+        "tests/test_basic.py"
+      ],
+      "timestamp": 1581369324
+    }
+  ],
+  "counts": {
+    "first_parent_commits_scanned_in_window": 600,
+    "single_parent_squash_pr_landings": 352,
+    "static_rejections_by_first_reason": {
+      "missing_source_or_python_test": 115,
+      "more_than_four_test_paths": 1,
+      "not_unambiguous_pr_landing": 248,
+      "path_count_outside_2_12": 163,
+      "path_outside_frozen_roots": 8,
+      "status_not_A_or_M": 5
+    },
+    "structurally_eligible": 60
+  },
+  "created_at_utc": "2026-08-24T11:55:37.608+00:00",
+  "cutoff_epoch": 1577836800,
+  "dynamic_budget": 200,
+  "head": "d318b683471101618febed18996405ad26462110",
+  "head_tree": "a8da09a58146cd39bc2956bfa5d2f468bf592166",
+  "measurement": "second-repository-static-candidate-ledger",
+  "order": "first-parent newest-to-oldest",
+  "repository": "C:\\Users\\joshp\\Desktop\\Blast-Radius\\exploratory\\causal\\repositories\\pallets-flask",
+  "repository_url": "https://github.com/pallets/flask.git",
+  "schema_version": 1,
+  "selection_rule": "exploratory/causal/SELECTION-RULE.md",
+  "selection_rule_sha256": "879ddb5a78505ed13916feafabadacb471b7f731a9d174e9db7fc9c022669932",
+  "target_tasks": 30
+}

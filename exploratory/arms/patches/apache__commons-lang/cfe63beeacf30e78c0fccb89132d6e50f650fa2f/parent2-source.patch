@@ -1,0 +1,13 @@
+diff --git a/src/changes/changes.xml b/src/changes/changes.xml
+index 36fc671e55fad6df5477be90723ace4867326385..e82989b036e688b9fac50b824d7b53408a047836 100644
+--- a/src/changes/changes.xml
++++ b/src/changes/changes.xml
+@@ -22,7 +22,7 @@
+   <body>
+ 
+   <release version="3.5" date="tba" description="tba">
+-    <action issue="LANG-1127" type="add" dev="chas">Unit test helpers which set and reset default Locale and TimeZone</action>
++    <action issue="LANG-1127" type="add" dev="chas, britter">Use JUnit rules to set and reset the default Locale and TimeZone</action>
+     <action issue="LANG-1128" type="fix" dev="britter" due-to="jacktan1991">JsonToStringStyle doesn't handle chars and objects correctly</action>
+     <action issue="LANG-456" type="fix" dev="britter" due-to="Bob Fields, Woosan Ko, Bruno P. Kinoshita">HashCodeBuilder throws StackOverflowError in bidirectional navigable association</action>
+     <action issue="LANG-1126" type="fix" dev="britter">DateFormatUtilsTest.testSMTP depends on the default Locale</action>

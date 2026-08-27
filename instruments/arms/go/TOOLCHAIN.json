@@ -1,0 +1,17 @@
+{
+  "schema_version": 1,
+  "go_version_output": "go version go1.16.15 windows/amd64",
+  "installation": "project-local tools/go/ (ignored build dependency, not a system install)",
+  "archive": {
+    "filename": "go1.16.15.windows-amd64.zip",
+    "url": "https://go.dev/dl/go1.16.15.windows-amd64.zip",
+    "size_bytes": 144126817,
+    "sha256": "0d6e551206b6d744d1286e62abf46aa2f17fed90f07ec4624a0448d71380407d"
+  },
+  "extracted_inventory": {
+    "files": 9807,
+    "uncompressed_file_bytes": 406176951,
+    "matches_archive_file_count_and_bytes": true
+  },
+  "selection_reason": "Candidate bases span 2013-2018 and include GOPATH and early-module layouts; Go 1.16.15 supports both without automatic toolchain switching. Compatibility remains a per-site gate outcome."
+}

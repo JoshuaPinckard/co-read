@@ -1,0 +1,83 @@
+diff --git a/CHANGES b/CHANGES
+new file mode 100644
+index 0000000000000000000000000000000000000000..69cd27a503dbc86a566b6931a2a04543c2bb5bbb
+--- /dev/null
++++ b/CHANGES
+@@ -0,0 +1,19 @@
++Click Changelog
++===============
++
++This contains all major version changes between click releases.
++
++Version 1.1
++-----------
++
++(bugfix release, release to be decided)
++
++- fixed a bug that caused text files on Python 2 to not accept
++  native strings.
++
++Version 1.0
++-----------
++
++(no codename, released on May 21st 2014)
++
++- Initial release.
+diff --git a/click/_compat.py b/click/_compat.py
+index 3d1e2f4c9e78910a17e419d101b743305532db55..a07dbd1a3f06aef89ff0102feaf9930ef6df9953 100644
+--- a/click/_compat.py
++++ b/click/_compat.py
+@@ -4,6 +4,9 @@ import sys
+ import codecs
+ 
+ 
++PY2 = sys.version_info[0] == 2
++
++
+ def _make_text_stream(stream, encoding, errors):
+     if encoding is None:
+         encoding = get_best_encoding(stream)
+@@ -31,9 +34,20 @@ def get_best_encoding(stream):
+ 
+ class _NonClosingTextIOWrapper(io.TextIOWrapper):
+ 
+-    def __init__(self, stream, encoding, errors):
++    def __init__(self, stream, encoding, errors, **extra):
+         io.TextIOWrapper.__init__(self, _FixupStream(stream),
+-                                  encoding, errors)
++                                  encoding, errors, **extra)
++
++    # The io module is already a place where Python 2 got the
++    # python 3 text behavior forced on, so we need to unbreak
++    # it to look like python 2 stuff.
++    if PY2:
++        def write(self, x):
++            return io.TextIOWrapper.write(self, unicode(x))
++
++        def writelines(self, lines):
++            lines = map(unicode, lines)
++            return io.TextIOWrapper.writelines(self, lines)
+ 
+     def __del__(self):
+         try:
+@@ -94,7 +108,6 @@ class _FixupStream(object):
+         return True
+ 
+ 
+-PY2 = sys.version_info[0] == 2
+ if PY2:
+     text_type = unicode
+     bytes = str
+diff --git a/setup.py b/setup.py
+index f26b79af91146dd981368cf67b162aed0318df91..9d1bfacb81d66a891e09d65b5e32474e70bd7b02 100644
+--- a/setup.py
++++ b/setup.py
+@@ -5,7 +5,7 @@ setup(
+     name='click',
+     author='Armin Ronacher',
+     author_email='armin.ronacher@active-4.com',
+-    version='0.7',
++    version='1.1-dev',
+     url='http://github.com/mitsuhiko/click',
+     packages=['click'],
+     description='A simple wrapper around optparse for '

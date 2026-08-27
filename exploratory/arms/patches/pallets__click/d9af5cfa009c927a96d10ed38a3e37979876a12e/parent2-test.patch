@@ -1,0 +1,394 @@
+diff --git a/tests/conftest.py b/tests/conftest.py
+index a71db7d5811b2a88338b8741de1d7e28ef651811..9440804feb3b22cb4a28f1f9eaa7f6e1fb0ce049 100644
+--- a/tests/conftest.py
++++ b/tests/conftest.py
+@@ -1,6 +1,3 @@
+-import os
+-import tempfile
+-
+ import pytest
+ 
+ from click.testing import CliRunner
+@@ -9,19 +6,3 @@ from click.testing import CliRunner
+ @pytest.fixture(scope="function")
+ def runner(request):
+     return CliRunner()
+-
+-
+-def _check_symlinks_supported():
+-    with tempfile.TemporaryDirectory(prefix="click-pytest-") as tempdir:
+-        target = os.path.join(tempdir, "target")
+-        open(target, "w").close()
+-        link = os.path.join(tempdir, "link")
+-
+-        try:
+-            os.symlink(target, link)
+-            return True
+-        except OSError:
+-            return False
+-
+-
+-symlinks_supported = _check_symlinks_supported()
+diff --git a/tests/test_arguments.py b/tests/test_arguments.py
+index 3395c552bb9cc506ae2d683d8744eb8052f829ef..7f6629fbae38ad31e6f3b45b3433bc3dc49cc7ae 100644
+--- a/tests/test_arguments.py
++++ b/tests/test_arguments.py
+@@ -381,3 +381,23 @@ def test_nested_subcommand_help(runner):
+     result = runner.invoke(cli, ["arg1", "cmd", "arg2", "subcmd", "--help"])
+     assert not result.exception
+     assert "Usage: cli ARG1 cmd ARG2 subcmd [OPTIONS]" in result.output
++
++
++def test_when_argument_decorator_is_used_multiple_times_cls_is_preserved():
++    class CustomArgument(click.Argument):
++        pass
++
++    reusable_argument = click.argument("art", cls=CustomArgument)
++
++    @click.command()
++    @reusable_argument
++    def foo(arg):
++        pass
++
++    @click.command()
++    @reusable_argument
++    def bar(arg):
++        pass
++
++    assert isinstance(foo.params[0], CustomArgument)
++    assert isinstance(bar.params[0], CustomArgument)
+diff --git a/tests/test_command_decorators.py b/tests/test_command_decorators.py
+index 9d54d7b27b71f1f04fa3ca6827e591aa59f2d29d..cfdab3c31f944e8532899bda170e325b2b708504 100644
+--- a/tests/test_command_decorators.py
++++ b/tests/test_command_decorators.py
+@@ -11,6 +11,26 @@ def test_command_no_parens(runner):
+     assert result.output == "hello\n"
+ 
+ 
++def test_custom_command_no_parens(runner):
++    class CustomCommand(click.Command):
++        pass
++
++    class CustomGroup(click.Group):
++        command_class = CustomCommand
++
++    @click.group(cls=CustomGroup)
++    def grp():
++        pass
++
++    @grp.command
++    def cli():
++        click.echo("hello custom command class")
++
++    result = runner.invoke(cli)
++    assert result.exception is None
++    assert result.output == "hello custom command class\n"
++
++
+ def test_group_no_parens(runner):
+     @click.group
+     def grp():
+diff --git a/tests/test_commands.py b/tests/test_commands.py
+index 3a0d4b9c671c6b64a58327688e40ed5ce395aea1..ed9d96f3c5178d1f43bcadd8db89d3f3a3fd3f8b 100644
+--- a/tests/test_commands.py
++++ b/tests/test_commands.py
+@@ -95,20 +95,6 @@ def test_auto_shorthelp(runner):
+     )
+ 
+ 
+-def test_help_truncation(runner):
+-    @click.command()
+-    def cli():
+-        """This is a command with truncated help.
+-        \f
+-
+-        This text should be truncated.
+-        """
+-
+-    result = runner.invoke(cli, ["--help"])
+-    assert result.exit_code == 0
+-    assert "This is a command with truncated help." in result.output
+-
+-
+ def test_no_args_is_help(runner):
+     @click.command(no_args_is_help=True)
+     def cli():
+@@ -411,3 +397,15 @@ def test_group_invoke_collects_used_option_prefixes(runner):
+ 
+     runner.invoke(group, ["command1"])
+     assert opt_prefixes == {"-", "--", "~", "+"}
++
++
++@pytest.mark.parametrize("exc", (EOFError, KeyboardInterrupt))
++def test_abort_exceptions_with_disabled_standalone_mode(runner, exc):
++    @click.command()
++    def cli():
++        raise exc("catch me!")
++
++    rv = runner.invoke(cli, standalone_mode=False)
++    assert rv.exit_code == 1
++    assert isinstance(rv.exception.__cause__, exc)
++    assert rv.exception.__cause__.args == ("catch me!",)
+diff --git a/tests/test_defaults.py b/tests/test_defaults.py
+index 0e438eb89122cc49b5c1c34490ff818d47fc34f5..8ef5ea2922d36fbef406a5daad8073ddddb24c03 100644
+--- a/tests/test_defaults.py
++++ b/tests/test_defaults.py
+@@ -38,3 +38,24 @@ def test_nargs_plus_multiple(runner):
+     result = runner.invoke(cli, [])
+     assert not result.exception
+     assert result.output.splitlines() == ["<1|2>", "<3|4>"]
++
++
++def test_multiple_flag_default(runner):
++    """Default default for flags when multiple=True should be empty tuple."""
++
++    @click.command
++    # flag due to secondary token
++    @click.option("-y/-n", multiple=True)
++    # flag due to is_flag
++    @click.option("-f", is_flag=True, multiple=True)
++    # flag due to flag_value
++    @click.option("-v", "v", flag_value=1, multiple=True)
++    @click.option("-q", "v", flag_value=-1, multiple=True)
++    def cli(y, f, v):
++        return y, f, v
++
++    result = runner.invoke(cli, standalone_mode=False)
++    assert result.return_value == ((), (), ())
++
++    result = runner.invoke(cli, ["-y", "-n", "-f", "-v", "-q"], standalone_mode=False)
++    assert result.return_value == ((True, False), (True,), (1, -1))
+diff --git a/tests/test_formatting.py b/tests/test_formatting.py
+index 1cbf32becb3004ed068ff5f637f51dfb0efed87c..fe7e7bad1f7e0b2e414f76a2f7486ae37d7098b5 100644
+--- a/tests/test_formatting.py
++++ b/tests/test_formatting.py
+@@ -296,6 +296,26 @@ def test_truncating_docstring(runner):
+     ]
+ 
+ 
++def test_truncating_docstring_no_help(runner):
++    @click.command()
++    @click.pass_context
++    def cli(ctx):
++        """
++        \f
++
++        This text should be truncated.
++        """
++
++    result = runner.invoke(cli, ["--help"], terminal_width=60)
++    assert not result.exception
++    assert result.output.splitlines() == [
++        "Usage: cli [OPTIONS]",
++        "",
++        "Options:",
++        "  --help  Show this message and exit.",
++    ]
++
++
+ def test_removing_multiline_marker(runner):
+     @click.group()
+     def cli():
+diff --git a/tests/test_options.py b/tests/test_options.py
+index d4090c72556c51e07b6d939e6bc22564308bd45b..91249b234f33718c985f4a75c582fb1988b4ad3e 100644
+--- a/tests/test_options.py
++++ b/tests/test_options.py
+@@ -911,10 +911,6 @@ def test_is_bool_flag_is_correctly_set(option, expected):
+     [
+         ({"count": True, "multiple": True}, "'count' is not valid with 'multiple'."),
+         ({"count": True, "is_flag": True}, "'count' is not valid with 'is_flag'."),
+-        (
+-            {"multiple": True, "is_flag": True},
+-            "'multiple' is not valid with 'is_flag', use 'count'.",
+-        ),
+     ],
+ )
+ def test_invalid_flag_combinations(runner, kwargs, message):
+diff --git a/tests/test_types.py b/tests/test_types.py
+index df44d8ac98da1d2577247875e0ad0b68699531ed..0a2508882a4f3b88774194de61c0cec632e4cd16 100644
+--- a/tests/test_types.py
++++ b/tests/test_types.py
+@@ -1,10 +1,11 @@
+ import os.path
+ import pathlib
++import tempfile
+ 
+ import pytest
+-from conftest import symlinks_supported
+ 
+ import click
++from click import FileError
+ 
+ 
+ @pytest.mark.parametrize(
+@@ -104,12 +105,25 @@ def test_path_type(runner, cls, expect):
+     assert result.return_value == expect
+ 
+ 
++def _symlinks_supported():
++    with tempfile.TemporaryDirectory(prefix="click-pytest-") as tempdir:
++        target = os.path.join(tempdir, "target")
++        open(target, "w").close()
++        link = os.path.join(tempdir, "link")
++
++        try:
++            os.symlink(target, link)
++            return True
++        except OSError:
++            return False
++
++
+ @pytest.mark.skipif(
+-    not symlinks_supported, reason="The current OS or FS doesn't support symlinks."
++    not _symlinks_supported(), reason="The current OS or FS doesn't support symlinks."
+ )
+ def test_path_resolve_symlink(tmp_path, runner):
+     test_file = tmp_path / "file"
+-    test_file_str = os.fsdecode(test_file)
++    test_file_str = os.fspath(test_file)
+     test_file.write_text("")
+ 
+     path_type = click.Path(resolve_path=True)
+@@ -121,10 +135,100 @@ def test_path_resolve_symlink(tmp_path, runner):
+ 
+     abs_link = test_dir / "abs"
+     abs_link.symlink_to(test_file)
+-    abs_rv = path_type.convert(os.fsdecode(abs_link), param, ctx)
++    abs_rv = path_type.convert(os.fspath(abs_link), param, ctx)
+     assert abs_rv == test_file_str
+ 
+     rel_link = test_dir / "rel"
+     rel_link.symlink_to(pathlib.Path("..") / "file")
+-    rel_rv = path_type.convert(os.fsdecode(rel_link), param, ctx)
++    rel_rv = path_type.convert(os.fspath(rel_link), param, ctx)
+     assert rel_rv == test_file_str
++
++
++def _non_utf8_filenames_supported():
++    with tempfile.TemporaryDirectory(prefix="click-pytest-") as tempdir:
++        try:
++            f = open(os.path.join(tempdir, "\udcff"), "w")
++        except OSError:
++            return False
++
++        f.close()
++        return True
++
++
++@pytest.mark.skipif(
++    not _non_utf8_filenames_supported(),
++    reason="The current OS or FS doesn't support non-UTF-8 filenames.",
++)
++def test_path_surrogates(tmp_path, monkeypatch):
++    monkeypatch.chdir(tmp_path)
++    type = click.Path(exists=True)
++    path = pathlib.Path("\udcff")
++
++    with pytest.raises(click.BadParameter, match="'�' does not exist"):
++        type.convert(path, None, None)
++
++    type = click.Path(file_okay=False)
++    path.touch()
++
++    with pytest.raises(click.BadParameter, match="'�' is a file"):
++        type.convert(path, None, None)
++
++    path.unlink()
++    type = click.Path(dir_okay=False)
++    path.mkdir()
++
++    with pytest.raises(click.BadParameter, match="'�' is a directory"):
++        type.convert(path, None, None)
++
++    path.rmdir()
++
++    def no_access(*args, **kwargs):
++        """Test environments may be running as root, so we have to fake the result of
++        the access tests that use os.access
++        """
++        p = args[0]
++        assert p == path, f"unexpected os.access call on file not under test: {p!r}"
++        return False
++
++    path.touch()
++    type = click.Path(readable=True)
++
++    with pytest.raises(click.BadParameter, match="'�' is not readable"):
++        with monkeypatch.context() as m:
++            m.setattr(os, "access", no_access)
++            type.convert(path, None, None)
++
++    type = click.Path(readable=False, writable=True)
++
++    with pytest.raises(click.BadParameter, match="'�' is not writable"):
++        with monkeypatch.context() as m:
++            m.setattr(os, "access", no_access)
++            type.convert(path, None, None)
++
++    type = click.Path(readable=False, executable=True)
++
++    with pytest.raises(click.BadParameter, match="'�' is not executable"):
++        with monkeypatch.context() as m:
++            m.setattr(os, "access", no_access)
++            type.convert(path, None, None)
++
++    path.unlink()
++
++
++@pytest.mark.parametrize(
++    "type",
++    [
++        click.File(mode="r"),
++        click.File(mode="r", lazy=True),
++    ],
++)
++def test_file_surrogates(type, tmp_path):
++    path = tmp_path / "\udcff"
++
++    with pytest.raises(click.BadParameter, match="�': No such file or directory"):
++        type.convert(path, None, None)
++
++
++def test_file_error_surrogates():
++    message = FileError(filename="\udcff").format_message()
++    assert message == "Could not open file '�': unknown error"
+diff --git a/tests/test_utils.py b/tests/test_utils.py
+index 5dfeb022313653f11a040a7d3343d78d6c35d5b4..12709a1d8b75f6fe8c0270daf3fba7b710505807 100644
+--- a/tests/test_utils.py
++++ b/tests/test_utils.py
+@@ -43,6 +43,15 @@ def test_echo_custom_file():
+     assert f.getvalue() == "hello\n"
+ 
+ 
++def test_echo_no_streams(monkeypatch, runner):
++    """echo should not fail when stdout and stderr are None with pythonw on Windows."""
++    with runner.isolation():
++        sys.stdout = None
++        sys.stderr = None
++        click.echo("test")
++        click.echo("test", err=True)
++
++
+ @pytest.mark.parametrize(
+     ("styles", "ref"),
+     [
+@@ -98,10 +107,7 @@ def test_filename_formatting():
+     assert click.format_filename(b"/x/foo.txt") == "/x/foo.txt"
+     assert click.format_filename("/x/foo.txt") == "/x/foo.txt"
+     assert click.format_filename("/x/foo.txt", shorten=True) == "foo.txt"
+-
+-    # filesystem encoding on windows permits this.
+-    if not WIN:
+-        assert click.format_filename(b"/x/foo\xff.txt", shorten=True) == "foo\udcff.txt"
++    assert click.format_filename(b"/x/\xff.txt", shorten=True) == "�.txt"
+ 
+ 
+ def test_prompts(runner):
+@@ -446,6 +452,7 @@ class MockMain:
+         ("example", None, "example"),
+         (str(pathlib.Path("example/__main__.py")), "example", "python -m example"),
+         (str(pathlib.Path("example/cli.py")), "example", "python -m example.cli"),
++        (str(pathlib.Path("./example")), "", "example"),
+     ],
+ )
+ def test_detect_program_name(path, main, expected):

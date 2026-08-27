@@ -1,0 +1,587 @@
+{
+  "artifact_type": "conflict_mirror_preparation_report",
+  "counts": {
+    "failed": 0,
+    "planned": 0,
+    "prepared": 16,
+    "reused": 0
+  },
+  "dry_run": false,
+  "repository_count": 16,
+  "results": [
+    {
+      "attempts": [
+        {
+          "command": [
+            "git",
+            "clone",
+            "--mirror",
+            "--filter=blob:none",
+            "--reference-if-able",
+            "D:\\Blast-Radius-corpus\\_clones\\pallets__click",
+            "--dissociate",
+            "--quiet",
+            "https://github.com/pallets/click.git",
+            "C:\\Users\\joshp\\Desktop\\Blast-Radius\\corpus\\_conflict_mirrors\\pallets__click.partial"
+          ],
+          "mode": "reference-and-dissociate",
+          "returncode": 0,
+          "stderr": ""
+        }
+      ],
+      "clone_mode": "reference-and-dissociate",
+      "destination": "corpus/_conflict_mirrors/pallets__click",
+      "repo": "pallets/click",
+      "slug": "pallets__click",
+      "source": "D:\\Blast-Radius-corpus\\_clones\\pallets__click",
+      "status": "prepared",
+      "verification": {
+        "alternates": false,
+        "bare": true,
+        "origin": "https://github.com/pallets/click.git",
+        "partial_clone_filter": "blob:none",
+        "pinned_commit": "2c8cd3ac958a7eb316d67f2d316c27086c4c0369",
+        "pinned_commit_fetched": false,
+        "promisor": true
+      }
+    },
+    {
+      "attempts": [
+        {
+          "command": [
+            "git",
+            "clone",
+            "--mirror",
+            "--filter=blob:none",
+            "--reference-if-able",
+            "D:\\Blast-Radius-corpus\\_clones\\pallets__itsdangerous",
+            "--dissociate",
+            "--quiet",
+            "https://github.com/pallets/itsdangerous.git",
+            "C:\\Users\\joshp\\Desktop\\Blast-Radius\\corpus\\_conflict_mirrors\\pallets__itsdangerous.partial"
+          ],
+          "mode": "reference-and-dissociate",
+          "returncode": 0,
+          "stderr": ""
+        }
+      ],
+      "clone_mode": "reference-and-dissociate",
+      "destination": "corpus/_conflict_mirrors/pallets__itsdangerous",
+      "repo": "pallets/itsdangerous",
+      "slug": "pallets__itsdangerous",
+      "source": "D:\\Blast-Radius-corpus\\_clones\\pallets__itsdangerous",
+      "status": "prepared",
+      "verification": {
+        "alternates": false,
+        "bare": true,
+        "origin": "https://github.com/pallets/itsdangerous.git",
+        "partial_clone_filter": "blob:none",
+        "pinned_commit": "672971d66a2ef9f85151e53283113f33d642dabd",
+        "pinned_commit_fetched": false,
+        "promisor": true
+      }
+    },
+    {
+      "attempts": [
+        {
+          "command": [
+            "git",
+            "clone",
+            "--mirror",
+            "--filter=blob:none",
+            "--reference-if-able",
+            "D:\\Blast-Radius-corpus\\_clones\\psf__requests",
+            "--dissociate",
+            "--quiet",
+            "https://github.com/psf/requests.git",
+            "C:\\Users\\joshp\\Desktop\\Blast-Radius\\corpus\\_conflict_mirrors\\psf__requests.partial"
+          ],
+          "mode": "reference-and-dissociate",
+          "returncode": 0,
+          "stderr": ""
+        }
+      ],
+      "clone_mode": "reference-and-dissociate",
+      "destination": "corpus/_conflict_mirrors/psf__requests",
+      "repo": "psf/requests",
+      "slug": "psf__requests",
+      "source": "D:\\Blast-Radius-corpus\\_clones\\psf__requests",
+      "status": "prepared",
+      "verification": {
+        "alternates": false,
+        "bare": true,
+        "origin": "https://github.com/psf/requests.git",
+        "partial_clone_filter": "blob:none",
+        "pinned_commit": "8f8b212de8c2129d7954c6cd373762880375620a",
+        "pinned_commit_fetched": false,
+        "promisor": true
+      }
+    },
+    {
+      "attempts": [
+        {
+          "command": [
+            "git",
+            "clone",
+            "--mirror",
+            "--filter=blob:none",
+            "--reference-if-able",
+            "D:\\Blast-Radius-corpus\\_clones\\ansible__ansible",
+            "--dissociate",
+            "--quiet",
+            "https://github.com/ansible/ansible.git",
+            "C:\\Users\\joshp\\Desktop\\Blast-Radius\\corpus\\_conflict_mirrors\\ansible__ansible.partial"
+          ],
+          "mode": "reference-and-dissociate",
+          "returncode": 0,
+          "stderr": ""
+        }
+      ],
+      "clone_mode": "reference-and-dissociate",
+      "destination": "corpus/_conflict_mirrors/ansible__ansible",
+      "repo": "ansible/ansible",
+      "slug": "ansible__ansible",
+      "source": "D:\\Blast-Radius-corpus\\_clones\\ansible__ansible",
+      "status": "prepared",
+      "verification": {
+        "alternates": false,
+        "bare": true,
+        "origin": "https://github.com/ansible/ansible.git",
+        "partial_clone_filter": "blob:none",
+        "pinned_commit": "b85437b7f6e39476252b271778b8c7dcebbd931a",
+        "pinned_commit_fetched": false,
+        "promisor": true
+      }
+    },
+    {
+      "attempts": [
+        {
+          "command": [
+            "git",
+            "clone",
+            "--mirror",
+            "--filter=blob:none",
+            "--quiet",
+            "https://github.com/pygments/pygments.git",
+            "C:\\Users\\joshp\\Desktop\\Blast-Radius\\corpus\\_conflict_mirrors\\pygments__pygments.partial"
+          ],
+          "mode": "direct",
+          "returncode": 0,
+          "stderr": ""
+        }
+      ],
+      "clone_mode": "direct",
+      "destination": "corpus/_conflict_mirrors/pygments__pygments",
+      "repo": "pygments/pygments",
+      "slug": "pygments__pygments",
+      "source": "D:\\Blast-Radius-corpus\\_clones\\pygments__pygments",
+      "status": "prepared",
+      "verification": {
+        "alternates": false,
+        "bare": true,
+        "origin": "https://github.com/pygments/pygments.git",
+        "partial_clone_filter": "blob:none",
+        "pinned_commit": "38f426a6b1cd4ffc6429f5808031b7c62ea57b1f",
+        "pinned_commit_fetched": false,
+        "promisor": true
+      }
+    },
+    {
+      "attempts": [
+        {
+          "command": [
+            "git",
+            "clone",
+            "--mirror",
+            "--filter=blob:none",
+            "--reference-if-able",
+            "D:\\Blast-Radius-corpus\\_clones\\jupyter__notebook",
+            "--dissociate",
+            "--quiet",
+            "https://github.com/jupyter/notebook.git",
+            "C:\\Users\\joshp\\Desktop\\Blast-Radius\\corpus\\_conflict_mirrors\\jupyter__notebook.partial"
+          ],
+          "mode": "reference-and-dissociate",
+          "returncode": 0,
+          "stderr": ""
+        }
+      ],
+      "clone_mode": "reference-and-dissociate",
+      "destination": "corpus/_conflict_mirrors/jupyter__notebook",
+      "repo": "jupyter/notebook",
+      "slug": "jupyter__notebook",
+      "source": "D:\\Blast-Radius-corpus\\_clones\\jupyter__notebook",
+      "status": "prepared",
+      "verification": {
+        "alternates": false,
+        "bare": true,
+        "origin": "https://github.com/jupyter/notebook.git",
+        "partial_clone_filter": "blob:none",
+        "pinned_commit": "062a2e41d3d2170ee144deff7b8e0fd252de96e2",
+        "pinned_commit_fetched": false,
+        "promisor": true
+      }
+    },
+    {
+      "attempts": [
+        {
+          "command": [
+            "git",
+            "clone",
+            "--mirror",
+            "--filter=blob:none",
+            "--reference-if-able",
+            "D:\\Blast-Radius-corpus\\_clones\\superfluid-org__protocol-monorepo",
+            "--dissociate",
+            "--quiet",
+            "https://github.com/superfluid-org/protocol-monorepo.git",
+            "C:\\Users\\joshp\\Desktop\\Blast-Radius\\corpus\\_conflict_mirrors\\superfluid-org__protocol-monorepo.partial"
+          ],
+          "mode": "reference-and-dissociate",
+          "returncode": 0,
+          "stderr": ""
+        }
+      ],
+      "clone_mode": "reference-and-dissociate",
+      "destination": "corpus/_conflict_mirrors/superfluid-org__protocol-monorepo",
+      "repo": "superfluid-org/protocol-monorepo",
+      "slug": "superfluid-org__protocol-monorepo",
+      "source": "D:\\Blast-Radius-corpus\\_clones\\superfluid-org__protocol-monorepo",
+      "status": "prepared",
+      "verification": {
+        "alternates": false,
+        "bare": true,
+        "origin": "https://github.com/superfluid-org/protocol-monorepo.git",
+        "partial_clone_filter": "blob:none",
+        "pinned_commit": "3e1bb8ba92d28470cb15f3b6eb53a2ea0ddafb90",
+        "pinned_commit_fetched": false,
+        "promisor": true
+      }
+    },
+    {
+      "attempts": [
+        {
+          "command": [
+            "git",
+            "clone",
+            "--mirror",
+            "--filter=blob:none",
+            "--reference-if-able",
+            "D:\\Blast-Radius-corpus\\_clones\\gohugoio__hugo",
+            "--dissociate",
+            "--quiet",
+            "https://github.com/gohugoio/hugo.git",
+            "C:\\Users\\joshp\\Desktop\\Blast-Radius\\corpus\\_conflict_mirrors\\gohugoio__hugo.partial"
+          ],
+          "mode": "reference-and-dissociate",
+          "returncode": 0,
+          "stderr": ""
+        }
+      ],
+      "clone_mode": "reference-and-dissociate",
+      "destination": "corpus/_conflict_mirrors/gohugoio__hugo",
+      "repo": "gohugoio/hugo",
+      "slug": "gohugoio__hugo",
+      "source": "D:\\Blast-Radius-corpus\\_clones\\gohugoio__hugo",
+      "status": "prepared",
+      "verification": {
+        "alternates": false,
+        "bare": true,
+        "origin": "https://github.com/gohugoio/hugo.git",
+        "partial_clone_filter": "blob:none",
+        "pinned_commit": "7b5199fdeff7d7682e9f979f468d55bc7b67b934",
+        "pinned_commit_fetched": false,
+        "promisor": true
+      }
+    },
+    {
+      "attempts": [
+        {
+          "command": [
+            "git",
+            "clone",
+            "--mirror",
+            "--filter=blob:none",
+            "--reference-if-able",
+            "D:\\Blast-Radius-corpus\\_clones\\hashicorp__terraform",
+            "--dissociate",
+            "--quiet",
+            "https://github.com/hashicorp/terraform.git",
+            "C:\\Users\\joshp\\Desktop\\Blast-Radius\\corpus\\_conflict_mirrors\\hashicorp__terraform.partial"
+          ],
+          "mode": "reference-and-dissociate",
+          "returncode": 0,
+          "stderr": ""
+        }
+      ],
+      "clone_mode": "reference-and-dissociate",
+      "destination": "corpus/_conflict_mirrors/hashicorp__terraform",
+      "repo": "hashicorp/terraform",
+      "slug": "hashicorp__terraform",
+      "source": "D:\\Blast-Radius-corpus\\_clones\\hashicorp__terraform",
+      "status": "prepared",
+      "verification": {
+        "alternates": false,
+        "bare": true,
+        "origin": "https://github.com/hashicorp/terraform.git",
+        "partial_clone_filter": "blob:none",
+        "pinned_commit": "883c7221ee2e0bc2fad6912fd4b3cc4b53a598a7",
+        "pinned_commit_fetched": false,
+        "promisor": true
+      }
+    },
+    {
+      "attempts": [
+        {
+          "command": [
+            "git",
+            "clone",
+            "--mirror",
+            "--filter=blob:none",
+            "--reference-if-able",
+            "D:\\Blast-Radius-corpus\\_clones\\hashicorp__terraform-provider-random",
+            "--dissociate",
+            "--quiet",
+            "https://github.com/hashicorp/terraform-provider-random.git",
+            "C:\\Users\\joshp\\Desktop\\Blast-Radius\\corpus\\_conflict_mirrors\\hashicorp__terraform-provider-random.partial"
+          ],
+          "mode": "reference-and-dissociate",
+          "returncode": 0,
+          "stderr": ""
+        }
+      ],
+      "clone_mode": "reference-and-dissociate",
+      "destination": "corpus/_conflict_mirrors/hashicorp__terraform-provider-random",
+      "repo": "hashicorp/terraform-provider-random",
+      "slug": "hashicorp__terraform-provider-random",
+      "source": "D:\\Blast-Radius-corpus\\_clones\\hashicorp__terraform-provider-random",
+      "status": "prepared",
+      "verification": {
+        "alternates": false,
+        "bare": true,
+        "origin": "https://github.com/hashicorp/terraform-provider-random.git",
+        "partial_clone_filter": "blob:none",
+        "pinned_commit": "f4c97d75848f22c53667b308a7dd89d3e1f06ce5",
+        "pinned_commit_fetched": false,
+        "promisor": true
+      }
+    },
+    {
+      "attempts": [
+        {
+          "command": [
+            "git",
+            "clone",
+            "--mirror",
+            "--filter=blob:none",
+            "--reference-if-able",
+            "D:\\Blast-Radius-corpus\\_clones\\prometheus__prometheus",
+            "--dissociate",
+            "--quiet",
+            "https://github.com/prometheus/prometheus.git",
+            "C:\\Users\\joshp\\Desktop\\Blast-Radius\\corpus\\_conflict_mirrors\\prometheus__prometheus.partial"
+          ],
+          "mode": "reference-and-dissociate",
+          "returncode": 0,
+          "stderr": ""
+        }
+      ],
+      "clone_mode": "reference-and-dissociate",
+      "destination": "corpus/_conflict_mirrors/prometheus__prometheus",
+      "repo": "prometheus/prometheus",
+      "slug": "prometheus__prometheus",
+      "source": "D:\\Blast-Radius-corpus\\_clones\\prometheus__prometheus",
+      "status": "prepared",
+      "verification": {
+        "alternates": false,
+        "bare": true,
+        "origin": "https://github.com/prometheus/prometheus.git",
+        "partial_clone_filter": "blob:none",
+        "pinned_commit": "d15adb9ad7e5d9fbde3a9a8f30200593a5a14d86",
+        "pinned_commit_fetched": false,
+        "promisor": true
+      }
+    },
+    {
+      "attempts": [
+        {
+          "command": [
+            "git",
+            "clone",
+            "--mirror",
+            "--filter=blob:none",
+            "--reference-if-able",
+            "D:\\Blast-Radius-corpus\\_clones\\BurntSushi__ripgrep",
+            "--dissociate",
+            "--quiet",
+            "https://github.com/BurntSushi/ripgrep.git",
+            "C:\\Users\\joshp\\Desktop\\Blast-Radius\\corpus\\_conflict_mirrors\\BurntSushi__ripgrep.partial"
+          ],
+          "mode": "reference-and-dissociate",
+          "returncode": 0,
+          "stderr": ""
+        }
+      ],
+      "clone_mode": "reference-and-dissociate",
+      "destination": "corpus/_conflict_mirrors/BurntSushi__ripgrep",
+      "repo": "BurntSushi/ripgrep",
+      "slug": "BurntSushi__ripgrep",
+      "source": "D:\\Blast-Radius-corpus\\_clones\\BurntSushi__ripgrep",
+      "status": "prepared",
+      "verification": {
+        "alternates": false,
+        "bare": true,
+        "origin": "https://github.com/BurntSushi/ripgrep.git",
+        "partial_clone_filter": "blob:none",
+        "pinned_commit": "3fce3b5bb0236da2df6d99672afb8a719642eca7",
+        "pinned_commit_fetched": false,
+        "promisor": true
+      }
+    },
+    {
+      "attempts": [
+        {
+          "command": [
+            "git",
+            "clone",
+            "--mirror",
+            "--filter=blob:none",
+            "--reference-if-able",
+            "D:\\Blast-Radius-corpus\\_clones\\apache__commons-lang",
+            "--dissociate",
+            "--quiet",
+            "https://github.com/apache/commons-lang.git",
+            "C:\\Users\\joshp\\Desktop\\Blast-Radius\\corpus\\_conflict_mirrors\\apache__commons-lang.partial"
+          ],
+          "mode": "reference-and-dissociate",
+          "returncode": 0,
+          "stderr": ""
+        }
+      ],
+      "clone_mode": "reference-and-dissociate",
+      "destination": "corpus/_conflict_mirrors/apache__commons-lang",
+      "repo": "apache/commons-lang",
+      "slug": "apache__commons-lang",
+      "source": "D:\\Blast-Radius-corpus\\_clones\\apache__commons-lang",
+      "status": "prepared",
+      "verification": {
+        "alternates": false,
+        "bare": true,
+        "origin": "https://github.com/apache/commons-lang.git",
+        "partial_clone_filter": "blob:none",
+        "pinned_commit": "4d91b28fce7317132360aa9f3bbf31cc6e479f00",
+        "pinned_commit_fetched": false,
+        "promisor": true
+      }
+    },
+    {
+      "attempts": [
+        {
+          "command": [
+            "git",
+            "clone",
+            "--mirror",
+            "--filter=blob:none",
+            "--reference-if-able",
+            "D:\\Blast-Radius-corpus\\_clones\\chinabugotech__hutool",
+            "--dissociate",
+            "--quiet",
+            "https://github.com/chinabugotech/hutool.git",
+            "C:\\Users\\joshp\\Desktop\\Blast-Radius\\corpus\\_conflict_mirrors\\chinabugotech__hutool.partial"
+          ],
+          "mode": "reference-and-dissociate",
+          "returncode": 0,
+          "stderr": ""
+        }
+      ],
+      "clone_mode": "reference-and-dissociate",
+      "destination": "corpus/_conflict_mirrors/chinabugotech__hutool",
+      "repo": "chinabugotech/hutool",
+      "slug": "chinabugotech__hutool",
+      "source": "D:\\Blast-Radius-corpus\\_clones\\chinabugotech__hutool",
+      "status": "prepared",
+      "verification": {
+        "alternates": false,
+        "bare": true,
+        "origin": "https://github.com/chinabugotech/hutool.git",
+        "partial_clone_filter": "blob:none",
+        "pinned_commit": "8870454b2a0c29cc6ffd31dcf5667c8ceb2fc442",
+        "pinned_commit_fetched": false,
+        "promisor": true
+      }
+    },
+    {
+      "attempts": [
+        {
+          "command": [
+            "git",
+            "clone",
+            "--mirror",
+            "--filter=blob:none",
+            "--reference-if-able",
+            "D:\\Blast-Radius-corpus\\_clones\\redis__redis",
+            "--dissociate",
+            "--quiet",
+            "https://github.com/redis/redis.git",
+            "C:\\Users\\joshp\\Desktop\\Blast-Radius\\corpus\\_conflict_mirrors\\redis__redis.partial"
+          ],
+          "mode": "reference-and-dissociate",
+          "returncode": 0,
+          "stderr": ""
+        }
+      ],
+      "clone_mode": "reference-and-dissociate",
+      "destination": "corpus/_conflict_mirrors/redis__redis",
+      "repo": "redis/redis",
+      "slug": "redis__redis",
+      "source": "D:\\Blast-Radius-corpus\\_clones\\redis__redis",
+      "status": "prepared",
+      "verification": {
+        "alternates": false,
+        "bare": true,
+        "origin": "https://github.com/redis/redis.git",
+        "partial_clone_filter": "blob:none",
+        "pinned_commit": "78432ed8e48aba009721a15a88ea8f5c9597b8e5",
+        "pinned_commit_fetched": false,
+        "promisor": true
+      }
+    },
+    {
+      "attempts": [
+        {
+          "command": [
+            "git",
+            "clone",
+            "--mirror",
+            "--filter=blob:none",
+            "--reference-if-able",
+            "D:\\Blast-Radius-corpus\\_clones\\ydb-platform__ydb",
+            "--dissociate",
+            "--quiet",
+            "https://github.com/ydb-platform/ydb.git",
+            "C:\\Users\\joshp\\Desktop\\Blast-Radius\\corpus\\_conflict_mirrors\\ydb-platform__ydb.partial"
+          ],
+          "mode": "reference-and-dissociate",
+          "returncode": 0,
+          "stderr": ""
+        }
+      ],
+      "clone_mode": "reference-and-dissociate",
+      "destination": "corpus/_conflict_mirrors/ydb-platform__ydb",
+      "repo": "ydb-platform/ydb",
+      "slug": "ydb-platform__ydb",
+      "source": "D:\\Blast-Radius-corpus\\_clones\\ydb-platform__ydb",
+      "status": "prepared",
+      "verification": {
+        "alternates": false,
+        "bare": true,
+        "origin": "https://github.com/ydb-platform/ydb.git",
+        "partial_clone_filter": "blob:none",
+        "pinned_commit": "406cdd6bdf080292978a484c9ae63a23714e9059",
+        "pinned_commit_fetched": false,
+        "promisor": true
+      }
+    }
+  ],
+  "schema_version": 1
+}

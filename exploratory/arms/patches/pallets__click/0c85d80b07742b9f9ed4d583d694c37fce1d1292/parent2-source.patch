@@ -1,0 +1,146 @@
+diff --git a/CHANGES.rst b/CHANGES.rst
+index b65e91df4864cbf1b5be52f0eb7028e832561682..f46d44647d3c88fd9bc346e33aa571e5c15f0d11 100644
+--- a/CHANGES.rst
++++ b/CHANGES.rst
+@@ -1,5 +1,14 @@
+ .. currentmodule:: click
+ 
++Version 8.0.4
++-------------
++
++Unreleased
++
++-   ``open_file`` recognizes ``Path("-")`` as a standard stream, the
++    same as the string ``"-"``. :issue:`2106`
++
++
+ Version 8.0.3
+ -------------
+ 
+diff --git a/src/click/_compat.py b/src/click/_compat.py
+index b9e1f0d39be2f3e6d063da496d804fbcf9c2fefe..7154dfd5090ee0f0fdb006c14b7c9410a33bcbc2 100644
+--- a/src/click/_compat.py
++++ b/src/click/_compat.py
+@@ -388,9 +388,9 @@ def open_stream(
+ ) -> t.Tuple[t.IO, bool]:
+     binary = "b" in mode
+ 
+-    # Standard streams first.  These are simple because they don't need
+-    # special handling for the atomic flag.  It's entirely ignored.
+-    if filename == "-":
++    # Standard streams first. These are simple because they ignore the
++    # atomic flag. Use fsdecode to handle Path("-").
++    if os.fsdecode(filename) == "-":
+         if any(m in mode for m in ["w", "a", "x"]):
+             if binary:
+                 return get_binary_stdout(), False
+diff --git a/src/click/types.py b/src/click/types.py
+index 103d21829d0fc7a4b7210d602580d12d58c6186a..198c723e352f6a9fa13d0b8bc4bb783620263384 100644
+--- a/src/click/types.py
++++ b/src/click/types.py
+@@ -744,26 +744,23 @@ class File(ParamType):
+ 
+ 
+ class Path(ParamType):
+-    """The path type is similar to the :class:`File` type but it performs
+-    different checks.  First of all, instead of returning an open file
+-    handle it returns just the filename.  Secondly, it can perform various
+-    basic checks about what the file or directory should be.
+-
+-    :param exists: if set to true, the file or directory needs to exist for
+-                   this value to be valid.  If this is not required and a
+-                   file does indeed not exist, then all further checks are
+-                   silently skipped.
+-    :param file_okay: controls if a file is a possible value.
+-    :param dir_okay: controls if a directory is a possible value.
+-    :param writable: if true, a writable check is performed.
+-    :param readable: if true, a readable check is performed.
+-    :param resolve_path: if this is true, then the path is fully resolved
+-                         before the value is passed onwards.  This means
+-                         that it's absolute and symlinks are resolved.  It
+-                         will not expand a tilde-prefix, as this is
+-                         supposed to be done by the shell only.
+-    :param allow_dash: If this is set to `True`, a single dash to indicate
+-                       standard streams is permitted.
++    """The ``Path`` type is similar to the :class:`File` type, but
++    returns the filename instead of an open file. Various checks can be
++    enabled to validate the type of file and permissions.
++
++    :param exists: The file or directory needs to exist for the value to
++        be valid. If this is not set to ``True``, and the file does not
++        exist, then all further checks are silently skipped.
++    :param file_okay: Allow a file as a value value.
++    :param dir_okay: Allow a directory as a value.
++    :param writable: The file or directory must be writable.
++    :param readable: The file or directory must be readable.
++    :param resolve_path: Make the value absolute and resolve any
++        symlinks. A ``~`` is not expanded, as this is supposed to be
++        done by the shell only.
++    :param allow_dash: Allow a single dash as a value, which indicates
++        a standard stream (but does not open it). Use
++        :func:`~click.open_file` to handle opening this value.
+     :param path_type: Convert the incoming path value to this type. If
+         ``None``, keep Python's default, which is ``str``. Useful to
+         convert to :class:`pathlib.Path`.
+diff --git a/src/click/utils.py b/src/click/utils.py
+index 16033d623541f84774029e74b17e684125d75908..051cf70093a78638ca25238b66642f108ea66933 100644
+--- a/src/click/utils.py
++++ b/src/click/utils.py
+@@ -340,33 +340,42 @@ def open_file(
+     lazy: bool = False,
+     atomic: bool = False,
+ ) -> t.IO:
+-    """This is similar to how the :class:`File` works but for manual
+-    usage.  Files are opened non lazy by default.  This can open regular
+-    files as well as stdin/stdout if ``'-'`` is passed.
++    """Open a file, with extra behavior to handle ``'-'`` to indicate
++    a standard stream, lazy open on write, and atomic write. Similar to
++    the behavior of the :class:`~click.File` param type.
+ 
+-    If stdin/stdout is returned the stream is wrapped so that the context
+-    manager will not close the stream accidentally.  This makes it possible
+-    to always use the function like this without having to worry to
+-    accidentally close a standard stream::
++    If ``'-'`` is given to open ``stdout`` or ``stdin``, the stream is
++    wrapped so that using it in a context manager will not close it.
++    This makes it possible to use the function without accidentally
++    closing a standard stream:
++
++    .. code-block:: python
+ 
+         with open_file(filename) as f:
+             ...
+ 
+-    .. versionadded:: 3.0
++    :param filename: The name of the file to open, or ``'-'`` for
++        ``stdin``/``stdout``.
++    :param mode: The mode in which to open the file.
++    :param encoding: The encoding to decode or encode a file opened in
++        text mode.
++    :param errors: The error handling mode.
++    :param lazy: Wait to open the file until it is accessed. For read
++        mode, the file is temporarily opened to raise access errors
++        early, then closed until it is read again.
++    :param atomic: Write to a temporary file and replace the given file
++        on close.
+ 
+-    :param filename: the name of the file to open (or ``'-'`` for stdin/stdout).
+-    :param mode: the mode in which to open the file.
+-    :param encoding: the encoding to use.
+-    :param errors: the error handling for this file.
+-    :param lazy: can be flipped to true to open the file lazily.
+-    :param atomic: in atomic mode writes go into a temporary file and it's
+-                   moved on close.
++    .. versionadded:: 3.0
+     """
+     if lazy:
+         return t.cast(t.IO, LazyFile(filename, mode, encoding, errors, atomic=atomic))
++
+     f, should_close = open_stream(filename, mode, encoding, errors, atomic=atomic)
++
+     if not should_close:
+         f = t.cast(t.IO, KeepOpenFile(f))
++
+     return f
+ 
+ 

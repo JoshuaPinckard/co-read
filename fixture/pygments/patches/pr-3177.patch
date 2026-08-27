@@ -1,0 +1,89 @@
+diff --git a/pygments/lexers/objective.py b/pygments/lexers/objective.py
+index ce281fbd198802ba63742086f850b339d82e3b0d..98553775a005c0da933d29883c4ce205f083c49a 100644
+--- a/pygments/lexers/objective.py
++++ b/pygments/lexers/objective.py
+@@ -436,6 +436,12 @@ class SwiftLexer(RegexLexer):
+              r'|__FILE__|__FUNCTION__|__LINE__|_'
+              r'|#(?:file|line|column|function))\b', Keyword.Constant),
+             (r'import\b', Keyword.Declaration, 'module'),
++            (r'(class)(\s+)(func)(\s+)([a-zA-Z_]\w*)',
++             bygroups(Keyword.Declaration, Whitespace, Keyword.Declaration,
++                      Whitespace, Name.Function)),
++            (r'(class)(\s+)(var)(\s+)([a-zA-Z_]\w*)',
++             bygroups(Keyword.Declaration, Whitespace, Keyword.Declaration,
++                      Whitespace, Name.Variable)),
+             (r'(class|enum|extension|struct|protocol)(\s+)([a-zA-Z_]\w*)',
+              bygroups(Keyword.Declaration, Whitespace, Name.Class)),
+             (r'(func)(\s+)([a-zA-Z_]\w*)',
+diff --git a/tests/examplefiles/swift/test.swift.output b/tests/examplefiles/swift/test.swift.output
+index 8be09d048bd26933e1cee898790a92dd50c9c6c6..d06c00bcbb2d93750e5f9b5a6cd008da713fe38c 100644
+--- a/tests/examplefiles/swift/test.swift.output
++++ b/tests/examplefiles/swift/test.swift.output
+@@ -47,9 +47,9 @@
+ '    '        Text.Whitespace
+ 'class'       Keyword.Declaration
+ ' '           Text.Whitespace
+-'func'        Name.Class
++'func'        Keyword.Declaration
+ ' '           Text.Whitespace
+-'unarchiveFromFile' Name
++'unarchiveFromFile' Name.Function
+ '('           Punctuation
+ 'file'        Name
+ ' '           Text.Whitespace
+diff --git a/tests/snippets/swift/test_class_method.txt b/tests/snippets/swift/test_class_method.txt
+new file mode 100644
+index 0000000000000000000000000000000000000000..699d175e262d6a110f24b4e0f69b7c965616c50b
+--- /dev/null
++++ b/tests/snippets/swift/test_class_method.txt
+@@ -0,0 +1,50 @@
++---input---
++func plain() {}
++class func typeMethod() {}
++public class func publicTypeMethod() {}
++class Named {}
++
++---tokens---
++'func'        Keyword.Declaration
++' '           Text.Whitespace
++'plain'       Name.Function
++'('           Punctuation
++')'           Punctuation
++' '           Text.Whitespace
++'{'           Punctuation
++'}'           Punctuation
++'\n'          Text
++
++'class'       Keyword.Declaration
++' '           Text.Whitespace
++'func'        Keyword.Declaration
++' '           Text.Whitespace
++'typeMethod'  Name.Function
++'('           Punctuation
++')'           Punctuation
++' '           Text.Whitespace
++'{'           Punctuation
++'}'           Punctuation
++'\n'          Text
++
++'public'      Keyword.Declaration
++' '           Text.Whitespace
++'class'       Keyword.Declaration
++' '           Text.Whitespace
++'func'        Keyword.Declaration
++' '           Text.Whitespace
++'publicTypeMethod' Name.Function
++'('           Punctuation
++')'           Punctuation
++' '           Text.Whitespace
++'{'           Punctuation
++'}'           Punctuation
++'\n'          Text
++
++'class'       Keyword.Declaration
++' '           Text.Whitespace
++'Named'       Name.Class
++' '           Text.Whitespace
++'{'           Punctuation
++'}'           Punctuation
++'\n'          Text

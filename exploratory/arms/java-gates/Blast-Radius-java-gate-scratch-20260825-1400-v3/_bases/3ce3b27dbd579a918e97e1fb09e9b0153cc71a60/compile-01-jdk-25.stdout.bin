@@ -1,0 +1,47 @@
+[ERROR] An internal error occurred
+java.util.ConcurrentModificationException
+    at java.util.TreeMap.callMappingFunctionWithCheck (TreeMap.java:784)
+    at java.util.TreeMap.computeIfAbsent (TreeMap.java:638)
+    at aQute.bnd.osgi.Jar.putResource (Jar.java:288)
+    at aQute.bnd.osgi.Jar$1.visitFile (Jar.java:202)
+    at aQute.bnd.osgi.Jar$1.visitFile (Jar.java:177)
+    at java.nio.file.Files.walkFileTree (Files.java:2543)
+    at aQute.bnd.osgi.Jar.buildFromDirectory (Jar.java:176)
+    at aQute.bnd.osgi.Jar.<init> (Jar.java:119)
+    at aQute.bnd.osgi.Jar.<init> (Jar.java:172)
+    at org.apache.felix.bundleplugin.BundlePlugin.getOSGiBuilder (BundlePlugin.java:604)
+    at org.apache.felix.bundleplugin.ManifestPlugin.getAnalyzer (ManifestPlugin.java:285)
+    at org.apache.felix.bundleplugin.ManifestPlugin.execute (ManifestPlugin.java:111)
+    at org.apache.felix.bundleplugin.BundlePlugin.execute (BundlePlugin.java:364)
+    at org.apache.maven.plugin.DefaultBuildPluginManager.executeMojo (DefaultBuildPluginManager.java:126)
+    at org.apache.maven.lifecycle.internal.MojoExecutor.doExecute2 (MojoExecutor.java:328)
+    at org.apache.maven.lifecycle.internal.MojoExecutor.doExecute (MojoExecutor.java:316)
+    at org.apache.maven.lifecycle.internal.MojoExecutor.execute (MojoExecutor.java:212)
+    at org.apache.maven.lifecycle.internal.MojoExecutor.execute (MojoExecutor.java:174)
+    at org.apache.maven.lifecycle.internal.MojoExecutor.access$000 (MojoExecutor.java:75)
+    at org.apache.maven.lifecycle.internal.MojoExecutor$1.run (MojoExecutor.java:162)
+    at org.apache.maven.plugin.DefaultMojosExecutionStrategy.execute (DefaultMojosExecutionStrategy.java:39)
+    at org.apache.maven.lifecycle.internal.MojoExecutor.execute (MojoExecutor.java:159)
+    at org.apache.maven.lifecycle.internal.LifecycleModuleBuilder.buildProject (LifecycleModuleBuilder.java:105)
+    at org.apache.maven.lifecycle.internal.LifecycleModuleBuilder.buildProject (LifecycleModuleBuilder.java:73)
+    at org.apache.maven.lifecycle.internal.builder.singlethreaded.SingleThreadedBuilder.build (SingleThreadedBuilder.java:53)
+    at org.apache.maven.lifecycle.internal.LifecycleStarter.execute (LifecycleStarter.java:118)
+    at org.apache.maven.DefaultMaven.doExecute (DefaultMaven.java:261)
+    at org.apache.maven.DefaultMaven.doExecute (DefaultMaven.java:173)
+    at org.apache.maven.DefaultMaven.execute (DefaultMaven.java:101)
+    at org.apache.maven.cli.MavenCli.execute (MavenCli.java:919)
+    at org.apache.maven.cli.MavenCli.doMain (MavenCli.java:285)
+    at org.apache.maven.cli.MavenCli.main (MavenCli.java:207)
+    at jdk.internal.reflect.DirectMethodHandleAccessor.invoke (DirectMethodHandleAccessor.java:104)
+    at java.lang.reflect.Method.invoke (Method.java:565)
+    at org.codehaus.plexus.classworlds.launcher.Launcher.launchEnhanced (Launcher.java:255)
+    at org.codehaus.plexus.classworlds.launcher.Launcher.launch (Launcher.java:201)
+    at org.codehaus.plexus.classworlds.launcher.Launcher.mainWithExitCode (Launcher.java:362)
+    at org.codehaus.plexus.classworlds.launcher.Launcher.main (Launcher.java:314)
+[ERROR] Failed to execute goal org.apache.felix:maven-bundle-plugin:4.2.1:manifest (bundle-manifest) on project commons-lang3: Internal error in maven-bundle-plugin: ConcurrentModificationException -> [Help 1]
+[ERROR] 
+[ERROR] To see the full stack trace of the errors, re-run Maven with the -e switch.
+[ERROR] Re-run Maven using the -X switch to enable full debug logging.
+[ERROR] 
+[ERROR] For more information about the errors and possible solutions, please read the following articles:
+[ERROR] [Help 1] http://cwiki.apache.org/confluence/display/MAVEN/MojoExecutionException

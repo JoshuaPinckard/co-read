@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?><testsuites name="pytest tests"><testsuite name="pytest" errors="0" failures="1" skipped="0" tests="3" time="0.171" timestamp="2026-08-24T08:13:54.995310-07:00" hostname="JoshP"><testcase classname="tests.test_raw_token" name="test_raw_token" time="0.033" /><testcase classname="tests.test_raw_token" name="test_invalid_raw_token" time="0.001" /><testcase classname="tests.test_raw_token" name="test_raw_token_error_color" time="0.001"><failure message="TypeError: can only concatenate str (not &quot;bytes&quot;) to str">def test_raw_token_error_color():
+        # ``error_color`` wraps Error tokens in an ANSI color. The output stream is
+        # binary, so the colorized line must stay bytes (regression test for the
+        # ``str``/``bytes`` mix that crashed the formatter).
+        from pygments.console import codes
+    
+&gt;       out = highlight("$", PythonLexer(), RawTokenFormatter(error_color="red"))
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests\test_raw_token.py:77: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+pygments\__init__.py:82: in highlight
+    return format(lex(code, lexer), formatter, outfile)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+pygments\__init__.py:64: in format
+    formatter.format(tokens, realoutfile)
+pygments\formatters\other.py:109: in format
+    write(colorize(self.error_color, line))
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+color_key = 'red', text = b"Token.Error\t'$'\n"
+
+    def colorize(color_key, text):
+&gt;       return codes[color_key] + text + codes["reset"]
+               ^^^^^^^^^^^^^^^^^^^^^^^
+E       TypeError: can only concatenate str (not "bytes") to str
+
+pygments\console.py:45: TypeError</failure></testcase></testsuite></testsuites>

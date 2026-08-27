@@ -1,0 +1,13 @@
+diff --git a/pygments/lexers/javascript.py b/pygments/lexers/javascript.py
+index 48c6aafda6ed0d30e674c5604376b7eb63a15e0f..f11a4a310dcb5cf8a2c6b64fc4139a9a0a83a45c 100644
+--- a/pygments/lexers/javascript.py
++++ b/pygments/lexers/javascript.py
+@@ -508,7 +508,7 @@ class TypeScriptLexer(RegexLexer):
+             (r'(super)(\s*)(\([\w,?.$\s]+\s*\))',
+              bygroups(Keyword.Reserved, Text), 'slashstartsregex'),
+             # Match stuff like: function() {...}
+-            (r'([a-zA-Z_?.$][\w?.$]*)\(\) \{', Name.Other, 'slashstartsregex'),
++            (r'([a-zA-Z_?.$][\w?.$]*)(?=\(\) \{)', Name.Other, 'slashstartsregex'),
+             # Match stuff like: (function: return type)
+             (r'([\w?.$][\w?.$]*)(\s*:\s*)([\w?.$][\w?.$]*)',
+              bygroups(Name.Other, Text, Keyword.Type)),

@@ -1,0 +1,34 @@
+diff --git a/pygments/formatters/groff.py b/pygments/formatters/groff.py
+index f5d3146b45b0103dbad53aa2822757b8102d1c42..4a463b569c95078a76bfa9e9d32db52d4a2ebd8b 100644
+--- a/pygments/formatters/groff.py
++++ b/pygments/formatters/groff.py
+@@ -104,7 +104,7 @@ class GroffFormatter(Formatter):
+                 newline += (chunk + '\n' + space)
+             remainder = length % self.wrap
+             if remainder > 0:
+-                newline += line[-remainder-1:]
++                newline += line[length-remainder:]
+                 self._linelen = remainder
+         elif self._linelen + length > self.wrap:
+             newline = ('\n' + space) + line
+diff --git a/tests/test_groff_formatter.py b/tests/test_groff_formatter.py
+index ce72eb63dff79a685115cd8cd2d575b6adbac747..c45ada5e4a669e561e29634037f225231f790f14 100644
+--- a/tests/test_groff_formatter.py
++++ b/tests/test_groff_formatter.py
+@@ -78,3 +78,16 @@ def test_inheritance_custom_tokens():
+ 
+ .fi"""
+     assert highlight("ab", ToyLexer(), GroffFormatter(style=ToyStyle)) == expected
++
++
++def test_wrap_does_not_duplicate_characters():
++    # A piece longer than ``wrap`` that does not end in a newline must not
++    # have a character duplicated when it is soft-wrapped. The tail slice used
++    # to reach one character too far to the left when there was no trailing
++    # newline, repeating the last character of the preceding full chunk.
++    fmt = GroffFormatter(wrap=4)
++    assert fmt._wrap_line("abcdefghij") == "abcd\nefgh\nij"
++
++    # A piece that does end in a newline still keeps that trailing newline.
++    fmt = GroffFormatter(wrap=4)
++    assert fmt._wrap_line("123456\n") == "1234\n56\n"

@@ -1,0 +1,39 @@
+{
+  "command": [
+    "mvn",
+    "-q",
+    "-s",
+    "<project>/tools/java/maven-settings.xml",
+    "-gs",
+    "<project>/tools/java/maven-settings.xml",
+    "-Dmaven.repo.local=<project>/tools/maven-repository",
+    "-DskipTests",
+    "test"
+  ],
+  "elapsed_seconds": 57.797,
+  "label": "compile-02-jdk-11",
+  "returncode": 0,
+  "source_export": {
+    "base": "63d8a025e6f38ddfc966c4104ac783bcb59031e0",
+    "clean_including_untracked_before": true,
+    "head_after": "63d8a025e6f38ddfc966c4104ac783bcb59031e0",
+    "head_before": "63d8a025e6f38ddfc966c4104ac783bcb59031e0",
+    "path": "C:/br-java-v4/a/c/63d8a025e6f3/c02j11",
+    "tracked_after": {
+      "tracked_file_count": 347,
+      "tracked_manifest_sha256": "6770bed56e4f0815115173b4529ae6c4ebef45fa0cc1162f10d8c98162f7e87d"
+    },
+    "tracked_before": {
+      "tracked_file_count": 347,
+      "tracked_manifest_sha256": "6770bed56e4f0815115173b4529ae6c4ebef45fa0cc1162f10d8c98162f7e87d"
+    },
+    "tracked_status_after": "",
+    "tracked_unchanged": true
+  },
+  "stderr": "exploratory/arms/java-gates/br-java-v4/_bases/63d8a025e6f38ddfc966c4104ac783bcb59031e0/compile-02-jdk-11.stderr.bin",
+  "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "stdout": "exploratory/arms/java-gates/br-java-v4/_bases/63d8a025e6f38ddfc966c4104ac783bcb59031e0/compile-02-jdk-11.stdout.bin",
+  "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "timed_out": false,
+  "timeout_termination": null
+}

@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?><testsuites name="pytest tests"><testsuite name="pytest" errors="0" failures="1" skipped="0" tests="1" time="0.182" timestamp="2026-08-24T08:30:40.125526-07:00" hostname="JoshP"><testcase classname="tests.examplefiles.splus.test.R" name="" time="0.007"><failure message="The tokens produced by the &quot;splus&quot; lexer differ from the expected ones in the file &quot;tests\examplefiles\splus\test.R&quot;.&#10;Run `tox -- tests\examplefiles --update-goldens` to update it.&#10;&#10;  &#10;  Skipping 6077 identical leading characters in diff, use -v to show&#10;  - ction'    Keyword.Reserved&#10;  + ction'    Name.Function&#10;    '('           Punctuation&#10;    'x'           Name&#10;    ','           Punctuation...&#10;  &#10;  ...Full output truncated (851 lines hidden), use '-vv' to show">The tokens produced by the "splus" lexer differ from the expected ones in the file "tests\examplefiles\splus\test.R".
+Run `tox -- tests\examplefiles --update-goldens` to update it.
+
+  
+  Skipping 6077 identical leading characters in diff, use -v to show
+  - ction'    Keyword.Reserved
+  + ction'    Name.Function
+    '('           Punctuation
+    'x'           Name
+    ','           Punctuation...
+  
+  ...Full output truncated (851 lines hidden), use '-vv' to show</failure></testcase></testsuite></testsuites>

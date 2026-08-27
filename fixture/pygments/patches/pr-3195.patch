@@ -1,0 +1,28 @@
+diff --git a/pygments/lexers/ruby.py b/pygments/lexers/ruby.py
+index e4e873dc2d16fb534449f09d342515ddadb3d3e4..0668e2abffdc4639d26f08c0b67279fd4abe166f 100644
+--- a/pygments/lexers/ruby.py
++++ b/pygments/lexers/ruby.py
+@@ -253,7 +253,7 @@ class RubyLexer(ExtendedRegexLexer):
+              Name.Builtin),
+             (r'__(FILE|LINE)__\b', Name.Builtin.Pseudo),
+             # normal heredocs
+-            (r'(?<!\w)(<<[-~]?)(["`\']?)([a-zA-Z_]\w*)(\2)(.*?\n)',
++            (r'(?<![\w)\]}])(<<[-~]?)(["`\']?)([a-zA-Z_]\w*)(\2)(.*?\n)',
+              heredoc_callback),
+             # empty string heredocs
+             (r'(<<[-~]?)("|\')()(\2)(.*?\n)', heredoc_callback),
+diff --git a/tests/snippets/ruby/test_shift_operator.txt b/tests/snippets/ruby/test_shift_operator.txt
+new file mode 100644
+index 0000000000000000000000000000000000000000..888fc49254f5a81fc6763b89e0bf245650193fd8
+--- /dev/null
++++ b/tests/snippets/ruby/test_shift_operator.txt
+@@ -0,0 +1,9 @@
++---input---
++[]<<a
++
++---tokens---
++'['           Operator
++']'           Operator
++'<<'          Operator
++'a'           Name
++'\n'          Text.Whitespace

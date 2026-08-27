@@ -1,0 +1,42 @@
+============================= test session starts =============================
+platform win32 -- Python 3.11.9, pytest-8.4.2, pluggy-1.6.0
+rootdir: C:\Users\joshp\AppData\Local\Temp\blast-radius-pygments-causal-opbff12g\screen-pr-3217-pht6f_b4\tests-only
+configfile: pyproject.toml
+collected 30 items
+
+tests\test_cmdline.py ......F.......................                     [100%]
+
+================================== FAILURES ===================================
+_________________________________ test_L_opt __________________________________
+
+    def test_L_opt():
+        o = check_success('-L')
+        assert 'Lexers' in o and 'Formatters' in o and 'Filters' in o and 'Styles' in o
+        o = check_success('-L', 'lexer')
+        assert 'Lexers' in o and 'Formatters' not in o
+        check_success('-L', 'lexers')
+>       check_failure('-L', 'invalid-kind', code=2)
+
+tests\test_cmdline.py:165: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+cmdline = ('-L', 'invalid-kind'), kwds = {}, expected_code = 2, code = 0
+out = 'Pygments version 2.21.0, (c) 2006-present by Georg Brandl, Matthäus Chajdas and contributors.\r\n'
+err = 'usage: __main__.py [-l LEXER | -g] [-F FILTER[:options]] [-f FORMATTER]\r\n                   [-O OPTION=value[,OPTIO...\r\n  -a ARG        Formatter-specific additional argument for the -S (print style\r\n                sheet) mode.\r\n'
+@py_assert1 = False, @py_format3 = '0 == 2', @py_format5 = 'assert 0 == 2'
+
+    def check_failure(*cmdline, **kwds):
+        expected_code = kwds.pop('code', 1)
+        try:
+            code, out, err = run_cmdline(*cmdline, **kwds)
+        except SystemExit as err:
+            assert err.args[0] == expected_code
+        else:
+>           assert code == expected_code
+E           assert 0 == 2
+
+tests\test_cmdline.py:77: AssertionError
+- generated xml file: C:\Users\joshp\Desktop\Blast-Radius\exploratory\causal\verification\pygments-results-arms\screening\pr-3217\tests-only-targeted.xml -
+=========================== short test summary info ===========================
+FAILED tests/test_cmdline.py::test_L_opt - assert 0 == 2
+======================== 1 failed, 29 passed in 2.37s =========================

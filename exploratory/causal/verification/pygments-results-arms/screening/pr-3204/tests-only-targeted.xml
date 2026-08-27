@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?><testsuites name="pytest tests"><testsuite name="pytest" errors="0" failures="6" skipped="0" tests="9" time="0.169" timestamp="2026-08-24T08:18:28.217745-07:00" hostname="JoshP"><testcase classname="tests.test_markup" name="test_markdown_fenced_code_block_offsets" time="0.023" /><testcase classname="tests.test_markup" name="test_rst_code_block_offsets" time="0.003" /><testcase classname="tests.test_markup" name="test_tiddlywiki_code_block_offsets" time="0.002" /><testcase classname="tests.test_markup" name="test_tex_math_environments[math]" time="0.001"><failure message="AssertionError: assert (Token.Name.Builtin, 'x') in [(Token.Keyword, '\\begin'), (Token.Name.Builtin, '{'), (Token.Text, 'math'), (Token.Name.Builtin, '}'), (Token.Text, 'x+1'), (Token.Keyword, '\\end'), ...]">environment = 'math'
+
+    @pytest.mark.parametrize('environment', [
+        'math', 'displaymath', 'equation', 'equation*', 'align', 'align*',
+    ])
+    def test_tex_math_environments(environment):
+        tokens = list(TexLexer().get_tokens(
+            rf'\begin{{{environment}}}x+1\end{{{environment}}}'
+        ))
+    
+&gt;       assert (Name.Builtin, 'x') in tokens
+E       AssertionError: assert (Token.Name.Builtin, 'x') in [(Token.Keyword, '\\begin'), (Token.Name.Builtin, '{'), (Token.Text, 'math'), (Token.Name.Builtin, '}'), (Token.Text, 'x+1'), (Token.Keyword, '\\end'), ...]
+
+tests\test_markup.py:64: AssertionError</failure></testcase><testcase classname="tests.test_markup" name="test_tex_math_environments[displaymath]" time="0.001"><failure message="AssertionError: assert (Token.Name.Builtin, 'x') in [(Token.Keyword, '\\begin'), (Token.Name.Builtin, '{'), (Token.Text, 'displaymath'), (Token.Name.Builtin, '}'), (Token.Text, 'x+1'), (Token.Keyword, '\\end'), ...]">environment = 'displaymath'
+
+    @pytest.mark.parametrize('environment', [
+        'math', 'displaymath', 'equation', 'equation*', 'align', 'align*',
+    ])
+    def test_tex_math_environments(environment):
+        tokens = list(TexLexer().get_tokens(
+            rf'\begin{{{environment}}}x+1\end{{{environment}}}'
+        ))
+    
+&gt;       assert (Name.Builtin, 'x') in tokens
+E       AssertionError: assert (Token.Name.Builtin, 'x') in [(Token.Keyword, '\\begin'), (Token.Name.Builtin, '{'), (Token.Text, 'displaymath'), (Token.Name.Builtin, '}'), (Token.Text, 'x+1'), (Token.Keyword, '\\end'), ...]
+
+tests\test_markup.py:64: AssertionError</failure></testcase><testcase classname="tests.test_markup" name="test_tex_math_environments[equation]" time="0.001"><failure message="AssertionError: assert (Token.Name.Builtin, 'x') in [(Token.Keyword, '\\begin'), (Token.Name.Builtin, '{'), (Token.Text, 'equation'), (Token.Name.Builtin, '}'), (Token.Text, 'x+1'), (Token.Keyword, '\\end'), ...]">environment = 'equation'
+
+    @pytest.mark.parametrize('environment', [
+        'math', 'displaymath', 'equation', 'equation*', 'align', 'align*',
+    ])
+    def test_tex_math_environments(environment):
+        tokens = list(TexLexer().get_tokens(
+            rf'\begin{{{environment}}}x+1\end{{{environment}}}'
+        ))
+    
+&gt;       assert (Name.Builtin, 'x') in tokens
+E       AssertionError: assert (Token.Name.Builtin, 'x') in [(Token.Keyword, '\\begin'), (Token.Name.Builtin, '{'), (Token.Text, 'equation'), (Token.Name.Builtin, '}'), (Token.Text, 'x+1'), (Token.Keyword, '\\end'), ...]
+
+tests\test_markup.py:64: AssertionError</failure></testcase><testcase classname="tests.test_markup" name="test_tex_math_environments[equation*]" time="0.000"><failure message="AssertionError: assert (Token.Name.Builtin, 'x') in [(Token.Keyword, '\\begin'), (Token.Name.Builtin, '{'), (Token.Text, 'equation*'), (Token.Name.Builtin, '}'), (Token.Text, 'x+1'), (Token.Keyword, '\\end'), ...]">environment = 'equation*'
+
+    @pytest.mark.parametrize('environment', [
+        'math', 'displaymath', 'equation', 'equation*', 'align', 'align*',
+    ])
+    def test_tex_math_environments(environment):
+        tokens = list(TexLexer().get_tokens(
+            rf'\begin{{{environment}}}x+1\end{{{environment}}}'
+        ))
+    
+&gt;       assert (Name.Builtin, 'x') in tokens
+E       AssertionError: assert (Token.Name.Builtin, 'x') in [(Token.Keyword, '\\begin'), (Token.Name.Builtin, '{'), (Token.Text, 'equation*'), (Token.Name.Builtin, '}'), (Token.Text, 'x+1'), (Token.Keyword, '\\end'), ...]
+
+tests\test_markup.py:64: AssertionError</failure></testcase><testcase classname="tests.test_markup" name="test_tex_math_environments[align]" time="0.000"><failure message="AssertionError: assert (Token.Name.Builtin, 'x') in [(Token.Keyword, '\\begin'), (Token.Name.Builtin, '{'), (Token.Text, 'align'), (Token.Name.Builtin, '}'), (Token.Text, 'x+1'), (Token.Keyword, '\\end'), ...]">environment = 'align'
+
+    @pytest.mark.parametrize('environment', [
+        'math', 'displaymath', 'equation', 'equation*', 'align', 'align*',
+    ])
+    def test_tex_math_environments(environment):
+        tokens = list(TexLexer().get_tokens(
+            rf'\begin{{{environment}}}x+1\end{{{environment}}}'
+        ))
+    
+&gt;       assert (Name.Builtin, 'x') in tokens
+E       AssertionError: assert (Token.Name.Builtin, 'x') in [(Token.Keyword, '\\begin'), (Token.Name.Builtin, '{'), (Token.Text, 'align'), (Token.Name.Builtin, '}'), (Token.Text, 'x+1'), (Token.Keyword, '\\end'), ...]
+
+tests\test_markup.py:64: AssertionError</failure></testcase><testcase classname="tests.test_markup" name="test_tex_math_environments[align*]" time="0.001"><failure message="AssertionError: assert (Token.Name.Builtin, 'x') in [(Token.Keyword, '\\begin'), (Token.Name.Builtin, '{'), (Token.Text, 'align*'), (Token.Name.Builtin, '}'), (Token.Text, 'x+1'), (Token.Keyword, '\\end'), ...]">environment = 'align*'
+
+    @pytest.mark.parametrize('environment', [
+        'math', 'displaymath', 'equation', 'equation*', 'align', 'align*',
+    ])
+    def test_tex_math_environments(environment):
+        tokens = list(TexLexer().get_tokens(
+            rf'\begin{{{environment}}}x+1\end{{{environment}}}'
+        ))
+    
+&gt;       assert (Name.Builtin, 'x') in tokens
+E       AssertionError: assert (Token.Name.Builtin, 'x') in [(Token.Keyword, '\\begin'), (Token.Name.Builtin, '{'), (Token.Text, 'align*'), (Token.Name.Builtin, '}'), (Token.Text, 'x+1'), (Token.Keyword, '\\end'), ...]
+
+tests\test_markup.py:64: AssertionError</failure></testcase></testsuite></testsuites>

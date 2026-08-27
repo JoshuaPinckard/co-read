@@ -1,0 +1,367 @@
+diff --git a/src/click/core.py b/src/click/core.py
+index cc0d4603b442c72cf170d2090c7888ae59d9ba89..7892e7036b41797053b0ec78ea75c3ada8fe035c 100644
+--- a/src/click/core.py
++++ b/src/click/core.py
+@@ -848,12 +848,15 @@ class Command:
+                             If enabled this will add ``--help`` as argument
+                             if no arguments are passed
+     :param hidden: hide this command from help outputs.
+-
+-    :param deprecated: issues a message indicating that
+-                             the command is deprecated.
++    :param deprecated: If ``True`` or non-empty string, issues a message
++                        indicating that the command is deprecated and highlights
++                        its deprecation in --help. The message can be customized
++                        by using a string as the value.
+ 
+     .. versionchanged:: 8.2
+         This is the base class for all commands, not ``BaseCommand``.
++        ``deprecated`` can be set to a string as well to customize the
++        deprecation message.
+ 
+     .. versionchanged:: 8.1
+         ``help``, ``epilog``, and ``short_help`` are stored unprocessed,
+@@ -897,7 +900,7 @@ class Command:
+         add_help_option: bool = True,
+         no_args_is_help: bool = False,
+         hidden: bool = False,
+-        deprecated: bool = False,
++        deprecated: bool | str = False,
+     ) -> None:
+         #: the name the command thinks it has.  Upon registering a command
+         #: on a :class:`Group` the group will default the command name
+@@ -1035,7 +1038,14 @@ class Command:
+             text = ""
+ 
+         if self.deprecated:
+-            text = _("(Deprecated) {text}").format(text=text)
++            deprecated_message = (
++                f"(DEPRECATED: {self.deprecated})"
++                if isinstance(self.deprecated, str)
++                else "(DEPRECATED)"
++            )
++            text = _("{text} {deprecated_message}").format(
++                text=text, deprecated_message=deprecated_message
++            )
+ 
+         return text.strip()
+ 
+@@ -1065,7 +1075,14 @@ class Command:
+             text = ""
+ 
+         if self.deprecated:
+-            text = _("(Deprecated) {text}").format(text=text)
++            deprecated_message = (
++                f"(DEPRECATED: {self.deprecated})"
++                if isinstance(self.deprecated, str)
++                else "(DEPRECATED)"
++            )
++            text = _("{text} {deprecated_message}").format(
++                text=text, deprecated_message=deprecated_message
++            )
+ 
+         if text:
+             formatter.write_paragraph()
+@@ -1160,9 +1177,13 @@ class Command:
+         in the right way.
+         """
+         if self.deprecated:
++            extra_message = (
++                f" {self.deprecated}" if isinstance(self.deprecated, str) else ""
++            )
+             message = _(
+                 "DeprecationWarning: The command {name!r} is deprecated."
+-            ).format(name=self.name)
++                "{extra_message}"
++            ).format(name=self.name, extra_message=extra_message)
+             echo(style(message, fg="red"), err=True)
+ 
+         if self.callback is not None:
+@@ -1966,6 +1987,18 @@ class Parameter:
+         given. Takes ``ctx, param, incomplete`` and must return a list
+         of :class:`~click.shell_completion.CompletionItem` or a list of
+         strings.
++    :param deprecated: If ``True`` or non-empty string, issues a message
++                        indicating that the argument is deprecated and highlights
++                        its deprecation in --help. The message can be customized
++                        by using a string as the value. A deprecated parameter
++                        cannot be required, a ValueError will be raised otherwise.
++
++    .. versionchanged:: 8.2.0
++        Introduction of ``deprecated``.
++
++    .. versionchanged:: 8.2
++        Adding duplicate parameter names to a :class:`~click.core.Command` will
++        result in a ``UserWarning`` being shown.
+ 
+     .. versionchanged:: 8.0
+         ``process_value`` validates required parameters and bounded
+@@ -2018,6 +2051,7 @@ class Parameter:
+             [Context, Parameter, str], list[CompletionItem] | list[str]
+         ]
+         | None = None,
++        deprecated: bool | str = False,
+     ) -> None:
+         self.name: str | None
+         self.opts: list[str]
+@@ -2045,6 +2079,7 @@ class Parameter:
+         self.metavar = metavar
+         self.envvar = envvar
+         self._custom_shell_complete = shell_complete
++        self.deprecated = deprecated
+ 
+         if __debug__:
+             if self.type.is_composite and nargs != self.type.arity:
+@@ -2087,6 +2122,13 @@ class Parameter:
+                             f"'default' {subject} must match nargs={nargs}."
+                         )
+ 
++            if required and deprecated:
++                raise ValueError(
++                    f"The {self.param_type_name} '{self.human_readable_name}' "
++                    "is deprecated and still required. A deprecated "
++                    f"{self.param_type_name} cannot be required."
++                )
++
+     def to_info_dict(self) -> dict[str, t.Any]:
+         """Gather information that could be useful for a tool generating
+         user-facing documentation.
+@@ -2306,6 +2348,29 @@ class Parameter:
+     ) -> tuple[t.Any, list[str]]:
+         with augment_usage_errors(ctx, param=self):
+             value, source = self.consume_value(ctx, opts)
++
++            if (
++                self.deprecated
++                and value is not None
++                and source
++                not in (
++                    ParameterSource.DEFAULT,
++                    ParameterSource.DEFAULT_MAP,
++                )
++            ):
++                extra_message = (
++                    f" {self.deprecated}" if isinstance(self.deprecated, str) else ""
++                )
++                message = _(
++                    "DeprecationWarning: The {param_type} {name!r} is deprecated."
++                    "{extra_message}"
++                ).format(
++                    param_type=self.param_type_name,
++                    name=self.human_readable_name,
++                    extra_message=extra_message,
++                )
++                echo(style(message, fg="red"), err=True)
++
+             ctx.set_parameter_source(self.name, source)  # type: ignore
+ 
+             try:
+@@ -2376,7 +2441,8 @@ class Option(Parameter):
+         shown.
+     :param prompt: If set to ``True`` or a non empty string then the
+         user will be prompted for input. If set to ``True`` the prompt
+-        will be the option name capitalized.
++        will be the option name capitalized. A deprecated option cannot be
++        prompted.
+     :param confirmation_prompt: Prompt a second time to confirm the
+         value if it was prompted for. Can be set to a string instead of
+         ``True`` to customize the message.
+@@ -2439,13 +2505,16 @@ class Option(Parameter):
+         hidden: bool = False,
+         show_choices: bool = True,
+         show_envvar: bool = False,
++        deprecated: bool | str = False,
+         **attrs: t.Any,
+     ) -> None:
+         if help:
+             help = inspect.cleandoc(help)
+ 
+         default_is_missing = "default" not in attrs
+-        super().__init__(param_decls, type=type, multiple=multiple, **attrs)
++        super().__init__(
++            param_decls, type=type, multiple=multiple, deprecated=deprecated, **attrs
++        )
+ 
+         if prompt is True:
+             if self.name is None:
+@@ -2457,6 +2526,14 @@ class Option(Parameter):
+         else:
+             prompt_text = prompt
+ 
++        if deprecated:
++            deprecated_message = (
++                f"(DEPRECATED: {deprecated})"
++                if isinstance(deprecated, str)
++                else "(DEPRECATED)"
++            )
++            help = help + deprecated_message if help is not None else deprecated_message
++
+         self.prompt = prompt_text
+         self.confirmation_prompt = confirmation_prompt
+         self.prompt_required = prompt_required
+@@ -2518,6 +2595,9 @@ class Option(Parameter):
+         self.show_envvar = show_envvar
+ 
+         if __debug__:
++            if deprecated and prompt:
++                raise ValueError("`deprecated` options cannot use `prompt`.")
++
+             if self.nargs == -1:
+                 raise TypeError("nargs=-1 is not supported for options.")
+ 
+@@ -2921,6 +3001,8 @@ class Argument(Parameter):
+         var = self.type.get_metavar(self)
+         if not var:
+             var = self.name.upper()  # type: ignore
++        if self.deprecated:
++            var += "!"
+         if not self.required:
+             var = f"[{var}]"
+         if self.nargs != 1:
+diff --git a/tests/test_arguments.py b/tests/test_arguments.py
+index 7f6629fbae38ad31e6f3b45b3433bc3dc49cc7ae..1c2a2bf187c407dd3391885e07b7f45fdb6f7a02 100644
+--- a/tests/test_arguments.py
++++ b/tests/test_arguments.py
+@@ -262,6 +262,44 @@ def test_implicit_non_required(runner):
+     assert result.output == "test\n"
+ 
+ 
++def test_deprecated_usage(runner):
++    @click.command()
++    @click.argument("f", required=False, deprecated=True)
++    def cli(f):
++        click.echo(f)
++
++    result = runner.invoke(cli, ["--help"])
++    assert result.exit_code == 0, result.output
++    assert "[F!]" in result.output
++
++
++@pytest.mark.parametrize("deprecated", [True, "USE B INSTEAD"])
++def test_deprecated_warning(runner, deprecated):
++    @click.command()
++    @click.argument(
++        "my-argument", required=False, deprecated=deprecated, default="default argument"
++    )
++    def cli(my_argument: str):
++        click.echo(f"{my_argument}")
++
++    # defaults should not give a deprecated warning
++    result = runner.invoke(cli, [])
++    assert result.exit_code == 0, result.output
++    assert "is deprecated" not in result.output
++
++    result = runner.invoke(cli, ["hello"])
++    assert result.exit_code == 0, result.output
++    assert "argument 'MY_ARGUMENT' is deprecated" in result.output
++
++    if isinstance(deprecated, str):
++        assert deprecated in result.output
++
++
++def test_deprecated_required(runner):
++    with pytest.raises(ValueError, match="is deprecated and still required"):
++        click.Argument(["a"], required=True, deprecated=True)
++
++
+ def test_eat_options(runner):
+     @click.command()
+     @click.option("-f")
+diff --git a/tests/test_commands.py b/tests/test_commands.py
+index 5a56799adfd4b2c64998476a948c38910782a646..fc13b2fc717452799df3bce08813b1ed658d4462 100644
+--- a/tests/test_commands.py
++++ b/tests/test_commands.py
+@@ -322,23 +322,31 @@ def test_unprocessed_options(runner):
+ 
+ 
+ @pytest.mark.parametrize("doc", ["CLI HELP", None])
+-def test_deprecated_in_help_messages(runner, doc):
+-    @click.command(deprecated=True, help=doc)
++@pytest.mark.parametrize("deprecated", [True, "USE OTHER COMMAND INSTEAD"])
++def test_deprecated_in_help_messages(runner, doc, deprecated):
++    @click.command(deprecated=deprecated, help=doc)
+     def cli():
+         pass
+ 
+     result = runner.invoke(cli, ["--help"])
+-    assert "(Deprecated)" in result.output
++    assert "(DEPRECATED" in result.output
+ 
++    if isinstance(deprecated, str):
++        assert deprecated in result.output
+ 
+-def test_deprecated_in_invocation(runner):
+-    @click.command(deprecated=True)
++
++@pytest.mark.parametrize("deprecated", [True, "USE OTHER COMMAND INSTEAD"])
++def test_deprecated_in_invocation(runner, deprecated):
++    @click.command(deprecated=deprecated)
+     def deprecated_cmd():
+         pass
+ 
+     result = runner.invoke(deprecated_cmd)
+     assert "DeprecationWarning:" in result.output
+ 
++    if isinstance(deprecated, str):
++        assert deprecated in result.output
++
+ 
+ def test_command_parse_args_collects_option_prefixes():
+     @click.command()
+diff --git a/tests/test_options.py b/tests/test_options.py
+index 7397f36676575c48fc94c99e760b1c0b43f406df..5785a062362ad4da2edd8fbef9814159f0d9a005 100644
+--- a/tests/test_options.py
++++ b/tests/test_options.py
+@@ -33,6 +33,52 @@ def test_invalid_option(runner):
+     assert "'--foo'" in message
+ 
+ 
++@pytest.mark.parametrize("deprecated", [True, "USE B INSTEAD"])
++def test_deprecated_usage(runner, deprecated):
++    @click.command()
++    @click.option("--foo", default="bar", deprecated=deprecated)
++    def cmd(foo):
++        click.echo(foo)
++
++    result = runner.invoke(cmd, ["--help"])
++    assert "(DEPRECATED" in result.output
++
++    if isinstance(deprecated, str):
++        assert deprecated in result.output
++
++
++@pytest.mark.parametrize("deprecated", [True, "USE B INSTEAD"])
++def test_deprecated_warning(runner, deprecated):
++    @click.command()
++    @click.option(
++        "--my-option", required=False, deprecated=deprecated, default="default option"
++    )
++    def cli(my_option: str):
++        click.echo(f"{my_option}")
++
++    # defaults should not give a deprecated warning
++    result = runner.invoke(cli, [])
++    assert result.exit_code == 0, result.output
++    assert "is deprecated" not in result.output
++
++    result = runner.invoke(cli, ["--my-option", "hello"])
++    assert result.exit_code == 0, result.output
++    assert "option 'my_option' is deprecated" in result.output
++
++    if isinstance(deprecated, str):
++        assert deprecated in result.output
++
++
++def test_deprecated_required(runner):
++    with pytest.raises(ValueError, match="is deprecated and still required"):
++        click.Option(["--a"], required=True, deprecated=True)
++
++
++def test_deprecated_prompt(runner):
++    with pytest.raises(ValueError, match="`deprecated` options cannot use `prompt`"):
++        click.Option(["--a"], prompt=True, deprecated=True)
++
++
+ def test_invalid_nargs(runner):
+     with pytest.raises(TypeError, match="nargs=-1"):
+ 

@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?><testsuites name="pytest tests"><testsuite name="pytest" errors="0" failures="1" skipped="0" tests="1" time="0.275" timestamp="2026-08-24T08:15:53.304913-07:00" hostname="JoshP"><testcase classname="tests.snippets.csharp.2685.txt" name="" time="0.097"><failure message="The tokens produced by the &quot;csharp&quot; lexer differ from the expected ones in the file &quot;tests\snippets\csharp\2685.txt&quot;.&#10;Run `tox -- tests\snippets --update-goldens` to update it.&#10;&#10;  &#10;  Skipping 82 identical leading characters in diff, use -v to show&#10;    tuation&#10;  + '$'           Error&#10;  - '$@&quot;C:\\Users\\{username}\\Desktop&quot;' Literal.String&#10;  ?  -&#10;  + '@&quot;C:\\Users\\{username}\\Desktop&quot;' Literal.String...&#10;  &#10;  ...Full output truncated (15 lines hidden), use '-vv' to show">The tokens produced by the "csharp" lexer differ from the expected ones in the file "tests\snippets\csharp\2685.txt".
+Run `tox -- tests\snippets --update-goldens` to update it.
+
+  
+  Skipping 82 identical leading characters in diff, use -v to show
+    tuation
+  + '$'           Error
+  - '$@"C:\\Users\\{username}\\Desktop"' Literal.String
+  ?  -
+  + '@"C:\\Users\\{username}\\Desktop"' Literal.String...
+  
+  ...Full output truncated (15 lines hidden), use '-vv' to show</failure></testcase></testsuite></testsuites>

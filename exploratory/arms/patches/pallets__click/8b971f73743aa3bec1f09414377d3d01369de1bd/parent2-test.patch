@@ -1,0 +1,118 @@
+diff --git a/tests/test_formatting.py b/tests/test_formatting.py
+index 566f3162da58642c8b61c60d2117f9a2069eef45..e4d25717aae8f70013536ee6b4111ddf0da74b93 100644
+--- a/tests/test_formatting.py
++++ b/tests/test_formatting.py
+@@ -312,4 +312,40 @@ def test_global_show_default(runner):
+         'Options:',
+         '  -f TEXT  Output file name  [default: out.txt]',
+         '  --help   Show this message and exit.  [default: False]'
+-    ]
+\ No newline at end of file
++    ]
++
++
++def test_formatting_usage_multiline_option_padding(runner):
++    @click.command('foo')
++    @click.option('--bar', help='This help message will be padded if it wraps.')
++    def cli():
++        pass
++
++    result = runner.invoke(cli, '--help', terminal_width=45)
++    assert not result.exception
++    assert result.output.splitlines() == [
++        'Usage: foo [OPTIONS]',
++        '',
++        'Options:',
++        '  --bar TEXT  This help message will be',
++        '              padded if it wraps.',
++        '',
++        '  --help      Show this message and exit.'
++    ]
++
++
++def test_formatting_usage_no_option_padding(runner):
++    @click.command('foo')
++    @click.option('--bar', help='This help message will be padded if it wraps.')
++    def cli():
++        pass
++
++    result = runner.invoke(cli, '--help', terminal_width=80)
++    assert not result.exception
++    assert result.output.splitlines() == [
++        'Usage: foo [OPTIONS]',
++        '',
++        'Options:',
++        '  --bar TEXT  This help message will be padded if it wraps.',
++        '  --help      Show this message and exit.'
++    ]
+diff --git a/tests/test_options.py b/tests/test_options.py
+index 4ad7f3ce7f6a792f5a2ad58d4902857b81d431f0..4a13a0a14367bb101a000e52f4c94cb0a9f9606d 100644
+--- a/tests/test_options.py
++++ b/tests/test_options.py
+@@ -273,6 +273,22 @@ def test_show_envvar_auto_prefix(runner):
+     assert 'TEST_ARG1' in result.output
+ 
+ 
++def test_show_envvar_auto_prefix_dash_in_command(runner):
++    @click.group()
++    def cli():
++        pass
++
++    @cli.command()
++    @click.option('--baz', show_envvar=True)
++    def foo_bar(baz):
++        pass
++
++    result = runner.invoke(cli, ['foo-bar', '--help'],
++                           auto_envvar_prefix='TEST')
++    assert not result.exception
++    assert 'TEST_FOO_BAR_BAZ' in result.output
++
++
+ def test_custom_validation(runner):
+     def validate_pos_int(ctx, param, value):
+         if value < 0:
+@@ -392,22 +408,30 @@ def test_case_insensitive_choice_returned_exactly(runner):
+     assert result.output == 'Apple\n'
+ 
+ 
+-def test_multiline_help(runner):
++def test_option_help_preserve_paragraphs(runner):
+     @click.command()
+-    @click.option('--foo', help="""
+-        hello
+-
+-        i am
+-
+-        multiline
+-    """)
+-    def cmd(foo):
+-        click.echo(foo)
++    @click.option(
++        "-C",
++        "--config",
++        type=click.Path(),
++        help="""Configuration file to use.
++        
++        If not given, the environment variable CONFIG_FILE is consulted
++        and used if set. If neither are given, a default configuration
++        file is loaded.""",
++    )
++    def cmd(config):
++        pass
+ 
+-    result = runner.invoke(cmd, ['--help'])
++    result = runner.invoke(cmd, ['--help'], )
+     assert result.exit_code == 0
+-    out = result.output.splitlines()
+-    assert '  --foo TEXT  hello  i am  multiline' in out
++    assert (
++        "  -C, --config PATH  Configuration file to use.\n"
++        "{i}\n"
++        "{i}If not given, the environment variable CONFIG_FILE is\n"
++        "{i}consulted and used if set. If neither are given, a default\n"
++        "{i}configuration file is loaded.".format(i=" " * 21)
++    ) in result.output
+ 
+ def test_argument_custom_class(runner):
+     class CustomArgument(click.Argument):

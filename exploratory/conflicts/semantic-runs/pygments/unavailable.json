@@ -1,0 +1,80 @@
+{
+  "schema_version": 1,
+  "measurement": "silent-semantic-breakage-source-availability",
+  "repository": "pygments/pygments",
+  "status": "not_estimable_source_unavailable",
+  "observed_at_local": "2026-08-24T16:37:44.3897526-07:00",
+  "rate_interpretation": "No numerator or denominator was measured. This is not a zero result and is not a per-merge exclusion.",
+  "required_source": {
+    "logical_root": "C:\\Users\\joshp\\Desktop\\Blast-Radius\\corpus\\_clones",
+    "resolved_junction_target": "D:\\Blast-Radius-corpus\\_clones",
+    "immediate_directories": 337,
+    "readable_git_configs_inspected": 336,
+    "matching_directory_names": 0,
+    "matching_remote_or_config_entries": 0
+  },
+  "noncompliant_source_observed_but_not_used": {
+    "path": "C:\\Users\\joshp\\Desktop\\Blast-Radius\\corpus\\_conflict_mirrors\\pygments__pygments",
+    "preparation_record": "exploratory/conflicts/PREPARATION.json",
+    "clone_mode": "direct",
+    "recorded_command_source": "https://github.com/pygments/pygments.git",
+    "reason_not_used": "The user required copying each repository from corpus/_clones into task-owned scratch. This mirror was created by another running job via a direct network clone, so it does not satisfy the mandated source-provenance rule and was neither used nor modified."
+  },
+  "explicit_absent_paths": [
+    "C:\\Users\\joshp\\Desktop\\Blast-Radius\\corpus\\_clones\\pygments__pygments",
+    "C:\\Users\\joshp\\Desktop\\Blast-Radius\\corpus\\_clones\\pygments",
+    "C:\\Users\\joshp\\Desktop\\Blast-Radius\\corpus\\_clones\\pygments-pygments",
+    "C:\\Users\\joshp\\Desktop\\Blast-Radius\\exploratory\\causal\\repositories\\pygments",
+    "C:\\Users\\joshp\\Desktop\\Blast-Radius\\exploratory\\causal\\repositories\\pygments__pygments",
+    "C:\\Users\\joshp\\Desktop\\Blast-Radius\\exploratory\\causal\\envs\\pygments",
+    "C:\\Users\\joshp\\Desktop\\Blast-Radius\\corpus\\_clones-empty-after-relocation-20260823\\pygments__pygments",
+    "C:\\Users\\joshp\\Desktop\\Blast-Radius\\corpus\\superseded\\pygments__pygments",
+    "C:\\Users\\joshp\\Desktop\\Blast-Radius\\exploratory\\conflicts\\scratch\\pygments__pygments"
+  ],
+  "retained_fixture": {
+    "source_export": "fixture/pygments/base-shared",
+    "source_export_file_count": 2756,
+    "source_export_bytes": 45219844,
+    "git_object_database_present": false,
+    "refs_present": false,
+    "bundle_or_pack_present": false,
+    "history_artifact": "fixture/pygments/history/commit-stream.txt.gz",
+    "history_artifact_content": "first-parent commit SHA, timestamp, and no-renames name-status only",
+    "missing_required_information": [
+      "second parents",
+      "complete DAG ancestry",
+      "subjects for the complete history and both parents",
+      "trees and blobs",
+      "merge bases",
+      "mechanical merge trees"
+    ],
+    "substitution_rejected": "The export cannot support merge-base, merge-tree --write-tree, parent/tree checkout, conflict-path classification, or mechanical-versus-recorded tree comparison."
+  },
+  "retained_gate_evidence": {
+    "anchor_commit": "38f426a6b1cd4ffc6429f5808031b7c62ea57b1f",
+    "anchor_tree": "ef5ef11d79315fe64ed6663277d7466c4d065b16",
+    "runtime": "CPython 3.11.9",
+    "command": "python -m pytest",
+    "runs": 5,
+    "passed_per_run": 5330,
+    "skipped_per_run": 16,
+    "all_exit_zero": true,
+    "normalized_signature": "c0cfda900015648c012c77e5e0b9b47659d0b278f38f5e78e9b11da68f54df06",
+    "wall_seconds": [31.373, 28.420, 27.940, 33.686, 25.526],
+    "limitations": "This is retained historical evidence of determinism only at the anchor. The deleted clone and absent objects prevent independent revalidation or merge-history measurement now.",
+    "sources": [
+      "fixture/pygments/GATE.md",
+      "exploratory/causal/SECOND-REPO.md"
+    ]
+  },
+  "measurement_effect": {
+    "merge_census": null,
+    "pilot_size": null,
+    "cap": null,
+    "over_block_rate": null,
+    "developer_intervention_count": null,
+    "silent_semantic_breakage_rate": null,
+    "reason": "The required immutable local Git history was unavailable; no network fetch or non-equivalent source was substituted."
+  },
+  "what_would_enable_measurement": "Restore the exact audited clone, or a complete immutable local clone or bundle containing the anchor's reachable DAG and objects; verify non-shallow coverage and git fsck --full before running the prescribed newest-first pilot and replay."
+}

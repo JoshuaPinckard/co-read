@@ -1,0 +1,23 @@
+diff --git a/tests/test_utils.py b/tests/test_utils.py
+index 1b1575657c7d5a74d7ab0fd55088f7ee4ddfae23..dceb5cea03df452d2a756ef3a5ab6c34f7bc39bb 100644
+--- a/tests/test_utils.py
++++ b/tests/test_utils.py
+@@ -8,6 +8,7 @@ from contextlib import nullcontext
+ from decimal import Decimal
+ from fractions import Fraction
+ from functools import partial
++from io import BytesIO
+ from io import StringIO
+ from pathlib import Path
+ from tempfile import tempdir
+@@ -98,6 +99,10 @@ def test_echo_custom_file():
+     click.echo("hello", file=f)
+     assert f.getvalue() == "hello\n"
+ 
++    b = BytesIO()
++    click.echo(b"", b)
++    assert b.getvalue() == b"\n"
++
+ 
+ def test_echo_no_streams(monkeypatch, runner):
+     """echo should not fail when stdout and stderr are None with pythonw on Windows."""

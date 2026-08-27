@@ -1,0 +1,14 @@
+diff --git a/tests/test_shell_completion.py b/tests/test_shell_completion.py
+index 20cff238f7c72d4999b20205c1fa0244f9934d70..8993978258542593062af62808972621ee775c7e 100644
+--- a/tests/test_shell_completion.py
++++ b/tests/test_shell_completion.py
+@@ -457,7 +457,8 @@ def test_context_settings(runner):
+     assert result.output == "plain,a\nplain,b\n"
+ 
+ 
+-@pytest.mark.parametrize(("value", "expect"), [(False, ["Au", "al"]), (True, ["al"])])
++# case_sensitive=False normalizes values to lowercase, matching remains case insensitive
++@pytest.mark.parametrize(("value", "expect"), [(False, ["au", "al"]), (True, ["al"])])
+ def test_choice_case_sensitive(value, expect):
+     cli = Command(
+         "cli",

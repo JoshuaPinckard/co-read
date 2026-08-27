@@ -1,0 +1,66 @@
+{
+ "objective": "P(T>L)*C_reacquire + E[min(L,D)]*p*C_block",
+ "C_reacquire_agent_min": 3.3275,
+ "C_block_per_min": 1.0,
+ "p_bracket_measured": [
+  0.01,
+  0.1
+ ],
+ "rows": [
+  {
+   "p_contention": 0.005,
+   "L_star_min": 60,
+   "objective": 0.6293,
+   "false_expiry": 0.0999
+  },
+  {
+   "p_contention": 0.01,
+   "L_star_min": 58,
+   "objective": 0.9217,
+   "false_expiry": 0.1045
+  },
+  {
+   "p_contention": 0.02,
+   "L_star_min": 58,
+   "objective": 1.4956,
+   "false_expiry": 0.1045
+  },
+  {
+   "p_contention": 0.023,
+   "L_star_min": 58,
+   "objective": 1.6678,
+   "false_expiry": 0.1045
+  },
+  {
+   "p_contention": 0.03,
+   "L_star_min": 0.5,
+   "objective": 1.6771,
+   "false_expiry": 0.4995
+  },
+  {
+   "p_contention": 0.05,
+   "L_star_min": 0.5,
+   "objective": 1.6871,
+   "false_expiry": 0.4995
+  },
+  {
+   "p_contention": 0.1,
+   "L_star_min": 0.5,
+   "objective": 1.7121,
+   "false_expiry": 0.4995
+  },
+  {
+   "p_contention": 0.25,
+   "L_star_min": 0.5,
+   "objective": 1.7871,
+   "false_expiry": 0.4995
+  },
+  {
+   "p_contention": 1.0,
+   "L_star_min": 0.5,
+   "objective": 2.1621,
+   "false_expiry": 0.4995
+  }
+ ],
+ "breakeven_p": 0.0231
+}

@@ -1,0 +1,49 @@
+diff --git a/src/test/java/org/apache/commons/lang3/ArrayUtilsTest.java b/src/test/java/org/apache/commons/lang3/ArrayUtilsTest.java
+index 383a8be33e2a54e7298c29b3553eb28ec9969ec6..a18af494859d42c906417a3ccdf41ddabf167deb 100644
+--- a/src/test/java/org/apache/commons/lang3/ArrayUtilsTest.java
++++ b/src/test/java/org/apache/commons/lang3/ArrayUtilsTest.java
+@@ -252,7 +252,17 @@ public class ArrayUtilsTest extends AbstractLangTest {
+     }
+ 
+     @Test
+-    public void testContainsAny() {
++    public void testContainsAnyInt() {
++        final int[] array = {0, 1, 2, 3, 0};
++        assertFalse(ArrayUtils.containsAny((int[]) null, 1));
++        assertTrue(ArrayUtils.containsAny(array, 0));
++        assertTrue(ArrayUtils.containsAny(array, 1));
++        assertTrue(ArrayUtils.containsAny(array, 2));
++        assertTrue(ArrayUtils.containsAny(array, 3));
++    }
++
++    @Test
++    public void testContainsAnyObject() {
+         final Object[] array = {"0", "1", "2", "3", null, "0"};
+         assertFalse(ArrayUtils.containsAny(null, (Object) null));
+         assertFalse(ArrayUtils.containsAny(null, "1"));
+diff --git a/src/test/java/org/apache/commons/lang3/stream/IntStreamsTest.java b/src/test/java/org/apache/commons/lang3/stream/IntStreamsTest.java
+index ecb87d68b2dab1840cfba5d55c8065f54614ad0c..eeee3ddd9f361fe9e23c15d455b0b8e50973d6f0 100644
+--- a/src/test/java/org/apache/commons/lang3/stream/IntStreamsTest.java
++++ b/src/test/java/org/apache/commons/lang3/stream/IntStreamsTest.java
+@@ -17,6 +17,7 @@
+ package org.apache.commons.lang3.stream;
+ 
+ import static org.junit.jupiter.api.Assertions.assertArrayEquals;
++import static org.junit.jupiter.api.Assertions.assertEquals;
+ 
+ import org.apache.commons.lang3.AbstractLangTest;
+ import org.junit.jupiter.api.Test;
+@@ -26,6 +27,13 @@ import org.junit.jupiter.api.Test;
+  */
+ public class IntStreamsTest extends AbstractLangTest {
+ 
++    @Test
++    public void testOfArray() {
++        assertEquals(0, IntStreams.of((int[]) null).count());
++        assertEquals(1, IntStreams.of(1).count());
++        assertEquals(2, IntStreams.of(1, 2).count());
++    }
++
+     @Test
+     public void testRange() {
+         assertArrayEquals(new int[] {0, 1}, IntStreams.range(2).toArray());

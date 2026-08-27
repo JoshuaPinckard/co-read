@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?><testsuites name="pytest tests"><testsuite name="pytest" errors="0" failures="1" skipped="0" tests="1" time="0.135" timestamp="2026-08-24T08:24:21.595793-07:00" hostname="JoshP"><testcase classname="tests.snippets.googlesql.test_leading_substring_set_not_keyword.txt" name="" time="0.049"><failure message="The tokens produced by the &quot;googlesql&quot; lexer differ from the expected ones in the file &quot;tests\snippets\googlesql\test_leading_substring_set_not_keyword.txt&quot;.&#10;Run `tox -- tests\snippets --update-goldens` to update it.&#10;&#10;  &#10;  Skipping 46 identical leading characters in diff, use -v to show&#10;    space&#10;  + 'set'         Keyword&#10;  - 'settings'    Name&#10;  ?  ---&#10;  + 'tings'       Name&#10;  ?            +++&#10;    '\n'          Text.Whitespace">The tokens produced by the "googlesql" lexer differ from the expected ones in the file "tests\snippets\googlesql\test_leading_substring_set_not_keyword.txt".
+Run `tox -- tests\snippets --update-goldens` to update it.
+
+  
+  Skipping 46 identical leading characters in diff, use -v to show
+    space
+  + 'set'         Keyword
+  - 'settings'    Name
+  ?  ---
+  + 'tings'       Name
+  ?            +++
+    '\n'          Text.Whitespace</failure></testcase></testsuite></testsuites>

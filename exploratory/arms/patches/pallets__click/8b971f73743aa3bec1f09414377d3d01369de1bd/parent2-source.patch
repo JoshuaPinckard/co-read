@@ -1,0 +1,155 @@
+diff --git a/CHANGES.rst b/CHANGES.rst
+index 17fd5b3ce0e2b067fbb28f32e84a1a04f0a2716e..24089e1db39ecf8cb374fbed6ef6185bd75037be 100644
+--- a/CHANGES.rst
++++ b/CHANGES.rst
+@@ -44,6 +44,15 @@ Unreleased
+     interpreter. :issue:`1139`
+ -   Fix how default values for file-type options are shown during
+     prompts. :issue:`914`
++-   Fix environment variable automatic generation for commands
++    containing ``-``. :issue:`1253`
++-   Option help text replaces newlines with spaces when rewrapping, but
++    preserves paragraph breaks, fixing multiline formatting.
++    :issue:`834, 1066, 1397`
++-   Option help text that is wrapped adds an extra newline at the end to
++    distinguish it from the next option. :issue:`1075`
++-   Consider ``sensible-editor`` when determining the editor to use for
++    ``click.edit()``. :pr:`1469`
+ 
+ 
+ Version 7.0
+diff --git a/click/_termui_impl.py b/click/_termui_impl.py
+index c3e14c6c577353e0306caf527e08e306765314d3..66668213b480222bd7c1f406487824f64041aec4 100644
+--- a/click/_termui_impl.py
++++ b/click/_termui_impl.py
+@@ -427,7 +427,7 @@ class Editor(object):
+                 return rv
+         if WIN:
+             return 'notepad'
+-        for editor in 'vim', 'nano':
++        for editor in 'sensible-editor', 'vim', 'nano':
+             if os.system('which %s >/dev/null 2>&1' % editor) == 0:
+                 return editor
+         return 'vi'
+diff --git a/click/core.py b/click/core.py
+index d4a29aefae81d440078c331559765913c401e3d8..95c07b01cb997f16e54b898af04953a503a5481a 100644
+--- a/click/core.py
++++ b/click/core.py
+@@ -335,6 +335,8 @@ class Context(object):
+                                            self.info_name.upper())
+         else:
+             auto_envvar_prefix = auto_envvar_prefix.upper()
++        if auto_envvar_prefix is not None:
++            auto_envvar_prefix = auto_envvar_prefix.replace("-", "_")
+         self.auto_envvar_prefix = auto_envvar_prefix
+ 
+         if color is None and parent is not None:
+@@ -943,8 +945,7 @@ class Command(BaseCommand):
+         for param in self.get_params(ctx):
+             rv = param.get_help_record(ctx)
+             if rv is not None:
+-                part_a, part_b = rv
+-                opts.append((part_a, part_b.replace('\n', ' ')))
++                opts.append(rv)
+ 
+         if opts:
+             with formatter.section('Options'):
+diff --git a/click/formatting.py b/click/formatting.py
+index a3d6a4d389019c3c5cf61a1ab9be8e6836bd15e6..4ae5f07eff813992c79c43608f0d1d45fa204652 100644
+--- a/click/formatting.py
++++ b/click/formatting.py
+@@ -198,12 +198,18 @@ class HelpFormatter(object):
+                 self.write(' ' * (first_col + self.current_indent))
+ 
+             text_width = max(self.width - first_col - 2, 10)
+-            lines = iter(wrap_text(second, text_width).splitlines())
++            wrapped_text = wrap_text(second, text_width, preserve_paragraphs=True)
++            lines = wrapped_text.splitlines()
++
+             if lines:
+-                self.write(next(lines) + '\n')
+-                for line in lines:
+-                    self.write('%*s%s\n' % (
+-                        first_col + self.current_indent, '', line))
++                self.write(lines[0] + '\n')
++
++                for line in lines[1:]:
++                    self.write('%*s%s\n' % (first_col + self.current_indent, '', line))
++
++                if len(lines) > 1:
++                    # separate long help from next option
++                    self.write("\n")
+             else:
+                 self.write('\n')
+ 
+diff --git a/docs/options.rst b/docs/options.rst
+index d7d7356fec2f1ca5d79673dbf3b32d202e5aba49..29000a161aee83f1bddc4dd9c88bd062927f22a9 100644
+--- a/docs/options.rst
++++ b/docs/options.rst
+@@ -593,8 +593,8 @@ environment variables which is supported for options only.  To enable this
+ feature, the ``auto_envvar_prefix`` parameter needs to be passed to the
+ script that is invoked.  Each command and parameter is then added as an
+ uppercase underscore-separated variable.  If you have a subcommand
+-called ``foo`` taking an option called ``bar`` and the prefix is
+-``MY_TOOL``, then the variable is ``MY_TOOL_FOO_BAR``.
++called ``run`` taking an option called ``reload`` and the prefix is
++``WEB``, then the variable is ``WEB_RUN_RELOAD``.
+ 
+ Example usage:
+ 
+@@ -615,8 +615,11 @@ And from the command line:
+     invoke(greet, env={'GREETER_USERNAME': 'john'},
+            auto_envvar_prefix='GREETER')
+ 
+-When using ``auto_envvar_prefix`` with command groups, the command name needs
+-to be included in the environment variable, between the prefix and the parameter name, *i.e.* *PREFIX_COMMAND_VARIABLE*.
++When using ``auto_envvar_prefix`` with command groups, the command name
++needs to be included in the environment variable, between the prefix and
++the parameter name, *i.e.* ``PREFIX_COMMAND_VARIABLE``. If you have a
++subcommand called ``run-server`` taking an option called ``host`` and
++the prefix is ``WEB``, then the variable is ``WEB_RUN_SERVER_HOST``.
+ 
+ Example:
+ 
+diff --git a/docs/upgrading.rst b/docs/upgrading.rst
+index 7c4cccde84ea448eafba32accd67738c8d67abcd..ea082bbeeb2580ffa15c7903ee55f50a9113ed9c 100644
+--- a/docs/upgrading.rst
++++ b/docs/upgrading.rst
+@@ -6,6 +6,37 @@ this is not entirely possible.  In case we need to break backwards
+ compatibility this document gives you information about how to upgrade or
+ handle backwards compatibility properly.
+ 
++.. _upgrade-to-7.0:
++
++Upgrading to 7.0
++----------------
++
++Commands that take their name from the decorated function now replace
++underscores with dashes. For example, the Python function ``run_server``
++will get the command name ``run-server`` now. There are a few options
++to address this:
++
++-   To continue with the new behavior, pin your dependency to
++    ``Click>=7`` and update any documentation to use dashes.
++-   To keep existing behavior, add an explicit command name with
++    underscores, like ``@click.command("run_server")``.
++-   To try a name with dashes if the name with underscores was not
++    found, pass a ``token_normalize_func`` to the context:
++
++    .. code-block:: python
++
++        def normalize(name):
++            return name.replace("_", "-")
++
++        @click.group(context_settings={"token_normalize_func": normalize})
++        def group():
++            ...
++
++        @group.command()
++        def run_server():
++            ...
++
++
+ .. _upgrade-to-3.2:
+ 
+ Upgrading to 3.2

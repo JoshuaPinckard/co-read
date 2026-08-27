@@ -1,0 +1,26 @@
+============================= test session starts =============================
+platform win32 -- Python 3.11.9, pytest-8.4.2, pluggy-1.6.0
+rootdir: C:\Users\joshp\AppData\Local\Temp\blast-radius-pygments-causal-opbff12g\screen-pr-2750-e0g4w4nc\tests-only
+configfile: pyproject.toml
+collected 1 item
+
+tests\examplefiles\splus\test.R F                                        [100%]
+
+================================== FAILURES ===================================
+_______________________ tests\examplefiles\splus\test.R _______________________
+The tokens produced by the "splus" lexer differ from the expected ones in the file "tests\examplefiles\splus\test.R".
+Run `tox -- tests\examplefiles --update-goldens` to update it.
+
+  
+  Skipping 6077 identical leading characters in diff, use -v to show
+  - ction'    Keyword.Reserved
+  + ction'    Name.Function
+    '('           Punctuation
+    'x'           Name
+    ','           Punctuation...
+  
+  ...Full output truncated (851 lines hidden), use '-vv' to show
+- generated xml file: C:\Users\joshp\Desktop\Blast-Radius\exploratory\causal\verification\pygments-results-arms\screening\pr-2750\tests-only-targeted.xml -
+=========================== short test summary info ===========================
+FAILED tests/examplefiles/splus/test.R::
+============================== 1 failed in 0.21s ==============================

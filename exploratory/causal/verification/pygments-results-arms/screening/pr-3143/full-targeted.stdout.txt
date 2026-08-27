@@ -1,0 +1,12 @@
+============================= test session starts =============================
+platform win32 -- Python 3.11.9, pytest-8.4.2, pluggy-1.6.0
+rootdir: C:\Users\joshp\AppData\Local\Temp\blast-radius-pygments-causal-opbff12g\screen-pr-3143-pigag0lo\full
+configfile: pyproject.toml
+collected 3 items
+
+tests\snippets\lua\attributes.txt .                                      [ 33%]
+tests\snippets\lua\test_separate_operators.txt .                         [ 66%]
+tests\snippets\lua\test_single_operators.txt .                           [100%]
+
+- generated xml file: C:\Users\joshp\Desktop\Blast-Radius\exploratory\causal\verification\pygments-results-arms\screening\pr-3143\full-targeted.xml -
+============================== 3 passed in 0.11s ==============================

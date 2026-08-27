@@ -1,0 +1,35 @@
+diff --git a/pygments/cmdline.py b/pygments/cmdline.py
+index bd4a1fb43926b7f7bdd7ef5028dbe19a9137515a..06a5fa8c965fd2ba82b9d6ba6c907a141fe89ae5 100644
+--- a/pygments/cmdline.py
++++ b/pygments/cmdline.py
+@@ -206,14 +206,14 @@ def main_inner(parser, argns):
+             parser.print_help(sys.stderr)
+             return 2
+ 
+-        # print version
+-        if not argns.json:
+-            main(['', '-V'])
+         allowed_types = {'lexer', 'formatter', 'filter', 'style'}
+         largs = [arg.rstrip('s') for arg in argns.L]
+         if any(arg not in allowed_types for arg in largs):
+             parser.print_help(sys.stderr)
+-            return 0
++            return 2
++        # print version
++        if not argns.json:
++            main(['', '-V'])
+         if not largs:
+             largs = allowed_types
+         if not argns.json:
+diff --git a/tests/test_cmdline.py b/tests/test_cmdline.py
+index 2bae794cf303a64f97f103946b1f95cd0ccc6985..e245d7328d42ab036b0572e02982cc101759c6ca 100644
+--- a/tests/test_cmdline.py
++++ b/tests/test_cmdline.py
+@@ -162,6 +162,7 @@ def test_L_opt():
+     o = check_success('-L', 'lexer')
+     assert 'Lexers' in o and 'Formatters' not in o
+     check_success('-L', 'lexers')
++    check_failure('-L', 'invalid-kind', code=2)
+ 
+ 
+ def test_O_opt():

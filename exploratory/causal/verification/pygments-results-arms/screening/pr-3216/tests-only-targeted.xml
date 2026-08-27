@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?><testsuites name="pytest tests"><testsuite name="pytest" errors="0" failures="1" skipped="0" tests="1" time="0.186" timestamp="2026-08-24T08:14:36.697664-07:00" hostname="JoshP"><testcase classname="tests.snippets.clojure.test_characters.txt" name="" time="0.030"><failure message="The tokens produced by the &quot;clojure&quot; lexer differ from the expected ones in the file &quot;tests\snippets\clojure\test_characters.txt&quot;.&#10;Run `tox -- tests\snippets --update-goldens` to update it.&#10;&#10;  &#10;  Skipping 303 identical leading characters in diff, use -v to show&#10;    space&#10;  - '\\space'     Literal.String.Char&#10;  ?     ----&#10;  + '\\s'         Literal.String.Char&#10;  ?      ++++...&#10;  &#10;  ...Full output truncated (46 lines hidden), use '-vv' to show">The tokens produced by the "clojure" lexer differ from the expected ones in the file "tests\snippets\clojure\test_characters.txt".
+Run `tox -- tests\snippets --update-goldens` to update it.
+
+  
+  Skipping 303 identical leading characters in diff, use -v to show
+    space
+  - '\\space'     Literal.String.Char
+  ?     ----
+  + '\\s'         Literal.String.Char
+  ?      ++++...
+  
+  ...Full output truncated (46 lines hidden), use '-vv' to show</failure></testcase></testsuite></testsuites>

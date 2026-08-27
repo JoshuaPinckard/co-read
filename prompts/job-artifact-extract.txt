@@ -1,0 +1,27 @@
+Build the PINNED STANDALONE ARTIFACT: the curated extract of the ToolsEnabled components this study used and studied, so the paper cites frozen source rather than a live moving tree. The PI directed this ("extract the relevant parts of toolsenabled for OUR study, publish it as a standalone artifact"), with publication gated on a final owner sign-off after your credential scan.
+
+## Source discipline - absolute
+
+Extract ONLY from the frozen snapshot at corpus/engine-audit/snapshot-20260825T141104Z/ (manifest with per-file SHA-256 in SNAPSHOT-MANIFEST.json, engine HEAD 42ccc286..., uncommitted diff preserved under _observations/). NEVER read the live engine checkout. If a file the study cites is absent from the snapshot, record it as absent; do not fetch it from anywhere.
+
+## What goes in artifact/engine-extract/
+
+The modules the study's documents cite with file:line evidence. Recover the citation list by scanning exploratory/build-params/ENGINE-GAP.md, exploratory/harvest/CORPUS.md, and paper/DRAFT-2026-08-25.md for S/-prefixed or engine-relative paths, then include each cited file. Expected core set (verify against the scan, do not limit to it): src/lib/tool-registry.js, src/lib/cloud-agent/cloud-mirror.js, src/lib/cloud-agent/codex-cloud-launch.js, src/lib/cloud-agent/batch-target.js, batch-harvest.js, batch-journal.js, tools/repo-sync.js, packages/internal-vcs/src/m6/protected-main-receiver-transport.js, tools/check-single-copy-work.js, src/lib/repo-sync-status.js, tools/agent-contract.js, packages/internal-vcs/src/m4/claim-authority.js, packages/internal-vcs/src/unbound-service.js and index.js and claim-service-binding.js, src/lib/fleet-supervisor/lane-runner.js, supervisor.js, worktree-lease-state.js, worktree-lease.js, src/lib/shared-write-guard.js, src/lib/providers/repo-files.js, host-control.js, fra-workspace-handles.js, src/lib/agent-api-policy.js, src/lib/controller-launch-record.js, src/lib/audit-store.js (and audit.js), src/lib/agent-lane.js, tools/grepsaver-orient.js, src/lib/agent-onboarding.js, src/lib/providers/code-intel.js, src/lib/search.js, src/mcp-server.js, packages/internal-vcs/src/m1/control-store.js. Preserve relative paths under artifact/engine-extract/.
+
+Also include: the transport-state record - copy _observations/git-paths.txt, git-status-porcelain-v2.txt, and git-diff-unified-zero.patch into artifact/engine-extract/_transport-state/ (this preserves the exact uncommitted launch-path code active during the study window).
+
+## The manifest and the claim map
+
+1. artifact/engine-extract/MANIFEST.json: every included file with its snapshot SHA-256 (must MATCH SNAPSHOT-MANIFEST.json - verify, do not recompute-and-trust), source-relative path, and byte size. Plus the engine HEAD, snapshot timestamp, and the study repo commit range the citations come from.
+2. artifact/engine-extract/CLAIM-MAP.md: for every study claim that cites engine code (scan the three documents above), one row: the claim (quoted or tightly paraphrased), the citing document and line, the extract file and line range that supports it. A claim whose support is NOT in the extract is listed under "cited but not extractable" with the reason.
+3. artifact/engine-extract/README.md: what this is (the pinned instrument-and-subject source for the study), the license (MIT, Copyright (c) 2026 Joshua Pinckard - carry the LICENSE text), the snapshot provenance, and the explicit statement that this is a frozen extract of a larger private system, not a runnable product.
+
+## The credential scan - blocking
+
+Before writing the final report, scan EVERY extracted byte for credential-shaped content: private keys, tokens (gh[pousr]_, sk-, AKIA, xox, Bearer strings), passwords in URLs, .env-style assignments of secrets, email addresses other than the owner's public identity, absolute paths revealing non-obvious private structure beyond C:/Users/joshp (acceptable: that root is already public in the study), and API endpoints with embedded auth. Report every hit with file:line and a verdict: redact (replace value with <REDACTED:kind> and note it in MANIFEST), exclude the file, or false positive with justification. The scan result is a REQUIRED section - an empty result is stated as "0 hits over N files, M bytes" with the pattern list used.
+
+## Output
+
+exploratory/artifact/EXTRACT-REPORT.md: first line = files extracted / cited-but-absent / credential hits (redacted/excluded/false-positive counts). Then the extraction inventory, the scan report, the claim-map coverage stats (claims mapped / claims total per document), "Claims that could NOT be verified", "What would change this verdict", per-claim confidence with reasons.
+
+DO NOT commit and DO NOT push - the orchestrator reviews and the OWNER signs off before anything reaches the public branch. Do not modify the snapshot, the live engine, fixture/, prompts/, or existing results. Do not fabricate.

@@ -1,0 +1,36 @@
+Compute whole-commit cluster bootstrap intervals for the completed ten-repository replay. This is PLAN.md step 1. Until it exists, no arm-versus-arm claim in this project is distinguishable from noise, and both planning passes named it the cheapest high-value work available.
+
+Do not re-run the replay. Everything needed is on disk.
+
+Read first: `exploratory/language-hole/RESULTS.md` and one of `exploratory/language-hole/results/*.json`.
+
+The result JSONs store per-eligible-commit, per-model sufficient statistics under `eligible_commits[]`: `{empty_queries, p1_hits, p10_hits, r10_sum, r20_sum}` plus `query_count`, `eligible_file_count`, `sha`, `index`, `timestamp`. Those are exactly what a commit-level bootstrap needs.
+
+## Why the resampling unit is the commit
+
+A commit touching k files yields a clique of k(k-1)/2 mutually dependent pairs and contributes k queries that share a ground-truth set. Queries are therefore not independent samples, and any query-level interval is invalid. Resample **whole commits with replacement**, recomputing each metric from the resampled sufficient statistics.
+
+## What to produce
+
+Write `instruments/analysis/bootstrap.py` and `exploratory/language-hole/BOOTSTRAP.md`.
+
+For each repository, and for each of these paired contrasts, report the point estimate and a 95% percentile bootstrap interval:
+
+- co-change time-decayed **minus** popularity control, on R@10 and on P@1
+- co-change time-decayed **minus** random control, same metrics
+- co-change time-decayed **minus** path/name similarity, same metrics
+- co-change time-decayed **minus** co-change plain confidence, same metrics
+
+Use paired resampling: resample commit indices once per replicate and evaluate both arms on the same resampled commits, so the contrast is within-replicate. 10,000 replicates. Seed deterministically and record the seed.
+
+Then answer, plainly and in the first section:
+
+1. **On how many of the ten repositories does the co-change advantage over the popularity control exclude zero?** This is the headline. RESULTS.md's own first falsifier is that intervals including zero on most non-JavaScript repositories would change the transfer verdict to ambiguous or negative.
+2. Is time decay distinguishable from plain confidence anywhere? RESULTS.md notes decay is not uniformly better; say whether the differences are real or noise.
+3. Is the path-beats-co-change reversal on `terraform-provider-random`, `hashicorp/terraform` and `ansible` distinguishable from zero, or is it inside the interval?
+
+Also report, per repository, the effective sample size — how many commits contribute, and what share of queries the largest single commit supplies. `terraform-provider-random` has one commit supplying 25% of queries; where a few commits dominate, the interval will be wide and that is the finding.
+
+Required sections: **"Claims that could NOT be verified"** and **"What would change this verdict"**. Per-claim confidence with its reason, not a document-level label.
+
+Do not fabricate. If a repository's stored statistics are insufficient for a metric, leave that cell empty and say why. Small readable scripts, not a framework.

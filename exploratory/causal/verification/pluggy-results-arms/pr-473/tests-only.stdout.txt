@@ -1,0 +1,179 @@
+============================= test session starts =============================
+platform win32 -- Python 3.11.9, pytest-7.4.4, pluggy-unknown
+benchmark: 4.0.0 (defaults: timer=time.perf_counter disable_gc=False min_rounds=5 min_time=0.000005 max_time=1.0 calibration_precision=10 warmup=False warmup_iterations=100000)
+rootdir: C:\Users\joshp\AppData\Local\Temp\blast-radius-pluggy-causal\a473-y2fy_7xw\t
+configfile: tox.ini
+testpaths: testing
+plugins: benchmark-4.0.0
+collected 107 items
+
+testing\test_details.py .....                                            [  4%]
+testing\test_helpers.py ......                                           [ 10%]
+testing\test_hookcaller.py ......................                        [ 30%]
+testing\test_invocations.py ...........                                  [ 41%]
+testing\test_multicall.py ......................                         [ 61%]
+testing\test_pluginmanager.py ...................................FF      [ 96%]
+testing\test_tracer.py ....                                              [100%]
+
+================================== FAILURES ===================================
+_____________________ test_register_while_calling[False] ______________________
+
+pm = <pluggy._manager.PluginManager object at 0x0000024955072550>
+historic = False
+
+    @pytest.mark.parametrize("historic", [False, True])
+    def test_register_while_calling(
+        pm: PluginManager,
+        historic: bool,
+    ) -> None:
+        """Test that registering an impl of a hook while it is being called does
+        not affect the call itself, only later calls.
+    
+        For historic hooks however, the hook is called immediately on registration.
+    
+        Regression test for #438.
+        """
+        hookspec = HookspecMarker("example")
+    
+        class Hooks:
+            @hookspec(historic=historic)
+            def configure(self) -> int:
+                raise NotImplementedError()
+    
+        class Plugin1:
+            @hookimpl
+            def configure(self) -> int:
+                return 1
+    
+        class Plugin2:
+            def __init__(self) -> None:
+                self.already_registered = False
+    
+            @hookimpl
+            def configure(self) -> int:
+                if not self.already_registered:
+                    pm.register(Plugin4())
+                    pm.register(Plugin5())
+                    pm.register(Plugin6())
+                    self.already_registered = True
+                return 2
+    
+        class Plugin3:
+            @hookimpl
+            def configure(self) -> int:
+                return 3
+    
+        class Plugin4:
+            @hookimpl(tryfirst=True)
+            def configure(self) -> int:
+                return 4
+    
+        class Plugin5:
+            @hookimpl()
+            def configure(self) -> int:
+                return 5
+    
+        class Plugin6:
+            @hookimpl(trylast=True)
+            def configure(self) -> int:
+                return 6
+    
+        pm.add_hookspecs(Hooks)
+        pm.register(Plugin1())
+        pm.register(Plugin2())
+        pm.register(Plugin3())
+    
+        if not historic:
+            result = pm.hook.configure()
+>           assert result == [3, 2, 1]
+E           assert [3, 2, 6] == [3, 2, 1]
+E             At index 2 diff: 6 != 1
+E             Use -v to get more diff
+
+testing\test_pluginmanager.py:744: AssertionError
+______________________ test_register_while_calling[True] ______________________
+
+pm = <pluggy._manager.PluginManager object at 0x0000024955054E90>
+historic = True
+
+    @pytest.mark.parametrize("historic", [False, True])
+    def test_register_while_calling(
+        pm: PluginManager,
+        historic: bool,
+    ) -> None:
+        """Test that registering an impl of a hook while it is being called does
+        not affect the call itself, only later calls.
+    
+        For historic hooks however, the hook is called immediately on registration.
+    
+        Regression test for #438.
+        """
+        hookspec = HookspecMarker("example")
+    
+        class Hooks:
+            @hookspec(historic=historic)
+            def configure(self) -> int:
+                raise NotImplementedError()
+    
+        class Plugin1:
+            @hookimpl
+            def configure(self) -> int:
+                return 1
+    
+        class Plugin2:
+            def __init__(self) -> None:
+                self.already_registered = False
+    
+            @hookimpl
+            def configure(self) -> int:
+                if not self.already_registered:
+                    pm.register(Plugin4())
+                    pm.register(Plugin5())
+                    pm.register(Plugin6())
+                    self.already_registered = True
+                return 2
+    
+        class Plugin3:
+            @hookimpl
+            def configure(self) -> int:
+                return 3
+    
+        class Plugin4:
+            @hookimpl(tryfirst=True)
+            def configure(self) -> int:
+                return 4
+    
+        class Plugin5:
+            @hookimpl()
+            def configure(self) -> int:
+                return 5
+    
+        class Plugin6:
+            @hookimpl(trylast=True)
+            def configure(self) -> int:
+                return 6
+    
+        pm.add_hookspecs(Hooks)
+        pm.register(Plugin1())
+        pm.register(Plugin2())
+        pm.register(Plugin3())
+    
+        if not historic:
+            result = pm.hook.configure()
+            assert result == [3, 2, 1]
+            result = pm.hook.configure()
+            assert result == [4, 5, 3, 2, 1, 6]
+        else:
+            result = []
+            pm.hook.configure.call_historic(result.append)
+>           assert result == [4, 5, 6, 3, 2, 1]
+E           assert [4, 5, 6, 3, 2, 6] == [4, 5, 6, 3, 2, 1]
+E             At index 5 diff: 6 != 1
+E             Use -v to get more diff
+
+testing\test_pluginmanager.py:750: AssertionError
+- generated xml file: C:\Users\joshp\Desktop\Blast-Radius\exploratory\causal\verification\pluggy-results-arms\pr-473\tests-only.xml -
+=========================== short test summary info ===========================
+FAILED testing/test_pluginmanager.py::test_register_while_calling[False] - as...
+FAILED testing/test_pluginmanager.py::test_register_while_calling[True] - ass...
+======================== 2 failed, 105 passed in 0.78s ========================

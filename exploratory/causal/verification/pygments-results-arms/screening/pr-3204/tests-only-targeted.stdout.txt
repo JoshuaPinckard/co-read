@@ -1,0 +1,114 @@
+============================= test session starts =============================
+platform win32 -- Python 3.11.9, pytest-8.4.2, pluggy-1.6.0
+rootdir: C:\Users\joshp\AppData\Local\Temp\blast-radius-pygments-causal-opbff12g\screen-pr-3204-aop46pa2\tests-only
+configfile: pyproject.toml
+collected 9 items
+
+tests\test_markup.py ...FFFFFF                                           [100%]
+
+================================== FAILURES ===================================
+______________________ test_tex_math_environments[math] _______________________
+
+environment = 'math'
+
+    @pytest.mark.parametrize('environment', [
+        'math', 'displaymath', 'equation', 'equation*', 'align', 'align*',
+    ])
+    def test_tex_math_environments(environment):
+        tokens = list(TexLexer().get_tokens(
+            rf'\begin{{{environment}}}x+1\end{{{environment}}}'
+        ))
+    
+>       assert (Name.Builtin, 'x') in tokens
+E       AssertionError: assert (Token.Name.Builtin, 'x') in [(Token.Keyword, '\\begin'), (Token.Name.Builtin, '{'), (Token.Text, 'math'), (Token.Name.Builtin, '}'), (Token.Text, 'x+1'), (Token.Keyword, '\\end'), ...]
+
+tests\test_markup.py:64: AssertionError
+___________________ test_tex_math_environments[displaymath] ___________________
+
+environment = 'displaymath'
+
+    @pytest.mark.parametrize('environment', [
+        'math', 'displaymath', 'equation', 'equation*', 'align', 'align*',
+    ])
+    def test_tex_math_environments(environment):
+        tokens = list(TexLexer().get_tokens(
+            rf'\begin{{{environment}}}x+1\end{{{environment}}}'
+        ))
+    
+>       assert (Name.Builtin, 'x') in tokens
+E       AssertionError: assert (Token.Name.Builtin, 'x') in [(Token.Keyword, '\\begin'), (Token.Name.Builtin, '{'), (Token.Text, 'displaymath'), (Token.Name.Builtin, '}'), (Token.Text, 'x+1'), (Token.Keyword, '\\end'), ...]
+
+tests\test_markup.py:64: AssertionError
+____________________ test_tex_math_environments[equation] _____________________
+
+environment = 'equation'
+
+    @pytest.mark.parametrize('environment', [
+        'math', 'displaymath', 'equation', 'equation*', 'align', 'align*',
+    ])
+    def test_tex_math_environments(environment):
+        tokens = list(TexLexer().get_tokens(
+            rf'\begin{{{environment}}}x+1\end{{{environment}}}'
+        ))
+    
+>       assert (Name.Builtin, 'x') in tokens
+E       AssertionError: assert (Token.Name.Builtin, 'x') in [(Token.Keyword, '\\begin'), (Token.Name.Builtin, '{'), (Token.Text, 'equation'), (Token.Name.Builtin, '}'), (Token.Text, 'x+1'), (Token.Keyword, '\\end'), ...]
+
+tests\test_markup.py:64: AssertionError
+____________________ test_tex_math_environments[equation*] ____________________
+
+environment = 'equation*'
+
+    @pytest.mark.parametrize('environment', [
+        'math', 'displaymath', 'equation', 'equation*', 'align', 'align*',
+    ])
+    def test_tex_math_environments(environment):
+        tokens = list(TexLexer().get_tokens(
+            rf'\begin{{{environment}}}x+1\end{{{environment}}}'
+        ))
+    
+>       assert (Name.Builtin, 'x') in tokens
+E       AssertionError: assert (Token.Name.Builtin, 'x') in [(Token.Keyword, '\\begin'), (Token.Name.Builtin, '{'), (Token.Text, 'equation*'), (Token.Name.Builtin, '}'), (Token.Text, 'x+1'), (Token.Keyword, '\\end'), ...]
+
+tests\test_markup.py:64: AssertionError
+______________________ test_tex_math_environments[align] ______________________
+
+environment = 'align'
+
+    @pytest.mark.parametrize('environment', [
+        'math', 'displaymath', 'equation', 'equation*', 'align', 'align*',
+    ])
+    def test_tex_math_environments(environment):
+        tokens = list(TexLexer().get_tokens(
+            rf'\begin{{{environment}}}x+1\end{{{environment}}}'
+        ))
+    
+>       assert (Name.Builtin, 'x') in tokens
+E       AssertionError: assert (Token.Name.Builtin, 'x') in [(Token.Keyword, '\\begin'), (Token.Name.Builtin, '{'), (Token.Text, 'align'), (Token.Name.Builtin, '}'), (Token.Text, 'x+1'), (Token.Keyword, '\\end'), ...]
+
+tests\test_markup.py:64: AssertionError
+_____________________ test_tex_math_environments[align*] ______________________
+
+environment = 'align*'
+
+    @pytest.mark.parametrize('environment', [
+        'math', 'displaymath', 'equation', 'equation*', 'align', 'align*',
+    ])
+    def test_tex_math_environments(environment):
+        tokens = list(TexLexer().get_tokens(
+            rf'\begin{{{environment}}}x+1\end{{{environment}}}'
+        ))
+    
+>       assert (Name.Builtin, 'x') in tokens
+E       AssertionError: assert (Token.Name.Builtin, 'x') in [(Token.Keyword, '\\begin'), (Token.Name.Builtin, '{'), (Token.Text, 'align*'), (Token.Name.Builtin, '}'), (Token.Text, 'x+1'), (Token.Keyword, '\\end'), ...]
+
+tests\test_markup.py:64: AssertionError
+- generated xml file: C:\Users\joshp\Desktop\Blast-Radius\exploratory\causal\verification\pygments-results-arms\screening\pr-3204\tests-only-targeted.xml -
+=========================== short test summary info ===========================
+FAILED tests/test_markup.py::test_tex_math_environments[math] - AssertionErro...
+FAILED tests/test_markup.py::test_tex_math_environments[displaymath] - Assert...
+FAILED tests/test_markup.py::test_tex_math_environments[equation] - Assertion...
+FAILED tests/test_markup.py::test_tex_math_environments[equation*] - Assertio...
+FAILED tests/test_markup.py::test_tex_math_environments[align] - AssertionErr...
+FAILED tests/test_markup.py::test_tex_math_environments[align*] - AssertionEr...
+========================= 6 failed, 3 passed in 0.31s =========================

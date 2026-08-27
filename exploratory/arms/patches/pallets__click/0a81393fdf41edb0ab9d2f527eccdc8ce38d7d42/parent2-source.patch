@@ -1,0 +1,111 @@
+diff --git a/CHANGES.rst b/CHANGES.rst
+index e4e69b1156c18b17e6f6d0a9b4b5b906a695cd63..55578c60e8600fda0f6badc852162bfac56b1e44 100644
+--- a/CHANGES.rst
++++ b/CHANGES.rst
+@@ -3,7 +3,7 @@
+ Version 8.0.2
+ -------------
+ 
+-Unreleased
++Released 2021-10-08
+ 
+ -   ``is_bool_flag`` is not set to ``True`` if ``is_flag`` is ``False``.
+     :issue:`1925`
+@@ -20,6 +20,12 @@ Unreleased
+     :issue:`2062`
+ -   Fix overline and italic styles, which were incorrectly added when
+     adding underline. :pr:`2058`
++-   An option with ``count=True`` will not show "[x>=0]" in help text.
++    :issue:`2072`
++-   Default values are not cast to the parameter type twice during
++    processing. :issue:`2085`
++-   Options with ``multiple`` and ``flag_value`` use the flag value
++    instead of leaving an internal placeholder. :issue:`2001`
+ 
+ 
+ Version 8.0.1
+diff --git a/src/click/__init__.py b/src/click/__init__.py
+index 969f4c4ddb813151546ebb41c29b75329a9a1538..478e744ba4be0a0133b0769d55447b9420f011ae 100644
+--- a/src/click/__init__.py
++++ b/src/click/__init__.py
+@@ -72,4 +72,4 @@ from .utils import get_os_args as get_os_args
+ from .utils import get_text_stream as get_text_stream
+ from .utils import open_file as open_file
+ 
+-__version__ = "8.0.2.dev0"
++__version__ = "8.0.2"
+diff --git a/src/click/core.py b/src/click/core.py
+index 5bbc90cf308a690ae7970390e9cb8eaa3cabf4b2..77a536aa314485db12ddc3041a20214c1b8d8459 100644
+--- a/src/click/core.py
++++ b/src/click/core.py
+@@ -2192,6 +2192,9 @@ class Parameter:
+         :param call: If the default is a callable, call it. Disable to
+             return the callable instead.
+ 
++        .. versionchanged:: 8.0.2
++            Type casting is no longer performed when getting a default.
++
+         .. versionchanged:: 8.0.1
+             Type casting can fail in resilient parsing mode. Invalid
+             defaults will not prevent showing help text.
+@@ -2207,20 +2210,10 @@ class Parameter:
+         if value is None:
+             value = self.default
+ 
+-        if callable(value):
+-            if not call:
+-                # Don't type cast the callable.
+-                return value
+-
++        if call and callable(value):
+             value = value()
+ 
+-        try:
+-            return self.type_cast_value(ctx, value)
+-        except BadParameter:
+-            if ctx.resilient_parsing:
+-                return value
+-
+-            raise
++        return value
+ 
+     def add_to_parser(self, parser: OptionParser, ctx: Context) -> None:
+         raise NotImplementedError()
+@@ -2305,8 +2298,7 @@ class Parameter:
+         return False
+ 
+     def process_value(self, ctx: Context, value: t.Any) -> t.Any:
+-        if value is not None:
+-            value = self.type_cast_value(ctx, value)
++        value = self.type_cast_value(ctx, value)
+ 
+         if self.required and self.value_is_missing(value):
+             raise MissingParameter(ctx=ctx, param=self)
+@@ -2740,7 +2732,11 @@ class Option(Parameter):
+             if default_string:
+                 extra.append(_("default: {default}").format(default=default_string))
+ 
+-        if isinstance(self.type, types._NumberRangeBase):
++        if (
++            isinstance(self.type, types._NumberRangeBase)
++            # skip count with default range type
++            and not (self.count and self.type.min == 0 and self.type.max is None)
++        ):
+             range_str = self.type._describe_range()
+ 
+             if range_str:
+@@ -2857,6 +2853,14 @@ class Option(Parameter):
+                 value = self.flag_value
+                 source = ParameterSource.COMMANDLINE
+ 
++        elif (
++            self.multiple
++            and value is not None
++            and any(v is _flag_needs_value for v in value)
++        ):
++            value = [self.flag_value if v is _flag_needs_value else v for v in value]
++            source = ParameterSource.COMMANDLINE
++
+         # The value wasn't set, or used the param's default, prompt if
+         # prompting is enabled.
+         elif (

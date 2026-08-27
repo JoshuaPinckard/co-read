@@ -1,0 +1,36 @@
+============================= test session starts =============================
+platform win32 -- Python 3.11.9, pytest-9.1.1, pluggy-1.6.0
+rootdir: C:\Users\joshp\AppData\Local\Temp\blast-radius-flask-causal\f6096-9lygr8d8\f
+configfile: pyproject.toml
+testpaths: tests
+collected 493 items
+
+tests\test_appctx.py ...............                                     [  3%]
+tests\test_async.py ........                                             [  4%]
+tests\test_basic.py .................................................... [ 15%]
+........................................................................ [ 29%]
+.........                                                                [ 31%]
+tests\test_blueprints.py ............................................... [ 41%]
+.............                                                            [ 43%]
+tests\test_cli.py ...................................................... [ 54%]
+....                                                                     [ 55%]
+tests\test_config.py ...................                                 [ 59%]
+tests\test_converters.py ..                                              [ 59%]
+tests\test_helpers.py ...................................                [ 66%]
+tests\test_instance_config.py .......                                    [ 68%]
+tests\test_json.py ...............................                       [ 74%]
+tests\test_json_tag.py ..............                                    [ 77%]
+tests\test_logging.py ......                                             [ 78%]
+tests\test_regression.py .                                               [ 78%]
+tests\test_reqctx.py ..........                                          [ 80%]
+tests\test_request.py ...                                                [ 81%]
+tests\test_session_interface.py .                                        [ 81%]
+tests\test_signals.py .......                                            [ 83%]
+tests\test_subclassing.py .                                              [ 83%]
+tests\test_templating.py ................................                [ 89%]
+tests\test_testing.py ..........................                         [ 95%]
+tests\test_user_error_handler.py .........                               [ 96%]
+tests\test_views.py ...............                                      [100%]
+
+- generated xml file: C:\Users\joshp\Desktop\Blast-Radius\exploratory\causal\verification\arms\pr-6096\full.xml -
+============================= 493 passed in 5.35s =============================

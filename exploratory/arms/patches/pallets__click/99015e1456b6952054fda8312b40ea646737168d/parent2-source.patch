@@ -1,0 +1,912 @@
+diff --git a/.github/dependabot.yml b/.github/dependabot.yml
+deleted file mode 100644
+index 1f47f125e5c06e827ba4df75cffd838547a4163a..0000000000000000000000000000000000000000
+--- a/.github/dependabot.yml
++++ /dev/null
+@@ -1,18 +0,0 @@
+-version: 2
+-updates:
+-  - package-ecosystem: github-actions
+-    directory: /
+-    schedule:
+-      interval: monthly
+-    groups:
+-      github-actions:
+-        patterns:
+-          - '*'
+-  - package-ecosystem: pip
+-    directory: /requirements/
+-    schedule:
+-      interval: monthly
+-    groups:
+-      python-requirements:
+-        patterns:
+-          - '*'
+diff --git a/.github/workflows/publish.yaml b/.github/workflows/publish.yaml
+index 951781073fe93b014b83100c8d2446b621cc588d..02cdde04bf5be0b0a317c938f7245e7f4645fea9 100644
+--- a/.github/workflows/publish.yaml
++++ b/.github/workflows/publish.yaml
+@@ -9,8 +9,8 @@ jobs:
+     outputs:
+       hash: ${{ steps.hash.outputs.hash }}
+     steps:
+-      - uses: actions/checkout@9bb56186c3b09b4f86b1c65136769dd318469633 # v4.1.2
+-      - uses: actions/setup-python@82c7e631bb3cdc910f68e0081d67478d79c6982d # v5.1.0
++      - uses: actions/checkout@692973e3d937129bcbf40652eb9f2f61becf3332 # v4.1.7
++      - uses: actions/setup-python@39cd14951b08e74b54015e9e001cdefcf80e669f # v5.1.1
+         with:
+           python-version: '3.x'
+           cache: pip
+@@ -23,7 +23,7 @@ jobs:
+       - name: generate hash
+         id: hash
+         run: cd dist && echo "hash=$(sha256sum * | base64 -w0)" >> $GITHUB_OUTPUT
+-      - uses: actions/upload-artifact@a8a3f3ad30e3422c9c7b888a15615d19a852ae32 # v3.1.3
++      - uses: actions/upload-artifact@834a144ee995460fba8ed112a2fc961b36a5ec5a # v4.3.6
+         with:
+           path: ./dist
+   provenance:
+@@ -33,7 +33,7 @@ jobs:
+       id-token: write
+       contents: write
+     # Can't pin with hash due to how this workflow works.
+-    uses: slsa-framework/slsa-github-generator/.github/workflows/generator_generic_slsa3.yml@v1.10.0
++    uses: slsa-framework/slsa-github-generator/.github/workflows/generator_generic_slsa3.yml@v2.0.0
+     with:
+       base64-subjects: ${{ needs.build.outputs.hash }}
+   create-release:
+@@ -44,7 +44,7 @@ jobs:
+     permissions:
+       contents: write
+     steps:
+-      - uses: actions/download-artifact@9bc31d5ccc31df68ecc42ccf4149144866c47d8a # v3.0.2
++      - uses: actions/download-artifact@fa0a91b85d4f404e444e00e005971372dc801d16 # v4.1.8
+       - name: create release
+         run: >
+           gh release create --draft --repo ${{ github.repository }}
+@@ -63,11 +63,11 @@ jobs:
+     permissions:
+       id-token: write
+     steps:
+-      - uses: actions/download-artifact@9bc31d5ccc31df68ecc42ccf4149144866c47d8a # v3.0.2
+-      - uses: pypa/gh-action-pypi-publish@81e9d935c883d0b210363ab89cf05f3894778450 # v1.8.14
++      - uses: actions/download-artifact@fa0a91b85d4f404e444e00e005971372dc801d16 # v4.1.8
++      - uses: pypa/gh-action-pypi-publish@ec4db0b4ddc65acdf4bff5fa45ac92d78b56bdf0 # v1.9.0
+         with:
+           repository-url: https://test.pypi.org/legacy/
+           packages-dir: artifact/
+-      - uses: pypa/gh-action-pypi-publish@81e9d935c883d0b210363ab89cf05f3894778450 # v1.8.14
++      - uses: pypa/gh-action-pypi-publish@ec4db0b4ddc65acdf4bff5fa45ac92d78b56bdf0 # v1.9.0
+         with:
+           packages-dir: artifact/
+diff --git a/.github/workflows/tests.yaml b/.github/workflows/tests.yaml
+index 0cd6f4a21e689f918b9b0557f2cb5c9e202ed592..afba0d753e62243baef9bb09412bb0a02d48d6c7 100644
+--- a/.github/workflows/tests.yaml
++++ b/.github/workflows/tests.yaml
+@@ -32,8 +32,8 @@ jobs:
+           - {python: '3.7'}
+           - {name: PyPy, python: 'pypy-3.10', tox: pypy310}
+     steps:
+-      - uses: actions/checkout@9bb56186c3b09b4f86b1c65136769dd318469633 # v4.1.2
+-      - uses: actions/setup-python@82c7e631bb3cdc910f68e0081d67478d79c6982d # v5.1.0
++      - uses: actions/checkout@692973e3d937129bcbf40652eb9f2f61becf3332 # v4.1.7
++      - uses: actions/setup-python@39cd14951b08e74b54015e9e001cdefcf80e669f # v5.1.1
+         with:
+           python-version: ${{ matrix.python }}
+           allow-prereleases: true
+@@ -44,8 +44,8 @@ jobs:
+   typing:
+     runs-on: ubuntu-latest
+     steps:
+-      - uses: actions/checkout@9bb56186c3b09b4f86b1c65136769dd318469633 # v4.1.2
+-      - uses: actions/setup-python@82c7e631bb3cdc910f68e0081d67478d79c6982d # v5.1.0
++      - uses: actions/checkout@692973e3d937129bcbf40652eb9f2f61becf3332 # v4.1.7
++      - uses: actions/setup-python@39cd14951b08e74b54015e9e001cdefcf80e669f # v5.1.1
+         with:
+           python-version: '3.x'
+           cache: pip
+diff --git a/.pre-commit-config.yaml b/.pre-commit-config.yaml
+index dd86089b880c348c37b656e73d287f500c2f1477..acd7bba889a9d59abeced2a1134257fd64a8448a 100644
+--- a/.pre-commit-config.yaml
++++ b/.pre-commit-config.yaml
+@@ -1,8 +1,6 @@
+-ci:
+-  autoupdate_schedule: monthly
+ repos:
+   - repo: https://github.com/astral-sh/ruff-pre-commit
+-    rev: v0.4.1
++    rev: v0.6.2
+     hooks:
+       - id: ruff
+       - id: ruff-format
+diff --git a/CHANGES.rst b/CHANGES.rst
+index 4f7a46554d72e5cef11cf88527a7ace9109b7b2f..7ca76f967343eed65770c4326eb0b89b247d11c9 100644
+--- a/CHANGES.rst
++++ b/CHANGES.rst
+@@ -1,5 +1,21 @@
+ .. currentmodule:: click
+ 
++Version 8.1.8
++-------------
++
++Unreleased
++
++-   Fix an issue with type hints for ``click.open_file()``. :issue:`2717`
++-   Fix issue where error message for invalid ``click.Path`` displays on
++    multiple lines. :issue:`2697`
++-   Fixed issue that prevented a default value of ``""`` from being displayed in
++    the help for an option. :issue:`2500`
++-   The test runner handles stripping color consistently on Windows.
++    :issue:`2705`
++-   Show correct value for flag default when using ``default_map``.
++    :issue:`2632`
++
++
+ Version 8.1.7
+ -------------
+ 
+diff --git a/CONTRIBUTING.rst b/CONTRIBUTING.rst
+index 1ad3bdcbf150c794d219c72d73674cddb901b6d9..d67a153879153258fd2fb634d32077ad9a8a1e4d 100644
+--- a/CONTRIBUTING.rst
++++ b/CONTRIBUTING.rst
+@@ -144,7 +144,7 @@ Start coding
+     .. code-block:: text
+ 
+         $ git fetch origin
+-        $ git checkout -b your-branch-name origin/8.0.x
++        $ git checkout -b your-branch-name origin/8.1.x
+ 
+     If you're submitting a feature addition or change, branch off of the
+     "main" branch.
+diff --git a/docs/advanced.rst b/docs/advanced.rst
+index 56495617d1bd94e862435ab2bc31f54d96ff83d1..9ef0b140117e21d908b0cbfe0f5c4e86336db4d5 100644
+--- a/docs/advanced.rst
++++ b/docs/advanced.rst
+@@ -435,6 +435,7 @@ defined as a context manager:
+         def __enter__(self):
+             path = os.path.join(self.home, "repo.db")
+             self.db = open_database(path)
++            return self
+ 
+         def __exit__(self, exc_type, exc_value, tb):
+             self.db.close()
+diff --git a/docs/conf.py b/docs/conf.py
+index c579af52da2c10380d5314a5a9c1c6da38bbd395..db253ea2c50ee926519cc29300f14232d17ced40 100644
+--- a/docs/conf.py
++++ b/docs/conf.py
+@@ -23,8 +23,8 @@ autodoc_member_order = "bysource"
+ autodoc_typehints = "description"
+ autodoc_preserve_defaults = True
+ extlinks = {
+-    "issue": ("https://github.com/pallets/flask/issues/%s", "#%s"),
+-    "pr": ("https://github.com/pallets/flask/pull/%s", "#%s"),
++    "issue": ("https://github.com/pallets/click/issues/%s", "#%s"),
++    "pr": ("https://github.com/pallets/click/pull/%s", "#%s"),
+ }
+ intersphinx_mapping = {
+     "python": ("https://docs.python.org/3/", None),
+diff --git a/docs/setuptools.rst b/docs/setuptools.rst
+index 7c60c7d3e7327a77eadfa352678ba3fa8b8f05a2..1b41414a1e582cea87f9324ded5d33f2b7d11169 100644
+--- a/docs/setuptools.rst
++++ b/docs/setuptools.rst
+@@ -81,10 +81,12 @@ Contents of ``setup.py``:
+         },
+     )
+ 
+-The magic is in the ``entry_points`` parameter.  Below
+-``console_scripts``, each line identifies one console script.  The first
+-part before the equals sign (``=``) is the name of the script that should
+-be generated, the second part is the import path followed by a colon
++The magic is in the ``entry_points`` parameter.  Read the full
++`entry_points <https://packaging.python.org/en/latest/specifications/entry-points/>`_
++specification for more details.  Below ``console_scripts``, each
++line identifies one console script.  The first part before the
++equals sign (``=``) is the name of the script that should be
++generated, the second part is the import path followed by a colon
+ (``:``) with the Click command.
+ 
+ That's it.
+diff --git a/docs/shell-completion.rst b/docs/shell-completion.rst
+index 9ea20294c9db6dd94a2a6438a6b99259cc10da93..dd9ddd439f21b1e2c70967a3a3b40fad795215c5 100644
+--- a/docs/shell-completion.rst
++++ b/docs/shell-completion.rst
+@@ -28,12 +28,16 @@ through an entry point, not through the ``python`` command. See
+ :doc:`/setuptools`. Once the executable is installed, calling it with
+ a special environment variable will put Click in completion mode.
+ 
+-In order for completion to be used, the user needs to register a special
+-function with their shell. The script is different for every shell, and
+-Click will output it when called with ``_{PROG_NAME}_COMPLETE`` set to
+-``{shell}_source``. ``{PROG_NAME}`` is the executable name in uppercase
+-with dashes replaced by underscores. The built-in shells are ``bash``,
+-``zsh``, and ``fish``.
++To enable shell completion, the user needs to register a special
++function with their shell. The exact script varies depending on the
++shell you are using. Click will output it when called with
++``_{FOO_BAR}_COMPLETE`` set to ``{shell}_source``. ``{FOO_BAR}`` is
++the executable name in uppercase with dashes replaced by underscores.
++It is conventional but not strictly required for environment variable
++names to be in upper case. This convention helps distinguish environment
++variables from regular shell variables and commands, making scripts
++and configuration files more readable and easier to maintain. The
++built-in shells are ``bash``, ``zsh``, and ``fish``.
+ 
+ Provide your users with the following instructions customized to your
+ program name. This uses ``foo-bar`` as an example.
+@@ -194,7 +198,7 @@ require implementing some smaller parts.
+ 
+ First, you'll need to figure out how your shell's completion system
+ works and write a script to integrate it with Click. It must invoke your
+-program with the environment variable ``_{PROG_NAME}_COMPLETE`` set to
++program with the environment variable ``_{FOO_BAR}_COMPLETE`` set to
+ ``{shell}_complete`` and pass the complete args and incomplete value.
+ How it passes those values, and the format of the completion response
+ from Click is up to you.
+@@ -207,7 +211,7 @@ formatting with the following variables:
+     in the script.
+ -   ``complete_var`` - The environment variable name for passing the
+     ``{shell}_complete`` instruction.
+--   ``prog_name`` - The name of the executable being completed.
++-   ``foo_bar`` - The name of the executable being completed.
+ 
+ The example code is for a made up shell "My Shell" or "mysh" for short.
+ 
+@@ -218,10 +222,10 @@ The example code is for a made up shell "My Shell" or "mysh" for short.
+ 
+     _mysh_source = """\
+     %(complete_func)s {
+-        response=$(%(complete_var)s=mysh_complete %(prog_name)s)
++        response=$(%(complete_var)s=mysh_complete %(foo_bar)s)
+         # parse response and set completions somehow
+     }
+-    call-on-complete %(prog_name)s %(complete_func)s
++    call-on-complete %(foo_bar)s %(complete_func)s
+     """
+ 
+     @add_completion_class
+diff --git a/pyproject.toml b/pyproject.toml
+index cc996618c9c61062286e3793372730c42e5b4805..358f5245f29d52e25a2d39814176b6da69c0ef13 100644
+--- a/pyproject.toml
++++ b/pyproject.toml
+@@ -92,8 +92,12 @@ select = [
+     "UP",  # pyupgrade
+     "W",  # pycodestyle warning
+ ]
+-ignore-init-module-imports = true
+ 
+ [tool.ruff.lint.isort]
+ force-single-line = true
+ order-by-type = false
++
++[tool.gha-update]
++tag-only = [
++    "slsa-framework/slsa-github-generator",
++]
+diff --git a/requirements/build.txt b/requirements/build.txt
+index 196545d0e0052553238b6c1cdc489563b7c1ca4b..4b289ca7f1fada616bca54b664261880e18093df 100644
+--- a/requirements/build.txt
++++ b/requirements/build.txt
+@@ -1,13 +1,12 @@
+-# SHA1:80754af91bfb6d1073585b046fe0a474ce868509
+ #
+-# This file is autogenerated by pip-compile-multi
+-# To update, run:
++# This file is autogenerated by pip-compile with Python 3.12
++# by the following command:
+ #
+-#    pip-compile-multi
++#    pip-compile build.in
+ #
+-build==0.10.0
+-    # via -r requirements/build.in
+-packaging==23.1
++build==1.2.1
++    # via -r build.in
++packaging==24.1
+     # via build
+-pyproject-hooks==1.0.0
++pyproject-hooks==1.1.0
+     # via build
+diff --git a/requirements/dev.txt b/requirements/dev.txt
+index c35708d30121e5796e7123297a3311b99f979758..a1e80fce2d84ac9dd84bc3a6edd66a6d526d24b9 100644
+--- a/requirements/dev.txt
++++ b/requirements/dev.txt
+@@ -1,60 +1,143 @@
+-# SHA1:54b5b77ec8c7a0064ffa93b2fd16cb0130ba177c
+ #
+-# This file is autogenerated by pip-compile-multi
+-# To update, run:
++# This file is autogenerated by pip-compile with Python 3.12
++# by the following command:
+ #
+-#    pip-compile-multi
++#    pip-compile dev.in
+ #
+--r docs.txt
+--r tests.txt
+--r typing.txt
+-build==0.10.0
++alabaster==1.0.0
++    # via sphinx
++babel==2.16.0
++    # via sphinx
++build==1.2.1
+     # via pip-tools
+-cachetools==5.3.1
++cachetools==5.5.0
+     # via tox
+-cfgv==3.3.1
++certifi==2024.7.4
++    # via requests
++cfgv==3.4.0
+     # via pre-commit
+-chardet==5.1.0
++chardet==5.2.0
+     # via tox
+-click==8.1.3
++charset-normalizer==3.3.2
++    # via requests
++click==8.1.7
+     # via
+     #   pip-compile-multi
+     #   pip-tools
+ colorama==0.4.6
+     # via tox
+-distlib==0.3.6
++distlib==0.3.8
+     # via virtualenv
+-filelock==3.12.2
++docutils==0.21.2
++    # via
++    #   sphinx
++    #   sphinx-tabs
++filelock==3.15.4
+     # via
+     #   tox
+     #   virtualenv
+-identify==2.5.24
++identify==2.6.0
+     # via pre-commit
+-pip-compile-multi==2.6.3
+-    # via -r requirements/dev.in
+-pip-tools==6.13.0
++idna==3.8
++    # via requests
++imagesize==1.4.1
++    # via sphinx
++iniconfig==2.0.0
++    # via pytest
++jinja2==3.1.4
++    # via sphinx
++markupsafe==2.1.5
++    # via jinja2
++mypy==1.11.1
++    # via -r typing.in
++mypy-extensions==1.0.0
++    # via mypy
++nodeenv==1.9.1
++    # via
++    #   pre-commit
++    #   pyright
++packaging==24.1
++    # via
++    #   build
++    #   pallets-sphinx-themes
++    #   pyproject-api
++    #   pytest
++    #   sphinx
++    #   tox
++pallets-sphinx-themes==2.1.3
++    # via -r docs.in
++pip-compile-multi==2.6.4
++    # via -r dev.in
++pip-tools==7.4.1
+     # via pip-compile-multi
+-platformdirs==3.8.0
++platformdirs==4.2.2
+     # via
+     #   tox
+     #   virtualenv
+-pre-commit==3.3.3
+-    # via -r requirements/dev.in
+-pyproject-api==1.5.2
++pluggy==1.5.0
++    # via
++    #   pytest
++    #   tox
++pre-commit==3.8.0
++    # via -r dev.in
++pygments==2.18.0
++    # via
++    #   sphinx
++    #   sphinx-tabs
++pyproject-api==1.7.1
+     # via tox
+-pyproject-hooks==1.0.0
+-    # via build
+-pyyaml==6.0.1
++pyproject-hooks==1.1.0
++    # via
++    #   build
++    #   pip-tools
++pyright==1.1.377
++    # via -r typing.in
++pytest==8.3.2
++    # via -r tests.in
++pyyaml==6.0.2
+     # via pre-commit
++requests==2.32.3
++    # via sphinx
++snowballstemmer==2.2.0
++    # via sphinx
++sphinx==8.0.2
++    # via
++    #   -r docs.in
++    #   pallets-sphinx-themes
++    #   sphinx-issues
++    #   sphinx-tabs
++    #   sphinxcontrib-log-cabinet
++sphinx-issues==4.1.0
++    # via -r docs.in
++sphinx-tabs==3.4.5
++    # via -r docs.in
++sphinxcontrib-applehelp==2.0.0
++    # via sphinx
++sphinxcontrib-devhelp==2.0.0
++    # via sphinx
++sphinxcontrib-htmlhelp==2.1.0
++    # via sphinx
++sphinxcontrib-jsmath==1.0.1
++    # via sphinx
++sphinxcontrib-log-cabinet==1.0.1
++    # via -r docs.in
++sphinxcontrib-qthelp==2.0.0
++    # via sphinx
++sphinxcontrib-serializinghtml==2.0.0
++    # via sphinx
+ toposort==1.10
+     # via pip-compile-multi
+-tox==4.6.3
+-    # via -r requirements/dev.in
+-virtualenv==20.23.1
++tox==4.18.0
++    # via -r dev.in
++typing-extensions==4.12.2
++    # via mypy
++urllib3==2.2.2
++    # via requests
++virtualenv==20.26.3
+     # via
+     #   pre-commit
+     #   tox
+-wheel==0.40.0
++wheel==0.44.0
+     # via pip-tools
+ 
+ # The following packages are considered to be unsafe in a requirements file:
+diff --git a/requirements/docs.txt b/requirements/docs.txt
+index c2d790ef1c246a809c8a736bd82bb48e9505fcbc..88aa29226996457f2155540bb41017a65c7944c1 100644
+--- a/requirements/docs.txt
++++ b/requirements/docs.txt
+@@ -1,68 +1,67 @@
+-# SHA1:34fd4ca6516e97c7348e6facdd9c4ebb68209d1c
+ #
+-# This file is autogenerated by pip-compile-multi
+-# To update, run:
++# This file is autogenerated by pip-compile with Python 3.12
++# by the following command:
+ #
+-#    pip-compile-multi
++#    pip-compile docs.in
+ #
+-alabaster==0.7.13
++alabaster==1.0.0
+     # via sphinx
+-babel==2.12.1
++babel==2.16.0
+     # via sphinx
+-certifi==2023.5.7
++certifi==2024.7.4
+     # via requests
+-charset-normalizer==3.1.0
++charset-normalizer==3.3.2
+     # via requests
+-docutils==0.18.1
++docutils==0.21.2
+     # via
+     #   sphinx
+     #   sphinx-tabs
+-idna==3.4
++idna==3.8
+     # via requests
+ imagesize==1.4.1
+     # via sphinx
+-jinja2==3.1.2
++jinja2==3.1.4
+     # via sphinx
+-markupsafe==2.1.3
++markupsafe==2.1.5
+     # via jinja2
+-packaging==23.1
++packaging==24.1
+     # via
+     #   pallets-sphinx-themes
+     #   sphinx
+-pallets-sphinx-themes==2.1.1
+-    # via -r requirements/docs.in
+-pygments==2.15.1
++pallets-sphinx-themes==2.1.3
++    # via -r docs.in
++pygments==2.18.0
+     # via
+     #   sphinx
+     #   sphinx-tabs
+-requests==2.31.0
++requests==2.32.3
+     # via sphinx
+ snowballstemmer==2.2.0
+     # via sphinx
+-sphinx==7.0.1
++sphinx==8.0.2
+     # via
+-    #   -r requirements/docs.in
++    #   -r docs.in
+     #   pallets-sphinx-themes
+     #   sphinx-issues
+     #   sphinx-tabs
+     #   sphinxcontrib-log-cabinet
+-sphinx-issues==3.0.1
+-    # via -r requirements/docs.in
++sphinx-issues==4.1.0
++    # via -r docs.in
+ sphinx-tabs==3.4.5
+-    # via -r requirements/docs.in
+-sphinxcontrib-applehelp==1.0.4
++    # via -r docs.in
++sphinxcontrib-applehelp==2.0.0
+     # via sphinx
+-sphinxcontrib-devhelp==1.0.2
++sphinxcontrib-devhelp==2.0.0
+     # via sphinx
+-sphinxcontrib-htmlhelp==2.0.1
++sphinxcontrib-htmlhelp==2.1.0
+     # via sphinx
+ sphinxcontrib-jsmath==1.0.1
+     # via sphinx
+ sphinxcontrib-log-cabinet==1.0.1
+-    # via -r requirements/docs.in
+-sphinxcontrib-qthelp==1.0.3
++    # via -r docs.in
++sphinxcontrib-qthelp==2.0.0
+     # via sphinx
+-sphinxcontrib-serializinghtml==1.1.5
++sphinxcontrib-serializinghtml==2.0.0
+     # via sphinx
+-urllib3==2.0.3
++urllib3==2.2.2
+     # via requests
+diff --git a/requirements/tests.txt b/requirements/tests.txt
+index 6a6808865865c3f44824c2c3a3f4a8ae1aeb463d..c73968d0b1ac021053dce704bd28a55ccb349fc7 100644
+--- a/requirements/tests.txt
++++ b/requirements/tests.txt
+@@ -1,15 +1,14 @@
+-# SHA1:0eaa389e1fdb3a1917c0f987514bd561be5718ee
+ #
+-# This file is autogenerated by pip-compile-multi
+-# To update, run:
++# This file is autogenerated by pip-compile with Python 3.12
++# by the following command:
+ #
+-#    pip-compile-multi
++#    pip-compile tests.in
+ #
+ iniconfig==2.0.0
+     # via pytest
+-packaging==23.1
++packaging==24.1
+     # via pytest
+-pluggy==1.2.0
++pluggy==1.5.0
+     # via pytest
+-pytest==7.4.0
+-    # via -r requirements/tests.in
++pytest==8.3.2
++    # via -r tests.in
+diff --git a/requirements/tests37.txt b/requirements/tests37.txt
+new file mode 100644
+index 0000000000000000000000000000000000000000..d490541c8f34dbaff98d12b242a92b33ea8176cf
+--- /dev/null
++++ b/requirements/tests37.txt
+@@ -0,0 +1,26 @@
++#
++# This file is autogenerated by pip-compile with Python 3.7
++# by the following command:
++#
++#    pip-compile --output-file=tests37.txt tests.in
++#
++exceptiongroup==1.2.2
++    # via pytest
++importlib-metadata==6.7.0
++    # via
++    #   pluggy
++    #   pytest
++iniconfig==2.0.0
++    # via pytest
++packaging==24.0
++    # via pytest
++pluggy==1.2.0
++    # via pytest
++pytest==7.4.4
++    # via -r tests.in
++tomli==2.0.1
++    # via pytest
++typing-extensions==4.7.1
++    # via importlib-metadata
++zipp==3.15.0
++    # via importlib-metadata
+diff --git a/requirements/typing.txt b/requirements/typing.txt
+index f04fde5dd1faf527ca1376a656d6a446a8d4f20d..d84e3bb48cad3012955fdc3f28dde6e0330d7f0d 100644
+--- a/requirements/typing.txt
++++ b/requirements/typing.txt
+@@ -1,20 +1,16 @@
+-# SHA1:0d25c235a98f3c8c55aefb59b91c82834e185f0a
+ #
+-# This file is autogenerated by pip-compile-multi
+-# To update, run:
++# This file is autogenerated by pip-compile with Python 3.12
++# by the following command:
+ #
+-#    pip-compile-multi
++#    pip-compile typing.in
+ #
+-mypy==1.4.1
+-    # via -r requirements/typing.in
++mypy==1.11.1
++    # via -r typing.in
+ mypy-extensions==1.0.0
+     # via mypy
+-nodeenv==1.8.0
++nodeenv==1.9.1
+     # via pyright
+-pyright==1.1.317
+-    # via -r requirements/typing.in
+-typing-extensions==4.6.3
++pyright==1.1.377
++    # via -r typing.in
++typing-extensions==4.12.2
+     # via mypy
+-
+-# The following packages are considered to be unsafe in a requirements file:
+-# setuptools
+diff --git a/src/click/core.py b/src/click/core.py
+index f205c79c638d6c3cf309b7f8489fd9c5db01117f..8d9d995589f4a6d563c8f2f92471633e604cb151 100644
+--- a/src/click/core.py
++++ b/src/click/core.py
+@@ -625,7 +625,7 @@ class Context:
+ 
+     def find_object(self, object_type: t.Type[V]) -> t.Optional[V]:
+         """Finds the closest object of a given type."""
+-        node: t.Optional["Context"] = self
++        node: t.Optional[Context] = self
+ 
+         while node is not None:
+             if isinstance(node.obj, object_type):
+@@ -969,7 +969,7 @@ class BaseCommand:
+         """
+         from click.shell_completion import CompletionItem
+ 
+-        results: t.List["CompletionItem"] = []
++        results: t.List[CompletionItem] = []
+ 
+         while ctx.parent is not None:
+             ctx = ctx.parent
+@@ -1217,7 +1217,7 @@ class Command(BaseCommand):
+         #: the list of parameters for this command in the order they
+         #: should show up in the help page and execute.  Eager parameters
+         #: will automatically be handled before non eager ones.
+-        self.params: t.List["Parameter"] = params or []
++        self.params: t.List[Parameter] = params or []
+         self.help = help
+         self.epilog = epilog
+         self.options_metavar = options_metavar
+@@ -1440,7 +1440,7 @@ class Command(BaseCommand):
+         """
+         from click.shell_completion import CompletionItem
+ 
+-        results: t.List["CompletionItem"] = []
++        results: t.List[CompletionItem] = []
+ 
+         if incomplete and not incomplete[0].isalnum():
+             for param in self.get_params(ctx):
+@@ -1600,7 +1600,7 @@ class MultiCommand(Command):
+                 return f(inner, *args, **kwargs)
+ 
+             self._result_callback = rv = update_wrapper(t.cast(F, function), f)
+-            return rv
++            return rv  # type: ignore[return-value]
+ 
+         return decorator
+ 
+@@ -2800,10 +2800,12 @@ class Option(Parameter):
+                 # For boolean flags that have distinct True/False opts,
+                 # use the opt without prefix instead of the value.
+                 default_string = split_opt(
+-                    (self.opts if self.default else self.secondary_opts)[0]
++                    (self.opts if default_value else self.secondary_opts)[0]
+                 )[1]
+             elif self.is_bool_flag and not self.secondary_opts and not default_value:
+                 default_string = ""
++            elif default_value == "":
++                default_string = '""'
+             else:
+                 default_string = str(default_value)
+ 
+diff --git a/src/click/decorators.py b/src/click/decorators.py
+index a1ec90628de1d382b0eb9dda984045bafab9faa5..c346c702aedad04ac970224f4bd3c81280103288 100644
+--- a/src/click/decorators.py
++++ b/src/click/decorators.py
+@@ -93,7 +93,7 @@ def make_pass_decorator(
+ 
+         return update_wrapper(new_func, f)
+ 
+-    return decorator  # type: ignore[return-value]
++    return decorator
+ 
+ 
+ def pass_meta_key(
+@@ -126,7 +126,7 @@ def pass_meta_key(
+         f"Decorator that passes {doc_description} as the first argument"
+         " to the decorated function."
+     )
+-    return decorator  # type: ignore[return-value]
++    return decorator
+ 
+ 
+ CmdType = t.TypeVar("CmdType", bound=Command)
+diff --git a/src/click/exceptions.py b/src/click/exceptions.py
+index c5edb6a02648886e0f6a12d325067240ab7288c4..64e7f0ec518c58613984974c2cf3e77ee0ae3bf8 100644
+--- a/src/click/exceptions.py
++++ b/src/click/exceptions.py
+@@ -58,7 +58,7 @@ class UsageError(ClickException):
+     def __init__(self, message: str, ctx: t.Optional["Context"] = None) -> None:
+         super().__init__(message)
+         self.ctx = ctx
+-        self.cmd: t.Optional["Command"] = self.ctx.command if self.ctx else None
++        self.cmd: t.Optional[Command] = self.ctx.command if self.ctx else None
+ 
+     def show(self, file: t.Optional[t.IO[t.Any]] = None) -> None:
+         if file is None:
+diff --git a/src/click/parser.py b/src/click/parser.py
+index e7b7c499c8962f6a38a6042d4dde2eff3ba10e77..600b8436d7c1e833cb3c5efea898b42d15d920c0 100644
+--- a/src/click/parser.py
++++ b/src/click/parser.py
+@@ -249,7 +249,7 @@ class ParsingState:
+         self.opts: t.Dict[str, t.Any] = {}
+         self.largs: t.List[str] = []
+         self.rargs = rargs
+-        self.order: t.List["CoreParameter"] = []
++        self.order: t.List[CoreParameter] = []
+ 
+ 
+ class OptionParser:
+diff --git a/src/click/testing.py b/src/click/testing.py
+index 7a3bec6c63e6cdaaed7eefd2b05ba4ad85bcc069..b517fd09f71cd3abaae220a5b7b8c27df3f99582 100644
+--- a/src/click/testing.py
++++ b/src/click/testing.py
+@@ -8,6 +8,7 @@ import tempfile
+ import typing as t
+ from types import TracebackType
+ 
++from . import _compat
+ from . import formatting
+ from . import termui
+ from . import utils
+@@ -315,6 +316,7 @@ class CliRunner:
+         termui.hidden_prompt_func = hidden_input
+         termui._getchar = _getchar
+         utils.should_strip_ansi = should_strip_ansi  # type: ignore
++        _compat.should_strip_ansi = should_strip_ansi
+ 
+         old_env = {}
+         try:
+diff --git a/src/click/types.py b/src/click/types.py
+index dc52bac3d49c4c562f5c10d565bfbdd917a7ee5c..c310377a06ca1daaf5438d0d3d456736aa09d172 100644
+--- a/src/click/types.py
++++ b/src/click/types.py
+@@ -892,7 +892,7 @@ class Path(ParamType):
+                 )
+             if not self.dir_okay and stat.S_ISDIR(st.st_mode):
+                 self.fail(
+-                    _("{name} '{filename}' is a directory.").format(
++                    _("{name} {filename!r} is a directory.").format(
+                         name=self.name.title(), filename=format_filename(value)
+                     ),
+                     param,
+diff --git a/src/click/utils.py b/src/click/utils.py
+index 88d0b9258041cbe37f00b6763c9afaeaaa9f2807..875f9fd4f8130cdf10bfd481bdbc45716289cf65 100644
+--- a/src/click/utils.py
++++ b/src/click/utils.py
+@@ -353,7 +353,7 @@ def get_text_stream(
+ 
+ 
+ def open_file(
+-    filename: str,
++    filename: t.Union[str, "os.PathLike[str]"],
+     mode: str = "r",
+     encoding: t.Optional[str] = None,
+     errors: t.Optional[str] = "strict",
+@@ -374,7 +374,7 @@ def open_file(
+         with open_file(filename) as f:
+             ...
+ 
+-    :param filename: The name of the file to open, or ``'-'`` for
++    :param filename: The name or Path of the file to open, or ``'-'`` for
+         ``stdin``/``stdout``.
+     :param mode: The mode in which to open the file.
+     :param encoding: The encoding to decode or encode a file opened in
+@@ -410,7 +410,7 @@ def format_filename(
+     with the replacement character ``�``.
+ 
+     Invalid bytes or surrogate escapes will raise an error when written to a
+-    stream with ``errors="strict". This will typically happen with ``stdout``
++    stream with ``errors="strict"``. This will typically happen with ``stdout``
+     when the locale is something like ``en_GB.UTF-8``.
+ 
+     Many scenarios *are* safe to write surrogates though, due to PEP 538 and
+diff --git a/tox.ini b/tox.ini
+index 840c418e0aa92b444242e455f6dcaed204f0495f..84ef184c088b7ae074730814a07c5ff8e2a006b6 100644
+--- a/tox.ini
++++ b/tox.ini
+@@ -15,6 +15,9 @@ use_frozen_constraints = true
+ deps = -r requirements/tests.txt
+ commands = pytest -v --tb=short --basetemp={envtmpdir} {posargs}
+ 
++[testenv:py37,py3.7]
++deps = -r requirements/tests37.txt
++
+ [testenv:style]
+ deps = pre-commit
+ skip_install = true
+@@ -31,16 +34,33 @@ commands =
+ deps = -r requirements/docs.txt
+ commands = sphinx-build -E -W -b dirhtml docs docs/_build/dirhtml
+ 
++[testenv:update-actions]
++labels = update
++deps = gha-update
++commands = gha-update
++
++[testenv:update-pre_commit]
++labels = update
++deps = pre-commit
++skip_install = true
++commands = pre-commit autoupdate -j4
++
+ [testenv:update-requirements]
+-deps =
+-    pip-tools
+-    pre-commit
++labels = update
++deps = pip-tools
+ skip_install = true
+ change_dir = requirements
+ commands =
+-    pre-commit autoupdate -j4
+-    pip-compile -U build.in
+-    pip-compile -U docs.in
+-    pip-compile -U tests.in
+-    pip-compile -U typing.in
+-    pip-compile -U dev.in
++    pip-compile build.in -q {posargs:-U}
++    pip-compile docs.in -q {posargs:-U}
++    pip-compile tests.in -q {posargs:-U}
++    pip-compile typing.in -q {posargs:-U}
++    pip-compile dev.in -q {posargs:-U}
++
++[testenv:update-requirements37]
++base_python = 3.7
++labels = update
++deps = pip-tools
++skip_install = true
++change_dir = requirements
++commands = pip-compile tests.in -q -o tests37.txt {posargs:-U}

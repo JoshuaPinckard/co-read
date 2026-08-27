@@ -1,0 +1,474 @@
+diff --git a/CHANGES.md b/CHANGES.md
+index 8991e8257605b392187bdb2e1551ce1bc08eadb8..7b91bee1e87e126e0f54e24aa50924174302fbca 100644
+--- a/CHANGES.md
++++ b/CHANGES.md
+@@ -1,3 +1,12 @@
++## Version 8.5.0
++
++Unreleased
++
++- Supported versions of Windows enable ANSI terminal styles by default.
++  Colorama is no longer a dependency and is not used. {issue}`2986` {pr}`3505`
++- {class}`Argument` accepts a `help` parameter, and help output includes
++  a `Positional arguments` section when argument help is available. {issue}`2983` {pr}`3473`
++
+ ## Version 8.4.2
+ 
+ Unreleased
+diff --git a/docs/arguments.md b/docs/arguments.md
+index 90d37c1569c36bef4e0c76d53f2017143da49b4e..81b331bd5d6ea95fc7255f2d0fb786b106766c27 100644
+--- a/docs/arguments.md
++++ b/docs/arguments.md
+@@ -10,10 +10,13 @@ Arguments are:
+ * Are positional in nature.
+ * Similar to a limited version of {ref}`options <options>` that
+   can take an arbitrary number of inputs
+-* {ref}`Documented manually <documenting-arguments>`.
++* Can take an optional `help` string shown in the ``Positional arguments``
++  section of the help page, or be {ref}`documented in the command docstring
++  <documenting-arguments>`.
+ 
+ Useful and often used kwargs are:
+ 
++* `help`: Help text for the argument.
+ * `default`: Passes a default.
+ * `nargs`: Sets the number of arguments. Set to -1 to take an arbitrary number.
+ 
+diff --git a/docs/changes.md b/docs/changes.md
+index 58b5a195c9a8642b10d7f0bce7ed53538e1aa785..5f522c22204b689033f69e581c007bc1e1d73774 100644
+--- a/docs/changes.md
++++ b/docs/changes.md
+@@ -1,5 +1,4 @@
+ # Changes
+ 
+-
+ ```{include} ../CHANGES.md
+ ```
+diff --git a/docs/documentation.md b/docs/documentation.md
+index 73a0ea75f1b670d43571ba255aba526c32b831d6..1215c85e5009f9ee235607ecc915194c69a3cc36 100644
+--- a/docs/documentation.md
++++ b/docs/documentation.md
+@@ -15,7 +15,7 @@ Simple example:
+ .. click:example::
+ 
+     @click.command()
+-    @click.argument('name')
++    @click.argument('name', help='The name to print')
+     @click.option('--count', default=1, help='number of greetings')
+     def hello(name: str, count: int):
+         """This script prints hello and a name one or more times."""
+@@ -113,8 +113,10 @@ The help epilog is printed at the end of the help and is useful for showing exam
+ 
+ ## Documenting Arguments
+ 
+-{class}`click.argument` does not take a `help` parameter. This follows the Unix Command Line Tools convention of using arguments only for necessary things and documenting them in the command help text
+-by name. This should then be done via the docstring.
++{class}`click.argument` accepts an optional `help` parameter that is shown in
++the ``Positional arguments`` section of the help page. You can still document
++arguments in the command docstring, especially when you want to describe them
++in the main help text by name.
+ 
+ A brief example:
+ 
+@@ -122,7 +124,7 @@ A brief example:
+ .. click:example::
+ 
+     @click.command()
+-    @click.argument('filename')
++    @click.argument('filename', help='The file to print.')
+     def touch(filename):
+         """Print FILENAME."""
+         click.echo(filename)
+@@ -131,7 +133,7 @@ A brief example:
+     invoke(touch, args=['--help'])
+ ```
+ 
+-Or more explicitly:
++Or more explicitly in the docstring:
+ 
+ ```{eval-rst}
+ .. click:example::
+diff --git a/docs/quickstart.md b/docs/quickstart.md
+index e7b4b54f9abf6c9092a30ccaa62d55908846e16b..c48260cfa50b467a18ab264072f3934eacf05033 100644
+--- a/docs/quickstart.md
++++ b/docs/quickstart.md
+@@ -24,8 +24,7 @@ Some standalone examples of Click applications are packaged with Click. They are
+   performs custom validation of parameters in different ways.
+ - [naval](https://github.com/pallets/click/tree/main/examples/naval) : Port of the [docopt](http://docopt.org/) naval
+   example.
+-- [colors](https://github.com/pallets/click/tree/main/examples/colors) : A simple example that colorizes text. Uses
+-  colorama on Windows.
++- [colors](https://github.com/pallets/click/tree/main/examples/colors) : A simple example that colorizes text.
+ - [aliases](https://github.com/pallets/click/tree/main/examples/aliases) : An advanced example that implements
+   {ref}`aliases`.
+ - [imagepipe](https://github.com/pallets/click/tree/main/examples/imagepipe) : A complex example that implements some
+@@ -81,7 +80,7 @@ What this means is that the {func}`echo` function applies some error correction
+ instead of dying with a {exc}`UnicodeError`.
+ 
+ The echo function also supports color and other styles in output. It will automatically remove styles if the output
+-stream is a file. On Windows, colorama is automatically installed and used. See {ref}`ansi-colors`.
++stream is a file. See {ref}`ansi-colors`.
+ 
+ If you don't need this, you can also use the `print()` construct / function.
+ 
+diff --git a/docs/utils.md b/docs/utils.md
+index 8afe390792ab7687437b0051d22fd2c411875efb..18a8a4a1c36092d2628393c855aa36f5b175a519 100644
+--- a/docs/utils.md
++++ b/docs/utils.md
+@@ -52,7 +52,7 @@ click.echo('Hello World!', err=True)
+ ```{versionadded} 2.0
+ ```
+ 
+-The {func}`echo` function supports ANSI colors and styles. On Windows this uses [colorama](https://pypi.org/project/colorama/).
++The {func}`echo` function supports ANSI colors and styles.
+ 
+ Primarily this means that:
+ 
+@@ -60,8 +60,13 @@ Primarily this means that:
+ - the {func}`echo` function will transparently connect to the terminal on Windows and translate ANSI codes to terminal
+   API calls. This means that colors will work on Windows the same way they do on other operating systems.
+ 
+-On Windows, Click uses colorama without calling `colorama.init()`. You can still call that in your code, but it's not
+-required for Click.
++:::{admonition} Older Windows Support
++:class: note
++
++Recent Windows 11 supports ANSI styling by default, in both Terminal and cmd.exe.
++If you need to support color output on older versions of Windows, install
++[colorama](https://pypi.org/project/colorama/) and call `colorama.init()`.
++:::
+ 
+ For styling a string, the {func}`style` function can be used:
+ 
+diff --git a/examples/colors/README b/examples/colors/README
+index 7aec8efb5b69d65bcf6bdbb276fa4b14e014edae..c6b2e155699cc2eae1ffe1c35227f60e134dbeff 100644
+--- a/examples/colors/README
++++ b/examples/colors/README
+@@ -3,8 +3,6 @@ $ colors_
+   colors is a simple example that shows how you can
+   colorize text.
+ 
+-  Uses colorama on Windows.
+-
+ Usage:
+ 
+   $ pip install --editable .
+diff --git a/pyproject.toml b/pyproject.toml
+index ed91e5d741f29f8f2c6cd1efede1dbd140c86a64..0156d5e8ac07342d892d1fbe6b4a42b5bd034b74 100644
+--- a/pyproject.toml
++++ b/pyproject.toml
+@@ -1,6 +1,6 @@
+ [project]
+ name = "click"
+-version = "8.4.2.dev"
++version = "8.5.0.dev"
+ description = "Composable command line interface toolkit"
+ readme = "README.md"
+ license = "BSD-3-Clause"
+@@ -14,9 +14,6 @@ classifiers = [
+     "Typing :: Typed",
+ ]
+ requires-python = ">=3.10"
+-dependencies = [
+-    "colorama; platform_system == 'Windows'",
+-]
+ 
+ [project.urls]
+ Donate = "https://palletsprojects.com/donate"
+@@ -114,12 +111,6 @@ show_error_codes = true
+ pretty = true
+ strict = true
+ 
+-[[tool.mypy.overrides]]
+-module = [
+-    "colorama.*",
+-]
+-ignore_missing_imports = true
+-
+ [tool.pyright]
+ pythonVersion = "3.10"
+ include = ["src", "tests/typing"]
+diff --git a/src/click/_compat.py b/src/click/_compat.py
+index 134c4f38934be0a0be78a6d2a3ab100fe60389b2..90e328bbd9f4975e14b1bb6d8dc77860f6b753f5 100644
+--- a/src/click/_compat.py
++++ b/src/click/_compat.py
+@@ -12,7 +12,6 @@ from weakref import WeakKeyDictionary
+ 
+ CYGWIN = sys.platform.startswith("cygwin")
+ WIN = sys.platform.startswith("win")
+-auto_wrap_for_ansi: t.Callable[[t.TextIO], t.TextIO] | None = None
+ _ansi_re = re.compile(r"\033\[[;?0-9]*[a-zA-Z]")
+ 
+ 
+@@ -510,9 +509,7 @@ def should_strip_ansi(
+     return not color
+ 
+ 
+-# On Windows, wrap the output streams with colorama to support ANSI
+-# color codes.
+-# NOTE: double check is needed so mypy does not analyze this on Linux
++# double check is needed so mypy does not analyze this on Linux
+ if sys.platform.startswith("win") and WIN:
+     from ._winconsole import _get_windows_console_stream
+ 
+@@ -521,43 +518,6 @@ if sys.platform.startswith("win") and WIN:
+ 
+         return locale.getpreferredencoding()
+ 
+-    _ansi_stream_wrappers: cabc.MutableMapping[t.TextIO, t.TextIO] = WeakKeyDictionary()
+-
+-    def auto_wrap_for_ansi(stream: t.TextIO, color: bool | None = None) -> t.TextIO:
+-        """Support ANSI color and style codes on Windows by wrapping a
+-        stream with colorama.
+-        """
+-        try:
+-            cached = _ansi_stream_wrappers.get(stream)
+-        except Exception:
+-            cached = None
+-
+-        if cached is not None:
+-            return cached
+-
+-        import colorama
+-
+-        strip = should_strip_ansi(stream, color)
+-        ansi_wrapper = colorama.AnsiToWin32(stream, strip=strip)
+-        rv = t.cast(t.TextIO, ansi_wrapper.stream)
+-        _write = rv.write
+-
+-        def _safe_write(s: str) -> int:
+-            try:
+-                return _write(s)
+-            except BaseException:
+-                ansi_wrapper.reset_all()
+-                raise
+-
+-        rv.write = _safe_write  # type: ignore[method-assign]
+-
+-        try:
+-            _ansi_stream_wrappers[stream] = rv
+-        except Exception:
+-            pass
+-
+-        return rv
+-
+ else:
+ 
+     def _get_argv_encoding() -> str:
+diff --git a/src/click/core.py b/src/click/core.py
+index d2db291d08ac4b8b23d1e9372c23281f852cd37c..a0c0c407e75302263bdb616c4f8e65f3b2186062 100644
+--- a/src/click/core.py
++++ b/src/click/core.py
+@@ -1216,11 +1216,13 @@ class Command:
+ 
+         -   :meth:`format_usage`
+         -   :meth:`format_help_text`
++        -   :meth:`format_arguments`
+         -   :meth:`format_options`
+         -   :meth:`format_epilog`
+         """
+         self.format_usage(ctx, formatter)
+         self.format_help_text(ctx, formatter)
++        self.format_arguments(ctx, formatter)
+         self.format_options(ctx, formatter)
+         self.format_epilog(ctx, formatter)
+ 
+@@ -1247,13 +1249,25 @@ class Command:
+         opts = []
+         for param in self.get_params(ctx):
+             rv = param.get_help_record(ctx)
+-            if rv is not None:
++            if rv is not None and not isinstance(param, Argument):
+                 opts.append(rv)
+ 
+         if opts:
+             with formatter.section(_("Options")):
+                 formatter.write_dl(opts)
+ 
++    def format_arguments(self, ctx: Context, formatter: HelpFormatter) -> None:
++        """Writes the arguments that have a help record into the formatter."""
++        args = []
++        for param in self.get_params(ctx):
++            rv = param.get_help_record(ctx)
++            if rv is not None and isinstance(param, Argument):
++                args.append(rv)
++
++        if args:
++            with formatter.section(_("Positional arguments")):
++                formatter.write_dl(args)
++
+     def format_epilog(self, ctx: Context, formatter: HelpFormatter) -> None:
+         """Writes the epilog into the formatter if it exists."""
+         if self.epilog:
+@@ -3534,6 +3548,11 @@ class Argument(Parameter):
+     and are required by default.
+ 
+     All parameters are passed onwards to the constructor of :class:`Parameter`.
++
++    :param help: the help string.
++
++    .. versionchanged:: 8.5
++        Added the ``help`` parameter.
+     """
+ 
+     param_type_name = "argument"
+@@ -3542,6 +3561,7 @@ class Argument(Parameter):
+         self,
+         param_decls: cabc.Sequence[str],
+         required: bool | None = None,
++        help: str | None = None,
+         **attrs: t.Any,
+     ) -> None:
+         # Auto-detect the requirement status of the argument if not explicitly set.
+@@ -3557,8 +3577,24 @@ class Argument(Parameter):
+         if "multiple" in attrs:
+             raise TypeError("__init__() got an unexpected keyword argument 'multiple'.")
+ 
++        deprecated = attrs.get("deprecated", False)
++
++        if help:
++            help = inspect.cleandoc(help)
++
++        if deprecated:
++            label = _format_deprecated_label(deprecated)
++            help = f"{help} {label}" if help else label
++
++        self.help = help
++
+         super().__init__(param_decls, required=required, **attrs)
+ 
++    def to_info_dict(self) -> dict[str, t.Any]:
++        info_dict = super().to_info_dict()
++        info_dict.update(help=self.help)
++        return info_dict
++
+     @property
+     def human_readable_name(self) -> str:
+         if self.metavar is not None:
+@@ -3601,6 +3637,12 @@ class Argument(Parameter):
+     def get_usage_pieces(self, ctx: Context) -> list[str]:
+         return [self.make_metavar(ctx)]
+ 
++    def get_help_record(self, ctx: Context) -> tuple[str, str] | None:
++        if self.help is None:
++            return None
++
++        return self.make_metavar(ctx), self.help
++
+     def get_error_hint(self, ctx: Context | None) -> str:
+         if ctx is not None:
+             return f"'{self.make_metavar(ctx)}'"
+diff --git a/src/click/shell_completion.py b/src/click/shell_completion.py
+index 874461261d08e74aba5674c64df7be998a29a5a1..e4accc1276abe615bfd546d0acae0682aed71eb6 100644
+--- a/src/click/shell_completion.py
++++ b/src/click/shell_completion.py
+@@ -502,11 +502,10 @@ def split_arg_string(string: str) -> list[str]:
+     lex = shlex.shlex(string, posix=True)
+     lex.whitespace_split = True
+     lex.commenters = ""
+-    out = []
++    out = []  # type: list[str]
+ 
+     try:
+-        for token in lex:
+-            out.append(token)
++        out.extend(lex)
+     except ValueError:
+         # Raised when end-of-string is reached in an invalid state. Use
+         # the partial token as-is. The quote or escape character is in
+diff --git a/src/click/termui.py b/src/click/termui.py
+index 9bc88db14dd66c59ccc99e386b385573d474dfd3..e5e9678c38aa2cda54871d21810a254b06a6f126 100644
+--- a/src/click/termui.py
++++ b/src/click/termui.py
+@@ -13,7 +13,6 @@ from gettext import gettext as _
+ 
+ from ._compat import isatty
+ from ._compat import strip_ansi
+-from ._compat import WIN
+ from .exceptions import Abort
+ from .exceptions import UsageError
+ from .globals import resolve_color_default
+@@ -84,17 +83,7 @@ def hidden_prompt_func(prompt: str) -> str:
+ def _readline_prompt(func: t.Callable[[str], str], text: str, err: bool) -> str:
+     """Call a prompt function, passing the full prompt on non-Windows so
+     readline can handle line editing and cursor positioning correctly.
+-
+-    On Windows the prompt is written separately via :func:`echo` for
+-    colorama support, with only the last character passed to *func*.
+     """
+-    if WIN:
+-        # Write the prompt separately so that we get nice coloring
+-        # through colorama on Windows.
+-        echo(text[:-1], nl=False, err=err)
+-        # Echo the last character to stdout to work around an issue
+-        # where readline causes backspace to clear the whole line.
+-        return func(text[-1:])
+     if err:
+         with redirect_stdout(sys.stderr):
+             return func(text)
+diff --git a/src/click/utils.py b/src/click/utils.py
+index c0cb22d683b4ea2ff3b035efdf1e6ef392b08367..8a5506c5587436f76492120cfa4b534c8d35b0a4 100644
+--- a/src/click/utils.py
++++ b/src/click/utils.py
+@@ -13,7 +13,6 @@ from types import TracebackType
+ from ._compat import _default_text_stderr
+ from ._compat import _default_text_stdout
+ from ._compat import _find_binary_writer
+-from ._compat import auto_wrap_for_ansi
+ from ._compat import binary_streams
+ from ._compat import open_stream
+ from ._compat import should_strip_ansi
+@@ -274,6 +273,9 @@ def echo(
+         default Click will remove color if the output does not look like
+         an interactive terminal.
+ 
++    .. versionchanged:: 8.5
++        Colorama is no longer used for color on Windows.
++
+     .. versionchanged:: 6.0
+         Support Unicode output on the Windows console. Click does not
+         modify ``sys.stdout``, so ``sys.stdout.write()`` and ``print()``
+@@ -331,16 +333,8 @@ def echo(
+ 
+     # ANSI style code support. For no message or bytes, nothing happens.
+     # When outputting to a file instead of a terminal, strip codes.
+-    else:
+-        color = resolve_color_default(color)
+-
+-        if should_strip_ansi(file, color):
+-            out = strip_ansi(out)
+-        elif WIN:
+-            if auto_wrap_for_ansi is not None:
+-                file = auto_wrap_for_ansi(file, color)  # type: ignore
+-            elif not color:
+-                out = strip_ansi(out)
++    elif should_strip_ansi(file, resolve_color_default(color)):
++        out = strip_ansi(out)
+ 
+     file.write(out)  # type: ignore
+     file.flush()
+diff --git a/uv.lock b/uv.lock
+index 72a4012485538ef9f8e51e762125a9c0ec0ba8f7..46ae78248a04a1837cddc4daf5a87e614e772a5f 100644
+--- a/uv.lock
++++ b/uv.lock
+@@ -173,11 +173,8 @@ wheels = [
+ 
+ [[package]]
+ name = "click"
+-version = "8.4.2.dev0"
++version = "8.5.0.dev0"
+ source = { editable = "." }
+-dependencies = [
+-    { name = "colorama", marker = "sys_platform == 'win32'" },
+-]
+ 
+ [package.dev-dependencies]
+ dev = [
+@@ -221,7 +218,6 @@ typing = [
+ ]
+ 
+ [package.metadata]
+-requires-dist = [{ name = "colorama", marker = "sys_platform == 'win32'" }]
+ 
+ [package.metadata.requires-dev]
+ dev = [

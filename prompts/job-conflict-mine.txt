@@ -1,0 +1,62 @@
+Build a deterministic miner for REAL historical merge conflicts, and run it across many repositories. This replaces synthetic contention with contention that actually occurred between real developers.
+
+Phase A only. Do NOT construct agent tasks and do NOT run any agent. Produce the conflict dataset.
+
+## The core method
+
+Git history stores the *resolved* merge. This recomputes whether the raw merge would have conflicted.
+
+For every merge commit `M` in first-parent-reachable history with exactly two parents `P1`, `P2`:
+
+1. `B = git merge-base P1 P2`
+2. Replay the raw three-way merge WITHOUT touching a working tree. `git merge-tree --write-tree P1 P2` (git 2.46 is installed; this form computes the base itself and reports conflicts). Verify on a known case that the exit status and the conflict listing behave as you expect, and **write down the exact invocation and how you interpret its output** — this is the determinism claim of the whole dataset.
+3. Record whether it conflicted, which paths, and the conflicted regions.
+
+Requirements:
+
+- **Never mutate any repository.** No checkout, merge, reset, stash, commit. `merge-tree` writes only to the object store; if you judge even that too invasive, operate on a `--mirror` clone in your own scratch area. State which you did.
+- **Determinism check, mandatory**: run the full miner twice on at least three repositories and confirm byte-identical output. A miner that is not reproducible produces a dataset nobody can trust. Report the check.
+
+## Repositories
+
+Mining is cheap, read-only and language-agnostic. Running agents later is expensive and Python-only. So mine WIDELY here.
+
+Target **at least 15 repositories**, deliberately spanning languages — Python, JavaScript/TypeScript, Go, Rust, Java, C/C++ — and spanning project shapes: library, framework, application, infrastructure. Prior work in this project measured only Node-dominated repositories and that is a stated weakness; this phase is the chance to fix it, so justify the set on language and shape coverage rather than popularity.
+
+Some repos are already under `corpus/_clones/`. Reuse them. Clone what else you need with `--filter=blob:none` where possible to keep disk modest, and report total disk used. **There is no network egress inside Codex Cloud, but this job runs locally, so cloning is available — if a clone fails, record it and move on.**
+
+Include `pallets/click` and `pygments/pygments`, which already passed strict determinism gates in this project, so the mined conflicts can later connect to existing fixtures.
+
+## What to extract per conflict
+
+Write `corpus/conflicts/<repo>.jsonl`, one row per conflicted merge:
+
+- repo, merge commit, both parents, merge base
+- conflicted paths, and per path the conflicted line ranges **and byte ranges**
+- size of each side's diff (files, hunks, lines) between base and each parent
+- how far each side diverged from the base (commit count, and wall-clock span between base and each parent)
+- whether either side touched tests, and which test files
+- the merge commit's message and both parents' subject lines
+- **file classification**: generated/lockfile/vendored versus hand-written source. Lockfiles and generated files conflict textually without any semantic disagreement and must be separable. State your classification rule explicitly.
+
+## The analysis
+
+`exploratory/conflicts/MINING.md`:
+
+1. **How many merges, how many conflicted, per repo and overall — with denominators.** This base rate is itself a contribution; state it plainly.
+2. The determinism check result.
+3. **Conflict concentration.** Do conflicts cluster in a few files? Report the distribution — what share of conflicts falls in the top 1% of files. Report it separately for source versus generated files, because the answer is probably very different and conflating them would be misleading.
+4. **Divergence versus conflict probability.** Does the chance of a conflict rise with how far the two sides diverged from their base — in commits, in time, in lines changed? This is the central question for isolation policy: it asks how long two lines of work can proceed independently before collision becomes likely. Report the relationship with intervals, and state clearly if the data will not support a claim.
+5. **Conflict granularity.** For each conflicted file, how much of it actually conflicted — byte ranges over file size. If conflicts are typically tiny regions of large files, that is direct evidence about file-level versus byte-level coordination; if they are typically whole-file, that is evidence the other way. **Report whichever way it comes out.** Compute, for each conflicted merge, whether the two sides' changed byte ranges actually overlap or merely landed in the same file.
+6. **Candidate task sites**: conflicts where BOTH sides changed test files, which are the ones that can later become verifiable agent tasks. Count them per repo. Do not build the tasks.
+7. Language and project-shape breakdown of every headline number.
+8. **"Claims that could NOT be verified"** and **"What would change this verdict."**
+9. Per-claim confidence with its reason, not a document-level label.
+
+## Discipline
+
+- Squash-merge workflows produce few two-parent merges. A repo yielding almost no merge commits is a **finding about workflow**, not a failure — report it and its merge count.
+- Do not filter conflicts to make a point. Report the full distribution including boring lockfile conflicts, then analyse them separately.
+- Every rate needs its denominator stated in the same sentence.
+
+Scripts under `instruments/conflicts/`. Do not fabricate. Do not modify anything under `fixture/`.

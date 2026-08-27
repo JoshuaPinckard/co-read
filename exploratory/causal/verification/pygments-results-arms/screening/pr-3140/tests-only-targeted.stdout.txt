@@ -1,0 +1,26 @@
+============================= test session starts =============================
+platform win32 -- Python 3.11.9, pytest-8.4.2, pluggy-1.6.0
+rootdir: C:\Users\joshp\AppData\Local\Temp\blast-radius-pygments-causal-opbff12g\screen-pr-3140-5jf_hfn2\tests-only
+configfile: pyproject.toml
+collected 1 item
+
+tests\snippets\julia\test_rstrings.txt F                                 [100%]
+
+================================== FAILURES ===================================
+___________________ tests\snippets\julia\test_rstrings.txt ____________________
+The tokens produced by the "julia" lexer differ from the expected ones in the file "tests\snippets\julia\test_rstrings.txt".
+Run `tox -- tests\snippets --update-goldens` to update it.
+
+  
+  Skipping 234 identical leading characters in diff, use -v to show
+    .Regex
+  + 'he'          Literal.String.Regex
+  + '\\'          Error
+  + '\\'          Error
+  - 'he\\\\llo'   Literal.String.Regex...
+  
+  ...Full output truncated (118 lines hidden), use '-vv' to show
+- generated xml file: C:\Users\joshp\Desktop\Blast-Radius\exploratory\causal\verification\pygments-results-arms\screening\pr-3140\tests-only-targeted.xml -
+=========================== short test summary info ===========================
+FAILED tests/snippets/julia/test_rstrings.txt::
+============================== 1 failed in 0.25s ==============================

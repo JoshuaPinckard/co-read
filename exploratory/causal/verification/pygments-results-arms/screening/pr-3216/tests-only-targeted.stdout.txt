@@ -1,0 +1,26 @@
+============================= test session starts =============================
+platform win32 -- Python 3.11.9, pytest-8.4.2, pluggy-1.6.0
+rootdir: C:\Users\joshp\AppData\Local\Temp\blast-radius-pygments-causal-opbff12g\screen-pr-3216-tstuoy94\tests-only
+configfile: pyproject.toml
+collected 1 item
+
+tests\snippets\clojure\test_characters.txt F                             [100%]
+
+================================== FAILURES ===================================
+_________________ tests\snippets\clojure\test_characters.txt __________________
+The tokens produced by the "clojure" lexer differ from the expected ones in the file "tests\snippets\clojure\test_characters.txt".
+Run `tox -- tests\snippets --update-goldens` to update it.
+
+  
+  Skipping 303 identical leading characters in diff, use -v to show
+    space
+  - '\\space'     Literal.String.Char
+  ?     ----
+  + '\\s'         Literal.String.Char
+  ?      ++++...
+  
+  ...Full output truncated (46 lines hidden), use '-vv' to show
+- generated xml file: C:\Users\joshp\Desktop\Blast-Radius\exploratory\causal\verification\pygments-results-arms\screening\pr-3216\tests-only-targeted.xml -
+=========================== short test summary info ===========================
+FAILED tests/snippets/clojure/test_characters.txt::
+============================== 1 failed in 0.47s ==============================

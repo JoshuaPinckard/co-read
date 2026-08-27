@@ -1,0 +1,67 @@
+diff --git a/src/changes/changes.xml b/src/changes/changes.xml
+index 785a3b2866586dd590c7d3914774a698d332485d..28e89479a4f6772bae3c2ceb7322f9d56d097c27 100644
+--- a/src/changes/changes.xml
++++ b/src/changes/changes.xml
+@@ -22,6 +22,7 @@
+   <body>
+ 
+   <release version="3.5" date="tba" description="tba">
++    <action issue="LANG-1128" type="fix" dev="britter" due-to="jacktan1991">JsonToStringStyle doesn't handle chars and objects correctly</action>
+     <action issue="LANG-1119" type="add" dev="britter" due-to="Loic Guibert">Add rotate(string, int) method to StringUtils</action>
+     <action issue="LANG-1118" type="fix" dev="britter" due-to="Loic Guibert">StringUtils.repeat('z', -1) throws NegativeArraySizeException</action>
+     <action issue="LANG-1099" type="add" dev="britter" due-to="Adrian Ber">Add swap and shift operations for arrays to ArrayUtils</action>
+diff --git a/src/main/java/org/apache/commons/lang3/builder/ToStringStyle.java b/src/main/java/org/apache/commons/lang3/builder/ToStringStyle.java
+index 658556bfa09190b460b5bde74c2c7f69ebeab850..fbb40474decd141709a89b123932023fde7a48ef 100644
+--- a/src/main/java/org/apache/commons/lang3/builder/ToStringStyle.java
++++ b/src/main/java/org/apache/commons/lang3/builder/ToStringStyle.java
+@@ -2559,22 +2559,46 @@ public abstract class ToStringStyle implements Serializable {
+             super.append(buffer, fieldName, value, fullDetail);
+         }
+ 
++        @Override
++        protected void appendDetail(StringBuffer buffer, String fieldName, char value) {
++            appendValueAsString(buffer, String.valueOf(value));
++        }
++
+         @Override
+         protected void appendDetail(StringBuffer buffer, String fieldName, Object value) {
+ 
+             if (value == null) {
+-
+                 appendNullText(buffer, fieldName);
+                 return;
+             }
+ 
+-            if (value.getClass() == String.class) {
++            if (value instanceof String || value instanceof Character) {
++                appendValueAsString(buffer, value.toString());
++                return;
++            }
+ 
+-                appendValueAsString(buffer, (String)value);
++            if (value instanceof Number || value instanceof Boolean) {
++                buffer.append(value);
+                 return;
+             }
+ 
+-            buffer.append(value);
++            final String valueAsString = value.toString();
++            if (isJsonObject(valueAsString) || isJsonArray(valueAsString)) {
++                buffer.append(value);
++                return;
++            }
++
++            appendDetail(buffer, fieldName, valueAsString);
++        }
++
++        private boolean isJsonArray(String valueAsString) {
++            return valueAsString.startsWith(getArrayStart())
++                    && valueAsString.startsWith(getArrayEnd());
++        }
++
++        private boolean isJsonObject(String valueAsString) {
++            return valueAsString.startsWith(getContentStart())
++                    && valueAsString.endsWith(getContentEnd());
+         }
+ 
+         /**

@@ -1,0 +1,13 @@
+diff --git a/tests/test_imports.py b/tests/test_imports.py
+index 8e9a97df61c9e522ec1aeeccd9a565b043853282..268c6068802d9f6cd63cd2277fc4f594ed7aec3b 100644
+--- a/tests/test_imports.py
++++ b/tests/test_imports.py
+@@ -32,7 +32,7 @@ click.echo(json.dumps(rv))
+ ALLOWED_IMPORTS = set([
+     'weakref', 'os', 'struct', 'collections', 'sys', 'contextlib',
+     'functools', 'stat', 're', 'codecs', 'inspect', 'itertools', 'io',
+-    'threading', 'colorama', 'errno', 'fcntl', 'datetime'
++    'threading', 'colorama', 'errno', 'fcntl', 'datetime', 'pipes', 'shlex'
+ ])
+ 
+ if WIN:

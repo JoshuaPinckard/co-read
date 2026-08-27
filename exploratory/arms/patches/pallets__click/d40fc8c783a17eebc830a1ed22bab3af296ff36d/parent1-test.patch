@@ -1,0 +1,90 @@
+diff --git a/tests/test_basic.py b/tests/test_basic.py
+index 045f6085315d3212203eecb45801f6a1aef7ff0b..421ba4108b29716574fd32837b7fd05cc58d1b33 100644
+--- a/tests/test_basic.py
++++ b/tests/test_basic.py
+@@ -397,3 +397,47 @@ def test_evaluation_order(runner):
+         'normal1',
+         'missing',
+     ]
++
++
++def test_hidden_option(runner):
++    @click.command()
++    @click.option('--nope', hidden=True)
++    def cli(nope):
++        click.echo(nope)
++
++    result = runner.invoke(cli, ['--help'])
++    assert result.exit_code == 0
++    assert '--nope' not in result.output
++
++
++def test_hidden_command(runner):
++    @click.group()
++    def cli():
++        pass
++
++    @cli.command(hidden=True)
++    def nope():
++        pass
++
++    result = runner.invoke(cli, ['--help'])
++    assert result.exit_code == 0
++    assert 'nope' not in result.output
++
++
++def test_hidden_group(runner):
++    @click.group()
++    def cli():
++        pass
++
++    @cli.group(hidden=True)
++    def subgroup():
++        pass
++
++    @subgroup.command()
++    def nope():
++        pass
++
++    result = runner.invoke(cli, ['--help'])
++    assert result.exit_code == 0
++    assert 'subgroup' not in result.output
++    assert 'nope' not in result.output
+diff --git a/tests/test_termui.py b/tests/test_termui.py
+index a03a29786b564231b1d69f702b9fa9c3eeb7cb20..762163adb17d41cf410d9532b5434cc4f08a0638 100644
+--- a/tests/test_termui.py
++++ b/tests/test_termui.py
+@@ -12,3 +12,33 @@ def test_progressbar_strip_regression(runner, monkeypatch):
+ 
+     monkeypatch.setattr(click._termui_impl, 'isatty', lambda _: True)
+     assert label in runner.invoke(cli, []).output
++
++
++def test_progressbar_length_hint(runner, monkeypatch):
++    class Hinted(object):
++        def __init__(self, n):
++            self.items = list(range(n))
++
++        def __length_hint__(self):
++            return len(self.items)
++
++        def __iter__(self):
++            return self
++
++        def __next__(self):
++            if self.items:
++                return self.items.pop()
++            else:
++                raise StopIteration
++
++        next = __next__
++
++    @click.command()
++    def cli():
++        with click.progressbar(Hinted(10), label='test') as progress:
++            for thing in progress:
++                pass
++
++    monkeypatch.setattr(click._termui_impl, 'isatty', lambda _: True)
++    result = runner.invoke(cli, [])
++    assert result.exception is None

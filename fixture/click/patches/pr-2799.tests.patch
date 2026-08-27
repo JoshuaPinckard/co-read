@@ -1,0 +1,82 @@
+diff --git a/tests/test_testing.py b/tests/test_testing.py
+index e67b3a91159fc0865a966d97c63a6390f76262a0..8665701b28c4afccfbab795650d72f66ba0b800f 100644
+--- a/tests/test_testing.py
++++ b/tests/test_testing.py
+@@ -5,6 +5,7 @@ from io import BytesIO
+ import pytest
+ 
+ import click
++from click.exceptions import ClickException
+ from click.testing import CliRunner
+ 
+ 
+@@ -199,6 +200,26 @@ def test_with_color():
+     assert not result.exception
+ 
+ 
++def test_with_color_errors():
++    class CLIError(ClickException):
++        def format_message(self) -> str:
++            return click.style(self.message, fg="red")
++
++    @click.command()
++    def cli():
++        raise CLIError("Red error")
++
++    runner = CliRunner()
++
++    result = runner.invoke(cli)
++    assert result.output == "Error: Red error\n"
++    assert result.exception
++
++    result = runner.invoke(cli, color=True)
++    assert result.output == f"Error: {click.style('Red error', fg='red')}\n"
++    assert result.exception
++
++
+ def test_with_color_but_pause_not_blocking():
+     @click.command()
+     def cli():
+diff --git a/tests/test_utils.py b/tests/test_utils.py
+index b8b65e2956675bfffd9f46424607938a7e351623..2ab175bec203369562e9e955f63dcbb1e42cc567 100644
+--- a/tests/test_utils.py
++++ b/tests/test_utils.py
+@@ -36,9 +36,7 @@ def test_echo(runner):
+ 
+ 
+ def test_echo_custom_file():
+-    import io
+-
+-    f = io.StringIO()
++    f = StringIO()
+     click.echo("hello", file=f)
+     assert f.getvalue() == "hello\n"
+ 
+@@ -209,7 +207,6 @@ def test_echo_via_pager(monkeypatch, capfd, cat, test):
+     assert out == expected_output
+ 
+ 
+-@pytest.mark.skipif(WIN, reason="Test does not make sense on Windows.")
+ def test_echo_color_flag(monkeypatch, capfd):
+     isatty = True
+     monkeypatch.setattr(click._compat, "isatty", lambda x: isatty)
+@@ -232,9 +229,16 @@ def test_echo_color_flag(monkeypatch, capfd):
+     assert out == f"{styled_text}\n"
+ 
+     isatty = False
+-    click.echo(styled_text)
+-    out, err = capfd.readouterr()
+-    assert out == f"{text}\n"
++    # Faking isatty() is not enough on Windows;
++    # the implementation caches the colorama wrapped stream
++    # so we have to use a new stream for each test
++    stream = StringIO()
++    click.echo(styled_text, file=stream)
++    assert stream.getvalue() == f"{text}\n"
++
++    stream = StringIO()
++    click.echo(styled_text, file=stream, color=True)
++    assert stream.getvalue() == f"{styled_text}\n"
+ 
+ 
+ def test_prompt_cast_default(capfd, monkeypatch):

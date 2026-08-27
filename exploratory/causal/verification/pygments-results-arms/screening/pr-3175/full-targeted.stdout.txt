@@ -1,0 +1,10 @@
+============================= test session starts =============================
+platform win32 -- Python 3.11.9, pytest-8.4.2, pluggy-1.6.0
+rootdir: C:\Users\joshp\AppData\Local\Temp\blast-radius-pygments-causal-opbff12g\screen-pr-3175-mv20uv5n\full
+configfile: pyproject.toml
+collected 4 items
+
+tests\test_latex_formatter.py .s..                                       [100%]
+
+- generated xml file: C:\Users\joshp\Desktop\Blast-Radius\exploratory\causal\verification\pygments-results-arms\screening\pr-3175\full-targeted.xml -
+======================== 3 passed, 1 skipped in 0.12s =========================

@@ -1,0 +1,329 @@
+# Pre-stated hypotheses, committed before any confirmatory run
+
+Status: **APPROVED by the PI, 2026-08-25, as amended at pre-approval review
+(commit `df41955`).** The approval covers the six propositions, the derived
+instrument hypotheses with their timing disclosures, the arms-ladder design
+with its realism note, and the four preconditions including the canary build
+cost. Confirmatory runs are licensed only after H5's cell sizes, metrics,
+and exclusion rule are fixed with the PI and committed as an amendment here;
+that sizing amendment must precede the first draw. (Rule transferred from
+LEAN-Bench `HYPOTHESES.md`, which enforces the same precondition.)
+
+Everything to date lives under `exploratory/` and stays there. Exploratory
+numbers are cited as sources of predictions, never as confirmations. A
+hypothesis whose confirmatory result contradicts its exploratory source is
+reported with both numbers side by side.
+
+**Provenance of authorship.** The propositions in section A were stated by the
+PI in the working conversation *before* the corresponding measurements landed
+on disk; the conversation record is the timestamp. Their formalization into
+testable predictions (this file) was written afterward, partly with results
+already visible, each entry says which. Section B holds derived instrument
+hypotheses; section C is the PI's experimental design.
+
+---
+
+## A. The PI's propositions
+
+P1. **Byte-granularity claiming works.** Proposed against a named expert
+    doubt (the PI's professor questioned whether byte-level claims are
+    workable). Stated before the mining and semantic-merge results existed.
+    Operationalized as three measurable parts:
+    (a) file claims over-block, most same-file concurrent edits do not
+    textually conflict (exploratory: 69.4% on Click's full census);
+    (b) real conflicts genuinely intersect at byte level, so fine claims
+    catch most of what matters (exploratory: 81.7% strict intersection,
+    miss-population 11.1%);
+    (c) the residue, byte-disjoint edits that are wrong together, is
+    caught by a test-verified integration gate, not by any claim granularity
+    (exploratory: 0/44 clean merges broke; thin exposure, gate retained).
+    Confirmatory test: (a) per repository with whole-merge cluster bootstrap
+    on unmined repositories or the unmeasured older windows; (c) on Pygments
+    and the 354 older Click clean merges, exact binomial per repo.
+    Standing conditions the PI accepts: ranges are content-anchored, and the
+    granularity claim is published as conditional on verified integration.
+
+P2. **Isolation plus deliberate integration ("harvesting") beats mid-flight
+    coordination.** The PI rejected the abort-and-retry frame as archaic and
+    identified the replacement as the harvest model his production system
+    already operates: agents work isolated copies; results integrate
+    deliberately, under tests, with complete information. Primary metric,
+    fixed here so the comparison cannot deadlock: **correct completions**
+    (tasks passing their oracle) per agent-minute and per wall-clock hour;
+    correctness violations are reported beside the rate, never traded off
+    inside a composite score. Prediction: the harvest arm exceeds
+    shared-tree arms on the primary metric, and redone-or-discarded effort
+    is lower under isolation. The measured divergence-conflict curve (12/12
+    repositories monotone) supplies the staleness bound that makes lazy
+    integration safe rather than sloppy.
+
+P3. **A single-source contract layer with a coordinator and bounded retry
+    prevents livelock.** The PI's design: agents do not own their tools, an
+    API layer mediates; subagents receive contracts from a single source; a
+    task failing after three attempts is failed and reassigned, not looped.
+    Operational definition, since "unbounded" is unobservable in a finite
+    run: a **livelock candidate** is any region whose cross-agent
+    alternation count trips the escalation budget. Prediction: in the
+    full-system arm, every livelock candidate terminates in a visible
+    bounded escalation or failure, none reaches the run's wall-clock cap
+    still cycling and unescalated. Sharpened by the wild contradictory case:
+    mined sites whose two sides have mutually unsatisfiable tests must
+    surface as escalations at contract issuance or bounded failures, never
+    as silent oscillation. The professor's adversarial-agents question is
+    the origin of this test.
+
+P4. **Claims are mechanical, never agent-declared.** The PI's observation
+    ("the agents aren't the ones claiming, it's mechanical"), the claim
+    record derives from mediated calls, so it is a record, not a promise.
+    Measurable form: under the full system, attribution of contested writes
+    from the event log alone is **100%**, every contested write resolves to
+    a unique actor with no recourse to reports, against the measured 69.2%
+    (9/13; sensitivity 66.7–70.0%) when ownership rests on agent
+    self-report. Any contested write the log cannot attribute falsifies P4
+    outright; the design property ("structurally impossible") is claimed
+    only as far as this observable reaches.
+
+P5. **Stateless one-shot dispatch removes adaptive adversarial behavior.**
+    The PI's proposition: each task goes to a brand-new agent with no
+    memory, so nothing can learn to over-claim, game the mediator, or hold a
+    grudge. By-construction claim with one measurable consequence and one
+    accepted limit. Consequence, **a weak check, not a test**: agent
+    behavior across successive draws in a cell is exchangeable, no
+    position-in-sequence drift (order statistics across draw index). Small
+    cells can only detect gross drift, and provider-side effects could break
+    exchangeability benignly, so a pass is consistent with the claim rather
+    than proof of it, and a fail triggers diagnosis before it counts against
+    P5. Accepted limit, stated by the study:
+    contradictory *contracts* reproduce conflict through fresh agents
+    indefinitely, persistence lives in the contracts, so P3's issuance
+    screen, not statelessness, carries that case.
+
+P6. **Human repository history understates agent contention; the curve
+    transfers, the operating point does not.** The PI's critique of the
+    mining result (1.66% base rate): the repos are all human work, already
+    socially coordinated before anything reached git. Prediction, two parts:
+    (a) agent arms on re-enacted sites show contention above the human base
+    rate at matched divergence; the PI's own production burst (11 adjudicated
+    collisions in ~28 concurrent tasks, one week, one tree) is the
+    exploratory anchor; (b) a bridge model, the human-measured
+    divergence-conflict curve plus agent tempo and fleet size, predicts
+    each arm's realized collision rate. Tolerance, fixed now rather than
+    deferred: the prediction must fall inside the arm's 95%
+    cluster-bootstrap interval, or within a factor of two of the point rate
+    where the interval is degenerate (zero or near-zero counts). If (b)
+    fails, the transfer question is answered negatively and that is the
+    finding.
+
+---
+
+## B. Derived instrument hypotheses (mined history; no agents)
+
+H2. **Clean textual merges are usually semantically sound, but not always.**
+    Prediction, interval-based so a zero count is scoreable: the exact 95%
+    binomial **upper bound** on the silent-breakage rate is below 0.10 per
+    gated repository. The "but not always" half is a program-level claim,
+    at least one stable breakage observed somewhere across all evaluated
+    repositories and windows; if none is ever observed, that half is
+    reported unsupported at the achieved upper bounds, not quietly dropped.
+    **Timing disclosure:** the Click result (0/44) landed on disk before
+    this hypothesis was first drafted and was unread at drafting; by
+    timestamps it is not pre-stated for Click. It remains pre-stated for
+    Pygments, the 354 older Click clean merges, and any further repository.
+
+H3. **Conflict probability rises with divergence from the merge base.**
+    Pre-stated properly: drafted and committed (`34e8b64`) before
+    `MINING.md` landed. Scored on the mined corpus: supported, 12/12
+    informative repositories positive, within-repo AUC 0.815 [0.735, 0.885]
+    on commit exposure, monotone in all three exposure measures. Remains
+    open on any repository outside the mined sixteen.
+
+H4. **Real conflicts genuinely intersect at byte level.** Pre-stated
+    properly (same commit). Scored: supported, 81.7% strict intersection
+    among decidable conflicted merges; the fine-claiming miss-population is
+    11.1% same-file-disjoint. The quantified minority is the load the
+    integration gate must carry, feeding P1(c).
+
+---
+
+## C. The arms ladder, the PI's experimental design
+
+The design as the PI specified it: identify situations in real repositories
+where conflicts occurred at high rates, deterministically; put agents into
+those situations with the tasks that actually collided; measure what happens
+with no coordination, then with a coordinator, then with contracts and the
+full system.
+
+Arms: sequential → unmediated concurrent → file locks → coordinator →
+contracts + mechanical claims + harvest. Sequential is the correctness
+ceiling and proves concurrency bought anything; file locks are the field's
+current answer and must be run to be beaten. Population: the 107 mined
+candidate sites with tests on both sides (Click 24, commons-lang 19,
+terraform 12, ansible 10, others per `MINING.md`), narrowed to sites where
+the fixture gate holds. **Realism note, recorded before sizing:** the
+runner machinery (AST perturbation, pytest oracles, determinism gates) is
+Python-only today, so the immediately runnable population is roughly
+Click's 24 plus Pygments' 3, not 107. Ansible's suite is unlikely to pass
+a determinism gate at all. The choice at sizing time is explicit: run the
+arms on the Python subset and keep the cross-language claim mined-only, or
+build per-language runners (Go, Java) first as their own gated
+instruments. Sites with mutually unsatisfiable tests are the
+contradictory-task subset for P3.
+
+**Sizing decisions fixed with the PI, 2026-08-25:**
+
+- **Scope: build the Go and Java runners before the arms run.** The PI chose
+  the largest population over the fastest start. Candidate sites before
+  validation: Click 24, commons-lang 19 (Java), terraform 12 (Go), hugo 3
+  (Go), Pygments 2, ~60. Each runner is its own gated instrument: a
+  perturbation operator for its language, focal-test oracles, and a
+  five-run determinism gate at each site's base before that site is
+  eligible. A site failing its gate is a recorded rejection.
+- **Draws: 5 per cell** (site × arm), two agents per draw, all five arms.
+- **Phases:** Phase 0, site validation (each side's test patch must
+  independently discriminate its source change from the shared base),
+  runner builds, shim with event log and the PI's N=3 escalation budget,
+  canary build and calibration. Phase 1, pilot, 6 sites × 5 arms × 2
+  draws, with a stop rule: if unmediated concurrency produces no collisions,
+  the sites are not exercising the phenomenon and the main phase does not
+  start until that is understood. Phase 2, all validated sites × 5 arms ×
+  5 draws.
+- **Metrics as fixed in P2/P3/P4/P6:** correct completions per agent-minute
+  and per wall-clock (primary); realized collision rate at byte and file
+  granularity over identical events; redone effort; escalation count and
+  disposition; log-only attribution rate; livelock candidates.
+- The surviving-site count is a measured input, not a choice; the final
+  cell table is committed here as a further amendment when validation and
+  the runner gates report, before the first pilot draw.
+
+**Amendment 2, APPROVED by the PI 2026-08-26 ("1) yes 3) ok"), from
+external review the PI forwarded. The PI also ruled the study is one paper:
+the arms ladder completes it rather than splitting into a mining paper and
+an agents paper. This amendment precedes the first draw.**
+
+- **A sixth arm: optimistic isolation.** Every agent works its own worktree
+  with no coordination, results merge at integration, the answer key
+  validates, and losers are retried. This is the deployed status quo
+  (copy-modify-merge with agent retries) and the arm the thesis must beat,
+  not just file locks. The reviewer is right that its absence was
+  conspicuous. Arms become: sequential, unmediated shared tree, optimistic
+  isolation, file locks, coordinator, full system.
+- **Wasted compute is a pre-specified metric**: retried agent-minutes and
+  discarded-diff agent-minutes, reported per arm beside correct completions.
+  This is the axis where optimism should lose and claims should win, and it
+  is specified now so it cannot become a post hoc rescue.
+- **Site strata are pre-specified**: byte-intersecting, same-file-disjoint,
+  and contradictory-task, assigned from the mining classification before any
+  draw. If the disjoint stratum is single digits across the 19 eligible
+  sites, more disjoint sites are mined before phase 2 rather than after.
+
+  **Stratum correction, 2026-08-26, before any draw.** The contingency fired
+  and its result corrected the specification. The 19 sites contain 0
+  same-file-disjoint merges, and mining for more found only 3 candidates in
+  gated repositories, all rejected on their runner gates (evidence:
+  `exploratory/arms/DISJOINT-SITES.md`). The stratum was also the wrong
+  object. Byte-disjoint *conflicted* merges test whether byte claims are
+  more permissive than git's line merge, a narrow question the mining
+  already answers descriptively at 11.1%. The under-blocking safety question
+  needs merges that were **clean with same-file concurrency**, where a
+  byte-granular claim would have permitted both writes and the question is
+  whether the integrated result is correct. That population is large (475 of
+  684 same-file concurrent units in Click alone). The third stratum is
+  therefore renamed **permissive** and defined as clean same-file-concurrent
+  sites carrying a recorded base-coordinate byte-overlap classification. The
+  strict-disjoint result stands as a recorded negative, and boundary-only
+  Click sites (2 validated) remain available as a labeled sensitivity class.
+  No draw has run under either definition.
+
+  **Permissive mining result, 2026-08-26, before any draw
+  (`exploratory/arms/PERMISSIVE-SITES.md`).** 6 permissive sites validated
+  of 14 attempted from a 77-candidate both-tests census (all 6 in Click,
+  all strictly byte-disjoint on every common file). Integrated sources are
+  jointly satisfiable in 5 of 6. The sixth is a **wild counterexample for
+  P1(c)**: byte-disjoint on all common files, git merges cleanly, a
+  byte-exclusive claim would permit every write, and the integrated sources
+  fail one side's focal test in both reruns. Focal-scoped; whether the
+  historical recorded merge shows the same failure is an open check. P1(c)'s
+  gate condition is therefore demonstrated by instance, not only priced by
+  rate, and the arms population becomes 25 sites (16 intersecting, 2
+  boundary, 1 unclassifiable, 6 permissive of which 1 is also
+  contradictory at integration). All permissive sites are Click, a stated
+  single-repository limit of that stratum.
+- **Environment pinning and interleaving**: subject model identifiers and
+  CLI versions are recorded per draw, and arm order is randomized and
+  interleaved across sites so provider-side model drift spreads across arms
+  instead of correlating with one. Analysis workers already carry the
+  double-run discipline, and subjects now carry schedule interleaving.
+- **A test-gate sensitivity instrument is preregistered beside the arms**:
+  inject known semantic breaks that merge cleanly (reusing the perturbation
+  operator on clean-merge pairs) and measure the fraction the repository
+  suite catches. The safety story of every winning arm is "tests stand
+  behind integration" and that wall currently has no measured load rating.
+  Prediction: catch rate below 1.0 and above 0.5, stated before measurement.
+- **P6 is restated in changed lines**: the transfer claim rides the
+  lines-of-divergence curve (AUC 0.801) rather than commits (0.815), because
+  commit counts are a human workflow artifact that agent populations will
+  not preserve, while changed-line exposure plausibly survives the
+  population shift. Commits and time remain reported.
+
+**Amendment 3, the preregistered transfer prediction. Drafted 2026-08-26
+before any draw, from `exploratory/models/HAZARD.md` and its frozen
+instrument. Pending PI approval.**
+
+The P6 transfer claim becomes a number. The conflict hazard fitted on 23,428
+human merges is `logit(p) = -5.955 + 0.234 * log(1 + combined changed
+lines)`, slope 95% [0.115, 0.353] excluding zero, reproducing the mined bin
+rates. Pushing the measured agent write-size distribution through it:
+
+- p50 task pair (18 combined lines): **0.51%** [0.19%, 1.38%]
+- p90 task pair (112 combined lines): **0.78%** [0.31%, 1.93%]
+- distributional mean: 0.62% provisional, sharp range [0.481%, 0.707%]
+
+**Preregistered prediction.** On task pairs not selected for historical
+conflict, the unmediated arm's realized textual collision rate falls within
+**[0.2%, 2.0%]**, the union of cluster intervals across that exposure range.
+Above 2.0% falsifies pure exposure transfer and indicates agent-specific
+concentration beyond size. Below 0.2% indicates agents avoid collision
+beyond what exposure predicts. Either miss is a finding and is reported with
+both numbers side by side.
+
+**Where the prediction is tested, and where it is not.** The 19 sites are
+conflict-selected: mean fitted hazard 1.155% against a realized 100%, an
+86.6x concentration, so they measure coordination rather than transfer. The
+**permissive stratum** (Amendment 2's correction: clean merges with same-file
+concurrency) is selected for concurrency and not for conflict, and its
+historical outcome was clean. It is therefore the transfer test, at no
+additional draws. Its per-site fitted hazards are computed before its first
+draw and recorded beside the realized rate. On conflict-selected sites the
+preregistered claim remains only the ordering: realized above the
+exposure-only prediction.
+
+**Unit caveat, stated now rather than after.** The agent exposure input is
+per-write aggregate claim lines, while the human exposure is a branch diff,
+so the prediction is a lower bound on task-level exposure and therefore on
+collision probability. The interval above is widened to reflect this and no
+narrower claim is made.
+
+**Lease correction, computed 2026-08-26
+(`exploratory/models/LEASE-CORRECTION.md`).** The instrument's L\* of 26
+seconds assumed a second agent always waiting. With contention probability p
+as an explicit factor the objective is bimodal with breakeven p\* = 0.023:
+below it the optimum is 58 to 60 minutes (pinned by the read-to-write p90 of
+58.66 minutes), above it short leases win. The measured contention bracket
+[0.01, 0.10] straddles p\*, so no single constant is correct and the rule
+that ships is per-key adaptive: 60-minute renewable lease while observed
+live multiplicity on the region is 1, demoting toward one minute when a
+second reader or claim arrives. p is observed per key by the index itself,
+never assumed globally.
+
+Preconditions for any arms run, non-negotiable:
+1. This file approved and committed first.
+2. Agent-subject runs meet the LEAN-Bench clean-room bar: environment
+   manifest, same-day calibrated planted-marker canary, certificates beside
+   the data. Analysis workers are instruments and carry the lighter
+   disclosure in `prompts/README.md`; subjects carry the full bar. Noted
+   cost, accepted at approval: the canary instrument for the arms harness
+   does not exist yet and must be built and calibrated before the first
+   draw.
+3. Prompts frozen in `prompts/` with hashes before launch.
+4. The fairness rule: an agent that never finished is excluded and its slot
+   redrawn; a finished-but-bad result is data. Everything stays on disk.

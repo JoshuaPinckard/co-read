@@ -1,0 +1,31 @@
+Three computations that turn measured distributions into preregisterable numbers. All inputs exist locally: corpus/conflicts/*.jsonl and _all_merges (per-merge conflict status, per-side diff sizes in lines, changed byte spans, file sizes in result blobs), exploratory/build-params/parameters.json (agent edit-region and concurrency distributions), exploratory/arms/sites.json + REANALYSIS.md (the 19 arms sites and their mined rows). No new mining, no agents, no network.
+
+## 1. The hazard fit and the preregistered prediction (feeds a prereg amendment - highest care)
+
+Fit conflict probability as a function of exposure in combined changed lines (the population-shift-robust variable) on the 23,428 evaluable merges with countable text lines. Model choice is yours but must be stated before fitting: a monotone fit (isotonic, or logistic in log-exposure) with repository-cluster uncertainty. Report the fitted curve at the observed bin midpoints against MINING.md's binned rates as a sanity check.
+
+Then compute TWO predictions, each precisely defined:
+
+(a) EXPOSURE-ONLY PREDICTION: the probability that two concurrent agent tasks textually conflict, taking agent per-task diff sizes from the transcript corpus (parameters.json: per-write aggregate claim lines, and state which statistic you use - report the prediction at p50, p90, and the mean of the distribution pushed through the curve, all three). This is the number the hazard-transfer hypothesis (P6) predicts for UNSELECTED concurrent work.
+
+(b) SITE-CONDITIONED CONTEXT: for each of the 19 arms sites, the historical two sides' combined line exposure and the fitted hazard at that exposure. The historical pairs all conflicted (the sites were selected as conflicts), so the mean fitted hazard across sites vs the realized 100% measures how much site selection concentrates conflict beyond exposure. State this explicitly: the arms' realized collision rate is predicted to land ABOVE (a) because sites are selected, and the preregistered quantity for the ladder is (a) for the unmediated arm's collision rate on FUTURE unselected tasks, while for the selected sites the preregistered claim is only the ORDERING: realized rate above the exposure-only prediction at agent diff sizes. Do not claim more than the model can carry.
+
+Report every number with its inputs so the amendment can quote them: the fitted curve parameters, the three exposure-only predictions, the per-site hazards, and the caveats.
+
+## 2. The null collision model (feeds the paper)
+
+Under a uniform-placement null, two edits of w1 and w2 bytes in a file of N bytes are byte-disjoint with probability approximately exp(-w1*w2/N) (birthday structure; state your exact null including edit contiguity assumptions - a contiguous-span null differs from a scattered-hunks null, compute the contiguous one and say so). Using the measured span distribution (handwritten conflicted spans, and same-file concurrent edit sizes from the mined side diffs) and result-blob file sizes:
+
+(a) The predicted over-block rate of file-granularity claiming under the null (probability two same-file edits do NOT overlap), vs the measured 69.4% Click census value. The deviation measures edit clustering.
+(b) The over-block curve as a function of claim granularity g (claim = edit span padded to g bytes): compute the null curve at g in {exact span, 64B, 256B, 1KB, 4KB, whole file} so a designer can see where the knob sits. Where the data supports it, compute the empirical analog on Click's same-file concurrent pairs (their actual base-coordinate spans are in the mined rows) at the same granularities. The empirical curve is the finding, the null is the reference.
+(c) A clustering statistic: the ratio of observed same-file-overlap probability to the null's, with its denominators.
+
+## 3. The lease rule (feeds the buildout)
+
+Replace the eyeballed 1-hour lease with the quantile rule: lease L minimizes FalseExpiry(L) * ReacquisitionCost + ExpectedDanglingTime(L) * BlockingCost, where FalseExpiry(L) is the fraction of measured read-to-write intervals exceeding L (the 405-pair distribution in parameters.json), ExpectedDanglingTime(L) is the expected time a claim outlives its last use under L given the linger distribution, and the two costs are stated as parameters with a default ratio derived from measured values (re-acquisition approximates agent relaunch overhead, blocking approximates one agent-minute per waiting minute; state both and the sensitivity of L* to the ratio across 1:10 to 10:1). Report L* and the curve, not just the point.
+
+## Output
+
+exploratory/models/HAZARD.md with the three sections, every number beside its inputs and assumptions, a stated-before-fitting model choice, "Claims that could NOT be verified", "What would change this verdict", per-claim confidence with reasons. Machine-readable exploratory/models/hazard.json with the fitted curve, the three predictions, the granularity curves, and L*. Scripts under instruments/models/.
+
+The null model will be wrong. The deviation is the finding. Do not tune the null to fit.

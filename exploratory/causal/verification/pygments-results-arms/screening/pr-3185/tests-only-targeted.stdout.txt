@@ -1,0 +1,59 @@
+============================= test session starts =============================
+platform win32 -- Python 3.11.9, pytest-8.4.2, pluggy-1.6.0
+rootdir: C:\Users\joshp\AppData\Local\Temp\blast-radius-pygments-causal-opbff12g\screen-pr-3185-y5dru_zc\tests-only
+configfile: pyproject.toml
+collected 23 items
+
+tests\test_html_formatter.py FF.....................                     [100%]
+
+================================== FAILURES ===================================
+_____________________________ test_correct_output _____________________________
+
+    def test_correct_output():
+        hfmt = HtmlFormatter(nowrap=True)
+        houtfile = StringIO()
+        hfmt.format(tokensource, houtfile)
+    
+        nfmt = NullFormatter()
+        noutfile = StringIO()
+        nfmt.format(tokensource, noutfile)
+    
+        stripped_html = re.sub('<.*?>', '', houtfile.getvalue())
+        # The formatter escapes token values as element text content, where the
+        # quote characters do not need escaping (quote=False), so compare against
+        # text escaped the same way.
+        escaped_text = html_escape(noutfile.getvalue(), quote=False)
+>       assert stripped_html == escaped_text
+E       assert '&quot;&quot;...#x27;&#x27;\n' == '"""\n    Pyg...ans == \'\'\n'
+E         
+E         - """
+E         + &quot;&quot;&quot;
+E               Pygments HTML formatter tests
+E               ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+E           
+E               :copyright: Copyright 2006-present by the Pygments team, see AUTHORS....
+E         
+E         ...Full output truncated (644 lines hidden), use '-vv' to show
+
+tests\test_html_formatter.py:44: AssertionError
+__________________ test_quotes_in_token_text_are_not_escaped __________________
+
+    def test_quotes_in_token_text_are_not_escaped():
+        # Token values are emitted as element text content, so " and ' are left
+        # as-is (html.escape(..., quote=False)); only &, < and > are escaped.
+        # This documents the behaviour introduced in PR #3185.
+        fmt = HtmlFormatter(nowrap=True)
+        outfile = StringIO()
+        fmt.format([(Token.Text, 'a "b" \'c\' & <d>\n')], outfile)
+        output = outfile.getvalue()
+    
+>       assert '"b"' in output       # double quotes stay literal
+        ^^^^^^^^^^^^^^^^^^^^^^
+E       assert '"b"' in 'a &quot;b&quot; &#x27;c&#x27; &amp; &lt;d&gt;\n'
+
+tests\test_html_formatter.py:56: AssertionError
+- generated xml file: C:\Users\joshp\Desktop\Blast-Radius\exploratory\causal\verification\pygments-results-arms\screening\pr-3185\tests-only-targeted.xml -
+=========================== short test summary info ===========================
+FAILED tests/test_html_formatter.py::test_correct_output - assert '&quot;&quo...
+FAILED tests/test_html_formatter.py::test_quotes_in_token_text_are_not_escaped
+======================== 2 failed, 21 passed in 0.40s =========================

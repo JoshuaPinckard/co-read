@@ -28,11 +28,16 @@ tree.
 Discharged 2026-08-23: repository initialised, initial commit taken, brief frozen
 to `brief/BRIEF-v1-2026-08-23.md` with sha256 recorded in `brief/FREEZE.md`.
 
-Outstanding: no remote. The PI has directed this project to the `joshuapinckard`
-GitHub account rather than the ToolsEnabled organisation. `gh` is not installed
-on this machine and the ToolsEnabled GitHub tooling authenticates as the company,
-so the remote must be created and wired by the owner. **Until that is done the
-evidence base exists on exactly one disk.** This is a live Gate 0 defect.
+Remote discharged 2026-08-24: `origin` is `github.com/JoshuaPinckard/co-read`
+under the personal account as directed; `public` is the curated branch, `main`
+the full record. Residual defect, narrower than before: commits queue behind
+the index lock while workers run, so the newest results can exist on one disk
+for hours at a time. Push at every lock-free opportunity.
+
+**Prompt freeze (standing rule, added 2026-08-24).** Every worker prompt is
+frozen to `prompts/` with a SHA-256 before or at launch. The first wave's
+prompts were lost with a session scratchpad — a real Gate 0 breach, disclosed
+in `prompts/README.md` — which is why this is now a rule rather than a habit.
 
 ## Gate 1 — fix known-wrong things, zero model calls
 
@@ -108,6 +113,43 @@ rationed.
 **Prioritisation rule:** spend the marginal evaluation on the axis that attacks
 the main validity threat, not on more of the same. Here that means
 cross-language generalisation before more JavaScript repositories.
+
+**Confirmatory precondition (added 2026-08-24, transferred from LEAN-Bench).**
+No confirmatory run until `HYPOTHESES.md` is PI-approved and its commit
+precedes the first draw. Everything before that stays under `exploratory/` and
+is cited as the source of predictions, never as their confirmation.
+
+**Cloud transport policy (added 2026-08-26, after the PI's challenge).** The
+engine's cloud routing was itself under concurrent modification during this
+study: at the audit snapshot its freshness gate was an uncommitted
+working-tree edit, 33 dirty paths sat on or near the launch seams, and the
+MCP server serving launches is the live checkout. Consequences, standing:
+
+1. Per-launch transport state for launches before this date is unknown and,
+   for the dirty components, unrecoverable. Disclosed, not repaired.
+2. Cloud results are consumed only through mechanical verification —
+   declared tree hashes, pytest counts, label schemas — never through worker
+   narrative alone, with the transport caveat attached at ingestion.
+3. Future research launches either bypass the engine routing (direct
+   provider CLI, pinned and recorded) or stamp engine HEAD plus a status
+   digest at launch. Every cloud prompt embeds its own SHA-256 for the
+   worker to echo into its report, and opens by inventorying and hashing
+   every instruction file visible in its container.
+4. The engine seam audit is snapshot evidence (HEAD `42ccc28` plus the
+   recorded dirty set, 2026-08-25T14:11Z); every buildout seam is
+   re-verified at build time.
+5. Cloud is for mechanical label sweeps over hash-gated fixtures only.
+   Subjects never run there: no event stream, no shared tree, no
+   controllable instruction surface.
+
+**Clean-room bar for agent subjects (added 2026-08-24).** When agents are the
+thing being measured — the arms ladder — the LEAN-Bench clean-room rule
+applies: environment manifest, same-day calibrated planted-marker canary,
+certificates beside the data. The Codex CLI reads instruction files from
+exactly its home and working directories (channel forensics, LEAN-Bench
+cleanroom 2026-08-21); both locations are recorded per run. Analysis workers
+are instruments, not subjects, and carry the lighter standing disclosure in
+`prompts/README.md`.
 
 ---
 

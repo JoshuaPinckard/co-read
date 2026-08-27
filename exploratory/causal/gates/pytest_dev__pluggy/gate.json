@@ -1,0 +1,4568 @@
+{
+  "baseline": {
+    "head": "e382e72789f8d791991c489d4322aa04e660b952",
+    "head_tree": "cc9553c49c8ad2b31e1c33be6771827f0d2db138",
+    "index_tree": "cc9553c49c8ad2b31e1c33be6771827f0d2db138",
+    "tracked_diff_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "tracked_status": ""
+  },
+  "completed_at_utc": "2026-08-24T13:46:39.181+00:00",
+  "identical_normalized_results": true,
+  "measurement": "posture-repository-eligibility-gate",
+  "normalized_signatures": [
+    "eba98a00e040526d58363c22d6796008e330785f78269ebb51bf99b0848f18b2",
+    "eba98a00e040526d58363c22d6796008e330785f78269ebb51bf99b0848f18b2",
+    "eba98a00e040526d58363c22d6796008e330785f78269ebb51bf99b0848f18b2",
+    "eba98a00e040526d58363c22d6796008e330785f78269ebb51bf99b0848f18b2",
+    "eba98a00e040526d58363c22d6796008e330785f78269ebb51bf99b0848f18b2"
+  ],
+  "protocol": {
+    "determinism_signature": "sorted JUnit testcase (classname, name, outcome, failure/error type or message)",
+    "environment": {
+      "PYTHONDONTWRITEBYTECODE": "1",
+      "PYTHONPATH": "C:\\Users\\joshp\\Desktop\\Blast-Radius\\exploratory\\causal\\repositories\\pytest-dev-pluggy\\src",
+      "platform": "Windows-10-10.0.26200-SP0",
+      "python_executable": "C:\\Users\\joshp\\Desktop\\Blast-Radius\\exploratory\\causal\\envs\\pluggy\\Scripts\\python.exe",
+      "python_version": "3.11.9"
+    },
+    "required_runs": 5,
+    "runtime_ceiling_seconds": 120.0,
+    "timeout_seconds": 150.0
+  },
+  "repository": "C:\\Users\\joshp\\Desktop\\Blast-Radius\\exploratory\\causal\\repositories\\pytest-dev-pluggy",
+  "repository_name": "pytest_dev__pluggy",
+  "runs": [
+    {
+      "after": {
+        "head": "e382e72789f8d791991c489d4322aa04e660b952",
+        "head_tree": "cc9553c49c8ad2b31e1c33be6771827f0d2db138",
+        "index_tree": "cc9553c49c8ad2b31e1c33be6771827f0d2db138",
+        "tracked_diff_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "tracked_status": ""
+      },
+      "before": {
+        "head": "e382e72789f8d791991c489d4322aa04e660b952",
+        "head_tree": "cc9553c49c8ad2b31e1c33be6771827f0d2db138",
+        "index_tree": "cc9553c49c8ad2b31e1c33be6771827f0d2db138",
+        "tracked_diff_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "tracked_status": ""
+      },
+      "command": [
+        "C:\\Users\\joshp\\Desktop\\Blast-Radius\\exploratory\\causal\\envs\\pluggy\\Scripts\\python.exe",
+        "-m",
+        "pytest",
+        "--junitxml=C:\\Users\\joshp\\Desktop\\Blast-Radius\\exploratory\\causal\\gates\\pytest_dev__pluggy\\run-1.xml"
+      ],
+      "completed_at_utc": "2026-08-24T13:46:20.006+00:00",
+      "elapsed_seconds": 2.0532999000279233,
+      "normalized": {
+        "case_count": 144,
+        "cases": [
+          {
+            "classname": "testing.test_details",
+            "detail": null,
+            "name": "test_dist_facade_identity_equality_and_hash",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_details",
+            "detail": null,
+            "name": "test_dist_facade_list_attributes",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_details",
+            "detail": null,
+            "name": "test_dist_facade_project_name_and_delegation",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_details",
+            "detail": null,
+            "name": "test_dunder_getattr_missing_raises",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_details",
+            "detail": null,
+            "name": "test_dunder_version",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_details",
+            "detail": null,
+            "name": "test_hook_nonspec_call",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_details",
+            "detail": null,
+            "name": "test_hookimpl_disallow_invalid_combination",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_details",
+            "detail": null,
+            "name": "test_not_all_arguments_are_provided_issues_a_warning",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_details",
+            "detail": null,
+            "name": "test_parse_hookimpl_override",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_details",
+            "detail": null,
+            "name": "test_plugin_getattr_raises_errors",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_details",
+            "detail": null,
+            "name": "test_repr",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_details",
+            "detail": null,
+            "name": "test_warn_when_deprecated_args_specified",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_details",
+            "detail": null,
+            "name": "test_warn_when_deprecated_specified",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_details",
+            "detail": null,
+            "name": "test_wrapper_runtimeerror_passtrough",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_helpers",
+            "detail": null,
+            "name": "test_formatdef",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_helpers",
+            "detail": null,
+            "name": "test_varnames",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_helpers",
+            "detail": null,
+            "name": "test_varnames_bound_method_from_module_function",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_helpers",
+            "detail": null,
+            "name": "test_varnames_class",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_helpers",
+            "detail": null,
+            "name": "test_varnames_classmethod",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_helpers",
+            "detail": null,
+            "name": "test_varnames_decorator",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_helpers",
+            "detail": null,
+            "name": "test_varnames_default",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_helpers",
+            "detail": null,
+            "name": "test_varnames_hookspec_without_self",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_helpers",
+            "detail": null,
+            "name": "test_varnames_keyword_only",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_helpers",
+            "detail": null,
+            "name": "test_varnames_legacy_noself_no_warn_with_self",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_helpers",
+            "detail": null,
+            "name": "test_varnames_legacy_noself_suppressed_for_timeout_hooks",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_helpers",
+            "detail": null,
+            "name": "test_varnames_legacy_noself_warns",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_helpers",
+            "detail": null,
+            "name": "test_varnames_no_legacy_noself_no_warn",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_helpers",
+            "detail": null,
+            "name": "test_varnames_staticmethod",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_helpers",
+            "detail": null,
+            "name": "test_varnames_unconventional_first_param_name",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_helpers",
+            "detail": null,
+            "name": "test_varnames_unresolvable_annotation",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_hookcaller",
+            "detail": null,
+            "name": "test_adding_nonwrappers",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_hookcaller",
+            "detail": null,
+            "name": "test_adding_nonwrappers_tryfirst",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_hookcaller",
+            "detail": null,
+            "name": "test_adding_nonwrappers_trylast",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_hookcaller",
+            "detail": null,
+            "name": "test_adding_nonwrappers_trylast2",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_hookcaller",
+            "detail": null,
+            "name": "test_adding_nonwrappers_trylast3",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_hookcaller",
+            "detail": null,
+            "name": "test_adding_wrappers_complex",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_hookcaller",
+            "detail": null,
+            "name": "test_adding_wrappers_ordering",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_hookcaller",
+            "detail": null,
+            "name": "test_adding_wrappers_ordering_tryfirst",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_hookcaller",
+            "detail": null,
+            "name": "test_call_extra_hook_order",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_hookcaller",
+            "detail": null,
+            "name": "test_hook_conflict",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_hookcaller",
+            "detail": null,
+            "name": "test_hookimpl[False-hookwrapper]",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_hookcaller",
+            "detail": null,
+            "name": "test_hookimpl[False-optionalhook]",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_hookcaller",
+            "detail": null,
+            "name": "test_hookimpl[False-tryfirst]",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_hookcaller",
+            "detail": null,
+            "name": "test_hookimpl[False-trylast]",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_hookcaller",
+            "detail": null,
+            "name": "test_hookimpl[True-hookwrapper]",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_hookcaller",
+            "detail": null,
+            "name": "test_hookimpl[True-optionalhook]",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_hookcaller",
+            "detail": null,
+            "name": "test_hookimpl[True-tryfirst]",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_hookcaller",
+            "detail": null,
+            "name": "test_hookimpl[True-trylast]",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_hookcaller",
+            "detail": null,
+            "name": "test_hookrelay_registration_by_specname",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_hookcaller",
+            "detail": null,
+            "name": "test_hookrelay_registration_by_specname_raises",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_hookcaller",
+            "detail": null,
+            "name": "test_hookrelay_registry",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_hookcaller",
+            "detail": null,
+            "name": "test_hookspec",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_hookcaller",
+            "detail": null,
+            "name": "test_remove_plugin_not_found_raises",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_invocations",
+            "detail": null,
+            "name": "test_argmismatch",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_invocations",
+            "detail": null,
+            "name": "test_call_order",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_invocations",
+            "detail": null,
+            "name": "test_firstresult_definition",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_invocations",
+            "detail": null,
+            "name": "test_firstresult_force_result",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_invocations",
+            "detail": null,
+            "name": "test_firstresult_force_result_hookwrapper",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_invocations",
+            "detail": null,
+            "name": "test_firstresult_no_plugin",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_invocations",
+            "detail": null,
+            "name": "test_firstresult_returns_none",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_invocations",
+            "detail": null,
+            "name": "test_no_hookspec",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_invocations",
+            "detail": null,
+            "name": "test_non_wrapper_generator",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_invocations",
+            "detail": null,
+            "name": "test_only_kwargs",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_invocations",
+            "detail": null,
+            "name": "test_opt_in_args",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_invocations",
+            "detail": null,
+            "name": "test_wrappers_yield_never_fails[legacy-wrapper]",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_invocations",
+            "detail": null,
+            "name": "test_wrappers_yield_never_fails[wrapper]",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_invocations",
+            "detail": null,
+            "name": "test_wrappers_yield_twice_fails[legacy-wrapper]",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_invocations",
+            "detail": null,
+            "name": "test_wrappers_yield_twice_fails[wrapper]",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_multicall",
+            "detail": null,
+            "name": "test_call_none_is_no_result",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_multicall",
+            "detail": null,
+            "name": "test_hookwrapper",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_multicall",
+            "detail": null,
+            "name": "test_hookwrapper_exception[SystemExit]",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_multicall",
+            "detail": null,
+            "name": "test_hookwrapper_exception[ValueError]",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_multicall",
+            "detail": null,
+            "name": "test_hookwrapper_force_exception",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_multicall",
+            "detail": null,
+            "name": "test_hookwrapper_not_yield",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_multicall",
+            "detail": null,
+            "name": "test_hookwrapper_order",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_multicall",
+            "detail": null,
+            "name": "test_hookwrapper_too_many_yield",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_multicall",
+            "detail": null,
+            "name": "test_hookwrapper_two_yields",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_multicall",
+            "detail": null,
+            "name": "test_hookwrapper_yield_not_executed",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_multicall",
+            "detail": null,
+            "name": "test_keyword_args",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_multicall",
+            "detail": null,
+            "name": "test_keyword_args_with_defaultargs",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_multicall",
+            "detail": null,
+            "name": "test_suppress_inner_wrapper_teardown_exc",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_multicall",
+            "detail": null,
+            "name": "test_tags_call_error",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_multicall",
+            "detail": null,
+            "name": "test_unwind_inner_wrapper_teardown_exc",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_multicall",
+            "detail": null,
+            "name": "test_wrapper",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_multicall",
+            "detail": null,
+            "name": "test_wrapper_exception[SystemExit]",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_multicall",
+            "detail": null,
+            "name": "test_wrapper_exception[ValueError]",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_multicall",
+            "detail": null,
+            "name": "test_wrapper_exception_chaining",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_multicall",
+            "detail": null,
+            "name": "test_wrapper_stopiteration_passtrough[False]",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_multicall",
+            "detail": null,
+            "name": "test_wrapper_stopiteration_passtrough[True]",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_multicall",
+            "detail": null,
+            "name": "test_wrapper_too_many_yield",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_multicall",
+            "detail": null,
+            "name": "test_wrapper_two_yields",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_multicall",
+            "detail": null,
+            "name": "test_wrapper_yield_not_executed",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_pluginmanager",
+            "detail": null,
+            "name": "test_add_hookspecs_nohooks",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_pluginmanager",
+            "detail": null,
+            "name": "test_add_tracefuncs[spec-is-class]",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_pluginmanager",
+            "detail": null,
+            "name": "test_add_tracefuncs[spec-is-instance]",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_pluginmanager",
+            "detail": null,
+            "name": "test_call_extra",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_pluginmanager",
+            "detail": null,
+            "name": "test_call_with_too_few_args",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_pluginmanager",
+            "detail": null,
+            "name": "test_check_pending_nonspec_hook",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_pluginmanager",
+            "detail": null,
+            "name": "test_check_pending_optionalhook",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_pluginmanager",
+            "detail": null,
+            "name": "test_check_pending_skips_underscore",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_pluginmanager",
+            "detail": null,
+            "name": "test_get_hookcallers",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_pluginmanager",
+            "detail": null,
+            "name": "test_get_hookcallers_no_duplicates",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_pluginmanager",
+            "detail": null,
+            "name": "test_get_hookimpls",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_pluginmanager",
+            "detail": null,
+            "name": "test_has_plugin",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_pluginmanager",
+            "detail": null,
+            "name": "test_historic_with_subset_hook_caller",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_pluginmanager",
+            "detail": null,
+            "name": "test_hook_tracing[spec-is-class]",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_pluginmanager",
+            "detail": null,
+            "name": "test_hook_tracing[spec-is-instance]",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_pluginmanager",
+            "detail": null,
+            "name": "test_load_setuptools_instantiation",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_pluginmanager",
+            "detail": null,
+            "name": "test_plugin_double_register",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_pluginmanager",
+            "detail": null,
+            "name": "test_pm",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_pluginmanager",
+            "detail": null,
+            "name": "test_pm_name",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_pluginmanager",
+            "detail": null,
+            "name": "test_register",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_pluginmanager",
+            "detail": null,
+            "name": "test_register_both_wrapper_and_hookwrapper[spec-is-class]",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_pluginmanager",
+            "detail": null,
+            "name": "test_register_both_wrapper_and_hookwrapper[spec-is-instance]",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_pluginmanager",
+            "detail": null,
+            "name": "test_register_dynamic_attr[spec-is-class]",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_pluginmanager",
+            "detail": null,
+            "name": "test_register_dynamic_attr[spec-is-instance]",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_pluginmanager",
+            "detail": null,
+            "name": "test_register_historic",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_pluginmanager",
+            "detail": null,
+            "name": "test_register_historic_incompat_hookwrapper",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_pluginmanager",
+            "detail": null,
+            "name": "test_register_historic_incompat_wrapper",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_pluginmanager",
+            "detail": null,
+            "name": "test_register_hookwrapper_not_a_generator_function[spec-is-class]",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_pluginmanager",
+            "detail": null,
+            "name": "test_register_hookwrapper_not_a_generator_function[spec-is-instance]",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_pluginmanager",
+            "detail": null,
+            "name": "test_register_mismatch_arg[spec-is-class]",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_pluginmanager",
+            "detail": null,
+            "name": "test_register_mismatch_arg[spec-is-instance]",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_pluginmanager",
+            "detail": null,
+            "name": "test_register_mismatch_method[spec-is-class]",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_pluginmanager",
+            "detail": null,
+            "name": "test_register_mismatch_method[spec-is-instance]",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_pluginmanager",
+            "detail": null,
+            "name": "test_register_unknown_hooks",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_pluginmanager",
+            "detail": null,
+            "name": "test_register_while_calling[False]",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_pluginmanager",
+            "detail": null,
+            "name": "test_register_while_calling[True]",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_pluginmanager",
+            "detail": null,
+            "name": "test_set_blocked",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_pluginmanager",
+            "detail": null,
+            "name": "test_subset_hook_caller",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_pluginmanager",
+            "detail": null,
+            "name": "test_unregister_blocked",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_pluginmanager",
+            "detail": null,
+            "name": "test_unregister_plugin_with_multi_hookimpls",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_pluginmanager",
+            "detail": null,
+            "name": "test_with_callbacks_immediately_executed",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_pluginmanager",
+            "detail": null,
+            "name": "test_with_result_memorized[False]",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_pluginmanager",
+            "detail": null,
+            "name": "test_with_result_memorized[True]",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_result",
+            "detail": null,
+            "name": "test_exceptions_traceback_doesnt_get_longer_and_longer",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_tracer",
+            "detail": null,
+            "name": "test_indent",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_tracer",
+            "detail": null,
+            "name": "test_readable_output_dictargs",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_tracer",
+            "detail": null,
+            "name": "test_setprocessor",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_tracer",
+            "detail": null,
+            "name": "test_simple",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_warnings",
+            "detail": null,
+            "name": "test_hookspec_missing_self_warns",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_warnings",
+            "detail": null,
+            "name": "test_hookspec_staticmethod_no_warning",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_warnings",
+            "detail": null,
+            "name": "test_hookspec_with_self_no_warning",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_warnings",
+            "detail": null,
+            "name": "test_teardown_raised_warning",
+            "outcome": "passed"
+          }
+        ],
+        "cases_sha256": "eba98a00e040526d58363c22d6796008e330785f78269ebb51bf99b0848f18b2",
+        "counts": {
+          "error": 0,
+          "failure": 0,
+          "passed": 144,
+          "skipped": 0
+        }
+      },
+      "returncode": 0,
+      "run": 1,
+      "started_at_utc": "2026-08-24T13:46:17.481+00:00",
+      "state_matches_baseline_after": true,
+      "state_matches_baseline_before": true,
+      "timed_out": false
+    },
+    {
+      "after": {
+        "head": "e382e72789f8d791991c489d4322aa04e660b952",
+        "head_tree": "cc9553c49c8ad2b31e1c33be6771827f0d2db138",
+        "index_tree": "cc9553c49c8ad2b31e1c33be6771827f0d2db138",
+        "tracked_diff_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "tracked_status": ""
+      },
+      "before": {
+        "head": "e382e72789f8d791991c489d4322aa04e660b952",
+        "head_tree": "cc9553c49c8ad2b31e1c33be6771827f0d2db138",
+        "index_tree": "cc9553c49c8ad2b31e1c33be6771827f0d2db138",
+        "tracked_diff_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "tracked_status": ""
+      },
+      "command": [
+        "C:\\Users\\joshp\\Desktop\\Blast-Radius\\exploratory\\causal\\envs\\pluggy\\Scripts\\python.exe",
+        "-m",
+        "pytest",
+        "--junitxml=C:\\Users\\joshp\\Desktop\\Blast-Radius\\exploratory\\causal\\gates\\pytest_dev__pluggy\\run-2.xml"
+      ],
+      "completed_at_utc": "2026-08-24T13:46:23.574+00:00",
+      "elapsed_seconds": 1.9522355999797583,
+      "normalized": {
+        "case_count": 144,
+        "cases": [
+          {
+            "classname": "testing.test_details",
+            "detail": null,
+            "name": "test_dist_facade_identity_equality_and_hash",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_details",
+            "detail": null,
+            "name": "test_dist_facade_list_attributes",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_details",
+            "detail": null,
+            "name": "test_dist_facade_project_name_and_delegation",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_details",
+            "detail": null,
+            "name": "test_dunder_getattr_missing_raises",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_details",
+            "detail": null,
+            "name": "test_dunder_version",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_details",
+            "detail": null,
+            "name": "test_hook_nonspec_call",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_details",
+            "detail": null,
+            "name": "test_hookimpl_disallow_invalid_combination",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_details",
+            "detail": null,
+            "name": "test_not_all_arguments_are_provided_issues_a_warning",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_details",
+            "detail": null,
+            "name": "test_parse_hookimpl_override",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_details",
+            "detail": null,
+            "name": "test_plugin_getattr_raises_errors",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_details",
+            "detail": null,
+            "name": "test_repr",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_details",
+            "detail": null,
+            "name": "test_warn_when_deprecated_args_specified",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_details",
+            "detail": null,
+            "name": "test_warn_when_deprecated_specified",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_details",
+            "detail": null,
+            "name": "test_wrapper_runtimeerror_passtrough",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_helpers",
+            "detail": null,
+            "name": "test_formatdef",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_helpers",
+            "detail": null,
+            "name": "test_varnames",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_helpers",
+            "detail": null,
+            "name": "test_varnames_bound_method_from_module_function",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_helpers",
+            "detail": null,
+            "name": "test_varnames_class",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_helpers",
+            "detail": null,
+            "name": "test_varnames_classmethod",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_helpers",
+            "detail": null,
+            "name": "test_varnames_decorator",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_helpers",
+            "detail": null,
+            "name": "test_varnames_default",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_helpers",
+            "detail": null,
+            "name": "test_varnames_hookspec_without_self",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_helpers",
+            "detail": null,
+            "name": "test_varnames_keyword_only",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_helpers",
+            "detail": null,
+            "name": "test_varnames_legacy_noself_no_warn_with_self",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_helpers",
+            "detail": null,
+            "name": "test_varnames_legacy_noself_suppressed_for_timeout_hooks",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_helpers",
+            "detail": null,
+            "name": "test_varnames_legacy_noself_warns",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_helpers",
+            "detail": null,
+            "name": "test_varnames_no_legacy_noself_no_warn",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_helpers",
+            "detail": null,
+            "name": "test_varnames_staticmethod",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_helpers",
+            "detail": null,
+            "name": "test_varnames_unconventional_first_param_name",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_helpers",
+            "detail": null,
+            "name": "test_varnames_unresolvable_annotation",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_hookcaller",
+            "detail": null,
+            "name": "test_adding_nonwrappers",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_hookcaller",
+            "detail": null,
+            "name": "test_adding_nonwrappers_tryfirst",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_hookcaller",
+            "detail": null,
+            "name": "test_adding_nonwrappers_trylast",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_hookcaller",
+            "detail": null,
+            "name": "test_adding_nonwrappers_trylast2",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_hookcaller",
+            "detail": null,
+            "name": "test_adding_nonwrappers_trylast3",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_hookcaller",
+            "detail": null,
+            "name": "test_adding_wrappers_complex",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_hookcaller",
+            "detail": null,
+            "name": "test_adding_wrappers_ordering",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_hookcaller",
+            "detail": null,
+            "name": "test_adding_wrappers_ordering_tryfirst",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_hookcaller",
+            "detail": null,
+            "name": "test_call_extra_hook_order",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_hookcaller",
+            "detail": null,
+            "name": "test_hook_conflict",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_hookcaller",
+            "detail": null,
+            "name": "test_hookimpl[False-hookwrapper]",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_hookcaller",
+            "detail": null,
+            "name": "test_hookimpl[False-optionalhook]",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_hookcaller",
+            "detail": null,
+            "name": "test_hookimpl[False-tryfirst]",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_hookcaller",
+            "detail": null,
+            "name": "test_hookimpl[False-trylast]",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_hookcaller",
+            "detail": null,
+            "name": "test_hookimpl[True-hookwrapper]",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_hookcaller",
+            "detail": null,
+            "name": "test_hookimpl[True-optionalhook]",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_hookcaller",
+            "detail": null,
+            "name": "test_hookimpl[True-tryfirst]",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_hookcaller",
+            "detail": null,
+            "name": "test_hookimpl[True-trylast]",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_hookcaller",
+            "detail": null,
+            "name": "test_hookrelay_registration_by_specname",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_hookcaller",
+            "detail": null,
+            "name": "test_hookrelay_registration_by_specname_raises",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_hookcaller",
+            "detail": null,
+            "name": "test_hookrelay_registry",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_hookcaller",
+            "detail": null,
+            "name": "test_hookspec",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_hookcaller",
+            "detail": null,
+            "name": "test_remove_plugin_not_found_raises",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_invocations",
+            "detail": null,
+            "name": "test_argmismatch",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_invocations",
+            "detail": null,
+            "name": "test_call_order",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_invocations",
+            "detail": null,
+            "name": "test_firstresult_definition",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_invocations",
+            "detail": null,
+            "name": "test_firstresult_force_result",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_invocations",
+            "detail": null,
+            "name": "test_firstresult_force_result_hookwrapper",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_invocations",
+            "detail": null,
+            "name": "test_firstresult_no_plugin",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_invocations",
+            "detail": null,
+            "name": "test_firstresult_returns_none",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_invocations",
+            "detail": null,
+            "name": "test_no_hookspec",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_invocations",
+            "detail": null,
+            "name": "test_non_wrapper_generator",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_invocations",
+            "detail": null,
+            "name": "test_only_kwargs",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_invocations",
+            "detail": null,
+            "name": "test_opt_in_args",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_invocations",
+            "detail": null,
+            "name": "test_wrappers_yield_never_fails[legacy-wrapper]",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_invocations",
+            "detail": null,
+            "name": "test_wrappers_yield_never_fails[wrapper]",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_invocations",
+            "detail": null,
+            "name": "test_wrappers_yield_twice_fails[legacy-wrapper]",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_invocations",
+            "detail": null,
+            "name": "test_wrappers_yield_twice_fails[wrapper]",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_multicall",
+            "detail": null,
+            "name": "test_call_none_is_no_result",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_multicall",
+            "detail": null,
+            "name": "test_hookwrapper",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_multicall",
+            "detail": null,
+            "name": "test_hookwrapper_exception[SystemExit]",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_multicall",
+            "detail": null,
+            "name": "test_hookwrapper_exception[ValueError]",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_multicall",
+            "detail": null,
+            "name": "test_hookwrapper_force_exception",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_multicall",
+            "detail": null,
+            "name": "test_hookwrapper_not_yield",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_multicall",
+            "detail": null,
+            "name": "test_hookwrapper_order",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_multicall",
+            "detail": null,
+            "name": "test_hookwrapper_too_many_yield",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_multicall",
+            "detail": null,
+            "name": "test_hookwrapper_two_yields",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_multicall",
+            "detail": null,
+            "name": "test_hookwrapper_yield_not_executed",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_multicall",
+            "detail": null,
+            "name": "test_keyword_args",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_multicall",
+            "detail": null,
+            "name": "test_keyword_args_with_defaultargs",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_multicall",
+            "detail": null,
+            "name": "test_suppress_inner_wrapper_teardown_exc",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_multicall",
+            "detail": null,
+            "name": "test_tags_call_error",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_multicall",
+            "detail": null,
+            "name": "test_unwind_inner_wrapper_teardown_exc",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_multicall",
+            "detail": null,
+            "name": "test_wrapper",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_multicall",
+            "detail": null,
+            "name": "test_wrapper_exception[SystemExit]",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_multicall",
+            "detail": null,
+            "name": "test_wrapper_exception[ValueError]",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_multicall",
+            "detail": null,
+            "name": "test_wrapper_exception_chaining",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_multicall",
+            "detail": null,
+            "name": "test_wrapper_stopiteration_passtrough[False]",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_multicall",
+            "detail": null,
+            "name": "test_wrapper_stopiteration_passtrough[True]",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_multicall",
+            "detail": null,
+            "name": "test_wrapper_too_many_yield",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_multicall",
+            "detail": null,
+            "name": "test_wrapper_two_yields",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_multicall",
+            "detail": null,
+            "name": "test_wrapper_yield_not_executed",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_pluginmanager",
+            "detail": null,
+            "name": "test_add_hookspecs_nohooks",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_pluginmanager",
+            "detail": null,
+            "name": "test_add_tracefuncs[spec-is-class]",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_pluginmanager",
+            "detail": null,
+            "name": "test_add_tracefuncs[spec-is-instance]",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_pluginmanager",
+            "detail": null,
+            "name": "test_call_extra",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_pluginmanager",
+            "detail": null,
+            "name": "test_call_with_too_few_args",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_pluginmanager",
+            "detail": null,
+            "name": "test_check_pending_nonspec_hook",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_pluginmanager",
+            "detail": null,
+            "name": "test_check_pending_optionalhook",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_pluginmanager",
+            "detail": null,
+            "name": "test_check_pending_skips_underscore",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_pluginmanager",
+            "detail": null,
+            "name": "test_get_hookcallers",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_pluginmanager",
+            "detail": null,
+            "name": "test_get_hookcallers_no_duplicates",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_pluginmanager",
+            "detail": null,
+            "name": "test_get_hookimpls",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_pluginmanager",
+            "detail": null,
+            "name": "test_has_plugin",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_pluginmanager",
+            "detail": null,
+            "name": "test_historic_with_subset_hook_caller",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_pluginmanager",
+            "detail": null,
+            "name": "test_hook_tracing[spec-is-class]",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_pluginmanager",
+            "detail": null,
+            "name": "test_hook_tracing[spec-is-instance]",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_pluginmanager",
+            "detail": null,
+            "name": "test_load_setuptools_instantiation",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_pluginmanager",
+            "detail": null,
+            "name": "test_plugin_double_register",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_pluginmanager",
+            "detail": null,
+            "name": "test_pm",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_pluginmanager",
+            "detail": null,
+            "name": "test_pm_name",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_pluginmanager",
+            "detail": null,
+            "name": "test_register",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_pluginmanager",
+            "detail": null,
+            "name": "test_register_both_wrapper_and_hookwrapper[spec-is-class]",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_pluginmanager",
+            "detail": null,
+            "name": "test_register_both_wrapper_and_hookwrapper[spec-is-instance]",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_pluginmanager",
+            "detail": null,
+            "name": "test_register_dynamic_attr[spec-is-class]",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_pluginmanager",
+            "detail": null,
+            "name": "test_register_dynamic_attr[spec-is-instance]",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_pluginmanager",
+            "detail": null,
+            "name": "test_register_historic",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_pluginmanager",
+            "detail": null,
+            "name": "test_register_historic_incompat_hookwrapper",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_pluginmanager",
+            "detail": null,
+            "name": "test_register_historic_incompat_wrapper",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_pluginmanager",
+            "detail": null,
+            "name": "test_register_hookwrapper_not_a_generator_function[spec-is-class]",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_pluginmanager",
+            "detail": null,
+            "name": "test_register_hookwrapper_not_a_generator_function[spec-is-instance]",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_pluginmanager",
+            "detail": null,
+            "name": "test_register_mismatch_arg[spec-is-class]",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_pluginmanager",
+            "detail": null,
+            "name": "test_register_mismatch_arg[spec-is-instance]",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_pluginmanager",
+            "detail": null,
+            "name": "test_register_mismatch_method[spec-is-class]",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_pluginmanager",
+            "detail": null,
+            "name": "test_register_mismatch_method[spec-is-instance]",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_pluginmanager",
+            "detail": null,
+            "name": "test_register_unknown_hooks",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_pluginmanager",
+            "detail": null,
+            "name": "test_register_while_calling[False]",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_pluginmanager",
+            "detail": null,
+            "name": "test_register_while_calling[True]",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_pluginmanager",
+            "detail": null,
+            "name": "test_set_blocked",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_pluginmanager",
+            "detail": null,
+            "name": "test_subset_hook_caller",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_pluginmanager",
+            "detail": null,
+            "name": "test_unregister_blocked",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_pluginmanager",
+            "detail": null,
+            "name": "test_unregister_plugin_with_multi_hookimpls",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_pluginmanager",
+            "detail": null,
+            "name": "test_with_callbacks_immediately_executed",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_pluginmanager",
+            "detail": null,
+            "name": "test_with_result_memorized[False]",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_pluginmanager",
+            "detail": null,
+            "name": "test_with_result_memorized[True]",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_result",
+            "detail": null,
+            "name": "test_exceptions_traceback_doesnt_get_longer_and_longer",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_tracer",
+            "detail": null,
+            "name": "test_indent",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_tracer",
+            "detail": null,
+            "name": "test_readable_output_dictargs",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_tracer",
+            "detail": null,
+            "name": "test_setprocessor",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_tracer",
+            "detail": null,
+            "name": "test_simple",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_warnings",
+            "detail": null,
+            "name": "test_hookspec_missing_self_warns",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_warnings",
+            "detail": null,
+            "name": "test_hookspec_staticmethod_no_warning",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_warnings",
+            "detail": null,
+            "name": "test_hookspec_with_self_no_warning",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_warnings",
+            "detail": null,
+            "name": "test_teardown_raised_warning",
+            "outcome": "passed"
+          }
+        ],
+        "cases_sha256": "eba98a00e040526d58363c22d6796008e330785f78269ebb51bf99b0848f18b2",
+        "counts": {
+          "error": 0,
+          "failure": 0,
+          "passed": 144,
+          "skipped": 0
+        }
+      },
+      "returncode": 0,
+      "run": 2,
+      "started_at_utc": "2026-08-24T13:46:20.759+00:00",
+      "state_matches_baseline_after": true,
+      "state_matches_baseline_before": true,
+      "timed_out": false
+    },
+    {
+      "after": {
+        "head": "e382e72789f8d791991c489d4322aa04e660b952",
+        "head_tree": "cc9553c49c8ad2b31e1c33be6771827f0d2db138",
+        "index_tree": "cc9553c49c8ad2b31e1c33be6771827f0d2db138",
+        "tracked_diff_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "tracked_status": ""
+      },
+      "before": {
+        "head": "e382e72789f8d791991c489d4322aa04e660b952",
+        "head_tree": "cc9553c49c8ad2b31e1c33be6771827f0d2db138",
+        "index_tree": "cc9553c49c8ad2b31e1c33be6771827f0d2db138",
+        "tracked_diff_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "tracked_status": ""
+      },
+      "command": [
+        "C:\\Users\\joshp\\Desktop\\Blast-Radius\\exploratory\\causal\\envs\\pluggy\\Scripts\\python.exe",
+        "-m",
+        "pytest",
+        "--junitxml=C:\\Users\\joshp\\Desktop\\Blast-Radius\\exploratory\\causal\\gates\\pytest_dev__pluggy\\run-3.xml"
+      ],
+      "completed_at_utc": "2026-08-24T13:46:26.940+00:00",
+      "elapsed_seconds": 2.187984999967739,
+      "normalized": {
+        "case_count": 144,
+        "cases": [
+          {
+            "classname": "testing.test_details",
+            "detail": null,
+            "name": "test_dist_facade_identity_equality_and_hash",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_details",
+            "detail": null,
+            "name": "test_dist_facade_list_attributes",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_details",
+            "detail": null,
+            "name": "test_dist_facade_project_name_and_delegation",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_details",
+            "detail": null,
+            "name": "test_dunder_getattr_missing_raises",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_details",
+            "detail": null,
+            "name": "test_dunder_version",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_details",
+            "detail": null,
+            "name": "test_hook_nonspec_call",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_details",
+            "detail": null,
+            "name": "test_hookimpl_disallow_invalid_combination",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_details",
+            "detail": null,
+            "name": "test_not_all_arguments_are_provided_issues_a_warning",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_details",
+            "detail": null,
+            "name": "test_parse_hookimpl_override",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_details",
+            "detail": null,
+            "name": "test_plugin_getattr_raises_errors",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_details",
+            "detail": null,
+            "name": "test_repr",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_details",
+            "detail": null,
+            "name": "test_warn_when_deprecated_args_specified",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_details",
+            "detail": null,
+            "name": "test_warn_when_deprecated_specified",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_details",
+            "detail": null,
+            "name": "test_wrapper_runtimeerror_passtrough",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_helpers",
+            "detail": null,
+            "name": "test_formatdef",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_helpers",
+            "detail": null,
+            "name": "test_varnames",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_helpers",
+            "detail": null,
+            "name": "test_varnames_bound_method_from_module_function",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_helpers",
+            "detail": null,
+            "name": "test_varnames_class",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_helpers",
+            "detail": null,
+            "name": "test_varnames_classmethod",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_helpers",
+            "detail": null,
+            "name": "test_varnames_decorator",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_helpers",
+            "detail": null,
+            "name": "test_varnames_default",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_helpers",
+            "detail": null,
+            "name": "test_varnames_hookspec_without_self",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_helpers",
+            "detail": null,
+            "name": "test_varnames_keyword_only",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_helpers",
+            "detail": null,
+            "name": "test_varnames_legacy_noself_no_warn_with_self",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_helpers",
+            "detail": null,
+            "name": "test_varnames_legacy_noself_suppressed_for_timeout_hooks",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_helpers",
+            "detail": null,
+            "name": "test_varnames_legacy_noself_warns",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_helpers",
+            "detail": null,
+            "name": "test_varnames_no_legacy_noself_no_warn",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_helpers",
+            "detail": null,
+            "name": "test_varnames_staticmethod",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_helpers",
+            "detail": null,
+            "name": "test_varnames_unconventional_first_param_name",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_helpers",
+            "detail": null,
+            "name": "test_varnames_unresolvable_annotation",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_hookcaller",
+            "detail": null,
+            "name": "test_adding_nonwrappers",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_hookcaller",
+            "detail": null,
+            "name": "test_adding_nonwrappers_tryfirst",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_hookcaller",
+            "detail": null,
+            "name": "test_adding_nonwrappers_trylast",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_hookcaller",
+            "detail": null,
+            "name": "test_adding_nonwrappers_trylast2",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_hookcaller",
+            "detail": null,
+            "name": "test_adding_nonwrappers_trylast3",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_hookcaller",
+            "detail": null,
+            "name": "test_adding_wrappers_complex",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_hookcaller",
+            "detail": null,
+            "name": "test_adding_wrappers_ordering",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_hookcaller",
+            "detail": null,
+            "name": "test_adding_wrappers_ordering_tryfirst",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_hookcaller",
+            "detail": null,
+            "name": "test_call_extra_hook_order",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_hookcaller",
+            "detail": null,
+            "name": "test_hook_conflict",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_hookcaller",
+            "detail": null,
+            "name": "test_hookimpl[False-hookwrapper]",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_hookcaller",
+            "detail": null,
+            "name": "test_hookimpl[False-optionalhook]",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_hookcaller",
+            "detail": null,
+            "name": "test_hookimpl[False-tryfirst]",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_hookcaller",
+            "detail": null,
+            "name": "test_hookimpl[False-trylast]",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_hookcaller",
+            "detail": null,
+            "name": "test_hookimpl[True-hookwrapper]",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_hookcaller",
+            "detail": null,
+            "name": "test_hookimpl[True-optionalhook]",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_hookcaller",
+            "detail": null,
+            "name": "test_hookimpl[True-tryfirst]",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_hookcaller",
+            "detail": null,
+            "name": "test_hookimpl[True-trylast]",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_hookcaller",
+            "detail": null,
+            "name": "test_hookrelay_registration_by_specname",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_hookcaller",
+            "detail": null,
+            "name": "test_hookrelay_registration_by_specname_raises",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_hookcaller",
+            "detail": null,
+            "name": "test_hookrelay_registry",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_hookcaller",
+            "detail": null,
+            "name": "test_hookspec",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_hookcaller",
+            "detail": null,
+            "name": "test_remove_plugin_not_found_raises",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_invocations",
+            "detail": null,
+            "name": "test_argmismatch",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_invocations",
+            "detail": null,
+            "name": "test_call_order",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_invocations",
+            "detail": null,
+            "name": "test_firstresult_definition",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_invocations",
+            "detail": null,
+            "name": "test_firstresult_force_result",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_invocations",
+            "detail": null,
+            "name": "test_firstresult_force_result_hookwrapper",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_invocations",
+            "detail": null,
+            "name": "test_firstresult_no_plugin",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_invocations",
+            "detail": null,
+            "name": "test_firstresult_returns_none",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_invocations",
+            "detail": null,
+            "name": "test_no_hookspec",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_invocations",
+            "detail": null,
+            "name": "test_non_wrapper_generator",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_invocations",
+            "detail": null,
+            "name": "test_only_kwargs",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_invocations",
+            "detail": null,
+            "name": "test_opt_in_args",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_invocations",
+            "detail": null,
+            "name": "test_wrappers_yield_never_fails[legacy-wrapper]",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_invocations",
+            "detail": null,
+            "name": "test_wrappers_yield_never_fails[wrapper]",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_invocations",
+            "detail": null,
+            "name": "test_wrappers_yield_twice_fails[legacy-wrapper]",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_invocations",
+            "detail": null,
+            "name": "test_wrappers_yield_twice_fails[wrapper]",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_multicall",
+            "detail": null,
+            "name": "test_call_none_is_no_result",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_multicall",
+            "detail": null,
+            "name": "test_hookwrapper",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_multicall",
+            "detail": null,
+            "name": "test_hookwrapper_exception[SystemExit]",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_multicall",
+            "detail": null,
+            "name": "test_hookwrapper_exception[ValueError]",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_multicall",
+            "detail": null,
+            "name": "test_hookwrapper_force_exception",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_multicall",
+            "detail": null,
+            "name": "test_hookwrapper_not_yield",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_multicall",
+            "detail": null,
+            "name": "test_hookwrapper_order",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_multicall",
+            "detail": null,
+            "name": "test_hookwrapper_too_many_yield",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_multicall",
+            "detail": null,
+            "name": "test_hookwrapper_two_yields",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_multicall",
+            "detail": null,
+            "name": "test_hookwrapper_yield_not_executed",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_multicall",
+            "detail": null,
+            "name": "test_keyword_args",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_multicall",
+            "detail": null,
+            "name": "test_keyword_args_with_defaultargs",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_multicall",
+            "detail": null,
+            "name": "test_suppress_inner_wrapper_teardown_exc",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_multicall",
+            "detail": null,
+            "name": "test_tags_call_error",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_multicall",
+            "detail": null,
+            "name": "test_unwind_inner_wrapper_teardown_exc",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_multicall",
+            "detail": null,
+            "name": "test_wrapper",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_multicall",
+            "detail": null,
+            "name": "test_wrapper_exception[SystemExit]",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_multicall",
+            "detail": null,
+            "name": "test_wrapper_exception[ValueError]",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_multicall",
+            "detail": null,
+            "name": "test_wrapper_exception_chaining",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_multicall",
+            "detail": null,
+            "name": "test_wrapper_stopiteration_passtrough[False]",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_multicall",
+            "detail": null,
+            "name": "test_wrapper_stopiteration_passtrough[True]",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_multicall",
+            "detail": null,
+            "name": "test_wrapper_too_many_yield",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_multicall",
+            "detail": null,
+            "name": "test_wrapper_two_yields",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_multicall",
+            "detail": null,
+            "name": "test_wrapper_yield_not_executed",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_pluginmanager",
+            "detail": null,
+            "name": "test_add_hookspecs_nohooks",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_pluginmanager",
+            "detail": null,
+            "name": "test_add_tracefuncs[spec-is-class]",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_pluginmanager",
+            "detail": null,
+            "name": "test_add_tracefuncs[spec-is-instance]",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_pluginmanager",
+            "detail": null,
+            "name": "test_call_extra",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_pluginmanager",
+            "detail": null,
+            "name": "test_call_with_too_few_args",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_pluginmanager",
+            "detail": null,
+            "name": "test_check_pending_nonspec_hook",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_pluginmanager",
+            "detail": null,
+            "name": "test_check_pending_optionalhook",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_pluginmanager",
+            "detail": null,
+            "name": "test_check_pending_skips_underscore",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_pluginmanager",
+            "detail": null,
+            "name": "test_get_hookcallers",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_pluginmanager",
+            "detail": null,
+            "name": "test_get_hookcallers_no_duplicates",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_pluginmanager",
+            "detail": null,
+            "name": "test_get_hookimpls",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_pluginmanager",
+            "detail": null,
+            "name": "test_has_plugin",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_pluginmanager",
+            "detail": null,
+            "name": "test_historic_with_subset_hook_caller",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_pluginmanager",
+            "detail": null,
+            "name": "test_hook_tracing[spec-is-class]",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_pluginmanager",
+            "detail": null,
+            "name": "test_hook_tracing[spec-is-instance]",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_pluginmanager",
+            "detail": null,
+            "name": "test_load_setuptools_instantiation",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_pluginmanager",
+            "detail": null,
+            "name": "test_plugin_double_register",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_pluginmanager",
+            "detail": null,
+            "name": "test_pm",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_pluginmanager",
+            "detail": null,
+            "name": "test_pm_name",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_pluginmanager",
+            "detail": null,
+            "name": "test_register",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_pluginmanager",
+            "detail": null,
+            "name": "test_register_both_wrapper_and_hookwrapper[spec-is-class]",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_pluginmanager",
+            "detail": null,
+            "name": "test_register_both_wrapper_and_hookwrapper[spec-is-instance]",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_pluginmanager",
+            "detail": null,
+            "name": "test_register_dynamic_attr[spec-is-class]",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_pluginmanager",
+            "detail": null,
+            "name": "test_register_dynamic_attr[spec-is-instance]",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_pluginmanager",
+            "detail": null,
+            "name": "test_register_historic",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_pluginmanager",
+            "detail": null,
+            "name": "test_register_historic_incompat_hookwrapper",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_pluginmanager",
+            "detail": null,
+            "name": "test_register_historic_incompat_wrapper",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_pluginmanager",
+            "detail": null,
+            "name": "test_register_hookwrapper_not_a_generator_function[spec-is-class]",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_pluginmanager",
+            "detail": null,
+            "name": "test_register_hookwrapper_not_a_generator_function[spec-is-instance]",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_pluginmanager",
+            "detail": null,
+            "name": "test_register_mismatch_arg[spec-is-class]",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_pluginmanager",
+            "detail": null,
+            "name": "test_register_mismatch_arg[spec-is-instance]",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_pluginmanager",
+            "detail": null,
+            "name": "test_register_mismatch_method[spec-is-class]",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_pluginmanager",
+            "detail": null,
+            "name": "test_register_mismatch_method[spec-is-instance]",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_pluginmanager",
+            "detail": null,
+            "name": "test_register_unknown_hooks",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_pluginmanager",
+            "detail": null,
+            "name": "test_register_while_calling[False]",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_pluginmanager",
+            "detail": null,
+            "name": "test_register_while_calling[True]",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_pluginmanager",
+            "detail": null,
+            "name": "test_set_blocked",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_pluginmanager",
+            "detail": null,
+            "name": "test_subset_hook_caller",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_pluginmanager",
+            "detail": null,
+            "name": "test_unregister_blocked",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_pluginmanager",
+            "detail": null,
+            "name": "test_unregister_plugin_with_multi_hookimpls",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_pluginmanager",
+            "detail": null,
+            "name": "test_with_callbacks_immediately_executed",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_pluginmanager",
+            "detail": null,
+            "name": "test_with_result_memorized[False]",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_pluginmanager",
+            "detail": null,
+            "name": "test_with_result_memorized[True]",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_result",
+            "detail": null,
+            "name": "test_exceptions_traceback_doesnt_get_longer_and_longer",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_tracer",
+            "detail": null,
+            "name": "test_indent",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_tracer",
+            "detail": null,
+            "name": "test_readable_output_dictargs",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_tracer",
+            "detail": null,
+            "name": "test_setprocessor",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_tracer",
+            "detail": null,
+            "name": "test_simple",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_warnings",
+            "detail": null,
+            "name": "test_hookspec_missing_self_warns",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_warnings",
+            "detail": null,
+            "name": "test_hookspec_staticmethod_no_warning",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_warnings",
+            "detail": null,
+            "name": "test_hookspec_with_self_no_warning",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_warnings",
+            "detail": null,
+            "name": "test_teardown_raised_warning",
+            "outcome": "passed"
+          }
+        ],
+        "cases_sha256": "eba98a00e040526d58363c22d6796008e330785f78269ebb51bf99b0848f18b2",
+        "counts": {
+          "error": 0,
+          "failure": 0,
+          "passed": 144,
+          "skipped": 0
+        }
+      },
+      "returncode": 0,
+      "run": 3,
+      "started_at_utc": "2026-08-24T13:46:23.995+00:00",
+      "state_matches_baseline_after": true,
+      "state_matches_baseline_before": true,
+      "timed_out": false
+    },
+    {
+      "after": {
+        "head": "e382e72789f8d791991c489d4322aa04e660b952",
+        "head_tree": "cc9553c49c8ad2b31e1c33be6771827f0d2db138",
+        "index_tree": "cc9553c49c8ad2b31e1c33be6771827f0d2db138",
+        "tracked_diff_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "tracked_status": ""
+      },
+      "before": {
+        "head": "e382e72789f8d791991c489d4322aa04e660b952",
+        "head_tree": "cc9553c49c8ad2b31e1c33be6771827f0d2db138",
+        "index_tree": "cc9553c49c8ad2b31e1c33be6771827f0d2db138",
+        "tracked_diff_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "tracked_status": ""
+      },
+      "command": [
+        "C:\\Users\\joshp\\Desktop\\Blast-Radius\\exploratory\\causal\\envs\\pluggy\\Scripts\\python.exe",
+        "-m",
+        "pytest",
+        "--junitxml=C:\\Users\\joshp\\Desktop\\Blast-Radius\\exploratory\\causal\\gates\\pytest_dev__pluggy\\run-4.xml"
+      ],
+      "completed_at_utc": "2026-08-24T13:46:34.608+00:00",
+      "elapsed_seconds": 2.410902200033888,
+      "normalized": {
+        "case_count": 144,
+        "cases": [
+          {
+            "classname": "testing.test_details",
+            "detail": null,
+            "name": "test_dist_facade_identity_equality_and_hash",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_details",
+            "detail": null,
+            "name": "test_dist_facade_list_attributes",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_details",
+            "detail": null,
+            "name": "test_dist_facade_project_name_and_delegation",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_details",
+            "detail": null,
+            "name": "test_dunder_getattr_missing_raises",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_details",
+            "detail": null,
+            "name": "test_dunder_version",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_details",
+            "detail": null,
+            "name": "test_hook_nonspec_call",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_details",
+            "detail": null,
+            "name": "test_hookimpl_disallow_invalid_combination",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_details",
+            "detail": null,
+            "name": "test_not_all_arguments_are_provided_issues_a_warning",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_details",
+            "detail": null,
+            "name": "test_parse_hookimpl_override",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_details",
+            "detail": null,
+            "name": "test_plugin_getattr_raises_errors",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_details",
+            "detail": null,
+            "name": "test_repr",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_details",
+            "detail": null,
+            "name": "test_warn_when_deprecated_args_specified",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_details",
+            "detail": null,
+            "name": "test_warn_when_deprecated_specified",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_details",
+            "detail": null,
+            "name": "test_wrapper_runtimeerror_passtrough",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_helpers",
+            "detail": null,
+            "name": "test_formatdef",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_helpers",
+            "detail": null,
+            "name": "test_varnames",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_helpers",
+            "detail": null,
+            "name": "test_varnames_bound_method_from_module_function",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_helpers",
+            "detail": null,
+            "name": "test_varnames_class",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_helpers",
+            "detail": null,
+            "name": "test_varnames_classmethod",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_helpers",
+            "detail": null,
+            "name": "test_varnames_decorator",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_helpers",
+            "detail": null,
+            "name": "test_varnames_default",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_helpers",
+            "detail": null,
+            "name": "test_varnames_hookspec_without_self",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_helpers",
+            "detail": null,
+            "name": "test_varnames_keyword_only",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_helpers",
+            "detail": null,
+            "name": "test_varnames_legacy_noself_no_warn_with_self",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_helpers",
+            "detail": null,
+            "name": "test_varnames_legacy_noself_suppressed_for_timeout_hooks",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_helpers",
+            "detail": null,
+            "name": "test_varnames_legacy_noself_warns",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_helpers",
+            "detail": null,
+            "name": "test_varnames_no_legacy_noself_no_warn",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_helpers",
+            "detail": null,
+            "name": "test_varnames_staticmethod",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_helpers",
+            "detail": null,
+            "name": "test_varnames_unconventional_first_param_name",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_helpers",
+            "detail": null,
+            "name": "test_varnames_unresolvable_annotation",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_hookcaller",
+            "detail": null,
+            "name": "test_adding_nonwrappers",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_hookcaller",
+            "detail": null,
+            "name": "test_adding_nonwrappers_tryfirst",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_hookcaller",
+            "detail": null,
+            "name": "test_adding_nonwrappers_trylast",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_hookcaller",
+            "detail": null,
+            "name": "test_adding_nonwrappers_trylast2",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_hookcaller",
+            "detail": null,
+            "name": "test_adding_nonwrappers_trylast3",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_hookcaller",
+            "detail": null,
+            "name": "test_adding_wrappers_complex",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_hookcaller",
+            "detail": null,
+            "name": "test_adding_wrappers_ordering",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_hookcaller",
+            "detail": null,
+            "name": "test_adding_wrappers_ordering_tryfirst",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_hookcaller",
+            "detail": null,
+            "name": "test_call_extra_hook_order",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_hookcaller",
+            "detail": null,
+            "name": "test_hook_conflict",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_hookcaller",
+            "detail": null,
+            "name": "test_hookimpl[False-hookwrapper]",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_hookcaller",
+            "detail": null,
+            "name": "test_hookimpl[False-optionalhook]",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_hookcaller",
+            "detail": null,
+            "name": "test_hookimpl[False-tryfirst]",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_hookcaller",
+            "detail": null,
+            "name": "test_hookimpl[False-trylast]",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_hookcaller",
+            "detail": null,
+            "name": "test_hookimpl[True-hookwrapper]",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_hookcaller",
+            "detail": null,
+            "name": "test_hookimpl[True-optionalhook]",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_hookcaller",
+            "detail": null,
+            "name": "test_hookimpl[True-tryfirst]",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_hookcaller",
+            "detail": null,
+            "name": "test_hookimpl[True-trylast]",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_hookcaller",
+            "detail": null,
+            "name": "test_hookrelay_registration_by_specname",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_hookcaller",
+            "detail": null,
+            "name": "test_hookrelay_registration_by_specname_raises",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_hookcaller",
+            "detail": null,
+            "name": "test_hookrelay_registry",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_hookcaller",
+            "detail": null,
+            "name": "test_hookspec",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_hookcaller",
+            "detail": null,
+            "name": "test_remove_plugin_not_found_raises",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_invocations",
+            "detail": null,
+            "name": "test_argmismatch",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_invocations",
+            "detail": null,
+            "name": "test_call_order",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_invocations",
+            "detail": null,
+            "name": "test_firstresult_definition",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_invocations",
+            "detail": null,
+            "name": "test_firstresult_force_result",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_invocations",
+            "detail": null,
+            "name": "test_firstresult_force_result_hookwrapper",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_invocations",
+            "detail": null,
+            "name": "test_firstresult_no_plugin",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_invocations",
+            "detail": null,
+            "name": "test_firstresult_returns_none",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_invocations",
+            "detail": null,
+            "name": "test_no_hookspec",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_invocations",
+            "detail": null,
+            "name": "test_non_wrapper_generator",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_invocations",
+            "detail": null,
+            "name": "test_only_kwargs",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_invocations",
+            "detail": null,
+            "name": "test_opt_in_args",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_invocations",
+            "detail": null,
+            "name": "test_wrappers_yield_never_fails[legacy-wrapper]",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_invocations",
+            "detail": null,
+            "name": "test_wrappers_yield_never_fails[wrapper]",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_invocations",
+            "detail": null,
+            "name": "test_wrappers_yield_twice_fails[legacy-wrapper]",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_invocations",
+            "detail": null,
+            "name": "test_wrappers_yield_twice_fails[wrapper]",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_multicall",
+            "detail": null,
+            "name": "test_call_none_is_no_result",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_multicall",
+            "detail": null,
+            "name": "test_hookwrapper",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_multicall",
+            "detail": null,
+            "name": "test_hookwrapper_exception[SystemExit]",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_multicall",
+            "detail": null,
+            "name": "test_hookwrapper_exception[ValueError]",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_multicall",
+            "detail": null,
+            "name": "test_hookwrapper_force_exception",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_multicall",
+            "detail": null,
+            "name": "test_hookwrapper_not_yield",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_multicall",
+            "detail": null,
+            "name": "test_hookwrapper_order",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_multicall",
+            "detail": null,
+            "name": "test_hookwrapper_too_many_yield",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_multicall",
+            "detail": null,
+            "name": "test_hookwrapper_two_yields",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_multicall",
+            "detail": null,
+            "name": "test_hookwrapper_yield_not_executed",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_multicall",
+            "detail": null,
+            "name": "test_keyword_args",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_multicall",
+            "detail": null,
+            "name": "test_keyword_args_with_defaultargs",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_multicall",
+            "detail": null,
+            "name": "test_suppress_inner_wrapper_teardown_exc",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_multicall",
+            "detail": null,
+            "name": "test_tags_call_error",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_multicall",
+            "detail": null,
+            "name": "test_unwind_inner_wrapper_teardown_exc",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_multicall",
+            "detail": null,
+            "name": "test_wrapper",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_multicall",
+            "detail": null,
+            "name": "test_wrapper_exception[SystemExit]",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_multicall",
+            "detail": null,
+            "name": "test_wrapper_exception[ValueError]",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_multicall",
+            "detail": null,
+            "name": "test_wrapper_exception_chaining",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_multicall",
+            "detail": null,
+            "name": "test_wrapper_stopiteration_passtrough[False]",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_multicall",
+            "detail": null,
+            "name": "test_wrapper_stopiteration_passtrough[True]",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_multicall",
+            "detail": null,
+            "name": "test_wrapper_too_many_yield",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_multicall",
+            "detail": null,
+            "name": "test_wrapper_two_yields",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_multicall",
+            "detail": null,
+            "name": "test_wrapper_yield_not_executed",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_pluginmanager",
+            "detail": null,
+            "name": "test_add_hookspecs_nohooks",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_pluginmanager",
+            "detail": null,
+            "name": "test_add_tracefuncs[spec-is-class]",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_pluginmanager",
+            "detail": null,
+            "name": "test_add_tracefuncs[spec-is-instance]",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_pluginmanager",
+            "detail": null,
+            "name": "test_call_extra",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_pluginmanager",
+            "detail": null,
+            "name": "test_call_with_too_few_args",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_pluginmanager",
+            "detail": null,
+            "name": "test_check_pending_nonspec_hook",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_pluginmanager",
+            "detail": null,
+            "name": "test_check_pending_optionalhook",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_pluginmanager",
+            "detail": null,
+            "name": "test_check_pending_skips_underscore",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_pluginmanager",
+            "detail": null,
+            "name": "test_get_hookcallers",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_pluginmanager",
+            "detail": null,
+            "name": "test_get_hookcallers_no_duplicates",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_pluginmanager",
+            "detail": null,
+            "name": "test_get_hookimpls",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_pluginmanager",
+            "detail": null,
+            "name": "test_has_plugin",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_pluginmanager",
+            "detail": null,
+            "name": "test_historic_with_subset_hook_caller",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_pluginmanager",
+            "detail": null,
+            "name": "test_hook_tracing[spec-is-class]",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_pluginmanager",
+            "detail": null,
+            "name": "test_hook_tracing[spec-is-instance]",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_pluginmanager",
+            "detail": null,
+            "name": "test_load_setuptools_instantiation",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_pluginmanager",
+            "detail": null,
+            "name": "test_plugin_double_register",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_pluginmanager",
+            "detail": null,
+            "name": "test_pm",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_pluginmanager",
+            "detail": null,
+            "name": "test_pm_name",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_pluginmanager",
+            "detail": null,
+            "name": "test_register",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_pluginmanager",
+            "detail": null,
+            "name": "test_register_both_wrapper_and_hookwrapper[spec-is-class]",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_pluginmanager",
+            "detail": null,
+            "name": "test_register_both_wrapper_and_hookwrapper[spec-is-instance]",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_pluginmanager",
+            "detail": null,
+            "name": "test_register_dynamic_attr[spec-is-class]",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_pluginmanager",
+            "detail": null,
+            "name": "test_register_dynamic_attr[spec-is-instance]",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_pluginmanager",
+            "detail": null,
+            "name": "test_register_historic",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_pluginmanager",
+            "detail": null,
+            "name": "test_register_historic_incompat_hookwrapper",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_pluginmanager",
+            "detail": null,
+            "name": "test_register_historic_incompat_wrapper",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_pluginmanager",
+            "detail": null,
+            "name": "test_register_hookwrapper_not_a_generator_function[spec-is-class]",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_pluginmanager",
+            "detail": null,
+            "name": "test_register_hookwrapper_not_a_generator_function[spec-is-instance]",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_pluginmanager",
+            "detail": null,
+            "name": "test_register_mismatch_arg[spec-is-class]",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_pluginmanager",
+            "detail": null,
+            "name": "test_register_mismatch_arg[spec-is-instance]",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_pluginmanager",
+            "detail": null,
+            "name": "test_register_mismatch_method[spec-is-class]",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_pluginmanager",
+            "detail": null,
+            "name": "test_register_mismatch_method[spec-is-instance]",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_pluginmanager",
+            "detail": null,
+            "name": "test_register_unknown_hooks",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_pluginmanager",
+            "detail": null,
+            "name": "test_register_while_calling[False]",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_pluginmanager",
+            "detail": null,
+            "name": "test_register_while_calling[True]",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_pluginmanager",
+            "detail": null,
+            "name": "test_set_blocked",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_pluginmanager",
+            "detail": null,
+            "name": "test_subset_hook_caller",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_pluginmanager",
+            "detail": null,
+            "name": "test_unregister_blocked",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_pluginmanager",
+            "detail": null,
+            "name": "test_unregister_plugin_with_multi_hookimpls",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_pluginmanager",
+            "detail": null,
+            "name": "test_with_callbacks_immediately_executed",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_pluginmanager",
+            "detail": null,
+            "name": "test_with_result_memorized[False]",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_pluginmanager",
+            "detail": null,
+            "name": "test_with_result_memorized[True]",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_result",
+            "detail": null,
+            "name": "test_exceptions_traceback_doesnt_get_longer_and_longer",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_tracer",
+            "detail": null,
+            "name": "test_indent",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_tracer",
+            "detail": null,
+            "name": "test_readable_output_dictargs",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_tracer",
+            "detail": null,
+            "name": "test_setprocessor",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_tracer",
+            "detail": null,
+            "name": "test_simple",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_warnings",
+            "detail": null,
+            "name": "test_hookspec_missing_self_warns",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_warnings",
+            "detail": null,
+            "name": "test_hookspec_staticmethod_no_warning",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_warnings",
+            "detail": null,
+            "name": "test_hookspec_with_self_no_warning",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_warnings",
+            "detail": null,
+            "name": "test_teardown_raised_warning",
+            "outcome": "passed"
+          }
+        ],
+        "cases_sha256": "eba98a00e040526d58363c22d6796008e330785f78269ebb51bf99b0848f18b2",
+        "counts": {
+          "error": 0,
+          "failure": 0,
+          "passed": 144,
+          "skipped": 0
+        }
+      },
+      "returncode": 0,
+      "run": 4,
+      "started_at_utc": "2026-08-24T13:46:27.943+00:00",
+      "state_matches_baseline_after": true,
+      "state_matches_baseline_before": true,
+      "timed_out": false
+    },
+    {
+      "after": {
+        "head": "e382e72789f8d791991c489d4322aa04e660b952",
+        "head_tree": "cc9553c49c8ad2b31e1c33be6771827f0d2db138",
+        "index_tree": "cc9553c49c8ad2b31e1c33be6771827f0d2db138",
+        "tracked_diff_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "tracked_status": ""
+      },
+      "before": {
+        "head": "e382e72789f8d791991c489d4322aa04e660b952",
+        "head_tree": "cc9553c49c8ad2b31e1c33be6771827f0d2db138",
+        "index_tree": "cc9553c49c8ad2b31e1c33be6771827f0d2db138",
+        "tracked_diff_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "tracked_status": ""
+      },
+      "command": [
+        "C:\\Users\\joshp\\Desktop\\Blast-Radius\\exploratory\\causal\\envs\\pluggy\\Scripts\\python.exe",
+        "-m",
+        "pytest",
+        "--junitxml=C:\\Users\\joshp\\Desktop\\Blast-Radius\\exploratory\\causal\\gates\\pytest_dev__pluggy\\run-5.xml"
+      ],
+      "completed_at_utc": "2026-08-24T13:46:38.723+00:00",
+      "elapsed_seconds": 2.09793179994449,
+      "normalized": {
+        "case_count": 144,
+        "cases": [
+          {
+            "classname": "testing.test_details",
+            "detail": null,
+            "name": "test_dist_facade_identity_equality_and_hash",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_details",
+            "detail": null,
+            "name": "test_dist_facade_list_attributes",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_details",
+            "detail": null,
+            "name": "test_dist_facade_project_name_and_delegation",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_details",
+            "detail": null,
+            "name": "test_dunder_getattr_missing_raises",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_details",
+            "detail": null,
+            "name": "test_dunder_version",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_details",
+            "detail": null,
+            "name": "test_hook_nonspec_call",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_details",
+            "detail": null,
+            "name": "test_hookimpl_disallow_invalid_combination",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_details",
+            "detail": null,
+            "name": "test_not_all_arguments_are_provided_issues_a_warning",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_details",
+            "detail": null,
+            "name": "test_parse_hookimpl_override",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_details",
+            "detail": null,
+            "name": "test_plugin_getattr_raises_errors",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_details",
+            "detail": null,
+            "name": "test_repr",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_details",
+            "detail": null,
+            "name": "test_warn_when_deprecated_args_specified",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_details",
+            "detail": null,
+            "name": "test_warn_when_deprecated_specified",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_details",
+            "detail": null,
+            "name": "test_wrapper_runtimeerror_passtrough",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_helpers",
+            "detail": null,
+            "name": "test_formatdef",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_helpers",
+            "detail": null,
+            "name": "test_varnames",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_helpers",
+            "detail": null,
+            "name": "test_varnames_bound_method_from_module_function",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_helpers",
+            "detail": null,
+            "name": "test_varnames_class",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_helpers",
+            "detail": null,
+            "name": "test_varnames_classmethod",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_helpers",
+            "detail": null,
+            "name": "test_varnames_decorator",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_helpers",
+            "detail": null,
+            "name": "test_varnames_default",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_helpers",
+            "detail": null,
+            "name": "test_varnames_hookspec_without_self",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_helpers",
+            "detail": null,
+            "name": "test_varnames_keyword_only",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_helpers",
+            "detail": null,
+            "name": "test_varnames_legacy_noself_no_warn_with_self",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_helpers",
+            "detail": null,
+            "name": "test_varnames_legacy_noself_suppressed_for_timeout_hooks",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_helpers",
+            "detail": null,
+            "name": "test_varnames_legacy_noself_warns",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_helpers",
+            "detail": null,
+            "name": "test_varnames_no_legacy_noself_no_warn",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_helpers",
+            "detail": null,
+            "name": "test_varnames_staticmethod",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_helpers",
+            "detail": null,
+            "name": "test_varnames_unconventional_first_param_name",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_helpers",
+            "detail": null,
+            "name": "test_varnames_unresolvable_annotation",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_hookcaller",
+            "detail": null,
+            "name": "test_adding_nonwrappers",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_hookcaller",
+            "detail": null,
+            "name": "test_adding_nonwrappers_tryfirst",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_hookcaller",
+            "detail": null,
+            "name": "test_adding_nonwrappers_trylast",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_hookcaller",
+            "detail": null,
+            "name": "test_adding_nonwrappers_trylast2",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_hookcaller",
+            "detail": null,
+            "name": "test_adding_nonwrappers_trylast3",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_hookcaller",
+            "detail": null,
+            "name": "test_adding_wrappers_complex",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_hookcaller",
+            "detail": null,
+            "name": "test_adding_wrappers_ordering",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_hookcaller",
+            "detail": null,
+            "name": "test_adding_wrappers_ordering_tryfirst",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_hookcaller",
+            "detail": null,
+            "name": "test_call_extra_hook_order",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_hookcaller",
+            "detail": null,
+            "name": "test_hook_conflict",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_hookcaller",
+            "detail": null,
+            "name": "test_hookimpl[False-hookwrapper]",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_hookcaller",
+            "detail": null,
+            "name": "test_hookimpl[False-optionalhook]",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_hookcaller",
+            "detail": null,
+            "name": "test_hookimpl[False-tryfirst]",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_hookcaller",
+            "detail": null,
+            "name": "test_hookimpl[False-trylast]",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_hookcaller",
+            "detail": null,
+            "name": "test_hookimpl[True-hookwrapper]",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_hookcaller",
+            "detail": null,
+            "name": "test_hookimpl[True-optionalhook]",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_hookcaller",
+            "detail": null,
+            "name": "test_hookimpl[True-tryfirst]",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_hookcaller",
+            "detail": null,
+            "name": "test_hookimpl[True-trylast]",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_hookcaller",
+            "detail": null,
+            "name": "test_hookrelay_registration_by_specname",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_hookcaller",
+            "detail": null,
+            "name": "test_hookrelay_registration_by_specname_raises",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_hookcaller",
+            "detail": null,
+            "name": "test_hookrelay_registry",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_hookcaller",
+            "detail": null,
+            "name": "test_hookspec",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_hookcaller",
+            "detail": null,
+            "name": "test_remove_plugin_not_found_raises",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_invocations",
+            "detail": null,
+            "name": "test_argmismatch",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_invocations",
+            "detail": null,
+            "name": "test_call_order",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_invocations",
+            "detail": null,
+            "name": "test_firstresult_definition",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_invocations",
+            "detail": null,
+            "name": "test_firstresult_force_result",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_invocations",
+            "detail": null,
+            "name": "test_firstresult_force_result_hookwrapper",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_invocations",
+            "detail": null,
+            "name": "test_firstresult_no_plugin",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_invocations",
+            "detail": null,
+            "name": "test_firstresult_returns_none",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_invocations",
+            "detail": null,
+            "name": "test_no_hookspec",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_invocations",
+            "detail": null,
+            "name": "test_non_wrapper_generator",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_invocations",
+            "detail": null,
+            "name": "test_only_kwargs",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_invocations",
+            "detail": null,
+            "name": "test_opt_in_args",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_invocations",
+            "detail": null,
+            "name": "test_wrappers_yield_never_fails[legacy-wrapper]",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_invocations",
+            "detail": null,
+            "name": "test_wrappers_yield_never_fails[wrapper]",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_invocations",
+            "detail": null,
+            "name": "test_wrappers_yield_twice_fails[legacy-wrapper]",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_invocations",
+            "detail": null,
+            "name": "test_wrappers_yield_twice_fails[wrapper]",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_multicall",
+            "detail": null,
+            "name": "test_call_none_is_no_result",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_multicall",
+            "detail": null,
+            "name": "test_hookwrapper",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_multicall",
+            "detail": null,
+            "name": "test_hookwrapper_exception[SystemExit]",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_multicall",
+            "detail": null,
+            "name": "test_hookwrapper_exception[ValueError]",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_multicall",
+            "detail": null,
+            "name": "test_hookwrapper_force_exception",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_multicall",
+            "detail": null,
+            "name": "test_hookwrapper_not_yield",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_multicall",
+            "detail": null,
+            "name": "test_hookwrapper_order",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_multicall",
+            "detail": null,
+            "name": "test_hookwrapper_too_many_yield",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_multicall",
+            "detail": null,
+            "name": "test_hookwrapper_two_yields",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_multicall",
+            "detail": null,
+            "name": "test_hookwrapper_yield_not_executed",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_multicall",
+            "detail": null,
+            "name": "test_keyword_args",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_multicall",
+            "detail": null,
+            "name": "test_keyword_args_with_defaultargs",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_multicall",
+            "detail": null,
+            "name": "test_suppress_inner_wrapper_teardown_exc",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_multicall",
+            "detail": null,
+            "name": "test_tags_call_error",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_multicall",
+            "detail": null,
+            "name": "test_unwind_inner_wrapper_teardown_exc",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_multicall",
+            "detail": null,
+            "name": "test_wrapper",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_multicall",
+            "detail": null,
+            "name": "test_wrapper_exception[SystemExit]",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_multicall",
+            "detail": null,
+            "name": "test_wrapper_exception[ValueError]",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_multicall",
+            "detail": null,
+            "name": "test_wrapper_exception_chaining",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_multicall",
+            "detail": null,
+            "name": "test_wrapper_stopiteration_passtrough[False]",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_multicall",
+            "detail": null,
+            "name": "test_wrapper_stopiteration_passtrough[True]",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_multicall",
+            "detail": null,
+            "name": "test_wrapper_too_many_yield",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_multicall",
+            "detail": null,
+            "name": "test_wrapper_two_yields",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_multicall",
+            "detail": null,
+            "name": "test_wrapper_yield_not_executed",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_pluginmanager",
+            "detail": null,
+            "name": "test_add_hookspecs_nohooks",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_pluginmanager",
+            "detail": null,
+            "name": "test_add_tracefuncs[spec-is-class]",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_pluginmanager",
+            "detail": null,
+            "name": "test_add_tracefuncs[spec-is-instance]",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_pluginmanager",
+            "detail": null,
+            "name": "test_call_extra",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_pluginmanager",
+            "detail": null,
+            "name": "test_call_with_too_few_args",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_pluginmanager",
+            "detail": null,
+            "name": "test_check_pending_nonspec_hook",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_pluginmanager",
+            "detail": null,
+            "name": "test_check_pending_optionalhook",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_pluginmanager",
+            "detail": null,
+            "name": "test_check_pending_skips_underscore",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_pluginmanager",
+            "detail": null,
+            "name": "test_get_hookcallers",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_pluginmanager",
+            "detail": null,
+            "name": "test_get_hookcallers_no_duplicates",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_pluginmanager",
+            "detail": null,
+            "name": "test_get_hookimpls",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_pluginmanager",
+            "detail": null,
+            "name": "test_has_plugin",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_pluginmanager",
+            "detail": null,
+            "name": "test_historic_with_subset_hook_caller",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_pluginmanager",
+            "detail": null,
+            "name": "test_hook_tracing[spec-is-class]",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_pluginmanager",
+            "detail": null,
+            "name": "test_hook_tracing[spec-is-instance]",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_pluginmanager",
+            "detail": null,
+            "name": "test_load_setuptools_instantiation",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_pluginmanager",
+            "detail": null,
+            "name": "test_plugin_double_register",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_pluginmanager",
+            "detail": null,
+            "name": "test_pm",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_pluginmanager",
+            "detail": null,
+            "name": "test_pm_name",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_pluginmanager",
+            "detail": null,
+            "name": "test_register",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_pluginmanager",
+            "detail": null,
+            "name": "test_register_both_wrapper_and_hookwrapper[spec-is-class]",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_pluginmanager",
+            "detail": null,
+            "name": "test_register_both_wrapper_and_hookwrapper[spec-is-instance]",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_pluginmanager",
+            "detail": null,
+            "name": "test_register_dynamic_attr[spec-is-class]",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_pluginmanager",
+            "detail": null,
+            "name": "test_register_dynamic_attr[spec-is-instance]",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_pluginmanager",
+            "detail": null,
+            "name": "test_register_historic",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_pluginmanager",
+            "detail": null,
+            "name": "test_register_historic_incompat_hookwrapper",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_pluginmanager",
+            "detail": null,
+            "name": "test_register_historic_incompat_wrapper",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_pluginmanager",
+            "detail": null,
+            "name": "test_register_hookwrapper_not_a_generator_function[spec-is-class]",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_pluginmanager",
+            "detail": null,
+            "name": "test_register_hookwrapper_not_a_generator_function[spec-is-instance]",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_pluginmanager",
+            "detail": null,
+            "name": "test_register_mismatch_arg[spec-is-class]",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_pluginmanager",
+            "detail": null,
+            "name": "test_register_mismatch_arg[spec-is-instance]",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_pluginmanager",
+            "detail": null,
+            "name": "test_register_mismatch_method[spec-is-class]",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_pluginmanager",
+            "detail": null,
+            "name": "test_register_mismatch_method[spec-is-instance]",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_pluginmanager",
+            "detail": null,
+            "name": "test_register_unknown_hooks",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_pluginmanager",
+            "detail": null,
+            "name": "test_register_while_calling[False]",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_pluginmanager",
+            "detail": null,
+            "name": "test_register_while_calling[True]",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_pluginmanager",
+            "detail": null,
+            "name": "test_set_blocked",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_pluginmanager",
+            "detail": null,
+            "name": "test_subset_hook_caller",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_pluginmanager",
+            "detail": null,
+            "name": "test_unregister_blocked",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_pluginmanager",
+            "detail": null,
+            "name": "test_unregister_plugin_with_multi_hookimpls",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_pluginmanager",
+            "detail": null,
+            "name": "test_with_callbacks_immediately_executed",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_pluginmanager",
+            "detail": null,
+            "name": "test_with_result_memorized[False]",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_pluginmanager",
+            "detail": null,
+            "name": "test_with_result_memorized[True]",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_result",
+            "detail": null,
+            "name": "test_exceptions_traceback_doesnt_get_longer_and_longer",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_tracer",
+            "detail": null,
+            "name": "test_indent",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_tracer",
+            "detail": null,
+            "name": "test_readable_output_dictargs",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_tracer",
+            "detail": null,
+            "name": "test_setprocessor",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_tracer",
+            "detail": null,
+            "name": "test_simple",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_warnings",
+            "detail": null,
+            "name": "test_hookspec_missing_self_warns",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_warnings",
+            "detail": null,
+            "name": "test_hookspec_staticmethod_no_warning",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_warnings",
+            "detail": null,
+            "name": "test_hookspec_with_self_no_warning",
+            "outcome": "passed"
+          },
+          {
+            "classname": "testing.test_warnings",
+            "detail": null,
+            "name": "test_teardown_raised_warning",
+            "outcome": "passed"
+          }
+        ],
+        "cases_sha256": "eba98a00e040526d58363c22d6796008e330785f78269ebb51bf99b0848f18b2",
+        "counts": {
+          "error": 0,
+          "failure": 0,
+          "passed": 144,
+          "skipped": 0
+        }
+      },
+      "returncode": 0,
+      "run": 5,
+      "started_at_utc": "2026-08-24T13:46:35.831+00:00",
+      "state_matches_baseline_after": true,
+      "state_matches_baseline_before": true,
+      "timed_out": false
+    }
+  ],
+  "schema_version": 1,
+  "status": "eligible"
+}

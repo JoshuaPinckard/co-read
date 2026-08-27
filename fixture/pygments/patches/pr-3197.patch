@@ -1,0 +1,35 @@
+diff --git a/pygments/lexers/algebra.py b/pygments/lexers/algebra.py
+index 1bb6e9ed8cd31f2850a9ebe8980d8bbc0348fec2..06fa404a218c5beafd9e6f8f74dd5c4a27198928 100644
+--- a/pygments/lexers/algebra.py
++++ b/pygments/lexers/algebra.py
+@@ -177,6 +177,9 @@ class MathematicaLexer(RegexLexer):
+         'root': [
+             (r'(?s)\(\*.*?\*\)', Comment),
+ 
++            # Named character escapes, e.g. \[Nu], \[CapitalAlpha].
++            (r'\\\[[A-Za-z][A-Za-z0-9]*\]', String.Escape),
++
+             (r'([a-zA-Z]+[A-Za-z0-9]*`)', Name.Namespace),
+             (r'([A-Za-z0-9]*_+[A-Za-z0-9]*)', Name.Variable),
+             (r'#\d*', Name.Variable),
+diff --git a/tests/snippets/mathematica/test_named_character.txt b/tests/snippets/mathematica/test_named_character.txt
+new file mode 100644
+index 0000000000000000000000000000000000000000..a2910cfb1f0f1f6e3eca71a6bd028ec758b5d1b8
+--- /dev/null
++++ b/tests/snippets/mathematica/test_named_character.txt
+@@ -0,0 +1,15 @@
++# Named-character escapes such as \[Nu] must not produce Error tokens.
++# See https://github.com/pygments/pygments/issues/3097
++
++---input---
++(45*\[Nu])/32
++
++---tokens---
++'('           Punctuation
++'45'          Literal.Number.Integer
++'*'           Operator
++'\\[Nu]'      Literal.String.Escape
++')'           Punctuation
++'/'           Operator
++'32'          Literal.Number.Integer
++'\n'          Text.Whitespace

@@ -1,0 +1,3014 @@
+diff --git a/pom.xml b/pom.xml
+index 3d809099303424919d88402d35d6d1bdfec8450e..4f8c2e474c9e237e199d54906e3c99e0c014fb5d 100644
+--- a/pom.xml
++++ b/pom.xml
+@@ -478,6 +478,9 @@
+     <contributor>
+       <name>Michał Kordas</name>
+     </contributor>
++    <contributor>
++      <name>Felipe Adorno</name>
++    </contributor>
+   </contributors>
+ 
+   <!-- Lang should depend on very little -->
+diff --git a/src/changes/changes.xml b/src/changes/changes.xml
+index 27a7f5ce584ae07cacd4acfec7146cbb44041955..ab6245eb480e466016b429b736b4a3a44e006b9a 100644
+--- a/src/changes/changes.xml
++++ b/src/changes/changes.xml
+@@ -22,6 +22,18 @@
+   <body>
+ 
+   <release version="3.5" date="tba" description="tba">
++    <action issue="LANG-701" type="add" dev="britter" due-to="James Sawle">StringUtils join with var args</action>
++    <action issue="LANG-1130" type="fix" dev="britter">Fix critical issues reported by SonarQube</action>
++    <action issue="LANG-1131" type="fix" dev="britter">StrBuilder.equals(StrBuilder) doesn't check for null inputs</action>
++    <action issue="LANG-1105" type="add" dev="britter" due-to="Hendrik Saly">Add ThreadUtils - A utility class which provides helper methods related to java.lang.Thread</action>
++    <action issue="LANG-1031" type="add" dev="britter" due-to="Felipe Adorno">Add annotations to exclude fields from ReflectionEqualsBuilder, ReflectionToStringBuilder and ReflectionHashCodeBuilder</action>
++    <action issue="LANG-1127" type="add" dev="chas">Unit test helpers which set and reset default Locale and TimeZone</action>
++    <action issue="LANG-1128" type="fix" dev="britter" due-to="jacktan1991">JsonToStringStyle doesn't handle chars and objects correctly</action>
++    <action issue="LANG-456" type="fix" dev="britter" due-to="Bob Fields, Woosan Ko, Bruno P. Kinoshita">HashCodeBuilder throws StackOverflowError in bidirectional navigable association</action>
++    <action issue="LANG-1126" type="fix" dev="britter">DateFormatUtilsTest.testSMTP depends on the default Locale</action>
++    <action issue="LANG-1123" type="fix" dev="chas" due-to="Christian P. Momon">Unit test FastDatePrinterTimeZonesTest needs a timezone set</action>
++    <action issue="LANG-916" type="fix" dev="chas" due-to="Christian P. Momon">CLONE - DateFormatUtils.format does not correctly change Calendar TimeZone in certain situations</action>
++    <action issue="LANG-1116" type="fix" dev="chas" due-to="Aaron Sheldon">DateUtilsTest.testLang530 fails for some timezones</action>
+     <action issue="LANG-1114" type="fix" dev="britter" due-to="Andy Coates">TypeUtils.ParameterizedType#equals doesn't work with wildcard types</action>
+     <action issue="LANG-1119" type="add" dev="britter" due-to="Loic Guibert">Add rotate(string, int) method to StringUtils</action>
+     <action issue="LANG-1118" type="fix" dev="britter" due-to="Loic Guibert">StringUtils.repeat('z', -1) throws NegativeArraySizeException</action>
+diff --git a/src/main/java/org/apache/commons/lang3/AnnotationUtils.java b/src/main/java/org/apache/commons/lang3/AnnotationUtils.java
+index b3692690ba0374d35d3a3b6291c89d121e01866a..fee44c006533ce3ec88bb809763101da4b34dae7 100644
+--- a/src/main/java/org/apache/commons/lang3/AnnotationUtils.java
++++ b/src/main/java/org/apache/commons/lang3/AnnotationUtils.java
+@@ -41,7 +41,6 @@ import org.apache.commons.lang3.builder.ToStringStyle;
+  * <p>#ThreadSafe#</p>
+  *
+  * @since 3.0
+- * @version $Id$
+  */
+ public class AnnotationUtils {
+ 
+diff --git a/src/main/java/org/apache/commons/lang3/ArrayUtils.java b/src/main/java/org/apache/commons/lang3/ArrayUtils.java
+index 0afe0e40610ca110fa8f09da476ebd03cc70b61a..afb384d72f716b93e734d58e257a264caa75e151 100644
+--- a/src/main/java/org/apache/commons/lang3/ArrayUtils.java
++++ b/src/main/java/org/apache/commons/lang3/ArrayUtils.java
+@@ -41,7 +41,6 @@ import org.apache.commons.lang3.mutable.MutableInt;
+  *
+  * <p>#ThreadSafe#</p>
+  * @since 2.0
+- * @version $Id$
+  */
+ public class ArrayUtils {
+ 
+diff --git a/src/main/java/org/apache/commons/lang3/BitField.java b/src/main/java/org/apache/commons/lang3/BitField.java
+index 06e127e8854fd2e2575cf10bb3017d4973dc0d3a..824d242123dda5e08f27da9d0811c8d9ccd9c361 100644
+--- a/src/main/java/org/apache/commons/lang3/BitField.java
++++ b/src/main/java/org/apache/commons/lang3/BitField.java
+@@ -69,7 +69,6 @@ package org.apache.commons.lang3;
+  *</pre>
+  *
+  * @since 2.0
+- * @version $Id$
+  */
+ public class BitField {
+     
+diff --git a/src/main/java/org/apache/commons/lang3/BooleanUtils.java b/src/main/java/org/apache/commons/lang3/BooleanUtils.java
+index 1832fe0fdd4e97c2c76ffbe2a113f3fcf96a4d8b..ba5dea00c8d39937aca6063f4788cf4cb7f5b8d5 100644
+--- a/src/main/java/org/apache/commons/lang3/BooleanUtils.java
++++ b/src/main/java/org/apache/commons/lang3/BooleanUtils.java
+@@ -27,7 +27,6 @@ import org.apache.commons.lang3.math.NumberUtils;
+  *
+  * <p>#ThreadSafe#</p>
+  * @since 2.0
+- * @version $Id$
+  */
+ public class BooleanUtils {
+ 
+diff --git a/src/main/java/org/apache/commons/lang3/CharEncoding.java b/src/main/java/org/apache/commons/lang3/CharEncoding.java
+index 2b48829b9c53ce828606d3cfddc80a84eca73c94..ea682847c901d2b00b181ece6c814fe9ded6cbdc 100644
+--- a/src/main/java/org/apache/commons/lang3/CharEncoding.java
++++ b/src/main/java/org/apache/commons/lang3/CharEncoding.java
+@@ -32,7 +32,6 @@ import java.nio.charset.IllegalCharsetNameException;
+  *
+  * @see <a href="http://download.oracle.com/javase/1.3/docs/guide/intl/encoding.doc.html">JRE character encoding names</a>
+  * @since 2.1
+- * @version $Id$
+  */
+ public class CharEncoding {
+ 
+diff --git a/src/main/java/org/apache/commons/lang3/CharRange.java b/src/main/java/org/apache/commons/lang3/CharRange.java
+index 39b26f9fcccad9724627088520603eb823107d66..2ccda7c4eac1788b747fab5da94841b7506f2a31 100644
+--- a/src/main/java/org/apache/commons/lang3/CharRange.java
++++ b/src/main/java/org/apache/commons/lang3/CharRange.java
+@@ -27,7 +27,6 @@ import java.util.NoSuchElementException;
+  *
+  * <p>#ThreadSafe#</p>
+  * @since 1.0
+- * @version $Id$
+  */
+ // TODO: This is no longer public and will be removed later as CharSet is moved 
+ // to depend on Range.
+diff --git a/src/main/java/org/apache/commons/lang3/CharSequenceUtils.java b/src/main/java/org/apache/commons/lang3/CharSequenceUtils.java
+index 2395dc5ffcb024dba044189b4f574a1127c4e08b..4335c9bd9c231a255a0e48c583fc8e06cfe14d83 100644
+--- a/src/main/java/org/apache/commons/lang3/CharSequenceUtils.java
++++ b/src/main/java/org/apache/commons/lang3/CharSequenceUtils.java
+@@ -22,7 +22,6 @@ package org.apache.commons.lang3;
+  *
+  * @see CharSequence
+  * @since 3.0
+- * @version $Id$
+  */
+ public class CharSequenceUtils {
+ 
+diff --git a/src/main/java/org/apache/commons/lang3/CharSet.java b/src/main/java/org/apache/commons/lang3/CharSet.java
+index 5adae758f848f45ab8840bf171b942c243c6c8c1..2cd4c7bdeb42ec5f11cc1e8251df6ebd0d7d6a59 100644
+--- a/src/main/java/org/apache/commons/lang3/CharSet.java
++++ b/src/main/java/org/apache/commons/lang3/CharSet.java
+@@ -30,7 +30,6 @@ import java.util.Set;
+  *
+  * <p>#ThreadSafe#</p>
+  * @since 1.0
+- * @version $Id$
+  */
+ public class CharSet implements Serializable {
+ 
+diff --git a/src/main/java/org/apache/commons/lang3/CharSetUtils.java b/src/main/java/org/apache/commons/lang3/CharSetUtils.java
+index 704a8fb8509727beef0e822aedb351fc336cf8e9..859967410fd392ee97b0e79cf8e79f14a77874e1 100644
+--- a/src/main/java/org/apache/commons/lang3/CharSetUtils.java
++++ b/src/main/java/org/apache/commons/lang3/CharSetUtils.java
+@@ -26,7 +26,6 @@ package org.apache.commons.lang3;
+  * <p>#ThreadSafe#</p>
+  * @see CharSet
+  * @since 1.0
+- * @version $Id$
+  */
+ public class CharSetUtils {
+ 
+diff --git a/src/main/java/org/apache/commons/lang3/CharUtils.java b/src/main/java/org/apache/commons/lang3/CharUtils.java
+index eb0c2c684e6acdd33d7b662972f71cfc55b8d07c..3e957411557dd764328aa442854ce95ca1997fae 100644
+--- a/src/main/java/org/apache/commons/lang3/CharUtils.java
++++ b/src/main/java/org/apache/commons/lang3/CharUtils.java
+@@ -25,7 +25,6 @@ package org.apache.commons.lang3;
+  * 
+  * <p>#ThreadSafe#</p>
+  * @since 2.1
+- * @version $Id$
+  */
+ public class CharUtils {
+     
+diff --git a/src/main/java/org/apache/commons/lang3/ClassPathUtils.java b/src/main/java/org/apache/commons/lang3/ClassPathUtils.java
+index ea42425e8c9a54de68dd2df22f1a6f9f2d3c9585..2a9f16f0e00ddcf8e3370d172ff2d0258513320e 100644
+--- a/src/main/java/org/apache/commons/lang3/ClassPathUtils.java
++++ b/src/main/java/org/apache/commons/lang3/ClassPathUtils.java
+@@ -22,7 +22,6 @@ package org.apache.commons.lang3;
+  * <p>The methods of this class do not allow {@code null} inputs.</p>
+  *
+  * @since 3.3
+- * @version $Id$
+  */
+ //@Immutable
+ public class ClassPathUtils {
+diff --git a/src/main/java/org/apache/commons/lang3/ClassUtils.java b/src/main/java/org/apache/commons/lang3/ClassUtils.java
+index 92ecb155751ea164e976d0081cbb8be00470af1b..0a7480ff8d991e555be679f86377dc19d3eb64d7 100644
+--- a/src/main/java/org/apache/commons/lang3/ClassUtils.java
++++ b/src/main/java/org/apache/commons/lang3/ClassUtils.java
+@@ -42,7 +42,6 @@ import org.apache.commons.lang3.mutable.MutableObject;
+  * {@code [I}. </p>
+  *
+  * @since 2.0
+- * @version $Id$
+  */
+ public class ClassUtils {
+     /**
+@@ -94,8 +93,9 @@ public class ClassUtils {
+      */
+     private static final Map<Class<?>, Class<?>> wrapperPrimitiveMap = new HashMap<Class<?>, Class<?>>();
+     static {
+-        for (final Class<?> primitiveClass : primitiveWrapperMap.keySet()) {
+-            final Class<?> wrapperClass = primitiveWrapperMap.get(primitiveClass);
++        for (final Map.Entry<Class<?>, Class<?>> entry : primitiveWrapperMap.entrySet()) {
++            final Class<?> primitiveClass = entry.getKey();
++            final Class<?> wrapperClass = entry.getValue();
+             if (!primitiveClass.equals(wrapperClass)) {
+                 wrapperPrimitiveMap.put(wrapperClass, primitiveClass);
+             }
+diff --git a/src/main/java/org/apache/commons/lang3/Conversion.java b/src/main/java/org/apache/commons/lang3/Conversion.java
+index 10f2daef54a038a01b5a571bbd2817e9016a21c8..05df594303827b27a516167fa97462af566358b2 100644
+--- a/src/main/java/org/apache/commons/lang3/Conversion.java
++++ b/src/main/java/org/apache/commons/lang3/Conversion.java
+@@ -61,7 +61,6 @@ import java.util.UUID;
+  * </p>
+  * 
+  * @since Lang 3.2
+- * @version $Id$
+  */
+ 
+ public class Conversion {
+diff --git a/src/main/java/org/apache/commons/lang3/EnumUtils.java b/src/main/java/org/apache/commons/lang3/EnumUtils.java
+index 242ed4051691cd746cd9e0402f0dd2e77ce5a51b..f98506208d0e2aebfac2d656fb3a998d63fb47ac 100644
+--- a/src/main/java/org/apache/commons/lang3/EnumUtils.java
++++ b/src/main/java/org/apache/commons/lang3/EnumUtils.java
+@@ -30,7 +30,6 @@ import java.util.Map;
+  * <p>#ThreadSafe#</p>
+  *
+  * @since 3.0
+- * @version $Id$
+  */
+ public class EnumUtils {
+ 
+diff --git a/src/main/java/org/apache/commons/lang3/JavaVersion.java b/src/main/java/org/apache/commons/lang3/JavaVersion.java
+index 822699d244065020054706b6bef0984bd877bbb2..e37d5ba9cefb365157abdad6500eb937348fb0d7 100644
+--- a/src/main/java/org/apache/commons/lang3/JavaVersion.java
++++ b/src/main/java/org/apache/commons/lang3/JavaVersion.java
+@@ -22,7 +22,6 @@ package org.apache.commons.lang3;
+  * <em>java.specification.version</em> System property. </p>
+  *
+  * @since 3.0
+- * @version $Id$
+  */
+ public enum JavaVersion {
+     
+diff --git a/src/main/java/org/apache/commons/lang3/LocaleUtils.java b/src/main/java/org/apache/commons/lang3/LocaleUtils.java
+index cf2e859d9703ea8381f2fd90b10491ccd0df1d91..3bd2ec1da02f93bef9be6f532eb3cd40087041cf 100644
+--- a/src/main/java/org/apache/commons/lang3/LocaleUtils.java
++++ b/src/main/java/org/apache/commons/lang3/LocaleUtils.java
+@@ -34,7 +34,6 @@ import java.util.concurrent.ConcurrentMap;
+  * Each method documents its behaviour in more detail.</p>
+  *
+  * @since 2.2
+- * @version $Id$
+  */
+ public class LocaleUtils {
+ 
+diff --git a/src/main/java/org/apache/commons/lang3/NotImplementedException.java b/src/main/java/org/apache/commons/lang3/NotImplementedException.java
+index 51038298f39280ebf574c19e89e603247e5b84a0..82e3784e883042a3da7a6b5c9fe7f9f5e2871dc0 100644
+--- a/src/main/java/org/apache/commons/lang3/NotImplementedException.java
++++ b/src/main/java/org/apache/commons/lang3/NotImplementedException.java
+@@ -39,7 +39,6 @@ package org.apache.commons.lang3;
+  * This class was originally added in Lang 2.0, but removed in 3.0.
+  *
+  * @since 3.2 
+- * @version $Id: NotImplementedException.java 905636 2010-02-02 14:03:32Z niallp $
+  */
+ public class NotImplementedException extends UnsupportedOperationException {
+ 
+diff --git a/src/main/java/org/apache/commons/lang3/ObjectUtils.java b/src/main/java/org/apache/commons/lang3/ObjectUtils.java
+index 8a8a7ab15f0562055e9b859145b559d1fb355fba..46d35dd347d097165fea0b17b1be3dc1a8939439 100644
+--- a/src/main/java/org/apache/commons/lang3/ObjectUtils.java
++++ b/src/main/java/org/apache/commons/lang3/ObjectUtils.java
+@@ -40,7 +40,6 @@ import org.apache.commons.lang3.text.StrBuilder;
+  *
+  * <p>#ThreadSafe#</p>
+  * @since 1.0
+- * @version $Id$
+  */
+ //@Immutable
+ public class ObjectUtils {
+diff --git a/src/main/java/org/apache/commons/lang3/RandomStringUtils.java b/src/main/java/org/apache/commons/lang3/RandomStringUtils.java
+index 9c09f54a05ed08d7c2a3ce6da7696e88f8f7c8e5..f9ed698dfd42c8ffbf6a17ebb6c2b5492f83ace8 100644
+--- a/src/main/java/org/apache/commons/lang3/RandomStringUtils.java
++++ b/src/main/java/org/apache/commons/lang3/RandomStringUtils.java
+@@ -31,7 +31,6 @@ import java.util.Random;
+  *
+  * <p>#ThreadSafe#</p>
+  * @since 1.0
+- * @version $Id$
+  */
+ public class RandomStringUtils {
+ 
+diff --git a/src/main/java/org/apache/commons/lang3/RandomUtils.java b/src/main/java/org/apache/commons/lang3/RandomUtils.java
+index 0846a237ce51b801a718ab66b0ee64f51533c74b..6bba2747fc77974b055348a84952a08d29069459 100644
+--- a/src/main/java/org/apache/commons/lang3/RandomUtils.java
++++ b/src/main/java/org/apache/commons/lang3/RandomUtils.java
+@@ -22,8 +22,6 @@ import java.util.Random;
+  * <p>Utility library that supplements the standard {@link Random} class.</p>
+  * 
+  * @since 3.3
+- *
+- * @version $Id$
+  */
+ public class RandomUtils {
+ 
+diff --git a/src/main/java/org/apache/commons/lang3/Range.java b/src/main/java/org/apache/commons/lang3/Range.java
+index 62d219c3afadac60d92f6fd97a3de73baef1903d..450897f653714f4e59a01b46947c6914854b1949 100644
+--- a/src/main/java/org/apache/commons/lang3/Range.java
++++ b/src/main/java/org/apache/commons/lang3/Range.java
+@@ -28,7 +28,6 @@ import java.util.Comparator;
+  * <p>#ThreadSafe# if the objects and comparator are thread-safe</p>
+  * 
+  * @since 3.0
+- * @version $Id$
+  */
+ public final class Range<T> implements Serializable {
+ 
+diff --git a/src/main/java/org/apache/commons/lang3/SerializationException.java b/src/main/java/org/apache/commons/lang3/SerializationException.java
+index 20e6cc4c698207a2bd36ebd3140b16d745d6fe86..588eff05abcd52e9cf480b84bb38c5175558675b 100644
+--- a/src/main/java/org/apache/commons/lang3/SerializationException.java
++++ b/src/main/java/org/apache/commons/lang3/SerializationException.java
+@@ -23,7 +23,6 @@ package org.apache.commons.lang3;
+  *
+  * <p>#NotThreadSafe# because Throwable is not thread-safe</p>
+  * @since 1.0
+- * @version $Id$
+  */
+ public class SerializationException extends RuntimeException {
+ 
+diff --git a/src/main/java/org/apache/commons/lang3/SerializationUtils.java b/src/main/java/org/apache/commons/lang3/SerializationUtils.java
+index d4384368ab657a546145248cd63f1bfe3419ce81..68ebbd5b6099cf5dd9843176cbd444b9b13b20aa 100644
+--- a/src/main/java/org/apache/commons/lang3/SerializationUtils.java
++++ b/src/main/java/org/apache/commons/lang3/SerializationUtils.java
+@@ -43,7 +43,6 @@ import java.util.Map;
+  *
+  * <p>#ThreadSafe#</p>
+  * @since 1.0
+- * @version $Id$
+  */
+ public class SerializationUtils {
+ 
+diff --git a/src/main/java/org/apache/commons/lang3/StringEscapeUtils.java b/src/main/java/org/apache/commons/lang3/StringEscapeUtils.java
+index da19c00fb9635c972a949f096a8c1808cee07cce..a69f3f3fb4f0f2d2f3dd20034249ba832f0d87d6 100644
+--- a/src/main/java/org/apache/commons/lang3/StringEscapeUtils.java
++++ b/src/main/java/org/apache/commons/lang3/StringEscapeUtils.java
+@@ -36,7 +36,6 @@ import org.apache.commons.lang3.text.translate.UnicodeUnpairedSurrogateRemover;
+  *
+  * <p>#ThreadSafe#</p>
+  * @since 2.0
+- * @version $Id$
+  */
+ public class StringEscapeUtils {
+ 
+diff --git a/src/main/java/org/apache/commons/lang3/StringUtils.java b/src/main/java/org/apache/commons/lang3/StringUtils.java
+index 279c472b9b77a27ec13cfaa070ad7b2fafd07791..726ecc056f3e981bca491bdbfa3bbc690a0fddb8 100644
+--- a/src/main/java/org/apache/commons/lang3/StringUtils.java
++++ b/src/main/java/org/apache/commons/lang3/StringUtils.java
+@@ -17,7 +17,6 @@
+ package org.apache.commons.lang3;
+ 
+ import java.io.UnsupportedEncodingException;
+-
+ import java.nio.charset.Charset;
+ import java.text.Normalizer;
+ import java.util.ArrayList;
+@@ -112,7 +111,6 @@ import java.util.regex.Pattern;
+  * <p>#ThreadSafe#</p>
+  * @see java.lang.String
+  * @since 1.0
+- * @version $Id$
+  */
+ //@Immutable
+ public class StringUtils {
+@@ -1597,6 +1595,7 @@ public class StringUtils {
+      * StringUtils.containsAny(*, [])                  = false
+      * StringUtils.containsAny("zzabyycdxx",['z','a']) = true
+      * StringUtils.containsAny("zzabyycdxx",['b','y']) = true
++     * StringUtils.containsAny("zzabyycdxx",['z','y']) = true
+      * StringUtils.containsAny("aba", ['z'])           = false
+      * </pre>
+      *
+@@ -1654,6 +1653,7 @@ public class StringUtils {
+      * StringUtils.containsAny(*, "")              = false
+      * StringUtils.containsAny("zzabyycdxx", "za") = true
+      * StringUtils.containsAny("zzabyycdxx", "by") = true
++     * StringUtils.containsAny("zzabyycdxx", "zy") = true
+      * StringUtils.containsAny("aba","z")          = false
+      * </pre>
+      *
+@@ -1686,6 +1686,7 @@ public class StringUtils {
+      * StringUtils.containsAny(*, null)            = false
+      * StringUtils.containsAny(*, [])              = false
+      * StringUtils.containsAny("abcd", "ab", "cd") = false
++     * StringUtils.containsAny("abcd", "ab", null) = false
+      * StringUtils.containsAny("abc", "d", "abc")  = true
+      * </pre>
+      *
+@@ -4179,6 +4180,48 @@ public class StringUtils {
+         return join(iterable.iterator(), separator);
+     }
+ 
++    /**
++     * <p>Joins the elements of the provided varargs into a
++     * single String containing the provided elements.</p>
++     *
++     * <p>No delimiter is added before or after the list.
++     * {@code null} elements and separator are treated as empty Strings ("").</p>
++     *
++     * <pre>
++     * StringUtils.joinWith(",", {"a", "b"})        = "a,b"
++     * StringUtils.joinWith(",", {"a", "b",""})     = "a,b,"
++     * StringUtils.joinWith(",", {"a", null, "b"})  = "a,,b"
++     * StringUtils.joinWith(null, {"a", "b"})       = "ab"
++     * </pre>
++     *
++     * @param separator the separator character to use, null treated as ""
++     * @param objects the varargs providing the values to join together. {@code null} elements are treated as ""
++     * @return the joined String.
++     * @throws java.lang.IllegalArgumentException if a null varargs is provided
++     */
++    public static String joinWith(final String separator, final Object... objects) {
++        if (objects == null) {
++            throw new IllegalArgumentException("Object varargs must not be null");
++        }
++
++        final String sanitizedSeparator = defaultString(separator, StringUtils.EMPTY);
++
++        final StringBuilder result = new StringBuilder();
++
++        final Iterator<Object> iterator = Arrays.asList(objects).iterator();
++        while (iterator.hasNext()) {
++            @SuppressWarnings("deprecation") // o.k. to use as long as we do not require java 7 or greater
++            final String value = ObjectUtils.toString(iterator.next());
++            result.append(value);
++
++            if (iterator.hasNext()) {
++                result.append(sanitizedSeparator);
++            }
++        }
++
++        return result.toString();
++    }
++
+     // Delete
+     //-----------------------------------------------------------------------
+     /**
+diff --git a/src/main/java/org/apache/commons/lang3/SystemUtils.java b/src/main/java/org/apache/commons/lang3/SystemUtils.java
+index 292b1b4d49467f416f031eae0eb34e455e4eeece..527cf0e366c552728c4418f9dca725e0e1619336 100644
+--- a/src/main/java/org/apache/commons/lang3/SystemUtils.java
++++ b/src/main/java/org/apache/commons/lang3/SystemUtils.java
+@@ -31,7 +31,6 @@ import java.io.File;
+  * </p>
+  *
+  * @since 1.0
+- * @version $Id$
+  */
+ public class SystemUtils {
+ 
+diff --git a/src/main/java/org/apache/commons/lang3/ThreadUtils.java b/src/main/java/org/apache/commons/lang3/ThreadUtils.java
+new file mode 100644
+index 0000000000000000000000000000000000000000..1174ff7ad7caaa8c20c2b56d6b01489ce77633f6
+--- /dev/null
++++ b/src/main/java/org/apache/commons/lang3/ThreadUtils.java
+@@ -0,0 +1,466 @@
++/*
++ * Licensed to the Apache Software Foundation (ASF) under one or more
++ * contributor license agreements.  See the NOTICE file distributed with
++ * this work for additional information regarding copyright ownership.
++ * The ASF licenses this file to You under the Apache License, Version 2.0
++ * (the "License"); you may not use this file except in compliance with
++ * the License.  You may obtain a copy of the License at
++ *
++ *      http://www.apache.org/licenses/LICENSE-2.0
++ *
++ * Unless required by applicable law or agreed to in writing, software
++ * distributed under the License is distributed on an "AS IS" BASIS,
++ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
++ * See the License for the specific language governing permissions and
++ * limitations under the License.
++ */
++package org.apache.commons.lang3;
++
++import java.util.ArrayList;
++import java.util.Collection;
++import java.util.Collections;
++import java.util.List;
++
++/**
++ * <p>
++ * Helpers for {@code java.lang.Thread} and {@code java.lang.ThreadGroup}.
++ * </p>
++ * <p>
++ * #ThreadSafe#
++ * </p>
++ *
++ * @see java.lang.Thread
++ * @see java.lang.ThreadGroup
++ * @since 3.5
++ */
++public class ThreadUtils {
++
++    /**
++     * Return the active thread with the specified id if it belong's to the specified thread group.
++     *
++     * @param threadId The thread id
++     * @param threadGroup The thread group
++     * @return The thread which belongs to a specified thread group and the thread's id match the specified id.
++     * {@code null} is returned if no such thread exists
++     * @throws IllegalArgumentException if the specified id is zero or negative or the group is null
++     * @throws  SecurityException
++     *          if the current thread cannot access the system thread group
++     *
++     * @throws  SecurityException  if the current thread cannot modify
++     *          thread groups from this thread's thread group up to the system thread group
++     */
++    public static Thread findThreadById(final long threadId, final ThreadGroup threadGroup) {
++        if (threadGroup == null) {
++            throw new IllegalArgumentException("The thread group must not be null");
++        }
++        final Thread thread = findThreadById(threadId);
++        if(thread != null && threadGroup.equals(thread.getThreadGroup())) {
++            return thread;
++        }
++        return null;
++    }
++
++    /**
++     * Return the active thread with the specified id if it belong's to a thread group with the specified group name.
++     *
++     * @param threadId The thread id
++     * @param threadGroupName The thread group name
++     * @return The threads which belongs to a thread group with the specified group name and the thread's id match the specified id.
++     * {@code null} is returned if no such thread exists
++     * @throws IllegalArgumentException if the specified id is zero or negative or the group name is null
++     * @throws  SecurityException
++     *          if the current thread cannot access the system thread group
++     *
++     * @throws  SecurityException  if the current thread cannot modify
++     *          thread groups from this thread's thread group up to the system thread group
++     */
++    public static Thread findThreadById(final long threadId, final String threadGroupName) {
++        if (threadGroupName == null) {
++            throw new IllegalArgumentException("The thread group name must not be null");
++        }
++        final Thread thread = findThreadById(threadId);
++        if(thread != null && thread.getThreadGroup() != null && thread.getThreadGroup().getName().equals(threadGroupName)) {
++            return thread;
++        }
++        return null;
++    }
++
++    /**
++     * Return active threads with the specified name if they belong to a specified thread group.
++     *
++     * @param threadName The thread name
++     * @param threadGroup The thread group
++     * @return The threads which belongs to a thread group and the thread's name match the specified name,
++     * An empty collection is returned if no such thread exists. The collection returned is always unmodifiable.
++     * @throws IllegalArgumentException if the specified thread name or group is null
++     * @throws  SecurityException
++     *          if the current thread cannot access the system thread group
++     *
++     * @throws  SecurityException  if the current thread cannot modify
++     *          thread groups from this thread's thread group up to the system thread group
++     */
++    public static Collection<Thread> findThreadsByName(final String threadName, final ThreadGroup threadGroup) {
++        return findThreads(threadGroup, false, new NamePredicate(threadName));
++    }
++
++    /**
++     * Return active threads with the specified name if they belong to a thread group with the specified group name.
++     *
++     * @param threadName The thread name
++     * @param threadGroupName The thread group name
++     * @return The threads which belongs to a thread group with the specified group name and the thread's name match the specified name,
++     * An empty collection is returned if no such thread exists. The collection returned is always unmodifiable.
++     * @throws IllegalArgumentException if the specified thread name or group name is null
++     * @throws  SecurityException
++     *          if the current thread cannot access the system thread group
++     *
++     * @throws  SecurityException  if the current thread cannot modify
++     *          thread groups from this thread's thread group up to the system thread group
++     */
++    public static Collection<Thread> findThreadsByName(final String threadName, final String threadGroupName) {
++        if (threadName == null) {
++            throw new IllegalArgumentException("The thread name must not be null");
++        }
++        if (threadGroupName == null) {
++            throw new IllegalArgumentException("The thread group name must not be null");
++        }
++
++        final Collection<ThreadGroup> threadGroups = findThreadGroups(new NamePredicate(threadGroupName));
++
++        if(threadGroups.isEmpty()) {
++            return Collections.emptyList();
++        }
++
++        final Collection<Thread> result = new ArrayList<Thread>();
++        final NamePredicate threadNamePredicate = new NamePredicate(threadName);
++        for(final ThreadGroup group : threadGroups) {
++            result.addAll(findThreads(group, false, threadNamePredicate));
++        }
++        return Collections.unmodifiableCollection(result);
++    }
++
++    /**
++     * Return active thread groups with the specified group name.
++     *
++     * @param threadGroupName The thread group name
++     * @return the thread groups with the specified group name or an empty collection if no such thread group exists. The collection returned is always unmodifiable.
++     * @throws IllegalArgumentException if group name is null
++     * @throws  SecurityException
++     *          if the current thread cannot access the system thread group
++     *
++     * @throws  SecurityException  if the current thread cannot modify
++     *          thread groups from this thread's thread group up to the system thread group
++     */
++    public static Collection<ThreadGroup> findThreadGroupsByName(final String threadGroupName) {
++        return findThreadGroups(new NamePredicate(threadGroupName));
++    }
++
++    /**
++     * Return all active thread groups excluding the system thread group (A thread group is active if it has been not destroyed).
++     *
++     * @return all thread groups excluding the system thread group. The collection returned is always unmodifiable.
++     * @throws  SecurityException
++     *          if the current thread cannot access the system thread group
++     *
++     * @throws  SecurityException  if the current thread cannot modify
++     *          thread groups from this thread's thread group up to the system thread group
++     */
++    public static Collection<ThreadGroup> getAllThreadGroups() {
++        return findThreadGroups(ALWAYS_TRUE_PREDICATE);
++    }
++
++    /**
++     * Return the system thread group (sometimes also referred as "root thread group").
++     *
++     * @return the system thread group
++     * @throws  SecurityException  if the current thread cannot modify
++     *          thread groups from this thread's thread group up to the system thread group
++     */
++    public static ThreadGroup getSystemThreadGroup() {
++        ThreadGroup threadGroup = Thread.currentThread().getThreadGroup();
++        while(threadGroup.getParent() != null) {
++            threadGroup = threadGroup.getParent();
++        }
++        return threadGroup;
++    }
++
++    /**
++     * Return all active threads (A thread is active if it has been started and has not yet died).
++     *
++     * @return all active threads. The collection returned is always unmodifiable.
++     * @throws  SecurityException
++     *          if the current thread cannot access the system thread group
++     *
++     * @throws  SecurityException  if the current thread cannot modify
++     *          thread groups from this thread's thread group up to the system thread group
++     */
++    public static Collection<Thread> getAllThreads() {
++        return findThreads(ALWAYS_TRUE_PREDICATE);
++    }
++
++    /**
++     * Return active threads with the specified name.
++     *
++     * @param threadName The thread name
++     * @return The threads with the specified name or an empty collection if no such thread exists. The collection returned is always unmodifiable.
++     * @throws IllegalArgumentException if the specified name is null
++     * @throws  SecurityException
++     *          if the current thread cannot access the system thread group
++     *
++     * @throws  SecurityException  if the current thread cannot modify
++     *          thread groups from this thread's thread group up to the system thread group
++     */
++    public static Collection<Thread> findThreadsByName(final String threadName) {
++        return findThreads(new NamePredicate(threadName));
++    }
++
++    /**
++     * Return the active thread with the specified id.
++     *
++     * @param threadId The thread id
++     * @return The thread with the specified id or {@code null} if no such thread exists
++     * @throws IllegalArgumentException if the specified id is zero or negative
++     * @throws  SecurityException
++     *          if the current thread cannot access the system thread group
++     *
++     * @throws  SecurityException  if the current thread cannot modify
++     *          thread groups from this thread's thread group up to the system thread group
++     */
++    public static Thread findThreadById(final long threadId) {
++        final Collection<Thread> result = findThreads(new ThreadIdPredicate(threadId));
++
++        if(result.isEmpty()) {
++            return null;
++        } else {
++            return result.iterator().next();
++        }
++
++    }
++
++    /**
++     * <p>
++     * ThreadUtils instances should NOT be constructed in standard programming. Instead, the class should be used as
++     * {@code ThreadUtils.getAllThreads()}
++     * </p>
++     * <p>
++     * This constructor is public to permit tools that require a JavaBean instance to operate.
++     * </p>
++     */
++    public ThreadUtils() {
++        super();
++    }
++
++    /**
++     * A predicate for selecting threads.
++     */
++    //if java minimal version for lang becomes 1.8 extend this interface from java.util.function.Predicate
++    public interface ThreadPredicate /*extends java.util.function.Predicate<Thread>*/{
++
++        /**
++         * Evaluates this predicate on the given thread.
++         * @param thread the thread
++         * @return {@code true} if the thread matches the predicate, otherwise {@code false}
++         */
++        boolean test(Thread thread);
++    }
++
++    /**
++     * A predicate for selecting threadgroups.
++     */
++    //if java minimal version for lang becomes 1.8 extend this interface from java.util.function.Predicate
++    public interface ThreadGroupPredicate /*extends java.util.function.Predicate<ThreadGroup>*/{
++
++        /**
++         * Evaluates this predicate on the given threadgroup.
++         * @param threadGroup the threadgroup
++         * @return {@code true} if the threadGroup matches the predicate, otherwise {@code false}
++         */
++        boolean test(ThreadGroup threadGroup);
++    }
++
++    /**
++     * Predicate which always returns true.
++     */
++    public static final AlwaysTruePredicate ALWAYS_TRUE_PREDICATE = new AlwaysTruePredicate();
++
++    /**
++     * A predicate implementation which always returns true.
++     */
++    private final static class AlwaysTruePredicate implements ThreadPredicate, ThreadGroupPredicate{
++
++        private AlwaysTruePredicate() {
++        }
++
++        @Override
++        public boolean test(final ThreadGroup threadGroup) {
++            return true;
++        }
++
++        @Override
++        public boolean test(final Thread thread) {
++            return true;
++        }
++    }
++
++    /**
++     * A predicate implementation which matches a thread or threadgroup name.
++     */
++    public static class NamePredicate implements ThreadPredicate, ThreadGroupPredicate {
++
++        private final String name;
++
++        /**
++         * Predicate constructor
++         *
++         * @param name thread or threadgroup name
++         * @throws IllegalArgumentException if the name is {@code null}
++         */
++        public NamePredicate(final String name) {
++            super();
++            if (name == null) {
++                throw new IllegalArgumentException("The name must not be null");
++            }
++            this.name = name;
++        }
++
++        @Override
++        public boolean test(final ThreadGroup threadGroup) {
++            return threadGroup != null && threadGroup.getName().equals(name);
++        }
++
++        @Override
++        public boolean test(final Thread thread) {
++            return thread != null && thread.getName().equals(name);
++        }
++    }
++
++    /**
++     * A predicate implementation which matches a thread id.
++     */
++    public static class ThreadIdPredicate implements ThreadPredicate {
++
++        private final long threadId;
++
++        /**
++         * Predicate constructor
++         *
++         * @param threadId the threadId to match
++         * @throws IllegalArgumentException if the threadId is zero or negative
++         */
++        public ThreadIdPredicate(final long threadId) {
++            super();
++            if (threadId <= 0) {
++                throw new IllegalArgumentException("The thread id must be greater than zero");
++            }
++            this.threadId = threadId;
++        }
++
++        @Override
++        public boolean test(final Thread thread) {
++            return thread != null && thread.getId() == threadId;
++        }
++    }
++
++    /**
++     * Select all active threads which match the given predicate.
++     *
++     * @param predicate the predicate
++     * @return An unmodifiable {@code Collection} of active threads matching the given predicate
++     *
++     * @throws IllegalArgumentException if the predicate is null
++     * @throws  SecurityException
++     *          if the current thread cannot access the system thread group
++     * @throws  SecurityException  if the current thread cannot modify
++     *          thread groups from this thread's thread group up to the system thread group
++     */
++    public static Collection<Thread> findThreads(final ThreadPredicate predicate){
++        return findThreads(getSystemThreadGroup(), true, predicate);
++    }
++
++    /**
++     * Select all active threadgroups which match the given predicate.
++     *
++     * @param predicate the predicate
++     * @return An unmodifiable {@code Collection} of active threadgroups matching the given predicate
++     * @throws IllegalArgumentException if the predicate is null
++     * @throws  SecurityException
++     *          if the current thread cannot access the system thread group
++     * @throws  SecurityException  if the current thread cannot modify
++     *          thread groups from this thread's thread group up to the system thread group
++     */
++    public static Collection<ThreadGroup> findThreadGroups(final ThreadGroupPredicate predicate){
++        return findThreadGroups(getSystemThreadGroup(), true, predicate);
++    }
++
++    /**
++     * Select all active threads which match the given predicate and which belongs to the given thread group (or one of its subgroups).
++     *
++     * @param group the thread group
++     * @param recurse if {@code true} then evaluate the predicate recursively on all threads in all subgroups of the given group
++     * @param predicate the predicate
++     * @return An unmodifiable {@code Collection} of active threads which match the given predicate and which belongs to the given thread group
++     * @throws IllegalArgumentException if the given group or predicate is null
++     * @throws  SecurityException  if the current thread cannot modify
++     *          thread groups from this thread's thread group up to the system thread group
++     */
++    public static Collection<Thread> findThreads(final ThreadGroup group, final boolean recurse, final ThreadPredicate predicate) {
++        if (group == null) {
++            throw new IllegalArgumentException("The group must not be null");
++        }
++        if (predicate == null) {
++            throw new IllegalArgumentException("The predicate must not be null");
++        }
++
++        int count = group.activeCount();
++        Thread[] threads;
++        do {
++            threads = new Thread[count + (count / 2) + 1]; //slightly grow the array size
++            count = group.enumerate(threads, recurse);
++            //return value of enumerate() must be strictly less than the array size according to javadoc
++        } while (count >= threads.length);
++
++        final List<Thread> result = new ArrayList<Thread>(count);
++        for (int i = 0; i < count; ++i) {
++            if (predicate.test(threads[i])) {
++                result.add(threads[i]);
++            }
++        }
++        return Collections.unmodifiableCollection(result);
++    }
++
++    /**
++     * Select all active threadgroups which match the given predicate and which is a subgroup of the given thread group (or one of its subgroups).
++     *
++     * @param group the thread group
++     * @param recurse if {@code true} then evaluate the predicate recursively on all threadgroups in all subgroups of the given group
++     * @param predicate the predicate
++     * @return An unmodifiable {@code Collection} of active threadgroups which match the given predicate and which is a subgroup of the given thread group
++     * @throws IllegalArgumentException if the given group or predicate is null
++     * @throws  SecurityException  if the current thread cannot modify
++     *          thread groups from this thread's thread group up to the system thread group
++     */
++    public static Collection<ThreadGroup> findThreadGroups(final ThreadGroup group, final boolean recurse, final ThreadGroupPredicate predicate){
++        if (group == null) {
++            throw new IllegalArgumentException("The group must not be null");
++        }
++        if (predicate == null) {
++            throw new IllegalArgumentException("The predicate must not be null");
++        }
++
++        int count = group.activeGroupCount();
++        ThreadGroup[] threadGroups;
++        do {
++            threadGroups = new ThreadGroup[count + (count / 2) + 1]; //slightly grow the array size
++            count = group.enumerate(threadGroups, recurse);
++            //return value of enumerate() must be strictly less than the array size according to javadoc
++        } while(count >= threadGroups.length);
++
++        final List<ThreadGroup> result = new ArrayList<ThreadGroup>(count);
++        for(int i = 0; i < count; ++i) {
++            if(predicate.test(threadGroups[i])) {
++                result.add(threadGroups[i]);
++            }
++        }
++        return Collections.unmodifiableCollection(result);
++    }
++}
+diff --git a/src/main/java/org/apache/commons/lang3/Validate.java b/src/main/java/org/apache/commons/lang3/Validate.java
+index 3b7c766dcd77adb5b1518e6e5519b04ee7d60689..f8308954914ee7a28579f17cf622aa48d10195af 100644
+--- a/src/main/java/org/apache/commons/lang3/Validate.java
++++ b/src/main/java/org/apache/commons/lang3/Validate.java
+@@ -40,7 +40,6 @@ import java.util.regex.Pattern;
+  * </pre>
+  *
+  * <p>#ThreadSafe#</p>
+- * @version $Id$
+  * @see java.lang.String#format(String, Object...)
+  * @since 2.0
+  */
+diff --git a/src/main/java/org/apache/commons/lang3/builder/Builder.java b/src/main/java/org/apache/commons/lang3/builder/Builder.java
+index eeb207d3e29d87269d8243ec49f59b7159e27883..496d2248ef893bb9bb05e7e41fd3edab7a05e03e 100644
+--- a/src/main/java/org/apache/commons/lang3/builder/Builder.java
++++ b/src/main/java/org/apache/commons/lang3/builder/Builder.java
+@@ -75,7 +75,6 @@ package org.apache.commons.lang3.builder;
+  * @param <T> the type of object that the builder will construct or compute.
+  * 
+  * @since 3.0
+- * @version $Id$
+  */
+ public interface Builder<T> {
+ 
+diff --git a/src/main/java/org/apache/commons/lang3/builder/CompareToBuilder.java b/src/main/java/org/apache/commons/lang3/builder/CompareToBuilder.java
+index 52e33f295ddd99a67d96c7fb897d8dc2b12d8b5b..56d2fcd912aede8e359494c53b571c0749b81ba3 100644
+--- a/src/main/java/org/apache/commons/lang3/builder/CompareToBuilder.java
++++ b/src/main/java/org/apache/commons/lang3/builder/CompareToBuilder.java
+@@ -91,7 +91,6 @@ import org.apache.commons.lang3.ArrayUtils;
+  * @see EqualsBuilder
+  * @see HashCodeBuilder
+  * @since 1.0
+- * @version $Id$
+  */
+ public class CompareToBuilder implements Builder<Integer> {
+     
+diff --git a/src/main/java/org/apache/commons/lang3/builder/Diff.java b/src/main/java/org/apache/commons/lang3/builder/Diff.java
+index 7d3f28def6ad643b2b3462f207ddf12766d46cd9..d1b0dafd2d82a94e9e3da07b8452ecc874bf52ba 100644
+--- a/src/main/java/org/apache/commons/lang3/builder/Diff.java
++++ b/src/main/java/org/apache/commons/lang3/builder/Diff.java
+@@ -39,7 +39,6 @@ import org.apache.commons.lang3.tuple.Pair;
+  *            between primitive objects are stored as their Object wrapper
+  *            equivalent.
+  * @since 3.3
+- * @version $Id$
+  */
+ public abstract class Diff<T> extends Pair<T, T> {
+ 
+diff --git a/src/main/java/org/apache/commons/lang3/builder/DiffBuilder.java b/src/main/java/org/apache/commons/lang3/builder/DiffBuilder.java
+index e4f4ed0fa207ddf237b183e0094bcf70ca4f5ea5..7a97e9cae7cd43f81dd82c187ebacf650c9dfacd 100644
+--- a/src/main/java/org/apache/commons/lang3/builder/DiffBuilder.java
++++ b/src/main/java/org/apache/commons/lang3/builder/DiffBuilder.java
+@@ -58,7 +58,6 @@ import org.apache.commons.lang3.ArrayUtils;
+  * </p>
+  * 
+  * @since 3.3
+- * @version $Id$
+  * @see Diffable
+  * @see Diff
+  * @see DiffResult
+diff --git a/src/main/java/org/apache/commons/lang3/builder/DiffResult.java b/src/main/java/org/apache/commons/lang3/builder/DiffResult.java
+index c321ba5c1606f0effbceebad2555a0ce4d4de9b5..2dbd85eb685b933386885ed7cc765a287df32867 100644
+--- a/src/main/java/org/apache/commons/lang3/builder/DiffResult.java
++++ b/src/main/java/org/apache/commons/lang3/builder/DiffResult.java
+@@ -32,7 +32,6 @@ import java.util.List;
+  * </p>
+  * 
+  * @since 3.3
+- * @version $Id$
+  */
+ public class DiffResult implements Iterable<Diff<?>> {
+ 
+diff --git a/src/main/java/org/apache/commons/lang3/builder/Diffable.java b/src/main/java/org/apache/commons/lang3/builder/Diffable.java
+index 6fc5bdbc5329765a52e8678ced249089f200748e..9f85eb1321cb4b4cd692556a2d3b5989d3a8c283 100644
+--- a/src/main/java/org/apache/commons/lang3/builder/Diffable.java
++++ b/src/main/java/org/apache/commons/lang3/builder/Diffable.java
+@@ -38,7 +38,6 @@ package org.apache.commons.lang3.builder;
+  *
+  * @param <T> the type of objects that this object may be differentiated against
+  * @since 3.3
+- * @version $Id$
+  */
+ public interface Diffable<T> {
+ 
+diff --git a/src/main/java/org/apache/commons/lang3/builder/EqualsBuilder.java b/src/main/java/org/apache/commons/lang3/builder/EqualsBuilder.java
+index b44976632f673be9cf381e14e0a9129fd1477b7b..eb7b6f1f6b50d7b81443fae2917874ce5aff3a54 100644
+--- a/src/main/java/org/apache/commons/lang3/builder/EqualsBuilder.java
++++ b/src/main/java/org/apache/commons/lang3/builder/EqualsBuilder.java
+@@ -77,9 +77,11 @@ import org.apache.commons.lang3.tuple.Pair;
+  *   return EqualsBuilder.reflectionEquals(this, obj);
+  * }
+  * </pre>
++ * 
++ * <p>The {@link EqualsExclude} annotation can be used to exclude fields from being
++ * used by the <code>reflectionEquals</code> methods.</p>
+  *
+  * @since 1.0
+- * @version $Id$
+  */
+ public class EqualsBuilder implements Builder<Boolean> {
+ 
+@@ -245,6 +247,8 @@ public class EqualsBuilder implements Builder<Boolean> {
+      * @param rhs  the other object
+      * @param excludeFields  Collection of String field names to exclude from testing
+      * @return <code>true</code> if the two Objects have tested equals.
++     * 
++     * @see EqualsExclude
+      */
+     public static boolean reflectionEquals(final Object lhs, final Object rhs, final Collection<String> excludeFields) {
+         return reflectionEquals(lhs, rhs, ReflectionToStringBuilder.toNoNullStringArray(excludeFields));
+@@ -269,6 +273,8 @@ public class EqualsBuilder implements Builder<Boolean> {
+      * @param rhs  the other object
+      * @param excludeFields  array of field names to exclude from testing
+      * @return <code>true</code> if the two Objects have tested equals.
++     * 
++     * @see EqualsExclude
+      */
+     public static boolean reflectionEquals(final Object lhs, final Object rhs, final String... excludeFields) {
+         return reflectionEquals(lhs, rhs, false, null, excludeFields);
+@@ -294,6 +300,8 @@ public class EqualsBuilder implements Builder<Boolean> {
+      * @param rhs  the other object
+      * @param testTransients  whether to include transient fields
+      * @return <code>true</code> if the two Objects have tested equals.
++     * 
++     * @see EqualsExclude
+      */
+     public static boolean reflectionEquals(final Object lhs, final Object rhs, final boolean testTransients) {
+         return reflectionEquals(lhs, rhs, testTransients, null);
+@@ -324,6 +332,8 @@ public class EqualsBuilder implements Builder<Boolean> {
+      *  may be <code>null</code>
+      * @param excludeFields  array of field names to exclude from testing
+      * @return <code>true</code> if the two Objects have tested equals.
++     * 
++     * @see EqualsExclude
+      * @since 2.0
+      */
+     public static boolean reflectionEquals(final Object lhs, final Object rhs, final boolean testTransients, final Class<?> reflectUpToClass,
+@@ -411,7 +421,8 @@ public class EqualsBuilder implements Builder<Boolean> {
+                 if (!ArrayUtils.contains(excludeFields, f.getName())
+                     && !f.getName().contains("$")
+                     && (useTransients || !Modifier.isTransient(f.getModifiers()))
+-                    && !Modifier.isStatic(f.getModifiers())) {
++                    && (!Modifier.isStatic(f.getModifiers()))
++                    && (!f.isAnnotationPresent(EqualsExclude.class))) {
+                     try {
+                         builder.append(f.get(lhs), f.get(rhs));
+                     } catch (final IllegalAccessException e) {
+diff --git a/src/main/java/org/apache/commons/lang3/builder/EqualsExclude.java b/src/main/java/org/apache/commons/lang3/builder/EqualsExclude.java
+new file mode 100755
+index 0000000000000000000000000000000000000000..1ed29f05d033f5e74b355220fc86a3b470e0789e
+--- /dev/null
++++ b/src/main/java/org/apache/commons/lang3/builder/EqualsExclude.java
+@@ -0,0 +1,34 @@
++/*
++ * Licensed to the Apache Software Foundation (ASF) under one or more
++ * contributor license agreements.  See the NOTICE file distributed with
++ * this work for additional information regarding copyright ownership.
++ * The ASF licenses this file to You under the Apache License, Version 2.0
++ * (the "License"); you may not use this file except in compliance with
++ * the License.  You may obtain a copy of the License at
++ *
++ *      http://www.apache.org/licenses/LICENSE-2.0
++ *
++ * Unless required by applicable law or agreed to in writing, software
++ * distributed under the License is distributed on an "AS IS" BASIS,
++ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
++ * See the License for the specific language governing permissions and
++ * limitations under the License.
++ */
++
++package org.apache.commons.lang3.builder;
++
++import java.lang.annotation.ElementType;
++import java.lang.annotation.Retention;
++import java.lang.annotation.RetentionPolicy;
++import java.lang.annotation.Target;
++
++/**
++ * Use this annotation to exclude a field from being being used by
++ * the various <code>reflectionEquals</code> methods defined on
++ * {@link EqualsBuilder}.
++ */
++@Retention(RetentionPolicy.RUNTIME)
++@Target(ElementType.FIELD)
++public @interface EqualsExclude {
++
++}
+diff --git a/src/main/java/org/apache/commons/lang3/builder/HashCodeBuilder.java b/src/main/java/org/apache/commons/lang3/builder/HashCodeBuilder.java
+index c2d865a5594f555e7c9f9c198fc3c7489d71106d..d56ee9f464117990b6a3879a0ff99c22e85bf4e2 100644
+--- a/src/main/java/org/apache/commons/lang3/builder/HashCodeBuilder.java
++++ b/src/main/java/org/apache/commons/lang3/builder/HashCodeBuilder.java
+@@ -94,9 +94,11 @@ import org.apache.commons.lang3.Validate;
+  *   return HashCodeBuilder.reflectionHashCode(this);
+  * }
+  * </pre>
++ * 
++ * <p>The {@link HashCodeExclude} annotation can be used to exclude fields from being
++ * used by the <code>reflectionHashCode</code> methods.</p>
+  *
+  * @since 1.0
+- * @version $Id$
+  */
+ public class HashCodeBuilder implements Builder<Integer> {
+     /**
+@@ -192,7 +194,8 @@ public class HashCodeBuilder implements Builder<Integer> {
+                 if (!ArrayUtils.contains(excludeFields, field.getName())
+                     && !field.getName().contains("$")
+                     && (useTransients || !Modifier.isTransient(field.getModifiers()))
+-                    && !Modifier.isStatic(field.getModifiers())) {
++                    && (!Modifier.isStatic(field.getModifiers()))
++                    && (!field.isAnnotationPresent(HashCodeExclude.class))) {
+                     try {
+                         final Object fieldValue = field.get(object);
+                         builder.append(fieldValue);
+@@ -245,6 +248,8 @@ public class HashCodeBuilder implements Builder<Integer> {
+      *             if the Object is <code>null</code>
+      * @throws IllegalArgumentException
+      *             if the number is zero or even
++     *
++     * @see HashCodeExclude
+      */
+     public static int reflectionHashCode(final int initialNonZeroOddNumber, final int multiplierNonZeroOddNumber, final Object object) {
+         return reflectionHashCode(initialNonZeroOddNumber, multiplierNonZeroOddNumber, object, false, null);
+@@ -289,6 +294,8 @@ public class HashCodeBuilder implements Builder<Integer> {
+      *             if the Object is <code>null</code>
+      * @throws IllegalArgumentException
+      *             if the number is zero or even
++     *
++     * @see HashCodeExclude
+      */
+     public static int reflectionHashCode(final int initialNonZeroOddNumber, final int multiplierNonZeroOddNumber, final Object object,
+             final boolean testTransients) {
+@@ -341,6 +348,8 @@ public class HashCodeBuilder implements Builder<Integer> {
+      *             if the Object is <code>null</code>
+      * @throws IllegalArgumentException
+      *             if the number is zero or even
++     *
++     * @see HashCodeExclude
+      * @since 2.0
+      */
+     public static <T> int reflectionHashCode(final int initialNonZeroOddNumber, final int multiplierNonZeroOddNumber, final T object,
+@@ -391,6 +400,8 @@ public class HashCodeBuilder implements Builder<Integer> {
+      * @return int hash code
+      * @throws IllegalArgumentException
+      *             if the object is <code>null</code>
++     *
++     * @see HashCodeExclude
+      */
+     public static int reflectionHashCode(final Object object, final boolean testTransients) {
+         return reflectionHashCode(DEFAULT_INITIAL_VALUE, DEFAULT_MULTIPLIER_VALUE, object, 
+@@ -429,6 +440,8 @@ public class HashCodeBuilder implements Builder<Integer> {
+      * @return int hash code
+      * @throws IllegalArgumentException
+      *             if the object is <code>null</code>
++     *
++     * @see HashCodeExclude
+      */
+     public static int reflectionHashCode(final Object object, final Collection<String> excludeFields) {
+         return reflectionHashCode(object, ReflectionToStringBuilder.toNoNullStringArray(excludeFields));
+@@ -468,6 +481,8 @@ public class HashCodeBuilder implements Builder<Integer> {
+      * @return int hash code
+      * @throws IllegalArgumentException
+      *             if the object is <code>null</code>
++     *
++     * @see HashCodeExclude
+      */
+     public static int reflectionHashCode(final Object object, final String... excludeFields) {
+         return reflectionHashCode(DEFAULT_INITIAL_VALUE, DEFAULT_MULTIPLIER_VALUE, object, false, 
+@@ -856,7 +871,35 @@ public class HashCodeBuilder implements Builder<Integer> {
+                     append((Object[]) object);
+                 }
+             } else {
+-                iTotal = iTotal * iConstant + object.hashCode();
++                if (object instanceof Long) {
++                    append(((Long) object).longValue());
++                } else if (object instanceof Integer) {
++                    append(((Integer) object).intValue());
++                } else if (object instanceof Short) {
++                    append(((Short) object).shortValue());
++                } else if (object instanceof Character) {
++                    append(((Character) object).charValue());
++                } else if (object instanceof Byte) {
++                    append(((Byte) object).byteValue());
++                } else if (object instanceof Double) {
++                    append(((Double) object).doubleValue());
++                } else if (object instanceof Float) {
++                    append(((Float) object).floatValue());
++                } else if (object instanceof Boolean) {
++                    append(((Boolean) object).booleanValue());
++                } else if (object instanceof String) {
++                    iTotal = iTotal * iConstant + object.hashCode();
++                } else {
++                    if (isRegistered(object)) {
++                        return this;
++                    }
++                    try {
++                        register(object);
++                        iTotal = iTotal * iConstant + object.hashCode();
++                    } finally {
++                        unregister(object);
++                    }
++                }
+             }
+         }
+         return this;
+diff --git a/src/main/java/org/apache/commons/lang3/builder/HashCodeExclude.java b/src/main/java/org/apache/commons/lang3/builder/HashCodeExclude.java
+new file mode 100755
+index 0000000000000000000000000000000000000000..25bac4c20fd9e0b6f0e2f36c0a32b4b40870f4b8
+--- /dev/null
++++ b/src/main/java/org/apache/commons/lang3/builder/HashCodeExclude.java
+@@ -0,0 +1,34 @@
++/*
++ * Licensed to the Apache Software Foundation (ASF) under one or more
++ * contributor license agreements.  See the NOTICE file distributed with
++ * this work for additional information regarding copyright ownership.
++ * The ASF licenses this file to You under the Apache License, Version 2.0
++ * (the "License"); you may not use this file except in compliance with
++ * the License.  You may obtain a copy of the License at
++ *
++ *      http://www.apache.org/licenses/LICENSE-2.0
++ *
++ * Unless required by applicable law or agreed to in writing, software
++ * distributed under the License is distributed on an "AS IS" BASIS,
++ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
++ * See the License for the specific language governing permissions and
++ * limitations under the License.
++ */
++
++package org.apache.commons.lang3.builder;
++
++import java.lang.annotation.ElementType;
++import java.lang.annotation.Retention;
++import java.lang.annotation.RetentionPolicy;
++import java.lang.annotation.Target;
++
++/**
++ * Use this annotation to exclude a field from being being used by
++ * the various <code>reflectionHashcode</code> methods defined on
++ * {@link HashCodeBuilder}.
++ */
++@Retention(RetentionPolicy.RUNTIME)
++@Target(ElementType.FIELD)
++public @interface HashCodeExclude {
++
++}
+diff --git a/src/main/java/org/apache/commons/lang3/builder/IDKey.java b/src/main/java/org/apache/commons/lang3/builder/IDKey.java
+index 4f209196c5213123dafd23227912be1f0cddde5f..18b780d16013d91928ed630245fda400b3f371e1 100644
+--- a/src/main/java/org/apache/commons/lang3/builder/IDKey.java
++++ b/src/main/java/org/apache/commons/lang3/builder/IDKey.java
+@@ -13,7 +13,6 @@
+  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  * See the License for the specific language governing permissions and
+  * limitations under the License.
+- * 
+  */
+ 
+ package org.apache.commons.lang3.builder;
+@@ -26,7 +25,6 @@ package org.apache.commons.lang3.builder;
+  * 
+  * This is necessary to disambiguate the occasional duplicate
+  * identityHashCodes that can occur.
+- * 
+  */ 
+ final class IDKey {
+         private final Object value;
+diff --git a/src/main/java/org/apache/commons/lang3/builder/MultilineRecursiveToStringStyle.java b/src/main/java/org/apache/commons/lang3/builder/MultilineRecursiveToStringStyle.java
+index dd86e3afbf96b80adcccf583a34fe200ea616865..d54e8b9cc2d40c50967f5aebcbed579f2b1c7ecc 100644
+--- a/src/main/java/org/apache/commons/lang3/builder/MultilineRecursiveToStringStyle.java
++++ b/src/main/java/org/apache/commons/lang3/builder/MultilineRecursiveToStringStyle.java
+@@ -61,7 +61,6 @@ import org.apache.commons.lang3.SystemUtils;
+  * </p>
+  * 
+  * @since 3.4
+- * @version $Id$
+  */
+ public class MultilineRecursiveToStringStyle extends RecursiveToStringStyle {
+ 
+@@ -217,4 +216,4 @@ public class MultilineRecursiveToStringStyle extends RecursiveToStringStyle {
+         resetIndent();
+     }
+ 
+-}
+\ No newline at end of file
++}
+diff --git a/src/main/java/org/apache/commons/lang3/builder/RecursiveToStringStyle.java b/src/main/java/org/apache/commons/lang3/builder/RecursiveToStringStyle.java
+index 99fb5e464ce2167d3821315e6f2fe4265d5981ef..b39e9eaaa484c1876b40737efc8adcc2f99119cd 100644
+--- a/src/main/java/org/apache/commons/lang3/builder/RecursiveToStringStyle.java
++++ b/src/main/java/org/apache/commons/lang3/builder/RecursiveToStringStyle.java
+@@ -49,7 +49,6 @@ import org.apache.commons.lang3.ClassUtils;
+  * <code>Person@7f54[name=Stephen,age=29,smoker=false,job=Job@43cd2[title=Manager]]</code></p>
+  * 
+  * @since 3.2
+- * @version $Id$
+  */
+ public class RecursiveToStringStyle extends ToStringStyle {
+ 
+diff --git a/src/main/java/org/apache/commons/lang3/builder/ReflectionToStringBuilder.java b/src/main/java/org/apache/commons/lang3/builder/ReflectionToStringBuilder.java
+index 5b992bd53c4d33e6693644b1edafd63b4e1792fb..d172b1e173528bac7ed5c6634d1dc1fe1798703f 100644
+--- a/src/main/java/org/apache/commons/lang3/builder/ReflectionToStringBuilder.java
++++ b/src/main/java/org/apache/commons/lang3/builder/ReflectionToStringBuilder.java
+@@ -79,6 +79,10 @@ import org.apache.commons.lang3.ClassUtils;
+  * }
+  * </pre>
+  * <p>
++ * Alternatively the {@link ToStringExclude} annotation can be used to exclude fields from being incorporated in the 
++ * result.
++ * </p>
++ * <p>
+  * The exact format of the <code>toString</code> is determined by the {@link ToStringStyle} passed into the constructor.
+  * </p>
+  *
+@@ -88,7 +92,6 @@ import org.apache.commons.lang3.ClassUtils;
+  * </p>
+  *
+  * @since 2.0
+- * @version $Id$
+  */
+ public class ReflectionToStringBuilder extends ToStringBuilder {
+ 
+@@ -113,6 +116,8 @@ public class ReflectionToStringBuilder extends ToStringBuilder {
+      * @return the String result
+      * @throws IllegalArgumentException
+      *             if the Object is <code>null</code>
++     *
++     * @see ToStringExclude
+      */
+     public static String toString(final Object object) {
+         return toString(object, null, false, false, null);
+@@ -145,6 +150,8 @@ public class ReflectionToStringBuilder extends ToStringBuilder {
+      * @return the String result
+      * @throws IllegalArgumentException
+      *             if the Object or <code>ToStringStyle</code> is <code>null</code>
++     *
++     * @see ToStringExclude
+      */
+     public static String toString(final Object object, final ToStringStyle style) {
+         return toString(object, style, false, false, null);
+@@ -183,6 +190,8 @@ public class ReflectionToStringBuilder extends ToStringBuilder {
+      * @return the String result
+      * @throws IllegalArgumentException
+      *             if the Object is <code>null</code>
++     *
++     * @see ToStringExclude
+      */
+     public static String toString(final Object object, final ToStringStyle style, final boolean outputTransients) {
+         return toString(object, style, outputTransients, false, null);
+@@ -228,6 +237,8 @@ public class ReflectionToStringBuilder extends ToStringBuilder {
+      * @return the String result
+      * @throws IllegalArgumentException
+      *             if the Object is <code>null</code>
++     * 
++     * @see ToStringExclude
+      * @since 2.1
+      */
+     public static String toString(final Object object, final ToStringStyle style, final boolean outputTransients, final boolean outputStatics) {
+@@ -279,6 +290,8 @@ public class ReflectionToStringBuilder extends ToStringBuilder {
+      * @return the String result
+      * @throws IllegalArgumentException
+      *             if the Object is <code>null</code>
++     * 
++     * @see ToStringExclude
+      * @since 2.1
+      */
+     public static <T> String toString(
+@@ -333,7 +346,7 @@ public class ReflectionToStringBuilder extends ToStringBuilder {
+                 list.add(e.toString());
+             }
+         }
+-        return list.toArray(ArrayUtils.EMPTY_STRING_ARRAY);
++        return list.toArray(new String[list.size()]);
+     }
+ 
+ 
+@@ -494,6 +507,9 @@ public class ReflectionToStringBuilder extends ToStringBuilder {
+             // Reject fields from the getExcludeFieldNames list.
+             return false;
+         }
++        if(field.isAnnotationPresent(ToStringExclude.class)) {
++            return false;
++        }
+         return true;
+     }
+ 
+diff --git a/src/main/java/org/apache/commons/lang3/builder/StandardToStringStyle.java b/src/main/java/org/apache/commons/lang3/builder/StandardToStringStyle.java
+index 929103857a34c9005f1ec53aaf9653eca0cd16e4..b9ba30c3b3f2fc68effa7041ad4341565bf55ca0 100644
+--- a/src/main/java/org/apache/commons/lang3/builder/StandardToStringStyle.java
++++ b/src/main/java/org/apache/commons/lang3/builder/StandardToStringStyle.java
+@@ -26,7 +26,6 @@ package org.apache.commons.lang3.builder;
+  * program to access.</p>
+  *
+  * @since 1.0
+- * @version $Id$
+  */
+ public class StandardToStringStyle extends ToStringStyle {
+     
+diff --git a/src/main/java/org/apache/commons/lang3/builder/ToStringBuilder.java b/src/main/java/org/apache/commons/lang3/builder/ToStringBuilder.java
+index e933665ec41139e4f18a86fd6ab47b891842e075..43637516e395a0f123b237822728682c60107339 100644
+--- a/src/main/java/org/apache/commons/lang3/builder/ToStringBuilder.java
++++ b/src/main/java/org/apache/commons/lang3/builder/ToStringBuilder.java
+@@ -84,7 +84,6 @@ import org.apache.commons.lang3.ObjectUtils;
+  * the {@link ToStringStyle} passed into the constructor.</p>
+  *
+  * @since 1.0
+- * @version $Id$
+  */
+ public class ToStringBuilder implements Builder<String> {
+ 
+diff --git a/src/main/java/org/apache/commons/lang3/builder/ToStringExclude.java b/src/main/java/org/apache/commons/lang3/builder/ToStringExclude.java
+new file mode 100755
+index 0000000000000000000000000000000000000000..c080e317aab8d723caee24a10911c0dfd25e7dd4
+--- /dev/null
++++ b/src/main/java/org/apache/commons/lang3/builder/ToStringExclude.java
+@@ -0,0 +1,33 @@
++/*
++ * Licensed to the Apache Software Foundation (ASF) under one or more
++ * contributor license agreements.  See the NOTICE file distributed with
++ * this work for additional information regarding copyright ownership.
++ * The ASF licenses this file to You under the Apache License, Version 2.0
++ * (the "License"); you may not use this file except in compliance with
++ * the License.  You may obtain a copy of the License at
++ *
++ *      http://www.apache.org/licenses/LICENSE-2.0
++ *
++ * Unless required by applicable law or agreed to in writing, software
++ * distributed under the License is distributed on an "AS IS" BASIS,
++ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
++ * See the License for the specific language governing permissions and
++ * limitations under the License.
++ */
++
++package org.apache.commons.lang3.builder;
++
++import java.lang.annotation.ElementType;
++import java.lang.annotation.Retention;
++import java.lang.annotation.Target;
++import java.lang.annotation.RetentionPolicy;
++
++/**
++ * Use this annotation to exclude a field from being being used by
++ * the {@link ReflectionToStringBuilder}.
++ */
++@Retention(RetentionPolicy.RUNTIME)
++@Target(ElementType.FIELD)
++public @interface ToStringExclude {
++
++}
+diff --git a/src/main/java/org/apache/commons/lang3/builder/ToStringStyle.java b/src/main/java/org/apache/commons/lang3/builder/ToStringStyle.java
+index 658556bfa09190b460b5bde74c2c7f69ebeab850..667990d5b5b9f3dce483e823165182b10ad55eb4 100644
+--- a/src/main/java/org/apache/commons/lang3/builder/ToStringStyle.java
++++ b/src/main/java/org/apache/commons/lang3/builder/ToStringStyle.java
+@@ -61,7 +61,6 @@ import org.apache.commons.lang3.SystemUtils;
+  * </pre>
+  *
+  * @since 1.0
+- * @version $Id$
+  */
+ public abstract class ToStringStyle implements Serializable {
+ 
+@@ -2559,22 +2558,46 @@ public abstract class ToStringStyle implements Serializable {
+             super.append(buffer, fieldName, value, fullDetail);
+         }
+ 
++        @Override
++        protected void appendDetail(StringBuffer buffer, String fieldName, char value) {
++            appendValueAsString(buffer, String.valueOf(value));
++        }
++
+         @Override
+         protected void appendDetail(StringBuffer buffer, String fieldName, Object value) {
+ 
+             if (value == null) {
+-
+                 appendNullText(buffer, fieldName);
+                 return;
+             }
+ 
+-            if (value.getClass() == String.class) {
++            if (value instanceof String || value instanceof Character) {
++                appendValueAsString(buffer, value.toString());
++                return;
++            }
+ 
+-                appendValueAsString(buffer, (String)value);
++            if (value instanceof Number || value instanceof Boolean) {
++                buffer.append(value);
+                 return;
+             }
+ 
+-            buffer.append(value);
++            final String valueAsString = value.toString();
++            if (isJsonObject(valueAsString) || isJsonArray(valueAsString)) {
++                buffer.append(value);
++                return;
++            }
++
++            appendDetail(buffer, fieldName, valueAsString);
++        }
++
++        private boolean isJsonArray(String valueAsString) {
++            return valueAsString.startsWith(getArrayStart())
++                    && valueAsString.startsWith(getArrayEnd());
++        }
++
++        private boolean isJsonObject(String valueAsString) {
++            return valueAsString.startsWith(getContentStart())
++                    && valueAsString.endsWith(getContentEnd());
+         }
+ 
+         /**
+diff --git a/src/main/java/org/apache/commons/lang3/builder/package-info.java b/src/main/java/org/apache/commons/lang3/builder/package-info.java
+index 401fce75fc51113eb6a6a483442243f50ce79adf..0043587f3e00322c268154406ef775194871037f 100644
+--- a/src/main/java/org/apache/commons/lang3/builder/package-info.java
++++ b/src/main/java/org/apache/commons/lang3/builder/package-info.java
+@@ -29,6 +29,5 @@
+  * @see java.lang.Comparable#compareTo(Object)
+  *
+  * @since 1.0
+- * @version $Id$
+  */
+ package org.apache.commons.lang3.builder;
+diff --git a/src/main/java/org/apache/commons/lang3/concurrent/AtomicInitializer.java b/src/main/java/org/apache/commons/lang3/concurrent/AtomicInitializer.java
+index e6219ee96d2a3ca8910c66d18d8b9d70869023d9..416dba7e03e206fe6cf78117cf73c7b40885c5ea 100644
+--- a/src/main/java/org/apache/commons/lang3/concurrent/AtomicInitializer.java
++++ b/src/main/java/org/apache/commons/lang3/concurrent/AtomicInitializer.java
+@@ -61,7 +61,6 @@ import java.util.concurrent.atomic.AtomicReference;
+  * </p>
+  *
+  * @since 3.0
+- * @version $Id$
+  * @param <T> the type of the object managed by this initializer class
+  */
+ public abstract class AtomicInitializer<T> implements ConcurrentInitializer<T> {
+diff --git a/src/main/java/org/apache/commons/lang3/concurrent/AtomicSafeInitializer.java b/src/main/java/org/apache/commons/lang3/concurrent/AtomicSafeInitializer.java
+index 5bb5096db1440866fbe93eeec693638619fcd9ac..3ad5e4eb3cd215bfca0f2cd625935f16af85e33f 100644
+--- a/src/main/java/org/apache/commons/lang3/concurrent/AtomicSafeInitializer.java
++++ b/src/main/java/org/apache/commons/lang3/concurrent/AtomicSafeInitializer.java
+@@ -50,7 +50,6 @@ import java.util.concurrent.atomic.AtomicReference;
+  * </p>
+  *
+  * @since 3.0
+- * @version $Id$
+  * @param <T> the type of the object managed by this initializer class
+  */
+ public abstract class AtomicSafeInitializer<T> implements
+diff --git a/src/main/java/org/apache/commons/lang3/concurrent/BackgroundInitializer.java b/src/main/java/org/apache/commons/lang3/concurrent/BackgroundInitializer.java
+index 7b6043bda068f397e81dc08a8153aeedea325c16..7b2662facef932fde1c6015219db869e5564c904 100644
+--- a/src/main/java/org/apache/commons/lang3/concurrent/BackgroundInitializer.java
++++ b/src/main/java/org/apache/commons/lang3/concurrent/BackgroundInitializer.java
+@@ -80,7 +80,6 @@ import java.util.concurrent.Future;
+  * </p>
+  *
+  * @since 3.0
+- * @version $Id$
+  * @param <T> the type of the object managed by this initializer class
+  */
+ public abstract class BackgroundInitializer<T> implements
+diff --git a/src/main/java/org/apache/commons/lang3/concurrent/BasicThreadFactory.java b/src/main/java/org/apache/commons/lang3/concurrent/BasicThreadFactory.java
+index 6c61189a61467c63b695c09708fc67b27eceaa38..9164ccaf6ae4c6f161c52590179895247438c333 100644
+--- a/src/main/java/org/apache/commons/lang3/concurrent/BasicThreadFactory.java
++++ b/src/main/java/org/apache/commons/lang3/concurrent/BasicThreadFactory.java
+@@ -85,7 +85,6 @@ import java.util.concurrent.atomic.AtomicLong;
+  * </pre>
+  *
+  * @since 3.0
+- * @version $Id$
+  */
+ public class BasicThreadFactory implements ThreadFactory {
+     /** A counter for the threads created by this factory. */
+@@ -249,7 +248,6 @@ public class BasicThreadFactory implements ThreadFactory {
+      * BasicThreadFactory} for a usage example.
+      * </p>
+      *
+-     * @version $Id$
+      */
+     public static class Builder 
+         implements org.apache.commons.lang3.builder.Builder<BasicThreadFactory> {
+diff --git a/src/main/java/org/apache/commons/lang3/concurrent/CallableBackgroundInitializer.java b/src/main/java/org/apache/commons/lang3/concurrent/CallableBackgroundInitializer.java
+index b95bf2a9eab1518389b35edf9ffda059a8f81e40..19414003adddc12db4654a2c8b62ec3b58f3b976 100644
+--- a/src/main/java/org/apache/commons/lang3/concurrent/CallableBackgroundInitializer.java
++++ b/src/main/java/org/apache/commons/lang3/concurrent/CallableBackgroundInitializer.java
+@@ -62,7 +62,6 @@ import java.util.concurrent.ExecutorService;
+  *
+  *
+  * @since 3.0
+- * @version $Id$
+  * @param <T> the type of the object managed by this initializer class
+  */
+ public class CallableBackgroundInitializer<T> extends BackgroundInitializer<T> {
+diff --git a/src/main/java/org/apache/commons/lang3/concurrent/ConcurrentException.java b/src/main/java/org/apache/commons/lang3/concurrent/ConcurrentException.java
+index 8d6fb546420797015217dda99ec48143bd92d174..92c642c09995892d56ac238b5e01173b061cafa4 100644
+--- a/src/main/java/org/apache/commons/lang3/concurrent/ConcurrentException.java
++++ b/src/main/java/org/apache/commons/lang3/concurrent/ConcurrentException.java
+@@ -30,7 +30,6 @@ package org.apache.commons.lang3.concurrent;
+  * </p>
+  *
+  * @since 3.0
+- * @version $Id$
+  */
+ public class ConcurrentException extends Exception {
+     /**
+diff --git a/src/main/java/org/apache/commons/lang3/concurrent/ConcurrentInitializer.java b/src/main/java/org/apache/commons/lang3/concurrent/ConcurrentInitializer.java
+index 7d5974d17de8213a777a9988c2f591fd501e3ea3..5532f74b1dec32a313e43c3a7e30b0d6c32e297c 100644
+--- a/src/main/java/org/apache/commons/lang3/concurrent/ConcurrentInitializer.java
++++ b/src/main/java/org/apache/commons/lang3/concurrent/ConcurrentInitializer.java
+@@ -35,7 +35,6 @@ package org.apache.commons.lang3.concurrent;
+  * </p>
+  *
+  * @since 3.0
+- * @version $Id$
+  * @param <T> the type of the object managed by this initializer class
+  */
+ public interface ConcurrentInitializer<T> {
+diff --git a/src/main/java/org/apache/commons/lang3/concurrent/ConcurrentRuntimeException.java b/src/main/java/org/apache/commons/lang3/concurrent/ConcurrentRuntimeException.java
+index f329f8f589c41fb8d9dbe2ebd090cfc3ce3005d4..a9e7d70a44f2f65291f0d1b4eec0d8f3d1d73e18 100644
+--- a/src/main/java/org/apache/commons/lang3/concurrent/ConcurrentRuntimeException.java
++++ b/src/main/java/org/apache/commons/lang3/concurrent/ConcurrentRuntimeException.java
+@@ -31,7 +31,6 @@ package org.apache.commons.lang3.concurrent;
+  * </p>
+  *
+  * @since 3.0
+- * @version $Id$
+  */
+ public class ConcurrentRuntimeException extends RuntimeException {
+     /**
+diff --git a/src/main/java/org/apache/commons/lang3/concurrent/ConcurrentUtils.java b/src/main/java/org/apache/commons/lang3/concurrent/ConcurrentUtils.java
+index 8a98893f4f62af9bc175f9e5edab2e70e20c7330..06c4080abd3312cf3a38e20bd9bab4c538300639 100644
+--- a/src/main/java/org/apache/commons/lang3/concurrent/ConcurrentUtils.java
++++ b/src/main/java/org/apache/commons/lang3/concurrent/ConcurrentUtils.java
+@@ -30,7 +30,6 @@ import org.apache.commons.lang3.Validate;
+  * </p>
+  *
+  * @since 3.0
+- * @version $Id$
+  */
+ public class ConcurrentUtils {
+ 
+diff --git a/src/main/java/org/apache/commons/lang3/concurrent/ConstantInitializer.java b/src/main/java/org/apache/commons/lang3/concurrent/ConstantInitializer.java
+index 0d15711ac308cd0e4334fb887b8d4b012ad35358..7d5e4fc62934db31be063639523337443c740887 100644
+--- a/src/main/java/org/apache/commons/lang3/concurrent/ConstantInitializer.java
++++ b/src/main/java/org/apache/commons/lang3/concurrent/ConstantInitializer.java
+@@ -35,7 +35,6 @@ import org.apache.commons.lang3.ObjectUtils;
+  * </p>
+  *
+  * @since 3.0
+- * @version $Id$
+  * @param <T> the type of the object managed by this initializer
+  */
+ public class ConstantInitializer<T> implements ConcurrentInitializer<T> {
+diff --git a/src/main/java/org/apache/commons/lang3/concurrent/LazyInitializer.java b/src/main/java/org/apache/commons/lang3/concurrent/LazyInitializer.java
+index a13e6de43e49b1766f49990cc2d859476ff7edad..be5482a806ae06b46dfe79ba7299aed437097f47 100644
+--- a/src/main/java/org/apache/commons/lang3/concurrent/LazyInitializer.java
++++ b/src/main/java/org/apache/commons/lang3/concurrent/LazyInitializer.java
+@@ -75,7 +75,6 @@ package org.apache.commons.lang3.concurrent;
+  * </p>
+  *
+  * @since 3.0
+- * @version $Id$
+  * @param <T> the type of the object managed by this initializer class
+  */
+ public abstract class LazyInitializer<T> implements ConcurrentInitializer<T> {
+diff --git a/src/main/java/org/apache/commons/lang3/concurrent/MultiBackgroundInitializer.java b/src/main/java/org/apache/commons/lang3/concurrent/MultiBackgroundInitializer.java
+index 61e0bd97cff03f8c7c7dce3c2902a528f603fbd2..2ca5c6e49498925ce4be0bf4036edf15001bf53c 100644
+--- a/src/main/java/org/apache/commons/lang3/concurrent/MultiBackgroundInitializer.java
++++ b/src/main/java/org/apache/commons/lang3/concurrent/MultiBackgroundInitializer.java
+@@ -92,7 +92,6 @@ import java.util.concurrent.ExecutorService;
+  * </p>
+  *
+  * @since 3.0
+- * @version $Id$
+  */
+ public class MultiBackgroundInitializer
+         extends
+diff --git a/src/main/java/org/apache/commons/lang3/concurrent/TimedSemaphore.java b/src/main/java/org/apache/commons/lang3/concurrent/TimedSemaphore.java
+index a3c19b3ca297b126552a235980c847b45c888f84..9e47b160f5ee78275355c638e382dab86644b037 100644
+--- a/src/main/java/org/apache/commons/lang3/concurrent/TimedSemaphore.java
++++ b/src/main/java/org/apache/commons/lang3/concurrent/TimedSemaphore.java
+@@ -127,7 +127,6 @@ import org.apache.commons.lang3.Validate;
+  * </p>
+  *
+  * @since 3.0
+- * @version $Id$
+  */
+ public class TimedSemaphore {
+     /**
+diff --git a/src/main/java/org/apache/commons/lang3/concurrent/package-info.java b/src/main/java/org/apache/commons/lang3/concurrent/package-info.java
+index 9b5b088126f6be2e4fcdc54bb83c553002b3e50d..00ed2ccf40131557d6fc33b57360de837fe17478 100644
+--- a/src/main/java/org/apache/commons/lang3/concurrent/package-info.java
++++ b/src/main/java/org/apache/commons/lang3/concurrent/package-info.java
+@@ -434,7 +434,5 @@
+  * There are some other methods for querying the internal state of a timed semaphore.
+  * Also some statistical data is available, e.g. the average number of <code>acquire()</code> calls per time frame.
+  * When a timed semaphore is no more needed, its <code>shutdown()</code> method has to be called.</p>
+- *
+- * @version $Id$
+  */
+ package org.apache.commons.lang3.concurrent;
+diff --git a/src/main/java/org/apache/commons/lang3/event/EventListenerSupport.java b/src/main/java/org/apache/commons/lang3/event/EventListenerSupport.java
+index f9857ef22b2eeaf311bc6b096a992e980dacf7ac..0f51796fbaf86d4536d6554afa786bcd6827d9e4 100644
+--- a/src/main/java/org/apache/commons/lang3/event/EventListenerSupport.java
++++ b/src/main/java/org/apache/commons/lang3/event/EventListenerSupport.java
+@@ -65,7 +65,6 @@ import org.apache.commons.lang3.Validate;
+  * @param <L> the type of event listener that is supported by this proxy.
+  *
+  * @since 3.0
+- * @version $Id$
+  */
+ public class EventListenerSupport<L> implements Serializable {
+ 
+diff --git a/src/main/java/org/apache/commons/lang3/event/EventUtils.java b/src/main/java/org/apache/commons/lang3/event/EventUtils.java
+index fc19b9b165d6954ab51ff125064bcd7eec389ef6..0bddc93099646ae4d38428ae86bb6918040d89aa 100644
+--- a/src/main/java/org/apache/commons/lang3/event/EventUtils.java
++++ b/src/main/java/org/apache/commons/lang3/event/EventUtils.java
+@@ -31,7 +31,6 @@ import org.apache.commons.lang3.reflect.MethodUtils;
+  * Provides some useful event-based utility methods.
+  *
+  * @since 3.0
+- * @version $Id$
+  */
+ public class EventUtils {
+ 
+diff --git a/src/main/java/org/apache/commons/lang3/event/package-info.java b/src/main/java/org/apache/commons/lang3/event/package-info.java
+index 4b70c15b4b0fdbaf074f3d2a3fc93500752b8299..0227a16bc595364e511a136791b70729e4fa5d9a 100644
+--- a/src/main/java/org/apache/commons/lang3/event/package-info.java
++++ b/src/main/java/org/apache/commons/lang3/event/package-info.java
+@@ -18,6 +18,5 @@
+  * Provides some useful event-based utilities.
+  *
+  * @since 3.0
+- * @version $Id$
+  */
+ package org.apache.commons.lang3.event;
+diff --git a/src/main/java/org/apache/commons/lang3/exception/ExceptionUtils.java b/src/main/java/org/apache/commons/lang3/exception/ExceptionUtils.java
+index 7e803ddc2b4601af0a45936ad81b16cb92fb8f32..a64357c85c9a4ecc22ea8bd82e3934285ee5ec9b 100644
+--- a/src/main/java/org/apache/commons/lang3/exception/ExceptionUtils.java
++++ b/src/main/java/org/apache/commons/lang3/exception/ExceptionUtils.java
+@@ -35,7 +35,6 @@ import org.apache.commons.lang3.SystemUtils;
+  * <code>Throwable</code> objects.</p>
+  *
+  * @since 1.0
+- * @version $Id$
+  */
+ public class ExceptionUtils {
+     
+diff --git a/src/main/java/org/apache/commons/lang3/exception/package-info.java b/src/main/java/org/apache/commons/lang3/exception/package-info.java
+index 713f60877ec6e76ca05f9527a2f023780d4f900d..b2f31a9de4567f44cec70e3282e09df0595bb9de 100644
+--- a/src/main/java/org/apache/commons/lang3/exception/package-info.java
++++ b/src/main/java/org/apache/commons/lang3/exception/package-info.java
+@@ -22,6 +22,5 @@
+  * and examination routines.</p>
+  *
+  * @since 1.0
+- * @version $Id$
+  */
+ package org.apache.commons.lang3.exception;
+diff --git a/src/main/java/org/apache/commons/lang3/math/Fraction.java b/src/main/java/org/apache/commons/lang3/math/Fraction.java
+index 100bd168029ab6c77ef71b37ca82810cc8b9cdee..ee1d638e13aa2a57be377d2d94dd92772980e3cd 100644
+--- a/src/main/java/org/apache/commons/lang3/math/Fraction.java
++++ b/src/main/java/org/apache/commons/lang3/math/Fraction.java
+@@ -30,7 +30,6 @@ import java.math.BigInteger;
+  * equivalent, please see the Commons Math BigFraction class. </p>
+  *
+  * @since 2.0
+- * @version $Id$
+  */
+ public final class Fraction extends Number implements Comparable<Fraction> {
+ 
+diff --git a/src/main/java/org/apache/commons/lang3/math/IEEE754rUtils.java b/src/main/java/org/apache/commons/lang3/math/IEEE754rUtils.java
+index a32ce47c7a7ce7d1b2805838294aed0f207b08e4..6d34e62d0ec1389f1be30ed9ffba0cf6fe545324 100644
+--- a/src/main/java/org/apache/commons/lang3/math/IEEE754rUtils.java
++++ b/src/main/java/org/apache/commons/lang3/math/IEEE754rUtils.java
+@@ -24,7 +24,6 @@ import org.apache.commons.lang3.Validate;
+  * <p>See: <a href="http://en.wikipedia.org/wiki/IEEE_754r">http://en.wikipedia.org/wiki/IEEE_754r</a></p>
+  *
+  * @since 2.4
+- * @version $Id$
+  */
+ public class IEEE754rUtils {
+     
+diff --git a/src/main/java/org/apache/commons/lang3/math/NumberUtils.java b/src/main/java/org/apache/commons/lang3/math/NumberUtils.java
+index 7b3f739b5f5d2d21e67f0a80a1ee8151ab1309df..8f99c782d72dc35747918987a4e679ad4dbdb3a3 100644
+--- a/src/main/java/org/apache/commons/lang3/math/NumberUtils.java
++++ b/src/main/java/org/apache/commons/lang3/math/NumberUtils.java
+@@ -27,7 +27,6 @@ import org.apache.commons.lang3.Validate;
+  * <p>Provides extra functionality for Java Number classes.</p>
+  *
+  * @since 2.0
+- * @version $Id$
+  */
+ public class NumberUtils {
+     
+diff --git a/src/main/java/org/apache/commons/lang3/math/package-info.java b/src/main/java/org/apache/commons/lang3/math/package-info.java
+index a3329e0b38c2e5b7a29f898ab4c1752503a70d60..fd6f8623d683df00f315dd8dd87effa8f4937396 100644
+--- a/src/main/java/org/apache/commons/lang3/math/package-info.java
++++ b/src/main/java/org/apache/commons/lang3/math/package-info.java
+@@ -29,6 +29,5 @@
+  * NumberUtils also has a related {@link org.apache.commons.lang3.math.NumberUtils#isNumber(String) isNumber(String)} method.</p>
+  *
+  * @since 2.0
+- * @version $Id$
+  */
+ package org.apache.commons.lang3.math;
+diff --git a/src/main/java/org/apache/commons/lang3/mutable/Mutable.java b/src/main/java/org/apache/commons/lang3/mutable/Mutable.java
+index b36dc394eea7706005d79adc6e29ea6aa4cc929e..301cac22c904a4e6806f237591b6f08f501c7437 100644
+--- a/src/main/java/org/apache/commons/lang3/mutable/Mutable.java
++++ b/src/main/java/org/apache/commons/lang3/mutable/Mutable.java
+@@ -28,7 +28,6 @@ package org.apache.commons.lang3.mutable;
+  * 
+  * @param <T> the type to set and get 
+  * @since 2.1
+- * @version $Id$
+  */
+ public interface Mutable<T> {
+ 
+diff --git a/src/main/java/org/apache/commons/lang3/mutable/MutableBoolean.java b/src/main/java/org/apache/commons/lang3/mutable/MutableBoolean.java
+index 31755ca979ed50a9966b6b649559ba162c566d04..085df400718cbdd2b3eea4bd30996d1ad6cdca93 100644
+--- a/src/main/java/org/apache/commons/lang3/mutable/MutableBoolean.java
++++ b/src/main/java/org/apache/commons/lang3/mutable/MutableBoolean.java
+@@ -28,7 +28,6 @@ import org.apache.commons.lang3.BooleanUtils;
+  * 
+  * @see Boolean
+  * @since 2.2
+- * @version $Id$
+  */
+ public class MutableBoolean implements Mutable<Boolean>, Serializable, Comparable<MutableBoolean> {
+ 
+diff --git a/src/main/java/org/apache/commons/lang3/mutable/MutableByte.java b/src/main/java/org/apache/commons/lang3/mutable/MutableByte.java
+index abe43fa4d7fc371cf04a633837c2b1f6fbf692f7..80edf3a01b0f5cda34af91d7bcab71c2a884c45c 100644
+--- a/src/main/java/org/apache/commons/lang3/mutable/MutableByte.java
++++ b/src/main/java/org/apache/commons/lang3/mutable/MutableByte.java
+@@ -25,7 +25,6 @@ import org.apache.commons.lang3.math.NumberUtils;
+  * 
+  * @see Byte
+  * @since 2.1
+- * @version $Id$
+  */
+ public class MutableByte extends Number implements Comparable<MutableByte>, Mutable<Number> {
+ 
+diff --git a/src/main/java/org/apache/commons/lang3/mutable/MutableDouble.java b/src/main/java/org/apache/commons/lang3/mutable/MutableDouble.java
+index 907c198f6d1fe0ff46af316e9d60b794185a87b0..855b04cca8fedaeb7f3455d94f46219e947ecad7 100644
+--- a/src/main/java/org/apache/commons/lang3/mutable/MutableDouble.java
++++ b/src/main/java/org/apache/commons/lang3/mutable/MutableDouble.java
+@@ -23,7 +23,6 @@ package org.apache.commons.lang3.mutable;
+  * 
+  * @see Double
+  * @since 2.1
+- * @version $Id$
+  */
+ public class MutableDouble extends Number implements Comparable<MutableDouble>, Mutable<Number> {
+ 
+diff --git a/src/main/java/org/apache/commons/lang3/mutable/MutableFloat.java b/src/main/java/org/apache/commons/lang3/mutable/MutableFloat.java
+index 3a4ae688fc7553f7acf36ee40ef43130bd642f31..7f798f7ec329e261d033d93ba8cabd3a21bf96fd 100644
+--- a/src/main/java/org/apache/commons/lang3/mutable/MutableFloat.java
++++ b/src/main/java/org/apache/commons/lang3/mutable/MutableFloat.java
+@@ -23,7 +23,6 @@ package org.apache.commons.lang3.mutable;
+  * 
+  * @see Float
+  * @since 2.1
+- * @version $Id$
+  */
+ public class MutableFloat extends Number implements Comparable<MutableFloat>, Mutable<Number> {
+ 
+diff --git a/src/main/java/org/apache/commons/lang3/mutable/MutableInt.java b/src/main/java/org/apache/commons/lang3/mutable/MutableInt.java
+index 87e4dbd32ed10a3ee029e140030e1f40266fd59a..1b86adede6360cb0cf83cbc7cf4ed40179a0505a 100644
+--- a/src/main/java/org/apache/commons/lang3/mutable/MutableInt.java
++++ b/src/main/java/org/apache/commons/lang3/mutable/MutableInt.java
+@@ -25,7 +25,6 @@ import org.apache.commons.lang3.math.NumberUtils;
+  * 
+  * @see Integer
+  * @since 2.1
+- * @version $Id$
+  */
+ public class MutableInt extends Number implements Comparable<MutableInt>, Mutable<Number> {
+ 
+diff --git a/src/main/java/org/apache/commons/lang3/mutable/MutableLong.java b/src/main/java/org/apache/commons/lang3/mutable/MutableLong.java
+index 569d69bf78a8ec98cdfe61b12a84c4f426148554..d9391c4a359c2a0f230bcfcf48f2a986bd0c6792 100644
+--- a/src/main/java/org/apache/commons/lang3/mutable/MutableLong.java
++++ b/src/main/java/org/apache/commons/lang3/mutable/MutableLong.java
+@@ -25,7 +25,6 @@ import org.apache.commons.lang3.math.NumberUtils;
+  * 
+  * @see Long
+  * @since 2.1
+- * @version $Id$
+  */
+ public class MutableLong extends Number implements Comparable<MutableLong>, Mutable<Number> {
+ 
+diff --git a/src/main/java/org/apache/commons/lang3/mutable/MutableObject.java b/src/main/java/org/apache/commons/lang3/mutable/MutableObject.java
+index a92a53d41a8b3bcca390ffe83568f5440a1bbe88..180cf3a703ec9f8d26f865b3e76a56e1d20ceff8 100644
+--- a/src/main/java/org/apache/commons/lang3/mutable/MutableObject.java
++++ b/src/main/java/org/apache/commons/lang3/mutable/MutableObject.java
+@@ -24,7 +24,6 @@ import java.io.Serializable;
+  * 
+  * @param <T> the type to set and get 
+  * @since 2.1
+- * @version $Id$
+  */
+ public class MutableObject<T> implements Mutable<T>, Serializable {
+ 
+diff --git a/src/main/java/org/apache/commons/lang3/mutable/MutableShort.java b/src/main/java/org/apache/commons/lang3/mutable/MutableShort.java
+index 7245b3cd2b9c03225b3897d364f01dd2599b6d48..5313245067c66a366ab04fa7bd30c83be6a169b6 100644
+--- a/src/main/java/org/apache/commons/lang3/mutable/MutableShort.java
++++ b/src/main/java/org/apache/commons/lang3/mutable/MutableShort.java
+@@ -25,7 +25,6 @@ import org.apache.commons.lang3.math.NumberUtils;
+  * 
+  * @see Short
+  * @since 2.1
+- * @version $Id$
+  */
+ public class MutableShort extends Number implements Comparable<MutableShort>, Mutable<Number> {
+ 
+diff --git a/src/main/java/org/apache/commons/lang3/mutable/package-info.java b/src/main/java/org/apache/commons/lang3/mutable/package-info.java
+index 911f19fc89a114f77617278e4c216ee57b2b1778..c5b8347373922f0f81f4d19b9f8b3f9fa854bdd4 100644
+--- a/src/main/java/org/apache/commons/lang3/mutable/package-info.java
++++ b/src/main/java/org/apache/commons/lang3/mutable/package-info.java
+@@ -20,6 +20,5 @@
+  * These classes are not thread-safe.</p>
+  *
+  * @since 2.1
+- * @version $Id$
+  */
+ package org.apache.commons.lang3.mutable;
+diff --git a/src/main/java/org/apache/commons/lang3/package-info.java b/src/main/java/org/apache/commons/lang3/package-info.java
+index 7868e2a2f9f6b5004ecc8b55adef997dedba91e0..88779d7a0a1983ca689d63e747be06e84a190994 100644
+--- a/src/main/java/org/apache/commons/lang3/package-info.java
++++ b/src/main/java/org/apache/commons/lang3/package-info.java
+@@ -120,6 +120,5 @@
+  * <p>The {@link org.apache.commons.lang3.BitField} class provides a wrapper class around the classic bitmask integer, whilst the {@link org.apache.commons.lang3.Validate} class may be used for assertions (remember, we support Java 1.2). </p>
+  *
+  * @since 1.0
+- * @version $Id$
+  */
+ package org.apache.commons.lang3;
+diff --git a/src/main/java/org/apache/commons/lang3/reflect/ConstructorUtils.java b/src/main/java/org/apache/commons/lang3/reflect/ConstructorUtils.java
+index 5eca29439aac63259b9a61f84f3c84c013810de6..7d4369458422ada2051bacd08a97d41d5222e91e 100644
+--- a/src/main/java/org/apache/commons/lang3/reflect/ConstructorUtils.java
++++ b/src/main/java/org/apache/commons/lang3/reflect/ConstructorUtils.java
+@@ -42,7 +42,6 @@ import org.apache.commons.lang3.Validate;
+  * fails then a warning will be logged and the method may fail.</p>
+  *
+  * @since 2.5
+- * @version $Id$
+  */
+ public class ConstructorUtils {
+ 
+diff --git a/src/main/java/org/apache/commons/lang3/reflect/FieldUtils.java b/src/main/java/org/apache/commons/lang3/reflect/FieldUtils.java
+index 90b2668f560a2f15b0a13ef123d402bf1711ad7e..f8fc1136952409bdfaa67d4d05382c1de3914174 100644
+--- a/src/main/java/org/apache/commons/lang3/reflect/FieldUtils.java
++++ b/src/main/java/org/apache/commons/lang3/reflect/FieldUtils.java
+@@ -34,7 +34,6 @@ import java.util.List;
+  * changed that shouldn't be. This facility should be used with care.
+  * 
+  * @since 2.5
+- * @version $Id$
+  */
+ public class FieldUtils {
+ 
+diff --git a/src/main/java/org/apache/commons/lang3/reflect/MemberUtils.java b/src/main/java/org/apache/commons/lang3/reflect/MemberUtils.java
+index f379db67c24a55cde33d70e85756ccb39ad5c3f1..04c363731035a18c030914aed6f70c3b34cfa8a5 100644
+--- a/src/main/java/org/apache/commons/lang3/reflect/MemberUtils.java
++++ b/src/main/java/org/apache/commons/lang3/reflect/MemberUtils.java
+@@ -27,7 +27,6 @@ import org.apache.commons.lang3.ClassUtils;
+  * extracted and refactored from {@link MethodUtils} when it was imported from Commons BeanUtils.
+  *
+  * @since 2.5
+- * @version $Id$
+  */
+ abstract class MemberUtils {
+     // TODO extract an interface to implement compareParameterSets(...)?
+diff --git a/src/main/java/org/apache/commons/lang3/reflect/MethodUtils.java b/src/main/java/org/apache/commons/lang3/reflect/MethodUtils.java
+index 6c2d50748c543c72bb1bafb772015b96929b78df..180c35cf502a636512e62809acba2157f58fe0ae 100644
+--- a/src/main/java/org/apache/commons/lang3/reflect/MethodUtils.java
++++ b/src/main/java/org/apache/commons/lang3/reflect/MethodUtils.java
+@@ -54,7 +54,6 @@ import org.apache.commons.lang3.Validate;
+  * If this call fails then the method may fail.</p>
+  *
+  * @since 2.5
+- * @version $Id$
+  */
+ public class MethodUtils {
+ 
+diff --git a/src/main/java/org/apache/commons/lang3/reflect/TypeLiteral.java b/src/main/java/org/apache/commons/lang3/reflect/TypeLiteral.java
+index 138d9b0d2f3aefb271215905757bed0b6dbef7f7..bead33f428cd5e92539acc55bc2ae796ca5e67ef 100644
+--- a/src/main/java/org/apache/commons/lang3/reflect/TypeLiteral.java
++++ b/src/main/java/org/apache/commons/lang3/reflect/TypeLiteral.java
+@@ -69,7 +69,6 @@ import org.apache.commons.lang3.Validate;
+  *   &lt;T&gt; T obtain(Typed&lt;T&gt; typed, ...);
+  * </pre>
+  *
+- * @version $Id$
+  * @since 3.2
+  */
+ public abstract class TypeLiteral<T> implements Typed<T> {
+diff --git a/src/main/java/org/apache/commons/lang3/reflect/TypeUtils.java b/src/main/java/org/apache/commons/lang3/reflect/TypeUtils.java
+index 91313c6a473066bf91b42ab182a12ad494c09d38..6eb286ab93c378317759fbf2a7e40c093a2cbe3f 100644
+--- a/src/main/java/org/apache/commons/lang3/reflect/TypeUtils.java
++++ b/src/main/java/org/apache/commons/lang3/reflect/TypeUtils.java
+@@ -42,7 +42,6 @@ import org.apache.commons.lang3.builder.Builder;
+  * generics. </p>
+  *
+  * @since 3.0
+- * @version $Id$
+  */
+ public class TypeUtils {
+ 
+@@ -157,7 +156,7 @@ public class TypeUtils {
+         private ParameterizedTypeImpl(final Class<?> raw, final Type useOwner, final Type[] typeArguments) {
+             this.raw = raw;
+             this.useOwner = useOwner;
+-            this.typeArguments = typeArguments;
++            this.typeArguments = typeArguments.clone();
+         }
+ 
+         /**
+diff --git a/src/main/java/org/apache/commons/lang3/reflect/Typed.java b/src/main/java/org/apache/commons/lang3/reflect/Typed.java
+index 167bf489927bbd727a94bb1d16778d37ff12bd65..4841f5c30aa76fff0f9fddc67af4c94f5a561578 100644
+--- a/src/main/java/org/apache/commons/lang3/reflect/Typed.java
++++ b/src/main/java/org/apache/commons/lang3/reflect/Typed.java
+@@ -22,7 +22,6 @@ import java.lang.reflect.Type;
+  * Generalization of "has a type."
+  * @see TypeLiteral
+  * @since 3.2
+- * @version $Id$
+  */
+ public interface Typed<T> {
+ 
+diff --git a/src/main/java/org/apache/commons/lang3/reflect/package-info.java b/src/main/java/org/apache/commons/lang3/reflect/package-info.java
+index 79672acf1e2902b95a831baf1b04c088fcf1e03c..5483643ef47d7b1db861904679452de6bd01978c 100644
+--- a/src/main/java/org/apache/commons/lang3/reflect/package-info.java
++++ b/src/main/java/org/apache/commons/lang3/reflect/package-info.java
+@@ -19,6 +19,5 @@
+  * <p>These classes are immutable, and therefore thread-safe.</p>
+  *
+  * @since 3.0
+- * @version $Id$
+  */
+ package org.apache.commons.lang3.reflect;
+diff --git a/src/main/java/org/apache/commons/lang3/text/CompositeFormat.java b/src/main/java/org/apache/commons/lang3/text/CompositeFormat.java
+index 1544a4f3b105bfe64afb994470c4285a3eece654..202f024a97a908c61f0f17e8b9462de2e9a6d237 100644
+--- a/src/main/java/org/apache/commons/lang3/text/CompositeFormat.java
++++ b/src/main/java/org/apache/commons/lang3/text/CompositeFormat.java
+@@ -25,8 +25,6 @@ import java.text.ParsePosition;
+  * Formats using one formatter and parses using a different formatter. An
+  * example of use for this would be a webapp where data is taken in one way and
+  * stored in a database another way.
+- * 
+- * @version $Id$
+  */
+ public class CompositeFormat extends Format {
+ 
+diff --git a/src/main/java/org/apache/commons/lang3/text/ExtendedMessageFormat.java b/src/main/java/org/apache/commons/lang3/text/ExtendedMessageFormat.java
+index bfe34b4f6cf3e38ad96fd8bf5ed074a4037ab322..d0835aa267dadd3a32671a137603cf1b42567c54 100644
+--- a/src/main/java/org/apache/commons/lang3/text/ExtendedMessageFormat.java
++++ b/src/main/java/org/apache/commons/lang3/text/ExtendedMessageFormat.java
+@@ -64,7 +64,6 @@ import org.apache.commons.lang3.Validate;
+  * </ul>
+  *
+  * @since 2.4
+- * @version $Id$
+  */
+ public class ExtendedMessageFormat extends MessageFormat {
+     private static final long serialVersionUID = -2362048321261811743L;
+diff --git a/src/main/java/org/apache/commons/lang3/text/FormatFactory.java b/src/main/java/org/apache/commons/lang3/text/FormatFactory.java
+index 3460b4db52e025a4e75bf68a99b733c8f2064de4..ffd91b5e0d01272dee60a47013bd03bc63d25bec 100644
+--- a/src/main/java/org/apache/commons/lang3/text/FormatFactory.java
++++ b/src/main/java/org/apache/commons/lang3/text/FormatFactory.java
+@@ -23,7 +23,6 @@ import java.util.Locale;
+  * Format factory.
+  * 
+  * @since 2.4
+- * @version $Id$
+  */
+ public interface FormatFactory {
+ 
+diff --git a/src/main/java/org/apache/commons/lang3/text/FormattableUtils.java b/src/main/java/org/apache/commons/lang3/text/FormattableUtils.java
+index abdd1149c2fa7efd529e3c097024787ccde165de..9be8e674564c4cec9d72616cdf048d3f39974891 100644
+--- a/src/main/java/org/apache/commons/lang3/text/FormattableUtils.java
++++ b/src/main/java/org/apache/commons/lang3/text/FormattableUtils.java
+@@ -33,7 +33,6 @@ import org.apache.commons.lang3.Validate;
+  * and padding, and is not designed to allow generalised alternate formats.</p>
+  * 
+  * @since Lang 3.0
+- * @version $Id$
+  */
+ public class FormattableUtils {
+ 
+diff --git a/src/main/java/org/apache/commons/lang3/text/StrBuilder.java b/src/main/java/org/apache/commons/lang3/text/StrBuilder.java
+index 103b04035f944bba6aca6dabc862a492450bbee9..a2010fdc31c89a003503154140eda3cc5cfcfa58 100644
+--- a/src/main/java/org/apache/commons/lang3/text/StrBuilder.java
++++ b/src/main/java/org/apache/commons/lang3/text/StrBuilder.java
+@@ -72,7 +72,6 @@ import org.apache.commons.lang3.builder.Builder;
+  * the interface. 
+  *
+  * @since 2.2
+- * @version $Id$
+  */
+ public class StrBuilder implements CharSequence, Appendable, Serializable, Builder<String> {
+ 
+@@ -2819,6 +2818,9 @@ public class StrBuilder implements CharSequence, Appendable, Serializable, Build
+         if (this == other) {
+             return true;
+         }
++        if (other == null) {
++            return false;
++        }
+         if (this.size != other.size) {
+             return false;
+         }
+@@ -2841,10 +2843,7 @@ public class StrBuilder implements CharSequence, Appendable, Serializable, Build
+      */
+     @Override
+     public boolean equals(final Object obj) {
+-        if (obj instanceof StrBuilder) {
+-            return equals((StrBuilder) obj);
+-        }
+-        return false;
++        return obj instanceof StrBuilder && equals((StrBuilder) obj);
+     }
+ 
+     /**
+diff --git a/src/main/java/org/apache/commons/lang3/text/StrLookup.java b/src/main/java/org/apache/commons/lang3/text/StrLookup.java
+index b77a583488faa6ca7688786f5cf6ebcbb11f39f0..c4d42b3eed47183d7bfebf2f773df8d6f10ef04f 100644
+--- a/src/main/java/org/apache/commons/lang3/text/StrLookup.java
++++ b/src/main/java/org/apache/commons/lang3/text/StrLookup.java
+@@ -34,7 +34,6 @@ import java.util.Properties;
+  * key as a primary key, and looked up the value on demand from the database
+  *
+  * @since 2.2
+- * @version $Id$
+  */
+ public abstract class StrLookup<V> {
+ 
+diff --git a/src/main/java/org/apache/commons/lang3/text/StrMatcher.java b/src/main/java/org/apache/commons/lang3/text/StrMatcher.java
+index 15148185b6f794d72f75d907a5afda5d9fbf42e8..a1ed6a53b625d43bb592f98e5d2298e767903326 100644
+--- a/src/main/java/org/apache/commons/lang3/text/StrMatcher.java
++++ b/src/main/java/org/apache/commons/lang3/text/StrMatcher.java
+@@ -28,7 +28,6 @@ import org.apache.commons.lang3.StringUtils;
+  * If these do not suffice, you can subclass and implement your own matcher.
+  *
+  * @since 2.2
+- * @version $Id$
+  */
+ public abstract class StrMatcher {
+ 
+diff --git a/src/main/java/org/apache/commons/lang3/text/StrSubstitutor.java b/src/main/java/org/apache/commons/lang3/text/StrSubstitutor.java
+index aa1e3d2d3a3d6cf57363621a87a05f4a300203e7..766e1614c62a45763f20558b5726e4a1ec86ae27 100644
+--- a/src/main/java/org/apache/commons/lang3/text/StrSubstitutor.java
++++ b/src/main/java/org/apache/commons/lang3/text/StrSubstitutor.java
+@@ -119,7 +119,6 @@ import org.apache.commons.lang3.StringUtils;
+  * {@link #setEnableSubstitutionInVariables(boolean) enableSubstitutionInVariables}
+  * property to <b>true</b>.
+  *
+- * @version $Id$
+  * @since 2.2
+  */
+ public class StrSubstitutor {
+diff --git a/src/main/java/org/apache/commons/lang3/text/StrTokenizer.java b/src/main/java/org/apache/commons/lang3/text/StrTokenizer.java
+index f620b39753d969b5fbf4c4f2ab5eb053e356b74d..c9650b8d406162a4528920ac055537f4fa143488 100644
+--- a/src/main/java/org/apache/commons/lang3/text/StrTokenizer.java
++++ b/src/main/java/org/apache/commons/lang3/text/StrTokenizer.java
+@@ -83,7 +83,6 @@ import org.apache.commons.lang3.StringUtils;
+  * </table>
+  *
+  * @since 2.2
+- * @version $Id$
+  */
+ public class StrTokenizer implements ListIterator<String>, Cloneable {
+ 
+diff --git a/src/main/java/org/apache/commons/lang3/text/WordUtils.java b/src/main/java/org/apache/commons/lang3/text/WordUtils.java
+index ce21d92b29c8fabbc367547c982dbbf8521b9c63..c95146fb02bb331dc20030c6f824380fe13a624a 100644
+--- a/src/main/java/org/apache/commons/lang3/text/WordUtils.java
++++ b/src/main/java/org/apache/commons/lang3/text/WordUtils.java
+@@ -27,7 +27,6 @@ import org.apache.commons.lang3.SystemUtils;
+  * Each method documents its behaviour in more detail.</p>
+  * 
+  * @since 2.0
+- * @version $Id$
+  */
+ public class WordUtils {
+ 
+diff --git a/src/main/java/org/apache/commons/lang3/text/package-info.java b/src/main/java/org/apache/commons/lang3/text/package-info.java
+index 051d727e65ddfd4293b8fa3cc3d0ba16f6e81a57..61e4b05d4bb8f5a586949c8fa81e67ab12f5ebf4 100644
+--- a/src/main/java/org/apache/commons/lang3/text/package-info.java
++++ b/src/main/java/org/apache/commons/lang3/text/package-info.java
+@@ -23,6 +23,5 @@
+  * While somewhat ungainly, the <code>Str</code> prefix has been used to ensure we don't clash with any current or future standard Java classes. </p>
+  *
+  * @since 2.1
+- * @version $Id$
+  */
+ package org.apache.commons.lang3.text;
+diff --git a/src/main/java/org/apache/commons/lang3/text/translate/AggregateTranslator.java b/src/main/java/org/apache/commons/lang3/text/translate/AggregateTranslator.java
+index 51e4e1d7d6abc470d7efac05766055229ced3430..f0756619492bd74992871e455b5d69c16b7c097f 100644
+--- a/src/main/java/org/apache/commons/lang3/text/translate/AggregateTranslator.java
++++ b/src/main/java/org/apache/commons/lang3/text/translate/AggregateTranslator.java
+@@ -26,7 +26,6 @@ import org.apache.commons.lang3.ArrayUtils;
+  * the first translator consumes codepoints from the input.
+  * 
+  * @since 3.0
+- * @version $Id$
+  */
+ public class AggregateTranslator extends CharSequenceTranslator {
+ 
+diff --git a/src/main/java/org/apache/commons/lang3/text/translate/CharSequenceTranslator.java b/src/main/java/org/apache/commons/lang3/text/translate/CharSequenceTranslator.java
+index 17e73b640d8860325ce7973c975458c1da8920b6..06c357dab51e27395baf8d0038e36169a05fa300 100644
+--- a/src/main/java/org/apache/commons/lang3/text/translate/CharSequenceTranslator.java
++++ b/src/main/java/org/apache/commons/lang3/text/translate/CharSequenceTranslator.java
+@@ -27,7 +27,6 @@ import java.util.Locale;
+  * is completely contextual, the API does not present two separate signatures.
+  * 
+  * @since 3.0
+- * @version $Id$
+  */
+ public abstract class CharSequenceTranslator {
+ 
+diff --git a/src/main/java/org/apache/commons/lang3/text/translate/CodePointTranslator.java b/src/main/java/org/apache/commons/lang3/text/translate/CodePointTranslator.java
+index 5a8780665781946f19f3895c17ff8f14a1fb19f2..d080f5a6bfd9f2988c67c5b8affe724d6e01eca9 100644
+--- a/src/main/java/org/apache/commons/lang3/text/translate/CodePointTranslator.java
++++ b/src/main/java/org/apache/commons/lang3/text/translate/CodePointTranslator.java
+@@ -24,7 +24,6 @@ import java.io.Writer;
+  * will replace up to one character at a time.
+  * 
+  * @since 3.0
+- * @version $Id$
+  */
+ public abstract class CodePointTranslator extends CharSequenceTranslator {
+ 
+diff --git a/src/main/java/org/apache/commons/lang3/text/translate/EntityArrays.java b/src/main/java/org/apache/commons/lang3/text/translate/EntityArrays.java
+index 23695758f5fbcd51fdd2c31f62b843419ecd585a..190d0a2386bf970e7fdae5ddc5af54d9334ba1d7 100644
+--- a/src/main/java/org/apache/commons/lang3/text/translate/EntityArrays.java
++++ b/src/main/java/org/apache/commons/lang3/text/translate/EntityArrays.java
+@@ -22,7 +22,6 @@ package org.apache.commons.lang3.text.translate;
+  * All arrays are of length [*][2].
+  *
+  * @since 3.0
+- * @version $Id$
+  */
+ public class EntityArrays {
+ 
+diff --git a/src/main/java/org/apache/commons/lang3/text/translate/JavaUnicodeEscaper.java b/src/main/java/org/apache/commons/lang3/text/translate/JavaUnicodeEscaper.java
+index 65722f24b8d224810a25126cb9c7086541ed9c36..b457c309601cb22702f4e6d5fcf4b9675d5f702d 100644
+--- a/src/main/java/org/apache/commons/lang3/text/translate/JavaUnicodeEscaper.java
++++ b/src/main/java/org/apache/commons/lang3/text/translate/JavaUnicodeEscaper.java
+@@ -20,7 +20,6 @@ package org.apache.commons.lang3.text.translate;
+  * Translates codepoints to their Unicode escaped value suitable for Java source.
+  * 
+  * @since 3.2
+- * @version $Id$
+  */
+ public class JavaUnicodeEscaper extends UnicodeEscaper {
+ 
+diff --git a/src/main/java/org/apache/commons/lang3/text/translate/LookupTranslator.java b/src/main/java/org/apache/commons/lang3/text/translate/LookupTranslator.java
+index bb2bbd63b8007261cc739e2fc4d735a7324e4da1..ea1fbc31c36d343956f73e8196eaf465fab64568 100644
+--- a/src/main/java/org/apache/commons/lang3/text/translate/LookupTranslator.java
++++ b/src/main/java/org/apache/commons/lang3/text/translate/LookupTranslator.java
+@@ -25,7 +25,6 @@ import java.util.HashSet;
+  * Translates a value using a lookup table.
+  *
+  * @since 3.0
+- * @version $Id$
+  */
+ public class LookupTranslator extends CharSequenceTranslator {
+ 
+diff --git a/src/main/java/org/apache/commons/lang3/text/translate/NumericEntityEscaper.java b/src/main/java/org/apache/commons/lang3/text/translate/NumericEntityEscaper.java
+index 0e2e033dcaacf1059a22b064a3b4b4209b76ec26..c38b02ac70082482d5c7cbd03bfc74fe02cb95ef 100644
+--- a/src/main/java/org/apache/commons/lang3/text/translate/NumericEntityEscaper.java
++++ b/src/main/java/org/apache/commons/lang3/text/translate/NumericEntityEscaper.java
+@@ -23,7 +23,6 @@ import java.io.Writer;
+  * Translates codepoints to their XML numeric entity escaped value.
+  *
+  * @since 3.0
+- * @version $Id$
+  */
+ public class NumericEntityEscaper extends CodePointTranslator {
+ 
+diff --git a/src/main/java/org/apache/commons/lang3/text/translate/NumericEntityUnescaper.java b/src/main/java/org/apache/commons/lang3/text/translate/NumericEntityUnescaper.java
+index ede2cf301047314945527e8cc985c145476aced8..1630451897066eae7bc06a8a9414481a7ad6cfe1 100644
+--- a/src/main/java/org/apache/commons/lang3/text/translate/NumericEntityUnescaper.java
++++ b/src/main/java/org/apache/commons/lang3/text/translate/NumericEntityUnescaper.java
+@@ -28,7 +28,6 @@ import java.util.EnumSet;
+  * Note that the semi-colon is optional.
+  * 
+  * @since 3.0
+- * @version $Id$
+  */
+ public class NumericEntityUnescaper extends CharSequenceTranslator {
+ 
+diff --git a/src/main/java/org/apache/commons/lang3/text/translate/OctalUnescaper.java b/src/main/java/org/apache/commons/lang3/text/translate/OctalUnescaper.java
+index 550650435174a978c62b1a789aed70a974e7b1d7..5ec567f4278528a19980dee47e5124af334cc293 100644
+--- a/src/main/java/org/apache/commons/lang3/text/translate/OctalUnescaper.java
++++ b/src/main/java/org/apache/commons/lang3/text/translate/OctalUnescaper.java
+@@ -28,7 +28,6 @@ import java.io.Writer;
+  * 1 to 377. This is because parsing Java is the main use case.
+  * 
+  * @since 3.0
+- * @version $Id: OctalUnescaper.java 967237 2010-07-23 20:08:57Z mbenson $
+  */
+ public class OctalUnescaper extends CharSequenceTranslator {
+ 
+diff --git a/src/main/java/org/apache/commons/lang3/text/translate/UnicodeEscaper.java b/src/main/java/org/apache/commons/lang3/text/translate/UnicodeEscaper.java
+index 3a63b721b73750db36b2709d7bed1d3d3a2aa9a8..dcaf54e2151ff4fdfffbb93672afe04f9148ea64 100644
+--- a/src/main/java/org/apache/commons/lang3/text/translate/UnicodeEscaper.java
++++ b/src/main/java/org/apache/commons/lang3/text/translate/UnicodeEscaper.java
+@@ -23,7 +23,6 @@ import java.io.Writer;
+  * Translates codepoints to their Unicode escaped value.
+  *
+  * @since 3.0
+- * @version $Id$
+  */
+ public class UnicodeEscaper extends CodePointTranslator {
+ 
+diff --git a/src/main/java/org/apache/commons/lang3/text/translate/UnicodeUnescaper.java b/src/main/java/org/apache/commons/lang3/text/translate/UnicodeUnescaper.java
+index 3b1e9d02d3de33f607b8b857457fc01b0af8333f..fd881afc007259188616c6dcc1b9dfd279238d33 100644
+--- a/src/main/java/org/apache/commons/lang3/text/translate/UnicodeUnescaper.java
++++ b/src/main/java/org/apache/commons/lang3/text/translate/UnicodeUnescaper.java
+@@ -25,7 +25,6 @@ import java.io.Writer;
+  * without the +.
+  * 
+  * @since 3.0
+- * @version $Id$
+  */
+ public class UnicodeUnescaper extends CharSequenceTranslator {
+ 
+diff --git a/src/main/java/org/apache/commons/lang3/text/translate/UnicodeUnpairedSurrogateRemover.java b/src/main/java/org/apache/commons/lang3/text/translate/UnicodeUnpairedSurrogateRemover.java
+index ce86d5e8560945865e03dbc5b352a3285b257b91..579944dc0beafdb26740fd1cfaf0ae50654ba308 100644
+--- a/src/main/java/org/apache/commons/lang3/text/translate/UnicodeUnpairedSurrogateRemover.java
++++ b/src/main/java/org/apache/commons/lang3/text/translate/UnicodeUnpairedSurrogateRemover.java
+@@ -21,8 +21,6 @@ import java.io.Writer;
+ 
+ /**
+  * Helper subclass to CharSequenceTranslator to remove unpaired surrogates.
+- * 
+- * @version $Id$
+  */
+ public class UnicodeUnpairedSurrogateRemover extends CodePointTranslator {
+     /**
+diff --git a/src/main/java/org/apache/commons/lang3/text/translate/package-info.java b/src/main/java/org/apache/commons/lang3/text/translate/package-info.java
+index fd47b62cb11451512297f7279775eb6b27771112..7d30d890cd60f32a346be7b3926e711ae477cbf1 100644
+--- a/src/main/java/org/apache/commons/lang3/text/translate/package-info.java
++++ b/src/main/java/org/apache/commons/lang3/text/translate/package-info.java
+@@ -20,6 +20,5 @@
+  * <p>These classes are immutable, and therefore thread-safe.</p>
+  *
+  * @since 3.0
+- * @version $Id$
+  */
+ package org.apache.commons.lang3.text.translate;
+diff --git a/src/main/java/org/apache/commons/lang3/time/DateFormatUtils.java b/src/main/java/org/apache/commons/lang3/time/DateFormatUtils.java
+index 4315e4742a1e6aa8d495bf6d816083e23353578c..642eb4d8971ddf406066d70e05ae23abb581903a 100644
+--- a/src/main/java/org/apache/commons/lang3/time/DateFormatUtils.java
++++ b/src/main/java/org/apache/commons/lang3/time/DateFormatUtils.java
+@@ -31,7 +31,6 @@ import java.util.TimeZone;
+  * override any previously called Calendar.clear() calls. See LANG-755.</p>
+  *
+  * @since 2.0
+- * @version $Id$
+  */
+ public class DateFormatUtils {
+ 
+@@ -43,6 +42,7 @@ public class DateFormatUtils {
+     /**
+      * ISO 8601 formatter for date-time without time zone.
+      * The format used is {@code yyyy-MM-dd'T'HH:mm:ss}.
++     * This format uses the default TimeZone in effect at the time of loading DateFormatUtils class.
+      */
+     public static final FastDateFormat ISO_DATETIME_FORMAT
+             = FastDateFormat.getInstance("yyyy-MM-dd'T'HH:mm:ss");
+@@ -50,6 +50,7 @@ public class DateFormatUtils {
+     /**
+      * ISO 8601 formatter for date-time with time zone.
+      * The format used is {@code yyyy-MM-dd'T'HH:mm:ssZZ}.
++     * This format uses the default TimeZone in effect at the time of loading DateFormatUtils class.
+      */
+     public static final FastDateFormat ISO_DATETIME_TIME_ZONE_FORMAT
+             = FastDateFormat.getInstance("yyyy-MM-dd'T'HH:mm:ssZZ");
+@@ -57,6 +58,7 @@ public class DateFormatUtils {
+     /**
+      * ISO 8601 formatter for date without time zone.
+      * The format used is {@code yyyy-MM-dd}.
++     * This format uses the default TimeZone in effect at the time of loading DateFormatUtils class.
+      */
+     public static final FastDateFormat ISO_DATE_FORMAT
+             = FastDateFormat.getInstance("yyyy-MM-dd");
+@@ -66,6 +68,7 @@ public class DateFormatUtils {
+      * The format used is {@code yyyy-MM-ddZZ}.
+      * This pattern does not comply with the formal ISO 8601 specification
+      * as the standard does not allow a time zone  without a time.
++     * This format uses the default TimeZone in effect at the time of loading DateFormatUtils class.
+      */
+     public static final FastDateFormat ISO_DATE_TIME_ZONE_FORMAT
+             = FastDateFormat.getInstance("yyyy-MM-ddZZ");
+@@ -73,6 +76,7 @@ public class DateFormatUtils {
+     /**
+      * ISO 8601 formatter for time without time zone.
+      * The format used is {@code 'T'HH:mm:ss}.
++     * This format uses the default TimeZone in effect at the time of loading DateFormatUtils class.
+      */
+     public static final FastDateFormat ISO_TIME_FORMAT
+             = FastDateFormat.getInstance("'T'HH:mm:ss");
+@@ -80,6 +84,7 @@ public class DateFormatUtils {
+     /**
+      * ISO 8601 formatter for time with time zone.
+      * The format used is {@code 'T'HH:mm:ssZZ}.
++     * This format uses the default TimeZone in effect at the time of loading DateFormatUtils class.
+      */
+     public static final FastDateFormat ISO_TIME_TIME_ZONE_FORMAT
+             = FastDateFormat.getInstance("'T'HH:mm:ssZZ");
+@@ -89,6 +94,7 @@ public class DateFormatUtils {
+      * The format used is {@code HH:mm:ss}.
+      * This pattern does not comply with the formal ISO 8601 specification
+      * as the standard requires the 'T' prefix for times.
++     * This format uses the default TimeZone in effect at the time of loading DateFormatUtils class.
+      */
+     public static final FastDateFormat ISO_TIME_NO_T_FORMAT
+             = FastDateFormat.getInstance("HH:mm:ss");
+@@ -98,6 +104,7 @@ public class DateFormatUtils {
+      * The format used is {@code HH:mm:ssZZ}.
+      * This pattern does not comply with the formal ISO 8601 specification
+      * as the standard requires the 'T' prefix for times.
++     * This format uses the default TimeZone in effect at the time of loading DateFormatUtils class.
+      */
+     public static final FastDateFormat ISO_TIME_NO_T_TIME_ZONE_FORMAT
+             = FastDateFormat.getInstance("HH:mm:ssZZ");
+@@ -105,6 +112,7 @@ public class DateFormatUtils {
+     /**
+      * SMTP (and probably other) date headers.
+      * The format used is {@code EEE, dd MMM yyyy HH:mm:ss Z} in US locale.
++     * This format uses the default TimeZone in effect at the time of loading DateFormatUtils class.
+      */
+     public static final FastDateFormat SMTP_DATETIME_FORMAT
+             = FastDateFormat.getInstance("EEE, dd MMM yyyy HH:mm:ss Z", Locale.US);
+diff --git a/src/main/java/org/apache/commons/lang3/time/DatePrinter.java b/src/main/java/org/apache/commons/lang3/time/DatePrinter.java
+index d1bfb91b9ef91ae041a1e1f3927d0e2abd41b883..68086285d705215d0df4f32e5695925511b83499 100644
+--- a/src/main/java/org/apache/commons/lang3/time/DatePrinter.java
++++ b/src/main/java/org/apache/commons/lang3/time/DatePrinter.java
+@@ -49,8 +49,11 @@ public interface DatePrinter {
+ 
+     /**
+      * <p>Formats a {@code Calendar} object.</p>
++     * The TimeZone set on the Calendar is only used to adjust the time offset.
++     * The TimeZone specified during the construction of the Parser will determine the TimeZone
++     * used in the formatted string.
+      *
+-     * @param calendar  the calendar to format
++     * @param calendar  the calendar to format.
+      * @return the formatted string
+      */
+     String format(Calendar calendar);
+@@ -76,8 +79,10 @@ public interface DatePrinter {
+     StringBuffer format(Date date, StringBuffer buf);
+ 
+     /**
+-     * <p>Formats a {@code Calendar} object into the
+-     * supplied {@code StringBuffer}.</p>
++     * <p>Formats a {@code Calendar} object into the supplied {@code StringBuffer}.</p>
++     * The TimeZone set on the Calendar is only used to adjust the time offset.
++     * The TimeZone specified during the construction of the Parser will determine the TimeZone
++     * used in the formatted string.
+      *
+      * @param calendar  the calendar to format
+      * @param buf  the buffer to format into
+diff --git a/src/main/java/org/apache/commons/lang3/time/DateUtils.java b/src/main/java/org/apache/commons/lang3/time/DateUtils.java
+index 74da2b61f9c203cf4bb29cb3d1391cbe84b28486..c49dbbb412f7c3333bbd99278295e7e1da0d753c 100644
+--- a/src/main/java/org/apache/commons/lang3/time/DateUtils.java
++++ b/src/main/java/org/apache/commons/lang3/time/DateUtils.java
+@@ -18,12 +18,12 @@ package org.apache.commons.lang3.time;
+ 
+ import java.text.ParseException;
+ import java.text.ParsePosition;
+-import java.text.SimpleDateFormat;
+ import java.util.Calendar;
+ import java.util.Date;
+ import java.util.Iterator;
+ import java.util.Locale;
+ import java.util.NoSuchElementException;
++import java.util.TimeZone;
+ import java.util.concurrent.TimeUnit;
+ 
+ /**
+@@ -48,7 +48,6 @@ import java.util.concurrent.TimeUnit;
+  * </p>
+  *
+  * @since 2.0
+- * @version $Id$
+  */
+ public class DateUtils {
+ 
+@@ -365,37 +364,21 @@ public class DateUtils {
+         if (str == null || parsePatterns == null) {
+             throw new IllegalArgumentException("Date and Patterns must not be null");
+         }
+-        
+-        SimpleDateFormat parser;
+-        if (locale == null) {
+-            parser = new SimpleDateFormat();
+-        } else {
+-            parser = new SimpleDateFormat("", locale);
+-        }
+-        
+-        parser.setLenient(lenient);
+-        final ParsePosition pos = new ParsePosition(0);
+-        for (final String parsePattern : parsePatterns) {
+-
+-            String pattern = parsePattern;
+ 
+-            // LANG-530 - need to make sure 'ZZ' output doesn't get passed to SimpleDateFormat
+-            if (parsePattern.endsWith("ZZ")) {
+-                pattern = pattern.substring(0, pattern.length() - 1);
+-            }
+-            
+-            parser.applyPattern(pattern);
+-            pos.setIndex(0);
++        final TimeZone tz = TimeZone.getDefault();
++        final Locale lcl = locale==null ?Locale.getDefault() : locale;
++        final ParsePosition pos = new ParsePosition(0);
+ 
+-            String str2 = str;
+-            // LANG-530 - need to make sure 'ZZ' output doesn't hit SimpleDateFormat as it will ParseException
+-            if (parsePattern.endsWith("ZZ")) {
+-                str2 = str.replaceAll("([-+][0-9][0-9]):([0-9][0-9])$", "$1$2"); 
++        for (final String parsePattern : parsePatterns) {
++            FastDateParser fdp = new FastDateParser(parsePattern, tz, lcl, null, lenient);
++            try {
++                Date date = fdp.parse(str, pos);
++                if (pos.getIndex() == str.length()) {
++                    return date;
++                }
++                pos.setIndex(0);
+             }
+-
+-            final Date date = parser.parse(str2, pos);
+-            if (date != null && pos.getIndex() == str2.length()) {
+-                return date;
++            catch(IllegalArgumentException iae) {
+             }
+         }
+         throw new ParseException("Unable to parse the date: " + str, -1);
+diff --git a/src/main/java/org/apache/commons/lang3/time/DurationFormatUtils.java b/src/main/java/org/apache/commons/lang3/time/DurationFormatUtils.java
+index f29099c8b9b6c46de51f58bd23fdefa21ec733c3..8eeab9225a9403bf0ef386b83948d18c02a9006e 100644
+--- a/src/main/java/org/apache/commons/lang3/time/DurationFormatUtils.java
++++ b/src/main/java/org/apache/commons/lang3/time/DurationFormatUtils.java
+@@ -46,7 +46,6 @@ import org.apache.commons.lang3.Validate;
+  * A token character can be repeated to ensure that the field occupies a certain minimum
+  * size. Values will be left-padded with 0 unless padding is disabled in the method invocation.
+  * @since 2.1
+- * @version $Id$
+  */
+ public class DurationFormatUtils {
+ 
+diff --git a/src/main/java/org/apache/commons/lang3/time/FastDateFormat.java b/src/main/java/org/apache/commons/lang3/time/FastDateFormat.java
+index 7f17220599d6772430bd29fe23e53145e2c834b6..b4cc85d8868d77ac64da62ca961300923654f823 100644
+--- a/src/main/java/org/apache/commons/lang3/time/FastDateFormat.java
++++ b/src/main/java/org/apache/commons/lang3/time/FastDateFormat.java
+@@ -68,7 +68,6 @@ import java.util.TimeZone;
+  * versions. FastDateFormat implements the behavior of Java 7.</p>
+  *
+  * @since 2.0
+- * @version $Id$
+  */
+ public class FastDateFormat extends Format implements DateParser, DatePrinter {
+     /**
+diff --git a/src/main/java/org/apache/commons/lang3/time/FastDateParser.java b/src/main/java/org/apache/commons/lang3/time/FastDateParser.java
+index 2d469a6b3e4c434c4b866ec335b78ef30024a0f0..f8a700e426df0d0db7f15a8d18a7b628a8f3595d 100644
+--- a/src/main/java/org/apache/commons/lang3/time/FastDateParser.java
++++ b/src/main/java/org/apache/commons/lang3/time/FastDateParser.java
+@@ -65,7 +65,6 @@ import java.util.regex.Pattern;
+  * <p>Timing tests indicate this class is as about as fast as SimpleDateFormat
+  * in single thread applications and about 25% faster in multi-thread applications.</p>
+  *
+- * @version $Id$
+  * @since 3.2
+  * @see FastDatePrinter
+  */
+@@ -75,7 +74,7 @@ public class FastDateParser implements DateParser, Serializable {
+      *
+      * @see java.io.Serializable
+      */
+-    private static final long serialVersionUID = 2L;
++    private static final long serialVersionUID = 3L;
+ 
+     static final Locale JAPANESE_IMPERIAL = new Locale("ja","JP","JP");
+ 
+@@ -85,6 +84,7 @@ public class FastDateParser implements DateParser, Serializable {
+     private final Locale locale;
+     private final int century;
+     private final int startYear;
++    private final boolean lenient;
+ 
+     // derived fields
+     private transient Pattern parsePattern;
+@@ -106,7 +106,7 @@ public class FastDateParser implements DateParser, Serializable {
+      * @param locale non-null locale
+      */
+     protected FastDateParser(final String pattern, final TimeZone timeZone, final Locale locale) {
+-        this(pattern, timeZone, locale, null);
++        this(pattern, timeZone, locale, null, true);
+     }
+ 
+     /**
+@@ -121,11 +121,31 @@ public class FastDateParser implements DateParser, Serializable {
+      * @since 3.3
+      */
+     protected FastDateParser(final String pattern, final TimeZone timeZone, final Locale locale, final Date centuryStart) {
++        this(pattern, timeZone, locale, centuryStart, true);
++    }
++
++    /**
++     * <p>Constructs a new FastDateParser.</p>
++     *
++     * @param pattern non-null {@link java.text.SimpleDateFormat} compatible
++     *  pattern
++     * @param timeZone non-null time zone to use
++     * @param locale non-null locale
++     * @param centuryStart The start of the century for 2 digit year parsing
++     * @param lenient if true, non-standard values for Calendar fields should be accepted;
++     * if false, non-standard values will cause a ParseException to be thrown {@link CalendaretLenient(boolean)}
++     *
++     * @since 3.5
++     */
++    protected FastDateParser(final String pattern, final TimeZone timeZone, final Locale locale,
++            final Date centuryStart, final boolean lenient) {
+         this.pattern = pattern;
+         this.timeZone = timeZone;
+         this.locale = locale;
++        this.lenient = lenient;
+ 
+         final Calendar definingCalendar = Calendar.getInstance(timeZone, locale);
++
+         int centuryStartYear;
+         if(centuryStart!=null) {
+             definingCalendar.setTime(centuryStart);
+@@ -336,6 +356,7 @@ public class FastDateParser implements DateParser, Serializable {
+         // timing tests indicate getting new instance is 19% faster than cloning
+         final Calendar cal= Calendar.getInstance(timeZone, locale);
+         cal.clear();
++        cal.setLenient(lenient);
+ 
+         for(int i=0; i<strategies.length;) {
+             final Strategy strategy= strategies[i++];
+diff --git a/src/main/java/org/apache/commons/lang3/time/FastDatePrinter.java b/src/main/java/org/apache/commons/lang3/time/FastDatePrinter.java
+index ac73646a9847be2a7478f1c02095a7637632e1c4..3f6b3bd14877402590635dfad4a5d06f63eea22f 100644
+--- a/src/main/java/org/apache/commons/lang3/time/FastDatePrinter.java
++++ b/src/main/java/org/apache/commons/lang3/time/FastDatePrinter.java
+@@ -73,7 +73,6 @@ import java.util.concurrent.ConcurrentMap;
+  * 'YYY' will be formatted as '2003', while it was '03' in former Java
+  * versions. FastDatePrinter implements the behavior of Java 7.</p>
+  *
+- * @version $Id$
+  * @since 3.2
+  * @see FastDateParser
+  */
+@@ -283,7 +282,7 @@ public class FastDatePrinter implements DatePrinter, Serializable {
+                 if (tokenLen == 1) {
+                     rule = TimeZoneNumberRule.INSTANCE_NO_COLON;
+                 } else if (tokenLen == 2) {
+-                    rule = TimeZoneNumberRule.INSTANCE_ISO_8601;
++                    rule = Iso8601_Rule.ISO8601_HOURS_COLON_MINUTES;
+                 } else {
+                     rule = TimeZoneNumberRule.INSTANCE_COLON;
+                 }
+@@ -477,7 +476,8 @@ public class FastDatePrinter implements DatePrinter, Serializable {
+      */
+     @Override
+     public StringBuffer format(final Calendar calendar, final StringBuffer buf) {
+-        return applyRules(calendar, buf);
++        // do not pass in calendar directly, this will cause TimeZone of FastDatePrinter to be ignored
++        return format(calendar.getTime(), buf);
+     }
+ 
+     /**
+@@ -1178,22 +1178,18 @@ public class FastDatePrinter implements DatePrinter, Serializable {
+      * or {@code +/-HH:MM}.</p>
+      */
+     private static class TimeZoneNumberRule implements Rule {
+-        static final TimeZoneNumberRule INSTANCE_COLON = new TimeZoneNumberRule(true, false);
+-        static final TimeZoneNumberRule INSTANCE_NO_COLON = new TimeZoneNumberRule(false, false);
+-        static final TimeZoneNumberRule INSTANCE_ISO_8601 = new TimeZoneNumberRule(true, true);
++        static final TimeZoneNumberRule INSTANCE_COLON = new TimeZoneNumberRule(true);
++        static final TimeZoneNumberRule INSTANCE_NO_COLON = new TimeZoneNumberRule(false);
+         
+         final boolean mColon;
+-        final boolean mISO8601;
+ 
+         /**
+          * Constructs an instance of {@code TimeZoneNumberRule} with the specified properties.
+          *
+          * @param colon add colon between HH and MM in the output if {@code true}
+-         * @param iso8601 create an ISO 8601 format output
+          */
+-        TimeZoneNumberRule(final boolean colon, final boolean iso8601) {
++        TimeZoneNumberRule(final boolean colon) {
+             mColon = colon;
+-            mISO8601 = iso8601;
+         }
+ 
+         /**
+@@ -1209,10 +1205,6 @@ public class FastDatePrinter implements DatePrinter, Serializable {
+          */
+         @Override
+         public void appendTo(final StringBuffer buffer, final Calendar calendar) {
+-            if (mISO8601 && calendar.getTimeZone().getID().equals("UTC")) {
+-                buffer.append("Z");
+-                return;
+-            }
+             
+             int offset = calendar.get(Calendar.ZONE_OFFSET) + calendar.get(Calendar.DST_OFFSET);
+ 
+@@ -1292,14 +1284,12 @@ public class FastDatePrinter implements DatePrinter, Serializable {
+          */
+         @Override
+         public void appendTo(final StringBuffer buffer, final Calendar calendar) {
+-            int zoneOffset = calendar.get(Calendar.ZONE_OFFSET);
+-            if (zoneOffset == 0) {
++            int offset = calendar.get(Calendar.ZONE_OFFSET) + calendar.get(Calendar.DST_OFFSET);
++            if (offset == 0) {
+                 buffer.append("Z");
+                 return;
+             }
+             
+-            int offset = zoneOffset + calendar.get(Calendar.DST_OFFSET);
+-
+             if (offset < 0) {
+                 buffer.append('-');
+                 offset = -offset;
+diff --git a/src/main/java/org/apache/commons/lang3/time/FormatCache.java b/src/main/java/org/apache/commons/lang3/time/FormatCache.java
+index 73a76899099aabae44f3bbca8093a905c3e56504..9224b59f1f66b8204fbc7af47f99fb8dca1a8613 100644
+--- a/src/main/java/org/apache/commons/lang3/time/FormatCache.java
++++ b/src/main/java/org/apache/commons/lang3/time/FormatCache.java
+@@ -29,7 +29,6 @@ import java.util.concurrent.ConcurrentMap;
+  * <p>FormatCache is a cache and factory for {@link Format}s.</p>
+  * 
+  * @since 3.0
+- * @version $Id: FormatCache 892161 2009-12-18 07:21:10Z  $
+  */
+ // TODO: Before making public move from getDateTimeInstance(Integer,...) to int; or some other approach.
+ abstract class FormatCache<F extends Format> {
+diff --git a/src/main/java/org/apache/commons/lang3/time/StopWatch.java b/src/main/java/org/apache/commons/lang3/time/StopWatch.java
+index 953479344f7954cca62763888df717e56ae051a2..239bc5161b22206eeb5174d0fb7d534c9d0db785 100644
+--- a/src/main/java/org/apache/commons/lang3/time/StopWatch.java
++++ b/src/main/java/org/apache/commons/lang3/time/StopWatch.java
+@@ -53,7 +53,6 @@ package org.apache.commons.lang3.time;
+  * <p>This class is not thread-safe</p>
+  * 
+  * @since 2.0
+- * @version $Id$
+  */
+ public class StopWatch {
+ 
+diff --git a/src/main/java/org/apache/commons/lang3/time/package-info.java b/src/main/java/org/apache/commons/lang3/time/package-info.java
+index 7ea3a500e3ecf64af366cc5e59085cdd491ddbb4..5cf6769b30ee7373203c08da711d928559d7e0dd 100644
+--- a/src/main/java/org/apache/commons/lang3/time/package-info.java
++++ b/src/main/java/org/apache/commons/lang3/time/package-info.java
+@@ -24,6 +24,5 @@
+  * <p>New in Lang 2.1 is the {@link org.apache.commons.lang3.time.DurationFormatUtils} class, which provides various methods for formatting durations.</p>
+  *
+  * @since 2.0
+- * @version $Id$
+  */
+ package org.apache.commons.lang3.time;
+diff --git a/src/main/java/org/apache/commons/lang3/tuple/ImmutablePair.java b/src/main/java/org/apache/commons/lang3/tuple/ImmutablePair.java
+index 3e0a7406552349d82447fb4d216f2a49bbd2b470..dfb66ebda7335d2dd4257cf99c604874bf4cb4d5 100644
+--- a/src/main/java/org/apache/commons/lang3/tuple/ImmutablePair.java
++++ b/src/main/java/org/apache/commons/lang3/tuple/ImmutablePair.java
+@@ -30,7 +30,6 @@ package org.apache.commons.lang3.tuple;
+  * @param <R> the right element type
+  *
+  * @since Lang 3.0
+- * @version $Id$
+  */
+ public final class ImmutablePair<L, R> extends Pair<L, R> {
+ 
+diff --git a/src/main/java/org/apache/commons/lang3/tuple/ImmutableTriple.java b/src/main/java/org/apache/commons/lang3/tuple/ImmutableTriple.java
+index 7e4660c22b81cf30605e87a42455ee46e3ad3cb6..cc64c0d48b15c97ccd2b7a7f8d35ab666c2735f4 100644
+--- a/src/main/java/org/apache/commons/lang3/tuple/ImmutableTriple.java
++++ b/src/main/java/org/apache/commons/lang3/tuple/ImmutableTriple.java
+@@ -30,7 +30,6 @@ package org.apache.commons.lang3.tuple;
+  * @param <M> the middle element type
+  * @param <R> the right element type
+  *
+- * @version $Id$
+  * @since 3.2
+  */
+ public final class ImmutableTriple<L, M, R> extends Triple<L, M, R> {
+diff --git a/src/main/java/org/apache/commons/lang3/tuple/MutablePair.java b/src/main/java/org/apache/commons/lang3/tuple/MutablePair.java
+index 2e37b9f57259efa74e2955cb9bc9efcd4a9c668b..35ab57619b49078869670519170da8be6d1d0677 100644
+--- a/src/main/java/org/apache/commons/lang3/tuple/MutablePair.java
++++ b/src/main/java/org/apache/commons/lang3/tuple/MutablePair.java
+@@ -25,7 +25,6 @@ package org.apache.commons.lang3.tuple;
+  * @param <R> the right element type
+  *
+  * @since Lang 3.0
+- * @version $Id$
+  */
+ public class MutablePair<L, R> extends Pair<L, R> {
+ 
+diff --git a/src/main/java/org/apache/commons/lang3/tuple/MutableTriple.java b/src/main/java/org/apache/commons/lang3/tuple/MutableTriple.java
+index bd2d97b5bc33badb4a2406264de53e5df2ad5e7b..1d321843391f2029682800369aa3bc4311bd2f29 100644
+--- a/src/main/java/org/apache/commons/lang3/tuple/MutableTriple.java
++++ b/src/main/java/org/apache/commons/lang3/tuple/MutableTriple.java
+@@ -25,7 +25,6 @@ package org.apache.commons.lang3.tuple;
+  * @param <M> the middle element type
+  * @param <R> the right element type
+  *
+- * @version $Id$
+  * @since 3.2
+  */
+ public class MutableTriple<L, M, R> extends Triple<L, M, R> {
+diff --git a/src/main/java/org/apache/commons/lang3/tuple/Pair.java b/src/main/java/org/apache/commons/lang3/tuple/Pair.java
+index b3f4e5976c5b9d70e2531612ebd5556d00d778e6..1f5a47174b999796776048101ce496f3cd2e5c8a 100644
+--- a/src/main/java/org/apache/commons/lang3/tuple/Pair.java
++++ b/src/main/java/org/apache/commons/lang3/tuple/Pair.java
+@@ -37,7 +37,6 @@ import org.apache.commons.lang3.builder.CompareToBuilder;
+  * @param <R> the right element type
+  *
+  * @since Lang 3.0
+- * @version $Id$
+  */
+ public abstract class Pair<L, R> implements Map.Entry<L, R>, Comparable<Pair<L, R>>, Serializable {
+ 
+diff --git a/src/main/java/org/apache/commons/lang3/tuple/Triple.java b/src/main/java/org/apache/commons/lang3/tuple/Triple.java
+index 515646e7bb19b8b296d0317bcb819cdaa6ee3c7e..196580aee0674f033e946c89ad381e37a4648564 100644
+--- a/src/main/java/org/apache/commons/lang3/tuple/Triple.java
++++ b/src/main/java/org/apache/commons/lang3/tuple/Triple.java
+@@ -35,7 +35,6 @@ import org.apache.commons.lang3.builder.CompareToBuilder;
+  * @param <M> the middle element type
+  * @param <R> the right element type
+  *
+- * @version $Id$
+  * @since 3.2
+  */
+ public abstract class Triple<L, M, R> implements Comparable<Triple<L, M, R>>, Serializable {
+diff --git a/src/main/java/org/apache/commons/lang3/tuple/package-info.java b/src/main/java/org/apache/commons/lang3/tuple/package-info.java
+index 7d309d6c2156f096f90cad8b437b53dc77f1f116..b580344608e43d0027f56f449db86f850fdffc22 100644
+--- a/src/main/java/org/apache/commons/lang3/tuple/package-info.java
++++ b/src/main/java/org/apache/commons/lang3/tuple/package-info.java
+@@ -18,6 +18,5 @@
+  * Tuple classes, starting with a Pair class in version 3.0.
+  *
+  * @since 3.0
+- * @version $Id$
+  */
+ package org.apache.commons.lang3.tuple;
+diff --git a/src/site/xdoc/release-history.xml b/src/site/xdoc/release-history.xml
+index 48690cfd24571425947fe56e9234a6629cfe4ad1..2fe467961093549a3b1b4e41c0ca58d93d5cca53 100644
+--- a/src/site/xdoc/release-history.xml
++++ b/src/site/xdoc/release-history.xml
+@@ -17,72 +17,94 @@ limitations under the License.
+ -->
+ <document>
+  <properties>
+-  <title>Home</title>
++  <title>Release History</title>
+   <author email="dev@commons.apache.org">Commons Documentation Team</author>
+  </properties>
+ <body>
+ <!-- ================================================== -->
+-<section name="Commons Lang Release History">
++  <section name="Release History">
+ 
+-<table>
+-<tr><th>Version</th><th>Release date</th><th>Required Java Version</th><th>Javadoc</th><th>Release notes</th></tr>
+-<tr>
+-  <td>3.4</td><td>2014-04-06</td><td>6.0</td><td><a href="javadocs/api-3.4/">api-3.4</a></td><td><a href="release-notes/RELEASE-NOTES-3.4.txt">release notes for 3.4</a></td>
+-</tr>
+-<tr>
+-  <td>3.3.2</td><td>2014-04-09</td><td>6.0</td><td><a href="javadocs/api-3.3.2/">api-3.3.2</a></td><td><a href="release-notes/RELEASE-NOTES-3.3.2.txt">release notes for 3.3.2</a></td>
+-</tr>
+-<tr>
+-  <td>3.3.1</td><td>2014-03-18</td><td>6.0</td><td><a href="javadocs/api-3.3.1/">api-3.3.1</a></td><td><a href="release-notes/RELEASE-NOTES-3.3.1.txt">release notes for 3.3.1</a></td>
+-</tr>
+-<tr>
+-  <td>3.3</td><td>2014-03-04</td><td>6.0</td><td><a href="javadocs/api-3.3/">api-3.3</a></td><td><a href="release-notes/RELEASE-NOTES-3.3.txt">release notes for 3.3</a></td>
+-</tr>
+-<tr>
+-  <td>3.2.1</td><td>2014-01-05</td><td>6.0</td><td><a href="javadocs/api-3.2.1/">api-3.2.1</a></td><td><a href="release-notes/RELEASE-NOTES-3.2.1.txt">release notes for 3.2.1</a></td>
+-</tr>
+-<tr>
+-  <td>3.2</td><td>2014-01-01</td><td>6.0</td><td><a href="javadocs/api-3.2/">api-3.2</a></td><td><a href="release-notes/RELEASE-NOTES-3.2.txt">release notes for 3.2</a></td>
+-</tr>
+-<tr>
+-  <td>3.1</td><td>2011-11-14</td><td>5.0</td><td><a href="javadocs/api-3.1/">api-3.1</a></td><td><a href="release-notes/RELEASE-NOTES-3.1.txt">release notes for 3.1</a></td>
+-</tr>
+-<tr>
+-  <td>3.0.1</td><td>2011-08-9</td><td>5.0</td><td><a href="javadocs/api-3.0.1/">api-3.0.1</a></td><td><a href="release-notes/RELEASE-NOTES-3.0.1.txt">release notes for 3.0.1</a></td>
+-</tr>
+-<tr>
+-  <td>3.0</td><td>2011-07-18</td><td>5.0</td><td><a href="javadocs/api-3.0/">api-3.0</a></td><td><a href="release-notes/RELEASE-NOTES-3.0.txt">release notes for 3.0</a></td>
+-</tr>
+-<tr>
+-  <td>2.6</td><td>2011-01-16</td><td>1.3</td><td><a href="javadocs/api-2.6/">api-2.6</a></td><td><a href="release-notes/RELEASE-NOTES-2.6.txt">release notes for 2.6</a></td>
+-</tr>
+-<tr>
+-  <td>2.5</td><td>2010-02-23</td><td>1.3</td><td><a href="javadocs/api-2.5/">api-2.5</a></td><td><a href="release-notes/RELEASE-NOTES-2.5.txt">release notes for 2.5</a></td>
+-</tr>
+-<tr>
+-  <td>2.4</td><td>2008-03-18</td><td>1.2</td><td><a href="javadocs/api-2.4/">api-2.4</a></td><td><a href="release-notes/RELEASE-NOTES-2.4.txt">release notes for 2.4</a></td>
+-</tr>
+-<tr>
+-  <td>2.3</td><td>2007-02-13</td><td>1.1</td><td><a href="javadocs/api-2.3/">api-2.3</a></td><td><a href="release-notes/RELEASE-NOTES-2.3.txt">release notes for 2.3</a></td>
+-</tr>
+-<tr>
+-  <td>2.2</td><td>2006-10-04</td><td>1.1</td><td><a href="javadocs/api-2.2/">api-2.2</a></td><td><a href="release-notes/RELEASE-NOTES-2.2.txt">release notes for 2.2</a></td>
+-</tr>
+-<tr>
+-  <td>2.1</td><td>2006-06-13</td><td>1.1</td><td><a href="javadocs/api-2.1/">api-2.1</a></td><td><a href="release-notes/RELEASE-NOTES-2.1.txt">release notes for 2.1</a></td>
+-</tr>
+-<tr>
+-  <td>2.0</td><td>2003-09-02</td><td>1.1</td><td><a href="javadocs/api-2.0/">api-2.0</a></td><td><a href="release-notes/RELEASE-NOTES-2.0.txt">release notes for 2.0</a></td>
+-</tr>
+-<tr>
+-  <td>1.0.1</td><td>2002-11-25</td><td>1.1</td><td><a href="javadocs/api-1.0.1/">api-1.0.1</a></td><td><a href="release-notes/RELEASE-NOTES-1.0.1.txt">release notes for 1.0.1</a></td>
+-</tr>
+-<tr>
+-  <td>1.0</td><td>2002-10-04</td><td>1.1</td><td><a href="javadocs/api-1.0/">api-1.0</a></td><td><a href="release-notes/RELEASE-NOTES-1.0.txt">release notes for 1.0</a></td>
+-</tr>
+-</table>
++  This page contains information about all Apache Commons Lang releases.
+ 
+-</section>
++    <subsection name="org.apache.commons:commons-lang3:3.x">
++      <table>
++        <tr>
++          <th>Version</th><th>Release date</th><th>Required Java Version</th><th>Javadoc</th><th>Release notes</th>
++        </tr>
++        <tr>
++          <td>3.4</td><td>2014-04-06</td><td>6.0</td><td><a href="javadocs/api-3.4/">api-3.4</a></td><td><a href="release-notes/RELEASE-NOTES-3.4.txt">release notes for 3.4</a></td>
++        </tr>
++        <tr>
++          <td>3.3.2</td><td>2014-04-09</td><td>6.0</td><td><a href="javadocs/api-3.3.2/">api-3.3.2</a></td><td><a href="release-notes/RELEASE-NOTES-3.3.2.txt">release notes for 3.3.2</a></td>
++        </tr>
++        <tr>
++          <td>3.3.1</td><td>2014-03-18</td><td>6.0</td><td><a href="javadocs/api-3.3.1/">api-3.3.1</a></td><td><a href="release-notes/RELEASE-NOTES-3.3.1.txt">release notes for 3.3.1</a></td>
++        </tr>
++        <tr>
++          <td>3.3</td><td>2014-03-04</td><td>6.0</td><td><a href="javadocs/api-3.3/">api-3.3</a></td><td><a href="release-notes/RELEASE-NOTES-3.3.txt">release notes for 3.3</a></td>
++        </tr>
++        <tr>
++          <td>3.2.1</td><td>2014-01-05</td><td>6.0</td><td><a href="javadocs/api-3.2.1/">api-3.2.1</a></td><td><a href="release-notes/RELEASE-NOTES-3.2.1.txt">release notes for 3.2.1</a></td>
++        </tr>
++        <tr>
++          <td>3.2</td><td>2014-01-01</td><td>6.0</td><td><a href="javadocs/api-3.2/">api-3.2</a></td><td><a href="release-notes/RELEASE-NOTES-3.2.txt">release notes for 3.2</a></td>
++        </tr>
++        <tr>
++          <td>3.1</td><td>2011-11-14</td><td>5.0</td><td><a href="javadocs/api-3.1/">api-3.1</a></td><td><a href="release-notes/RELEASE-NOTES-3.1.txt">release notes for 3.1</a></td>
++        </tr>
++        <tr>
++          <td>3.0.1</td><td>2011-08-09</td><td>5.0</td><td><a href="javadocs/api-3.0.1/">api-3.0.1</a></td><td><a href="release-notes/RELEASE-NOTES-3.0.1.txt">release notes for 3.0.1</a></td>
++        </tr>
++        <tr>
++          <td>3.0</td><td>2011-07-18</td><td>5.0</td><td><a href="javadocs/api-3.0/">api-3.0</a></td><td><a href="release-notes/RELEASE-NOTES-3.0.txt">release notes for 3.0</a></td>
++        </tr>
++      </table>
++    </subsection>
++
++    <subsection name="commons-lang:commons-lang:2.x">
++      <table>
++        <tr>
++          <th>Version</th><th>Release date</th><th>Required Java Version</th><th>Javadoc</th><th>Release notes</th>
++        </tr>
++        <tr>
++          <td>2.6</td><td>2011-01-16</td><td>1.3</td><td><a href="javadocs/api-2.6/">api-2.6</a></td><td><a href="release-notes/RELEASE-NOTES-2.6.txt">release notes for 2.6</a></td>
++        </tr>
++        <tr>
++          <td>2.5</td><td>2010-02-23</td><td>1.3</td><td><a href="javadocs/api-2.5/">api-2.5</a></td><td><a href="release-notes/RELEASE-NOTES-2.5.txt">release notes for 2.5</a></td>
++        </tr>
++        <tr>
++          <td>2.4</td><td>2008-03-18</td><td>1.2</td><td><a href="javadocs/api-2.4/">api-2.4</a></td><td><a href="release-notes/RELEASE-NOTES-2.4.txt">release notes for 2.4</a></td>
++        </tr>
++        <tr>
++          <td>2.3</td><td>2007-02-13</td><td>1.1</td><td><a href="javadocs/api-2.3/">api-2.3</a></td><td><a href="release-notes/RELEASE-NOTES-2.3.txt">release notes for 2.3</a></td>
++        </tr>
++        <tr>
++          <td>2.2</td><td>2006-10-04</td><td>1.1</td><td><a href="javadocs/api-2.2/">api-2.2</a></td><td><a href="release-notes/RELEASE-NOTES-2.2.txt">release notes for 2.2</a></td>
++        </tr>
++        <tr>
++          <td>2.1</td><td>2006-06-13</td><td>1.1</td><td><a href="javadocs/api-2.1/">api-2.1</a></td><td><a href="release-notes/RELEASE-NOTES-2.1.txt">release notes for 2.1</a></td>
++        </tr>
++        <tr>
++          <td>2.0</td><td>2003-09-02</td><td>1.1</td><td><a href="javadocs/api-2.0/">api-2.0</a></td><td><a href="release-notes/RELEASE-NOTES-2.0.txt">release notes for 2.0</a></td>
++        </tr>
++      </table>
++    </subsection>
++
++    <subsection name="commons-lang:commons-lang:1.x">
++      <table>
++        <tr>
++          <th>Version</th><th>Release date</th><th>Required Java Version</th><th>Javadoc</th><th>Release notes</th>
++        </tr>
++        <tr>
++          <td>1.0.1</td><td>2002-11-25</td><td>1.1</td><td><a href="javadocs/api-1.0.1/">api-1.0.1</a></td><td><a href="release-notes/RELEASE-NOTES-1.0.1.txt">release notes for 1.0.1</a></td>
++        </tr>
++        <tr>
++          <td>1.0</td><td>2002-10-04</td><td>1.1</td><td><a href="javadocs/api-1.0/">api-1.0</a></td><td><a href="release-notes/RELEASE-NOTES-1.0.txt">release notes for 1.0</a></td>
++        </tr>
++      </table>
++    </subsection>
++
++  </section>
+ <!-- ================================================== -->
+ </body>
+ </document>

@@ -1,0 +1,20 @@
+diff --git a/tests/test_testing.py b/tests/test_testing.py
+index 9f294b3a133f81a02ffa3c6e092be5066bed2a12..0a3ac26f4d232e7f7cec3a917e7f7f0e3b0e135b 100644
+--- a/tests/test_testing.py
++++ b/tests/test_testing.py
+@@ -5,7 +5,6 @@ from io import BytesIO
+ import pytest
+ 
+ import click
+-from click._compat import WIN
+ from click.testing import CliRunner
+ 
+ 
+@@ -184,7 +183,6 @@ def test_catch_exceptions():
+     assert result.exit_code == 1
+ 
+ 
+-@pytest.mark.skipif(WIN, reason="Test does not make sense on Windows.")
+ def test_with_color():
+     @click.command()
+     def cli():

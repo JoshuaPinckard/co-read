@@ -1,0 +1,46 @@
+diff --git a/src/click/core.py b/src/click/core.py
+index cc65e896bf2d754d74b54a84ac501b80127f83ca..d0214c21f6880ecbdedd565aceb85a1b3fad1aa4 100644
+--- a/src/click/core.py
++++ b/src/click/core.py
+@@ -2810,7 +2810,7 @@ class Option(Parameter):
+                 # For boolean flags that have distinct True/False opts,
+                 # use the opt without prefix instead of the value.
+                 default_string = split_opt(
+-                    (self.opts if self.default else self.secondary_opts)[0]
++                    (self.opts if default_value else self.secondary_opts)[0]
+                 )[1]
+             elif self.is_bool_flag and not self.secondary_opts and not default_value:
+                 default_string = ""
+diff --git a/tests/test_defaults.py b/tests/test_defaults.py
+index 8ef5ea2922d36fbef406a5daad8073ddddb24c03..c7f4d00029bb37bede68a1b0f3ba0ae510d395a0 100644
+--- a/tests/test_defaults.py
++++ b/tests/test_defaults.py
+@@ -59,3 +59,28 @@ def test_multiple_flag_default(runner):
+ 
+     result = runner.invoke(cli, ["-y", "-n", "-f", "-v", "-q"], standalone_mode=False)
+     assert result.return_value == ((True, False), (True,), (1, -1))
++
++
++def test_flag_default_map(runner):
++    """test flag with default map"""
++
++    @click.group()
++    def cli():
++        pass
++
++    @cli.command()
++    @click.option("--name/--no-name", is_flag=True, show_default=True, help="name flag")
++    def foo(name):
++        click.echo(name)
++
++    result = runner.invoke(cli, ["foo"])
++    assert "False" in result.output
++
++    result = runner.invoke(cli, ["foo", "--help"])
++    assert "default: no-name" in result.output
++
++    result = runner.invoke(cli, ["foo"], default_map={"foo": {"name": True}})
++    assert "True" in result.output
++
++    result = runner.invoke(cli, ["foo", "--help"], default_map={"foo": {"name": True}})
++    assert "default: name" in result.output

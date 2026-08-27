@@ -1,0 +1,1257 @@
+diff --git a/src/test/java/org/apache/commons/lang3/ArchUtilsTest.java b/src/test/java/org/apache/commons/lang3/ArchUtilsTest.java
+index 55724ff98353a8143c27b4d1ffcb55ba0ca3239b..0ba4c055955e7ee3707dc494714ee0cd28ef610c 100644
+--- a/src/test/java/org/apache/commons/lang3/ArchUtilsTest.java
++++ b/src/test/java/org/apache/commons/lang3/ArchUtilsTest.java
+@@ -98,7 +98,7 @@ public class ArchUtilsTest {
+ 
+     @Test
+     public void testArchLabels() {
+-        for (Arch arch : Arch.values()) {
++        for (final Arch arch : Arch.values()) {
+             // Only test label presence.
+             assertFalse(arch.getLabel().isEmpty());
+         }
+diff --git a/src/test/java/org/apache/commons/lang3/ArrayUtilsTest.java b/src/test/java/org/apache/commons/lang3/ArrayUtilsTest.java
+index 8dfcbcb5a5fe75a4e1e53e9d83d6e23859d01327..16faecd8c91dcd8999c4a8d7ad141b41d398a18b 100644
+--- a/src/test/java/org/apache/commons/lang3/ArrayUtilsTest.java
++++ b/src/test/java/org/apache/commons/lang3/ArrayUtilsTest.java
+@@ -3146,8 +3146,8 @@ public class ArrayUtilsTest {
+     @Test
+     public void testIndexesOf() {
+         final Object[] array = new Object[]{"0", "1", "2", "3", null, "0"};
+-        BitSet emptySet = new BitSet();
+-        BitSet testSet = new BitSet();
++        final BitSet emptySet = new BitSet();
++        final BitSet testSet = new BitSet();
+         assertEquals(emptySet, ArrayUtils.indexesOf((Object[]) null, null));
+         assertEquals(emptySet, ArrayUtils.indexesOf(new Object[0], "0"));
+         testSet.set(5);
+@@ -3168,8 +3168,8 @@ public class ArrayUtilsTest {
+     @Test
+     public void testIndexesOfWithStartIndex() {
+         final Object[] array = new Object[]{"0", "1", "2", "3", "2", "3", "1", null, "0"};
+-        BitSet emptySet = new BitSet();
+-        BitSet testSet = new BitSet();
++        final BitSet emptySet = new BitSet();
++        final BitSet testSet = new BitSet();
+         assertEquals(emptySet, ArrayUtils.indexesOf(null, null, 2));
+         assertEquals(emptySet, ArrayUtils.indexesOf(new Object[0], "0", 0));
+         assertEquals(emptySet, ArrayUtils.indexesOf(null, "0", 2));
+@@ -3288,8 +3288,8 @@ public class ArrayUtilsTest {
+     @Test
+     public void testIndexesOfLong() {
+         final long[] array = new long[]{0, 1, 2, 3};
+-        BitSet emptySet = new BitSet();
+-        BitSet testSet = new BitSet();
++        final BitSet emptySet = new BitSet();
++        final BitSet testSet = new BitSet();
+         assertEquals(emptySet, ArrayUtils.indexesOf((long[]) null, 0));
+         assertEquals(emptySet, ArrayUtils.indexesOf(array, 4));
+         testSet.set(0);
+@@ -3308,8 +3308,8 @@ public class ArrayUtilsTest {
+     @Test
+     public void testIndexesOfLongWithStartIndex() {
+         final long[] array = new long[]{0, 1, 2, 3, 2, 1, 0, 1};
+-        BitSet emptySet = new BitSet();
+-        BitSet testSet = new BitSet();
++        final BitSet emptySet = new BitSet();
++        final BitSet testSet = new BitSet();
+         assertEquals(emptySet, ArrayUtils.indexesOf((long[]) null, 0, 0));
+         assertEquals(emptySet, ArrayUtils.indexesOf(array, 4, 0));
+         testSet.set(6);
+@@ -3399,8 +3399,8 @@ public class ArrayUtilsTest {
+     @Test
+     public void textIndexesOfInt() {
+         int[] array = null;
+-        BitSet emptySet = new BitSet();
+-        BitSet testSet = new BitSet();
++        final BitSet emptySet = new BitSet();
++        final BitSet testSet = new BitSet();
+         assertEquals(emptySet, ArrayUtils.indexesOf(array, 0));
+         array = new int[]{0, 1, 2, 3, 0};
+         testSet.set(0);
+@@ -3421,8 +3421,8 @@ public class ArrayUtilsTest {
+     @Test
+     public void testIndexesOfIntWithStartIndex() {
+         int[] array = null;
+-        BitSet emptySet = new BitSet();
+-        BitSet testSet = new BitSet();
++        final BitSet emptySet = new BitSet();
++        final BitSet testSet = new BitSet();
+         assertEquals(emptySet, ArrayUtils.indexesOf(array, 0, 2));
+         array = new int[]{0, 1, 2, 3, 0};
+         testSet.set(4);
+@@ -3510,8 +3510,8 @@ public class ArrayUtilsTest {
+     @Test
+     public void testIndexesOfShort() {
+         short[] array = null;
+-        BitSet emptySet = new BitSet();
+-        BitSet testSet = new BitSet();
++        final BitSet emptySet = new BitSet();
++        final BitSet testSet = new BitSet();
+         assertEquals(emptySet, ArrayUtils.indexesOf(array, (short) 0));
+         array = new short[]{0, 1, 2, 3, 0};
+         testSet.set(0);
+@@ -3532,8 +3532,8 @@ public class ArrayUtilsTest {
+     @Test
+     public void testIndexesOfShortWithStartIndex() {
+         short[] array = null;
+-        BitSet emptySet = new BitSet();
+-        BitSet testSet = new BitSet();
++        final BitSet emptySet = new BitSet();
++        final BitSet testSet = new BitSet();
+         assertEquals(emptySet, ArrayUtils.indexesOf(array, (short) 0, 2));
+         array = new short[]{0, 1, 2, 3, 0};
+         testSet.set(4);
+@@ -3621,8 +3621,8 @@ public class ArrayUtilsTest {
+     @Test
+     public void testIndexesOfChar() {
+         char[] array = null;
+-        BitSet emptySet = new BitSet();
+-        BitSet testSet = new BitSet();
++        final BitSet emptySet = new BitSet();
++        final BitSet testSet = new BitSet();
+         assertEquals(emptySet, ArrayUtils.indexesOf(array, 'a'));
+         array = new char[]{'a', 'b', 'c', 'd', 'a'};
+         testSet.set(0);
+@@ -3643,8 +3643,8 @@ public class ArrayUtilsTest {
+     @Test
+     public void testIndexesOfCharWithStartIndex() {
+         char[] array = null;
+-        BitSet emptySet = new BitSet();
+-        BitSet testSet = new BitSet();
++        final BitSet emptySet = new BitSet();
++        final BitSet testSet = new BitSet();
+         assertEquals(emptySet, ArrayUtils.indexesOf(array, 'a', 0));
+         array = new char[]{'a', 'b', 'c', 'd', 'a'};
+         testSet.set(4);
+@@ -3733,8 +3733,8 @@ public class ArrayUtilsTest {
+     @Test
+     public void testIndexesOfByte() {
+         byte[] array = null;
+-        BitSet emptySet = new BitSet();
+-        BitSet testSet = new BitSet();
++        final BitSet emptySet = new BitSet();
++        final BitSet testSet = new BitSet();
+         assertEquals(emptySet, ArrayUtils.indexesOf(array, (byte) 0));
+         array = new byte[]{0, 1, 2, 3, 0};
+         testSet.set(0);
+@@ -3755,8 +3755,8 @@ public class ArrayUtilsTest {
+     @Test
+     public void testIndexesOfByteWithStartIndex() {
+         byte[] array = null;
+-        BitSet emptySet = new BitSet();
+-        BitSet testSet = new BitSet();
++        final BitSet emptySet = new BitSet();
++        final BitSet testSet = new BitSet();
+         assertEquals(emptySet, ArrayUtils.indexesOf(array, (byte) 0, 2));
+         array = new byte[]{0, 1, 2, 3, 0};
+         testSet.set(4);
+@@ -3883,8 +3883,8 @@ public class ArrayUtilsTest {
+     @Test
+     public void testIndexesOfDouble() {
+         double[] array = null;
+-        BitSet emptySet = new BitSet();
+-        BitSet testSet = new BitSet();
++        final BitSet emptySet = new BitSet();
++        final BitSet testSet = new BitSet();
+         assertEquals(emptySet, ArrayUtils.indexesOf(array, 0));
+         array = new double[]{0, 1, 2, 3, 0};
+         testSet.set(0);
+@@ -3906,8 +3906,8 @@ public class ArrayUtilsTest {
+     @Test
+     public void testIndexesOfDoubleWithStartIndex() {
+         double[] array = null;
+-        BitSet emptySet = new BitSet();
+-        BitSet testSet = new BitSet();
++        final BitSet emptySet = new BitSet();
++        final BitSet testSet = new BitSet();
+         assertEquals(emptySet, ArrayUtils.indexesOf(array, 0, 2));
+         array = new double[]{0, 1, 2, 3, 0};
+         testSet.set(4);
+@@ -3931,8 +3931,8 @@ public class ArrayUtilsTest {
+     @Test
+     public void testIndexesOfDoubleTolerance() {
+         double[] array = null;
+-        BitSet emptySet = new BitSet();
+-        BitSet testSet = new BitSet();
++        final BitSet emptySet = new BitSet();
++        final BitSet testSet = new BitSet();
+         assertEquals(emptySet, ArrayUtils.indexesOf(array, (double) 0, (double) 0));
+         array = new double[0];
+         assertEquals(emptySet, ArrayUtils.indexesOf(array, (double) 0, (double) 0));
+@@ -3952,8 +3952,8 @@ public class ArrayUtilsTest {
+     @Test
+     public void testIndexesOfDoubleWithStartIndexTolerance() {
+         double[] array = null;
+-        BitSet emptySet = new BitSet();
+-        BitSet testSet = new BitSet();
++        final BitSet emptySet = new BitSet();
++        final BitSet testSet = new BitSet();
+         assertEquals(emptySet, ArrayUtils.indexesOf(array, (double) 0, 0, (double) 0));
+         array = new double[0];
+         assertEquals(emptySet, ArrayUtils.indexesOf(array, (double) 0, 0, (double) 0));
+@@ -4102,8 +4102,8 @@ public class ArrayUtilsTest {
+     @Test
+     public void testIndexesOfFloat() {
+         float[] array = null;
+-        BitSet emptySet = new BitSet();
+-        BitSet testSet = new BitSet();
++        final BitSet emptySet = new BitSet();
++        final BitSet testSet = new BitSet();
+         assertEquals(emptySet, ArrayUtils.indexesOf(array, 0));
+         array = new float[]{0, 1, 2, 3, 0};
+         testSet.set(0);
+@@ -4125,8 +4125,8 @@ public class ArrayUtilsTest {
+     @Test
+     public void testIndexesOfFloatWithStartIndex() {
+         float[] array = null;
+-        BitSet emptySet = new BitSet();
+-        BitSet testSet = new BitSet();
++        final BitSet emptySet = new BitSet();
++        final BitSet testSet = new BitSet();
+         assertEquals(emptySet, ArrayUtils.indexesOf(array, 0, 2));
+         array = new float[]{0, 1, 2, 3, 0};
+         testSet.set(4);
+@@ -4224,8 +4224,8 @@ public class ArrayUtilsTest {
+     @Test
+     public void testIndexesOfBoolean() {
+         boolean[] array = null;
+-        BitSet emptySet = new BitSet();
+-        BitSet testSet = new BitSet();
++        final BitSet emptySet = new BitSet();
++        final BitSet testSet = new BitSet();
+         assertEquals(emptySet, ArrayUtils.indexesOf(array, true));
+         array = new boolean[0];
+         assertEquals(emptySet, ArrayUtils.indexesOf(array, true));
+@@ -4243,8 +4243,8 @@ public class ArrayUtilsTest {
+     @Test
+     public void testIndexesOfBooleanWithStartIndex() {
+         boolean[] array = null;
+-        BitSet emptySet = new BitSet();
+-        BitSet testSet = new BitSet();
++        final BitSet emptySet = new BitSet();
++        final BitSet testSet = new BitSet();
+         assertEquals(emptySet, ArrayUtils.indexesOf(array, true, 0));
+         array = new boolean[0];
+         assertEquals(emptySet, ArrayUtils.indexesOf(array, true, 0));
+@@ -5160,7 +5160,7 @@ public class ArrayUtilsTest {
+     @Test
+     public void testIsArrayIndexValid() {
+         assertFalse(ArrayUtils.isArrayIndexValid(null, 0));
+-        String[] array = new String[1];
++        final String[] array = new String[1];
+ 
+         //too big
+         assertFalse(ArrayUtils.isArrayIndexValid(array, 1));
+diff --git a/src/test/java/org/apache/commons/lang3/CharRangeTest.java b/src/test/java/org/apache/commons/lang3/CharRangeTest.java
+index f8dfe2d523e17ed61372893a693f746321d6ebe1..18e4e90e77678d5518b865fbb2e27ae77594c34d 100644
+--- a/src/test/java/org/apache/commons/lang3/CharRangeTest.java
++++ b/src/test/java/org/apache/commons/lang3/CharRangeTest.java
+@@ -311,7 +311,7 @@ public class CharRangeTest  {
+     @Test
+     public void testContainsNullArg() {
+         final CharRange range = CharRange.is('a');
+-        IllegalArgumentException e = assertThrows(IllegalArgumentException.class, () -> range.contains(null));
++        final IllegalArgumentException e = assertThrows(IllegalArgumentException.class, () -> range.contains(null));
+         assertEquals("The Range must not be null", e.getMessage());
+     }
+ 
+diff --git a/src/test/java/org/apache/commons/lang3/FunctionsTest.java b/src/test/java/org/apache/commons/lang3/FunctionsTest.java
+index ae6bc69d59b663ebe933ef88edf8a3f7bc8a03b9..bec8a44b3cbad239216988741bb0a1ba647ecdfc 100644
+--- a/src/test/java/org/apache/commons/lang3/FunctionsTest.java
++++ b/src/test/java/org/apache/commons/lang3/FunctionsTest.java
+@@ -49,11 +49,11 @@ class FunctionsTest {
+ 
+         private Throwable t;
+ 
+-        SomeException(String pMsg) {
++        SomeException(final String pMsg) {
+             super(pMsg);
+         }
+ 
+-        public void setThrowable(Throwable pThrowable) {
++        public void setThrowable(final Throwable pThrowable) {
+             t = pThrowable;
+         }
+ 
+@@ -66,11 +66,11 @@ class FunctionsTest {
+     public static class Testable {
+         private Throwable t;
+ 
+-        Testable(Throwable pTh) {
++        Testable(final Throwable pTh) {
+             t = pTh;
+         }
+ 
+-        public void setThrowable(Throwable pThrowable) {
++        public void setThrowable(final Throwable pThrowable) {
+             t = pThrowable;
+         }
+ 
+@@ -78,7 +78,7 @@ class FunctionsTest {
+             test(t);
+         }
+ 
+-        public void test(Throwable pThrowable) throws Throwable {
++        public void test(final Throwable pThrowable) throws Throwable {
+             if (pThrowable != null) {
+                 throw pThrowable;
+             }
+@@ -88,7 +88,7 @@ class FunctionsTest {
+             return testInt(t);
+         }
+ 
+-        public Integer testInt(Throwable pThrowable) throws Throwable {
++        public Integer testInt(final Throwable pThrowable) throws Throwable {
+             if (pThrowable != null) {
+                 throw pThrowable;
+             }
+@@ -117,7 +117,7 @@ class FunctionsTest {
+     public static class CloseableObject {
+         private boolean closed;
+ 
+-        public void run(Throwable pTh) throws Throwable {
++        public void run(final Throwable pTh) throws Throwable {
+             if (pTh != null) {
+                 throw pTh;
+             }
+@@ -139,7 +139,7 @@ class FunctionsTest {
+     @Test
+     void testRunnable() {
+         FailureOnOddInvocations.invocation = 0;
+-        UndeclaredThrowableException e = assertThrows(UndeclaredThrowableException.class, () ->  Functions.run(FailureOnOddInvocations::new));
++        final UndeclaredThrowableException e = assertThrows(UndeclaredThrowableException.class, () ->  Functions.run(FailureOnOddInvocations::new));
+         final Throwable cause = e.getCause();
+         assertNotNull(cause);
+         assertTrue(cause instanceof SomeException);
+@@ -152,8 +152,8 @@ class FunctionsTest {
+     @Test
+     void testAsRunnable() {
+         FailureOnOddInvocations.invocation = 0;
+-        Runnable runnable = Functions.asRunnable(() -> new FailureOnOddInvocations());
+-        UndeclaredThrowableException e = assertThrows(UndeclaredThrowableException.class, () ->  runnable.run());
++        final Runnable runnable = Functions.asRunnable(() -> new FailureOnOddInvocations());
++        final UndeclaredThrowableException e = assertThrows(UndeclaredThrowableException.class, () ->  runnable.run());
+         final Throwable cause = e.getCause();
+         assertNotNull(cause);
+         assertTrue(cause instanceof SomeException);
+@@ -166,7 +166,7 @@ class FunctionsTest {
+     @Test
+     void testCallable() {
+         FailureOnOddInvocations.invocation = 0;
+-        UndeclaredThrowableException e = assertThrows(UndeclaredThrowableException.class, () ->  Functions.run(FailureOnOddInvocations::new));
++        final UndeclaredThrowableException e = assertThrows(UndeclaredThrowableException.class, () ->  Functions.run(FailureOnOddInvocations::new));
+         final Throwable cause = e.getCause();
+         assertNotNull(cause);
+         assertTrue(cause instanceof SomeException);
+@@ -182,7 +182,7 @@ class FunctionsTest {
+             return new FailureOnOddInvocations();
+         };
+         final Callable<FailureOnOddInvocations> callable = Functions.asCallable(failableCallable);
+-        UndeclaredThrowableException e = assertThrows(UndeclaredThrowableException.class, () ->  callable.call());
++        final UndeclaredThrowableException e = assertThrows(UndeclaredThrowableException.class, () ->  callable.call());
+         final Throwable cause = e.getCause();
+         assertNotNull(cause);
+         assertTrue(cause instanceof SomeException);
+@@ -190,7 +190,7 @@ class FunctionsTest {
+         final FailureOnOddInvocations instance;
+         try {
+             instance = callable.call();
+-        } catch (Exception ex) {
++        } catch (final Exception ex) {
+             throw Functions.rethrow(ex);
+         }
+         assertNotNull(instance);
+@@ -394,7 +394,7 @@ class FunctionsTest {
+     @Test
+     public void testGetFromSupplier() {
+         FailureOnOddInvocations.invocation = 0;
+-        UndeclaredThrowableException e = assertThrows(UndeclaredThrowableException.class, () ->  Functions.run(FailureOnOddInvocations::new));
++        final UndeclaredThrowableException e = assertThrows(UndeclaredThrowableException.class, () ->  Functions.run(FailureOnOddInvocations::new));
+         final Throwable cause = e.getCause();
+         assertNotNull(cause);
+         assertTrue(cause instanceof SomeException);
+@@ -409,7 +409,7 @@ class FunctionsTest {
+         FailureOnOddInvocations.invocation = 0;
+         final Functions.FailablePredicate<Object, Throwable> failablePredicate = (t) -> FailureOnOddInvocations.failingBool();
+         final Predicate<?> predicate = Functions.asPredicate(failablePredicate);
+-        UndeclaredThrowableException e = assertThrows(UndeclaredThrowableException.class, () -> predicate.test(null));
++        final UndeclaredThrowableException e = assertThrows(UndeclaredThrowableException.class, () -> predicate.test(null));
+         final Throwable cause = e.getCause();
+         assertNotNull(cause);
+         assertTrue(cause instanceof SomeException);
+@@ -424,7 +424,7 @@ class FunctionsTest {
+         FailureOnOddInvocations.invocation = 0;
+         final Functions.FailableBiPredicate<Object, Object, Throwable> failableBiPredicate = (t1, t2) -> FailureOnOddInvocations.failingBool();
+         final BiPredicate<?, ?> predicate = Functions.asBiPredicate(failableBiPredicate);
+-        UndeclaredThrowableException e = assertThrows(UndeclaredThrowableException.class, () -> predicate.test(null, null));
++        final UndeclaredThrowableException e = assertThrows(UndeclaredThrowableException.class, () -> predicate.test(null, null));
+         final Throwable cause = e.getCause();
+         assertNotNull(cause);
+         assertTrue(cause instanceof SomeException);
+@@ -438,7 +438,7 @@ class FunctionsTest {
+         FailureOnOddInvocations.invocation = 0;
+         final FailableSupplier<FailureOnOddInvocations, Throwable> failableSupplier = () -> new FailureOnOddInvocations();
+         final Supplier<FailureOnOddInvocations> supplier = Functions.asSupplier(failableSupplier);
+-        UndeclaredThrowableException e = assertThrows(UndeclaredThrowableException.class, () ->  supplier.get());
++        final UndeclaredThrowableException e = assertThrows(UndeclaredThrowableException.class, () ->  supplier.get());
+         final Throwable cause = e.getCause();
+         assertNotNull(cause);
+         assertTrue(cause instanceof SomeException);
+@@ -464,7 +464,7 @@ class FunctionsTest {
+         assertTrue(co.isClosed());
+         co.reset();
+         final IOException ioe = new IOException("Unknown I/O error");
+-        UncheckedIOException uioe = assertThrows(UncheckedIOException.class, () ->  Functions.tryWithResources(() -> consumer.accept(ioe), co::close));
++        final UncheckedIOException uioe = assertThrows(UncheckedIOException.class, () ->  Functions.tryWithResources(() -> consumer.accept(ioe), co::close));
+         final IOException cause = uioe.getCause();
+         assertSame(ioe, cause);
+ 
+diff --git a/src/test/java/org/apache/commons/lang3/LocaleUtilsTest.java b/src/test/java/org/apache/commons/lang3/LocaleUtilsTest.java
+index e5c14077332c64613bcbb7b34b4cc775a8cda3ae..558b5f9cf33deefefccf39593ec8c85a390bb6bc 100644
+--- a/src/test/java/org/apache/commons/lang3/LocaleUtilsTest.java
++++ b/src/test/java/org/apache/commons/lang3/LocaleUtilsTest.java
+@@ -524,7 +524,7 @@ public class LocaleUtilsTest  {
+ 
+     @ParameterizedTest
+     @MethodSource("java.util.Locale#getAvailableLocales")
+-    public void testParseAllLocales(Locale l) {
++    public void testParseAllLocales(final Locale l) {
+         // Check if it's possible to recreate the Locale using just the standard constructor
+         final Locale locale = new Locale(l.getLanguage(), l.getCountry(), l.getVariant());
+         if (l.equals(locale)) { // it is possible for LocaleUtils.toLocale to handle these Locales
+diff --git a/src/test/java/org/apache/commons/lang3/ObjectUtilsTest.java b/src/test/java/org/apache/commons/lang3/ObjectUtilsTest.java
+index 7fcdc4b71d88dfb12489be37b578b05f90a36091..373f40ca76cda2965f60963d12da12ce4fcba180 100644
+--- a/src/test/java/org/apache/commons/lang3/ObjectUtilsTest.java
++++ b/src/test/java/org/apache/commons/lang3/ObjectUtilsTest.java
+@@ -121,8 +121,8 @@ public class ObjectUtilsTest {
+         assertSame(o, ObjectUtils.getIfNull(o, () -> dflt), "dflt was returned when o was not null");
+         assertSame(o, ObjectUtils.getIfNull(FOO, () -> dflt), "dflt was returned when o was not null");
+         assertSame(o, ObjectUtils.getIfNull("foo", () -> dflt), "dflt was returned when o was not null");
+-        MutableInt callsCounter = new MutableInt(0);
+-        Supplier<Object> countingDefaultSupplier = () -> {
++        final MutableInt callsCounter = new MutableInt(0);
++        final Supplier<Object> countingDefaultSupplier = () -> {
+             callsCounter.increment();
+             return dflt;
+         };
+@@ -539,7 +539,7 @@ public class ObjectUtilsTest {
+     @Test
+     public void testCloneOfUncloneable() {
+         final UncloneableString string = new UncloneableString("apache");
+-        CloneFailedException e = assertThrows(CloneFailedException.class, () -> ObjectUtils.clone(string));
++        final CloneFailedException e = assertThrows(CloneFailedException.class, () -> ObjectUtils.clone(string));
+         assertEquals(NoSuchMethodException.class, e.getCause().getClass());
+     }
+ 
+@@ -585,7 +585,7 @@ public class ObjectUtilsTest {
+     @Test
+     public void testPossibleCloneOfUncloneable() {
+         final UncloneableString string = new UncloneableString("apache");
+-        CloneFailedException e = assertThrows(CloneFailedException.class, () -> ObjectUtils.cloneIfPossible(string));
++        final CloneFailedException e = assertThrows(CloneFailedException.class, () -> ObjectUtils.cloneIfPossible(string));
+         assertEquals(NoSuchMethodException.class, e.getCause().getClass());
+     }
+ 
+diff --git a/src/test/java/org/apache/commons/lang3/RandomStringUtilsTest.java b/src/test/java/org/apache/commons/lang3/RandomStringUtilsTest.java
+index d18e3c887f6e231de84e3d02e3ab7c02c4cdce9e..aee483449a2543ca0c6e2f2bfbb3dfa89363d461 100644
+--- a/src/test/java/org/apache/commons/lang3/RandomStringUtilsTest.java
++++ b/src/test/java/org/apache/commons/lang3/RandomStringUtilsTest.java
+@@ -158,7 +158,7 @@ public class RandomStringUtilsTest {
+ 
+     @Test
+     public void testLANG807() {
+-        IllegalArgumentException ex =
++        final IllegalArgumentException ex =
+                 assertThrows(IllegalArgumentException.class, () -> RandomStringUtils.random(3, 5, 5, false, false));
+         final String msg = ex.getMessage();
+         assertTrue(msg.contains("start"), "Message (" + msg + ") must contain 'start'");
+diff --git a/src/test/java/org/apache/commons/lang3/SerializationUtilsTest.java b/src/test/java/org/apache/commons/lang3/SerializationUtilsTest.java
+index d0dcaa33adf07832e4895b8a8c47c8ad4721f703..698962f260d608f8e09250c80b73ac83b24fe56f 100644
+--- a/src/test/java/org/apache/commons/lang3/SerializationUtilsTest.java
++++ b/src/test/java/org/apache/commons/lang3/SerializationUtilsTest.java
+@@ -159,7 +159,7 @@ public class SerializationUtilsTest {
+                 throw new IOException(SERIALIZE_IO_EXCEPTION_MESSAGE);
+             }
+         };
+-        SerializationException e =
++        final SerializationException e =
+                 assertThrows(SerializationException.class, () -> SerializationUtils.serialize(iMap, streamTest));
+         assertEquals("java.io.IOException: " + SERIALIZE_IO_EXCEPTION_MESSAGE, e.getMessage());
+     }
+@@ -232,7 +232,7 @@ public class SerializationUtilsTest {
+         oos.close();
+ 
+         final ByteArrayInputStream inTest = new ByteArrayInputStream(streamReal.toByteArray());
+-        SerializationException se =
++        final SerializationException se =
+                 assertThrows(SerializationException.class, () -> SerializationUtils.deserialize(inTest));
+         assertEquals("java.lang.ClassNotFoundException: " + CLASS_NOT_FOUND_MESSAGE, se.getMessage());
+     }
+diff --git a/src/test/java/org/apache/commons/lang3/StreamsTest.java b/src/test/java/org/apache/commons/lang3/StreamsTest.java
+index 3ce713d9321dd07e43b492ec93cb148779841e8e..6769c9b3cf76bd991d569d35791e8d82c9cc2985 100644
+--- a/src/test/java/org/apache/commons/lang3/StreamsTest.java
++++ b/src/test/java/org/apache/commons/lang3/StreamsTest.java
+@@ -48,7 +48,7 @@ class StreamsTest {
+         try {
+             Functions.stream(input).map((s) -> Integer.valueOf(s)).collect(Collectors.toList());
+             fail("Expected Exception");
+-        } catch (NumberFormatException nfe) {
++        } catch (final NumberFormatException nfe) {
+             assertEquals("For input string: \"4 \"", nfe.getMessage());
+         }
+     }
+@@ -64,7 +64,7 @@ class StreamsTest {
+         }
+     }
+ 
+-    protected <T extends Throwable> FailableConsumer<String, T> asIntConsumer(T pThrowable) {
++    protected <T extends Throwable> FailableConsumer<String, T> asIntConsumer(final T pThrowable) {
+         return (s) -> {
+             final Integer i = Integer.valueOf(s);
+             if (i.intValue() == 4) {
+@@ -81,7 +81,7 @@ class StreamsTest {
+         try {
+             Functions.stream(input).forEach(asIntConsumer(ise));
+             fail("Expected Exception");
+-        } catch (IllegalArgumentException e) {
++        } catch (final IllegalArgumentException e) {
+             assertSame(ise, e);
+         }
+         output.clear();
+@@ -89,7 +89,7 @@ class StreamsTest {
+         try {
+             Functions.stream(input).forEach(asIntConsumer(oome));
+             fail("Expected Exception");
+-        } catch (Throwable t) {
++        } catch (final Throwable t) {
+             assertSame(oome, t);
+         }
+         output.clear();
+@@ -97,7 +97,7 @@ class StreamsTest {
+         try {
+             Functions.stream(input).forEach(asIntConsumer(se));
+             fail("Expected Exception");
+-        } catch (UndeclaredThrowableException ute) {
++        } catch (final UndeclaredThrowableException ute) {
+             assertSame(se, ute.getCause());
+         }
+     }
+@@ -121,7 +121,7 @@ class StreamsTest {
+         }
+     }
+ 
+-    protected <T extends Throwable> FailablePredicate<Integer, T> asIntPredicate(T pThrowable) {
++    protected <T extends Throwable> FailablePredicate<Integer, T> asIntPredicate(final T pThrowable) {
+         return (i) -> {
+             if (i.intValue() == 5) {
+                 if (pThrowable != null) {
+@@ -149,7 +149,7 @@ class StreamsTest {
+                     .filter(asIntPredicate(iae))
+                     .collect(Collectors.toList());
+             fail("Expected Exception");
+-        } catch (IllegalArgumentException e) {
++        } catch (final IllegalArgumentException e) {
+             assertSame(iae, e);
+         }
+ 
+@@ -161,7 +161,7 @@ class StreamsTest {
+                     .filter(asIntPredicate(oome))
+                     .collect(Collectors.toList());
+             fail("Expected Exception");
+-        } catch (Throwable t) {
++        } catch (final Throwable t) {
+             assertSame(oome, t);
+         }
+ 
+@@ -173,7 +173,7 @@ class StreamsTest {
+                     .filter(asIntPredicate(se))
+                     .collect(Collectors.toList());
+             fail("Expected Exception");
+-        } catch (UndeclaredThrowableException t) {
++        } catch (final UndeclaredThrowableException t) {
+             assertSame(se, t.getCause());
+         }
+     }
+diff --git a/src/test/java/org/apache/commons/lang3/StringUtilsTest.java b/src/test/java/org/apache/commons/lang3/StringUtilsTest.java
+index 7f034c27c0cdf321fd8d56538eb3f89261bf9a25..e7eb5f075fc97dd157cbed164ef334e1e2c7992e 100644
+--- a/src/test/java/org/apache/commons/lang3/StringUtilsTest.java
++++ b/src/test/java/org/apache/commons/lang3/StringUtilsTest.java
+@@ -239,7 +239,7 @@ public class StringUtilsTest {
+     //Fixed LANG-1463
+     @Test
+     public void testAbbreviateMarkerWithEmptyString() {
+-        String greaterThanMaxTest = "much too long text";
++        final String greaterThanMaxTest = "much too long text";
+         assertEquals("much too long", StringUtils.abbreviate(greaterThanMaxTest, "", 13));
+     }
+ 
+@@ -684,8 +684,8 @@ public class StringUtilsTest {
+         final String s = StringUtils.getIfBlank("abc", () -> "NULL");
+         assertEquals("abc", s);
+         //Checking that default value supplied only on demand
+-        MutableInt numberOfCalls = new MutableInt(0);
+-        Supplier<String> countingDefaultSupplier = () -> {
++        final MutableInt numberOfCalls = new MutableInt(0);
++        final Supplier<String> countingDefaultSupplier = () -> {
+             numberOfCalls.increment();
+             return "NULL";
+         };
+@@ -752,8 +752,8 @@ public class StringUtilsTest {
+         final String s = StringUtils.getIfEmpty("abc", () -> "NULL");
+         assertEquals("abc", s);
+         //Checking that default value supplied only on demand
+-        MutableInt numberOfCalls = new MutableInt(0);
+-        Supplier<String> countingDefaultSupplier = () -> {
++        final MutableInt numberOfCalls = new MutableInt(0);
++        final Supplier<String> countingDefaultSupplier = () -> {
+             numberOfCalls.increment();
+             return "NULL";
+         };
+@@ -3273,7 +3273,7 @@ public class StringUtilsTest {
+         assertEquals("title", "TITLE".toLowerCase(Locale.ROOT));
+         assertEquals("title", StringUtils.toRootLowerCase("TITLE"));
+         // Make sure we are not using the default Locale:
+-        Locale defaultLocales = Locale.getDefault();
++        final Locale defaultLocales = Locale.getDefault();
+         try {
+             Locale.setDefault(TURKISH);
+             assertEquals("title", StringUtils.toRootLowerCase("TITLE"));
+@@ -3293,7 +3293,7 @@ public class StringUtilsTest {
+         assertEquals("TITLE", "title".toUpperCase(Locale.ROOT));
+         assertEquals("TITLE", StringUtils.toRootUpperCase("title"));
+         // Make sure we are not using the default Locale:
+-        Locale defaultLocales = Locale.getDefault();
++        final Locale defaultLocales = Locale.getDefault();
+         try {
+             Locale.setDefault(TURKISH);
+             assertEquals("TITLE", StringUtils.toRootUpperCase("title"));
+diff --git a/src/test/java/org/apache/commons/lang3/ValidateTest.java b/src/test/java/org/apache/commons/lang3/ValidateTest.java
+index cf1a907f36def4ad41ffbf0cb171139aeaeda013..0aa6edfdbbfb7ad1019e8920ec2a2125cda9e743 100644
+--- a/src/test/java/org/apache/commons/lang3/ValidateTest.java
++++ b/src/test/java/org/apache/commons/lang3/ValidateTest.java
+@@ -712,7 +712,7 @@ class ValidateTest {
+ 
+                 @Test
+                 void shouldReturnSameInstance() {
+-                    Set<String> col = Collections.singleton("a");
++                    final Set<String> col = Collections.singleton("a");
+                     final Set<String> result = Validate.noNullElements(col);
+ 
+                     assertSame(col, result);
+@@ -747,7 +747,7 @@ class ValidateTest {
+ 
+                 @Test
+                 void shouldReturnSameInstance() {
+-                    Set<String> col = Collections.singleton("a");
++                    final Set<String> col = Collections.singleton("a");
+                     final Set<String> result = Validate.noNullElements(col, "MSG");
+ 
+                     assertSame(col, result);
+diff --git a/src/test/java/org/apache/commons/lang3/builder/EqualsBuilderTest.java b/src/test/java/org/apache/commons/lang3/builder/EqualsBuilderTest.java
+index 061d2da0ff48005cebe78726645be5ccff4769c3..d487bac04f70b15a07a6bd29d2edc477eb954d49 100644
+--- a/src/test/java/org/apache/commons/lang3/builder/EqualsBuilderTest.java
++++ b/src/test/java/org/apache/commons/lang3/builder/EqualsBuilderTest.java
+@@ -447,7 +447,7 @@ public class EqualsBuilderTest {
+     @Test
+     public void testObjectRecursiveGenericString() {
+         // Note: Do not use literals, because string literals are always mapped by same object (internal() of String))!
+-        String s1_a = String.valueOf(1);
++        final String s1_a = String.valueOf(1);
+         final TestRecursiveGenericObject<String> o1_a = new TestRecursiveGenericObject<>(s1_a);
+         final TestRecursiveGenericObject<String> o1_b = new TestRecursiveGenericObject<>(String.valueOf(1));
+         final TestRecursiveGenericObject<String> o2 = new TestRecursiveGenericObject<>(String.valueOf(2));
+diff --git a/src/test/java/org/apache/commons/lang3/builder/ReflectionToStringBuilderSummaryTest.java b/src/test/java/org/apache/commons/lang3/builder/ReflectionToStringBuilderSummaryTest.java
+index 46e2283c959a162066e2be08ad0e2d969666ca76..dfd549c24999adf541bc6b63412ce01f359f0871 100644
+--- a/src/test/java/org/apache/commons/lang3/builder/ReflectionToStringBuilderSummaryTest.java
++++ b/src/test/java/org/apache/commons/lang3/builder/ReflectionToStringBuilderSummaryTest.java
+@@ -23,10 +23,10 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
+ public class ReflectionToStringBuilderSummaryTest {
+ 
+     @SuppressWarnings("unused")
+-    private String stringField = "string";
++    private final String stringField = "string";
+ 
+     @ToStringSummary
+-    private String summaryString = "summary";
++    private final String summaryString = "summary";
+ 
+     @Test
+     public void testSummary() {
+diff --git a/src/test/java/org/apache/commons/lang3/concurrent/BackgroundInitializerTest.java b/src/test/java/org/apache/commons/lang3/concurrent/BackgroundInitializerTest.java
+index cbb726de057873ca2306ddabfa31b0bfe3cd4945..ecb4a160f9972876ff650ee08edba66a98a99efa 100644
+--- a/src/test/java/org/apache/commons/lang3/concurrent/BackgroundInitializerTest.java
++++ b/src/test/java/org/apache/commons/lang3/concurrent/BackgroundInitializerTest.java
+@@ -179,7 +179,7 @@ public class BackgroundInitializerTest {
+         final RuntimeException rex = new RuntimeException();
+         init.ex = rex;
+         init.start();
+-        Exception ex = assertThrows(Exception.class, init::get);
++        final Exception ex = assertThrows(Exception.class, init::get);
+         assertEquals(rex, ex, "Runtime exception not thrown");
+     }
+ 
+@@ -193,7 +193,7 @@ public class BackgroundInitializerTest {
+         final Exception ex = new Exception();
+         init.ex = ex;
+         init.start();
+-        ConcurrentException cex = assertThrows(ConcurrentException.class, init::get);
++        final ConcurrentException cex = assertThrows(ConcurrentException.class, init::get);
+         assertEquals(ex, cex.getCause(), "Exception not thrown");
+     }
+ 
+diff --git a/src/test/java/org/apache/commons/lang3/concurrent/ConcurrentUtilsTest.java b/src/test/java/org/apache/commons/lang3/concurrent/ConcurrentUtilsTest.java
+index 8f3159bed5ef448f6e3e4b243bd219d7ac6c0762..075c6f807030db0e31de7656abd1238437bf6ceb 100644
+--- a/src/test/java/org/apache/commons/lang3/concurrent/ConcurrentUtilsTest.java
++++ b/src/test/java/org/apache/commons/lang3/concurrent/ConcurrentUtilsTest.java
+@@ -107,7 +107,7 @@ public class ConcurrentUtilsTest {
+     @Test
+     public void testExtractCauseError() {
+         final Error err = new AssertionError("Test");
+-        AssertionError e =
++        final AssertionError e =
+                 assertThrows(AssertionError.class, () -> ConcurrentUtils.extractCause(new ExecutionException(err)));
+         assertEquals(err, e, "Wrong error");
+     }
+@@ -154,7 +154,7 @@ public class ConcurrentUtilsTest {
+     @Test
+     public void testExtractCauseUncheckedError() {
+         final Error err = new AssertionError("Test");
+-        Error e = assertThrows(Error.class, () -> ConcurrentUtils.extractCauseUnchecked(new ExecutionException(err)));
++        final Error e = assertThrows(Error.class, () -> ConcurrentUtils.extractCauseUnchecked(new ExecutionException(err)));
+         assertEquals(err, e, "Wrong error");
+     }
+ 
+@@ -164,7 +164,7 @@ public class ConcurrentUtilsTest {
+     @Test
+     public void testExtractCauseUncheckedUncheckedException() {
+         final RuntimeException rex = new RuntimeException("Test");
+-        RuntimeException r =
++        final RuntimeException r =
+                 assertThrows(RuntimeException.class, () -> ConcurrentUtils.extractCauseUnchecked(new ExecutionException(rex)));
+         assertEquals(rex, r, "Wrong exception");
+     }
+@@ -186,7 +186,7 @@ public class ConcurrentUtilsTest {
+     @Test
+     public void testHandleCauseError() {
+         final Error err = new AssertionError("Test");
+-        Error e = assertThrows(Error.class, () -> ConcurrentUtils.handleCause(new ExecutionException(err)));
++        final Error e = assertThrows(Error.class, () -> ConcurrentUtils.handleCause(new ExecutionException(err)));
+         assertEquals(err, e, "Wrong error");
+     }
+ 
+@@ -196,7 +196,7 @@ public class ConcurrentUtilsTest {
+     @Test
+     public void testHandleCauseUncheckedException() {
+         final RuntimeException rex = new RuntimeException("Test");
+-        RuntimeException r =
++        final RuntimeException r =
+                 assertThrows(RuntimeException.class, () -> ConcurrentUtils.handleCause(new ExecutionException(rex)));
+         assertEquals(rex, r, "Wrong exception");
+     }
+@@ -207,7 +207,7 @@ public class ConcurrentUtilsTest {
+     @Test
+     public void testHandleCauseChecked() {
+         final Exception ex = new Exception("Test");
+-        ConcurrentException cex =
++        final ConcurrentException cex =
+                 assertThrows(ConcurrentException.class, () -> ConcurrentUtils.handleCause(new ExecutionException(ex)));
+         assertEquals(ex, cex.getCause(), "Wrong cause");
+     }
+@@ -231,7 +231,7 @@ public class ConcurrentUtilsTest {
+     @Test
+     public void testHandleCauseUncheckedError() {
+         final Error err = new AssertionError("Test");
+-        Error e = assertThrows(Error.class, () -> ConcurrentUtils.handleCauseUnchecked(new ExecutionException(err)));
++        final Error e = assertThrows(Error.class, () -> ConcurrentUtils.handleCauseUnchecked(new ExecutionException(err)));
+         assertEquals(err, e, "Wrong error");
+     }
+ 
+@@ -241,7 +241,7 @@ public class ConcurrentUtilsTest {
+     @Test
+     public void testHandleCauseUncheckedUncheckedException() {
+         final RuntimeException rex = new RuntimeException("Test");
+-        RuntimeException r =
++        final RuntimeException r =
+                 assertThrows(RuntimeException.class, () -> ConcurrentUtils.handleCauseUnchecked(new ExecutionException(rex)));
+         assertEquals(rex, r, "Wrong exception");
+     }
+@@ -252,7 +252,7 @@ public class ConcurrentUtilsTest {
+     @Test
+     public void testHandleCauseUncheckedChecked() {
+         final Exception ex = new Exception("Test");
+-        ConcurrentRuntimeException crex =
++        final ConcurrentRuntimeException crex =
+                 assertThrows(ConcurrentRuntimeException.class, () -> ConcurrentUtils.handleCauseUnchecked(new ExecutionException(ex)));
+         assertEquals(ex, crex.getCause(), "Wrong cause");
+     }
+@@ -346,7 +346,7 @@ public class ConcurrentUtilsTest {
+         final Exception cause = new Exception();
+         EasyMock.expect(init.get()).andThrow(new ConcurrentException(cause));
+         EasyMock.replay(init);
+-        ConcurrentRuntimeException crex =
++        final ConcurrentRuntimeException crex =
+                 assertThrows(ConcurrentRuntimeException.class, () -> ConcurrentUtils.initializeUnchecked(init));
+         assertSame(cause, crex.getCause(), "Wrong cause");
+         EasyMock.verify(init);
+@@ -524,7 +524,7 @@ public class ConcurrentUtilsTest {
+         final Exception ex = new Exception();
+         EasyMock.expect(init.get()).andThrow(new ConcurrentException(ex));
+         EasyMock.replay(init);
+-        ConcurrentRuntimeException crex =
++        final ConcurrentRuntimeException crex =
+                 assertThrows(
+                         ConcurrentRuntimeException.class,
+                         () -> ConcurrentUtils.createIfAbsentUnchecked(new ConcurrentHashMap<>(), "test", init));
+diff --git a/src/test/java/org/apache/commons/lang3/concurrent/EventCountCircuitBreakerTest.java b/src/test/java/org/apache/commons/lang3/concurrent/EventCountCircuitBreakerTest.java
+index 2819006b2aa3f48ce982064281f1139b9ef86673..9e486952c2b445bc8a8028eabfaca3e3cd86fc6c 100644
+--- a/src/test/java/org/apache/commons/lang3/concurrent/EventCountCircuitBreakerTest.java
++++ b/src/test/java/org/apache/commons/lang3/concurrent/EventCountCircuitBreakerTest.java
+@@ -161,8 +161,8 @@ public class EventCountCircuitBreakerTest {
+         final long timeIncrement = NANO_FACTOR / OPENING_THRESHOLD - 1;
+         final EventCountCircuitBreakerTestImpl breaker = new EventCountCircuitBreakerTestImpl(OPENING_THRESHOLD, 1,
+             TimeUnit.SECONDS, CLOSING_THRESHOLD, 1, TimeUnit.SECONDS);
+-        long startTime = timeIncrement * (OPENING_THRESHOLD + 1);
+-        boolean open = !breaker.at(startTime).incrementAndCheckState(OPENING_THRESHOLD + 1);
++        final long startTime = timeIncrement * (OPENING_THRESHOLD + 1);
++        final boolean open = !breaker.at(startTime).incrementAndCheckState(OPENING_THRESHOLD + 1);
+         assertTrue(open, "Not open");
+         assertFalse(breaker.isClosed(), "Closed");
+     }
+diff --git a/src/test/java/org/apache/commons/lang3/concurrent/MultiBackgroundInitializerTest.java b/src/test/java/org/apache/commons/lang3/concurrent/MultiBackgroundInitializerTest.java
+index 068b5b6dbdcb730e756d4e623b0a3789991ee7d7..973f72b6c8b0422173ad14420513d17cd2aba6eb 100644
+--- a/src/test/java/org/apache/commons/lang3/concurrent/MultiBackgroundInitializerTest.java
++++ b/src/test/java/org/apache/commons/lang3/concurrent/MultiBackgroundInitializerTest.java
+@@ -273,7 +273,7 @@ public class MultiBackgroundInitializerTest {
+         child.ex = new RuntimeException();
+         initializer.addInitializer(CHILD_INIT, child);
+         initializer.start();
+-        Exception ex = assertThrows(Exception.class, initializer::get);
++        final Exception ex = assertThrows(Exception.class, initializer::get);
+         assertEquals(child.ex, ex, "Wrong exception");
+     }
+ 
+diff --git a/src/test/java/org/apache/commons/lang3/event/EventUtilsTest.java b/src/test/java/org/apache/commons/lang3/event/EventUtilsTest.java
+index 27797b2a5a607951dbef30c320aee982f64561ac..1736e1380aaf148df37dda2c5c07870d2c47e18c 100644
+--- a/src/test/java/org/apache/commons/lang3/event/EventUtilsTest.java
++++ b/src/test/java/org/apache/commons/lang3/event/EventUtilsTest.java
+@@ -69,7 +69,7 @@ public class EventUtilsTest {
+         final PropertyChangeSource src = new PropertyChangeSource();
+         final EventCountingInvociationHandler handler = new EventCountingInvociationHandler();
+         final ObjectChangeListener listener = handler.createListener(ObjectChangeListener.class);
+-        IllegalArgumentException e =
++        final IllegalArgumentException e =
+                 assertThrows(IllegalArgumentException.class, () -> EventUtils.addEventListener(src, ObjectChangeListener.class, listener));
+         assertEquals("Class " + src.getClass().getName() + " does not have a public add" + ObjectChangeListener.class.getSimpleName() + " method which takes a parameter of type " + ObjectChangeListener.class.getName() + ".",
+                 e.getMessage());
+@@ -90,7 +90,7 @@ public class EventUtilsTest {
+         final PropertyChangeSource src = new PropertyChangeSource();
+         final EventCountingInvociationHandler handler = new EventCountingInvociationHandler();
+         final VetoableChangeListener listener = handler.createListener(VetoableChangeListener.class);
+-        IllegalArgumentException e =
++        final IllegalArgumentException e =
+                 assertThrows(IllegalArgumentException.class, () -> EventUtils.addEventListener(src, VetoableChangeListener.class, listener));
+         assertEquals("Class " + src.getClass().getName() + " does not have a public add" + VetoableChangeListener.class.getSimpleName() + " method which takes a parameter of type " + VetoableChangeListener.class.getName() + ".",
+                 e.getMessage());
+diff --git a/src/test/java/org/apache/commons/lang3/exception/ExceptionUtilsTest.java b/src/test/java/org/apache/commons/lang3/exception/ExceptionUtilsTest.java
+index 5eafdf308073233a216fb93d0d7a63c42162586b..fb7a9fbf3174a3a2b1d41083723584d634f3594f 100644
+--- a/src/test/java/org/apache/commons/lang3/exception/ExceptionUtilsTest.java
++++ b/src/test/java/org/apache/commons/lang3/exception/ExceptionUtilsTest.java
+@@ -566,7 +566,7 @@ public class ExceptionUtilsTest {
+     @Test
+     public void testThrow() {
+         final Exception expected = new InterruptedException();
+-        Exception actual = assertThrows(Exception.class, () -> ExceptionUtils.rethrow(expected));
++        final Exception actual = assertThrows(Exception.class, () -> ExceptionUtils.rethrow(expected));
+         assertSame(expected, actual);
+     }
+ 
+@@ -678,25 +678,25 @@ public class ExceptionUtilsTest {
+ 
+     @Test
+     public void testWrapAndUnwrapCheckedException() {
+-        Throwable t = assertThrows(Throwable.class, () -> ExceptionUtils.wrapAndThrow(new IOException()));
++        final Throwable t = assertThrows(Throwable.class, () -> ExceptionUtils.wrapAndThrow(new IOException()));
+         assertTrue(ExceptionUtils.hasCause(t, IOException.class));
+     }
+ 
+     @Test
+     public void testWrapAndUnwrapError() {
+-        Throwable t = assertThrows(Throwable.class, () -> ExceptionUtils.wrapAndThrow(new OutOfMemoryError()));
++        final Throwable t = assertThrows(Throwable.class, () -> ExceptionUtils.wrapAndThrow(new OutOfMemoryError()));
+         assertTrue(ExceptionUtils.hasCause(t, Error.class));
+     }
+ 
+     @Test
+     public void testWrapAndUnwrapRuntimeException() {
+-        Throwable t = assertThrows(Throwable.class, () -> ExceptionUtils.wrapAndThrow(new IllegalArgumentException()));
++        final Throwable t = assertThrows(Throwable.class, () -> ExceptionUtils.wrapAndThrow(new IllegalArgumentException()));
+         assertTrue(ExceptionUtils.hasCause(t, RuntimeException.class));
+     }
+ 
+     @Test
+     public void testWrapAndUnwrapThrowable() {
+-        Throwable t = assertThrows(Throwable.class, () -> ExceptionUtils.wrapAndThrow(new TestThrowable()));
++        final Throwable t = assertThrows(Throwable.class, () -> ExceptionUtils.wrapAndThrow(new TestThrowable()));
+         assertTrue(ExceptionUtils.hasCause(t, TestThrowable.class));
+     }
+ }
+diff --git a/src/test/java/org/apache/commons/lang3/reflect/FieldUtilsTest.java b/src/test/java/org/apache/commons/lang3/reflect/FieldUtilsTest.java
+index 4e428a926b6ae453e6aeb130195145b1e8fe1439..9db1f807056802d07dd4cd628016d7bb84b3a9fd 100644
+--- a/src/test/java/org/apache/commons/lang3/reflect/FieldUtilsTest.java
++++ b/src/test/java/org/apache/commons/lang3/reflect/FieldUtilsTest.java
+@@ -36,6 +36,7 @@ import java.lang.reflect.Field;
+ import java.lang.reflect.Modifier;
+ import java.util.ArrayList;
+ import java.util.Arrays;
++import java.util.HashSet;
+ import java.util.List;
+ 
+ import static org.junit.jupiter.api.Assertions.assertArrayEquals;
+@@ -172,7 +173,7 @@ public class FieldUtilsTest {
+         final Field[] allFields = FieldUtils.getAllFields(PublicChild.class);
+         // Under Jacoco,0.8.1 and Java 10, the field count is 7.
+         int expected = 5;
+-        for (Field field : allFields) {
++        for (final Field field : allFields) {
+             if (field.getName().equals(JACOCO_DATA_FIELD_NAME)) {
+                 expected++;
+             }
+@@ -188,11 +189,11 @@ public class FieldUtilsTest {
+         final List<Field> fieldsInteger = Arrays.asList(Integer.class.getDeclaredFields());
+         final List<Field> allFieldsInteger = new ArrayList<>(fieldsInteger);
+         allFieldsInteger.addAll(fieldsNumber);
+-        assertEquals(allFieldsInteger, FieldUtils.getAllFieldsList(Integer.class));
++        assertEquals(new HashSet(allFieldsInteger), new HashSet(FieldUtils.getAllFieldsList(Integer.class)));
+         final List<Field> allFields = FieldUtils.getAllFieldsList(PublicChild.class);
+         // Under Jacoco,0.8.1 and Java 10, the field count is 7.
+         int expected = 5;
+-        for (Field field : allFields) {
++        for (final Field field : allFields) {
+             if (field.getName().equals(JACOCO_DATA_FIELD_NAME)) {
+                 expected++;
+             }
+@@ -671,7 +672,7 @@ public class FieldUtilsTest {
+ 
+     @Test
+     public void testWriteStaticField() throws Exception {
+-        Field field = StaticContainer.class.getDeclaredField("mutablePublic");
++        final Field field = StaticContainer.class.getDeclaredField("mutablePublic");
+         FieldUtils.writeStaticField(field, "new");
+         assertEquals("new", StaticContainer.mutablePublic);
+         assertThrows(
+@@ -829,7 +830,7 @@ public class FieldUtilsTest {
+ 
+     @Test
+     public void testWriteField() throws Exception {
+-        Field field = parentClass.getDeclaredField("s");
++        final Field field = parentClass.getDeclaredField("s");
+         FieldUtils.writeField(field, publicChild, "S");
+         assertEquals("S", field.get(publicChild));
+         assertThrows(
+@@ -1048,10 +1049,10 @@ public class FieldUtilsTest {
+      * @param forceAccess {@link Boolean} to be curried into
+      *              {@link FieldUtils#removeFinalModifier(Field, boolean)}.
+      */
+-    private void callRemoveFinalModifierCheckForException(Field field, Boolean forceAccess) {
++    private void callRemoveFinalModifierCheckForException(final Field field, final Boolean forceAccess) {
+         try {
+             FieldUtils.removeFinalModifier(field, forceAccess);
+-        } catch (UnsupportedOperationException exception) {
++        } catch (final UnsupportedOperationException exception) {
+             if (SystemUtils.isJavaVersionAtLeast(JavaVersion.JAVA_12)) {
+                 assertTrue(exception.getCause() instanceof NoSuchFieldException);
+             } else {
+diff --git a/src/test/java/org/apache/commons/lang3/text/StrBuilderTest.java b/src/test/java/org/apache/commons/lang3/text/StrBuilderTest.java
+index 735b13234228577eb1f5cd66a67df70810fde4f6..cd13cdaadfac72c7bd91845fe1ebbf7579b97cd1 100644
+--- a/src/test/java/org/apache/commons/lang3/text/StrBuilderTest.java
++++ b/src/test/java/org/apache/commons/lang3/text/StrBuilderTest.java
+@@ -521,7 +521,7 @@ public class StrBuilderTest {
+         final StrBuilder sb = new StrBuilder();
+ 
+         sb.append("junit");
+-        char[] a = new char[5];
++        final char[] a = new char[5];
+         sb.getChars(0, 5, a, 0);
+         assertArrayEquals(new char[]{'j', 'u', 'n', 'i', 't'}, a);
+ 
+@@ -538,7 +538,7 @@ public class StrBuilderTest {
+     //-----------------------------------------------------------------------
+     @Test
+     public void testDeleteIntInt() {
+-        StrBuilder sb = new StrBuilder("abc");
++        final StrBuilder sb = new StrBuilder("abc");
+         sb.delete(0, 1);
+         assertEquals("bc", sb.toString());
+         sb.delete(1, 2);
+@@ -679,7 +679,7 @@ public class StrBuilderTest {
+     // -----------------------------------------------------------------------
+     @Test
+     public void testReplace_int_int_String() {
+-        StrBuilder sb = new StrBuilder("abc");
++        final StrBuilder sb = new StrBuilder("abc");
+         sb.replace(0, 1, "d");
+         assertEquals("dbc", sb.toString());
+         sb.replace(0, 1, "aaa");
+@@ -693,12 +693,12 @@ public class StrBuilderTest {
+         sb.replace(0, 1000, "text");
+         assertEquals("text", sb.toString());
+ 
+-        StrBuilder sb1 = new StrBuilder("atext");
++        final StrBuilder sb1 = new StrBuilder("atext");
+         sb1.replace(1, 1, "ny");
+         assertEquals("anytext", sb1.toString());
+         assertThrows(IndexOutOfBoundsException.class, () -> sb1.replace(2, 1, "anything"));
+ 
+-        StrBuilder sb2 = new StrBuilder();
++        final StrBuilder sb2 = new StrBuilder();
+         assertThrows(IndexOutOfBoundsException.class, () -> sb2.replace(1, 2, "anything"));
+         assertThrows(IndexOutOfBoundsException.class, () -> sb2.replace(-1, 1, "anything"));
+     }
+@@ -960,13 +960,13 @@ public class StrBuilderTest {
+         sb.replace(StrMatcher.stringMatcher("aa"), "-", 10, sb.length(), -1);
+         assertEquals("aaxaaaayaa", sb.toString());
+ 
+-        StrBuilder sb1 = new StrBuilder("aaxaaaayaa");
++        final StrBuilder sb1 = new StrBuilder("aaxaaaayaa");
+         assertThrows(
+                 IndexOutOfBoundsException.class,
+                 () -> sb1.replace(StrMatcher.stringMatcher("aa"), "-", 11, sb1.length(), -1));
+         assertEquals("aaxaaaayaa", sb1.toString());
+ 
+-        StrBuilder sb2 = new StrBuilder("aaxaaaayaa");
++        final StrBuilder sb2 = new StrBuilder("aaxaaaayaa");
+         assertThrows(
+                 IndexOutOfBoundsException.class,
+                 () -> sb2.replace(StrMatcher.stringMatcher("aa"), "-", -1, sb2.length(), -1));
+@@ -1019,7 +1019,7 @@ public class StrBuilderTest {
+         sb.replace(StrMatcher.stringMatcher("aa"), "-", 0, 1000, -1);
+         assertEquals("-x--y-", sb.toString());
+ 
+-        StrBuilder sb1 = new StrBuilder("aaxaaaayaa");
++        final StrBuilder sb1 = new StrBuilder("aaxaaaayaa");
+         assertThrows(
+                 IndexOutOfBoundsException.class,
+                 () -> sb1.replace(StrMatcher.stringMatcher("aa"), "-", 2, 1, -1));
+diff --git a/src/test/java/org/apache/commons/lang3/text/StrSubstitutorTest.java b/src/test/java/org/apache/commons/lang3/text/StrSubstitutorTest.java
+index f2f224dd0f06715604658e2796e1c11ab2d7e190..a5879b680df8599030f284290d029a12dc863e9b 100644
+--- a/src/test/java/org/apache/commons/lang3/text/StrSubstitutorTest.java
++++ b/src/test/java/org/apache/commons/lang3/text/StrSubstitutorTest.java
+@@ -245,7 +245,7 @@ public class StrSubstitutorTest {
+         map.put("critterSpeed", "quick");
+         map.put("critterColor", "brown");
+         map.put("critterType", "${animal}");
+-        StrSubstitutor sub = new StrSubstitutor(map);
++        final StrSubstitutor sub = new StrSubstitutor(map);
+         assertThrows(
+                 IllegalStateException.class,
+                 () -> sub.replace("The ${animal} jumps over the ${target}."),
+@@ -253,7 +253,7 @@ public class StrSubstitutorTest {
+ 
+         // also check even when default value is set.
+         map.put("critterType", "${animal:-fox}");
+-        StrSubstitutor sub2 = new StrSubstitutor(map);
++        final StrSubstitutor sub2 = new StrSubstitutor(map);
+         assertThrows(
+                 IllegalStateException.class,
+                 () -> sub2.replace("The ${animal} jumps over the ${target}."),
+diff --git a/src/test/java/org/apache/commons/lang3/time/DateUtilsTest.java b/src/test/java/org/apache/commons/lang3/time/DateUtilsTest.java
+index 90070d59f6bf1a6dc23d897cbffac229843faf87..64cfde87d8c89f1c61b4f7affacddcb2ff8bbfc0 100644
+--- a/src/test/java/org/apache/commons/lang3/time/DateUtilsTest.java
++++ b/src/test/java/org/apache/commons/lang3/time/DateUtilsTest.java
+@@ -1514,10 +1514,10 @@ public class DateUtilsTest {
+ 
+             it = DateUtils.iterator((Object) now, DateUtils.RANGE_WEEK_CENTER);
+             assertWeekIterator(it, centered);
+-            Iterator<?> it2 = DateUtils.iterator((Object) now.getTime(), DateUtils.RANGE_WEEK_CENTER);
++            final Iterator<?> it2 = DateUtils.iterator((Object) now.getTime(), DateUtils.RANGE_WEEK_CENTER);
+             assertWeekIterator(it2, centered);
+             assertThrows(NoSuchElementException.class, it2::next);
+-            Iterator<?> it3 = DateUtils.iterator(now, DateUtils.RANGE_WEEK_CENTER);
++            final Iterator<?> it3 = DateUtils.iterator(now, DateUtils.RANGE_WEEK_CENTER);
+             it3.next();
+             assertThrows(UnsupportedOperationException.class, it3::remove);
+ 
+diff --git a/src/test/java/org/apache/commons/lang3/time/FastDateParserSDFTest.java b/src/test/java/org/apache/commons/lang3/time/FastDateParserSDFTest.java
+index e948a249f1ad424449b35e77e13d2b3bccf828f4..ce8e4bf2fcd9813c3659710d3200920e58d88eae 100644
+--- a/src/test/java/org/apache/commons/lang3/time/FastDateParserSDFTest.java
++++ b/src/test/java/org/apache/commons/lang3/time/FastDateParserSDFTest.java
+@@ -140,7 +140,7 @@ public class FastDateParserSDFTest {
+         checkParsePosition(input.toLowerCase(locale), format, locale, valid);
+     }
+ 
+-    private void checkParse(final String formattedDate, String format, Locale locale, boolean valid) {
++    private void checkParse(final String formattedDate, final String format, final Locale locale, final boolean valid) {
+         final SimpleDateFormat sdf = new SimpleDateFormat(format, locale);
+         sdf.setTimeZone(timeZone);
+         final DateParser fdf = new FastDateParser(format, timeZone, locale);
+@@ -176,7 +176,7 @@ public class FastDateParserSDFTest {
+             assertEquals(sdfE, fdfE, locale.toString()+" "+formattedDate + " expected same Exception ");
+         }
+     }
+-    private void checkParsePosition(final String formattedDate, String format, Locale locale, boolean valid) {
++    private void checkParsePosition(final String formattedDate, final String format, final Locale locale, final boolean valid) {
+         final SimpleDateFormat sdf = new SimpleDateFormat(format, locale);
+         sdf.setTimeZone(timeZone);
+         final DateParser fdf = new FastDateParser(format, timeZone, locale);
+diff --git a/src/test/java/org/apache/commons/lang3/time/FastDatePrinterTimeZonesTest.java b/src/test/java/org/apache/commons/lang3/time/FastDatePrinterTimeZonesTest.java
+index 98a6ea535522999e5c608f111d32c016212e7670..290022922ff91758ff151edbe1de4088666d7cd3 100644
+--- a/src/test/java/org/apache/commons/lang3/time/FastDatePrinterTimeZonesTest.java
++++ b/src/test/java/org/apache/commons/lang3/time/FastDatePrinterTimeZonesTest.java
+@@ -37,7 +37,7 @@ public class FastDatePrinterTimeZonesTest {
+ 
+     @ParameterizedTest
+     @MethodSource("data")
+-    public void testCalendarTimezoneRespected(TimeZone timeZone) {
++    public void testCalendarTimezoneRespected(final TimeZone timeZone) {
+         final Calendar cal = Calendar.getInstance(timeZone);
+ 
+         final SimpleDateFormat sdf = new SimpleDateFormat(PATTERN);
+diff --git a/src/test/java/org/apache/commons/lang3/time/WeekYearTest.java b/src/test/java/org/apache/commons/lang3/time/WeekYearTest.java
+index ca2c710789d3163577b40ff7523062ff396c357e..9a3a31741c6a210074c2cece10645df498051598 100644
+--- a/src/test/java/org/apache/commons/lang3/time/WeekYearTest.java
++++ b/src/test/java/org/apache/commons/lang3/time/WeekYearTest.java
+@@ -54,7 +54,7 @@ public class WeekYearTest {
+ 
+     @ParameterizedTest
+     @MethodSource("data")
+-    public void testParser(Calendar vulgar, String isoForm) {
++    public void testParser(final Calendar vulgar, final String isoForm) {
+         final DateParser parser = new FastDateParser("YYYY-'W'ww-u", TimeZone.getDefault(), Locale.getDefault());
+ 
+         final Calendar cal = Calendar.getInstance();
+@@ -68,7 +68,7 @@ public class WeekYearTest {
+ 
+     @ParameterizedTest
+     @MethodSource("data")
+-    public void testPrinter(Calendar vulgar, String isoForm) {
++    public void testPrinter(final Calendar vulgar, final String isoForm) {
+         final FastDatePrinter printer = new FastDatePrinter("YYYY-'W'ww-u", TimeZone.getDefault(), Locale.getDefault());
+ 
+         vulgar.setMinimalDaysInFirstWeek(4);
+diff --git a/src/test/java/org/apache/commons/lang3/tuple/ImmutablePairTest.java b/src/test/java/org/apache/commons/lang3/tuple/ImmutablePairTest.java
+index 218c814190bb4995e97ba6bcff958b4d9dc23c9a..f4e189a58bcbb540b7828b86e54ea4565766e646 100644
+--- a/src/test/java/org/apache/commons/lang3/tuple/ImmutablePairTest.java
++++ b/src/test/java/org/apache/commons/lang3/tuple/ImmutablePairTest.java
+@@ -154,7 +154,7 @@ public class ImmutablePairTest {
+         assertNull(pair2.getLeft());
+         assertEquals("bar", pair2.right);
+         assertEquals("bar", pair2.getRight());
+-        ImmutablePair pair3 = ImmutablePair.of(null, null);
++        final ImmutablePair pair3 = ImmutablePair.of(null, null);
+         assertNull(pair3.left);
+         assertNull(pair3.right);
+     }
+@@ -182,11 +182,11 @@ public class ImmutablePairTest {
+ 
+     @Test
+     public void testUseAsKeyOfHashMap() {
+-        HashMap<ImmutablePair<Object, Object>, String> map = new HashMap<>();
+-        Object o1 = new Object();
+-        Object o2 = new Object();
+-        ImmutablePair<Object, Object> key1 = ImmutablePair.of(o1, o2);
+-        String value1 = "a1";
++        final HashMap<ImmutablePair<Object, Object>, String> map = new HashMap<>();
++        final Object o1 = new Object();
++        final Object o2 = new Object();
++        final ImmutablePair<Object, Object> key1 = ImmutablePair.of(o1, o2);
++        final String value1 = "a1";
+         map.put(key1, value1);
+         assertEquals(value1, map.get(key1));
+         assertEquals(value1, map.get(ImmutablePair.of(o1, o2)));
+@@ -194,17 +194,17 @@ public class ImmutablePairTest {
+ 
+     @Test
+     public void testUseAsKeyOfTreeMap() {
+-        TreeMap<ImmutablePair<Integer, Integer>, String> map = new TreeMap<>();
++        final TreeMap<ImmutablePair<Integer, Integer>, String> map = new TreeMap<>();
+         map.put(ImmutablePair.of(1, 2), "12");
+         map.put(ImmutablePair.of(1, 1), "11");
+         map.put(ImmutablePair.of(0, 1), "01");
+-        ArrayList<ImmutablePair<Integer, Integer>> expected = new ArrayList<>();
++        final ArrayList<ImmutablePair<Integer, Integer>> expected = new ArrayList<>();
+         expected.add(ImmutablePair.of(0, 1));
+         expected.add(ImmutablePair.of(1, 1));
+         expected.add(ImmutablePair.of(1, 2));
+-        Iterator<Entry<ImmutablePair<Integer, Integer>, String>> it = map.entrySet().iterator();
+-        for (ImmutablePair<Integer, Integer> item : expected) {
+-            Entry<ImmutablePair<Integer, Integer>, String> entry = it.next();
++        final Iterator<Entry<ImmutablePair<Integer, Integer>, String>> it = map.entrySet().iterator();
++        for (final ImmutablePair<Integer, Integer> item : expected) {
++            final Entry<ImmutablePair<Integer, Integer>, String> entry = it.next();
+             assertEquals(item, entry.getKey());
+             assertEquals(item.getLeft() + "" + item.getRight(), entry.getValue());
+         }
+diff --git a/src/test/java/org/apache/commons/lang3/tuple/ImmutableTripleTest.java b/src/test/java/org/apache/commons/lang3/tuple/ImmutableTripleTest.java
+index 4c6cd17fc42606a76574d0ed3adc5deb14f3f968..d6d8a64a1df5ae2aa220e431ab96dce55476dc5b 100644
+--- a/src/test/java/org/apache/commons/lang3/tuple/ImmutableTripleTest.java
++++ b/src/test/java/org/apache/commons/lang3/tuple/ImmutableTripleTest.java
+@@ -163,12 +163,12 @@ public class ImmutableTripleTest {
+ 
+     @Test
+     public void testUseAsKeyOfHashMap() {
+-        HashMap<ImmutableTriple<Object, Object, Object>, String> map = new HashMap<>();
+-        Object o1 = new Object();
+-        Object o2 = new Object();
+-        Object o3 = new Object();
+-        ImmutableTriple<Object, Object, Object> key1 = ImmutableTriple.of(o1, o2, o3);
+-        String value1 = "a1";
++        final HashMap<ImmutableTriple<Object, Object, Object>, String> map = new HashMap<>();
++        final Object o1 = new Object();
++        final Object o2 = new Object();
++        final Object o3 = new Object();
++        final ImmutableTriple<Object, Object, Object> key1 = ImmutableTriple.of(o1, o2, o3);
++        final String value1 = "a1";
+         map.put(key1, value1);
+         assertEquals(value1, map.get(key1));
+         assertEquals(value1, map.get(ImmutableTriple.of(o1, o2, o3)));
+@@ -176,17 +176,17 @@ public class ImmutableTripleTest {
+ 
+     @Test
+     public void testUseAsKeyOfTreeMap() {
+-        TreeMap<ImmutableTriple<Integer, Integer, Integer>, String> map = new TreeMap<>();
++        final TreeMap<ImmutableTriple<Integer, Integer, Integer>, String> map = new TreeMap<>();
+         map.put(ImmutableTriple.of(0, 1, 2), "012");
+         map.put(ImmutableTriple.of(0, 1, 1), "011");
+         map.put(ImmutableTriple.of(0, 0, 1), "001");
+-        ArrayList<ImmutableTriple<Integer, Integer, Integer>> expected = new ArrayList<>();
++        final ArrayList<ImmutableTriple<Integer, Integer, Integer>> expected = new ArrayList<>();
+         expected.add(ImmutableTriple.of(0, 0, 1));
+         expected.add(ImmutableTriple.of(0, 1, 1));
+         expected.add(ImmutableTriple.of(0, 1, 2));
+-        Iterator<Entry<ImmutableTriple<Integer, Integer, Integer>, String>> it = map.entrySet().iterator();
+-        for (ImmutableTriple<Integer, Integer, Integer> item : expected) {
+-            Entry<ImmutableTriple<Integer, Integer, Integer>, String> entry = it.next();
++        final Iterator<Entry<ImmutableTriple<Integer, Integer, Integer>, String>> it = map.entrySet().iterator();
++        for (final ImmutableTriple<Integer, Integer, Integer> item : expected) {
++            final Entry<ImmutableTriple<Integer, Integer, Integer>, String> entry = it.next();
+             assertEquals(item, entry.getKey());
+             assertEquals(item.getLeft() + "" + item.getMiddle() + "" + item.getRight(), entry.getValue());
+         }
+diff --git a/src/test/java/org/apache/commons/lang3/tuple/MutablePairTest.java b/src/test/java/org/apache/commons/lang3/tuple/MutablePairTest.java
+index 731f17818e676d240dd0ac83174f0c8648679bba..57a6d490d954d79d8426a8237ea2c8e62dacf061 100644
+--- a/src/test/java/org/apache/commons/lang3/tuple/MutablePairTest.java
++++ b/src/test/java/org/apache/commons/lang3/tuple/MutablePairTest.java
+@@ -123,7 +123,7 @@ public class MutablePairTest {
+         final MutablePair<Object, String> pair2 = MutablePair.of(null, "bar");
+         assertNull(pair2.getLeft());
+         assertEquals("bar", pair2.getRight());
+-        MutablePair pair3 = MutablePair.of(null, null);
++        final MutablePair pair3 = MutablePair.of(null, null);
+         assertNull(pair3.left);
+         assertNull(pair3.right);
+     }
+diff --git a/src/test/java/org/apache/commons/lang3/tuple/PairTest.java b/src/test/java/org/apache/commons/lang3/tuple/PairTest.java
+index 6ec78ccaae0e83188a33143165f38c32d85dbbc3..2ad4f50b68f117b09ff1de6693761c9a88e8bd43 100644
+--- a/src/test/java/org/apache/commons/lang3/tuple/PairTest.java
++++ b/src/test/java/org/apache/commons/lang3/tuple/PairTest.java
+@@ -123,7 +123,7 @@ public class PairTest {
+         assertTrue(pair2 instanceof ImmutablePair<?, ?>);
+         assertNull(((ImmutablePair<Object, String>) pair2).left);
+         assertEquals("bar", ((ImmutablePair<Object, String>) pair2).right);
+-        Pair pair3 = Pair.of(null, null);
++        final Pair pair3 = Pair.of(null, null);
+         assertNull(pair3.getLeft());
+         assertNull(pair3.getRight());
+     }

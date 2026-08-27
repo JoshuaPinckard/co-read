@@ -1,0 +1,974 @@
+diff --git a/src/test/java/org/apache/commons/lang3/ClassUtilsTest.java b/src/test/java/org/apache/commons/lang3/ClassUtilsTest.java
+index 44fc96e45dbe8b7992a6f239fbccbf62ca69bfcc..e8f9eb0ea0b7b90aa43bcf51dd2e1afdabe95c69 100644
+--- a/src/test/java/org/apache/commons/lang3/ClassUtilsTest.java
++++ b/src/test/java/org/apache/commons/lang3/ClassUtilsTest.java
+@@ -886,7 +886,6 @@ public class ClassUtilsTest  {
+         final Class<?>[] castNull = ClassUtils.primitivesToWrappers((Class<?>)null); // == new Class<?>[]{null}
+         assertTrue("(Class<?>)null -> [null]", Arrays.equals(new Class<?>[]{null}, castNull));
+         // test empty array is returned unchanged
+-        // TODO this is not documented
+         assertArrayEquals("empty -> empty",
+                 ArrayUtils.EMPTY_CLASS_ARRAY, ClassUtils.primitivesToWrappers(ArrayUtils.EMPTY_CLASS_ARRAY));
+ 
+diff --git a/src/test/java/org/apache/commons/lang3/DigitalBase10SizeUnitTest.java b/src/test/java/org/apache/commons/lang3/DigitalBase10SizeUnitTest.java
+deleted file mode 100644
+index db343b7e79bf6b60380508e96a5ef963f56a719e..0000000000000000000000000000000000000000
+--- a/src/test/java/org/apache/commons/lang3/DigitalBase10SizeUnitTest.java
++++ /dev/null
+@@ -1,123 +0,0 @@
+-/*
+- * Licensed to the Apache Software Foundation (ASF) under one or more
+- * contributor license agreements.  See the NOTICE file distributed with
+- * this work for additional information regarding copyright ownership.
+- * The ASF licenses this file to You under the Apache License, Version 2.0
+- * (the "License"); you may not use this file except in compliance with
+- * the License.  You may obtain a copy of the License at
+- *
+- *      http://www.apache.org/licenses/LICENSE-2.0
+- *
+- * Unless required by applicable law or agreed to in writing, software
+- * distributed under the License is distributed on an "AS IS" BASIS,
+- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+- * See the License for the specific language governing permissions and
+- * limitations under the License.
+- */
+-
+-package org.apache.commons.lang3;
+-
+-import static org.apache.commons.lang3.DigitalBase10SizeUnit.BITS;
+-import static org.apache.commons.lang3.DigitalBase10SizeUnit.BYTES;
+-import static org.apache.commons.lang3.DigitalBase10SizeUnit.GIGABYTES;
+-import static org.apache.commons.lang3.DigitalBase10SizeUnit.KILOBYTES;
+-import static org.apache.commons.lang3.DigitalBase10SizeUnit.MEGABYTES;
+-import static org.apache.commons.lang3.DigitalBase10SizeUnit.TERABYTES;
+-
+-import org.junit.Assert;
+-import org.junit.Test;
+-
+-public class DigitalBase10SizeUnitTest {
+-
+-    @Test
+-    public void testToBits() throws Exception {
+-        Assert.assertEquals(1, BITS.toBits(1));
+-        Assert.assertEquals(16, BYTES.toBits(2));
+-        Assert.assertEquals(2000, KILOBYTES.toBits(2));
+-        Assert.assertEquals(2000000, MEGABYTES.toBits(2));
+-        Assert.assertEquals(2000000000L, GIGABYTES.toBits(2));
+-        Assert.assertEquals(2000000000000L, TERABYTES.toBits(2));
+-        //
+-        Assert.assertEquals(2, BYTES.convert(2, BYTES));
+-        Assert.assertEquals(2000, BYTES.convert(2, KILOBYTES));
+-        Assert.assertEquals(2000000, BYTES.convert(2, MEGABYTES));
+-        Assert.assertEquals(2000000000L, BYTES.convert(2, GIGABYTES));
+-        Assert.assertEquals(2000000000000L, BYTES.convert(2, TERABYTES));
+-    }
+-
+-    @Test
+-    public void testToBytes() throws Exception {
+-        Assert.assertEquals(0, BITS.toBytes(2));
+-        Assert.assertEquals(2, BYTES.toBytes(2));
+-        Assert.assertEquals(2000, KILOBYTES.toBytes(2));
+-        Assert.assertEquals(2000000, MEGABYTES.toBytes(2));
+-        Assert.assertEquals(2000000000L, GIGABYTES.toBytes(2));
+-        Assert.assertEquals(2000000000000L, TERABYTES.toBytes(2));
+-        //
+-        Assert.assertEquals(2, BYTES.convert(2, BYTES));
+-        Assert.assertEquals(2000, BYTES.convert(2, KILOBYTES));
+-        Assert.assertEquals(2000000, BYTES.convert(2, MEGABYTES));
+-        Assert.assertEquals(2000000000L, BYTES.convert(2, GIGABYTES));
+-        Assert.assertEquals(2000000000000L, BYTES.convert(2, TERABYTES));
+-    }
+-
+-    @Test
+-    public void testToGigabytes() throws Exception {
+-        Assert.assertEquals(2, BYTES.toGigabytes(2147483648l));
+-        Assert.assertEquals(2, KILOBYTES.toGigabytes(2000000));
+-        Assert.assertEquals(2, MEGABYTES.toGigabytes(2000));
+-        Assert.assertEquals(2, GIGABYTES.toGigabytes(2));
+-        Assert.assertEquals(2000, TERABYTES.toGigabytes(2));
+-        //
+-        Assert.assertEquals(2, GIGABYTES.convert(2000000000L, BYTES));
+-        Assert.assertEquals(2, GIGABYTES.convert(2000000, KILOBYTES));
+-        Assert.assertEquals(2, GIGABYTES.convert(2000, MEGABYTES));
+-        Assert.assertEquals(2, GIGABYTES.convert(2, GIGABYTES));
+-        Assert.assertEquals(2000, GIGABYTES.convert(2, TERABYTES));
+-    }
+-
+-    @Test
+-    public void testToKilobytes() throws Exception {
+-        Assert.assertEquals(2, BYTES.toKilobytes(2000));
+-        Assert.assertEquals(2, KILOBYTES.toKilobytes(2));
+-        Assert.assertEquals(2000, MEGABYTES.toKilobytes(2));
+-        Assert.assertEquals(2000000, GIGABYTES.toKilobytes(2));
+-        Assert.assertEquals(2000000000L, TERABYTES.toKilobytes(2));
+-        //
+-        Assert.assertEquals(2, KILOBYTES.convert(2000, BYTES));
+-        Assert.assertEquals(2, KILOBYTES.convert(2, KILOBYTES));
+-        Assert.assertEquals(2000, KILOBYTES.convert(2, MEGABYTES));
+-        Assert.assertEquals(2000000, KILOBYTES.convert(2, GIGABYTES));
+-        Assert.assertEquals(2000000000L, KILOBYTES.convert(2, TERABYTES));
+-    }
+-
+-    @Test
+-    public void testToMegabytes() throws Exception {
+-        Assert.assertEquals(2, BYTES.toMegabytes(2000000));
+-        Assert.assertEquals(2, KILOBYTES.toMegabytes(2000));
+-        Assert.assertEquals(2, MEGABYTES.toMegabytes(2));
+-        Assert.assertEquals(2000, GIGABYTES.toMegabytes(2));
+-        Assert.assertEquals(2000000, TERABYTES.toMegabytes(2));
+-        //
+-        Assert.assertEquals(2, MEGABYTES.convert(2000000, BYTES));
+-        Assert.assertEquals(2, MEGABYTES.convert(2000, KILOBYTES));
+-        Assert.assertEquals(2, MEGABYTES.convert(2, MEGABYTES));
+-        Assert.assertEquals(2000, MEGABYTES.convert(2, GIGABYTES));
+-        Assert.assertEquals(2000000, MEGABYTES.convert(2, TERABYTES));
+-    }
+-
+-    @Test
+-    public void testToTerabytes() throws Exception {
+-        Assert.assertEquals(2, BYTES.toTerabytes(2199023255552l));
+-        Assert.assertEquals(2, KILOBYTES.toTerabytes(2147483648l));
+-        Assert.assertEquals(2, MEGABYTES.toTerabytes(2000000));
+-        Assert.assertEquals(2, GIGABYTES.toTerabytes(2000));
+-        Assert.assertEquals(2, TERABYTES.toTerabytes(2));
+-        //
+-        Assert.assertEquals(2, TERABYTES.convert(2000000000000L, BYTES));
+-        Assert.assertEquals(2, TERABYTES.convert(2000000000L, KILOBYTES));
+-        Assert.assertEquals(2, TERABYTES.convert(2000000, MEGABYTES));
+-        Assert.assertEquals(2, TERABYTES.convert(2000, GIGABYTES));
+-        Assert.assertEquals(2, TERABYTES.convert(2, TERABYTES));
+-    }
+-}
+\ No newline at end of file
+diff --git a/src/test/java/org/apache/commons/lang3/DigitalBase2SizeUnitTest.java b/src/test/java/org/apache/commons/lang3/DigitalBase2SizeUnitTest.java
+deleted file mode 100644
+index ba510112e7343a36ac11659feaf8e386effa88d3..0000000000000000000000000000000000000000
+--- a/src/test/java/org/apache/commons/lang3/DigitalBase2SizeUnitTest.java
++++ /dev/null
+@@ -1,123 +0,0 @@
+-/*
+- * Licensed to the Apache Software Foundation (ASF) under one or more
+- * contributor license agreements.  See the NOTICE file distributed with
+- * this work for additional information regarding copyright ownership.
+- * The ASF licenses this file to You under the Apache License, Version 2.0
+- * (the "License"); you may not use this file except in compliance with
+- * the License.  You may obtain a copy of the License at
+- *
+- *      http://www.apache.org/licenses/LICENSE-2.0
+- *
+- * Unless required by applicable law or agreed to in writing, software
+- * distributed under the License is distributed on an "AS IS" BASIS,
+- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+- * See the License for the specific language governing permissions and
+- * limitations under the License.
+- */
+-
+-package org.apache.commons.lang3;
+-
+-import static org.apache.commons.lang3.DigitalBase2SizeUnit.BITS;
+-import static org.apache.commons.lang3.DigitalBase2SizeUnit.BYTES;
+-import static org.apache.commons.lang3.DigitalBase2SizeUnit.GIGABYTES;
+-import static org.apache.commons.lang3.DigitalBase2SizeUnit.KILOBYTES;
+-import static org.apache.commons.lang3.DigitalBase2SizeUnit.MEGABYTES;
+-import static org.apache.commons.lang3.DigitalBase2SizeUnit.TERABYTES;
+-
+-import org.junit.Assert;
+-import org.junit.Test;
+-
+-public class DigitalBase2SizeUnitTest {
+-
+-    @Test
+-    public void testToBits() throws Exception {
+-        Assert.assertEquals(1, BITS.toBits(1));
+-        Assert.assertEquals(16, BYTES.toBits(2));
+-        Assert.assertEquals(2048, KILOBYTES.toBits(2));
+-        Assert.assertEquals(2097152, MEGABYTES.toBits(2));
+-        Assert.assertEquals(2147483648L, GIGABYTES.toBits(2));
+-        Assert.assertEquals(2199023255552L, TERABYTES.toBits(2));
+-        //
+-        Assert.assertEquals(2, BYTES.convert(2, BYTES));
+-        Assert.assertEquals(2048, BYTES.convert(2, KILOBYTES));
+-        Assert.assertEquals(2097152, BYTES.convert(2, MEGABYTES));
+-        Assert.assertEquals(2147483648L, BYTES.convert(2, GIGABYTES));
+-        Assert.assertEquals(2199023255552L, BYTES.convert(2, TERABYTES));
+-    }
+-
+-    @Test
+-    public void testToBytes() throws Exception {
+-        Assert.assertEquals(0, BITS.toBytes(2));
+-        Assert.assertEquals(2, BYTES.toBytes(2));
+-        Assert.assertEquals(2048, KILOBYTES.toBytes(2));
+-        Assert.assertEquals(2097152, MEGABYTES.toBytes(2));
+-        Assert.assertEquals(2147483648L, GIGABYTES.toBytes(2));
+-        Assert.assertEquals(2199023255552L, TERABYTES.toBytes(2));
+-        //
+-        Assert.assertEquals(2, BYTES.convert(2, BYTES));
+-        Assert.assertEquals(2048, BYTES.convert(2, KILOBYTES));
+-        Assert.assertEquals(2097152, BYTES.convert(2, MEGABYTES));
+-        Assert.assertEquals(2147483648L, BYTES.convert(2, GIGABYTES));
+-        Assert.assertEquals(2199023255552L, BYTES.convert(2, TERABYTES));
+-    }
+-
+-    @Test
+-    public void testToGigabytes() throws Exception {
+-        Assert.assertEquals(2, BYTES.toGigabytes(2147483648l));
+-        Assert.assertEquals(2, KILOBYTES.toGigabytes(2097152));
+-        Assert.assertEquals(2, MEGABYTES.toGigabytes(2048));
+-        Assert.assertEquals(2, GIGABYTES.toGigabytes(2));
+-        Assert.assertEquals(2048, TERABYTES.toGigabytes(2));
+-        //
+-        Assert.assertEquals(2, GIGABYTES.convert(2147483648L, BYTES));
+-        Assert.assertEquals(2, GIGABYTES.convert(2097152, KILOBYTES));
+-        Assert.assertEquals(2, GIGABYTES.convert(2048, MEGABYTES));
+-        Assert.assertEquals(2, GIGABYTES.convert(2, GIGABYTES));
+-        Assert.assertEquals(2048, GIGABYTES.convert(2, TERABYTES));
+-    }
+-
+-    @Test
+-    public void testToKilobytes() throws Exception {
+-        Assert.assertEquals(2, BYTES.toKilobytes(2048));
+-        Assert.assertEquals(2, KILOBYTES.toKilobytes(2));
+-        Assert.assertEquals(2048, MEGABYTES.toKilobytes(2));
+-        Assert.assertEquals(2097152, GIGABYTES.toKilobytes(2));
+-        Assert.assertEquals(2147483648L, TERABYTES.toKilobytes(2));
+-        //
+-        Assert.assertEquals(2, KILOBYTES.convert(2048, BYTES));
+-        Assert.assertEquals(2, KILOBYTES.convert(2, KILOBYTES));
+-        Assert.assertEquals(2048, KILOBYTES.convert(2, MEGABYTES));
+-        Assert.assertEquals(2097152, KILOBYTES.convert(2, GIGABYTES));
+-        Assert.assertEquals(2147483648L, KILOBYTES.convert(2, TERABYTES));
+-    }
+-
+-    @Test
+-    public void testToMegabytes() throws Exception {
+-        Assert.assertEquals(2, BYTES.toMegabytes(2097152));
+-        Assert.assertEquals(2, KILOBYTES.toMegabytes(2048));
+-        Assert.assertEquals(2, MEGABYTES.toMegabytes(2));
+-        Assert.assertEquals(2048, GIGABYTES.toMegabytes(2));
+-        Assert.assertEquals(2097152, TERABYTES.toMegabytes(2));
+-        //
+-        Assert.assertEquals(2, MEGABYTES.convert(2097152, BYTES));
+-        Assert.assertEquals(2, MEGABYTES.convert(2048, KILOBYTES));
+-        Assert.assertEquals(2, MEGABYTES.convert(2, MEGABYTES));
+-        Assert.assertEquals(2048, MEGABYTES.convert(2, GIGABYTES));
+-        Assert.assertEquals(2097152, MEGABYTES.convert(2, TERABYTES));
+-    }
+-
+-    @Test
+-    public void testToTerabytes() throws Exception {
+-        Assert.assertEquals(2, BYTES.toTerabytes(2199023255552l));
+-        Assert.assertEquals(2, KILOBYTES.toTerabytes(2147483648l));
+-        Assert.assertEquals(2, MEGABYTES.toTerabytes(2097152));
+-        Assert.assertEquals(2, GIGABYTES.toTerabytes(2048));
+-        Assert.assertEquals(2, TERABYTES.toTerabytes(2));
+-        //
+-        Assert.assertEquals(2, TERABYTES.convert(2199023255552L, BYTES));
+-        Assert.assertEquals(2, TERABYTES.convert(2147483648L, KILOBYTES));
+-        Assert.assertEquals(2, TERABYTES.convert(2097152, MEGABYTES));
+-        Assert.assertEquals(2, TERABYTES.convert(2048, GIGABYTES));
+-        Assert.assertEquals(2, TERABYTES.convert(2, TERABYTES));
+-    }
+-}
+\ No newline at end of file
+diff --git a/src/test/java/org/apache/commons/lang3/JavaVersionTest.java b/src/test/java/org/apache/commons/lang3/JavaVersionTest.java
+index 8833318363f8c86efb7e64903efb5867da4c299a..943aac3611a07c9036af0a6eafb9f1244c80c286 100644
+--- a/src/test/java/org/apache/commons/lang3/JavaVersionTest.java
++++ b/src/test/java/org/apache/commons/lang3/JavaVersionTest.java
+@@ -32,6 +32,7 @@ import static org.apache.commons.lang3.JavaVersion.JAVA_1_6;
+ import static org.apache.commons.lang3.JavaVersion.JAVA_1_7;
+ import static org.apache.commons.lang3.JavaVersion.JAVA_1_8;
+ import static org.apache.commons.lang3.JavaVersion.JAVA_1_9;
++import static org.apache.commons.lang3.JavaVersion.JAVA_9;
+ import static org.apache.commons.lang3.JavaVersion.get;
+ import static org.apache.commons.lang3.JavaVersion.getJavaVersion;
+ 
+@@ -51,7 +52,7 @@ public class JavaVersionTest {
+         assertEquals("1.6 failed", JAVA_1_6, get("1.6"));
+         assertEquals("1.7 failed", JAVA_1_7, get("1.7"));
+         assertEquals("1.8 failed", JAVA_1_8, get("1.8"));
+-        assertEquals("1.9 failed", JAVA_1_9, get("1.9"));
++        assertEquals("9 failed", JAVA_9, get("9"));
+         assertEquals("1.10 failed", JAVA_RECENT, get("1.10"));
+         // assertNull("2.10 unexpectedly worked", get("2.10"));
+         assertEquals("Wrapper method failed", get("1.5"), getJavaVersion("1.5"));
+diff --git a/src/test/java/org/apache/commons/lang3/SystemUtilsTest.java b/src/test/java/org/apache/commons/lang3/SystemUtilsTest.java
+index cac20cd8046ee2ef90efc63b35b22920a895622f..9b614426c2a01934aeef91d6e9bf6ecb0cd820d4 100644
+--- a/src/test/java/org/apache/commons/lang3/SystemUtilsTest.java
++++ b/src/test/java/org/apache/commons/lang3/SystemUtilsTest.java
+@@ -92,8 +92,9 @@ public class SystemUtilsTest {
+     }
+ 
+     @Test
++    @SuppressWarnings("deprecation")
+     public void testIS_JAVA() {
+-        final String javaVersion = System.getProperty("java.version");
++        final String javaVersion = System.getProperty("java.specification.name");
+         if (javaVersion == null) {
+             assertFalse(SystemUtils.IS_JAVA_1_1);
+             assertFalse(SystemUtils.IS_JAVA_1_2);
+@@ -104,6 +105,7 @@ public class SystemUtilsTest {
+             assertFalse(SystemUtils.IS_JAVA_1_7);
+             assertFalse(SystemUtils.IS_JAVA_1_8);
+             assertFalse(SystemUtils.IS_JAVA_1_9);
++            assertFalse(SystemUtils.IS_JAVA_9);
+         } else if (javaVersion.startsWith("1.1")) {
+             assertTrue(SystemUtils.IS_JAVA_1_1);
+             assertFalse(SystemUtils.IS_JAVA_1_2);
+@@ -114,6 +116,7 @@ public class SystemUtilsTest {
+             assertFalse(SystemUtils.IS_JAVA_1_7);
+             assertFalse(SystemUtils.IS_JAVA_1_8);
+             assertFalse(SystemUtils.IS_JAVA_1_9);
++            assertFalse(SystemUtils.IS_JAVA_9);
+         } else if (javaVersion.startsWith("1.2")) {
+             assertFalse(SystemUtils.IS_JAVA_1_1);
+             assertTrue(SystemUtils.IS_JAVA_1_2);
+@@ -124,6 +127,7 @@ public class SystemUtilsTest {
+             assertFalse(SystemUtils.IS_JAVA_1_7);
+             assertFalse(SystemUtils.IS_JAVA_1_8);
+             assertFalse(SystemUtils.IS_JAVA_1_9);
++            assertFalse(SystemUtils.IS_JAVA_9);
+         } else if (javaVersion.startsWith("1.3")) {
+             assertFalse(SystemUtils.IS_JAVA_1_1);
+             assertFalse(SystemUtils.IS_JAVA_1_2);
+@@ -134,6 +138,7 @@ public class SystemUtilsTest {
+             assertFalse(SystemUtils.IS_JAVA_1_7);
+             assertFalse(SystemUtils.IS_JAVA_1_8);
+             assertFalse(SystemUtils.IS_JAVA_1_9);
++            assertFalse(SystemUtils.IS_JAVA_9);
+         } else if (javaVersion.startsWith("1.4")) {
+             assertFalse(SystemUtils.IS_JAVA_1_1);
+             assertFalse(SystemUtils.IS_JAVA_1_2);
+@@ -144,6 +149,7 @@ public class SystemUtilsTest {
+             assertFalse(SystemUtils.IS_JAVA_1_7);
+             assertFalse(SystemUtils.IS_JAVA_1_8);
+             assertFalse(SystemUtils.IS_JAVA_1_9);
++            assertFalse(SystemUtils.IS_JAVA_9);
+         } else if (javaVersion.startsWith("1.5")) {
+             assertFalse(SystemUtils.IS_JAVA_1_1);
+             assertFalse(SystemUtils.IS_JAVA_1_2);
+@@ -154,6 +160,7 @@ public class SystemUtilsTest {
+             assertFalse(SystemUtils.IS_JAVA_1_7);
+             assertFalse(SystemUtils.IS_JAVA_1_8);
+             assertFalse(SystemUtils.IS_JAVA_1_9);
++            assertFalse(SystemUtils.IS_JAVA_9);
+         } else if (javaVersion.startsWith("1.6")) {
+             assertFalse(SystemUtils.IS_JAVA_1_1);
+             assertFalse(SystemUtils.IS_JAVA_1_2);
+@@ -164,6 +171,7 @@ public class SystemUtilsTest {
+             assertFalse(SystemUtils.IS_JAVA_1_7);
+             assertFalse(SystemUtils.IS_JAVA_1_8);
+             assertFalse(SystemUtils.IS_JAVA_1_9);
++            assertFalse(SystemUtils.IS_JAVA_9);
+         } else if (javaVersion.startsWith("1.7")) {
+             assertFalse(SystemUtils.IS_JAVA_1_1);
+             assertFalse(SystemUtils.IS_JAVA_1_2);
+@@ -174,6 +182,7 @@ public class SystemUtilsTest {
+             assertTrue(SystemUtils.IS_JAVA_1_7);
+             assertFalse(SystemUtils.IS_JAVA_1_8);
+             assertFalse(SystemUtils.IS_JAVA_1_9);
++            assertFalse(SystemUtils.IS_JAVA_9);
+         } else if (javaVersion.startsWith("1.8")) {
+             assertFalse(SystemUtils.IS_JAVA_1_1);
+             assertFalse(SystemUtils.IS_JAVA_1_2);
+@@ -184,7 +193,8 @@ public class SystemUtilsTest {
+             assertFalse(SystemUtils.IS_JAVA_1_7);
+             assertTrue(SystemUtils.IS_JAVA_1_8);
+             assertFalse(SystemUtils.IS_JAVA_1_9);
+-        } else if (javaVersion.startsWith("1.9")) {
++            assertFalse(SystemUtils.IS_JAVA_9);
++        } else if (javaVersion.startsWith("9")) {
+             assertFalse(SystemUtils.IS_JAVA_1_1);
+             assertFalse(SystemUtils.IS_JAVA_1_2);
+             assertFalse(SystemUtils.IS_JAVA_1_3);
+@@ -194,6 +204,7 @@ public class SystemUtilsTest {
+             assertFalse(SystemUtils.IS_JAVA_1_7);
+             assertFalse(SystemUtils.IS_JAVA_1_8);
+             assertTrue(SystemUtils.IS_JAVA_1_9);
++            assertTrue(SystemUtils.IS_JAVA_9);
+         } else {
+             System.out.println("Can't test IS_JAVA value: "+javaVersion);
+         }
+@@ -262,6 +273,8 @@ public class SystemUtilsTest {
+         assertFalse(SystemUtils.isJavaVersionMatch(javaVersion, "1.5"));
+         assertFalse(SystemUtils.isJavaVersionMatch(javaVersion, "1.6"));
+         assertFalse(SystemUtils.isJavaVersionMatch(javaVersion, "1.7"));
++        assertFalse(SystemUtils.isJavaVersionMatch(javaVersion, "1.8"));
++        assertFalse(SystemUtils.isJavaVersionMatch(javaVersion, "9"));
+         javaVersion = "";
+         assertFalse(SystemUtils.isJavaVersionMatch(javaVersion, "1.0"));
+         assertFalse(SystemUtils.isJavaVersionMatch(javaVersion, "1.1"));
+@@ -271,6 +284,8 @@ public class SystemUtilsTest {
+         assertFalse(SystemUtils.isJavaVersionMatch(javaVersion, "1.5"));
+         assertFalse(SystemUtils.isJavaVersionMatch(javaVersion, "1.6"));
+         assertFalse(SystemUtils.isJavaVersionMatch(javaVersion, "1.7"));
++        assertFalse(SystemUtils.isJavaVersionMatch(javaVersion, "1.8"));
++        assertFalse(SystemUtils.isJavaVersionMatch(javaVersion, "9"));
+         javaVersion = "1.0";
+         assertTrue(SystemUtils.isJavaVersionMatch(javaVersion, "1.0"));
+         assertFalse(SystemUtils.isJavaVersionMatch(javaVersion, "1.1"));
+@@ -280,6 +295,8 @@ public class SystemUtilsTest {
+         assertFalse(SystemUtils.isJavaVersionMatch(javaVersion, "1.5"));
+         assertFalse(SystemUtils.isJavaVersionMatch(javaVersion, "1.6"));
+         assertFalse(SystemUtils.isJavaVersionMatch(javaVersion, "1.7"));
++        assertFalse(SystemUtils.isJavaVersionMatch(javaVersion, "1.8"));
++        assertFalse(SystemUtils.isJavaVersionMatch(javaVersion, "9"));
+         javaVersion = "1.1";
+         assertFalse(SystemUtils.isJavaVersionMatch(javaVersion, "1.0"));
+         assertTrue(SystemUtils.isJavaVersionMatch(javaVersion, "1.1"));
+@@ -289,6 +306,8 @@ public class SystemUtilsTest {
+         assertFalse(SystemUtils.isJavaVersionMatch(javaVersion, "1.5"));
+         assertFalse(SystemUtils.isJavaVersionMatch(javaVersion, "1.6"));
+         assertFalse(SystemUtils.isJavaVersionMatch(javaVersion, "1.7"));
++        assertFalse(SystemUtils.isJavaVersionMatch(javaVersion, "1.8"));
++        assertFalse(SystemUtils.isJavaVersionMatch(javaVersion, "9"));
+         javaVersion = "1.2";
+         assertFalse(SystemUtils.isJavaVersionMatch(javaVersion, "1.0"));
+         assertFalse(SystemUtils.isJavaVersionMatch(javaVersion, "1.1"));
+@@ -298,6 +317,8 @@ public class SystemUtilsTest {
+         assertFalse(SystemUtils.isJavaVersionMatch(javaVersion, "1.5"));
+         assertFalse(SystemUtils.isJavaVersionMatch(javaVersion, "1.6"));
+         assertFalse(SystemUtils.isJavaVersionMatch(javaVersion, "1.7"));
++        assertFalse(SystemUtils.isJavaVersionMatch(javaVersion, "1.8"));
++        assertFalse(SystemUtils.isJavaVersionMatch(javaVersion, "9"));
+         javaVersion = "1.3.0";
+         assertFalse(SystemUtils.isJavaVersionMatch(javaVersion, "1.0"));
+         assertFalse(SystemUtils.isJavaVersionMatch(javaVersion, "1.1"));
+@@ -307,6 +328,8 @@ public class SystemUtilsTest {
+         assertFalse(SystemUtils.isJavaVersionMatch(javaVersion, "1.5"));
+         assertFalse(SystemUtils.isJavaVersionMatch(javaVersion, "1.6"));
+         assertFalse(SystemUtils.isJavaVersionMatch(javaVersion, "1.7"));
++        assertFalse(SystemUtils.isJavaVersionMatch(javaVersion, "1.8"));
++        assertFalse(SystemUtils.isJavaVersionMatch(javaVersion, "9"));
+         javaVersion = "1.3.1";
+         assertFalse(SystemUtils.isJavaVersionMatch(javaVersion, "1.0"));
+         assertFalse(SystemUtils.isJavaVersionMatch(javaVersion, "1.1"));
+@@ -316,6 +339,8 @@ public class SystemUtilsTest {
+         assertFalse(SystemUtils.isJavaVersionMatch(javaVersion, "1.5"));
+         assertFalse(SystemUtils.isJavaVersionMatch(javaVersion, "1.6"));
+         assertFalse(SystemUtils.isJavaVersionMatch(javaVersion, "1.7"));
++        assertFalse(SystemUtils.isJavaVersionMatch(javaVersion, "1.8"));
++        assertFalse(SystemUtils.isJavaVersionMatch(javaVersion, "9"));
+         javaVersion = "1.4.0";
+         assertFalse(SystemUtils.isJavaVersionMatch(javaVersion, "1.0"));
+         assertFalse(SystemUtils.isJavaVersionMatch(javaVersion, "1.1"));
+@@ -325,6 +350,8 @@ public class SystemUtilsTest {
+         assertFalse(SystemUtils.isJavaVersionMatch(javaVersion, "1.5"));
+         assertFalse(SystemUtils.isJavaVersionMatch(javaVersion, "1.6"));
+         assertFalse(SystemUtils.isJavaVersionMatch(javaVersion, "1.7"));
++        assertFalse(SystemUtils.isJavaVersionMatch(javaVersion, "1.8"));
++        assertFalse(SystemUtils.isJavaVersionMatch(javaVersion, "9"));
+         javaVersion = "1.4.1";
+         assertFalse(SystemUtils.isJavaVersionMatch(javaVersion, "1.0"));
+         assertFalse(SystemUtils.isJavaVersionMatch(javaVersion, "1.1"));
+@@ -334,6 +361,8 @@ public class SystemUtilsTest {
+         assertFalse(SystemUtils.isJavaVersionMatch(javaVersion, "1.5"));
+         assertFalse(SystemUtils.isJavaVersionMatch(javaVersion, "1.6"));
+         assertFalse(SystemUtils.isJavaVersionMatch(javaVersion, "1.7"));
++        assertFalse(SystemUtils.isJavaVersionMatch(javaVersion, "1.8"));
++        assertFalse(SystemUtils.isJavaVersionMatch(javaVersion, "9"));
+         javaVersion = "1.4.2";
+         assertFalse(SystemUtils.isJavaVersionMatch(javaVersion, "1.0"));
+         assertFalse(SystemUtils.isJavaVersionMatch(javaVersion, "1.1"));
+@@ -343,6 +372,8 @@ public class SystemUtilsTest {
+         assertFalse(SystemUtils.isJavaVersionMatch(javaVersion, "1.5"));
+         assertFalse(SystemUtils.isJavaVersionMatch(javaVersion, "1.6"));
+         assertFalse(SystemUtils.isJavaVersionMatch(javaVersion, "1.7"));
++        assertFalse(SystemUtils.isJavaVersionMatch(javaVersion, "1.8"));
++        assertFalse(SystemUtils.isJavaVersionMatch(javaVersion, "9"));
+         javaVersion = "1.5.0";
+         assertFalse(SystemUtils.isJavaVersionMatch(javaVersion, "1.0"));
+         assertFalse(SystemUtils.isJavaVersionMatch(javaVersion, "1.1"));
+@@ -352,6 +383,8 @@ public class SystemUtilsTest {
+         assertTrue(SystemUtils.isJavaVersionMatch(javaVersion, "1.5"));
+         assertFalse(SystemUtils.isJavaVersionMatch(javaVersion, "1.6"));
+         assertFalse(SystemUtils.isJavaVersionMatch(javaVersion, "1.7"));
++        assertFalse(SystemUtils.isJavaVersionMatch(javaVersion, "1.8"));
++        assertFalse(SystemUtils.isJavaVersionMatch(javaVersion, "9"));
+         javaVersion = "1.6.0";
+         assertFalse(SystemUtils.isJavaVersionMatch(javaVersion, "1.0"));
+         assertFalse(SystemUtils.isJavaVersionMatch(javaVersion, "1.1"));
+@@ -361,6 +394,8 @@ public class SystemUtilsTest {
+         assertFalse(SystemUtils.isJavaVersionMatch(javaVersion, "1.5"));
+         assertTrue(SystemUtils.isJavaVersionMatch(javaVersion, "1.6"));
+         assertFalse(SystemUtils.isJavaVersionMatch(javaVersion, "1.7"));
++        assertFalse(SystemUtils.isJavaVersionMatch(javaVersion, "1.8"));
++        assertFalse(SystemUtils.isJavaVersionMatch(javaVersion, "9"));
+         javaVersion = "1.7.0";
+         assertFalse(SystemUtils.isJavaVersionMatch(javaVersion, "1.0"));
+         assertFalse(SystemUtils.isJavaVersionMatch(javaVersion, "1.1"));
+@@ -370,6 +405,30 @@ public class SystemUtilsTest {
+         assertFalse(SystemUtils.isJavaVersionMatch(javaVersion, "1.5"));
+         assertFalse(SystemUtils.isJavaVersionMatch(javaVersion, "1.6"));
+         assertTrue(SystemUtils.isJavaVersionMatch(javaVersion, "1.7"));
++        assertFalse(SystemUtils.isJavaVersionMatch(javaVersion, "1.8"));
++        assertFalse(SystemUtils.isJavaVersionMatch(javaVersion, "9"));
++        javaVersion = "1.8.0";
++        assertFalse(SystemUtils.isJavaVersionMatch(javaVersion, "1.0"));
++        assertFalse(SystemUtils.isJavaVersionMatch(javaVersion, "1.1"));
++        assertFalse(SystemUtils.isJavaVersionMatch(javaVersion, "1.2"));
++        assertFalse(SystemUtils.isJavaVersionMatch(javaVersion, "1.3"));
++        assertFalse(SystemUtils.isJavaVersionMatch(javaVersion, "1.4"));
++        assertFalse(SystemUtils.isJavaVersionMatch(javaVersion, "1.5"));
++        assertFalse(SystemUtils.isJavaVersionMatch(javaVersion, "1.6"));
++        assertFalse(SystemUtils.isJavaVersionMatch(javaVersion, "1.7"));
++        assertTrue(SystemUtils.isJavaVersionMatch(javaVersion, "1.8"));
++        assertFalse(SystemUtils.isJavaVersionMatch(javaVersion, "9"));
++        javaVersion = "9";
++        assertFalse(SystemUtils.isJavaVersionMatch(javaVersion, "1.0"));
++        assertFalse(SystemUtils.isJavaVersionMatch(javaVersion, "1.1"));
++        assertFalse(SystemUtils.isJavaVersionMatch(javaVersion, "1.2"));
++        assertFalse(SystemUtils.isJavaVersionMatch(javaVersion, "1.3"));
++        assertFalse(SystemUtils.isJavaVersionMatch(javaVersion, "1.4"));
++        assertFalse(SystemUtils.isJavaVersionMatch(javaVersion, "1.5"));
++        assertFalse(SystemUtils.isJavaVersionMatch(javaVersion, "1.6"));
++        assertFalse(SystemUtils.isJavaVersionMatch(javaVersion, "1.7"));
++        assertFalse(SystemUtils.isJavaVersionMatch(javaVersion, "1.8"));
++        assertTrue(SystemUtils.isJavaVersionMatch(javaVersion, "9"));
+     }
+ 
+     @Test
+diff --git a/src/test/java/org/apache/commons/lang3/ValidateTest.java b/src/test/java/org/apache/commons/lang3/ValidateTest.java
+index d577ee65ee1a9d4f1806e5aebe587ea72d5bb96e..bb294bb44bc1e605510affccdc9784228b087e7b 100644
+--- a/src/test/java/org/apache/commons/lang3/ValidateTest.java
++++ b/src/test/java/org/apache/commons/lang3/ValidateTest.java
+@@ -914,15 +914,15 @@ public class ValidateTest  {
+ 
+     @Test
+     public void testGreaterObject1() {
+-        Validate.greaterObj("c", "b");
++        Validate.greaterObject("c", "b");
+         try {
+-            Validate.greaterObj("b", "b");
++            Validate.greaterObject("b", "b");
+             fail("Expecting IllegalArgumentException");
+         } catch (final IllegalArgumentException ex) {
+             assertEquals("The value b is not greater than b", ex.getMessage());
+         }
+         try {
+-            Validate.greaterObj("a", "b");
++            Validate.greaterObject("a", "b");
+             fail("Expecting IllegalArgumentException");
+         } catch (final IllegalArgumentException ex) {
+             assertEquals("The value a is not greater than b", ex.getMessage());
+@@ -931,15 +931,15 @@ public class ValidateTest  {
+ 
+     @Test
+     public void testGreaterObject2() {
+-        Validate.greaterObj("c", "b", "MSG");
++        Validate.greaterObject("c", "b", "MSG");
+         try {
+-            Validate.greaterObj("b", "b", "MSG");
++            Validate.greaterObject("b", "b", "MSG");
+             fail("Expecting IllegalArgumentException");
+         } catch (final IllegalArgumentException ex) {
+             assertEquals("MSG", ex.getMessage());
+         }
+         try {
+-            Validate.greaterObj("a", "b", "MSG");
++            Validate.greaterObject("a", "b", "MSG");
+             fail("Expecting IllegalArgumentException");
+         } catch (final IllegalArgumentException ex) {
+             assertEquals("MSG", ex.getMessage());
+@@ -1057,10 +1057,10 @@ public class ValidateTest  {
+ 
+     @Test
+     public void testGreaterOrEqualObject1() {
+-        Validate.greaterOrEqualObj("c", "b");
+-        Validate.greaterOrEqualObj("b", "b");
++        Validate.greaterOrEqualObject("c", "b");
++        Validate.greaterOrEqualObject("b", "b");
+         try {
+-            Validate.greaterOrEqualObj("a", "b");
++            Validate.greaterOrEqualObject("a", "b");
+             fail("Expecting IllegalArgumentException");
+         } catch (final IllegalArgumentException ex) {
+             assertEquals("The value a is not greater than or equal to b", ex.getMessage());
+@@ -1069,10 +1069,10 @@ public class ValidateTest  {
+ 
+     @Test
+     public void testGreaterOrEqualObject2() {
+-        Validate.greaterOrEqualObj("c", "b", "MSG");
+-        Validate.greaterOrEqualObj("b", "b", "MSG");
++        Validate.greaterOrEqualObject("c", "b", "MSG");
++        Validate.greaterOrEqualObject("b", "b", "MSG");
+         try {
+-            Validate.greaterOrEqualObj("a", "b", "MSG");
++            Validate.greaterOrEqualObject("a", "b", "MSG");
+             fail("Expecting IllegalArgumentException");
+         } catch (final IllegalArgumentException ex) {
+             assertEquals("MSG", ex.getMessage());
+@@ -1183,15 +1183,15 @@ public class ValidateTest  {
+ 
+     @Test
+     public void testSmallerObject1() {
+-        Validate.smallerObj("a", "b");
++        Validate.smallerObject("a", "b");
+         try {
+-            Validate.smallerObj("b", "b");
++            Validate.smallerObject("b", "b");
+             fail("Expecting IllegalArgumentException");
+         } catch (final IllegalArgumentException ex) {
+             assertEquals("The value b is not smaller than b", ex.getMessage());
+         }
+         try {
+-            Validate.smallerObj("c", "b");
++            Validate.smallerObject("c", "b");
+             fail("Expecting IllegalArgumentException");
+         } catch (final IllegalArgumentException ex) {
+             assertEquals("The value c is not smaller than b", ex.getMessage());
+@@ -1200,15 +1200,15 @@ public class ValidateTest  {
+ 
+     @Test
+     public void testSmallerObject2() {
+-        Validate.smallerObj("a", "b", "MSG");
++        Validate.smallerObject("a", "b", "MSG");
+         try {
+-            Validate.smallerObj("b", "b", "MSG");
++            Validate.smallerObject("b", "b", "MSG");
+             fail("Expecting IllegalArgumentException");
+         } catch (final IllegalArgumentException ex) {
+             assertEquals("MSG", ex.getMessage());
+         }
+         try {
+-            Validate.smallerObj("c", "b", "MSG");
++            Validate.smallerObject("c", "b", "MSG");
+             fail("Expecting IllegalArgumentException");
+         } catch (final IllegalArgumentException ex) {
+             assertEquals("MSG", ex.getMessage());
+@@ -1326,10 +1326,10 @@ public class ValidateTest  {
+ 
+     @Test
+     public void testSmallerOrEqualObject1() {
+-        Validate.smallerOrEqualObj("a", "b");
+-        Validate.smallerOrEqualObj("b", "b");
++        Validate.smallerOrEqualObject("a", "b");
++        Validate.smallerOrEqualObject("b", "b");
+         try {
+-            Validate.smallerOrEqualObj("c", "b");
++            Validate.smallerOrEqualObject("c", "b");
+             fail("Expecting IllegalArgumentException");
+         } catch (final IllegalArgumentException ex) {
+             assertEquals("The value c is not smaller than or equal to b", ex.getMessage());
+@@ -1338,10 +1338,10 @@ public class ValidateTest  {
+ 
+     @Test
+     public void testSmallerOrEqualObject2() {
+-        Validate.smallerOrEqualObj("a", "b", "MSG");
+-        Validate.smallerOrEqualObj("b", "b", "MSG");
++        Validate.smallerOrEqualObject("a", "b", "MSG");
++        Validate.smallerOrEqualObject("b", "b", "MSG");
+         try {
+-            Validate.smallerOrEqualObj("c", "b", "MSG");
++            Validate.smallerOrEqualObject("c", "b", "MSG");
+             fail("Expecting IllegalArgumentException");
+         } catch (final IllegalArgumentException ex) {
+             assertEquals("MSG", ex.getMessage());
+@@ -1439,9 +1439,9 @@ public class ValidateTest  {
+ 
+     @Test
+     public void testDifferentObject1() {
+-        Validate.differentObj("b", "a");
++        Validate.differentObject("b", "a");
+         try {
+-            Validate.differentObj("a", "a");
++            Validate.differentObject("a", "a");
+             fail("Expecting IllegalArgumentException");
+         } catch (final IllegalArgumentException ex) {
+             assertEquals("The value a is invalid", ex.getMessage());
+@@ -1450,9 +1450,9 @@ public class ValidateTest  {
+ 
+     @Test
+     public void testDifferentObject2() {
+-        Validate.differentObj("b", "a", "MSG");
++        Validate.differentObject("b", "a", "MSG");
+         try {
+-            Validate.differentObj("a", "a", "MSG");
++            Validate.differentObject("a", "a", "MSG");
+             fail("Expecting IllegalArgumentException");
+         } catch (final IllegalArgumentException ex) {
+             assertEquals("MSG", ex.getMessage());
+diff --git a/src/test/java/org/apache/commons/lang3/XMLCharacterTest.java b/src/test/java/org/apache/commons/lang3/XMLCharacterTest.java
+deleted file mode 100644
+index 4984b88c3de3be61acee32baf987dd3bf13acfaf..0000000000000000000000000000000000000000
+--- a/src/test/java/org/apache/commons/lang3/XMLCharacterTest.java
++++ /dev/null
+@@ -1,104 +0,0 @@
+-/*
+- * Licensed to the Apache Software Foundation (ASF) under one
+- * or more contributor license agreements. See the NOTICE file
+- * distributed with this work for additional information
+- * regarding copyright ownership. The ASF licenses this file
+- * to you under the Apache License, Version 2.0 (the  "License");
+- * you may not use this file except in compliance with the License.
+- * You may obtain a copy of the License at
+- *
+- *     http://www.apache.org/licenses/LICENSE-2.0
+- *
+- * Unless required by applicable law or agreed to in writing, software
+- * distributed under the License is distributed on an "AS IS" BASIS,
+- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+- * See the License for the specific language governing permissions and
+- * limitations under the License.
+- */
+-package org.apache.commons.lang3;
+-
+-import org.junit.Assert;
+-import org.junit.Test;
+-
+-/**
+- * Tests {@link XMLCharacter}.
+- */
+-public class XMLCharacterTest {
+-
+-    private static char[] XML_WHITESPACE_CHARS = { ' ', '\t', '\r', '\n' };
+-
+-    private static char[] JAVA_EXTRA_WHITESPACE_CHARS = { '\u000B', '\u001C', '\u001D', '\u001E', '\u001F' };
+-
+-    /**
+-     * @see Character#isWhitespace(char)
+-     */
+-    @Test
+-    public void testIsWhitespace_char() {
+-        for (final char c : XML_WHITESPACE_CHARS) {
+-            Assert.assertTrue(XMLCharacter.isWhitespace(c));
+-            Assert.assertTrue(Character.isWhitespace(c));
+-        }
+-        for (final char c : JAVA_EXTRA_WHITESPACE_CHARS) {
+-            Assert.assertFalse(XMLCharacter.isWhitespace(c));
+-            Assert.assertTrue(Character.isWhitespace(c));
+-        }
+-        //
+-        Assert.assertFalse(XMLCharacter.isWhitespace('a'));
+-    }
+-
+-    @Test
+-    public void testIsWhitespace_char_arrary() {
+-        Assert.assertTrue(XMLCharacter.isWhitespace(XML_WHITESPACE_CHARS, 0, XML_WHITESPACE_CHARS.length));
+-        Assert.assertFalse(
+-                XMLCharacter.isWhitespace(JAVA_EXTRA_WHITESPACE_CHARS, 0, JAVA_EXTRA_WHITESPACE_CHARS.length));
+-    }
+-
+-    @Test
+-    public void testIsWhitespace_CharSequence() {
+-        Assert.assertFalse(XMLCharacter.isWhitespace(StringUtils.EMPTY));
+-    }
+-
+-    @Test
+-    public void testIsWhitespace_EmptyArray() {
+-        Assert.assertFalse(XMLCharacter.isWhitespace(new char[] {}, 0, 0));
+-    }
+-
+-    @Test
+-    public void testIsWhitespace_String_firstChar() {
+-        for (final char c : XML_WHITESPACE_CHARS) {
+-            Assert.assertTrue(XMLCharacter.isWhitespace(Character.toString(c) + Character.toString(c)));
+-            Assert.assertFalse(XMLCharacter.isWhitespace(Character.toString(c) + "X"));
+-        }
+-        for (final char c : JAVA_EXTRA_WHITESPACE_CHARS) {
+-            Assert.assertFalse(XMLCharacter.isWhitespace(Character.toString(c) + "X"));
+-        }
+-        //
+-        Assert.assertFalse(XMLCharacter.isWhitespace('a'));
+-    }
+-
+-    @Test
+-    public void testIsWhitespace_String_lastChar() {
+-        for (final char c : XML_WHITESPACE_CHARS) {
+-            Assert.assertTrue(XMLCharacter.isWhitespace(Character.toString(c) + Character.toString(c)));
+-            Assert.assertFalse(XMLCharacter.isWhitespace("X" + Character.toString(c)));
+-        }
+-        for (final char c : JAVA_EXTRA_WHITESPACE_CHARS) {
+-            Assert.assertFalse(XMLCharacter.isWhitespace("X" + Character.toString(c)));
+-        }
+-        //
+-        Assert.assertFalse(XMLCharacter.isWhitespace('a'));
+-    }
+-
+-    @Test
+-    public void testIsWhitespace_String_singleChar() {
+-        for (final char c : XML_WHITESPACE_CHARS) {
+-            Assert.assertTrue(XMLCharacter.isWhitespace(Character.toString(c)));
+-        }
+-        for (final char c : JAVA_EXTRA_WHITESPACE_CHARS) {
+-            Assert.assertFalse(XMLCharacter.isWhitespace(Character.toString(c)));
+-        }
+-        //
+-        Assert.assertFalse(XMLCharacter.isWhitespace('a'));
+-    }
+-
+-}
+diff --git a/src/test/java/org/apache/commons/lang3/math/NumberUtilsTest.java b/src/test/java/org/apache/commons/lang3/math/NumberUtilsTest.java
+index 9b785f01f772df26697a82effae3cf03e296ee31..f9c012f04b272c6a526948775fffd0bd08aa954c 100644
+--- a/src/test/java/org/apache/commons/lang3/math/NumberUtilsTest.java
++++ b/src/test/java/org/apache/commons/lang3/math/NumberUtilsTest.java
+@@ -27,6 +27,8 @@ import java.lang.reflect.Modifier;
+ import java.math.BigDecimal;
+ import java.math.BigInteger;
+ 
++import org.apache.commons.lang3.StringUtils;
++import org.apache.commons.lang3.SystemUtils;
+ import org.junit.Test;
+ 
+ /**
+@@ -1216,8 +1218,109 @@ public class NumberUtilsTest {
+     }
+ 
+     /**
+-     * Tests isNumber(String) and tests that createNumber(String) returns
+-     * a valid number iff isNumber(String) returns false.
++     * Tests isCreatable(String) and tests that createNumber(String) returns
++     * a valid number iff isCreatable(String) returns false.
++     */
++    @Test
++    public void testIsCreatable() {
++        compareIsCreatableWithCreateNumber("12345", true);
++        compareIsCreatableWithCreateNumber("1234.5", true);
++        compareIsCreatableWithCreateNumber(".12345", true);
++        compareIsCreatableWithCreateNumber("1234E5", true);
++        compareIsCreatableWithCreateNumber("1234E+5", true);
++        compareIsCreatableWithCreateNumber("1234E-5", true);
++        compareIsCreatableWithCreateNumber("123.4E5", true);
++        compareIsCreatableWithCreateNumber("-1234", true);
++        compareIsCreatableWithCreateNumber("-1234.5", true);
++        compareIsCreatableWithCreateNumber("-.12345", true);
++        compareIsCreatableWithCreateNumber("-1234E5", true);
++        compareIsCreatableWithCreateNumber("0", true);
++        compareIsCreatableWithCreateNumber("-0", true);
++        compareIsCreatableWithCreateNumber("01234", true);
++        compareIsCreatableWithCreateNumber("-01234", true);
++        compareIsCreatableWithCreateNumber("-0xABC123", true);
++        compareIsCreatableWithCreateNumber("-0x0", true);
++        compareIsCreatableWithCreateNumber("123.4E21D", true);
++        compareIsCreatableWithCreateNumber("-221.23F", true);
++        compareIsCreatableWithCreateNumber("22338L", true);
++
++        compareIsCreatableWithCreateNumber(null, false);
++        compareIsCreatableWithCreateNumber("", false);
++        compareIsCreatableWithCreateNumber(" ", false);
++        compareIsCreatableWithCreateNumber("\r\n\t", false);
++        compareIsCreatableWithCreateNumber("--2.3", false);
++        compareIsCreatableWithCreateNumber(".12.3", false);
++        compareIsCreatableWithCreateNumber("-123E", false);
++        compareIsCreatableWithCreateNumber("-123E+-212", false);
++        compareIsCreatableWithCreateNumber("-123E2.12", false);
++        compareIsCreatableWithCreateNumber("0xGF", false);
++        compareIsCreatableWithCreateNumber("0xFAE-1", false);
++        compareIsCreatableWithCreateNumber(".", false);
++        compareIsCreatableWithCreateNumber("-0ABC123", false);
++        compareIsCreatableWithCreateNumber("123.4E-D", false);
++        compareIsCreatableWithCreateNumber("123.4ED", false);
++        compareIsCreatableWithCreateNumber("1234E5l", false);
++        compareIsCreatableWithCreateNumber("11a", false);
++        compareIsCreatableWithCreateNumber("1a", false);
++        compareIsCreatableWithCreateNumber("a", false);
++        compareIsCreatableWithCreateNumber("11g", false);
++        compareIsCreatableWithCreateNumber("11z", false);
++        compareIsCreatableWithCreateNumber("11def", false);
++        compareIsCreatableWithCreateNumber("11d11", false);
++        compareIsCreatableWithCreateNumber("11 11", false);
++        compareIsCreatableWithCreateNumber(" 1111", false);
++        compareIsCreatableWithCreateNumber("1111 ", false);
++
++        compareIsCreatableWithCreateNumber("2.", true); // LANG-521
++        compareIsCreatableWithCreateNumber("1.1L", false); // LANG-664
++    }
++
++    @Test
++    public void testLANG971() {
++        compareIsCreatableWithCreateNumber("0085", false);
++        compareIsCreatableWithCreateNumber("085", false);
++        compareIsCreatableWithCreateNumber("08", false);
++        compareIsCreatableWithCreateNumber("07", true);
++        compareIsCreatableWithCreateNumber("00", true);
++    }
++
++    @Test
++    public void testLANG992() {
++        compareIsCreatableWithCreateNumber("0.0", true);
++        compareIsCreatableWithCreateNumber("0.4790", true);
++    }
++
++    @Test
++    public void testLANG972() {
++        compareIsCreatableWithCreateNumber("0xABCD", true);
++        compareIsCreatableWithCreateNumber("0XABCD", true);
++    }
++
++    @Test
++    public void testLANG1252() {
++        //Check idiosyncries between java 1.6 and 1.7,1.8 redarding leading + signs
++        if (SystemUtils.IS_JAVA_1_6) {
++            compareIsCreatableWithCreateNumber("+2", false);
++        } else {
++            compareIsCreatableWithCreateNumber("+2", true);
++        }
++
++        //The Following should work regardless of 1.6, 1.7, or 1.8
++        compareIsCreatableWithCreateNumber("+2.0", true);
++    }
++
++    private void compareIsCreatableWithCreateNumber(final String val, final boolean expected) {
++        final boolean isValid = NumberUtils.isCreatable(val);
++        final boolean canCreate = checkCreateNumber(val);
++        if (isValid == expected && canCreate == expected) {
++            return;
++        }
++        fail("Expecting "+ expected + " for isCreatable/createNumber using \"" + val + "\" but got " + isValid + " and " + canCreate);
++    }
++
++    /**
++     * Tests isCreatable(String) and tests that createNumber(String) returns
++     * a valid number iff isCreatable(String) returns false.
+      */
+     @Test
+     public void testIsNumber() {
+@@ -1274,7 +1377,7 @@ public class NumberUtilsTest {
+     }
+ 
+     @Test
+-    public void testLANG971() {
++    public void testIsNumberLANG971() {
+         compareIsNumberWithCreateNumber("0085", false);
+         compareIsNumberWithCreateNumber("085", false);
+         compareIsNumberWithCreateNumber("08", false);
+@@ -1283,24 +1386,37 @@ public class NumberUtilsTest {
+     }
+ 
+     @Test
+-    public void testLANG992() {
++    public void testIsNumberLANG992() {
+         compareIsNumberWithCreateNumber("0.0", true);
+         compareIsNumberWithCreateNumber("0.4790", true);
+     }
+ 
+     @Test
+-    public void testLANG972() {
++    public void testIsNumberLANG972() {
+         compareIsNumberWithCreateNumber("0xABCD", true);
+         compareIsNumberWithCreateNumber("0XABCD", true);
+     }
+ 
++    @Test
++    public void testIsNumberLANG1252() {
++        //Check idiosyncries between java 1.6 and 1.7,1.8 redarding leading + signs
++        if (SystemUtils.IS_JAVA_1_6) {
++            compareIsNumberWithCreateNumber("+2", false);
++        } else {
++            compareIsNumberWithCreateNumber("+2", true);
++        }
++
++        //The Following should work regardless of 1.6, 1.7, or 1.8
++        compareIsNumberWithCreateNumber("+2.0", true);
++    }
++
+     private void compareIsNumberWithCreateNumber(final String val, final boolean expected) {
+         final boolean isValid = NumberUtils.isNumber(val);
+         final boolean canCreate = checkCreateNumber(val);
+         if (isValid == expected && canCreate == expected) {
+             return;
+         }
+-        fail("Expecting "+ expected + " for isNumber/createNumber using \"" + val + "\" but got " + isValid + " and " + canCreate);
++        fail("Expecting "+ expected + " for isCreatable/createNumber using \"" + val + "\" but got " + isValid + " and " + canCreate);
+     }
+     
+     @Test

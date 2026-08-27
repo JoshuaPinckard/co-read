@@ -1,0 +1,248 @@
+diff --git a/src/changes/changes.xml b/src/changes/changes.xml
+index 6b89e5f03659c222498c3d99fa0de2bb13320ac2..b49b19af334edbf3f505717a4066c51ade71926f 100644
+--- a/src/changes/changes.xml
++++ b/src/changes/changes.xml
+@@ -68,7 +68,7 @@ The <action> type attribute can be add,update,fix,remove.
+     <action                   type="fix" dev="ggregory" due-to="Gary Gregory">Fix NullPointerException in ThreadUtils.getSystemThreadGroup() when the current thread is stopped.</action>
+     <action                   type="fix" dev="ggregory" due-to="Gary Gregory">ArrayUtils.toPrimitive(Boolean...) null array elements map to false, like Boolean.parseBoolean(null) and its callers return false.</action>
+     <action                   type="fix" dev="ggregory" due-to="CodeQL, Gary Gregory">StrBuilder.StrBuilderReader.skip(long): Throw an exception when an implicit narrowing conversion in a compound assignment would result in information loss or a numeric error such as an overflows.</action>
+-    
++    <action                   type="fix" dev="ggregory" due-to="Gary Gregory">Deprecate Validate#notNull(Object) in favor of using Objects#requireNonNull(Object, String).</action>
+     <!-- ADD -->
+     <action                   type="add" dev="ggregory" due-to="Gary Gregory">Add EnumUtils.getEnumSystemProperty(...).</action>
+     <action                   type="add" dev="ggregory" due-to="Gary Gregory">Add TriConsumer.</action>
+diff --git a/src/main/java/org/apache/commons/lang3/EnumUtils.java b/src/main/java/org/apache/commons/lang3/EnumUtils.java
+index c27b318c068b8a1752576c7e031435dad4f98f19..6ec30604a443b9bca33569a7cf58e92b071f3c99 100644
+--- a/src/main/java/org/apache/commons/lang3/EnumUtils.java
++++ b/src/main/java/org/apache/commons/lang3/EnumUtils.java
+@@ -22,6 +22,7 @@ import java.util.Collections;
+ import java.util.EnumSet;
+ import java.util.List;
+ import java.util.Map;
++import java.util.Objects;
+ import java.util.function.Function;
+ import java.util.stream.Collectors;
+ import java.util.stream.Stream;
+@@ -115,7 +116,7 @@ public class EnumUtils {
+      */
+     public static <E extends Enum<E>> long generateBitVector(final Class<E> enumClass, final Iterable<? extends E> values) {
+         checkBitVectorable(enumClass);
+-        Validate.notNull(values);
++        Objects.requireNonNull(values, "values");
+         long total = 0;
+         for (final E constant : values) {
+             Validate.notNull(constant, NULL_ELEMENTS_NOT_PERMITTED);
+@@ -172,7 +173,7 @@ public class EnumUtils {
+      */
+     public static <E extends Enum<E>> long[] generateBitVectors(final Class<E> enumClass, final Iterable<? extends E> values) {
+         asEnum(enumClass);
+-        Validate.notNull(values);
++        Objects.requireNonNull(values, "values");
+         final EnumSet<E> condensed = EnumSet.noneOf(enumClass);
+         for (final E constant : values) {
+             Validate.notNull(constant, NULL_ELEMENTS_NOT_PERMITTED);
+@@ -419,7 +420,7 @@ public class EnumUtils {
+      */
+     public static <E extends Enum<E>> EnumSet<E> processBitVectors(final Class<E> enumClass, final long... values) {
+         final EnumSet<E> results = EnumSet.noneOf(asEnum(enumClass));
+-        final long[] lvalues = ArrayUtils.clone(Validate.notNull(values));
++        final long[] lvalues = ArrayUtils.clone(Objects.requireNonNull(values, "values"));
+         ArrayUtils.reverse(lvalues);
+         for (final E constant : enumClass.getEnumConstants()) {
+             final int block = constant.ordinal() / Long.SIZE;
+diff --git a/src/main/java/org/apache/commons/lang3/Validate.java b/src/main/java/org/apache/commons/lang3/Validate.java
+index 7dc0d21e165b14da38d3d0f80922d595193c5b09..06294abf73db792c979025f0b6865390be17d247 100644
+--- a/src/main/java/org/apache/commons/lang3/Validate.java
++++ b/src/main/java/org/apache/commons/lang3/Validate.java
+@@ -201,7 +201,9 @@ public class Validate {
+      * @return the validated object (never {@code null} for method chaining)
+      * @throws NullPointerException if the object is {@code null}
+      * @see #notNull(Object, String, Object...)
++     * @deprecated Use {@link Objects#requireNonNull(Object)}.
+      */
++    @Deprecated
+     public static <T> T notNull(final T object) {
+         return notNull(object, DEFAULT_IS_NULL_EX_MESSAGE);
+     }
+@@ -218,7 +220,7 @@ public class Validate {
+      * @param values  the optional values for the formatted exception message
+      * @return the validated object (never {@code null} for method chaining)
+      * @throws NullPointerException if the object is {@code null}
+-     * @see #notNull(Object)
++     * @see Objects#requireNonNull(Object)
+      */
+     public static <T> T notNull(final T object, final String message, final Object... values) {
+         return Objects.requireNonNull(object, () -> String.format(message, values));
+@@ -493,7 +495,7 @@ public class Validate {
+      * @see #noNullElements(Object[])
+      */
+     public static <T> T[] noNullElements(final T[] array, final String message, final Object... values) {
+-        notNull(array);
++        Objects.requireNonNull(array, "array");
+         for (int i = 0; i < array.length; i++) {
+             if (array[i] == null) {
+                 final Object[] values2 = ArrayUtils.add(values, Integer.valueOf(i));
+@@ -555,7 +557,7 @@ public class Validate {
+      * @see #noNullElements(Iterable)
+      */
+     public static <T extends Iterable<?>> T noNullElements(final T iterable, final String message, final Object... values) {
+-        notNull(iterable);
++        Objects.requireNonNull(iterable, "iterable");
+         int i = 0;
+         for (final Iterator<?> it = iterable.iterator(); it.hasNext(); i++) {
+             if (it.next() == null) {
+@@ -616,7 +618,7 @@ public class Validate {
+      * @since 3.0
+      */
+     public static <T> T[] validIndex(final T[] array, final int index, final String message, final Object... values) {
+-        notNull(array);
++        Objects.requireNonNull(array, "array");
+         if (index < 0 || index >= array.length) {
+             throw new IndexOutOfBoundsException(String.format(message, values));
+         }
+@@ -675,7 +677,7 @@ public class Validate {
+      * @since 3.0
+      */
+     public static <T extends Collection<?>> T validIndex(final T collection, final int index, final String message, final Object... values) {
+-        notNull(collection);
++        Objects.requireNonNull(collection, "collection");
+         if (index < 0 || index >= collection.size()) {
+             throw new IndexOutOfBoundsException(String.format(message, values));
+         }
+@@ -732,7 +734,7 @@ public class Validate {
+      * @since 3.0
+      */
+     public static <T extends CharSequence> T validIndex(final T chars, final int index, final String message, final Object... values) {
+-        notNull(chars);
++        Objects.requireNonNull(chars, "chars");
+         if (index < 0 || index >= chars.length()) {
+             throw new IndexOutOfBoundsException(String.format(message, values));
+         }
+diff --git a/src/main/java/org/apache/commons/lang3/reflect/MethodUtils.java b/src/main/java/org/apache/commons/lang3/reflect/MethodUtils.java
+index eff0ee87493f52be36716a01c51f869791a458ca..ff5894ec0280daa130e5b4c39e4fe6ba0634d0a3 100644
+--- a/src/main/java/org/apache/commons/lang3/reflect/MethodUtils.java
++++ b/src/main/java/org/apache/commons/lang3/reflect/MethodUtils.java
+@@ -31,6 +31,7 @@ import java.util.Iterator;
+ import java.util.LinkedHashSet;
+ import java.util.List;
+ import java.util.Map;
++import java.util.Objects;
+ import java.util.Set;
+ import java.util.TreeMap;
+ import java.util.stream.Collectors;
+@@ -201,32 +202,29 @@ public class MethodUtils {
+      * @throws IllegalAccessException if the requested method is not accessible via reflection
+      * @since 3.5
+      */
+-    public static Object invokeMethod(final Object object, final boolean forceAccess, final String methodName,
+-            Object[] args, Class<?>[] parameterTypes)
+-            throws NoSuchMethodException, IllegalAccessException, InvocationTargetException {
++    public static Object invokeMethod(final Object object, final boolean forceAccess, final String methodName, Object[] args, Class<?>[] parameterTypes)
++        throws NoSuchMethodException, IllegalAccessException, InvocationTargetException {
++        Objects.requireNonNull(object, "object");
+         parameterTypes = ArrayUtils.nullToEmpty(parameterTypes);
+         args = ArrayUtils.nullToEmpty(args);
+ 
+         final String messagePrefix;
+         final Method method;
+ 
++        final Class<? extends Object> cls = object.getClass();
+         if (forceAccess) {
+             messagePrefix = "No such method: ";
+-            method = getMatchingMethod(object.getClass(),
+-                    methodName, parameterTypes);
++            method = getMatchingMethod(cls, methodName, parameterTypes);
+             if (method != null && !method.isAccessible()) {
+                 method.setAccessible(true);
+             }
+         } else {
+             messagePrefix = "No such accessible method: ";
+-            method = getMatchingAccessibleMethod(object.getClass(),
+-                    methodName, parameterTypes);
++            method = getMatchingAccessibleMethod(cls, methodName, parameterTypes);
+         }
+ 
+         if (method == null) {
+-            throw new NoSuchMethodException(messagePrefix
+-                    + methodName + "() on object: "
+-                    + object.getClass().getName());
++            throw new NoSuchMethodException(messagePrefix + methodName + "() on object: " + cls.getName());
+         }
+         args = toVarArgs(method, args);
+ 
+@@ -326,18 +324,15 @@ public class MethodUtils {
+      * @throws IllegalAccessException if the requested method is not accessible
+      *  via reflection
+      */
+-    public static Object invokeExactMethod(final Object object, final String methodName,
+-            Object[] args, Class<?>[] parameterTypes)
+-            throws NoSuchMethodException, IllegalAccessException,
+-            InvocationTargetException {
++    public static Object invokeExactMethod(final Object object, final String methodName, Object[] args, Class<?>[] parameterTypes)
++        throws NoSuchMethodException, IllegalAccessException, InvocationTargetException {
++        Objects.requireNonNull(object, "object");
+         args = ArrayUtils.nullToEmpty(args);
+         parameterTypes = ArrayUtils.nullToEmpty(parameterTypes);
+-        final Method method = getAccessibleMethod(object.getClass(), methodName,
+-                parameterTypes);
++        final Class<? extends Object> cls = object.getClass();
++        final Method method = getAccessibleMethod(cls, methodName, parameterTypes);
+         if (method == null) {
+-            throw new NoSuchMethodException("No such accessible method: "
+-                    + methodName + "() on object: "
+-                    + object.getClass().getName());
++            throw new NoSuchMethodException("No such accessible method: " + methodName + "() on object: " + cls.getName());
+         }
+         return method.invoke(object, args);
+     }
+@@ -736,7 +731,7 @@ public class MethodUtils {
+      */
+     public static Method getMatchingMethod(final Class<?> cls, final String methodName,
+             final Class<?>... parameterTypes) {
+-        Validate.notNull(cls, "cls");
++        Objects.requireNonNull(cls, "cls");
+         Validate.notEmpty(methodName, "methodName");
+ 
+         final List<Method> methods = Stream.of(cls.getDeclaredMethods())
+@@ -822,7 +817,7 @@ public class MethodUtils {
+      * @since 3.2
+      */
+     public static Set<Method> getOverrideHierarchy(final Method method, final Interfaces interfacesBehavior) {
+-        Validate.notNull(method);
++        Objects.requireNonNull(method, "method");
+         final Set<Method> result = new LinkedHashSet<>();
+         result.add(method);
+ 
+@@ -924,7 +919,7 @@ public class MethodUtils {
+                                                             final Class<? extends Annotation> annotationCls,
+                                                             final boolean searchSupers, final boolean ignoreAccess) {
+ 
+-        Validate.notNull(cls, "cls");
++        Objects.requireNonNull(cls, "cls");
+         Validate.notNull(annotationCls, "annotationCls");
+         final List<Class<?>> classes = searchSupers ? getAllSuperclassesAndInterfaces(cls) : new ArrayList<>();
+         classes.add(0, cls);
+@@ -961,8 +956,8 @@ public class MethodUtils {
+     public static <A extends Annotation> A getAnnotation(final Method method, final Class<A> annotationCls,
+                                                          final boolean searchSupers, final boolean ignoreAccess) {
+ 
+-        Validate.notNull(method, "method");
+-        Validate.notNull(annotationCls, "annotationCls");
++        Objects.requireNonNull(method, "method");
++        Objects.requireNonNull(annotationCls, "annotationCls");
+         if (!ignoreAccess && !MemberUtils.isAccessible(method)) {
+             return null;
+         }
+diff --git a/src/main/java/org/apache/commons/lang3/reflect/TypeUtils.java b/src/main/java/org/apache/commons/lang3/reflect/TypeUtils.java
+index aa854c330f4b442ae289507caa3fbf453ec5a0a2..c08ada56c617f256fb4f6bd8b73d22dc7bc4dae3 100644
+--- a/src/main/java/org/apache/commons/lang3/reflect/TypeUtils.java
++++ b/src/main/java/org/apache/commons/lang3/reflect/TypeUtils.java
+@@ -1709,7 +1709,7 @@ public class TypeUtils {
+      * @since 3.2
+      */
+     public static String toString(final Type type) {
+-        Validate.notNull(type);
++        Objects.requireNonNull(type, "type");
+         if (type instanceof Class<?>) {
+             return classToString((Class<?>) type);
+         }

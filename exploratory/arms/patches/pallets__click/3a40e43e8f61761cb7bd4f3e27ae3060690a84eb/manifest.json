@@ -1,0 +1,144 @@
+{
+  "base": "a42300ab9eb032c986ad030fae65f1eb58518dae",
+  "canonical_merge_tree": {
+    "exit_code": 1,
+    "matches_canonical_row": true,
+    "result_tree": "7d32c8099adf573e7db26bcd7dfeacb841398c95",
+    "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "stdout_sha256": "6a61aab22d3d4152f70bb4f734f4978ca5fe9e471b7055993565031d5d6280b0"
+  },
+  "conflicted_paths": [
+    "tests/test_shell_completion.py"
+  ],
+  "corpus_line": 72,
+  "joint_source": {
+    "constructible": true,
+    "index_verification": {
+      "actual_changed_paths": [
+        ".github/workflows/nightly.yaml",
+        "CHANGES.rst",
+        "docs/documentation.md",
+        "pyproject.toml",
+        "src/click/shell_completion.py",
+        "uv.lock"
+      ],
+      "actual_entries_sha256": "59fa9dba45c16ca0fa94fa06a1de61014244bf113f7136474eec125adf36a395",
+      "actual_tree": "bf3ce582a79b80c9640cbeebb270557d9ee5de2c",
+      "base": "a42300ab9eb032c986ad030fae65f1eb58518dae",
+      "changed_paths_match_exactly": true,
+      "declared_paths": [
+        ".github/workflows/nightly.yaml",
+        "CHANGES.rst",
+        "docs/documentation.md",
+        "pyproject.toml",
+        "src/click/shell_completion.py",
+        "uv.lock"
+      ],
+      "expected_changed_paths": [
+        ".github/workflows/nightly.yaml",
+        "CHANGES.rst",
+        "docs/documentation.md",
+        "pyproject.toml",
+        "src/click/shell_completion.py",
+        "uv.lock"
+      ],
+      "modes_and_oids_match": true,
+      "no_outside_path_changed": true,
+      "outside_declared_paths": [],
+      "path_count": 6,
+      "target": "7d32c8099adf573e7db26bcd7dfeacb841398c95",
+      "target_entries_sha256": "59fa9dba45c16ca0fa94fa06a1de61014244bf113f7136474eec125adf36a395",
+      "verified": true
+    },
+    "patch": {
+      "bytes": 7665,
+      "path": "exploratory/arms/patches/pallets__click/3a40e43e8f61761cb7bd4f3e27ae3060690a84eb/joint-source.patch",
+      "sha256": "e6cf41c94439a044cff156e6e79c03f47cc21f663a3ad82864da9b0522fed0dc"
+    },
+    "reason": null,
+    "source_conflict_paths": [],
+    "source_paths": [
+      ".github/workflows/nightly.yaml",
+      "CHANGES.rst",
+      "docs/documentation.md",
+      "pyproject.toml",
+      "src/click/shell_completion.py",
+      "uv.lock"
+    ]
+  },
+  "merge": "3a40e43e8f61761cb7bd4f3e27ae3060690a84eb",
+  "parents": [
+    "c3535905c77a29afc84861b29d3ad366ce5451bd",
+    "648d7c403829013ade629d63ddbfe808f6b2b770"
+  ],
+  "prepared_at_utc": "2026-08-25T16:27:53.255+00:00",
+  "protocol_sha256": "fb1c0a9f9c7b48c30178d8a7e737250e18535ada63959c49c73c180505c69828",
+  "repo_slug": "pallets__click",
+  "repository": "pallets/click",
+  "result_tree": "7d32c8099adf573e7db26bcd7dfeacb841398c95",
+  "runner_sha256": "e04bc99409e584636ce8cb81cc22f6a7ca9c917f9ec9e46ab68a4c2328b6b6c6",
+  "schema_version": 1,
+  "sides": {
+    "parent1": {
+      "changed_paths": [
+        "CHANGES.rst",
+        "pyproject.toml",
+        "src/click/shell_completion.py",
+        "tests/test_shell_completion.py",
+        "uv.lock"
+      ],
+      "parent": "c3535905c77a29afc84861b29d3ad366ce5451bd",
+      "reconstructed_parent_tree": "b6197ba739f29bdd816b7a6deff2b83629cdd412",
+      "source_patch": {
+        "bytes": 3520,
+        "path": "exploratory/arms/patches/pallets__click/3a40e43e8f61761cb7bd4f3e27ae3060690a84eb/parent1-source.patch",
+        "sha256": "606a623a307ee8adf54b63db380ad58fbd42a8af7e19aabcfb07fe1417f0e824"
+      },
+      "source_paths": [
+        "CHANGES.rst",
+        "pyproject.toml",
+        "src/click/shell_completion.py",
+        "uv.lock"
+      ],
+      "test_patch": {
+        "bytes": 2946,
+        "path": "exploratory/arms/patches/pallets__click/3a40e43e8f61761cb7bd4f3e27ae3060690a84eb/parent1-test.patch",
+        "sha256": "090901e7788d263b37cad9f75606a938965860d3c11322389b9b37abfd2bccbb"
+      },
+      "test_paths": [
+        "tests/test_shell_completion.py"
+      ]
+    },
+    "parent2": {
+      "changed_paths": [
+        ".github/workflows/nightly.yaml",
+        "CHANGES.rst",
+        "docs/documentation.md",
+        "src/click/shell_completion.py",
+        "tests/test_shell_completion.py"
+      ],
+      "parent": "648d7c403829013ade629d63ddbfe808f6b2b770",
+      "reconstructed_parent_tree": "bbf8555a428419e1c2a8eece954afa6a10e13183",
+      "source_patch": {
+        "bytes": 6620,
+        "path": "exploratory/arms/patches/pallets__click/3a40e43e8f61761cb7bd4f3e27ae3060690a84eb/parent2-source.patch",
+        "sha256": "99a54f84d2d61b5614adc34f7c2b9893f3248a0cd77e25814ce7c69e6b057110"
+      },
+      "source_paths": [
+        ".github/workflows/nightly.yaml",
+        "CHANGES.rst",
+        "docs/documentation.md",
+        "src/click/shell_completion.py"
+      ],
+      "test_patch": {
+        "bytes": 3576,
+        "path": "exploratory/arms/patches/pallets__click/3a40e43e8f61761cb7bd4f3e27ae3060690a84eb/parent2-test.patch",
+        "sha256": "11056bb749e909d7d08d9eed788badeb67c63610af40a319849df33857cd5554"
+      },
+      "test_paths": [
+        "tests/test_shell_completion.py"
+      ]
+    }
+  },
+  "site_index": 22
+}

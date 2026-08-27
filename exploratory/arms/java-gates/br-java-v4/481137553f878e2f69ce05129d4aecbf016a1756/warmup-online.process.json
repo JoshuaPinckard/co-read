@@ -1,0 +1,52 @@
+{
+  "command": [
+    "mvn",
+    "-q",
+    "-s",
+    "<project>/tools/java/maven-settings.xml",
+    "-gs",
+    "<project>/tools/java/maven-settings.xml",
+    "-Dmaven.repo.local=<project>/tools/maven-repository",
+    "test",
+    "-Dtest=DateFormatUtilsTest,DateUtilsRoundingTest,DateUtilsTest,DurationFormatUtilsTest,FastDatePrinterTest,StringUtilsEqualsIndexOfTest,StringUtilsTest",
+    "-DfailIfNoTests=false"
+  ],
+  "elapsed_seconds": 32.469,
+  "label": "warmup-online",
+  "normalized": {
+    "normalized_sha256": "36ebdb54e6f1da789200a15f36ef9cebe43410972f32b062782d68c64a5bb520",
+    "outcome_counts": {
+      "pass": 316
+    },
+    "parse_errors": [],
+    "path": "exploratory/arms/java-gates/br-java-v4/481137553f878e2f69ce05129d4aecbf016a1756/warmup-online.normalized.json",
+    "sha256": "3508f5f64d82fc5b915f1d82c80b61e05e91094eec70a6760fce1217b2506ad8",
+    "test_count": 316
+  },
+  "reports_archive": "exploratory/arms/java-gates/br-java-v4/481137553f878e2f69ce05129d4aecbf016a1756/warmup-online.reports.zip",
+  "reports_archive_sha256": "c00a4a6ca142108874d34693495fc6ce092fe6d15690a407286e98df362f211e",
+  "returncode": 0,
+  "source_export": {
+    "base": "47c186298927e373b31fe26444b9dbc313cccce6",
+    "clean_including_untracked_before": true,
+    "head_after": "47c186298927e373b31fe26444b9dbc313cccce6",
+    "head_before": "47c186298927e373b31fe26444b9dbc313cccce6",
+    "path": "C:/br-java-v4/a/f/481137553f87/47c186298927/warm",
+    "tracked_after": {
+      "tracked_file_count": 359,
+      "tracked_manifest_sha256": "3f14f99d24dc8f6cffbfd4e05a44386ddcce2a32d91d601939aec09e3d27b42e"
+    },
+    "tracked_before": {
+      "tracked_file_count": 359,
+      "tracked_manifest_sha256": "3f14f99d24dc8f6cffbfd4e05a44386ddcce2a32d91d601939aec09e3d27b42e"
+    },
+    "tracked_status_after": "",
+    "tracked_unchanged": true
+  },
+  "stderr": "exploratory/arms/java-gates/br-java-v4/481137553f878e2f69ce05129d4aecbf016a1756/warmup-online.stderr.bin",
+  "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "stdout": "exploratory/arms/java-gates/br-java-v4/481137553f878e2f69ce05129d4aecbf016a1756/warmup-online.stdout.bin",
+  "stdout_sha256": "8baa06f29d152572e773e16662b67130e9024a7819a82087050ee151977b1e99",
+  "timed_out": false,
+  "timeout_termination": null
+}

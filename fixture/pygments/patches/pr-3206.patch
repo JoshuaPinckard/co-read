@@ -1,0 +1,37 @@
+diff --git a/pygments/lexers/c_like.py b/pygments/lexers/c_like.py
+index cafd2ef1a4ccb0660b9d6ef5662f402eab2fb3d5..a5f991cb27e5fba8d4d26686efd0e113682e8f01 100644
+--- a/pygments/lexers/c_like.py
++++ b/pygments/lexers/c_like.py
+@@ -202,10 +202,10 @@ class ValaLexer(RegexLexer):
+             (r'/(\\\n)?[*][\s\S]*?[*](\\\n)?/', Comment.Multiline),
+         ],
+         'statements': [
++            (r'(?s)""".*?"""', String),  # verbatim strings
+             (r'[L@]?"', String, 'string'),
+             (r"L?'(\\.|\\[0-7]{1,3}|\\x[a-fA-F0-9]{1,2}|[^\\\'\n])'",
+              String.Char),
+-            (r'(?s)""".*?"""', String),  # verbatim strings
+             (r'(\d+\.\d*|\.\d+|\d+)[eE][+-]?\d+[lL]?', Number.Float),
+             (r'(\d+\.\d*|\.\d+|\d+[fF])[fF]?', Number.Float),
+             (r'0x[0-9a-fA-F]+[Ll]?', Number.Hex),
+diff --git a/tests/snippets/vala/verbatim-string.txt b/tests/snippets/vala/verbatim-string.txt
+new file mode 100644
+index 0000000000000000000000000000000000000000..e0c2ff01440f5803b833f54dc5b66c812ab79fee
+--- /dev/null
++++ b/tests/snippets/vala/verbatim-string.txt
+@@ -0,0 +1,15 @@
++---input---
++string verbatim = """This is a so-called "verbatim string".
++   Verbatim strings don't process escape sequences, such as \n, \t, \\, etc.
++   They may contain quotes and may span multiple lines.""";
++
++---tokens---
++'string'      Keyword.Type
++' '           Text.Whitespace
++'verbatim'    Name
++' '           Text.Whitespace
++'='           Operator
++' '           Text.Whitespace
++'"""This is a so-called "verbatim string".\n   Verbatim strings don\'t process escape sequences, such as \\n, \\t, \\\\, etc.\n   They may contain quotes and may span multiple lines."""' Literal.String
++';'           Punctuation
++'\n'          Text.Whitespace

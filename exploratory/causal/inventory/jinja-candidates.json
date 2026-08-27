@@ -1,0 +1,3111 @@
+{
+  "candidates": [
+    {
+      "commit_tree": "e30c409abdadcb9639254b1054561e9ca4c31e7f",
+      "committed_at": "2022-03-15T14:01:58-07:00",
+      "full_patch_bytes": 4083,
+      "full_patch_sha256": "d9449213eb7857d9c4ab5afab1c924d11781399f61a2b951bfb743e01e3c712d",
+      "history_position": 102,
+      "order": 1,
+      "parent": "a2920752fd111c2d52c88eb57487667b3cf0ea7b",
+      "parent_tree": "662854d4cf57f2a7318e4b3066d95bb7269a5749",
+      "paths": [
+        "CHANGES.rst",
+        "src/jinja2/loaders.py",
+        "tests/test_loader.py"
+      ],
+      "pr": 1621,
+      "pr_identity_provenance": "2-parent 'Merge pull request #N' subject; remote PR page not queried",
+      "pr_url": "https://github.com/pallets/jinja/pull/1621",
+      "python_test_paths": [
+        "tests/test_loader.py"
+      ],
+      "sha": "ede0f98725786911031e33b70fcfbb802ae0c825",
+      "source_python_paths": [
+        "src/jinja2/loaders.py"
+      ],
+      "subject": "Merge pull request #1621 from pallets/template-safe-path",
+      "task_id": "pr-1621",
+      "test_patch_bytes": 1621,
+      "test_patch_sha256": "b32b79b444a978e1bdd11257c8f1efe71bf298da01f48349efbe8000d0ee9091",
+      "test_paths": [
+        "tests/test_loader.py"
+      ],
+      "timestamp": 1647378118
+    },
+    {
+      "commit_tree": "554c8d0fb61dac24efdce10f21e31d6681367b0e",
+      "committed_at": "2022-03-08T06:57:02-08:00",
+      "full_patch_bytes": 6047,
+      "full_patch_sha256": "32e13bb177107e0fbed5bbbe783fc027a9550ee384be131c2a90796251559f71",
+      "history_position": 108,
+      "order": 2,
+      "parent": "20eb7f5e33120f1717b78bdf85540ab75631187a",
+      "parent_tree": "abce210072c8825316c155ee9990cc0046c5f4fa",
+      "paths": [
+        "CHANGES.rst",
+        "src/jinja2/filters.py",
+        "tests/test_async_filters.py",
+        "tests/test_filters.py"
+      ],
+      "pr": 1465,
+      "pr_identity_provenance": "2-parent 'Merge pull request #N' subject; remote PR page not queried",
+      "pr_url": "https://github.com/pallets/jinja/pull/1465",
+      "python_test_paths": [
+        "tests/test_async_filters.py",
+        "tests/test_filters.py"
+      ],
+      "sha": "a12ad40d56302c90ccb72471ff34ad320c070ed0",
+      "source_python_paths": [
+        "src/jinja2/filters.py"
+      ],
+      "subject": "Merge pull request #1465 from wombatonfire/groupby-case-sensitive",
+      "task_id": "pr-1465",
+      "test_patch_bytes": 2116,
+      "test_patch_sha256": "3002847bf05e14693b374a18584c1642d948fc3a71a61f1541eeef6eea0974e5",
+      "test_paths": [
+        "tests/test_async_filters.py",
+        "tests/test_filters.py"
+      ],
+      "timestamp": 1646751422
+    },
+    {
+      "commit_tree": "abce210072c8825316c155ee9990cc0046c5f4fa",
+      "committed_at": "2022-03-07T09:36:04-08:00",
+      "full_patch_bytes": 2924,
+      "full_patch_sha256": "bdaa76aed1dfcdd7aea2ce251bac08f72e3d9110569d27c1a0892b5184aa8bbf",
+      "history_position": 109,
+      "order": 3,
+      "parent": "a819eb37bd182a4e668ab2299f303630df0d7973",
+      "parent_tree": "273500fdb8ce764fb84855c8b9ac3230cbed64f5",
+      "paths": [
+        "CHANGES.rst",
+        "src/jinja2/compiler.py",
+        "tests/test_async.py"
+      ],
+      "pr": 1614,
+      "pr_identity_provenance": "2-parent 'Merge pull request #N' subject; remote PR page not queried",
+      "pr_url": "https://github.com/pallets/jinja/pull/1614",
+      "python_test_paths": [
+        "tests/test_async.py"
+      ],
+      "sha": "20eb7f5e33120f1717b78bdf85540ab75631187a",
+      "source_python_paths": [
+        "src/jinja2/compiler.py"
+      ],
+      "subject": "Merge pull request #1614 from pallets/async-env-filter",
+      "task_id": "pr-1614",
+      "test_patch_bytes": 841,
+      "test_patch_sha256": "909e53e24cdb2cdd993aae11b726783fc5981ff54e2ad4f3026f4218301a06f7",
+      "test_paths": [
+        "tests/test_async.py"
+      ],
+      "timestamp": 1646674564
+    },
+    {
+      "commit_tree": "273500fdb8ce764fb84855c8b9ac3230cbed64f5",
+      "committed_at": "2022-03-07T08:32:45-08:00",
+      "full_patch_bytes": 2645,
+      "full_patch_sha256": "4b7e2d2ec20384f194bacfbe881cdba74ffa00ee32f82dc88b0f13ae0e71e0c1",
+      "history_position": 110,
+      "order": 4,
+      "parent": "d5b8f668f392710f80c3c62ad8b70ea7a8bbd44b",
+      "parent_tree": "b2266bd55ff5e2856bdf1a692fe7fea59ed70ae1",
+      "paths": [
+        "CHANGES.rst",
+        "src/jinja2/filters.py",
+        "tests/test_filters.py"
+      ],
+      "pr": 1564,
+      "pr_identity_provenance": "2-parent 'Merge pull request #N' subject; remote PR page not queried",
+      "pr_url": "https://github.com/pallets/jinja/pull/1564",
+      "python_test_paths": [
+        "tests/test_filters.py"
+      ],
+      "sha": "a819eb37bd182a4e668ab2299f303630df0d7973",
+      "source_python_paths": [
+        "src/jinja2/filters.py"
+      ],
+      "subject": "Merge pull request #1564 from pallets/feature/pairs",
+      "task_id": "pr-1564",
+      "test_patch_bytes": 769,
+      "test_patch_sha256": "89c5cc16bca1b611016c797e3f615eb560488c512ecf728f5e9359aec93ed04f",
+      "test_paths": [
+        "tests/test_filters.py"
+      ],
+      "timestamp": 1646670765
+    },
+    {
+      "commit_tree": "b2266bd55ff5e2856bdf1a692fe7fea59ed70ae1",
+      "committed_at": "2022-03-07T07:56:46-08:00",
+      "full_patch_bytes": 2014,
+      "full_patch_sha256": "a7bc71b3269e99318cb15afcfb0cded1375ab9879f311fd77d05e8af7466f628",
+      "history_position": 111,
+      "order": 5,
+      "parent": "09907ef37891be76ab0a1a3dc1a3f7df667db959",
+      "parent_tree": "c54ff068fdd157bf9a760e9a8263f8cb8d767c6a",
+      "paths": [
+        "CHANGES.rst",
+        "src/jinja2/async_utils.py",
+        "tests/test_pickle.py"
+      ],
+      "pr": 1613,
+      "pr_identity_provenance": "2-parent 'Merge pull request #N' subject; remote PR page not queried",
+      "pr_url": "https://github.com/pallets/jinja/pull/1613",
+      "python_test_paths": [
+        "tests/test_pickle.py"
+      ],
+      "sha": "d5b8f668f392710f80c3c62ad8b70ea7a8bbd44b",
+      "source_python_paths": [
+        "src/jinja2/async_utils.py"
+      ],
+      "subject": "Merge pull request #1613 from dairiki/bug.environment-not-pickleable",
+      "task_id": "pr-1613",
+      "test_patch_bytes": 378,
+      "test_patch_sha256": "8b9964cd837a0d916ac08ed1100f8102f7604795b0671a979505b34a63c4e435",
+      "test_paths": [
+        "tests/test_pickle.py"
+      ],
+      "timestamp": 1646668606
+    },
+    {
+      "commit_tree": "9cef366d29b3435e20fc78941cbab8acdea94d96",
+      "committed_at": "2021-12-26T11:55:30-07:00",
+      "full_patch_bytes": 6867,
+      "full_patch_sha256": "fc7d95a78f60618373519172c2eff06590817c122285fa29051db5a7b780f48b",
+      "history_position": 120,
+      "order": 6,
+      "parent": "896a62135bcc151f2997e028c5125bec2cb2431f",
+      "parent_tree": "dca4a04fa2f9fc5b78c215ea236a709ce5419041",
+      "paths": [
+        "CHANGES.rst",
+        "docs/templates.rst",
+        "src/jinja2/ext.py",
+        "tests/test_ext.py"
+      ],
+      "pr": 1559,
+      "pr_identity_provenance": "2-parent 'Merge pull request #N' subject; remote PR page not queried",
+      "pr_url": "https://github.com/pallets/jinja/pull/1559",
+      "python_test_paths": [
+        "tests/test_ext.py"
+      ],
+      "sha": "4f5c79ce06c29a79cfc685c6df538e4cf04fbb6c",
+      "source_python_paths": [
+        "src/jinja2/ext.py"
+      ],
+      "subject": "Merge pull request #1559 from pallets/i18n-context-block",
+      "task_id": "pr-1559",
+      "test_patch_bytes": 1752,
+      "test_patch_sha256": "e121b415983f15b79dd778924d7bfa837451e208b4063dfae08a53c81b5e79f3",
+      "test_paths": [
+        "tests/test_ext.py"
+      ],
+      "timestamp": 1640544930
+    },
+    {
+      "commit_tree": "9afc5d16acee5c2802df206c56e62849960869ad",
+      "committed_at": "2021-11-10T11:19:29-08:00",
+      "full_patch_bytes": 5228,
+      "full_patch_sha256": "2928af700236d8b051c57311b342ec2bc7d5829b31103096804d5cd8c053a683",
+      "history_position": 122,
+      "order": 7,
+      "parent": "b285d0c2e65f546d340b7cac75dbb9f74267bc23",
+      "parent_tree": "bc5a26bd5ca16687ae6c2711d8bf1ea1eaa7068a",
+      "paths": [
+        "CHANGES.rst",
+        "src/jinja2/compiler.py",
+        "src/jinja2/environment.py",
+        "src/jinja2/nativetypes.py",
+        "src/jinja2/runtime.py",
+        "tests/test_nativetypes.py"
+      ],
+      "pr": 1511,
+      "pr_identity_provenance": "2-parent 'Merge pull request #N' subject; remote PR page not queried",
+      "pr_url": "https://github.com/pallets/jinja/pull/1511",
+      "python_test_paths": [
+        "tests/test_nativetypes.py"
+      ],
+      "sha": "7d72eb7fefb7dce065193967f31f805180508448",
+      "source_python_paths": [
+        "src/jinja2/compiler.py",
+        "src/jinja2/environment.py",
+        "src/jinja2/nativetypes.py",
+        "src/jinja2/runtime.py"
+      ],
+      "subject": "Merge pull request #1511 from mkrizek/issue-1510",
+      "task_id": "pr-1511",
+      "test_patch_bytes": 573,
+      "test_patch_sha256": "b3a37ce6e91f5b288c22b769c342059ab22a749c3d8b0b3b8fcf32f8beafc60e",
+      "test_paths": [
+        "tests/test_nativetypes.py"
+      ],
+      "timestamp": 1636571969
+    },
+    {
+      "commit_tree": "3e761bf218204b366bf64e2b3f537adbcc09eb02",
+      "committed_at": "2021-04-11T23:58:46-07:00",
+      "full_patch_bytes": 8531,
+      "full_patch_sha256": "ffb91909b7888ca20f55d2a88ff11f1e813e48b05939c15dd15de8fd50b91c90",
+      "history_position": 168,
+      "order": 8,
+      "parent": "9d4689b04d53f233b8b9ab664edb2f7430d2bbde",
+      "parent_tree": "240f231e7ca27ae18fa35855ea3d4a4a7eddcca1",
+      "paths": [
+        "CHANGES.rst",
+        "docs/api.rst",
+        "src/jinja2/runtime.py",
+        "tests/test_regression.py"
+      ],
+      "pr": 1393,
+      "pr_identity_provenance": "2-parent 'Merge pull request #N' subject; remote PR page not queried",
+      "pr_url": "https://github.com/pallets/jinja/pull/1393",
+      "python_test_paths": [
+        "tests/test_regression.py"
+      ],
+      "sha": "06230b00223df9ca6fded118c53920000dd3a627",
+      "source_python_paths": [
+        "src/jinja2/runtime.py"
+      ],
+      "subject": "Merge pull request #1393 from pallets/deprecate-legacy-resolve",
+      "task_id": "pr-1393",
+      "test_patch_bytes": 907,
+      "test_patch_sha256": "1fd140e85b02afb9c98126202b89f4b0eabcc02f51b58a34a686dd7448aeeb0c",
+      "test_paths": [
+        "tests/test_regression.py"
+      ],
+      "timestamp": 1618210726
+    },
+    {
+      "commit_tree": "edc0f1c09e0e1f2e287d3e983de567c41a6f5414",
+      "committed_at": "2021-04-10T10:24:58-07:00",
+      "full_patch_bytes": 7173,
+      "full_patch_sha256": "364a589cd166d119d476541ffdad22163ecc0c9ccb673101872c0825fb471d41",
+      "history_position": 170,
+      "order": 9,
+      "parent": "39846a887b105497bd5aabc02f40a1e89f422c1f",
+      "parent_tree": "9441ab5c76b2fc97a90b6b7d563c267b830ba5c6",
+      "paths": [
+        "docs/api.rst",
+        "src/jinja2/__init__.py",
+        "src/jinja2/utils.py",
+        "tests/test_asyncfilters.py",
+        "tests/test_filters.py",
+        "tests/test_regression.py",
+        "tests/test_security.py",
+        "tests/test_tests.py"
+      ],
+      "pr": 1391,
+      "pr_identity_provenance": "2-parent 'Merge pull request #N' subject; remote PR page not queried",
+      "pr_url": "https://github.com/pallets/jinja/pull/1391",
+      "python_test_paths": [
+        "tests/test_asyncfilters.py",
+        "tests/test_filters.py",
+        "tests/test_regression.py",
+        "tests/test_security.py",
+        "tests/test_tests.py"
+      ],
+      "sha": "a9b06f4bd271de7f56347f602dd90b41c3db8327",
+      "source_python_paths": [
+        "src/jinja2/__init__.py",
+        "src/jinja2/utils.py"
+      ],
+      "subject": "Merge pull request #1391 from pallets/markupsafe-imports",
+      "task_id": "pr-1391",
+      "test_patch_bytes": 2418,
+      "test_patch_sha256": "cae6e2aab7f0df8f5a7cffb072f4f5a36153beebd148ed9f96c94c8ec840a2ee",
+      "test_paths": [
+        "tests/test_asyncfilters.py",
+        "tests/test_filters.py",
+        "tests/test_regression.py",
+        "tests/test_security.py",
+        "tests/test_tests.py"
+      ],
+      "timestamp": 1618075498
+    },
+    {
+      "commit_tree": "9441ab5c76b2fc97a90b6b7d563c267b830ba5c6",
+      "committed_at": "2021-04-10T10:19:30-07:00",
+      "full_patch_bytes": 51215,
+      "full_patch_sha256": "cd90749922d50f3ab44c9dd00598aecf63449766195682f5c53a27c3c694a0aa",
+      "history_position": 171,
+      "order": 10,
+      "parent": "94b381da2343423de0bac5ec90c6cf4497f213ce",
+      "parent_tree": "efdf39a48755fe168f20df8f6cbeae8745b08c91",
+      "paths": [
+        "CHANGES.rst",
+        "docs/api.rst",
+        "docs/faq.rst",
+        "src/jinja2/__init__.py",
+        "src/jinja2/asyncfilters.py",
+        "src/jinja2/compiler.py",
+        "src/jinja2/environment.py",
+        "src/jinja2/ext.py",
+        "src/jinja2/filters.py",
+        "src/jinja2/nodes.py",
+        "src/jinja2/runtime.py",
+        "src/jinja2/tests.py",
+        "src/jinja2/utils.py",
+        "tests/test_api.py",
+        "tests/test_ext.py",
+        "tests/test_regression.py",
+        "tests/test_runtime.py"
+      ],
+      "pr": 1389,
+      "pr_identity_provenance": "2-parent 'Merge pull request #N' subject; remote PR page not queried",
+      "pr_url": "https://github.com/pallets/jinja/pull/1389",
+      "python_test_paths": [
+        "tests/test_api.py",
+        "tests/test_ext.py",
+        "tests/test_regression.py",
+        "tests/test_runtime.py"
+      ],
+      "sha": "39846a887b105497bd5aabc02f40a1e89f422c1f",
+      "source_python_paths": [
+        "src/jinja2/__init__.py",
+        "src/jinja2/asyncfilters.py",
+        "src/jinja2/compiler.py",
+        "src/jinja2/environment.py",
+        "src/jinja2/ext.py",
+        "src/jinja2/filters.py",
+        "src/jinja2/nodes.py",
+        "src/jinja2/runtime.py",
+        "src/jinja2/tests.py",
+        "src/jinja2/utils.py"
+      ],
+      "subject": "Merge pull request #1389 from pallets/unify-decorators",
+      "task_id": "pr-1389",
+      "test_patch_bytes": 5861,
+      "test_patch_sha256": "1485db1af0475a1040b4a5d7e395600daa521261f0cf268858ea072a63c9017c",
+      "test_paths": [
+        "tests/test_api.py",
+        "tests/test_ext.py",
+        "tests/test_regression.py",
+        "tests/test_runtime.py"
+      ],
+      "timestamp": 1618075170
+    },
+    {
+      "commit_tree": "0c6bb6b23598c54f1332d58c2feae705a20d5f03",
+      "committed_at": "2021-04-05T14:44:37-07:00",
+      "full_patch_bytes": 3830,
+      "full_patch_sha256": "5b5c0eb6e0b49daa11ad68dc0b2f92c241c727479174ffc25d914ee04d4a5a69",
+      "history_position": 174,
+      "order": 11,
+      "parent": "4a941cab0ddff1ce58f4c6634e22a7659fd0648b",
+      "parent_tree": "2290132b1cd37183c1d97f449b3063009cdde224",
+      "paths": [
+        "CHANGES.rst",
+        "src/jinja2/asyncfilters.py",
+        "src/jinja2/filters.py",
+        "tests/test_filters.py"
+      ],
+      "pr": 1360,
+      "pr_identity_provenance": "2-parent 'Merge pull request #N' subject; remote PR page not queried",
+      "pr_url": "https://github.com/pallets/jinja/pull/1360",
+      "python_test_paths": [
+        "tests/test_filters.py"
+      ],
+      "sha": "c752dc81834ecfdc5635e4b5b24b9a74ed474def",
+      "source_python_paths": [
+        "src/jinja2/asyncfilters.py",
+        "src/jinja2/filters.py"
+      ],
+      "subject": "Merge pull request #1360 from lisongmin/add-default-value-to-groupby",
+      "task_id": "pr-1360",
+      "test_patch_bytes": 954,
+      "test_patch_sha256": "b90a47b0bf64d878dfc19f1693f5c8941cda43753b8ae1fba08f3ff88821d467",
+      "test_paths": [
+        "tests/test_filters.py"
+      ],
+      "timestamp": 1617659077
+    },
+    {
+      "commit_tree": "b7c6ce202b0302fcd5533b419fb8660071ce297b",
+      "committed_at": "2021-04-05T11:50:38-07:00",
+      "full_patch_bytes": 2200,
+      "full_patch_sha256": "55ac72b950a398cbf97a249c076cbe7d5a7e0e1912311c83f1a90e482ec7625f",
+      "history_position": 179,
+      "order": 12,
+      "parent": "59de6fbde98de6719758b773a77f0559756756b5",
+      "parent_tree": "4caa3755de45b32415443dff118000eeab74a169",
+      "paths": [
+        "CHANGES.rst",
+        "src/jinja2/lexer.py",
+        "tests/test_regression.py"
+      ],
+      "pr": 1366,
+      "pr_identity_provenance": "2-parent 'Merge pull request #N' subject; remote PR page not queried",
+      "pr_url": "https://github.com/pallets/jinja/pull/1366",
+      "python_test_paths": [
+        "tests/test_regression.py"
+      ],
+      "sha": "4abb2a0739195c697751f734d084d76272d12359",
+      "source_python_paths": [
+        "src/jinja2/lexer.py"
+      ],
+      "subject": "Merge pull request #1366 from mvolfik/fix-unicode-newlines",
+      "task_id": "pr-1366",
+      "test_patch_bytes": 592,
+      "test_patch_sha256": "daec5b9a506fb5c6eaca21ca08aa3d6ada1c62203ae47d0640ddbc01bd7cbe7c",
+      "test_paths": [
+        "tests/test_regression.py"
+      ],
+      "timestamp": 1617648638
+    },
+    {
+      "commit_tree": "4caa3755de45b32415443dff118000eeab74a169",
+      "committed_at": "2021-04-05T11:38:54-07:00",
+      "full_patch_bytes": 2482,
+      "full_patch_sha256": "c58b52cf07afccfaacbd567a4315f0af4474f9f0cf8ad3f3109226ec57ca5c93",
+      "history_position": 180,
+      "order": 13,
+      "parent": "06c7c6fee10b33162446dc87dd1d8cadb1d006d0",
+      "parent_tree": "8fd0fd3af53ddf34461d7e78a4bef6ebe55b4ad1",
+      "paths": [
+        "CHANGES.rst",
+        "src/jinja2/nativetypes.py",
+        "tests/test_async.py"
+      ],
+      "pr": 1363,
+      "pr_identity_provenance": "2-parent 'Merge pull request #N' subject; remote PR page not queried",
+      "pr_url": "https://github.com/pallets/jinja/pull/1363",
+      "python_test_paths": [
+        "tests/test_async.py"
+      ],
+      "sha": "59de6fbde98de6719758b773a77f0559756756b5",
+      "source_python_paths": [
+        "src/jinja2/nativetypes.py"
+      ],
+      "subject": "Merge pull request #1363 from remidebette/add-native-async-support",
+      "task_id": "pr-1363",
+      "test_patch_bytes": 1118,
+      "test_patch_sha256": "53716963ed704c22b9bb639d6a694cb6fe5f6a71115720f6f89d6ff96c8c8916",
+      "test_paths": [
+        "tests/test_async.py"
+      ],
+      "timestamp": 1617647934
+    },
+    {
+      "commit_tree": "8fd0fd3af53ddf34461d7e78a4bef6ebe55b4ad1",
+      "committed_at": "2021-04-05T10:53:57-07:00",
+      "full_patch_bytes": 1676,
+      "full_patch_sha256": "d81611faafd359deb3f6817a1f244f57e29d049de73559b0b0dc7ea1ffaa727a",
+      "history_position": 181,
+      "order": 14,
+      "parent": "139c3eee816ce24fdf94fc7f26a05a6623fb9831",
+      "parent_tree": "ef3b86f38d418b57140e78036b1477715261c562",
+      "paths": [
+        "CHANGES.rst",
+        "src/jinja2/runtime.py",
+        "tests/test_async.py"
+      ],
+      "pr": 1294,
+      "pr_identity_provenance": "2-parent 'Merge pull request #N' subject; remote PR page not queried",
+      "pr_url": "https://github.com/pallets/jinja/pull/1294",
+      "python_test_paths": [
+        "tests/test_async.py"
+      ],
+      "sha": "06c7c6fee10b33162446dc87dd1d8cadb1d006d0",
+      "source_python_paths": [
+        "src/jinja2/runtime.py"
+      ],
+      "subject": "Merge pull request #1294 from Jafnee/chainableundefined-aiter-bug",
+      "task_id": "pr-1294",
+      "test_patch_bytes": 827,
+      "test_patch_sha256": "cc0798ae634baa7ec81e1c3b8b41602f88cabda4abcaf63b23a141ee95611ac2",
+      "test_paths": [
+        "tests/test_async.py"
+      ],
+      "timestamp": 1617645237
+    },
+    {
+      "commit_tree": "ef3b86f38d418b57140e78036b1477715261c562",
+      "committed_at": "2021-04-05T10:46:24-07:00",
+      "full_patch_bytes": 1841,
+      "full_patch_sha256": "21d16d5755979cff4a6b4408d69ed6060f8b00700fa33a992542e040d64cd5a4",
+      "history_position": 182,
+      "order": 15,
+      "parent": "fd001b216a80a40cdc5c9afc6c863ed763095470",
+      "parent_tree": "a387deadf03ef2ebd43bb22e3ad16de776294ca5",
+      "paths": [
+        "CHANGES.rst",
+        "src/jinja2/runtime.py",
+        "tests/test_api.py"
+      ],
+      "pr": 1204,
+      "pr_identity_provenance": "2-parent 'Merge pull request #N' subject; remote PR page not queried",
+      "pr_url": "https://github.com/pallets/jinja/pull/1204",
+      "python_test_paths": [
+        "tests/test_api.py"
+      ],
+      "sha": "139c3eee816ce24fdf94fc7f26a05a6623fb9831",
+      "source_python_paths": [
+        "src/jinja2/runtime.py"
+      ],
+      "subject": "Merge pull request #1204 from dparker2/undefined-contains",
+      "task_id": "pr-1204",
+      "test_patch_bytes": 655,
+      "test_patch_sha256": "31cfa493d04104d22058be065caaf8ab878870fe633fdbf3bcf1f4aeebaf2344",
+      "test_paths": [
+        "tests/test_api.py"
+      ],
+      "timestamp": 1617644784
+    },
+    {
+      "commit_tree": "a387deadf03ef2ebd43bb22e3ad16de776294ca5",
+      "committed_at": "2021-04-05T10:40:02-07:00",
+      "full_patch_bytes": 2363,
+      "full_patch_sha256": "5a39f98dcc06598daa8778c72a0526b86ce16d84495abc7cb0d5e6b987942f3e",
+      "history_position": 183,
+      "order": 16,
+      "parent": "1eb871fdc32cb90db54700281dd6f4b7aa9a4cad",
+      "parent_tree": "bebce5858eb21c8c4a9d2373199fde41a9c62e85",
+      "paths": [
+        "CHANGES.rst",
+        "src/jinja2/lexer.py",
+        "tests/test_lexnparse.py"
+      ],
+      "pr": 1171,
+      "pr_identity_provenance": "2-parent 'Merge pull request #N' subject; remote PR page not queried",
+      "pr_url": "https://github.com/pallets/jinja/pull/1171",
+      "python_test_paths": [
+        "tests/test_lexnparse.py"
+      ],
+      "sha": "fd001b216a80a40cdc5c9afc6c863ed763095470",
+      "source_python_paths": [
+        "src/jinja2/lexer.py"
+      ],
+      "subject": "Merge pull request #1171 from amykyta3/feature/base-integer-literals",
+      "task_id": "pr-1171",
+      "test_patch_bytes": 683,
+      "test_patch_sha256": "bef4093e21610d427a2ca749e0826dee52b7a9e7dd80aad8a2f7bfc2f56fb468",
+      "test_paths": [
+        "tests/test_lexnparse.py"
+      ],
+      "timestamp": 1617644402
+    },
+    {
+      "commit_tree": "e6647b3929df3a376aec6546fb15cee486742205",
+      "committed_at": "2021-04-05T09:53:29-07:00",
+      "full_patch_bytes": 2294,
+      "full_patch_sha256": "81a7405b566ef1449fed3b62c081be861022bd2ad74658715d781d9f5d5ebd58",
+      "history_position": 185,
+      "order": 17,
+      "parent": "7bea9193f48b6f8fac147ace7ca349a05e594af4",
+      "parent_tree": "8f8bfc703edf71102b6a845b719190669f462d5f",
+      "paths": [
+        "CHANGES.rst",
+        "src/jinja2/filters.py",
+        "tests/test_filters.py"
+      ],
+      "pr": 1167,
+      "pr_identity_provenance": "2-parent 'Merge pull request #N' subject; remote PR page not queried",
+      "pr_url": "https://github.com/pallets/jinja/pull/1167",
+      "python_test_paths": [
+        "tests/test_filters.py"
+      ],
+      "sha": "1b874db33754f72a12a26353b00b90291cf9714f",
+      "source_python_paths": [
+        "src/jinja2/filters.py"
+      ],
+      "subject": "Merge pull request #1167 from LarsKollstedt/allow_indent_with_generic_char",
+      "task_id": "pr-1167",
+      "test_patch_bytes": 588,
+      "test_patch_sha256": "478202d5827c75c6e42aec10c491e565079b321a4c294d34536351f66c8b59b8",
+      "test_paths": [
+        "tests/test_filters.py"
+      ],
+      "timestamp": 1617641609
+    },
+    {
+      "commit_tree": "45e4af2cbd10d8f9f569b8f19de0e05dec8e7ada",
+      "committed_at": "2021-04-05T13:57:00+02:00",
+      "full_patch_bytes": 13094,
+      "full_patch_sha256": "e629486b996451bc9538509abe7773b023d28ffa5f3d383a5438ab41c07e19e2",
+      "history_position": 187,
+      "order": 18,
+      "parent": "beabf304b0f9baa51729d25a9792844ad16675b3",
+      "parent_tree": "5b06d102ff40b6d7eba1d8b1369fa6415ccd60e4",
+      "paths": [
+        "CHANGES.rst",
+        "docs/extensions.rst",
+        "src/jinja2/ext.py",
+        "tests/test_ext.py"
+      ],
+      "pr": 1126,
+      "pr_identity_provenance": "2-parent 'Merge pull request #N' subject; remote PR page not queried",
+      "pr_url": "https://github.com/pallets/jinja/pull/1126",
+      "python_test_paths": [
+        "tests/test_ext.py"
+      ],
+      "sha": "43d422893065b3672b4c771edef02c50fd1c3866",
+      "source_python_paths": [
+        "src/jinja2/ext.py"
+      ],
+      "subject": "Merge pull request #1126 from imomaliev/pgettext-support",
+      "task_id": "pr-1126",
+      "test_patch_bytes": 5094,
+      "test_patch_sha256": "41faeddf8b1eede4007e539d28e5470f4f249108ecaad729b0dd9241d01dafcc",
+      "test_paths": [
+        "tests/test_ext.py"
+      ],
+      "timestamp": 1617623820
+    },
+    {
+      "commit_tree": "5b06d102ff40b6d7eba1d8b1369fa6415ccd60e4",
+      "committed_at": "2021-04-04T17:39:15-07:00",
+      "full_patch_bytes": 28621,
+      "full_patch_sha256": "5797c4c71aac157fb5b607dde62054eee8356b24559df8edeed964230e667065",
+      "history_position": 188,
+      "order": 19,
+      "parent": "af5d80e999944b6204e99a07940ae13382909efd",
+      "parent_tree": "32bc5e70d82b669a3459c0ef9f40dac2a78005ea",
+      "paths": [
+        "CHANGES.rst",
+        "docs/api.rst",
+        "src/jinja2/compiler.py",
+        "src/jinja2/environment.py",
+        "src/jinja2/nodes.py",
+        "src/jinja2/tests.py",
+        "tests/test_filters.py",
+        "tests/test_tests.py"
+      ],
+      "pr": 1383,
+      "pr_identity_provenance": "2-parent 'Merge pull request #N' subject; remote PR page not queried",
+      "pr_url": "https://github.com/pallets/jinja/pull/1383",
+      "python_test_paths": [
+        "tests/test_filters.py",
+        "tests/test_tests.py"
+      ],
+      "sha": "beabf304b0f9baa51729d25a9792844ad16675b3",
+      "source_python_paths": [
+        "src/jinja2/compiler.py",
+        "src/jinja2/environment.py",
+        "src/jinja2/nodes.py",
+        "src/jinja2/tests.py"
+      ],
+      "subject": "Merge pull request #1383 from pallets/test-decorators",
+      "task_id": "pr-1383",
+      "test_patch_bytes": 3763,
+      "test_patch_sha256": "8c6cb6a3e559f225b427d4cef3c01051078325d18289e8aaaf3535f4e36d8d0f",
+      "test_paths": [
+        "tests/test_filters.py",
+        "tests/test_tests.py"
+      ],
+      "timestamp": 1617583155
+    },
+    {
+      "commit_tree": "32bc5e70d82b669a3459c0ef9f40dac2a78005ea",
+      "committed_at": "2021-04-04T10:20:49-07:00",
+      "full_patch_bytes": 6420,
+      "full_patch_sha256": "c45ee462ebd5572bd476f082fc02371a7e615246694b8f9e4e71c9a7f5ebd73d",
+      "history_position": 189,
+      "order": 20,
+      "parent": "1c863d0447efb7e68e2593e7de3fec87670521cb",
+      "parent_tree": "213f237f74457032157b2e7e0a2df63d97e7324c",
+      "paths": [
+        "CHANGES.rst",
+        "src/jinja2/compiler.py",
+        "src/jinja2/runtime.py",
+        "tests/test_filters.py"
+      ],
+      "pr": 1248,
+      "pr_identity_provenance": "2-parent 'Merge pull request #N' subject; remote PR page not queried",
+      "pr_url": "https://github.com/pallets/jinja/pull/1248",
+      "python_test_paths": [
+        "tests/test_filters.py"
+      ],
+      "sha": "af5d80e999944b6204e99a07940ae13382909efd",
+      "source_python_paths": [
+        "src/jinja2/compiler.py",
+        "src/jinja2/runtime.py"
+      ],
+      "subject": "Merge pull request #1248 from MLH-Fellowship/test-for-filter",
+      "task_id": "pr-1248",
+      "test_patch_bytes": 2670,
+      "test_patch_sha256": "f9a4f53b5c2add4379257b5082df4e68200a2c42531de0b0102eaf03ddb8c820",
+      "test_paths": [
+        "tests/test_filters.py"
+      ],
+      "timestamp": 1617556849
+    },
+    {
+      "commit_tree": "213f237f74457032157b2e7e0a2df63d97e7324c",
+      "committed_at": "2021-03-31T17:21:21-07:00",
+      "full_patch_bytes": 14877,
+      "full_patch_sha256": "1e2ff01aa002c7d27ad937dda26735e8eab9dbb73f268e6ca345ff7486b32a94",
+      "history_position": 190,
+      "order": 21,
+      "parent": "40a312e80f4f1b25f201293c3f1a840a1b88191d",
+      "parent_tree": "793912318fec0fdb5afa6e02a1a998b962f15017",
+      "paths": [
+        "CHANGES.rst",
+        "docs/api.rst",
+        "src/jinja2/environment.py",
+        "tests/test_regression.py"
+      ],
+      "pr": 1374,
+      "pr_identity_provenance": "2-parent 'Merge pull request #N' subject; remote PR page not queried",
+      "pr_url": "https://github.com/pallets/jinja/pull/1374",
+      "python_test_paths": [
+        "tests/test_regression.py"
+      ],
+      "sha": "1c863d0447efb7e68e2593e7de3fec87670521cb",
+      "source_python_paths": [
+        "src/jinja2/environment.py"
+      ],
+      "subject": "Merge pull request #1374 from pallets/docs-globals",
+      "task_id": "pr-1374",
+      "test_patch_bytes": 2317,
+      "test_patch_sha256": "3c7635a10073e295c455fdfe26bf63178fa35f21f3ba8b835d28c02828775337",
+      "test_paths": [
+        "tests/test_regression.py"
+      ],
+      "timestamp": 1617236481
+    },
+    {
+      "commit_tree": "793912318fec0fdb5afa6e02a1a998b962f15017",
+      "committed_at": "2021-03-30T07:49:51-07:00",
+      "full_patch_bytes": 3110,
+      "full_patch_sha256": "fcb9636c342a0e09459613956d26a1d8bf8cccd881381ff392186edb112db2c0",
+      "history_position": 191,
+      "order": 22,
+      "parent": "f71f5ebab2e76c5ee6f5f705a2703f3891e762bc",
+      "parent_tree": "b92d20d7d0e5fefb8bc0a7b1a4e1e9b0e9e72a07",
+      "paths": [
+        "CHANGES.rst",
+        "src/jinja2/environment.py",
+        "tests/test_regression.py"
+      ],
+      "pr": 1244,
+      "pr_identity_provenance": "2-parent 'Merge pull request #N' subject; remote PR page not queried",
+      "pr_url": "https://github.com/pallets/jinja/pull/1244",
+      "python_test_paths": [
+        "tests/test_regression.py"
+      ],
+      "sha": "40a312e80f4f1b25f201293c3f1a840a1b88191d",
+      "source_python_paths": [
+        "src/jinja2/environment.py"
+      ],
+      "subject": "Merge pull request #1244 from MLH-Fellowship/cache-bugs",
+      "task_id": "pr-1244",
+      "test_patch_bytes": 1514,
+      "test_patch_sha256": "ff4010b12a33fbb86931bce4dd44fcbe7137e2447750a38218f767f63ebca658",
+      "test_paths": [
+        "tests/test_regression.py"
+      ],
+      "timestamp": 1617115791
+    },
+    {
+      "commit_tree": "b92d20d7d0e5fefb8bc0a7b1a4e1e9b0e9e72a07",
+      "committed_at": "2021-03-26T18:44:19-04:00",
+      "full_patch_bytes": 10271,
+      "full_patch_sha256": "dc27b19957e2e2f019ed6b9b1913aa33ff8901d8c35bce72fe54d97abe61306d",
+      "history_position": 192,
+      "order": 23,
+      "parent": "94ccd028ef1f3cd9eaec862d6a1d646d02a242bc",
+      "parent_tree": "d1b9a9ab6ad8892282096d794fa1343d05c29fdc",
+      "paths": [
+        "CHANGES.rst",
+        "src/jinja2/compiler.py",
+        "src/jinja2/runtime.py",
+        "tests/test_regression.py"
+      ],
+      "pr": 1242,
+      "pr_identity_provenance": "2-parent 'Merge pull request #N' subject; remote PR page not queried",
+      "pr_url": "https://github.com/pallets/jinja/pull/1242",
+      "python_test_paths": [
+        "tests/test_regression.py"
+      ],
+      "sha": "f71f5ebab2e76c5ee6f5f705a2703f3891e762bc",
+      "source_python_paths": [
+        "src/jinja2/compiler.py",
+        "src/jinja2/runtime.py"
+      ],
+      "subject": "Merge pull request #1242 from MLH-Fellowship/context-bug",
+      "task_id": "pr-1242",
+      "test_patch_bytes": 2915,
+      "test_patch_sha256": "229bf03eab39ff2d686b02e20f3f74cf0b3213e76937808034408599855345b6",
+      "test_paths": [
+        "tests/test_regression.py"
+      ],
+      "timestamp": 1616798659
+    },
+    {
+      "commit_tree": "b3a871c116173cce7bf3c3b999c0f85e10cfd01e",
+      "committed_at": "2021-02-24T17:18:38-08:00",
+      "full_patch_bytes": 2251,
+      "full_patch_sha256": "99b105bafaa571a2568923e9f245e5f5ef41ee8f17074790e43089eb6aa3cf17",
+      "history_position": 195,
+      "order": 24,
+      "parent": "ab9cd8c66426c753df7ea3a952ffa6f8f8619b2e",
+      "parent_tree": "446e41118c45bb24d4d5f23e7a48b258b04c0ad2",
+      "paths": [
+        "CHANGES.rst",
+        "src/jinja2/filters.py",
+        "tests/test_filters.py"
+      ],
+      "pr": 1356,
+      "pr_identity_provenance": "2-parent 'Merge pull request #N' subject; remote PR page not queried",
+      "pr_url": "https://github.com/pallets/jinja/pull/1356",
+      "python_test_paths": [
+        "tests/test_filters.py"
+      ],
+      "sha": "8ab9db26f36a976212debd02a7a46265fa6dd1c1",
+      "source_python_paths": [
+        "src/jinja2/filters.py"
+      ],
+      "subject": "Merge pull request #1356 from BALaka-18/map-filter-default",
+      "task_id": "pr-1356",
+      "test_patch_bytes": 1127,
+      "test_patch_sha256": "ac7c0606b2f51bf52f15c838f59bf9380f0dc8ca502dda5b451e090d5ce35ffe",
+      "test_paths": [
+        "tests/test_filters.py"
+      ],
+      "timestamp": 1614215918
+    },
+    {
+      "commit_tree": "2e2f459570955410815eb3a7765abaebbd25aed8",
+      "committed_at": "2021-01-30T22:55:14-08:00",
+      "full_patch_bytes": 16778,
+      "full_patch_sha256": "571cf437517ffa5f0f5576384aa6e9403a230d453ebfc724bcdf0fea72aff04a",
+      "history_position": 209,
+      "order": 25,
+      "parent": "2f41690b3ba0d0427ec5fc007a40575d95f057ae",
+      "parent_tree": "f28a19fad6bc6ac853e5b136616231ca5184c563",
+      "paths": [
+        "CHANGES.rst",
+        "docs/api.rst",
+        "src/jinja2/defaults.py",
+        "src/jinja2/filters.py",
+        "src/jinja2/utils.py",
+        "tests/test_filters.py",
+        "tests/test_regression.py"
+      ],
+      "pr": 1195,
+      "pr_identity_provenance": "2-parent 'Merge pull request #N' subject; remote PR page not queried",
+      "pr_url": "https://github.com/pallets/jinja/pull/1195",
+      "python_test_paths": [
+        "tests/test_filters.py",
+        "tests/test_regression.py"
+      ],
+      "sha": "f1b1caf00375c7088ea03cee6ed46dd7fe2c4589",
+      "source_python_paths": [
+        "src/jinja2/defaults.py",
+        "src/jinja2/filters.py",
+        "src/jinja2/utils.py"
+      ],
+      "subject": "Merge pull request #1195 from bebleo/add_mailto_link_support",
+      "task_id": "pr-1195",
+      "test_patch_bytes": 2754,
+      "test_patch_sha256": "27ca2b92824bf03b3ccd565119fc78785d6eea085e99a8271cd23a1b4bed61d4",
+      "test_paths": [
+        "tests/test_filters.py",
+        "tests/test_regression.py"
+      ],
+      "timestamp": 1612076114
+    },
+    {
+      "commit_tree": "2febcc5ce113bdecdb7f476a6860977923fe061f",
+      "committed_at": "2021-01-29T22:17:45-05:00",
+      "full_patch_bytes": 6447,
+      "full_patch_sha256": "5433217c831009dfa1bd41943a376d0b63760479d504591c4e98d123bcd012c3",
+      "history_position": 213,
+      "order": 26,
+      "parent": "35e8f0a09dd7c496de19b5b0ecc22e820fbe9b0b",
+      "parent_tree": "d2fe10c5e355c76a7972b1dc89acad4b3afdc820",
+      "paths": [
+        "CHANGES.rst",
+        "src/jinja2/ext.py",
+        "tests/test_ext.py",
+        "tests/test_regression.py"
+      ],
+      "pr": 1243,
+      "pr_identity_provenance": "2-parent 'Merge pull request #N' subject; remote PR page not queried",
+      "pr_url": "https://github.com/pallets/jinja/pull/1243",
+      "python_test_paths": [
+        "tests/test_ext.py",
+        "tests/test_regression.py"
+      ],
+      "sha": "b5a00c854ec16914bad97aaba1301c145746f85b",
+      "source_python_paths": [
+        "src/jinja2/ext.py"
+      ],
+      "subject": "Merge pull request #1243 from MLH-Fellowship/deprecate-extension",
+      "task_id": "pr-1243",
+      "test_patch_bytes": 4795,
+      "test_patch_sha256": "b9dabdedd60c6cc6add6322400953678f6bf192a036874857858ca90d62fb772",
+      "test_paths": [
+        "tests/test_ext.py",
+        "tests/test_regression.py"
+      ],
+      "timestamp": 1611976665
+    },
+    {
+      "commit_tree": "d2fe10c5e355c76a7972b1dc89acad4b3afdc820",
+      "committed_at": "2021-01-29T10:36:54-05:00",
+      "full_patch_bytes": 10789,
+      "full_patch_sha256": "bec58fb9a7942530d287ff25d820bb35dc2c9a39adba279cd825854a7906d30f",
+      "history_position": 214,
+      "order": 27,
+      "parent": "bc22a8b0d3453f880d7a8ae8b84e385d1c918b02",
+      "parent_tree": "c58a757d55198bc257a364e3715afc1460c4398e",
+      "paths": [
+        "CHANGES.rst",
+        "docs/templates.rst",
+        "src/jinja2/compiler.py",
+        "src/jinja2/nodes.py",
+        "src/jinja2/parser.py",
+        "tests/test_idtracking.py",
+        "tests/test_inheritance.py"
+      ],
+      "pr": 1233,
+      "pr_identity_provenance": "2-parent 'Merge pull request #N' subject; remote PR page not queried",
+      "pr_url": "https://github.com/pallets/jinja/pull/1233",
+      "python_test_paths": [
+        "tests/test_idtracking.py",
+        "tests/test_inheritance.py"
+      ],
+      "sha": "35e8f0a09dd7c496de19b5b0ecc22e820fbe9b0b",
+      "source_python_paths": [
+        "src/jinja2/compiler.py",
+        "src/jinja2/nodes.py",
+        "src/jinja2/parser.py"
+      ],
+      "subject": "Merge pull request #1233 from MLH-Fellowship/required-blocks",
+      "task_id": "pr-1233",
+      "test_patch_bytes": 6068,
+      "test_patch_sha256": "6cb907fe22f864ec3e058a3cd2420879f879c118eabcf8efe4e6f1ecb6566efe",
+      "test_paths": [
+        "tests/test_idtracking.py",
+        "tests/test_inheritance.py"
+      ],
+      "timestamp": 1611934614
+    },
+    {
+      "commit_tree": "9327f584db01a75e56da4766d4d828edac2a0e16",
+      "committed_at": "2020-10-31T19:09:22-07:00",
+      "full_patch_bytes": 3176,
+      "full_patch_sha256": "42556144db62c570bbe86bd2f5074bf7b646b94e08cb94007a77fa870d8d009c",
+      "history_position": 230,
+      "order": 28,
+      "parent": "27c65757b26bb5012df1a5ccab1340cd7d52f139",
+      "parent_tree": "421392cfe98e5b9e8408b9018741567fd8beb8bc",
+      "paths": [
+        "CHANGES.rst",
+        "src/jinja2/nodes.py",
+        "tests/test_asyncfilters.py"
+      ],
+      "pr": 1303,
+      "pr_identity_provenance": "2-parent 'Merge pull request #N' subject; remote PR page not queried",
+      "pr_url": "https://github.com/pallets/jinja/pull/1303",
+      "python_test_paths": [
+        "tests/test_asyncfilters.py"
+      ],
+      "sha": "1eca37ba6d55c57f837a2126a5e240fd596f2e6d",
+      "source_python_paths": [
+        "src/jinja2/nodes.py"
+      ],
+      "subject": "Merge pull request #1303 from gibson042/gh-1279-custom-async-filters",
+      "task_id": "pr-1303",
+      "test_patch_bytes": 1488,
+      "test_patch_sha256": "bba06dc21462ed08c82857b3a6da78253daf25c169de6197e47660a5d14f1441",
+      "test_paths": [
+        "tests/test_asyncfilters.py"
+      ],
+      "timestamp": 1604196562
+    },
+    {
+      "commit_tree": "2046b95d53a74b793dd54b7ea6e1b86724b93435",
+      "committed_at": "2020-06-22T10:34:40-07:00",
+      "full_patch_bytes": 8205,
+      "full_patch_sha256": "be4bdefb50e6efc342b487aca8c9860b15984251c2a45bd50b53e888d3b3d886",
+      "history_position": 250,
+      "order": 29,
+      "parent": "9b718ed3d26fc2f80ab58f3249b517a65db9cc7b",
+      "parent_tree": "350a8732bfa8c222e39c82640197b8f788df7a91",
+      "paths": [
+        "CHANGES.rst",
+        "docs/templates.rst",
+        "src/jinja2/lexer.py",
+        "tests/test_lexnparse.py"
+      ],
+      "pr": 1240,
+      "pr_identity_provenance": "2-parent 'Merge pull request #N' subject; remote PR page not queried",
+      "pr_url": "https://github.com/pallets/jinja/pull/1240",
+      "python_test_paths": [
+        "tests/test_lexnparse.py"
+      ],
+      "sha": "03c719f3ec4db9660aa4dea30bef9ac8e47aa933",
+      "source_python_paths": [
+        "src/jinja2/lexer.py"
+      ],
+      "subject": "Merge pull request #1240 from MLH-Fellowship/ignore-trim-blocks",
+      "task_id": "pr-1240",
+      "test_patch_bytes": 5326,
+      "test_patch_sha256": "de6813f3311b116f2275ec1998f5835bb7e3199b1d57b2515d6a854c32f7e896",
+      "test_paths": [
+        "tests/test_lexnparse.py"
+      ],
+      "timestamp": 1592847280
+    },
+    {
+      "commit_tree": "350a8732bfa8c222e39c82640197b8f788df7a91",
+      "committed_at": "2020-06-22T10:12:46-07:00",
+      "full_patch_bytes": 6804,
+      "full_patch_sha256": "7a68e4b5a0d66ebe844455dd61d1b0057d2b5705e2619988c880145b7ebbaf60",
+      "history_position": 251,
+      "order": 30,
+      "parent": "5eea6e49e09971f844f7a3b6812c7be167ee04c9",
+      "parent_tree": "a498b46418570fadfd9032c69c73b877b5e73df3",
+      "paths": [
+        "CHANGES.rst",
+        "src/jinja2/asyncsupport.py",
+        "src/jinja2/compiler.py",
+        "src/jinja2/environment.py",
+        "src/jinja2/runtime.py",
+        "tests/test_imports.py"
+      ],
+      "pr": 1241,
+      "pr_identity_provenance": "2-parent 'Merge pull request #N' subject; remote PR page not queried",
+      "pr_url": "https://github.com/pallets/jinja/pull/1241",
+      "python_test_paths": [
+        "tests/test_imports.py"
+      ],
+      "sha": "9b718ed3d26fc2f80ab58f3249b517a65db9cc7b",
+      "source_python_paths": [
+        "src/jinja2/asyncsupport.py",
+        "src/jinja2/compiler.py",
+        "src/jinja2/environment.py",
+        "src/jinja2/runtime.py"
+      ],
+      "subject": "Merge pull request #1241 from MLH-Fellowship/macros_with_globals",
+      "task_id": "pr-1241",
+      "test_patch_bytes": 1985,
+      "test_patch_sha256": "91d2794e7264f4743cf0d685fe110f3ae91b59e2175b5dcd8b4242ea1f48c539",
+      "test_paths": [
+        "tests/test_imports.py"
+      ],
+      "timestamp": 1592845966
+    },
+    {
+      "commit_tree": "a498b46418570fadfd9032c69c73b877b5e73df3",
+      "committed_at": "2020-06-15T11:08:47-07:00",
+      "full_patch_bytes": 2237,
+      "full_patch_sha256": "41f36485bfffdb97aa619b5054642be4785b4f9da81067f8293f3b02a9fbc2ba",
+      "history_position": 252,
+      "order": 31,
+      "parent": "8816c9335b3276f92aca45ee0f5a2aacc6465e26",
+      "parent_tree": "c54a4782a2b665b3613516652b121d6f506438ef",
+      "paths": [
+        "src/jinja2/sandbox.py",
+        "tests/test_security.py"
+      ],
+      "pr": 1238,
+      "pr_identity_provenance": "2-parent 'Merge pull request #N' subject; remote PR page not queried",
+      "pr_url": "https://github.com/pallets/jinja/pull/1238",
+      "python_test_paths": [
+        "tests/test_security.py"
+      ],
+      "sha": "5eea6e49e09971f844f7a3b6812c7be167ee04c9",
+      "source_python_paths": [
+        "src/jinja2/sandbox.py"
+      ],
+      "subject": "Merge pull request #1238 from MLH-Fellowship/1197-sandbox",
+      "task_id": "pr-1238",
+      "test_patch_bytes": 785,
+      "test_patch_sha256": "97ea5b6437d059c6c4478707467274592293e0e92f58a3cbf2a3bb3ca955dcaa",
+      "test_paths": [
+        "tests/test_security.py"
+      ],
+      "timestamp": 1592244527
+    },
+    {
+      "commit_tree": "3faf870963786755075d2332b9193dc74225f399",
+      "committed_at": "2020-03-30T13:03:04-07:00",
+      "full_patch_bytes": 4161,
+      "full_patch_sha256": "dffe5880cd023ec427275cc5030bd04aa618dec4676a5d0f503450f09ac6ff57",
+      "history_position": 276,
+      "order": 32,
+      "parent": "0a370316c6a4f0d034da5f90df5a671a32a8e376",
+      "parent_tree": "a291ea51000c3d9aa7d32776d96ce609b68473aa",
+      "paths": [
+        "CHANGES.rst",
+        "src/jinja2/loaders.py",
+        "tests/test_loader.py"
+      ],
+      "pr": 1169,
+      "pr_identity_provenance": "2-parent 'Merge pull request #N' subject; remote PR page not queried",
+      "pr_url": "https://github.com/pallets/jinja/pull/1169",
+      "python_test_paths": [
+        "tests/test_loader.py"
+      ],
+      "sha": "bff4893d5fb8a26ff38725609547189a897234b0",
+      "source_python_paths": [
+        "src/jinja2/loaders.py"
+      ],
+      "subject": "Merge pull request #1169 from asottile/pep_451",
+      "task_id": "pr-1169",
+      "test_patch_bytes": 1632,
+      "test_patch_sha256": "4bc6d245c6e15a70c29819887e5cada448d855ac6b307f10fda6d826d4bc8cbd",
+      "test_paths": [
+        "tests/test_loader.py"
+      ],
+      "timestamp": 1585598584
+    },
+    {
+      "commit_tree": "765abb527afdb0f10145df0ced49bda1743f517c",
+      "committed_at": "2020-01-08T12:09:37-08:00",
+      "full_patch_bytes": 2153,
+      "full_patch_sha256": "3b34ac7971a8e62657d866dd8537215a6b78760476b47c0adb8e12baacc99900",
+      "history_position": 299,
+      "order": 33,
+      "parent": "715f357abc1d3966f1059f59d7a0ae5a7b6b5905",
+      "parent_tree": "54d4a088f0a949c48d3ad182ce40ff57991bb986",
+      "paths": [
+        "CHANGES.rst",
+        "jinja2/exceptions.py",
+        "tests/test_debug.py"
+      ],
+      "pr": 1117,
+      "pr_identity_provenance": "2-parent 'Merge pull request #N' subject; remote PR page not queried",
+      "pr_url": "https://github.com/pallets/jinja/pull/1117",
+      "python_test_paths": [
+        "tests/test_debug.py"
+      ],
+      "sha": "8342180f3913daea28fcd6644a0ba4c69391b189",
+      "source_python_paths": [
+        "jinja2/exceptions.py"
+      ],
+      "subject": "Merge pull request #1117 from nvllsvm/fix_exc_pickle",
+      "task_id": "pr-1117",
+      "test_patch_bytes": 887,
+      "test_patch_sha256": "38347548e4d1bad7ba6014966915b4012d7c66b69fdd7561a33baa7b4d4fb9e1",
+      "test_paths": [
+        "tests/test_debug.py"
+      ],
+      "timestamp": 1578514177
+    },
+    {
+      "commit_tree": "d1fc038749766a946ff47d76d8aed7a5a11a888c",
+      "committed_at": "2019-12-05T13:50:42-08:00",
+      "full_patch_bytes": 9172,
+      "full_patch_sha256": "04af4c92cb92b07abdc2703a5fac4f38995708b60428fa6a2120c6560041c479",
+      "history_position": 303,
+      "order": 34,
+      "parent": "9176fbd8183ac491bfa9a69eb6d42b485c2749c6",
+      "parent_tree": "ef4fdd259fadaefa7e599d73db5991fa485020dd",
+      "paths": [
+        "CHANGES.rst",
+        "jinja2/environment.py",
+        "jinja2/exceptions.py",
+        "jinja2/runtime.py",
+        "tests/test_api.py"
+      ],
+      "pr": 1114,
+      "pr_identity_provenance": "2-parent 'Merge pull request #N' subject; remote PR page not queried",
+      "pr_url": "https://github.com/pallets/jinja/pull/1114",
+      "python_test_paths": [
+        "tests/test_api.py"
+      ],
+      "sha": "f81c74437e555d43529fd7746307d0dfd577f6c5",
+      "source_python_paths": [
+        "jinja2/environment.py",
+        "jinja2/exceptions.py",
+        "jinja2/runtime.py"
+      ],
+      "subject": "Merge pull request #1114 from pallets/import-undefined",
+      "task_id": "pr-1114",
+      "test_patch_bytes": 1649,
+      "test_patch_sha256": "de89a6bacfa1daf743cf8ec1c24fab476077c40ae51f896cf75f6e4917f2ee21",
+      "test_paths": [
+        "tests/test_api.py"
+      ],
+      "timestamp": 1575582642
+    },
+    {
+      "commit_tree": "23762a1ce74ed1a58b316a851c6f9ed66f33a3d7",
+      "committed_at": "2019-12-03T13:25:57-08:00",
+      "full_patch_bytes": 3556,
+      "full_patch_sha256": "ebcd8e7d1592a3e306171c3d6ce15351c2121768cbd1bc495608579f978a0ade",
+      "history_position": 305,
+      "order": 35,
+      "parent": "09ddf2db4362e461339c5122eb232512723eb126",
+      "parent_tree": "ac9bfcb5054297878b79b58a7a2d9cfa64f88924",
+      "paths": [
+        "CHANGES.rst",
+        "jinja2/debug.py",
+        "tests/test_debug.py"
+      ],
+      "pr": 1112,
+      "pr_identity_provenance": "2-parent 'Merge pull request #N' subject; remote PR page not queried",
+      "pr_url": "https://github.com/pallets/jinja/pull/1112",
+      "python_test_paths": [
+        "tests/test_debug.py"
+      ],
+      "sha": "28f12c020ea9628f72e13a658a9a6846743fa9c8",
+      "source_python_paths": [
+        "jinja2/debug.py"
+      ],
+      "subject": "Merge pull request #1112 from pallets/include-syntax-error-source",
+      "task_id": "pr-1112",
+      "test_patch_bytes": 1888,
+      "test_patch_sha256": "22193c99f9b487f7a9cb83a131b75387db3e8918df5c516b360d4ae9c6b32dc1",
+      "test_paths": [
+        "tests/test_debug.py"
+      ],
+      "timestamp": 1575408357
+    },
+    {
+      "commit_tree": "f2b56b225df8fe19b4e34f446aa87c0ac14c5888",
+      "committed_at": "2019-12-02T14:07:08-08:00",
+      "full_patch_bytes": 3977,
+      "full_patch_sha256": "1aa3487219355bce49fce316111b1dfc954c7cc6d601e788e83fb694cc66c851",
+      "history_position": 307,
+      "order": 36,
+      "parent": "41df8a503b9c18af5ede589e1bf09bf28e01e143",
+      "parent_tree": "875ea585675f89d0d53fc866c0490f5521cb960e",
+      "paths": [
+        "CHANGES.rst",
+        "jinja2/compiler.py",
+        "jinja2/nodes.py",
+        "tests/test_ext.py"
+      ],
+      "pr": 861,
+      "pr_identity_provenance": "2-parent 'Merge pull request #N' subject; remote PR page not queried",
+      "pr_url": "https://github.com/pallets/jinja/pull/861",
+      "python_test_paths": [
+        "tests/test_ext.py"
+      ],
+      "sha": "06238a9dba2f80c17c94b487972aeaa111027de4",
+      "source_python_paths": [
+        "jinja2/compiler.py",
+        "jinja2/nodes.py"
+      ],
+      "subject": "Merge pull request #861 from OddBloke/contextreference_locals",
+      "task_id": "pr-861",
+      "test_patch_bytes": 2330,
+      "test_patch_sha256": "2da5a08c76e3c4c3a93b24e59c4c69283d081f8f0ed61681e7ff6c2975bfeb5b",
+      "test_paths": [
+        "tests/test_ext.py"
+      ],
+      "timestamp": 1575324428
+    },
+    {
+      "commit_tree": "875ea585675f89d0d53fc866c0490f5521cb960e",
+      "committed_at": "2019-12-02T13:07:56-08:00",
+      "full_patch_bytes": 30144,
+      "full_patch_sha256": "632ea592ad0b5b729c29211a1999d988d0b0616bbde45eab34c809e539769337",
+      "history_position": 308,
+      "order": 37,
+      "parent": "6c1a62f7776edac2e4402ceafa0e6d9ba12bcedd",
+      "parent_tree": "27ef51bb35b5d1f224f58be8e519c67f6a12f3fa",
+      "paths": [
+        "CHANGES.rst",
+        "jinja2/asyncsupport.py",
+        "jinja2/debug.py",
+        "jinja2/environment.py",
+        "jinja2/nativetypes.py",
+        "tests/test_debug.py"
+      ],
+      "pr": 1110,
+      "pr_identity_provenance": "2-parent 'Merge pull request #N' subject; remote PR page not queried",
+      "pr_url": "https://github.com/pallets/jinja/pull/1110",
+      "python_test_paths": [
+        "tests/test_debug.py"
+      ],
+      "sha": "41df8a503b9c18af5ede589e1bf09bf28e01e143",
+      "source_python_paths": [
+        "jinja2/asyncsupport.py",
+        "jinja2/debug.py",
+        "jinja2/environment.py",
+        "jinja2/nativetypes.py"
+      ],
+      "subject": "Merge pull request #1110 from pallets/patch-traceback",
+      "task_id": "pr-1110",
+      "test_patch_bytes": 649,
+      "test_patch_sha256": "a34713d8a46723d4695aaad85cbba65b66159445aad3b31cc034641f11e74dc9",
+      "test_paths": [
+        "tests/test_debug.py"
+      ],
+      "timestamp": 1575320876
+    },
+    {
+      "commit_tree": "27ef51bb35b5d1f224f58be8e519c67f6a12f3fa",
+      "committed_at": "2019-11-20T14:44:22-08:00",
+      "full_patch_bytes": 23090,
+      "full_patch_sha256": "0c3921095bc9caa88a19d5bfbdb61be19f13edaf253b6ee1e2c77d2e134f7f4e",
+      "history_position": 309,
+      "order": 38,
+      "parent": "5d33f673ce261220b0a39b1c7a07e0f3bc6f8c64",
+      "parent_tree": "84e6654a720f17b85458120c08e457b4e1863281",
+      "paths": [
+        "jinja2/compiler.py",
+        "jinja2/nativetypes.py",
+        "jinja2/runtime.py",
+        "tests/test_api.py",
+        "tests/test_async.py"
+      ],
+      "pr": 1109,
+      "pr_identity_provenance": "2-parent 'Merge pull request #N' subject; remote PR page not queried",
+      "pr_url": "https://github.com/pallets/jinja/pull/1109",
+      "python_test_paths": [
+        "tests/test_api.py",
+        "tests/test_async.py"
+      ],
+      "sha": "6c1a62f7776edac2e4402ceafa0e6d9ba12bcedd",
+      "source_python_paths": [
+        "jinja2/compiler.py",
+        "jinja2/nativetypes.py",
+        "jinja2/runtime.py"
+      ],
+      "subject": "Merge pull request #1109 from pallets/visit-output-refactor",
+      "task_id": "pr-1109",
+      "test_patch_bytes": 3009,
+      "test_patch_sha256": "77a59b6e9c805f1af31c540bb87e71e5d246eb0eda267a22d2b40035263b1e98",
+      "test_paths": [
+        "tests/test_api.py",
+        "tests/test_async.py"
+      ],
+      "timestamp": 1574289862
+    },
+    {
+      "commit_tree": "84e6654a720f17b85458120c08e457b4e1863281",
+      "committed_at": "2019-11-20T06:58:20-08:00",
+      "full_patch_bytes": 3173,
+      "full_patch_sha256": "21de506d388f9cea6a722dec81ea3a66802ad0164e8a1791070b675cf75d7584",
+      "history_position": 310,
+      "order": 39,
+      "parent": "c206cc987eb6521e718b84b18ffa8f9dab8266ae",
+      "parent_tree": "5187be16ef255ed0ef4bc2e259226ac91a60e622",
+      "paths": [
+        "CHANGES.rst",
+        "jinja2/nodes.py",
+        "tests/test_lexnparse.py"
+      ],
+      "pr": 1105,
+      "pr_identity_provenance": "2-parent 'Merge pull request #N' subject; remote PR page not queried",
+      "pr_url": "https://github.com/pallets/jinja/pull/1105",
+      "python_test_paths": [
+        "tests/test_lexnparse.py"
+      ],
+      "sha": "5d33f673ce261220b0a39b1c7a07e0f3bc6f8c64",
+      "source_python_paths": [
+        "jinja2/nodes.py"
+      ],
+      "subject": "Merge pull request #1105 from areebbeigh/issue-1102",
+      "task_id": "pr-1105",
+      "test_patch_bytes": 1840,
+      "test_patch_sha256": "2746f721de437b23bdfc3bad6bc2ebd1129a2d36075d98781c846684df4c987a",
+      "test_paths": [
+        "tests/test_lexnparse.py"
+      ],
+      "timestamp": 1574261900
+    },
+    {
+      "commit_tree": "da55a6740db12d7d4869d9c245fb10391a73777a",
+      "committed_at": "2019-11-08T07:13:53-08:00",
+      "full_patch_bytes": 22579,
+      "full_patch_sha256": "3d72bb3aade093db4a86b4a9694c7d5093fd2e775506b8d023f9dde70c123a50",
+      "history_position": 312,
+      "order": 40,
+      "parent": "d8820b95d60ecc6a7b3c9e0fc178573e62e2f012",
+      "parent_tree": "a7a3be312d396ed4126699686ecc6bf337d83817",
+      "paths": [
+        "CHANGES.rst",
+        "jinja2/asyncsupport.py",
+        "jinja2/compiler.py",
+        "jinja2/runtime.py",
+        "tests/test_async.py",
+        "tests/test_runtime.py"
+      ],
+      "pr": 1101,
+      "pr_identity_provenance": "2-parent 'Merge pull request #N' subject; remote PR page not queried",
+      "pr_url": "https://github.com/pallets/jinja/pull/1101",
+      "python_test_paths": [
+        "tests/test_async.py",
+        "tests/test_runtime.py"
+      ],
+      "sha": "540b260198285f0ed41fbe80c0b1b6f13be579c1",
+      "source_python_paths": [
+        "jinja2/asyncsupport.py",
+        "jinja2/compiler.py",
+        "jinja2/runtime.py"
+      ],
+      "subject": "Merge pull request #1101 from pallets/refactor-loop-context",
+      "task_id": "pr-1101",
+      "test_patch_bytes": 3428,
+      "test_patch_sha256": "57566eea47822cf55f75f15dc2ac30a0a81283556170cf504e760232a9e0bb52",
+      "test_paths": [
+        "tests/test_async.py",
+        "tests/test_runtime.py"
+      ],
+      "timestamp": 1573226033
+    },
+    {
+      "commit_tree": "a7a3be312d396ed4126699686ecc6bf337d83817",
+      "committed_at": "2019-11-04T08:50:13-08:00",
+      "full_patch_bytes": 5976,
+      "full_patch_sha256": "4e201aee4d35af1b060356953c9d50c9bb8e0be3fb4c7cc1c09daba8f0d5bb34",
+      "history_position": 313,
+      "order": 41,
+      "parent": "77aa538b6803a9c66509ba11d9e5099c70b4cb96",
+      "parent_tree": "794b20b5d7956aaf626c0b6252ada781335ff551",
+      "paths": [
+        "jinja2/filters.py",
+        "jinja2/utils.py",
+        "tests/test_filters.py"
+      ],
+      "pr": 1098,
+      "pr_identity_provenance": "2-parent 'Merge pull request #N' subject; remote PR page not queried",
+      "pr_url": "https://github.com/pallets/jinja/pull/1098",
+      "python_test_paths": [
+        "tests/test_filters.py"
+      ],
+      "sha": "d8820b95d60ecc6a7b3c9e0fc178573e62e2f012",
+      "source_python_paths": [
+        "jinja2/filters.py",
+        "jinja2/utils.py"
+      ],
+      "subject": "Merge pull request #1098 from pallets/urlencode-docs",
+      "task_id": "pr-1098",
+      "test_patch_bytes": 1751,
+      "test_patch_sha256": "546c32b5fbbe8f7c798a944f5b21cf0801603a5939158acfe873e7f596347c54",
+      "test_paths": [
+        "tests/test_filters.py"
+      ],
+      "timestamp": 1572886213
+    },
+    {
+      "commit_tree": "ad8b82315c29af901b16163fff242b890e8ab22a",
+      "committed_at": "2019-11-01T08:11:55-07:00",
+      "full_patch_bytes": 3857,
+      "full_patch_sha256": "be3722be53d7050e15bdbd018beffab208262a5a8a3f61f87d8d0df27e058eb6",
+      "history_position": 315,
+      "order": 42,
+      "parent": "5dcc676e88997352a8b1b5fbd7aa6b6f3bd1ee4f",
+      "parent_tree": "ccf5684e1509748f09e19147f0e99627053bead2",
+      "paths": [
+        "CHANGES.rst",
+        "jinja2/filters.py",
+        "tests/test_filters.py"
+      ],
+      "pr": 766,
+      "pr_identity_provenance": "2-parent 'Merge pull request #N' subject; remote PR page not queried",
+      "pr_url": "https://github.com/pallets/jinja/pull/766",
+      "python_test_paths": [
+        "tests/test_filters.py"
+      ],
+      "sha": "881c56b6c41fc8982fc778af027572134d23b818",
+      "source_python_paths": [
+        "jinja2/filters.py"
+      ],
+      "subject": "Merge pull request #766 from fheinle/palletes_jinja_175-wordwrap",
+      "task_id": "pr-766",
+      "test_patch_bytes": 680,
+      "test_patch_sha256": "9302008752dd32a6b091dd85a29290863cbb613e265605a618c6344358dbbe84",
+      "test_paths": [
+        "tests/test_filters.py"
+      ],
+      "timestamp": 1572621115
+    },
+    {
+      "commit_tree": "ccf5684e1509748f09e19147f0e99627053bead2",
+      "committed_at": "2019-11-01T06:22:27-07:00",
+      "full_patch_bytes": 1207,
+      "full_patch_sha256": "c51c2c8564a46485f72e1b1fedf8414040c32f7c540f0206a320eea23a509dea",
+      "history_position": 316,
+      "order": 43,
+      "parent": "abc6ac82b77a8931b7bbd6129c70129de5383040",
+      "parent_tree": "5e40af21be7fcb78413d7791fbc1f821297ff89f",
+      "paths": [
+        "jinja2/environment.py",
+        "tests/test_debug.py"
+      ],
+      "pr": 673,
+      "pr_identity_provenance": "2-parent 'Merge pull request #N' subject; remote PR page not queried",
+      "pr_url": "https://github.com/pallets/jinja/pull/673",
+      "python_test_paths": [
+        "tests/test_debug.py"
+      ],
+      "sha": "5dcc676e88997352a8b1b5fbd7aa6b6f3bd1ee4f",
+      "source_python_paths": [
+        "jinja2/environment.py"
+      ],
+      "subject": "Merge pull request #673 from MrSenko/get_corresponding_lineno_traceback",
+      "task_id": "pr-673",
+      "test_patch_bytes": 547,
+      "test_patch_sha256": "fdbbe541bea672732786a57bb68166929b5ecddf4f84f1de58a02e1c32b62a84",
+      "test_paths": [
+        "tests/test_debug.py"
+      ],
+      "timestamp": 1572614547
+    },
+    {
+      "commit_tree": "37ffa9cbba6d7172b3c0756801ff10065cf1a74f",
+      "committed_at": "2019-10-28T09:06:00-07:00",
+      "full_patch_bytes": 12369,
+      "full_patch_sha256": "6913f268db21f898294d1e7a48801c42d63d05f88b7d9246d524cb4310f3b84e",
+      "history_position": 318,
+      "order": 44,
+      "parent": "4c95c5f5f008ea057b2b59cdb1eadb813a5f70b2",
+      "parent_tree": "07887e8708f62b8a3c90cd887ce8416a4edfed33",
+      "paths": [
+        "CHANGES.rst",
+        "jinja2/environment.py",
+        "jinja2/nativetypes.py",
+        "tests/test_nativetypes.py"
+      ],
+      "pr": 1095,
+      "pr_identity_provenance": "2-parent 'Merge pull request #N' subject; remote PR page not queried",
+      "pr_url": "https://github.com/pallets/jinja/pull/1095",
+      "python_test_paths": [
+        "tests/test_nativetypes.py"
+      ],
+      "sha": "848809089cae513f66678802e5f12ef8b0693523",
+      "source_python_paths": [
+        "jinja2/environment.py",
+        "jinja2/nativetypes.py"
+      ],
+      "subject": "Merge pull request #1095 from pallets/native-template-env",
+      "task_id": "pr-1095",
+      "test_patch_bytes": 8400,
+      "test_patch_sha256": "8f03d5e85cc02e8ceeb0e70356e1f4525ac4bfc9b0cddd6fde85cd25eb88902e",
+      "test_paths": [
+        "tests/test_nativetypes.py"
+      ],
+      "timestamp": 1572278760
+    },
+    {
+      "commit_tree": "68d72a47347bddbe5a24f12adf6cef9a8c800462",
+      "committed_at": "2019-10-24T08:00:39-07:00",
+      "full_patch_bytes": 2391,
+      "full_patch_sha256": "df0226c08a5d1c5f49ad132493e2c080fc4e88b94ce60579b404009fcb4f9aa7",
+      "history_position": 320,
+      "order": 45,
+      "parent": "81825095d24f4dbccb40f787fff70db54989b91c",
+      "parent_tree": "98ff63fb43587471856a954b4d4a1e4b44f5d0b9",
+      "paths": [
+        "CHANGES.rst",
+        "jinja2/utils.py",
+        "tests/test_utils.py"
+      ],
+      "pr": 1090,
+      "pr_identity_provenance": "2-parent 'Merge pull request #N' subject; remote PR page not queried",
+      "pr_url": "https://github.com/pallets/jinja/pull/1090",
+      "python_test_paths": [
+        "tests/test_utils.py"
+      ],
+      "sha": "9a7dd7b28b50fd8adc019ab2702b50ae5c6ed782",
+      "source_python_paths": [
+        "jinja2/utils.py"
+      ],
+      "subject": "Merge pull request #1090 from pallets/lrucache-copy",
+      "task_id": "pr-1090",
+      "test_patch_bytes": 1339,
+      "test_patch_sha256": "3c8efceabd8935c70e992f826f16ebf189a9babc5e695c8b5c33acfd5adee6ec",
+      "test_paths": [
+        "tests/test_utils.py"
+      ],
+      "timestamp": 1571929239
+    },
+    {
+      "commit_tree": "4e91df56e1310f993f143a0ec6d8598a4c510af0",
+      "committed_at": "2019-10-22T13:33:24-07:00",
+      "full_patch_bytes": 5321,
+      "full_patch_sha256": "d1df754282e7513bc2dd2048ec2c052be8db833f56a7c52f1cb98a53ce829aa6",
+      "history_position": 323,
+      "order": 46,
+      "parent": "afd6c48308afb95d7fbab22ef49dd070f056f174",
+      "parent_tree": "ded34f78b7391b32de8e7243476365ee2b5c409f",
+      "paths": [
+        "CHANGES.rst",
+        "jinja2/nativetypes.py",
+        "tests/test_nativetypes.py"
+      ],
+      "pr": 1086,
+      "pr_identity_provenance": "2-parent 'Merge pull request #N' subject; remote PR page not queried",
+      "pr_url": "https://github.com/pallets/jinja/pull/1086",
+      "python_test_paths": [
+        "tests/test_nativetypes.py"
+      ],
+      "sha": "6e50bbd9f741d71f32f511192577687b0000d95d",
+      "source_python_paths": [
+        "jinja2/nativetypes.py"
+      ],
+      "subject": "Merge pull request #1086 from pallets/native-string-literal",
+      "task_id": "pr-1086",
+      "test_patch_bytes": 1299,
+      "test_patch_sha256": "209aaf870460c7e461d0b8c3dcd924e5a50864d9e25decda24ffe8ba580ae357",
+      "test_paths": [
+        "tests/test_nativetypes.py"
+      ],
+      "timestamp": 1571776404
+    },
+    {
+      "commit_tree": "ded34f78b7391b32de8e7243476365ee2b5c409f",
+      "committed_at": "2019-10-21T07:41:01-07:00",
+      "full_patch_bytes": 8779,
+      "full_patch_sha256": "ae51be6e98e2d94356c8c534f99b0b6d006482cfc474940116ad9f6d37867d90",
+      "history_position": 324,
+      "order": 47,
+      "parent": "29d1ff41196c015c72b39d2f6ab75bf90b840070",
+      "parent_tree": "dd3d4abd0d42165b53fa5f62cf4c5aaa53b24a46",
+      "paths": [
+        "CHANGES.rst",
+        "jinja2/_compat.py",
+        "jinja2/loaders.py",
+        "tests/conftest.py",
+        "tests/res/templates/variable_encoding.txt",
+        "tests/test_loader.py"
+      ],
+      "pr": 1064,
+      "pr_identity_provenance": "2-parent 'Merge pull request #N' subject; remote PR page not queried",
+      "pr_url": "https://github.com/pallets/jinja/pull/1064",
+      "python_test_paths": [
+        "tests/conftest.py",
+        "tests/test_loader.py"
+      ],
+      "sha": "afd6c48308afb95d7fbab22ef49dd070f056f174",
+      "source_python_paths": [
+        "jinja2/_compat.py",
+        "jinja2/loaders.py"
+      ],
+      "subject": "Merge pull request #1064 from alexwlchan/support-pathlib",
+      "task_id": "pr-1064",
+      "test_patch_bytes": 5500,
+      "test_patch_sha256": "4c6ddc94fc3e668b75cba93af4d44236d62c610f1354f0ac19164f9b697e9c4a",
+      "test_paths": [
+        "tests/conftest.py",
+        "tests/res/templates/variable_encoding.txt",
+        "tests/test_loader.py"
+      ],
+      "timestamp": 1571668861
+    },
+    {
+      "commit_tree": "0c3e612f56f02825a5b968bf8bc6d8ff8601d98d",
+      "committed_at": "2019-10-17T11:17:24-07:00",
+      "full_patch_bytes": 10833,
+      "full_patch_sha256": "6700638bf98ccafed1cd74edd2715bae95b147d94d5a9acf5b9f561ec749b7a7",
+      "history_position": 328,
+      "order": 48,
+      "parent": "81b32242e5bdaa226bb8e4e7d67118d717fad005",
+      "parent_tree": "76873a0cd3cd93eb10aad5c6f46fa093efcc023c",
+      "paths": [
+        "CHANGES.rst",
+        "jinja2/loaders.py",
+        "tests/res/package.zip",
+        "tests/test_loader.py"
+      ],
+      "pr": 1082,
+      "pr_identity_provenance": "2-parent 'Merge pull request #N' subject; remote PR page not queried",
+      "pr_url": "https://github.com/pallets/jinja/pull/1082",
+      "python_test_paths": [
+        "tests/test_loader.py"
+      ],
+      "sha": "1949a5cf6cbe41b6b288e24100251ef5f53e32ee",
+      "source_python_paths": [
+        "jinja2/loaders.py"
+      ],
+      "subject": "Merge pull request #1082 from pallets/pkgutil-loader",
+      "task_id": "pr-1082",
+      "test_patch_bytes": 3701,
+      "test_patch_sha256": "513f7113e4feae65cb4be6ec0e412489d43e36b13b1373db1f2143e25cd5c952",
+      "test_paths": [
+        "tests/res/package.zip",
+        "tests/test_loader.py"
+      ],
+      "timestamp": 1571336244
+    },
+    {
+      "commit_tree": "76873a0cd3cd93eb10aad5c6f46fa093efcc023c",
+      "committed_at": "2019-10-14T09:16:59-07:00",
+      "full_patch_bytes": 4264,
+      "full_patch_sha256": "3983d9790b3939a494e5b08a7bebb05535314303ed71597ea62187e67bb50b2f",
+      "history_position": 329,
+      "order": 49,
+      "parent": "468b2df4c1ab7a20591135b0e16c1baec140c995",
+      "parent_tree": "898bc532ac641890443495f457b01a896d8f1be7",
+      "paths": [
+        "CHANGES.rst",
+        "jinja2/runtime.py",
+        "tests/test_runtime.py"
+      ],
+      "pr": 993,
+      "pr_identity_provenance": "2-parent 'Merge pull request #N' subject; remote PR page not queried",
+      "pr_url": "https://github.com/pallets/jinja/pull/993",
+      "python_test_paths": [
+        "tests/test_runtime.py"
+      ],
+      "sha": "81b32242e5bdaa226bb8e4e7d67118d717fad005",
+      "source_python_paths": [
+        "jinja2/runtime.py"
+      ],
+      "subject": "Merge pull request #993 from aayushuppal/loop_fix",
+      "task_id": "pr-993",
+      "test_patch_bytes": 1482,
+      "test_patch_sha256": "ff2ad05a1d6a3b0d248e5120a6f45502571fd9812062f111511d4d9c2ee09e0b",
+      "test_paths": [
+        "tests/test_runtime.py"
+      ],
+      "timestamp": 1571069819
+    },
+    {
+      "commit_tree": "0209e7b6b30c98acfe7cebe8f671eb509a9c468f",
+      "committed_at": "2019-10-13T10:00:36-07:00",
+      "full_patch_bytes": 3667,
+      "full_patch_sha256": "fc73f19f87e25d9222a871d39085fc19a483271d2cbf67ec35f57de449c5b4bd",
+      "history_position": 331,
+      "order": 50,
+      "parent": "464e4934d1788aa4a0f989a2494ca97129dcb7f9",
+      "parent_tree": "7f55206ad5b5ff17d8dfcec14f9cc7cb596841ba",
+      "paths": [
+        "CHANGES.rst",
+        "docs/templates.rst",
+        "jinja2/compiler.py",
+        "jinja2/runtime.py",
+        "tests/test_api.py"
+      ],
+      "pr": 1079,
+      "pr_identity_provenance": "2-parent 'Merge pull request #N' subject; remote PR page not queried",
+      "pr_url": "https://github.com/pallets/jinja/pull/1079",
+      "python_test_paths": [
+        "tests/test_api.py"
+      ],
+      "sha": "8146e45b30f3b555533000be9207a8e48385dfde",
+      "source_python_paths": [
+        "jinja2/compiler.py",
+        "jinja2/runtime.py"
+      ],
+      "subject": "Merge pull request #1079 from ThiefMaster/cond-expr-undefined",
+      "task_id": "pr-1079",
+      "test_patch_bytes": 538,
+      "test_patch_sha256": "d305b0c9212634545cc64155f49a03e9504440ec6cd406ff4370e83b097137b7",
+      "test_paths": [
+        "tests/test_api.py"
+      ],
+      "timestamp": 1570986036
+    },
+    {
+      "commit_tree": "7f55206ad5b5ff17d8dfcec14f9cc7cb596841ba",
+      "committed_at": "2019-10-13T06:48:54-07:00",
+      "full_patch_bytes": 2949,
+      "full_patch_sha256": "dc74576be279466b58e7fcafcd057bd4496ca9177742324f31e81b17f66b70fb",
+      "history_position": 332,
+      "order": 51,
+      "parent": "0687adfa865156ae5b3de55a873e5b5add4a7c4d",
+      "parent_tree": "6ae8ae02ee249d7ab7af255e6523d198dbcc8fa7",
+      "paths": [
+        "CHANGES.rst",
+        "jinja2/utils.py",
+        "tests/res/templates2/foo",
+        "tests/test_loader.py"
+      ],
+      "pr": 1081,
+      "pr_identity_provenance": "2-parent 'Merge pull request #N' subject; remote PR page not queried",
+      "pr_url": "https://github.com/pallets/jinja/pull/1081",
+      "python_test_paths": [
+        "tests/test_loader.py"
+      ],
+      "sha": "464e4934d1788aa4a0f989a2494ca97129dcb7f9",
+      "source_python_paths": [
+        "jinja2/utils.py"
+      ],
+      "subject": "Merge pull request #1081 from pallets/open-if-exists",
+      "task_id": "pr-1081",
+      "test_patch_bytes": 1365,
+      "test_patch_sha256": "a032fd0f58e97ec9bbb93564cbc0639934ada0525174919fae7cfe72649111f4",
+      "test_paths": [
+        "tests/res/templates2/foo",
+        "tests/test_loader.py"
+      ],
+      "timestamp": 1570974534
+    },
+    {
+      "commit_tree": "6ae8ae02ee249d7ab7af255e6523d198dbcc8fa7",
+      "committed_at": "2019-10-12T21:34:11-07:00",
+      "full_patch_bytes": 8833,
+      "full_patch_sha256": "3f9ba1be21fca49b25a6829bd6ab5d9743ef20d4b21ae907900f067165b09d59",
+      "history_position": 333,
+      "order": 52,
+      "parent": "636c7122d98f6ace18fc4860587ac3cc1b0bfb8e",
+      "parent_tree": "699cedfe82471edf1282ad4acf2e96db103615f2",
+      "paths": [
+        ".gitignore",
+        "CHANGES.rst",
+        "jinja2/compiler.py",
+        "tests/test_api.py"
+      ],
+      "pr": 1080,
+      "pr_identity_provenance": "2-parent 'Merge pull request #N' subject; remote PR page not queried",
+      "pr_url": "https://github.com/pallets/jinja/pull/1080",
+      "python_test_paths": [
+        "tests/test_api.py"
+      ],
+      "sha": "0687adfa865156ae5b3de55a873e5b5add4a7c4d",
+      "source_python_paths": [
+        "jinja2/compiler.py"
+      ],
+      "subject": "Merge pull request #1080 from pallets/no-finalize-template-data",
+      "task_id": "pr-1080",
+      "test_patch_bytes": 2928,
+      "test_patch_sha256": "f8dc21574e183dd9aa415a6a24390338e9a41002eda06702bfb192ad903f39d6",
+      "test_paths": [
+        "tests/test_api.py"
+      ],
+      "timestamp": 1570941251
+    },
+    {
+      "commit_tree": "1d7105e43b445c00b0742780ab777fd11e9065ce",
+      "committed_at": "2019-10-09T20:09:42-07:00",
+      "full_patch_bytes": 7282,
+      "full_patch_sha256": "27569fc140c8b79a1ef27d5fec400f704fe86addc48889f021f79fb5446842af",
+      "history_position": 336,
+      "order": 53,
+      "parent": "9aa8296781e885e06417c401cb5a8f1b9fee7f9c",
+      "parent_tree": "9079500e5194b070fa9bbfa07d755516f8813c4b",
+      "paths": [
+        "CHANGES.rst",
+        "jinja2/tests.py",
+        "tests/test_tests.py"
+      ],
+      "pr": 824,
+      "pr_identity_provenance": "2-parent 'Merge pull request #N' subject; remote PR page not queried",
+      "pr_url": "https://github.com/pallets/jinja/pull/824",
+      "python_test_paths": [
+        "tests/test_tests.py"
+      ],
+      "sha": "0b9d252a071b0b5a171e1308157da74aa079b9d8",
+      "source_python_paths": [
+        "jinja2/tests.py"
+      ],
+      "subject": "Merge pull request #824 from dagwieers/new-type-tests",
+      "task_id": "pr-824",
+      "test_patch_bytes": 5061,
+      "test_patch_sha256": "fea38e3e9acf87007b951c9a7d6c971ed2805933265cb729a55db4812970cf69",
+      "test_paths": [
+        "tests/test_tests.py"
+      ],
+      "timestamp": 1570676982
+    },
+    {
+      "commit_tree": "a22c506ffe8354689e6fbb6e58b3136907586259",
+      "committed_at": "2019-10-07T06:55:32-07:00",
+      "full_patch_bytes": 1275,
+      "full_patch_sha256": "4c28e06a1be280cbcaa9d716cc3d3b14429b759caab4533274e5fc75480eb991",
+      "history_position": 340,
+      "order": 54,
+      "parent": "c8b1b020c0b2703591212b5461a3fc71995a44f1",
+      "parent_tree": "badad5cbb8a0e991dbc50db01a763a4e530efebf",
+      "paths": [
+        "jinja2/compiler.py",
+        "tests/test_lexnparse.py"
+      ],
+      "pr": 938,
+      "pr_identity_provenance": "2-parent 'Merge pull request #N' subject; remote PR page not queried",
+      "pr_url": "https://github.com/pallets/jinja/pull/938",
+      "python_test_paths": [
+        "tests/test_lexnparse.py"
+      ],
+      "sha": "f1d199a84dbc8c47fc6eddbf0879254cd3449674",
+      "source_python_paths": [
+        "jinja2/compiler.py"
+      ],
+      "subject": "Merge pull request #938 from stevenorum/master",
+      "task_id": "pr-938",
+      "test_patch_bytes": 708,
+      "test_patch_sha256": "9f515afbb50861e4e8fdc99734faa3a361f40303eb65677b4f1c0a757dc8dd8f",
+      "test_paths": [
+        "tests/test_lexnparse.py"
+      ],
+      "timestamp": 1570456532
+    },
+    {
+      "commit_tree": "865f6c32f0b26098707cac1673e097096017aeeb",
+      "committed_at": "2019-10-04T19:17:41-07:00",
+      "full_patch_bytes": 13502,
+      "full_patch_sha256": "4d8ed9e81ea70a72c6c81c40a9fb54f6605bbdb555765cefb6f9ea67646cd253",
+      "history_position": 344,
+      "order": 55,
+      "parent": "496c81af81ed9ea2aaccc6537338ec1f723cbf5a",
+      "parent_tree": "b0f2747e9e29dbc2630ea546226a26a7803344e7",
+      "paths": [
+        "CHANGES.rst",
+        "docs/extensions.rst",
+        "docs/templates.rst",
+        "jinja2/ext.py",
+        "tests/test_ext.py"
+      ],
+      "pr": 983,
+      "pr_identity_provenance": "2-parent 'Merge pull request #N' subject; remote PR page not queried",
+      "pr_url": "https://github.com/pallets/jinja/pull/983",
+      "python_test_paths": [
+        "tests/test_ext.py"
+      ],
+      "sha": "3ea88fe752589c41a73d3808f1dd086fc12bb37b",
+      "source_python_paths": [
+        "jinja2/ext.py"
+      ],
+      "subject": "Merge pull request #983 from kevin-brown/pr/798",
+      "task_id": "pr-983",
+      "test_patch_bytes": 690,
+      "test_patch_sha256": "0065c4a121f777add6ba9222682ce54b8c90162c08baaadf26447c2a07b4783a",
+      "test_paths": [
+        "tests/test_ext.py"
+      ],
+      "timestamp": 1570241861
+    },
+    {
+      "commit_tree": "b0f2747e9e29dbc2630ea546226a26a7803344e7",
+      "committed_at": "2019-10-04T13:11:20-07:00",
+      "full_patch_bytes": 1723,
+      "full_patch_sha256": "73e83754cdb8688a19e55d074dd68258cc67d6913fd05166540d90af187c30f3",
+      "history_position": 345,
+      "order": 56,
+      "parent": "e68d9b870536d1d019b6f26750d4c68a89df25e3",
+      "parent_tree": "c29f9b194b1662e531d643e942d717f861e95d0e",
+      "paths": [
+        "jinja2/runtime.py",
+        "tests/test_regression.py"
+      ],
+      "pr": 1047,
+      "pr_identity_provenance": "2-parent 'Merge pull request #N' subject; remote PR page not queried",
+      "pr_url": "https://github.com/pallets/jinja/pull/1047",
+      "python_test_paths": [
+        "tests/test_regression.py"
+      ],
+      "sha": "496c81af81ed9ea2aaccc6537338ec1f723cbf5a",
+      "source_python_paths": [
+        "jinja2/runtime.py"
+      ],
+      "subject": "Merge pull request #1047 from lfdebrux/ldeb-bug-chainable_undefined_and_markup",
+      "task_id": "pr-1047",
+      "test_patch_bytes": 601,
+      "test_patch_sha256": "69725e7410c89840a639a35593f3bd6934879cccce67ce1087be62e1a1a9a962",
+      "test_paths": [
+        "tests/test_regression.py"
+      ],
+      "timestamp": 1570219880
+    },
+    {
+      "commit_tree": "95b86d603bbd79299dac373cf6b6f9f8d1f62f62",
+      "committed_at": "2019-10-04T12:01:37-07:00",
+      "full_patch_bytes": 1907,
+      "full_patch_sha256": "2e96b5532606f46f4c1ee20019f2268c4b450e43c6937226a5c18a0971526f03",
+      "history_position": 347,
+      "order": 57,
+      "parent": "544c2e95016ff32ecdcb02093eb279d120c5cf3d",
+      "parent_tree": "df526a5d06728a49c54ec2d95a000433a82dd2fc",
+      "paths": [
+        "CHANGES.rst",
+        "jinja2/filters.py",
+        "tests/test_filters.py"
+      ],
+      "pr": 828,
+      "pr_identity_provenance": "2-parent 'Merge pull request #N' subject; remote PR page not queried",
+      "pr_url": "https://github.com/pallets/jinja/pull/828",
+      "python_test_paths": [
+        "tests/test_filters.py"
+      ],
+      "sha": "f179cf8c715f378b1b9d5600c630a952e95536a9",
+      "source_python_paths": [
+        "jinja2/filters.py"
+      ],
+      "subject": "Merge pull request #828 from chamini2/trim-more",
+      "task_id": "pr-828",
+      "test_patch_bytes": 816,
+      "test_patch_sha256": "ccd4a02c11dae00dbb7eebbffb76efa201077e77cefedb6c81afd15bd2ca3729",
+      "test_paths": [
+        "tests/test_filters.py"
+      ],
+      "timestamp": 1570215697
+    },
+    {
+      "commit_tree": "f03955546a8890efc0f0b4a83b426862f9184c7c",
+      "committed_at": "2019-10-04T08:30:39-07:00",
+      "full_patch_bytes": 8910,
+      "full_patch_sha256": "a566a8a7123265c6bf87eb4a4fb67ee77379302e2867f75f87a8e4c7253a2f32",
+      "history_position": 350,
+      "order": 58,
+      "parent": "71133493b5b47035c9da8971f32a27dcdee1938b",
+      "parent_tree": "7d0475608a6f4f632f12e5f434b9abe55040feef",
+      "paths": [
+        "CHANGES.rst",
+        "jinja2/utils.py",
+        "tests/conftest.py",
+        "tests/test_api.py",
+        "tests/test_utils.py"
+      ],
+      "pr": 1000,
+      "pr_identity_provenance": "2-parent 'Merge pull request #N' subject; remote PR page not queried",
+      "pr_url": "https://github.com/pallets/jinja/pull/1000",
+      "python_test_paths": [
+        "tests/conftest.py",
+        "tests/test_api.py",
+        "tests/test_utils.py"
+      ],
+      "sha": "d3b976b7f8bf9e99b47feec92bdc00039a6c5c56",
+      "source_python_paths": [
+        "jinja2/utils.py"
+      ],
+      "subject": "Merge pull request #1000 from EtiennePelletier/fix_deadlock_improve_tests",
+      "task_id": "pr-1000",
+      "test_patch_bytes": 7102,
+      "test_patch_sha256": "ad5d70b22144b5f15b30352778e740cc5e69e63b087a02c7d2bf34bd39079bb0",
+      "test_paths": [
+        "tests/conftest.py",
+        "tests/test_api.py",
+        "tests/test_utils.py"
+      ],
+      "timestamp": 1570203039
+    },
+    {
+      "commit_tree": "f1c8a8362ec308e11ed860e21d20efa72fd8e73b",
+      "committed_at": "2019-07-23T11:11:28-07:00",
+      "full_patch_bytes": 8415,
+      "full_patch_sha256": "ac2e83f0bcb112cbcf4a30f0e6cab9d101442c8c9689db97042f2da6389d4742",
+      "history_position": 361,
+      "order": 59,
+      "parent": "278a0574f70ae05df9592a22096620e9a59546ea",
+      "parent_tree": "178cb43eb7b30f40616ef0032e8cbec6a3f70bb8",
+      "paths": [
+        "CHANGES.rst",
+        "docs/templates.rst",
+        "jinja2/lexer.py",
+        "tests/test_filters.py",
+        "tests/test_lexnparse.py"
+      ],
+      "pr": 923,
+      "pr_identity_provenance": "2-parent 'Merge pull request #N' subject; remote PR page not queried",
+      "pr_url": "https://github.com/pallets/jinja/pull/923",
+      "python_test_paths": [
+        "tests/test_filters.py",
+        "tests/test_lexnparse.py"
+      ],
+      "sha": "8e3c0e773913299180317873898c460eb1fecd26",
+      "source_python_paths": [
+        "jinja2/lexer.py"
+      ],
+      "subject": "Merge pull request #923 from CleoQc/feature/long_integer_with_underscores",
+      "task_id": "pr-923",
+      "test_patch_bytes": 4487,
+      "test_patch_sha256": "96257f870144db0e83cd499331062ef1db22a71821c15a23923fe9386991239a",
+      "test_paths": [
+        "tests/test_filters.py",
+        "tests/test_lexnparse.py"
+      ],
+      "timestamp": 1563905488
+    },
+    {
+      "commit_tree": "178cb43eb7b30f40616ef0032e8cbec6a3f70bb8",
+      "committed_at": "2019-07-23T08:35:15-07:00",
+      "full_patch_bytes": 5594,
+      "full_patch_sha256": "ad8f9a992752de5cde460dc005316dc647dab169520b7bf28ae3943f0f319935",
+      "history_position": 362,
+      "order": 60,
+      "parent": "626bdd08d4a6b878f6291a64eceb099f39a808a8",
+      "parent_tree": "5d854e93baa315a751b07ab3e513cb4c2bcab82e",
+      "paths": [
+        "CHANGES.rst",
+        "docs/templates.rst",
+        "jinja2/lexer.py",
+        "tests/test_filters.py",
+        "tests/test_lexnparse.py"
+      ],
+      "pr": 922,
+      "pr_identity_provenance": "2-parent 'Merge pull request #N' subject; remote PR page not queried",
+      "pr_url": "https://github.com/pallets/jinja/pull/922",
+      "python_test_paths": [
+        "tests/test_filters.py",
+        "tests/test_lexnparse.py"
+      ],
+      "sha": "278a0574f70ae05df9592a22096620e9a59546ea",
+      "source_python_paths": [
+        "jinja2/lexer.py"
+      ],
+      "subject": "Merge pull request #922 from CleoQc/feature/support_scientific_notation",
+      "task_id": "pr-922",
+      "test_patch_bytes": 2358,
+      "test_patch_sha256": "80f67f31c91f473a96f2ac26059b69dd84d8ce649ca422b1409f71a6ad05d064",
+      "test_paths": [
+        "tests/test_filters.py",
+        "tests/test_lexnparse.py"
+      ],
+      "timestamp": 1563896115
+    },
+    {
+      "commit_tree": "0845a7c3cc3a9875843d7f25819c5c1f6000bd4b",
+      "committed_at": "2019-07-22T10:46:50-07:00",
+      "full_patch_bytes": 1827,
+      "full_patch_sha256": "9e0fb86d8d825a523088ecfb27b7c57f47bb10aaaddd84bf7adc71e06c1b4ef4",
+      "history_position": 364,
+      "order": 61,
+      "parent": "c5f1fd328bc01bbddab5a6c37625738533f9b1ed",
+      "parent_tree": "d3ab679fe9001650472bc876cbf2f902b13790fb",
+      "paths": [
+        "CHANGES.rst",
+        "jinja2/meta.py",
+        "tests/test_api.py"
+      ],
+      "pr": 994,
+      "pr_identity_provenance": "2-parent 'Merge pull request #N' subject; remote PR page not queried",
+      "pr_url": "https://github.com/pallets/jinja/pull/994",
+      "python_test_paths": [
+        "tests/test_api.py"
+      ],
+      "sha": "2e950f0f5f1b4113c1f0d4f90e641b136674e2af",
+      "source_python_paths": [
+        "jinja2/meta.py"
+      ],
+      "subject": "Merge pull request #994 from bkiu/931-undeclared-variables",
+      "task_id": "pr-994",
+      "test_patch_bytes": 683,
+      "test_patch_sha256": "2113bc33f9b7babe8a69d56242e9c00e184c3b1799cefae6ae0590af19bcab0c",
+      "test_paths": [
+        "tests/test_api.py"
+      ],
+      "timestamp": 1563817610
+    },
+    {
+      "commit_tree": "33e5a12e1302e5696416bfa278490b55ec4cd9af",
+      "committed_at": "2019-07-22T07:42:04-07:00",
+      "full_patch_bytes": 5067,
+      "full_patch_sha256": "97c86b49614a250eb136ee70bc8f907bcfda7831da88ebe90f978954cbdfb210",
+      "history_position": 367,
+      "order": 62,
+      "parent": "f76c3edf2b2bf9021877893e065c91c2504f756d",
+      "parent_tree": "9f50cb8c87cfa62a6db1c03c1b4e31d99e7ac374",
+      "paths": [
+        "CHANGES.rst",
+        "jinja2/filters.py",
+        "tests/test_filters.py"
+      ],
+      "pr": 1018,
+      "pr_identity_provenance": "2-parent 'Merge pull request #N' subject; remote PR page not queried",
+      "pr_url": "https://github.com/pallets/jinja/pull/1018",
+      "python_test_paths": [
+        "tests/test_filters.py"
+      ],
+      "sha": "52c45df29239b2f4f368d361801b9d315670df60",
+      "source_python_paths": [
+        "jinja2/filters.py"
+      ],
+      "subject": "Merge pull request #1018 from kbiggers/jinja/557",
+      "task_id": "pr-1018",
+      "test_patch_bytes": 1260,
+      "test_patch_sha256": "4cac3a2a335de64ebf654c4a43156c169219b113faf7450a1028e66339632530",
+      "test_paths": [
+        "tests/test_filters.py"
+      ],
+      "timestamp": 1563806524
+    },
+    {
+      "commit_tree": "9f50cb8c87cfa62a6db1c03c1b4e31d99e7ac374",
+      "committed_at": "2019-07-20T14:23:53-07:00",
+      "full_patch_bytes": 4943,
+      "full_patch_sha256": "38c34e02abcd67f4458d0c760f6602b53d2d073fb089c1948c7489bf8e2552e9",
+      "history_position": 368,
+      "order": 63,
+      "parent": "55cb0e73e6d956652e81a5a9add06727b44a1457",
+      "parent_tree": "4343b827e16b16c011484064da2d5233f8e20bf0",
+      "paths": [
+        "CHANGES.rst",
+        "jinja2/lexer.py",
+        "tests/test_lexnparse.py"
+      ],
+      "pr": 1014,
+      "pr_identity_provenance": "2-parent 'Merge pull request #N' subject; remote PR page not queried",
+      "pr_url": "https://github.com/pallets/jinja/pull/1014",
+      "python_test_paths": [
+        "tests/test_lexnparse.py"
+      ],
+      "sha": "f76c3edf2b2bf9021877893e065c91c2504f756d",
+      "source_python_paths": [
+        "jinja2/lexer.py"
+      ],
+      "subject": "Merge pull request #1014 from markroth8/mroth/fix/748",
+      "task_id": "pr-1014",
+      "test_patch_bytes": 993,
+      "test_patch_sha256": "1f724f3f475285d3a5ed46fbfd9f939b578f61885c07bd5bf369eaeb705a6f27",
+      "test_paths": [
+        "tests/test_lexnparse.py"
+      ],
+      "timestamp": 1563657833
+    },
+    {
+      "commit_tree": "0029078badacc8dff2daf70a2bac54510ec5a76d",
+      "committed_at": "2019-06-24T20:32:11-04:00",
+      "full_patch_bytes": 1427,
+      "full_patch_sha256": "3560c94b8ebdfdfa31833a50488d3507b937dc339823b8ca6c9ad8630b4461fe",
+      "history_position": 375,
+      "order": 64,
+      "parent": "321b499778e6ec0739b8ddae3c472a9b26556e97",
+      "parent_tree": "a2adedbb77a0ecc01fc08ae04d7752d62a1fb59c",
+      "paths": [
+        "jinja2/parser.py",
+        "tests/test_regression.py"
+      ],
+      "pr": 1002,
+      "pr_identity_provenance": "2-parent 'Merge pull request #N' subject; remote PR page not queried",
+      "pr_url": "https://github.com/pallets/jinja/pull/1002",
+      "python_test_paths": [
+        "tests/test_regression.py"
+      ],
+      "sha": "88f2025e6e48cfe9e25dff14c2224dbbc5afcdb5",
+      "source_python_paths": [
+        "jinja2/parser.py"
+      ],
+      "subject": "Merge pull request #1002 from eplata31/bugfix-template-parse-if-with-dict-subproperty",
+      "task_id": "pr-1002",
+      "test_patch_bytes": 740,
+      "test_patch_sha256": "9b1decf50b5602c46bc9eb5e63f36f8598afc1da4d7361917fe7c00dfe7f698f",
+      "test_paths": [
+        "tests/test_regression.py"
+      ],
+      "timestamp": 1561422731
+    },
+    {
+      "commit_tree": "a2adedbb77a0ecc01fc08ae04d7752d62a1fb59c",
+      "committed_at": "2019-06-24T20:19:36-04:00",
+      "full_patch_bytes": 4782,
+      "full_patch_sha256": "44a58cc12e021c7c73a1b19ed9f5c302874f005fb90b6bb0d4ef9f08e15e705b",
+      "history_position": 376,
+      "order": 65,
+      "parent": "6ffe6cc9707a6fbf729b71eb3a23f15ef3b9c167",
+      "parent_tree": "4f276c591ac6bc8c3e1d48e200d5c2aa5f7036ac",
+      "paths": [
+        "jinja2/filters.py",
+        "tests/test_filters.py"
+      ],
+      "pr": 1013,
+      "pr_identity_provenance": "2-parent 'Merge pull request #N' subject; remote PR page not queried",
+      "pr_url": "https://github.com/pallets/jinja/pull/1013",
+      "python_test_paths": [
+        "tests/test_filters.py"
+      ],
+      "sha": "321b499778e6ec0739b8ddae3c472a9b26556e97",
+      "source_python_paths": [
+        "jinja2/filters.py"
+      ],
+      "subject": "Merge pull request #1013 from mayuropensource/jinja-670-sort-multi-attr",
+      "task_id": "pr-1013",
+      "test_patch_bytes": 2035,
+      "test_patch_sha256": "c417162136b216a5c3ea3560eeac7c778b4befbca0043b5d979cfc6750d51ae2",
+      "test_paths": [
+        "tests/test_filters.py"
+      ],
+      "timestamp": 1561421976
+    },
+    {
+      "commit_tree": "3e54d416a1f369a265dcffa5f085adbb5d9b8a31",
+      "committed_at": "2019-05-31T13:15:03-04:00",
+      "full_patch_bytes": 1919,
+      "full_patch_sha256": "e74eabb3f9e96a94b9fa5e89543af9703ba00d2dde0f8b2efc0bc052737af30e",
+      "history_position": 379,
+      "order": 66,
+      "parent": "30685be0896119b3d6cd0f3d5baa8a616cfb8e14",
+      "parent_tree": "2dda1e9a7079d1c0f43871fd44109bd8f65adaaa",
+      "paths": [
+        "jinja2/utils.py",
+        "tests/test_utils.py"
+      ],
+      "pr": 1008,
+      "pr_identity_provenance": "2-parent 'Merge pull request #N' subject; remote PR page not queried",
+      "pr_url": "https://github.com/pallets/jinja/pull/1008",
+      "python_test_paths": [
+        "tests/test_utils.py"
+      ],
+      "sha": "a486b37458f7712b331752ca851f3a333bebaffd",
+      "source_python_paths": [
+        "jinja2/utils.py"
+      ],
+      "subject": "Merge pull request #1008 from gokcegrbl/GH-999",
+      "task_id": "pr-1008",
+      "test_patch_bytes": 1030,
+      "test_patch_sha256": "f89f31fdc71530f1b90f169aa1990bdf27ef1b6b1b698757062630cc59d2a03a",
+      "test_paths": [
+        "tests/test_utils.py"
+      ],
+      "timestamp": 1559322903
+    },
+    {
+      "commit_tree": "a92f5b265e9508c4ab6f5a197b3a391e7e35b281",
+      "committed_at": "2019-05-08T10:47:33-04:00",
+      "full_patch_bytes": 7832,
+      "full_patch_sha256": "aa5d3fbc971ebf2a64c847778c2702712f607cfc15515b247c82b3b0570ee17c",
+      "history_position": 382,
+      "order": 67,
+      "parent": "9766c179fad831aa6aa2039882fadc7aff6bba2d",
+      "parent_tree": "e2ee4cb0b09530b72b6f8b2a67c5d9ecdac6736f",
+      "paths": [
+        ".gitignore",
+        "CHANGES.rst",
+        "docs/api.rst",
+        "jinja2/__init__.py",
+        "jinja2/filters.py",
+        "jinja2/runtime.py",
+        "tests/test_api.py"
+      ],
+      "pr": 997,
+      "pr_identity_provenance": "1-parent terminal '(#N)' subject; remote PR page not queried",
+      "pr_url": "https://github.com/pallets/jinja/pull/997",
+      "python_test_paths": [
+        "tests/test_api.py"
+      ],
+      "sha": "19133d40593ced72eb28e230588abcc70d8b9f82",
+      "source_python_paths": [
+        "jinja2/__init__.py",
+        "jinja2/filters.py",
+        "jinja2/runtime.py"
+      ],
+      "subject": "Add ChainableUndefined allowing getattr & getitem (#997)",
+      "task_id": "pr-997",
+      "test_patch_bytes": 2118,
+      "test_patch_sha256": "43068ef9cec635b0b2a4cf4bb821f484a61ae4ebda1a019acf0dc8dc499da5ca",
+      "test_paths": [
+        "tests/test_api.py"
+      ],
+      "timestamp": 1557326853
+    },
+    {
+      "commit_tree": "0dfcc54f900b8c013b5f9fc46edae5b845fae073",
+      "committed_at": "2019-02-18T08:14:47+01:00",
+      "full_patch_bytes": 2001,
+      "full_patch_sha256": "9893bbf7fff820825d46ee1443342476dd579b041c548ed602292e60a3729cf0",
+      "history_position": 388,
+      "order": 68,
+      "parent": "6e08416ce263d3d88cd95079b7c2f8f3bd9bccff",
+      "parent_tree": "02f847cf7c4b0906131be69c2f08aadf1a8c7d6f",
+      "paths": [
+        "jinja2/asyncfilters.py",
+        "tests/test_asyncfilters.py",
+        "tests/test_filters.py"
+      ],
+      "pr": 913,
+      "pr_identity_provenance": "1-parent terminal '(#N)' subject; remote PR page not queried",
+      "pr_url": "https://github.com/pallets/jinja/pull/913",
+      "python_test_paths": [
+        "tests/test_asyncfilters.py",
+        "tests/test_filters.py"
+      ],
+      "sha": "2b23cca8cf5fc72c8b5ad68bf0e48031e680dadf",
+      "source_python_paths": [
+        "jinja2/asyncfilters.py"
+      ],
+      "subject": "Await in async version of the map filter (#913)",
+      "task_id": "pr-913",
+      "test_patch_bytes": 1325,
+      "test_patch_sha256": "b3658b57ed24da724e2b07ce0ac17d4795a71c3e4512111176bee2f6fc3237c3",
+      "test_paths": [
+        "tests/test_asyncfilters.py",
+        "tests/test_filters.py"
+      ],
+      "timestamp": 1550474087
+    },
+    {
+      "commit_tree": "898e1a7e91fd1a0748445b9ee48def400d85324c",
+      "committed_at": "2018-05-14T11:21:27-04:00",
+      "full_patch_bytes": 2196,
+      "full_patch_sha256": "d2a91c9b579580c0a3085a319220bc7324c2ec57a83185db550fd19f8863b8e0",
+      "history_position": 406,
+      "order": 69,
+      "parent": "a1c5bcab0d0eb6ad5dac2f8adb994cb07de177bb",
+      "parent_tree": "1b6608b7178c2faa36aea6dd257582f7feeffc5c",
+      "paths": [
+        "jinja2/parser.py",
+        "tests/test_lexnparse.py"
+      ],
+      "pr": 802,
+      "pr_identity_provenance": "2-parent 'Merge pull request #N' subject; remote PR page not queried",
+      "pr_url": "https://github.com/pallets/jinja/pull/802",
+      "python_test_paths": [
+        "tests/test_lexnparse.py"
+      ],
+      "sha": "348234284270dc4f5d19f1783efda55979939b5d",
+      "source_python_paths": [
+        "jinja2/parser.py"
+      ],
+      "subject": "Merge pull request #802 from abadger/allow-more-splatting",
+      "task_id": "pr-802",
+      "test_patch_bytes": 1025,
+      "test_patch_sha256": "4932abd4b91ab9d751c0abaed3d33a6eff9fb6b5a30e373c1772a6006a708073",
+      "test_paths": [
+        "tests/test_lexnparse.py"
+      ],
+      "timestamp": 1526311287
+    },
+    {
+      "commit_tree": "2fc57ae32982c1d11808ab2d1b09b8c493aa294c",
+      "committed_at": "2018-03-22T11:59:02-07:00",
+      "full_patch_bytes": 3314,
+      "full_patch_sha256": "c536d285bd5759b84f000eaa83d9b05b9f8101e50ca48cc5aab7a019ac377bb2",
+      "history_position": 411,
+      "order": 70,
+      "parent": "34b1ab9f6ef25d392b7440eff1f1ffaff007bb6f",
+      "parent_tree": "3c490cf57c5220f4b6118ebb107380c35b1c851d",
+      "paths": [
+        ".gitignore",
+        "jinja2/filters.py",
+        "tests/test_filters.py"
+      ],
+      "pr": 826,
+      "pr_identity_provenance": "2-parent 'Merge pull request #N' subject; remote PR page not queried",
+      "pr_url": "https://github.com/pallets/jinja/pull/826",
+      "python_test_paths": [
+        "tests/test_filters.py"
+      ],
+      "sha": "3bb2ef8b83cd04bcd77361a4d6a86b3bf4f89529",
+      "source_python_paths": [
+        "jinja2/filters.py"
+      ],
+      "subject": "Merge pull request #826 from terminalmage/issue823",
+      "task_id": "pr-826",
+      "test_patch_bytes": 2102,
+      "test_patch_sha256": "cc5c10173690b6a532da777fb4229a9d180e10ee54d2cf808fad4ee762a68b58",
+      "test_paths": [
+        "tests/test_filters.py"
+      ],
+      "timestamp": 1521745142
+    },
+    {
+      "commit_tree": "1ed432d997c5a73505424f7fca1bc57c38adeccb",
+      "committed_at": "2018-01-23T08:31:30-08:00",
+      "full_patch_bytes": 1319,
+      "full_patch_sha256": "c88bbaf2d8ee5f6d84b7b2132ed807ac0e98fb448a49a2addb379c918532875e",
+      "history_position": 417,
+      "order": 71,
+      "parent": "1f60059729fb4a49bfa32780844047b631941669",
+      "parent_tree": "f1c00c74f38879e6895fd0ee9123f08c71700b27",
+      "paths": [
+        "jinja2/nativetypes.py",
+        "tests/test_nativetypes.py"
+      ],
+      "pr": 799,
+      "pr_identity_provenance": "2-parent 'Merge pull request #N' subject; remote PR page not queried",
+      "pr_url": "https://github.com/pallets/jinja/pull/799",
+      "python_test_paths": [
+        "tests/test_nativetypes.py"
+      ],
+      "sha": "96cd53d8fffb20863246357d54865f8b87ec625c",
+      "source_python_paths": [
+        "jinja2/nativetypes.py"
+      ],
+      "subject": "Merge pull request #799 from mkrizek/native-concat-list",
+      "task_id": "pr-799",
+      "test_patch_bytes": 610,
+      "test_patch_sha256": "4f3075bd78c6dfa251ca570db020b6e7aa97078405918685cde273d875db74d3",
+      "test_paths": [
+        "tests/test_nativetypes.py"
+      ],
+      "timestamp": 1516725090
+    },
+    {
+      "commit_tree": "9849547dc73a20fc6ce914b9ee3b075a771e22f1",
+      "committed_at": "2017-10-31T12:16:10-07:00",
+      "full_patch_bytes": 14918,
+      "full_patch_sha256": "a3269861a40118995014ea020259ce93d4a9c5e1fb7b28c385f778735c6b0c11",
+      "history_position": 425,
+      "order": 72,
+      "parent": "31f92b5947e9dba8ba997dd93921cbf1538bb79f",
+      "parent_tree": "90d1f6469fd5646ad7271c43847f10277ca71c89",
+      "paths": [
+        "CHANGES",
+        "docs/contents.rst.inc",
+        "docs/nativetypes.rst",
+        "jinja2/nativetypes.py",
+        "tests/test_nativetypes.py"
+      ],
+      "pr": 708,
+      "pr_identity_provenance": "2-parent 'Merge pull request #N' subject; remote PR page not queried",
+      "pr_url": "https://github.com/pallets/jinja/pull/708",
+      "python_test_paths": [
+        "tests/test_nativetypes.py"
+      ],
+      "sha": "d17c7dbbf003c2561d2599383a77027089fe15fb",
+      "source_python_paths": [
+        "jinja2/nativetypes.py"
+      ],
+      "subject": "Merge pull request #708 from jctanner/NATIVE_TYPES",
+      "task_id": "pr-708",
+      "test_patch_bytes": 3984,
+      "test_patch_sha256": "638f1ddf5f384e4f31464645cdaeda7e79ec9b70960143fb0a5127378d85255e",
+      "test_paths": [
+        "tests/test_nativetypes.py"
+      ],
+      "timestamp": 1509477370
+    },
+    {
+      "commit_tree": "cabbc36c9931a6eb13d8f47b40cbb58ff2ecb6e1",
+      "committed_at": "2017-07-08T09:10:33-07:00",
+      "full_patch_bytes": 3973,
+      "full_patch_sha256": "b6b366530dbe4acb84785345ac125b13f0e68687f5849be4377a3cf0cc9dbf8a",
+      "history_position": 433,
+      "order": 73,
+      "parent": "07c0b875e569414d1316c38ce6fbd1d199b6d66e",
+      "parent_tree": "43d9896da0312b9f353ad021a466f76dffcd01c2",
+      "paths": [
+        "CHANGES",
+        "jinja2/filters.py",
+        "tests/test_filters.py"
+      ],
+      "pr": 692,
+      "pr_identity_provenance": "2-parent 'Merge pull request #N' subject; remote PR page not queried",
+      "pr_url": "https://github.com/pallets/jinja/pull/692",
+      "python_test_paths": [
+        "tests/test_filters.py"
+      ],
+      "sha": "711ad9dc21c7f380fbecc35b6d187c69aacdf9b9",
+      "source_python_paths": [
+        "jinja2/filters.py"
+      ],
+      "subject": "Merge pull request #692 from dnmvisser/dictsort_reverse",
+      "task_id": "pr-692",
+      "test_patch_bytes": 1457,
+      "test_patch_sha256": "f83a3d286de3d0f59ce887d4b083b198525b6cbe77f0865f66a547c2da8686f1",
+      "test_paths": [
+        "tests/test_filters.py"
+      ],
+      "timestamp": 1499530233
+    },
+    {
+      "commit_tree": "50cea783abe832b01a4de7ec671e42f85eeccb1a",
+      "committed_at": "2017-07-07T11:55:24-07:00",
+      "full_patch_bytes": 4652,
+      "full_patch_sha256": "a0d5e98704326efcd9d1e60ebce41a96d94ddbbcaad1a86e3944a453a2f5c936",
+      "history_position": 435,
+      "order": 74,
+      "parent": "6f4d03c094eea19129ba747da01a902a84cd8201",
+      "parent_tree": "9d446614404ce56cabab95e890abfcc309afed72",
+      "paths": [
+        "CHANGES",
+        "jinja2/filters.py",
+        "tests/test_filters.py"
+      ],
+      "pr": 685,
+      "pr_identity_provenance": "2-parent 'Merge pull request #N' subject; remote PR page not queried",
+      "pr_url": "https://github.com/pallets/jinja/pull/685",
+      "python_test_paths": [
+        "tests/test_filters.py"
+      ],
+      "sha": "e276843dae00be38ae40596ece66d8459f81edd9",
+      "source_python_paths": [
+        "jinja2/filters.py"
+      ],
+      "subject": "Merge pull request #685 from jkfran/master",
+      "task_id": "pr-685",
+      "test_patch_bytes": 1705,
+      "test_patch_sha256": "914ea09e67c870861dfbd9aa6b6084d278d9c73cd25acdbfe5d4bcdefb91b53c",
+      "test_paths": [
+        "tests/test_filters.py"
+      ],
+      "timestamp": 1499453724
+    },
+    {
+      "commit_tree": "9d446614404ce56cabab95e890abfcc309afed72",
+      "committed_at": "2017-07-07T09:56:01-07:00",
+      "full_patch_bytes": 2079,
+      "full_patch_sha256": "1fcf4cb54b83eb74e52ff13d11129b3ddef1d8ccabed89281560511dbbc20be6",
+      "history_position": 436,
+      "order": 75,
+      "parent": "a361b74fda6bfd01f389b3e0110f607953e445e0",
+      "parent_tree": "1f8f56800cfb641c365d210b3397ad9863657525",
+      "paths": [
+        "CHANGES",
+        "jinja2/parser.py",
+        "tests/test_imports.py"
+      ],
+      "pr": 617,
+      "pr_identity_provenance": "2-parent 'Merge pull request #N' subject; remote PR page not queried",
+      "pr_url": "https://github.com/pallets/jinja/pull/617",
+      "python_test_paths": [
+        "tests/test_imports.py"
+      ],
+      "sha": "6f4d03c094eea19129ba747da01a902a84cd8201",
+      "source_python_paths": [
+        "jinja2/parser.py"
+      ],
+      "subject": "Merge pull request #617 from jackwilsdon/dont-skip-comma",
+      "task_id": "pr-617",
+      "test_patch_bytes": 808,
+      "test_patch_sha256": "655479d56879fd38c01833cc08c0af019cca74086cf257bdbe02a30be268ff09",
+      "test_paths": [
+        "tests/test_imports.py"
+      ],
+      "timestamp": 1499446561
+    },
+    {
+      "commit_tree": "1f8f56800cfb641c365d210b3397ad9863657525",
+      "committed_at": "2017-07-07T09:40:35-07:00",
+      "full_patch_bytes": 2848,
+      "full_patch_sha256": "a94d9172147737bc134aa598c5a753f882fb8a0ab47a67050e35865a99ab34f8",
+      "history_position": 437,
+      "order": 76,
+      "parent": "2c61df138ae2bfc475f9f1e531691d3f6474e209",
+      "parent_tree": "8f46d5e85e0dbe68290b4090d23f8f287bdc7a77",
+      "paths": [
+        "CHANGES",
+        "jinja2/parser.py",
+        "tests/test_imports.py"
+      ],
+      "pr": 618,
+      "pr_identity_provenance": "2-parent 'Merge pull request #N' subject; remote PR page not queried",
+      "pr_url": "https://github.com/pallets/jinja/pull/618",
+      "python_test_paths": [
+        "tests/test_imports.py"
+      ],
+      "sha": "a361b74fda6bfd01f389b3e0110f607953e445e0",
+      "source_python_paths": [
+        "jinja2/parser.py"
+      ],
+      "subject": "Merge pull request #618 from jackwilsdon/stricter-from-parsing",
+      "task_id": "pr-618",
+      "test_patch_bytes": 1608,
+      "test_patch_sha256": "9ffb271f17e787a4548c05152c2ec24a4938b5de55ed97248bb0d522c77552c5",
+      "test_paths": [
+        "tests/test_imports.py"
+      ],
+      "timestamp": 1499445635
+    },
+    {
+      "commit_tree": "f384cf44c8f8949205ab28eebd29aac32204e031",
+      "committed_at": "2017-07-06T13:06:44-07:00",
+      "full_patch_bytes": 6910,
+      "full_patch_sha256": "66ba1ced62893cae44e8884869963d8853aa340f2eb0ada4d5540f0f03eb2355",
+      "history_position": 439,
+      "order": 77,
+      "parent": "05b55d516d66cdae768a2210fe2284257acccdd6",
+      "parent_tree": "8a1ce68cfb033ede71b1f5120959d9db7e784b10",
+      "paths": [
+        "CHANGES",
+        "docs/jinjaext.py",
+        "jinja2/tests.py",
+        "tests/test_tests.py"
+      ],
+      "pr": 665,
+      "pr_identity_provenance": "2-parent 'Merge pull request #N' subject; remote PR page not queried",
+      "pr_url": "https://github.com/pallets/jinja/pull/665",
+      "python_test_paths": [
+        "tests/test_tests.py"
+      ],
+      "sha": "ca1abd46bd8ab7f2034f293640b89aeca6beabdc",
+      "source_python_paths": [
+        "jinja2/tests.py"
+      ],
+      "subject": "Merge pull request #665 from pallets/operator-tests",
+      "task_id": "pr-665",
+      "test_patch_bytes": 1961,
+      "test_patch_sha256": "6f0c59d76b4b9373c4bbeb817d9403ba2c44b7acd5e9b398472743d568b87ff5",
+      "test_paths": [
+        "tests/test_tests.py"
+      ],
+      "timestamp": 1499371604
+    },
+    {
+      "commit_tree": "d149582bf074adfa5385adeb6c2a6221e9089c94",
+      "committed_at": "2017-07-06T08:48:07-07:00",
+      "full_patch_bytes": 5705,
+      "full_patch_sha256": "186a0eb7329d3f32dd6e2003123ea232b7b407b225be18ca504979407a873267",
+      "history_position": 441,
+      "order": 78,
+      "parent": "532171d3d21b6be596a0383f979a67a9541b80c5",
+      "parent_tree": "36c935f2f20f0b69a5333d276a536a711e52a3e4",
+      "paths": [
+        "CHANGES",
+        "jinja2/filters.py",
+        "tests/test_filters.py"
+      ],
+      "pr": 737,
+      "pr_identity_provenance": "2-parent 'Merge pull request #N' subject; remote PR page not queried",
+      "pr_url": "https://github.com/pallets/jinja/pull/737",
+      "python_test_paths": [
+        "tests/test_filters.py"
+      ],
+      "sha": "3ff8ec7b82fe4370033cbd6ebdfe52a000836e2c",
+      "source_python_paths": [
+        "jinja2/filters.py"
+      ],
+      "subject": "Merge pull request #737 from davidism/minmax-filters",
+      "task_id": "pr-737",
+      "test_patch_bytes": 1280,
+      "test_patch_sha256": "c396ca788f34688500dff0733a6ee4300af38916df610eab304807b1cd9fcfd2",
+      "test_paths": [
+        "tests/test_filters.py"
+      ],
+      "timestamp": 1499356087
+    },
+    {
+      "commit_tree": "36c935f2f20f0b69a5333d276a536a711e52a3e4",
+      "committed_at": "2017-07-05T14:27:45-07:00",
+      "full_patch_bytes": 6855,
+      "full_patch_sha256": "77bff98a7662e3a9dfa49c7586131d64c29c67382ae9379d3c1fa617efc8550c",
+      "history_position": 442,
+      "order": 79,
+      "parent": "ecba702fe3de0ddecc127a0e16800ebd0b231c7d",
+      "parent_tree": "23064116ad053fe4d7bd998fe485ec90dd500323",
+      "paths": [
+        "CHANGES",
+        "jinja2/filters.py",
+        "tests/test_filters.py"
+      ],
+      "pr": 735,
+      "pr_identity_provenance": "2-parent 'Merge pull request #N' subject; remote PR page not queried",
+      "pr_url": "https://github.com/pallets/jinja/pull/735",
+      "python_test_paths": [
+        "tests/test_filters.py"
+      ],
+      "sha": "532171d3d21b6be596a0383f979a67a9541b80c5",
+      "source_python_paths": [
+        "jinja2/filters.py"
+      ],
+      "subject": "Merge pull request #735 from davidism/unique-filter",
+      "task_id": "pr-735",
+      "test_patch_bytes": 1694,
+      "test_patch_sha256": "920d53e73c91b746a37748d4e6e645d5598f652c9fd0da9103231b29aff5c09b",
+      "test_paths": [
+        "tests/test_filters.py"
+      ],
+      "timestamp": 1499290065
+    },
+    {
+      "commit_tree": "23064116ad053fe4d7bd998fe485ec90dd500323",
+      "committed_at": "2017-07-05T11:52:20-07:00",
+      "full_patch_bytes": 3157,
+      "full_patch_sha256": "1e372c61538236f21dd1f24b2b20d8ff9cfef79aafbca56926c4c8e48099d042",
+      "history_position": 443,
+      "order": 80,
+      "parent": "47ef6a3baab14dfaa9f3f5d087855e0824f50965",
+      "parent_tree": "5fc4967d913d7195a7061d0a455c54e03a6f20d5",
+      "paths": [
+        "CHANGES",
+        "jinja2/filters.py",
+        "tests/test_filters.py"
+      ],
+      "pr": 734,
+      "pr_identity_provenance": "2-parent 'Merge pull request #N' subject; remote PR page not queried",
+      "pr_url": "https://github.com/pallets/jinja/pull/734",
+      "python_test_paths": [
+        "tests/test_filters.py"
+      ],
+      "sha": "ecba702fe3de0ddecc127a0e16800ebd0b231c7d",
+      "source_python_paths": [
+        "jinja2/filters.py"
+      ],
+      "subject": "Merge pull request #734 from davidism/dont-inline-random",
+      "task_id": "pr-734",
+      "test_patch_bytes": 1548,
+      "test_patch_sha256": "3956d4d358d3f1a80663f02504eb61afef7b42d6b2b3c30f35ca6abbd54a7b37",
+      "test_paths": [
+        "tests/test_filters.py"
+      ],
+      "timestamp": 1499280740
+    },
+    {
+      "commit_tree": "675b802b883a4fddf7879595eda495c8121ecdcb",
+      "committed_at": "2017-06-24T11:00:47+02:00",
+      "full_patch_bytes": 14813,
+      "full_patch_sha256": "d5a3ef5ab7729367c306acecc0c845a2952f37a98255616ed44f3924218f9851",
+      "history_position": 446,
+      "order": 81,
+      "parent": "b73cb489c57cfe0c713699c6f7c153406cb28269",
+      "parent_tree": "762d8f65350b5b9f3eedbf057126a46f6f763193",
+      "paths": [
+        "CHANGES",
+        "docs/api.rst",
+        "docs/templates.rst",
+        "jinja2/__init__.py",
+        "jinja2/compiler.py",
+        "jinja2/defaults.py",
+        "jinja2/idtracking.py",
+        "jinja2/nodes.py",
+        "jinja2/parser.py",
+        "jinja2/runtime.py",
+        "jinja2/utils.py",
+        "tests/test_core_tags.py"
+      ],
+      "pr": 684,
+      "pr_identity_provenance": "2-parent 'Merge pull request #N' subject; remote PR page not queried",
+      "pr_url": "https://github.com/pallets/jinja/pull/684",
+      "python_test_paths": [
+        "tests/test_core_tags.py"
+      ],
+      "sha": "c7dfa21a2b05ffbe440196880fe6a097b95c89da",
+      "source_python_paths": [
+        "jinja2/__init__.py",
+        "jinja2/compiler.py",
+        "jinja2/defaults.py",
+        "jinja2/idtracking.py",
+        "jinja2/nodes.py",
+        "jinja2/parser.py",
+        "jinja2/runtime.py",
+        "jinja2/utils.py"
+      ],
+      "subject": "Merge pull request #684 from ThiefMaster/set-namespaces",
+      "task_id": "pr-684",
+      "test_patch_bytes": 3402,
+      "test_patch_sha256": "6f96225ba8f680932958ef17b46fea371a7d5456ceaa7c2e39922ad9f685fcb4",
+      "test_paths": [
+        "tests/test_core_tags.py"
+      ],
+      "timestamp": 1498294847
+    },
+    {
+      "commit_tree": "762d8f65350b5b9f3eedbf057126a46f6f763193",
+      "committed_at": "2017-06-24T10:55:37+02:00",
+      "full_patch_bytes": 13429,
+      "full_patch_sha256": "6b230155ad20e7a318fbb594ceefa48c34237766dceb28acb710ce215b16ec07",
+      "history_position": 447,
+      "order": 82,
+      "parent": "bec0065c4e7e89e7d893eda7840ba0219824b23c",
+      "parent_tree": "245847d5e09d458ceb4bd208da4ddea7ef5a2891",
+      "paths": [
+        "AUTHORS",
+        "CHANGES",
+        "docs/templates.rst",
+        "jinja2/asyncsupport.py",
+        "jinja2/compiler.py",
+        "jinja2/runtime.py",
+        "tests/test_async.py",
+        "tests/test_core_tags.py"
+      ],
+      "pr": 676,
+      "pr_identity_provenance": "2-parent 'Merge pull request #N' subject; remote PR page not queried",
+      "pr_url": "https://github.com/pallets/jinja/pull/676",
+      "python_test_paths": [
+        "tests/test_async.py",
+        "tests/test_core_tags.py"
+      ],
+      "sha": "b73cb489c57cfe0c713699c6f7c153406cb28269",
+      "source_python_paths": [
+        "jinja2/asyncsupport.py",
+        "jinja2/compiler.py",
+        "jinja2/runtime.py"
+      ],
+      "subject": "Merge pull request #676 from ThiefMaster/loop-lookarounds",
+      "task_id": "pr-676",
+      "test_patch_bytes": 4379,
+      "test_patch_sha256": "a4a3af20cd6a96dfae4c4ee8ff3dd2ba6374bc62bbf6c6d363001822f0b71136",
+      "test_paths": [
+        "tests/test_async.py",
+        "tests/test_core_tags.py"
+      ],
+      "timestamp": 1498294537
+    },
+    {
+      "commit_tree": "323c5d6bc63d8a16008a9a55bb9ec9ba8ce26b88",
+      "committed_at": "2017-01-12T13:03:38-08:00",
+      "full_patch_bytes": 1785,
+      "full_patch_sha256": "be2d06c7d17867646258e617fb09cfb076f5fec568402aedf63193005dcbb6fa",
+      "history_position": 462,
+      "order": 83,
+      "parent": "5c9de9cf075688f40df8ef682a4478d876ea41cf",
+      "parent_tree": "efe2e76351cbf8fe35f7b1570673a62ad5aa2c41",
+      "paths": [
+        "jinja2/tests.py",
+        "tests/test_tests.py"
+      ],
+      "pr": 658,
+      "pr_identity_provenance": "1-parent terminal '(#N)' subject; remote PR page not queried",
+      "pr_url": "https://github.com/pallets/jinja/pull/658",
+      "python_test_paths": [
+        "tests/test_tests.py"
+      ],
+      "sha": "7ab79c62ef8aa65cc4e6b6a2e2e4dd226aeb6d51",
+      "source_python_paths": [
+        "jinja2/tests.py"
+      ],
+      "subject": "Add \"is in\" containment test (#658)",
+      "task_id": "pr-658",
+      "test_patch_bytes": 1074,
+      "test_patch_sha256": "3197808c3e5b02ca6d0e8cc85886d002c0739e797b225715e10366eb22ae1ab2",
+      "test_paths": [
+        "tests/test_tests.py"
+      ],
+      "timestamp": 1484255018
+    },
+    {
+      "commit_tree": "51026ad7735ef3952faf3758259a0b6f3dd8be26",
+      "committed_at": "2017-01-06T13:08:57+01:00",
+      "full_patch_bytes": 3256,
+      "full_patch_sha256": "b6563c86e1f5b9621601e992c6a0ea3640eec888e47a028dcb78ac2710ad2ad0",
+      "history_position": 518,
+      "order": 84,
+      "parent": "5453db1711eeb33c68ed1126764ab691b81d1472",
+      "parent_tree": "e8cd94def4f5ea1726156c422d61a52f1115f9ae",
+      "paths": [
+        "jinja2/filters.py",
+        "tests/test_filters.py"
+      ],
+      "pr": 610,
+      "pr_identity_provenance": "2-parent 'Merge pull request #N' subject; remote PR page not queried",
+      "pr_url": "https://github.com/pallets/jinja/pull/610",
+      "python_test_paths": [
+        "tests/test_filters.py"
+      ],
+      "sha": "49c382a1d0577d3aacf726e62830fc04ac8fec84",
+      "source_python_paths": [
+        "jinja2/filters.py"
+      ],
+      "subject": "Merge pull request #610 from jab/jab-do_truncate",
+      "task_id": "pr-610",
+      "test_patch_bytes": 1326,
+      "test_patch_sha256": "c3214b9d46489c1da27fef3c7f4db9b305a978622972cbe244201ef22953f7e2",
+      "test_paths": [
+        "tests/test_filters.py"
+      ],
+      "timestamp": 1483704537
+    },
+    {
+      "commit_tree": "e128a9dd9c0035369e29e6ccc7f36c73cf10ea2d",
+      "committed_at": "2017-01-04T08:21:53-08:00",
+      "full_patch_bytes": 1730,
+      "full_patch_sha256": "ff4771770b8c2071ee9c3afc12a69b2af66eb7464f85d0c72d33fc134028c0a4",
+      "history_position": 522,
+      "order": 85,
+      "parent": "ebed13eb2b0995d015ddcaacca72fadc829b09e6",
+      "parent_tree": "1615bca0dc6984d6a51100594cbc7bd4a60eee5b",
+      "paths": [
+        "jinja2/tests.py",
+        "tests/test_tests.py"
+      ],
+      "pr": 624,
+      "pr_identity_provenance": "1-parent terminal '(#N)' subject; remote PR page not queried",
+      "pr_url": "https://github.com/pallets/jinja/pull/624",
+      "python_test_paths": [
+        "tests/test_tests.py"
+      ],
+      "sha": "65fbf324ab55b4e349065de82a73c733ccb8d9ac",
+      "source_python_paths": [
+        "jinja2/tests.py"
+      ],
+      "subject": "Add test for greater/less than (#624)",
+      "task_id": "pr-624",
+      "test_patch_bytes": 837,
+      "test_patch_sha256": "18aa08f4df2491ec7b336f012916a4089df7119a6216432380596de17a3d3511",
+      "test_paths": [
+        "tests/test_tests.py"
+      ],
+      "timestamp": 1483546913
+    },
+    {
+      "commit_tree": "5ab7c55fc1618c8d65908c49d61cd26fa68a4d30",
+      "committed_at": "2017-01-03T19:31:01+01:00",
+      "full_patch_bytes": 1244,
+      "full_patch_sha256": "9a264148b225dd26e94f01b113ed625e6e9695ffe2977c29c8d70bce982fb13e",
+      "history_position": 524,
+      "order": 86,
+      "parent": "61dc8d020a55674f88364cdfa20afdd590cb02be",
+      "parent_tree": "b9e348ff18e09252668027f44aae1d6bf92010e7",
+      "paths": [
+        "jinja2/runtime.py",
+        "tests/test_api.py"
+      ],
+      "pr": 530,
+      "pr_identity_provenance": "2-parent 'Merge pull request #N' subject; remote PR page not queried",
+      "pr_url": "https://github.com/pallets/jinja/pull/530",
+      "python_test_paths": [
+        "tests/test_api.py"
+      ],
+      "sha": "479d870ebad89b055754674a2727a30fc704cd43",
+      "source_python_paths": [
+        "jinja2/runtime.py"
+      ],
+      "subject": "Merge pull request #530 from nick-garcia/master",
+      "task_id": "pr-530",
+      "test_patch_bytes": 605,
+      "test_patch_sha256": "dd07220ebe0ecc8f9f58469de0fb9e82d08a73e423bb6fca3a6d07f10c912bf5",
+      "test_paths": [
+        "tests/test_api.py"
+      ],
+      "timestamp": 1483468261
+    },
+    {
+      "commit_tree": "af6c969a29d6838db897d43e3ba32f85b44b6414",
+      "committed_at": "2017-01-03T19:18:42+01:00",
+      "full_patch_bytes": 1323,
+      "full_patch_sha256": "6a083343b0537ff3e43c12b2c5de533dd4c6e4c0726d40f948eb4180f16f6460",
+      "history_position": 526,
+      "order": 87,
+      "parent": "45b59b522a542c21611214b352df049a3b6dbcb4",
+      "parent_tree": "e6448fe205c79c4c0aef46e914cf888e16bf2b26",
+      "paths": [
+        "jinja2/utils.py",
+        "tests/test_api.py"
+      ],
+      "pr": 525,
+      "pr_identity_provenance": "2-parent 'Merge pull request #N' subject; remote PR page not queried",
+      "pr_url": "https://github.com/pallets/jinja/pull/525",
+      "python_test_paths": [
+        "tests/test_api.py"
+      ],
+      "sha": "2cacbac15a17bc07826cbc12a11c3fcd784fb407",
+      "source_python_paths": [
+        "jinja2/utils.py"
+      ],
+      "subject": "Merge pull request #525 from iffy/fix-cycle-next",
+      "task_id": "pr-525",
+      "test_patch_bytes": 723,
+      "test_patch_sha256": "ba035e26ea75cdb2e26e9d55c90dfa3c8756f1d5af2f71bf80a9ce57b39ead75",
+      "test_paths": [
+        "tests/test_api.py"
+      ],
+      "timestamp": 1483467522
+    },
+    {
+      "commit_tree": "fb86d41fea24b9849ddc5061259875b73c69fe7d",
+      "committed_at": "2015-06-01T17:08:01+02:00",
+      "full_patch_bytes": 1708,
+      "full_patch_sha256": "8563c86563bec4a292dd669db0f8ab58cb2fa45c284b4bdf34b7a20c9070f31d",
+      "history_position": 598,
+      "order": 88,
+      "parent": "d2ffef5813678c1dd012d6f92d30bdc8034d2c71",
+      "parent_tree": "12689fa6048608db142155c110453af7c6927ef6",
+      "paths": [
+        "jinja2/filters.py",
+        "tests/test_filters.py"
+      ],
+      "pr": 447,
+      "pr_identity_provenance": "2-parent 'Merge pull request #N' subject; remote PR page not queried",
+      "pr_url": "https://github.com/pallets/jinja/pull/447",
+      "python_test_paths": [
+        "tests/test_filters.py"
+      ],
+      "sha": "3bb8a1f826352250a312ec1a0d7f7d422b5a4d7b",
+      "source_python_paths": [
+        "jinja2/filters.py"
+      ],
+      "subject": "Merge pull request #447 from bentimms/int-filter-base",
+      "task_id": "pr-447",
+      "test_patch_bytes": 770,
+      "test_patch_sha256": "1f2973a9b041194ef76172bdcfa4edf121ea87d546a4a87c1883665808a1e1bc",
+      "test_paths": [
+        "tests/test_filters.py"
+      ],
+      "timestamp": 1433171281
+    }
+  ],
+  "counts": {
+    "first_parent_commits_scanned_in_window": 644,
+    "static_rejections_by_first_reason": {
+      "execution_environment_path_changed": 5,
+      "missing_source_or_python_test": 81,
+      "not_unambiguous_pr_landing": 278,
+      "path_count_outside_2_30": 181,
+      "status_not_A_or_M": 11
+    },
+    "structurally_eligible": 88,
+    "unambiguous_pr_landings": 366
+  },
+  "created_at_utc": "2026-08-24T13:28:02.999+00:00",
+  "cutoff_epoch": 1420070400,
+  "dynamic_budget": 88,
+  "head": "5ef70112a1ff19c05324ff889dd30405b1002044",
+  "head_tree": "9cc8b01ae238ef334ec9ccfac656c703dc862331",
+  "measurement": "second-repository-static-candidate-ledger",
+  "order": "first-parent newest-to-oldest",
+  "repository": "C:\\Users\\joshp\\Desktop\\Blast-Radius\\exploratory\\causal\\repositories\\pallets-jinja",
+  "repository_url": "https://github.com/pallets/jinja.git",
+  "schema_version": 1,
+  "selection_rule": "exploratory/causal/JINJA-SELECTION-RULE.md",
+  "selection_rule_sha256": "470178b3a094e00ea3caefb494126d7f3771615aaf77f66cb5dda7e2d448d11f",
+  "target_tasks": 30
+}

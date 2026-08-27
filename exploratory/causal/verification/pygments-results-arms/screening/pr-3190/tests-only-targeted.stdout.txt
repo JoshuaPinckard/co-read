@@ -1,0 +1,44 @@
+============================= test session starts =============================
+platform win32 -- Python 3.11.9, pytest-8.4.2, pluggy-1.6.0
+rootdir: C:\Users\joshp\AppData\Local\Temp\blast-radius-pygments-causal-opbff12g\screen-pr-3190-s2ftujv6\tests-only
+configfile: pyproject.toml
+collected 9 items
+
+tests\test_regexopt.py .......FF                                         [100%]
+
+================================== FAILURES ===================================
+_______________________________ test_duplicates _______________________________
+
+    def test_duplicates():
+        # duplicate words must not produce a redundant character class like [ss]
+        opt = regex_opt(('as', 'abstract', 'and', 'as', 'break'))
+        print(opt)
+>       assert '[ss]' not in opt
+E       AssertionError: assert '[ss]' not in '(a(?:bstrac...[ss])|break)'
+E         
+E         '[ss]' is contained here:
+E           (a(?:bstract|nd|[ss])|break)
+E         ?                 ++++
+
+tests\test_regexopt.py:109: AssertionError
+---------------------------- Captured stdout call -----------------------------
+(a(?:bstract|nd|[ss])|break)
+_________________________ test_duplicate_single_chars _________________________
+
+    def test_duplicate_single_chars():
+        # duplicate one-character words must be collapsed in the character class
+        opt = regex_opt(('a', 'a', 'b'))
+        print(opt)
+>       assert opt.count('a') == 1
+E       AssertionError: assert 2 == 1
+E        +  where 2 = <built-in method count of str object at 0x00000243BD6742B0>('a')
+E        +    where <built-in method count of str object at 0x00000243BD6742B0> = '([aab])'.count
+
+tests\test_regexopt.py:123: AssertionError
+---------------------------- Captured stdout call -----------------------------
+([aab])
+- generated xml file: C:\Users\joshp\Desktop\Blast-Radius\exploratory\causal\verification\pygments-results-arms\screening\pr-3190\tests-only-targeted.xml -
+=========================== short test summary info ===========================
+FAILED tests/test_regexopt.py::test_duplicates - AssertionError: assert '[ss]...
+FAILED tests/test_regexopt.py::test_duplicate_single_chars - AssertionError: ...
+========================= 2 failed, 7 passed in 0.85s =========================

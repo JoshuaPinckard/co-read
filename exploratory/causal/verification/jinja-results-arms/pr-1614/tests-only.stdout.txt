@@ -1,0 +1,328 @@
+============================= test session starts =============================
+platform win32 -- Python 3.11.9, pytest-8.4.2, pluggy-1.6.0
+rootdir: C:\Users\joshp\AppData\Local\Temp\blast-radius-jinja-causal\a1614-tiqsfgik\t
+configfile: setup.cfg
+testpaths: tests
+plugins: timeout-2.4.0
+collected 837 items
+
+tests\test_api.py .................................                      [  3%]
+tests\test_async.py .................................................... [ 10%]
+....FEFE                                                                 [ 10%]
+tests\test_async_filters.py .........................................    [ 15%]
+tests\test_bytecode_cache.py ...                                         [ 16%]
+tests\test_compile.py ..                                                 [ 16%]
+tests\test_core_tags.py ................................................ [ 22%]
+..............                                                           [ 23%]
+tests\test_debug.py .......                                              [ 24%]
+tests\test_ext.py .................................................      [ 30%]
+tests\test_filters.py .................................................. [ 36%]
+........................................................................ [ 45%]
+                                                                         [ 45%]
+tests\test_idtracking.py .....                                           [ 45%]
+tests\test_imports.py ...............                                    [ 47%]
+tests\test_inheritance.py ......................                         [ 50%]
+tests\test_lexnparse.py ................................................ [ 55%]
+........................................................................ [ 64%]
+..............................                                           [ 67%]
+tests\test_loader.py ........................................            [ 72%]
+tests\test_nativetypes.py ..........................                     [ 75%]
+tests\test_nodes.py .                                                    [ 75%]
+tests\test_pickle.py .                                                   [ 76%]
+tests\test_regression.py ............................................... [ 81%]
+.....                                                                    [ 82%]
+tests\test_runtime.py .......                                            [ 83%]
+tests\test_security.py ...............                                   [ 84%]
+tests\test_tests.py .................................................... [ 91%]
+......................................................                   [ 97%]
+tests\test_utils.py ....................                                 [100%]
+
+=================================== ERRORS ====================================
+_______________ ERROR at teardown of test_getitem_after_filter ________________
+
+coro = <coroutine object auto_await at 0x000002842B334930>
+
+    def _warn_unawaited_coroutine(coro):
+        msg_lines = [
+            f"coroutine '{coro.__qualname__}' was never awaited\n"
+        ]
+        if coro.cr_origin is not None:
+            import linecache, traceback
+            def extract():
+                for filename, lineno, funcname in reversed(coro.cr_origin):
+                    line = linecache.getline(filename, lineno)
+                    yield (filename, lineno, funcname, line)
+            msg_lines.append("Coroutine created at (most recent call last)\n")
+            msg_lines += traceback.format_list(list(extract()))
+        msg = "".join(msg_lines).rstrip("\n")
+        # Passing source= here means that if the user happens to have tracemalloc
+        # enabled and tracking where the coroutine was created, the warning will
+        # contain that traceback. This does mean that if they have *both*
+        # coroutine origin tracking *and* tracemalloc enabled, they'll get two
+        # partially-redundant tracebacks. If we wanted to be clever we could
+        # probably detect this case and avoid it, but for now we don't bother.
+>       warn(msg, category=RuntimeWarning, stacklevel=2, source=coro)
+E       RuntimeWarning: coroutine 'auto_await' was never awaited
+
+..\..\..\..\Programs\Python\Python311\Lib\warnings.py:538: RuntimeWarning
+
+The above exception was the direct cause of the following exception:
+
+cls = <class '_pytest.runner.CallInfo'>
+func = <function call_and_report.<locals>.<lambda> at 0x000002842B3B3600>
+when = 'teardown'
+reraise = (<class '_pytest.outcomes.Exit'>, <class 'KeyboardInterrupt'>)
+
+    @classmethod
+    def from_call(
+        cls,
+        func: Callable[[], TResult],
+        when: Literal["collect", "setup", "call", "teardown"],
+        reraise: type[BaseException] | tuple[type[BaseException], ...] | None = None,
+    ) -> CallInfo[TResult]:
+        """Call func, wrapping the result in a CallInfo.
+    
+        :param func:
+            The function to call. Called without arguments.
+        :type func: Callable[[], _pytest.runner.TResult]
+        :param when:
+            The phase in which the function is called.
+        :param reraise:
+            Exception or exceptions that shall propagate if raised by the
+            function, instead of being wrapped in the CallInfo.
+        """
+        excinfo = None
+        instant = timing.Instant()
+        try:
+>           result: TResult | None = func()
+                                     ^^^^^^
+
+C:\Users\joshp\Desktop\Blast-Radius\exploratory\causal\envs\jinja-historical\Lib\site-packages\_pytest\runner.py:344: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+C:\Users\joshp\Desktop\Blast-Radius\exploratory\causal\envs\jinja-historical\Lib\site-packages\_pytest\runner.py:246: in <lambda>
+    lambda: runtest_hook(item=item, **kwds), when=when, reraise=reraise
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+C:\Users\joshp\Desktop\Blast-Radius\exploratory\causal\envs\jinja-historical\Lib\site-packages\pluggy\_hooks.py:512: in __call__
+    return self._hookexec(self.name, self._hookimpls.copy(), kwargs, firstresult)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+C:\Users\joshp\Desktop\Blast-Radius\exploratory\causal\envs\jinja-historical\Lib\site-packages\pluggy\_manager.py:120: in _hookexec
+    return self._inner_hookexec(hook_name, methods, kwargs, firstresult)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+C:\Users\joshp\Desktop\Blast-Radius\exploratory\causal\envs\jinja-historical\Lib\site-packages\_pytest\logging.py:858: in pytest_runtest_teardown
+    yield
+C:\Users\joshp\Desktop\Blast-Radius\exploratory\causal\envs\jinja-historical\Lib\site-packages\_pytest\capture.py:905: in pytest_runtest_teardown
+    return (yield)
+            ^^^^^
+C:\Users\joshp\Desktop\Blast-Radius\exploratory\causal\envs\jinja-historical\Lib\site-packages\_pytest\unraisableexception.py:163: in pytest_runtest_teardown
+    collect_unraisable(item.config)
+C:\Users\joshp\Desktop\Blast-Radius\exploratory\causal\envs\jinja-historical\Lib\site-packages\_pytest\unraisableexception.py:79: in collect_unraisable
+    raise errors[0]
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+config = <_pytest.config.Config object at 0x0000028428D36A90>
+
+    def collect_unraisable(config: Config) -> None:
+        pop_unraisable = config.stash[unraisable_exceptions].pop
+        errors: list[pytest.PytestUnraisableExceptionWarning | RuntimeError] = []
+        meta = None
+        hook_error = None
+        try:
+            while True:
+                try:
+                    meta = pop_unraisable()
+                except IndexError:
+                    break
+    
+                if isinstance(meta, BaseException):
+                    hook_error = RuntimeError("Failed to process unraisable exception")
+                    hook_error.__cause__ = meta
+                    errors.append(hook_error)
+                    continue
+    
+                msg = meta.msg
+                try:
+>                   warnings.warn(pytest.PytestUnraisableExceptionWarning(msg))
+E                   pytest.PytestUnraisableExceptionWarning: Exception ignored in: <coroutine object auto_await at 0x000002842B334930>
+E                   Enable tracemalloc to get traceback where the object was allocated.
+E                   See https://docs.pytest.org/en/stable/how-to/capture-warnings.html#resource-warnings for more info.
+
+C:\Users\joshp\Desktop\Blast-Radius\exploratory\causal\envs\jinja-historical\Lib\site-packages\_pytest\unraisableexception.py:67: PytestUnraisableExceptionWarning
+________________ ERROR at teardown of test_getitem_after_call _________________
+
+coro = <coroutine object auto_await at 0x000002842B488450>
+
+    def _warn_unawaited_coroutine(coro):
+        msg_lines = [
+            f"coroutine '{coro.__qualname__}' was never awaited\n"
+        ]
+        if coro.cr_origin is not None:
+            import linecache, traceback
+            def extract():
+                for filename, lineno, funcname in reversed(coro.cr_origin):
+                    line = linecache.getline(filename, lineno)
+                    yield (filename, lineno, funcname, line)
+            msg_lines.append("Coroutine created at (most recent call last)\n")
+            msg_lines += traceback.format_list(list(extract()))
+        msg = "".join(msg_lines).rstrip("\n")
+        # Passing source= here means that if the user happens to have tracemalloc
+        # enabled and tracking where the coroutine was created, the warning will
+        # contain that traceback. This does mean that if they have *both*
+        # coroutine origin tracking *and* tracemalloc enabled, they'll get two
+        # partially-redundant tracebacks. If we wanted to be clever we could
+        # probably detect this case and avoid it, but for now we don't bother.
+>       warn(msg, category=RuntimeWarning, stacklevel=2, source=coro)
+E       RuntimeWarning: coroutine 'auto_await' was never awaited
+
+..\..\..\..\Programs\Python\Python311\Lib\warnings.py:538: RuntimeWarning
+
+The above exception was the direct cause of the following exception:
+
+cls = <class '_pytest.runner.CallInfo'>
+func = <function call_and_report.<locals>.<lambda> at 0x000002842B3B1620>
+when = 'teardown'
+reraise = (<class '_pytest.outcomes.Exit'>, <class 'KeyboardInterrupt'>)
+
+    @classmethod
+    def from_call(
+        cls,
+        func: Callable[[], TResult],
+        when: Literal["collect", "setup", "call", "teardown"],
+        reraise: type[BaseException] | tuple[type[BaseException], ...] | None = None,
+    ) -> CallInfo[TResult]:
+        """Call func, wrapping the result in a CallInfo.
+    
+        :param func:
+            The function to call. Called without arguments.
+        :type func: Callable[[], _pytest.runner.TResult]
+        :param when:
+            The phase in which the function is called.
+        :param reraise:
+            Exception or exceptions that shall propagate if raised by the
+            function, instead of being wrapped in the CallInfo.
+        """
+        excinfo = None
+        instant = timing.Instant()
+        try:
+>           result: TResult | None = func()
+                                     ^^^^^^
+
+C:\Users\joshp\Desktop\Blast-Radius\exploratory\causal\envs\jinja-historical\Lib\site-packages\_pytest\runner.py:344: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+C:\Users\joshp\Desktop\Blast-Radius\exploratory\causal\envs\jinja-historical\Lib\site-packages\_pytest\runner.py:246: in <lambda>
+    lambda: runtest_hook(item=item, **kwds), when=when, reraise=reraise
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+C:\Users\joshp\Desktop\Blast-Radius\exploratory\causal\envs\jinja-historical\Lib\site-packages\pluggy\_hooks.py:512: in __call__
+    return self._hookexec(self.name, self._hookimpls.copy(), kwargs, firstresult)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+C:\Users\joshp\Desktop\Blast-Radius\exploratory\causal\envs\jinja-historical\Lib\site-packages\pluggy\_manager.py:120: in _hookexec
+    return self._inner_hookexec(hook_name, methods, kwargs, firstresult)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+C:\Users\joshp\Desktop\Blast-Radius\exploratory\causal\envs\jinja-historical\Lib\site-packages\_pytest\logging.py:858: in pytest_runtest_teardown
+    yield
+C:\Users\joshp\Desktop\Blast-Radius\exploratory\causal\envs\jinja-historical\Lib\site-packages\_pytest\capture.py:905: in pytest_runtest_teardown
+    return (yield)
+            ^^^^^
+C:\Users\joshp\Desktop\Blast-Radius\exploratory\causal\envs\jinja-historical\Lib\site-packages\_pytest\unraisableexception.py:163: in pytest_runtest_teardown
+    collect_unraisable(item.config)
+C:\Users\joshp\Desktop\Blast-Radius\exploratory\causal\envs\jinja-historical\Lib\site-packages\_pytest\unraisableexception.py:79: in collect_unraisable
+    raise errors[0]
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+config = <_pytest.config.Config object at 0x0000028428D36A90>
+
+    def collect_unraisable(config: Config) -> None:
+        pop_unraisable = config.stash[unraisable_exceptions].pop
+        errors: list[pytest.PytestUnraisableExceptionWarning | RuntimeError] = []
+        meta = None
+        hook_error = None
+        try:
+            while True:
+                try:
+                    meta = pop_unraisable()
+                except IndexError:
+                    break
+    
+                if isinstance(meta, BaseException):
+                    hook_error = RuntimeError("Failed to process unraisable exception")
+                    hook_error.__cause__ = meta
+                    errors.append(hook_error)
+                    continue
+    
+                msg = meta.msg
+                try:
+>                   warnings.warn(pytest.PytestUnraisableExceptionWarning(msg))
+E                   pytest.PytestUnraisableExceptionWarning: Exception ignored in: <coroutine object auto_await at 0x000002842B488450>
+E                   Enable tracemalloc to get traceback where the object was allocated.
+E                   See https://docs.pytest.org/en/stable/how-to/capture-warnings.html#resource-warnings for more info.
+
+C:\Users\joshp\Desktop\Blast-Radius\exploratory\causal\envs\jinja-historical\Lib\site-packages\_pytest\unraisableexception.py:67: PytestUnraisableExceptionWarning
+================================== FAILURES ===================================
+__________________________ test_getitem_after_filter __________________________
+
+    def test_getitem_after_filter():
+        env = Environment(enable_async=True)
+        env.filters["add_each"] = lambda v, x: [i + x for i in v]
+        t = env.from_string("{{ (a|add_each(2))[1:] }}")
+>       out = t.render(a=range(3))
+              ^^^^^^^^^^^^^^^^^^^^
+
+tests\test_async.py:651: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+src\jinja2\environment.py:1281: in render
+    return loop.run_until_complete(self.render_async(*args, **kwargs))
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+..\..\..\..\Programs\Python\Python311\Lib\asyncio\base_events.py:654: in run_until_complete
+    return future.result()
+           ^^^^^^^^^^^^^^^
+src\jinja2\environment.py:1314: in render_async
+    return self.environment.handle_exception()
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+src\jinja2\environment.py:926: in handle_exception
+    raise rewrite_traceback_stack(source=source)
+src\jinja2\environment.py:1311: in <listcomp>
+    [n async for n in self.root_render_func(ctx)]  # type: ignore
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+>   ???
+E   TypeError: 'coroutine' object is not subscriptable
+
+<template>:1: TypeError
+___________________________ test_getitem_after_call ___________________________
+
+    def test_getitem_after_call():
+        env = Environment(enable_async=True)
+        env.globals["add_each"] = lambda v, x: [i + x for i in v]
+        t = env.from_string("{{ add_each(a, 2)[1:] }}")
+>       out = t.render(a=range(3))
+              ^^^^^^^^^^^^^^^^^^^^
+
+tests\test_async.py:659: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+src\jinja2\environment.py:1281: in render
+    return loop.run_until_complete(self.render_async(*args, **kwargs))
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+..\..\..\..\Programs\Python\Python311\Lib\asyncio\base_events.py:654: in run_until_complete
+    return future.result()
+           ^^^^^^^^^^^^^^^
+src\jinja2\environment.py:1314: in render_async
+    return self.environment.handle_exception()
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+src\jinja2\environment.py:926: in handle_exception
+    raise rewrite_traceback_stack(source=source)
+src\jinja2\environment.py:1311: in <listcomp>
+    [n async for n in self.root_render_func(ctx)]  # type: ignore
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+>   ???
+E   TypeError: 'coroutine' object is not subscriptable
+
+<template>:1: TypeError
+- generated xml file: C:\Users\joshp\Desktop\Blast-Radius\exploratory\causal\verification\jinja-results-arms\pr-1614\tests-only.xml -
+=========================== short test summary info ===========================
+FAILED tests/test_async.py::test_getitem_after_filter - TypeError: 'coroutine...
+FAILED tests/test_async.py::test_getitem_after_call - TypeError: 'coroutine' ...
+ERROR tests/test_async.py::test_getitem_after_filter - pytest.PytestUnraisabl...
+ERROR tests/test_async.py::test_getitem_after_call - pytest.PytestUnraisableE...
+=================== 2 failed, 835 passed, 2 errors in 7.42s ===================

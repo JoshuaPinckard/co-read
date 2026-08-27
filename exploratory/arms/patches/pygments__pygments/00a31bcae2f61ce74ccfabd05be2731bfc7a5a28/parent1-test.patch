@@ -1,0 +1,138 @@
+diff --git a/tests/test_cfm.py b/tests/test_cfm.py
+index a89e160d3e97e49d1b0ce892994c8f496e0dcbfe..a16f1af84e9d5f64e0e72778f5b82a37d0e00b6a 100644
+--- a/tests/test_cfm.py
++++ b/tests/test_cfm.py
+@@ -21,7 +21,6 @@ def lexer():
+ def test_basic_comment(lexer):
+     fragment = '<!--- cfcomment --->'
+     expected = [
+-        (Token.Text, ''),
+         (Token.Comment.Multiline, '<!---'),
+         (Token.Comment.Multiline, ' cfcomment '),
+         (Token.Comment.Multiline, '--->'),
+@@ -33,7 +32,6 @@ def test_basic_comment(lexer):
+ def test_nested_comment(lexer):
+     fragment = '<!--- nested <!--- cfcomment ---> --->'
+     expected = [
+-        (Token.Text, ''),
+         (Token.Comment.Multiline, '<!---'),
+         (Token.Comment.Multiline, ' nested '),
+         (Token.Comment.Multiline, '<!---'),
+diff --git a/tests/test_latex_formatter.py b/tests/test_latex_formatter.py
+index ccaa35563688a8e0a271912a074ccf7512aab47d..0f45edc0588b6e359dbce6a2b14151a515466902 100644
+--- a/tests/test_latex_formatter.py
++++ b/tests/test_latex_formatter.py
+@@ -65,7 +65,7 @@ def test_embedded_lexer():
+     >>> y
+     |$1 + z^2$|""")
+ 
+-    assert list(lexer.get_tokens(src)) == [(Token.Name, ''),
++    assert list(lexer.get_tokens(src)) == [
+         (Token.Generic.Prompt, '>>> '),
+         (Token.Name, 'x'),
+         (Token.Text, ' '),
+@@ -74,7 +74,6 @@ def test_embedded_lexer():
+         (Token.Literal.Number.Integer, '1'),
+         (Token.Text, '\n'),
+         (Token.Generic.Prompt, '>>> '),
+-        (Token.Text, ''),
+         (Token.Name, 'y'),
+         (Token.Text, ' '),
+         (Token.Operator, '='),
+@@ -85,16 +84,13 @@ def test_embedded_lexer():
+         (Token.Punctuation, ','),
+         (Token.Text, ' '),
+         (Token.Escape, '$z^2$'),
+-        (Token.Text, ''),
+         (Token.Punctuation, ')'),
+         (Token.Text, '  '),
+         (Token.Comment.Single, '# these |pipes| are untouched'),  # note: not Token.Escape
+         (Token.Text, '\n'),
+         (Token.Generic.Prompt, '>>> '),
+-        (Token.Text, ''),
+         (Token.Name, 'y'),
+         (Token.Text, '\n'),
+         (Token.Escape, '$1 + z^2$'),
+-        (Token.Text, ''),
+         (Token.Generic.Output, '\n'),
+-    ]
+\ No newline at end of file
++    ]
+diff --git a/tests/test_shell.py b/tests/test_shell.py
+index b3600a4eaf3a2ee926e3c70e3beabd0afcd1b0a1..102992b3c62160502f9e560f0eb0b3674d668b23 100644
+--- a/tests/test_shell.py
++++ b/tests/test_shell.py
+@@ -10,7 +10,8 @@
+ import pytest
+ 
+ from pygments.token import Token
+-from pygments.lexers import BashLexer, BashSessionLexer, MSDOSSessionLexer, PowerShellSessionLexer
++from pygments.lexers import BashLexer, BashSessionLexer, MSDOSSessionLexer, \
++    PowerShellSessionLexer
+ 
+ 
+ @pytest.fixture(scope='module')
+@@ -142,7 +143,6 @@ def test_end_of_line_nums(lexer_bash):
+ def test_newline_in_echo(lexer_session):
+     fragment = '$ echo \\\nhi\nhi\n'
+     tokens = [
+-        (Token.Text, ''),
+         (Token.Generic.Prompt, '$'),
+         (Token.Text, ' '),
+         (Token.Name.Builtin, 'echo'),
+@@ -158,11 +158,9 @@ def test_newline_in_echo(lexer_session):
+ def test_msdos_gt_only(lexer_msdos):
+     fragment = '> py\nhi\n'
+     tokens = [
+-        (Token.Text, ''),
+         (Token.Generic.Prompt, '>'),
+         (Token.Text, ' '),
+         (Token.Text, 'py'),
+-        (Token.Text, ''),
+         (Token.Text, '\n'),
+         (Token.Generic.Output, 'hi\n'),
+     ]
+@@ -172,7 +170,6 @@ def test_msdos_gt_only(lexer_msdos):
+ def test_powershell_session(lexer_powershell_session):
+     fragment = 'PS C:\\> Get-ChildItem\n'
+     tokens = [
+-        (Token.Name.Builtin, ''),
+         (Token.Generic.Prompt, 'PS C:\\> '),
+         (Token.Name.Builtin, 'Get-ChildItem'),
+         (Token.Text, '\n')
+@@ -181,7 +178,6 @@ def test_powershell_session(lexer_powershell_session):
+ 
+     fragment = 'PS> Get-ChildItem\n'
+     tokens = [
+-        (Token.Name.Builtin, ''),
+         (Token.Generic.Prompt, 'PS> '),
+         (Token.Name.Builtin, 'Get-ChildItem'),
+         (Token.Text, '\n')
+@@ -190,7 +186,6 @@ def test_powershell_session(lexer_powershell_session):
+ 
+     fragment = 'PS > Get-ChildItem\n'
+     tokens = [
+-        (Token.Name.Builtin, ''),
+         (Token.Generic.Prompt, 'PS > '),
+         (Token.Name.Builtin, 'Get-ChildItem'),
+         (Token.Text, '\n')
+@@ -201,7 +196,6 @@ def test_powershell_session(lexer_powershell_session):
+ def test_powershell_remoting_session(lexer_powershell_session):
+     fragment = '[Long-NetBIOS-Hostname]: PS C:\\> Get-ChildItem\n'
+     tokens = [
+-        (Token.Name.Builtin, ''),
+         (Token.Generic.Prompt, '[Long-NetBIOS-Hostname]: PS C:\\> '),
+         (Token.Name.Builtin, 'Get-ChildItem'),
+         (Token.Text, '\n')
+@@ -212,11 +206,8 @@ def test_powershell_remoting_session(lexer_powershell_session):
+ def test_virtualenv(lexer_session):
+     fragment = '(env) [~/project]$ foo -h\n'
+     tokens = [
+-        (Token.Text, ''),
+         (Token.Generic.Prompt.VirtualEnv, '(env)'),
+-        (Token.Text, ''),
+         (Token.Text, ' '),
+-        (Token.Text, ''),
+         (Token.Generic.Prompt, '[~/project]$'),
+         (Token.Text, ' '),
+         (Token.Text, 'foo'),

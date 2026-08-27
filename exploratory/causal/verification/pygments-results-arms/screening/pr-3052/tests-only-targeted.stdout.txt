@@ -1,0 +1,26 @@
+============================= test session starts =============================
+platform win32 -- Python 3.11.9, pytest-8.4.2, pluggy-1.6.0
+rootdir: C:\Users\joshp\AppData\Local\Temp\blast-radius-pygments-causal-opbff12g\screen-pr-3052-j1kd4xr_\tests-only
+configfile: pyproject.toml
+collected 1 item
+
+tests\examplefiles\control\control F                                     [100%]
+
+================================== FAILURES ===================================
+_____________________ tests\examplefiles\control\control ______________________
+The tokens produced by the "control" lexer differ from the expected ones in the file "tests\examplefiles\control\control".
+Run `tox -- tests\examplefiles --update-goldens` to update it.
+
+  
+  Skipping 3396 identical leading characters in diff, use -v to show
+       Text
+  - '['           Punctuation
+  - 'amd64'       Name.Entity
+  ?        --
+  + '[amd64]'     Name.Entity...
+  
+  ...Full output truncated (87 lines hidden), use '-vv' to show
+- generated xml file: C:\Users\joshp\Desktop\Blast-Radius\exploratory\causal\verification\pygments-results-arms\screening\pr-3052\tests-only-targeted.xml -
+=========================== short test summary info ===========================
+FAILED tests/examplefiles/control/control::
+============================== 1 failed in 0.21s ==============================

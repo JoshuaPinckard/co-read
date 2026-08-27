@@ -1,0 +1,461 @@
+diff --git a/.travis.yml b/.travis.yml
+index a6018924ef22e30bcbf0b1a0cf94423bd3f78e9a..3b5bde3620324779b4888c9e78c4402cd14cc869 100644
+--- a/.travis.yml
++++ b/.travis.yml
+@@ -17,12 +17,11 @@ install:
+ 
+ script: make test
+ 
++branches:
++  only:
++    - master
++    - auto
++    - /^.*-maintenance$/
++
+ notifications:
+   email: false
+-  irc:
+-    channels:
+-      - "chat.freenode.net#pocoo"
+-    on_success: change
+-    on_failure: always
+-    use_notice: true
+-    skip_join: true
+diff --git a/CHANGES b/CHANGES
+index 0a12ec56a2abf8fd6fc49d0b5c03c5f78ad3685e..aefecd28a4111345d6c498ee9d5c0f4fb53bb37f 100644
+--- a/CHANGES
++++ b/CHANGES
+@@ -3,6 +3,14 @@ Click Changelog
+ 
+ This contains all major version changes between Click releases.
+ 
++Version 7.0
++-----------
++
++(upcoming release with new features, release date to be decided)
++
++- The exception objects now store unicode properly.
++- Added the ability to hide commands and options from help.
++
+ Version 6.4
+ -----------
+ 
+@@ -20,7 +28,6 @@ Version 6.3
+   on Windows.
+ - Fixed a bug that cased locale detection to error out on Python 3.
+ 
+-
+ Version 6.2
+ -----------
+ 
+diff --git a/CONTRIBUTING.rst b/CONTRIBUTING.rst
+index e16e50b2dc38c89fe1aeb9e56644611c1f3e8404..3b8d6e6eba443ba419e12d8e50e54a34b53b6503 100644
+--- a/CONTRIBUTING.rst
++++ b/CONTRIBUTING.rst
+@@ -32,6 +32,9 @@ Submitting patches
+ - Try to follow `PEP8 <http://legacy.python.org/dev/peps/pep-0008/>`_, but you
+   may ignore the line-length-limit if following it would make the code uglier.
+ 
++- For features: Consider whether your feature would be a better fit for an
++  `external package <click.pocoo.org/contrib/>`_
++
+ Running the testsuite
+ ---------------------
+ 
+diff --git a/MANIFEST.in b/MANIFEST.in
+index 69c14ebe1018bc71ba5f438687c0cf79fdf4e797..15458cf27edd85ff795f4cb16557defe0a010719 100644
+--- a/MANIFEST.in
++++ b/MANIFEST.in
+@@ -1,12 +1,9 @@
+ include Makefile CHANGES LICENSE
+-recursive-include artwork *
+-recursive-include tests *
+-recursive-include examples *
+-recursive-include docs *
+-recursive-exclude docs *.pyc
+-recursive-exclude docs *.pyo
+-recursive-exclude tests *.pyc
+-recursive-exclude tests *.pyo
+-recursive-exclude examples *.pyc
+-recursive-exclude examples *.pyo
++
++graft artwork
++graft tests
++graft examples
++graft docs
+ prune docs/_build
++
++global-exclude *.py[co] .DS_Store
+diff --git a/click/__init__.py b/click/__init__.py
+index 66238eaf243c2d0174c4ddf47811155ab1e0f62a..774d988224d02fc8be468ec2f44b3ed6f809daf0 100644
+--- a/click/__init__.py
++++ b/click/__init__.py
+@@ -95,4 +95,4 @@ __all__ = [
+ disable_unicode_literals_warning = False
+ 
+ 
+-__version__ = '6.5-dev'
++__version__ = '7.0-dev'
+diff --git a/click/_compat.py b/click/_compat.py
+index 6bbebd3b35a1655a82a136898bb94cd89797d8f0..3e24a4eec1e652e104aae1f5397ea634a1b94fae 100644
+--- a/click/_compat.py
++++ b/click/_compat.py
+@@ -139,6 +139,7 @@ if PY2:
+     bytes = str
+     raw_input = raw_input
+     string_types = (str, unicode)
++    int_types = (int, long)
+     iteritems = lambda x: x.iteritems()
+     range_type = xrange
+ 
+@@ -212,6 +213,7 @@ else:
+     text_type = str
+     raw_input = input
+     string_types = (str,)
++    int_types = (int,)
+     range_type = range
+     isidentifier = lambda x: x.isidentifier()
+     iteritems = lambda x: iter(x.items())
+diff --git a/click/_termui_impl.py b/click/_termui_impl.py
+index a2c1eb02d76aa66d00e0b9e0aa41be43a5d28b0c..9796a9f79f9942915e10cfccf018107b5ca65dd7 100644
+--- a/click/_termui_impl.py
++++ b/click/_termui_impl.py
+@@ -14,7 +14,7 @@ import sys
+ import time
+ import math
+ from ._compat import _default_text_stdout, range_type, PY2, isatty, \
+-     open_stream, strip_ansi, term_len, get_best_encoding, WIN
++     open_stream, strip_ansi, term_len, get_best_encoding, WIN, int_types
+ from .utils import echo
+ from .exceptions import ClickException
+ 
+@@ -41,7 +41,7 @@ def _length_hint(obj):
+         except TypeError:
+             return None
+         if hint is NotImplemented or \
+-           not isinstance(hint, (int, long)) or \
++           not isinstance(hint, int_types) or \
+            hint < 0:
+             return None
+         return hint
+diff --git a/click/_unicodefun.py b/click/_unicodefun.py
+index 24b7031028772eed7d83dc25fa09cbbc39ea52ca..09a60c3ed286022457567489dd6c4d24af5023dd 100644
+--- a/click/_unicodefun.py
++++ b/click/_unicodefun.py
+@@ -94,7 +94,7 @@ def _verify_python3_env():
+         else:
+             extra += (
+                 'This system lists a couple of UTF-8 supporting locales that\n'
+-                'you can pick from.  The following suitable locales where\n'
++                'you can pick from.  The following suitable locales were\n'
+                 'discovered: %s'
+             ) % ', '.join(sorted(good_locales))
+ 
+diff --git a/click/core.py b/click/core.py
+index 33a527aac569c0c09bff1b23dabfaf8456d80c41..cb43d537fa2a968a4dde9501e0bd2ad420e916ac 100644
+--- a/click/core.py
++++ b/click/core.py
+@@ -654,7 +654,7 @@ class BaseCommand(object):
+                           name from ``sys.argv[0]``.
+         :param complete_var: the environment variable that controls the
+                              bash completion support.  The default is
+-                             ``"_<prog_name>_COMPLETE"`` with prog name in
++                             ``"_<prog_name>_COMPLETE"`` with prog_name in
+                              uppercase.
+         :param standalone_mode: the default behavior is to invoke the script
+                                 in standalone mode.  Click will then
+@@ -669,7 +669,7 @@ class BaseCommand(object):
+                       constructor.  See :class:`Context` for more information.
+         """
+         # If we are in Python 3, we will verify that the environment is
+-        # sane at this point of reject further execution to avoid a
++        # sane at this point or reject further execution to avoid a
+         # broken script.
+         if not PY2:
+             _verify_python3_env()
+@@ -737,11 +737,13 @@ class Command(BaseCommand):
+                        shown on the command listing of the parent command.
+     :param add_help_option: by default each command registers a ``--help``
+                             option.  This can be disabled by this parameter.
++    :param hidden: hide this command from help outputs.
+     """
+ 
+     def __init__(self, name, context_settings=None, callback=None,
+                  params=None, help=None, epilog=None, short_help=None,
+-                 options_metavar='[OPTIONS]', add_help_option=True):
++                 options_metavar='[OPTIONS]', add_help_option=True,
++                 hidden=False):
+         BaseCommand.__init__(self, name, context_settings)
+         #: the callback to execute when the command fires.  This might be
+         #: `None` in which case nothing happens.
+@@ -757,6 +759,7 @@ class Command(BaseCommand):
+             short_help = make_default_short_help(help)
+         self.short_help = short_help
+         self.add_help_option = add_help_option
++        self.hidden = hidden
+ 
+     def get_usage(self, ctx):
+         formatter = ctx.make_formatter()
+@@ -996,6 +999,8 @@ class MultiCommand(Command):
+             # What is this, the tool lied about a command.  Ignore it
+             if cmd is None:
+                 continue
++            if cmd.hidden:
++                continue
+ 
+             help = cmd.short_help or ''
+             rows.append((subcommand, help))
+@@ -1419,9 +1424,9 @@ class Option(Parameter):
+ 
+     :param show_default: controls if the default value should be shown on the
+                          help page.  Normally, defaults are not shown.
+-    :param prompt: if set to `True` or a non empty string then the user will
+-                   be prompted for input if not set.  If set to `True` the
+-                   prompt will be the option name capitalized.
++    :param prompt: if set to `True` or a non empty string then the user will be
++                   prompted for input.  If set to `True` the prompt will be the
++                   option name capitalized.
+     :param confirmation_prompt: if set then the value will need to be confirmed
+                                 if it was prompted for.
+     :param hide_input: if this is `True` then the input on the prompt will be
+@@ -1442,6 +1447,7 @@ class Option(Parameter):
+                                variable in case a prefix is defined on the
+                                context.
+     :param help: the help string.
++    :param hidden: hide this option from help outputs.
+     """
+     param_type_name = 'option'
+ 
+@@ -1449,7 +1455,7 @@ class Option(Parameter):
+                  prompt=False, confirmation_prompt=False,
+                  hide_input=False, is_flag=None, flag_value=None,
+                  multiple=False, count=False, allow_from_autoenv=True,
+-                 type=None, help=None, **attrs):
++                 type=None, help=None, hidden=False, **attrs):
+         default_is_missing = attrs.get('default', _missing) is _missing
+         Parameter.__init__(self, param_decls, type=type, **attrs)
+ 
+@@ -1462,6 +1468,7 @@ class Option(Parameter):
+         self.prompt = prompt_text
+         self.confirmation_prompt = confirmation_prompt
+         self.hide_input = hide_input
++        self.hidden = hidden
+ 
+         # Flags
+         if is_flag is None:
+@@ -1589,6 +1596,8 @@ class Option(Parameter):
+             parser.add_option(self.opts, **kwargs)
+ 
+     def get_help_record(self, ctx):
++        if self.hidden:
++            return
+         any_prefix_is_slash = []
+ 
+         def _write_opts(opts):
+diff --git a/click/exceptions.py b/click/exceptions.py
+index 74a4542bb57f29be1a50412b063f4298448e70c0..e2c0bcd9cd8dd843362355f086f9586756d1f73b 100644
+--- a/click/exceptions.py
++++ b/click/exceptions.py
+@@ -9,15 +9,22 @@ class ClickException(Exception):
+     exit_code = 1
+ 
+     def __init__(self, message):
++        ctor_msg = message
+         if PY2:
+-            if message is not None:
+-                message = message.encode('utf-8')
+-        Exception.__init__(self, message)
++            if ctor_msg is not None:
++                ctor_msg = ctor_msg.encode('utf-8')
++        Exception.__init__(self, ctor_msg)
+         self.message = message
+ 
+     def format_message(self):
+         return self.message
+ 
++    def __unicode__(self):
++        return self.message
++
++    def __str__(self):
++        return self.message.encode('utf-8')
++
+     def show(self, file=None):
+         if file is None:
+             file = get_text_stderr()
+@@ -164,10 +171,13 @@ class BadOptionUsage(UsageError):
+     for an option is not correct.
+ 
+     .. versionadded:: 4.0
++
++    :param option_name: the name of the option being used incorrectly.
+     """
+ 
+-    def __init__(self, message, ctx=None):
++    def __init__(self, option_name, message, ctx=None):
+         UsageError.__init__(self, message, ctx)
++        self.option_name = option_name
+ 
+ 
+ class BadArgumentUsage(UsageError):
+diff --git a/click/parser.py b/click/parser.py
+index 9775c9ff9b99d85ed040e410f5209a342b9dd565..4fe3d2f60244c40db1c9f941b24e895f6ccca240 100644
+--- a/click/parser.py
++++ b/click/parser.py
+@@ -74,8 +74,8 @@ def _unpack_args(args, nargs_spec):
+ 
+ def _error_opt_args(nargs, opt):
+     if nargs == 1:
+-        raise BadOptionUsage('%s option requires an argument' % opt)
+-    raise BadOptionUsage('%s option requires %d arguments' % (opt, nargs))
++        raise BadOptionUsage(opt, '%s option requires an argument' % opt)
++    raise BadOptionUsage(opt, '%s option requires %d arguments' % (opt, nargs))
+ 
+ 
+ def split_opt(opt):
+@@ -342,7 +342,7 @@ class OptionParser(object):
+                 del state.rargs[:nargs]
+ 
+         elif explicit_value is not None:
+-            raise BadOptionUsage('%s option does not take a value' % opt)
++            raise BadOptionUsage(opt, '%s option does not take a value' % opt)
+ 
+         else:
+             value = None
+diff --git a/click/types.py b/click/types.py
+index 7a247471d6dcce8c8d33547193a3aa8e670b9877..e339ec9f153949390a59eea8e38da53e9e8af4f6 100644
+--- a/click/types.py
++++ b/click/types.py
+@@ -358,7 +358,9 @@ class Path(ParamType):
+     :param readable: if true, a readable check is performed.
+     :param resolve_path: if this is true, then the path is fully resolved
+                          before the value is passed onwards.  This means
+-                         that it's absolute and symlinks are resolved.
++                         that it's absolute and symlinks are resolved.  It
++                         will not expand a tilde-prefix, as this is
++                         supposed to be done by the shell only.
+     :param allow_dash: If this is set to `True`, a single dash to indicate
+                        standard streams is permitted.
+     :param type: optionally a string type that should be used to
+diff --git a/click/utils.py b/click/utils.py
+index eee626d3fd0153486345605815ca5f748eb63e7e..fdf4f62847f7804943ccf4b0f5e17afe5d756007 100644
+--- a/click/utils.py
++++ b/click/utils.py
+@@ -43,6 +43,7 @@ def make_str(value):
+ 
+ 
+ def make_default_short_help(help, max_length=45):
++    """Return a condensed version of help string."""
+     words = help.split()
+     total_length = 0
+     result = []
+@@ -171,7 +172,7 @@ def echo(message=None, file=None, nl=True, err=False, color=None):
+ 
+     Primarily it means that you can print binary data as well as Unicode
+     data on both 2.x and 3.x to the given file in the most appropriate way
+-    possible.  This is a very carefree function as in that it will try its
++    possible.  This is a very carefree function in that it will try its
+     best to not fail.  As of Click 6.0 this includes support for unicode
+     output on the Windows console.
+ 
+diff --git a/docs/_templates/sidebarintro.html b/docs/_templates/sidebarintro.html
+index 0041190fbc5eb055fccd9c8a9dca5ece8e79e8fb..afc10029804657ed5491611681670c4435ff90d1 100644
+--- a/docs/_templates/sidebarintro.html
++++ b/docs/_templates/sidebarintro.html
+@@ -8,6 +8,6 @@
+ <ul>
+   <li><a href="http://click.pocoo.org/">The Click Website</a></li>
+   <li><a href="http://pypi.python.org/pypi/click">click @ PyPI</a></li>
+-  <li><a href="http://github.com/mitsuhiko/click">click @ github</a></li>
+-  <li><a href="http://github.com/mitsuhiko/click/issues">Issue Tracker</a></li>
++  <li><a href="http://github.com/pallets/click">click @ github</a></li>
++  <li><a href="http://github.com/pallets/click/issues">Issue Tracker</a></li>
+ </ul>
+diff --git a/docs/advanced.rst b/docs/advanced.rst
+index f2b83dd1c747381b9ddf10058cb87d49de4d49a3..a0165f0e89abef2359d19b42cca73e4fd9db3999 100644
+--- a/docs/advanced.rst
++++ b/docs/advanced.rst
+@@ -346,7 +346,7 @@ Global Context Access
+ .. versionadded:: 5.0
+ 
+ Starting with Click 5.0 it is possible to access the current context from
+-anywhere within the same through through the use of the
++anywhere within the same thread through the use of the
+ :func:`get_current_context` function which returns it.  This is primarily
+ useful for accessing the context bound object as well as some flags that
+ are stored on it to customize the runtime behavior.  For instance the
+diff --git a/docs/commands.rst b/docs/commands.rst
+index 95d4fa800c3bd5e8482ce084153ab2d0c298121d..29c71e46678d3d68aa0af51081345f2f13a00b7b 100644
+--- a/docs/commands.rst
++++ b/docs/commands.rst
+@@ -417,7 +417,7 @@ to not use the file type and manually open the file through
+ 
+ For a more complex example that also improves upon handling of the
+ pipelines have a look at the `imagepipe multi command chaining demo
+-<https://github.com/mitsuhiko/click/tree/master/examples/imagepipe>`__ in
++<https://github.com/pallets/click/tree/master/examples/imagepipe>`__ in
+ the Click repository.  It implements a pipeline based image editing tool
+ that has a nice internal structure for the pipelines.
+ 
+diff --git a/docs/quickstart.rst b/docs/quickstart.rst
+index e5ce571a0b31614380460a14d509e5229143e6fb..9108b5a2546a8b98a2c089152e0854d4ca12d81e 100644
+--- a/docs/quickstart.rst
++++ b/docs/quickstart.rst
+@@ -102,23 +102,23 @@ Examples of Click applications can be found in the documentation as well
+ as in the GitHub repository together with readme files:
+ 
+ *   ``inout``: `File input and output
+-    <https://github.com/mitsuhiko/click/tree/master/examples/inout>`_
++    <https://github.com/pallets/click/tree/master/examples/inout>`_
+ *   ``naval``: `Port of docopt naval example
+-    <https://github.com/mitsuhiko/click/tree/master/examples/naval>`_
++    <https://github.com/pallets/click/tree/master/examples/naval>`_
+ *   ``aliases``: `Command alias example
+-    <https://github.com/mitsuhiko/click/tree/master/examples/aliases>`_
++    <https://github.com/pallets/click/tree/master/examples/aliases>`_
+ *   ``repo``: `Git-/Mercurial-like command line interface
+-    <https://github.com/mitsuhiko/click/tree/master/examples/repo>`_
++    <https://github.com/pallets/click/tree/master/examples/repo>`_
+ *   ``complex``: `Complex example with plugin loading
+-    <https://github.com/mitsuhiko/click/tree/master/examples/complex>`_
++    <https://github.com/pallets/click/tree/master/examples/complex>`_
+ *   ``validation``: `Custom parameter validation example
+-    <https://github.com/mitsuhiko/click/tree/master/examples/validation>`_
++    <https://github.com/pallets/click/tree/master/examples/validation>`_
+ *   ``colors``: `Colorama ANSI color support
+-    <https://github.com/mitsuhiko/click/tree/master/examples/colors>`_
++    <https://github.com/pallets/click/tree/master/examples/colors>`_
+ *   ``termui``: `Terminal UI functions demo
+-    <https://github.com/mitsuhiko/click/tree/master/examples/termui>`_
++    <https://github.com/pallets/click/tree/master/examples/termui>`_
+ *   ``imagepipe``: `Multi command chaining demo
+-    <https://github.com/mitsuhiko/click/tree/master/examples/imagepipe>`_
++    <https://github.com/pallets/click/tree/master/examples/imagepipe>`_
+ 
+ Basic Concepts
+ --------------
+diff --git a/docs/utils.rst b/docs/utils.rst
+index f1798b999ad6b53b28147d878e49f9ee5316cb0d..2ecbe8873d80e0a5c83f32941439b550c06bf384 100644
+--- a/docs/utils.rst
++++ b/docs/utils.rst
+@@ -266,7 +266,7 @@ streams respond to Unicode and binary data.
+ 
+ Because of this, click provides the :func:`get_binary_stream` and
+ :func:`get_text_stream` functions, which produce consistent results with
+-different Python versions and for a wide variety pf terminal configurations.
++different Python versions and for a wide variety of terminal configurations.
+ 
+ The end result is that these functions will always return a functional
+ stream object (except in very odd cases in Python 3; see
+diff --git a/setup.py b/setup.py
+index 8bacd6a76c0239bcc51340db7273be4951b17ad6..79f7f665921d89382ac8183dd1ff6c698126d8a5 100644
+--- a/setup.py
++++ b/setup.py
+@@ -16,7 +16,7 @@ setup(
+     author='Armin Ronacher',
+     author_email='armin.ronacher@active-4.com',
+     version=version,
+-    url='http://github.com/mitsuhiko/click',
++    url='http://github.com/pallets/click',
+     packages=['click'],
+     description='A simple wrapper around optparse for '
+                 'powerful command line utilities.',

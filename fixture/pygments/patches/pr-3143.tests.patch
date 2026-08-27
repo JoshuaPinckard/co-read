@@ -1,0 +1,205 @@
+diff --git a/tests/snippets/lua/attributes.txt b/tests/snippets/lua/attributes.txt
+new file mode 100644
+index 0000000000000000000000000000000000000000..5cd954dbed5a205b9f16aa6796e09ac632320cc6
+--- /dev/null
++++ b/tests/snippets/lua/attributes.txt
+@@ -0,0 +1,39 @@
++---input---
++local a < const> = 10
++local b<const>, c<close> = 10, false
++
++---tokens---
++'local'       Keyword.Declaration
++' '           Text.Whitespace
++'a'           Name.Variable
++' '           Text.Whitespace
++'<'           Punctuation
++' '           Text.Whitespace
++'const'       Name.Attribute
++'>'           Punctuation
++' '           Text.Whitespace
++'='           Operator
++' '           Text.Whitespace
++'10'          Literal.Number.Integer
++'\n'          Text.Whitespace
++
++'local'       Keyword.Declaration
++' '           Text.Whitespace
++'b'           Name.Variable
++'<'           Punctuation
++'const'       Name.Attribute
++'>'           Punctuation
++','           Punctuation
++' '           Text.Whitespace
++'c'           Name.Variable
++'<'           Punctuation
++'close'       Name.Attribute
++'>'           Punctuation
++' '           Text.Whitespace
++'='           Operator
++' '           Text.Whitespace
++'10'          Literal.Number.Integer
++','           Punctuation
++' '           Text.Whitespace
++'false'       Keyword.Constant
++'\n'          Text.Whitespace
+diff --git a/tests/snippets/lua/test_separate_operators.txt b/tests/snippets/lua/test_separate_operators.txt
+new file mode 100644
+index 0000000000000000000000000000000000000000..470cfaca3e1e5d629a592804f0179ff8ec7ba5d4
+--- /dev/null
++++ b/tests/snippets/lua/test_separate_operators.txt
+@@ -0,0 +1,30 @@
++---input---
++a =- 10
++a =~ 10
++a =# ""
++
++---tokens---
++'a'           Name.Variable
++' '           Text.Whitespace
++'='           Operator
++'-'           Operator
++' '           Text.Whitespace
++'10'          Literal.Number.Integer
++'\n'          Text.Whitespace
++
++'a'           Name.Variable
++' '           Text.Whitespace
++'='           Operator
++'~'           Operator
++' '           Text.Whitespace
++'10'          Literal.Number.Integer
++'\n'          Text.Whitespace
++
++'a'           Name.Variable
++' '           Text.Whitespace
++'='           Operator
++'#'           Operator
++' '           Text.Whitespace
++'"'           Literal.String.Double
++'"'           Literal.String.Double
++'\n'          Text.Whitespace
+diff --git a/tests/snippets/lua/test_single_operators.txt b/tests/snippets/lua/test_single_operators.txt
+new file mode 100644
+index 0000000000000000000000000000000000000000..131f90187b8963fbf5eb971049dca7d0de566c0e
+--- /dev/null
++++ b/tests/snippets/lua/test_single_operators.txt
+@@ -0,0 +1,118 @@
++---input---
++expr = (((1 + 1 - #("" .. "") * 1 / 1 % 1 << 1) ^ 1 // 1 & ~0 | 1 >> 1) == 4) and (0 ~= 1) or not (1 > 0 and 1 < 2 and 1 >= 1 and 1 <= 1)
++
++---tokens---
++'expr'        Name.Variable
++' '           Text.Whitespace
++'='           Operator
++' '           Text.Whitespace
++'((('         Punctuation
++'1'           Literal.Number.Integer
++' '           Text.Whitespace
++'+'           Operator
++' '           Text.Whitespace
++'1'           Literal.Number.Integer
++' '           Text.Whitespace
++'-'           Operator
++' '           Text.Whitespace
++'#'           Operator
++'('           Punctuation
++'"'           Literal.String.Double
++'"'           Literal.String.Double
++' '           Text.Whitespace
++'..'          Operator
++' '           Text.Whitespace
++'"'           Literal.String.Double
++'"'           Literal.String.Double
++')'           Punctuation
++' '           Text.Whitespace
++'*'           Operator
++' '           Text.Whitespace
++'1'           Literal.Number.Integer
++' '           Text.Whitespace
++'/'           Operator
++' '           Text.Whitespace
++'1'           Literal.Number.Integer
++' '           Text.Whitespace
++'%'           Operator
++' '           Text.Whitespace
++'1'           Literal.Number.Integer
++' '           Text.Whitespace
++'<<'          Operator
++' '           Text.Whitespace
++'1'           Literal.Number.Integer
++')'           Punctuation
++' '           Text.Whitespace
++'^'           Operator
++' '           Text.Whitespace
++'1'           Literal.Number.Integer
++' '           Text.Whitespace
++'//'          Operator
++' '           Text.Whitespace
++'1'           Literal.Number.Integer
++' '           Text.Whitespace
++'&'           Operator
++' '           Text.Whitespace
++'~'           Operator
++'0'           Literal.Number.Integer
++' '           Text.Whitespace
++'|'           Operator
++' '           Text.Whitespace
++'1'           Literal.Number.Integer
++' '           Text.Whitespace
++'>>'          Operator
++' '           Text.Whitespace
++'1'           Literal.Number.Integer
++')'           Punctuation
++' '           Text.Whitespace
++'=='          Operator
++' '           Text.Whitespace
++'4'           Literal.Number.Integer
++')'           Punctuation
++' '           Text.Whitespace
++'and'         Operator.Word
++' '           Text.Whitespace
++'('           Punctuation
++'0'           Literal.Number.Integer
++' '           Text.Whitespace
++'~='          Operator
++' '           Text.Whitespace
++'1'           Literal.Number.Integer
++')'           Punctuation
++' '           Text.Whitespace
++'or'          Operator.Word
++' '           Text.Whitespace
++'not'         Operator.Word
++' '           Text.Whitespace
++'('           Punctuation
++'1'           Literal.Number.Integer
++' '           Text.Whitespace
++'>'           Operator
++' '           Text.Whitespace
++'0'           Literal.Number.Integer
++' '           Text.Whitespace
++'and'         Operator.Word
++' '           Text.Whitespace
++'1'           Literal.Number.Integer
++' '           Text.Whitespace
++'<'           Operator
++' '           Text.Whitespace
++'2'           Literal.Number.Integer
++' '           Text.Whitespace
++'and'         Operator.Word
++' '           Text.Whitespace
++'1'           Literal.Number.Integer
++' '           Text.Whitespace
++'>='          Operator
++' '           Text.Whitespace
++'1'           Literal.Number.Integer
++' '           Text.Whitespace
++'and'         Operator.Word
++' '           Text.Whitespace
++'1'           Literal.Number.Integer
++' '           Text.Whitespace
++'<='          Operator
++' '           Text.Whitespace
++'1'           Literal.Number.Integer
++')'           Punctuation
++'\n'          Text.Whitespace

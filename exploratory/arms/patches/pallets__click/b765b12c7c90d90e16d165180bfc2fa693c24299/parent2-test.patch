@@ -1,0 +1,190 @@
+diff --git a/tests/typing/typing_aliased_group.py b/tests/typing/typing_aliased_group.py
+new file mode 100644
+index 0000000000000000000000000000000000000000..ccc706bc53fab561e45f2cdd4730418a88388539
+--- /dev/null
++++ b/tests/typing/typing_aliased_group.py
+@@ -0,0 +1,45 @@
++"""Example from https://click.palletsprojects.com/en/8.1.x/advanced/#command-aliases"""
++from __future__ import annotations
++
++from typing_extensions import assert_type
++
++import click
++
++
++class AliasedGroup(click.Group):
++    def get_command(self, ctx: click.Context, cmd_name: str) -> click.Command | None:
++        rv = click.Group.get_command(self, ctx, cmd_name)
++        if rv is not None:
++            return rv
++        matches = [x for x in self.list_commands(ctx) if x.startswith(cmd_name)]
++        if not matches:
++            return None
++        elif len(matches) == 1:
++            return click.Group.get_command(self, ctx, matches[0])
++        ctx.fail(f"Too many matches: {', '.join(sorted(matches))}")
++
++    def resolve_command(
++        self, ctx: click.Context, args: list[str]
++    ) -> tuple[str | None, click.Command, list[str]]:
++        # always return the full command name
++        _, cmd, args = super().resolve_command(ctx, args)
++        assert cmd is not None
++        return cmd.name, cmd, args
++
++
++@click.command(cls=AliasedGroup)
++def cli() -> None:
++    pass
++
++
++assert_type(cli, AliasedGroup)
++
++
++@cli.command()
++def push() -> None:
++    pass
++
++
++@cli.command()
++def pop() -> None:
++    pass
+diff --git a/tests/typing/typing_confirmation_option.py b/tests/typing/typing_confirmation_option.py
+new file mode 100644
+index 0000000000000000000000000000000000000000..09ecaa96daa834599e1750ca9b148eb2c8cd45c6
+--- /dev/null
++++ b/tests/typing/typing_confirmation_option.py
+@@ -0,0 +1,13 @@
++"""From https://click.palletsprojects.com/en/8.1.x/options/#yes-parameters"""
++from typing_extensions import assert_type
++
++import click
++
++
++@click.command()
++@click.confirmation_option(prompt="Are you sure you want to drop the db?")
++def dropdb() -> None:
++    click.echo("Dropped all tables!")
++
++
++assert_type(dropdb, click.Command)
+diff --git a/tests/typing/typing_group_kw_options.py b/tests/typing/typing_group_kw_options.py
+new file mode 100644
+index 0000000000000000000000000000000000000000..579132facc51c0d0a9c64597204b83149ff34132
+--- /dev/null
++++ b/tests/typing/typing_group_kw_options.py
+@@ -0,0 +1,11 @@
++from typing_extensions import assert_type
++
++import click
++
++
++@click.group(context_settings={})
++def hello() -> None:
++    pass
++
++
++assert_type(hello, click.Group)
+diff --git a/tests/typing/typing_help_option.py b/tests/typing/typing_help_option.py
+new file mode 100644
+index 0000000000000000000000000000000000000000..6b822c13147a05f06ccef8b3c0a1c7df2a34cda0
+--- /dev/null
++++ b/tests/typing/typing_help_option.py
+@@ -0,0 +1,13 @@
++from typing_extensions import assert_type
++
++import click
++
++
++@click.command()
++@click.help_option("-h", "--help")
++def hello() -> None:
++    """Simple program that greets NAME for a total of COUNT times."""
++    click.echo("Hello!")
++
++
++assert_type(hello, click.Command)
+diff --git a/tests/typing/typing_options.py b/tests/typing/typing_options.py
+new file mode 100644
+index 0000000000000000000000000000000000000000..6a6611928ef04d42404921567fa8d396a563b3da
+--- /dev/null
++++ b/tests/typing/typing_options.py
+@@ -0,0 +1,15 @@
++"""From https://click.palletsprojects.com/en/8.1.x/quickstart/#adding-parameters"""
++from typing_extensions import assert_type
++
++import click
++
++
++@click.command()
++@click.option("--count", default=1, help="number of greetings")
++@click.argument("name")
++def hello(count: int, name: str) -> None:
++    for _ in range(count):
++        click.echo(f"Hello {name}!")
++
++
++assert_type(hello, click.Command)
+diff --git a/tests/typing/typing_password_option.py b/tests/typing/typing_password_option.py
+new file mode 100644
+index 0000000000000000000000000000000000000000..8537e6ff59ec53e94c8adaf5402f46fb646a41c8
+--- /dev/null
++++ b/tests/typing/typing_password_option.py
+@@ -0,0 +1,14 @@
++import codecs
++
++from typing_extensions import assert_type
++
++import click
++
++
++@click.command()
++@click.password_option()
++def encrypt(password: str) -> None:
++    click.echo(f"encoded: to {codecs.encode(password, 'rot13')}")
++
++
++assert_type(encrypt, click.Command)
+diff --git a/tests/typing/typing_simple_example.py b/tests/typing/typing_simple_example.py
+new file mode 100644
+index 0000000000000000000000000000000000000000..0a94b8cb7872309780ea8db02484ce5d27b4cf3b
+--- /dev/null
++++ b/tests/typing/typing_simple_example.py
+@@ -0,0 +1,16 @@
++"""The simple example from https://github.com/pallets/click#a-simple-example."""
++from typing_extensions import assert_type
++
++import click
++
++
++@click.command()
++@click.option("--count", default=1, help="Number of greetings.")
++@click.option("--name", prompt="Your name", help="The person to greet.")
++def hello(count: int, name: str) -> None:
++    """Simple program that greets NAME for a total of COUNT times."""
++    for _ in range(count):
++        click.echo(f"Hello, {name}!")
++
++
++assert_type(hello, click.Command)
+diff --git a/tests/typing/typing_version_option.py b/tests/typing/typing_version_option.py
+new file mode 100644
+index 0000000000000000000000000000000000000000..fd473a001bd96b72996e3a331ad02eff5a0506b9
+--- /dev/null
++++ b/tests/typing/typing_version_option.py
+@@ -0,0 +1,15 @@
++"""
++From https://click.palletsprojects.com/en/8.1.x/options/#callbacks-and-eager-options.
++"""
++from typing_extensions import assert_type
++
++import click
++
++
++@click.command()
++@click.version_option("0.1")
++def hello() -> None:
++    click.echo("Hello World!")
++
++
++assert_type(hello, click.Command)

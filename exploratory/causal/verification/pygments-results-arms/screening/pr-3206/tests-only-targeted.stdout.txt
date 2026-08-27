@@ -1,0 +1,26 @@
+============================= test session starts =============================
+platform win32 -- Python 3.11.9, pytest-8.4.2, pluggy-1.6.0
+rootdir: C:\Users\joshp\AppData\Local\Temp\blast-radius-pygments-causal-opbff12g\screen-pr-3206-x4mn878z\tests-only
+configfile: pyproject.toml
+collected 1 item
+
+tests\snippets\vala\verbatim-string.txt F                                [100%]
+
+================================== FAILURES ===================================
+___________________ tests\snippets\vala\verbatim-string.txt ___________________
+The tokens produced by the "vala" lexer differ from the expected ones in the file "tests\snippets\vala\verbatim-string.txt".
+Run `tox -- tests\snippets --update-goldens` to update it.
+
+  
+  Skipping 151 identical leading characters in diff, use -v to show
+    tespace
+  - '"""This is a so-called "verbatim string".\n   Verbatim strings don\'t process escape sequences, such as \\n, \\t, \\\\, etc.\n   They may contain quotes and may span multiple lines."""' Literal.String
+  - ';'           Punctuation
+  + '"'           Literal.String
+  + '"'           Literal.String...
+  
+  ...Full output truncated (70 lines hidden), use '-vv' to show
+- generated xml file: C:\Users\joshp\Desktop\Blast-Radius\exploratory\causal\verification\pygments-results-arms\screening\pr-3206\tests-only-targeted.xml -
+=========================== short test summary info ===========================
+FAILED tests/snippets/vala/verbatim-string.txt::
+============================== 1 failed in 0.17s ==============================

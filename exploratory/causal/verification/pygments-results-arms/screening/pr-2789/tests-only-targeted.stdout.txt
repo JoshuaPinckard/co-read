@@ -1,0 +1,23 @@
+============================= test session starts =============================
+platform win32 -- Python 3.11.9, pytest-8.4.2, pluggy-1.6.0
+rootdir: C:\Users\joshp\AppData\Local\Temp\blast-radius-pygments-causal-opbff12g\screen-pr-2789-la6nt84w\tests-only
+configfile: pyproject.toml
+collected 3 items
+
+tests\snippets\bqn\test_inter_word.txt F                                 [ 33%]
+tests\snippets\bqn\test_number_underscores.txt F                         [ 66%]
+tests\snippets\bqn\test_recursive_modifier.txt F                         [100%]
+
+================================== FAILURES ===================================
+___________________ tests\snippets\bqn\test_inter_word.txt ____________________
+The tokens produced by the "bqn" lexer differ from the expected ones in the file "tests\\snippets\\bqn\\test_inter_word.txt".\nRun `tox -- tests\\snippets --update-goldens` to update it.\n\n  \n    '{'           Keyword.Type\n  - 'ab'          Name.Variable\n  ?     ---\n  + 'ab\U0001d54ais'       Name.Variable\n  ?    +++\n  - '\U0001d54a'           Operator...\n  \n  ...Full output truncated (6 lines hidden), use '-vv' to show
+_______________ tests\snippets\bqn\test_number_underscores.txt ________________
+The tokens produced by the "bqn" lexer differ from the expected ones in the file "tests\\snippets\\bqn\\test_number_underscores.txt".\nRun `tox -- tests\\snippets --update-goldens` to update it.\n\n  \n    '\u27e8'           Punctuation\n  - '1_.0__1_'    Literal.Number\n  ?   -------\n  + '1'           Literal.Number\n  ?    +++++++\n  + '_'           Error...\n  \n  ...Full output truncated (17 lines hidden), use '-vv' to show
+_______________ tests\snippets\bqn\test_recursive_modifier.txt ________________
+The tokens produced by the "bqn" lexer differ from the expected ones in the file "tests\\snippets\\bqn\\test_recursive_modifier.txt".\nRun `tox -- tests\\snippets --update-goldens` to update it.\n\n  \n  + '_'           Error\n  - '_\U0001d563'          Name.Attribute\n  ?  -\n  + '\U0001d563'           Name.Attribute\n  ?    +\n    ' '           Text.Whitespace...\n  \n  ...Full output truncated (7 lines hidden), use '-vv' to show
+- generated xml file: C:\Users\joshp\Desktop\Blast-Radius\exploratory\causal\verification\pygments-results-arms\screening\pr-2789\tests-only-targeted.xml -
+=========================== short test summary info ===========================
+FAILED tests/snippets/bqn/test_inter_word.txt::
+FAILED tests/snippets/bqn/test_number_underscores.txt::
+FAILED tests/snippets/bqn/test_recursive_modifier.txt::
+============================== 3 failed in 0.41s ==============================

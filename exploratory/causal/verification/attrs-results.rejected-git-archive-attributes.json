@@ -1,0 +1,1148 @@
+{
+  "accepted": 0,
+  "budget": 200,
+  "candidate_ledger_sha256": "aef5fa2f0927ab3d9a947876c2728d34162d2f2954306123c6757b4cf9417ab7",
+  "examined": 54,
+  "measurement": "second-repository-causal-task-verification",
+  "records": [
+    {
+      "accepted": false,
+      "base_tree_check": {
+        "actual_paths": 137,
+        "blob_mismatches": [
+          ".git_archival.txt"
+        ],
+        "expected_modes_sha256": "0f1312e500bad4ad82125e8a2b031af2e1e0b4a25bcdf12ad6cad9fad5879d76",
+        "expected_paths": 137,
+        "extra": [],
+        "matches_parent": false,
+        "missing": []
+      },
+      "completed_at_utc": "2026-08-24T12:49:39.970+00:00",
+      "parent": "f38b8a3f1625060aa4245930822c34c11c252f83",
+      "pr": 1606,
+      "rejection_reason": "base_export_tree_mismatch",
+      "sha": "f53fc5440d7f86aac4328aec7a563eb48634177f",
+      "started_at_utc": "2026-08-24T12:49:39.447+00:00",
+      "task_id": "pr-1606"
+    },
+    {
+      "accepted": false,
+      "base_tree_check": {
+        "actual_paths": 135,
+        "blob_mismatches": [
+          ".git_archival.txt"
+        ],
+        "expected_modes_sha256": "0c5946483d5257b1525c43d217c8ddf7ed2806fd238ba4632a7d6e4751f5972f",
+        "expected_paths": 135,
+        "extra": [],
+        "matches_parent": false,
+        "missing": []
+      },
+      "completed_at_utc": "2026-08-24T12:49:41.242+00:00",
+      "parent": "f616f732c6c5f87a8f7a762176422baed250a6be",
+      "pr": 1571,
+      "rejection_reason": "base_export_tree_mismatch",
+      "sha": "5aa76a4450c311d87eda43946ec0ecd743572649",
+      "started_at_utc": "2026-08-24T12:49:40.533+00:00",
+      "task_id": "pr-1571"
+    },
+    {
+      "accepted": false,
+      "base_tree_check": {
+        "actual_paths": 132,
+        "blob_mismatches": [
+          ".git_archival.txt"
+        ],
+        "expected_modes_sha256": "477ec1ea3488d74978bfe816a01cc9ffe51f0e4fbba704ea08dd9271819d964f",
+        "expected_paths": 132,
+        "extra": [],
+        "matches_parent": false,
+        "missing": []
+      },
+      "completed_at_utc": "2026-08-24T12:49:42.887+00:00",
+      "parent": "6851ab593cd25f3c14393e9355d57d22bec2a074",
+      "pr": 1593,
+      "rejection_reason": "base_export_tree_mismatch",
+      "sha": "97f8d175656bc03c373a1c9038048a4d312c307c",
+      "started_at_utc": "2026-08-24T12:49:41.658+00:00",
+      "task_id": "pr-1593"
+    },
+    {
+      "accepted": false,
+      "base_tree_check": {
+        "actual_paths": 131,
+        "blob_mismatches": [
+          ".git_archival.txt"
+        ],
+        "expected_modes_sha256": "1a99c91e2d254f74074e0b2b9543f62fcc8101f1c12721a10831f79ddd624885",
+        "expected_paths": 131,
+        "extra": [],
+        "matches_parent": false,
+        "missing": []
+      },
+      "completed_at_utc": "2026-08-24T12:49:44.812+00:00",
+      "parent": "ca0f04585d3fb132c6e2f6baa9d7d966d8036760",
+      "pr": 1600,
+      "rejection_reason": "base_export_tree_mismatch",
+      "sha": "6851ab593cd25f3c14393e9355d57d22bec2a074",
+      "started_at_utc": "2026-08-24T12:49:43.748+00:00",
+      "task_id": "pr-1600"
+    },
+    {
+      "accepted": false,
+      "base_tree_check": {
+        "actual_paths": 129,
+        "blob_mismatches": [
+          ".git_archival.txt"
+        ],
+        "expected_modes_sha256": "72fa0dbfb20f462fd06b93f8ffb771363bffed2df86ce3e11b36d68a33f56c20",
+        "expected_paths": 129,
+        "extra": [],
+        "matches_parent": false,
+        "missing": []
+      },
+      "completed_at_utc": "2026-08-24T12:49:46.507+00:00",
+      "parent": "57b314c0dc8e0b80c0ed8f61c0be81965137ea41",
+      "pr": 1541,
+      "rejection_reason": "base_export_tree_mismatch",
+      "sha": "0f758fe54a8742110f730ebbaf146e79f3937c8d",
+      "started_at_utc": "2026-08-24T12:49:45.889+00:00",
+      "task_id": "pr-1541"
+    },
+    {
+      "accepted": false,
+      "base_tree_check": {
+        "actual_paths": 133,
+        "blob_mismatches": [
+          ".git_archival.txt"
+        ],
+        "expected_modes_sha256": "fee14b19a2bc025e70dd841e9ff305567f894da981244e8f4f7e51ec271eaeb5",
+        "expected_paths": 133,
+        "extra": [],
+        "matches_parent": false,
+        "missing": []
+      },
+      "completed_at_utc": "2026-08-24T12:49:51.988+00:00",
+      "parent": "3a68d4913221abc6f8ad3be50937f7ae49300a98",
+      "pr": 1529,
+      "rejection_reason": "base_export_tree_mismatch",
+      "sha": "48b8611c27779811d161200e17de8da24aae7feb",
+      "started_at_utc": "2026-08-24T12:49:50.728+00:00",
+      "task_id": "pr-1529"
+    },
+    {
+      "accepted": false,
+      "base_tree_check": {
+        "actual_paths": 131,
+        "blob_mismatches": [
+          ".git_archival.txt"
+        ],
+        "expected_modes_sha256": "4b40108f2a748e6408ab9d321488b8616418330c368599ea69709281c6781c21",
+        "expected_paths": 131,
+        "extra": [],
+        "matches_parent": false,
+        "missing": []
+      },
+      "completed_at_utc": "2026-08-24T12:49:53.769+00:00",
+      "parent": "ab7f8b2f4c0f747d5b1575247ce35e5adaad182e",
+      "pr": 1513,
+      "rejection_reason": "base_export_tree_mismatch",
+      "sha": "af9c510912ce604a94896cc35c27368d5baf6ae6",
+      "started_at_utc": "2026-08-24T12:49:52.624+00:00",
+      "task_id": "pr-1513"
+    },
+    {
+      "accepted": false,
+      "base_tree_check": {
+        "actual_paths": 129,
+        "blob_mismatches": [
+          ".git_archival.txt"
+        ],
+        "expected_modes_sha256": "ff826a152bc007d814a82fcb3c78d9aec7517d700e46f7d3d5edd993bb52b77b",
+        "expected_paths": 129,
+        "extra": [],
+        "matches_parent": false,
+        "missing": []
+      },
+      "completed_at_utc": "2026-08-24T12:49:55.595+00:00",
+      "parent": "f3bcc37c3d2dc3199715f825a86b748c3b3805f9",
+      "pr": 1509,
+      "rejection_reason": "base_export_tree_mismatch",
+      "sha": "862696afb52fb7c0d47d45e05ec4feb844c11001",
+      "started_at_utc": "2026-08-24T12:49:54.366+00:00",
+      "task_id": "pr-1509"
+    },
+    {
+      "accepted": false,
+      "base_tree_check": {
+        "actual_paths": 134,
+        "blob_mismatches": [
+          ".git_archival.txt"
+        ],
+        "expected_modes_sha256": "dcf09ec39c821174a70ac8bf59283db22a10269e934dea634c84b52e5628a5da",
+        "expected_paths": 134,
+        "extra": [],
+        "matches_parent": false,
+        "missing": []
+      },
+      "completed_at_utc": "2026-08-24T12:49:58.603+00:00",
+      "parent": "6ef8d73dd728cdebf939b3a2cd694af57d1f6b5d",
+      "pr": 1469,
+      "rejection_reason": "base_export_tree_mismatch",
+      "sha": "1315e42fe51743fe1c3529da6792dcda2ef6cc1f",
+      "started_at_utc": "2026-08-24T12:49:56.903+00:00",
+      "task_id": "pr-1469"
+    },
+    {
+      "accepted": false,
+      "base_tree_check": {
+        "actual_paths": 133,
+        "blob_mismatches": [
+          ".git_archival.txt"
+        ],
+        "expected_modes_sha256": "e1fe9ea684fafcc865c94d09697f5f784f2d4a3af3a36d9e5947256cd77e44e2",
+        "expected_paths": 133,
+        "extra": [],
+        "matches_parent": false,
+        "missing": []
+      },
+      "completed_at_utc": "2026-08-24T12:50:00.629+00:00",
+      "parent": "57f0d5441c9deaac44aebbbf45e38e477651e4f2",
+      "pr": 1463,
+      "rejection_reason": "base_export_tree_mismatch",
+      "sha": "7369ad9f4b273e400478c8e65399d826ab3f3b32",
+      "started_at_utc": "2026-08-24T12:49:59.354+00:00",
+      "task_id": "pr-1463"
+    },
+    {
+      "accepted": false,
+      "base_tree_check": {
+        "actual_paths": 131,
+        "blob_mismatches": [
+          ".git_archival.txt"
+        ],
+        "expected_modes_sha256": "2c719b8eea1a68202289c569685288488b49f6a46823c9ca518548ef98f01cb9",
+        "expected_paths": 131,
+        "extra": [],
+        "matches_parent": false,
+        "missing": []
+      },
+      "completed_at_utc": "2026-08-24T12:50:03.229+00:00",
+      "parent": "af349876f4fb5df2b71a3f4878239b775bc89230",
+      "pr": 1457,
+      "rejection_reason": "base_export_tree_mismatch",
+      "sha": "6e3786c599279f24e91b0d57ef448f7a85d7a69f",
+      "started_at_utc": "2026-08-24T12:50:01.570+00:00",
+      "task_id": "pr-1457"
+    },
+    {
+      "accepted": false,
+      "base_tree_check": {
+        "actual_paths": 128,
+        "blob_mismatches": [
+          ".git_archival.txt"
+        ],
+        "expected_modes_sha256": "8e6dbd29c2d7ba47036120da9e4e8c6aaf29f0c40177085e4f78b7c0bf0f0216",
+        "expected_paths": 128,
+        "extra": [],
+        "matches_parent": false,
+        "missing": []
+      },
+      "completed_at_utc": "2026-08-24T12:50:05.859+00:00",
+      "parent": "000c563473400aa086f6486a9c38ace0e77ea219",
+      "pr": 1449,
+      "rejection_reason": "base_export_tree_mismatch",
+      "sha": "5bab46deb916520b153892d73400978ccb08ef96",
+      "started_at_utc": "2026-08-24T12:50:03.981+00:00",
+      "task_id": "pr-1449"
+    },
+    {
+      "accepted": false,
+      "base_tree_check": {
+        "actual_paths": 127,
+        "blob_mismatches": [
+          ".git_archival.txt"
+        ],
+        "expected_modes_sha256": "1ca1933be0a68cb5d9d555395157143288a001a9f85194a49aaf4d72c7188c6d",
+        "expected_paths": 127,
+        "extra": [],
+        "matches_parent": false,
+        "missing": []
+      },
+      "completed_at_utc": "2026-08-24T12:50:06.911+00:00",
+      "parent": "cbaef3f8f5ec3d6049b42c8c27f542c1571bb4c8",
+      "pr": 1446,
+      "rejection_reason": "base_export_tree_mismatch",
+      "sha": "000c563473400aa086f6486a9c38ace0e77ea219",
+      "started_at_utc": "2026-08-24T12:50:06.242+00:00",
+      "task_id": "pr-1446"
+    },
+    {
+      "accepted": false,
+      "base_tree_check": {
+        "actual_paths": 126,
+        "blob_mismatches": [
+          ".git_archival.txt"
+        ],
+        "expected_modes_sha256": "3fbf1647aeda53c1fc4bb8ce4a35668a1bd5bd9fb619905dba290ff0b90cc9cf",
+        "expected_paths": 126,
+        "extra": [],
+        "matches_parent": false,
+        "missing": []
+      },
+      "completed_at_utc": "2026-08-24T12:50:08.617+00:00",
+      "parent": "6879ffd11d9c382782008a515e78765e46c178d6",
+      "pr": 1448,
+      "rejection_reason": "base_export_tree_mismatch",
+      "sha": "cbaef3f8f5ec3d6049b42c8c27f542c1571bb4c8",
+      "started_at_utc": "2026-08-24T12:50:07.702+00:00",
+      "task_id": "pr-1448"
+    },
+    {
+      "accepted": false,
+      "base_tree_check": {
+        "actual_paths": 125,
+        "blob_mismatches": [
+          ".git_archival.txt"
+        ],
+        "expected_modes_sha256": "614ebb4a70b633199d96bf123d59976308a9da2ba8b28a36f66ccd4507a9ebcc",
+        "expected_paths": 125,
+        "extra": [],
+        "matches_parent": false,
+        "missing": []
+      },
+      "completed_at_utc": "2026-08-24T12:50:10.003+00:00",
+      "parent": "94caa57142c057ce52504cdf239ae0ed3168f9b5",
+      "pr": 1428,
+      "rejection_reason": "base_export_tree_mismatch",
+      "sha": "937b1e232803cc4ec9b9375ef525fc57c24ec498",
+      "started_at_utc": "2026-08-24T12:50:09.283+00:00",
+      "task_id": "pr-1428"
+    },
+    {
+      "accepted": false,
+      "base_tree_check": {
+        "actual_paths": 123,
+        "blob_mismatches": [
+          ".git_archival.txt"
+        ],
+        "expected_modes_sha256": "c319bfc3ca236cb7fa60c5d3ae018ea6409f7a0575a45944297bc14f7cfdb3bc",
+        "expected_paths": 123,
+        "extra": [],
+        "matches_parent": false,
+        "missing": []
+      },
+      "completed_at_utc": "2026-08-24T12:50:13.337+00:00",
+      "parent": "19943b775d40c018e844f2cb1728442f58112a3b",
+      "pr": 1417,
+      "rejection_reason": "base_export_tree_mismatch",
+      "sha": "3b0378dd66d33ebddb52be85b8c4aac6a914b1a2",
+      "started_at_utc": "2026-08-24T12:50:12.508+00:00",
+      "task_id": "pr-1417"
+    },
+    {
+      "accepted": false,
+      "base_tree_check": {
+        "actual_paths": 126,
+        "blob_mismatches": [
+          ".git_archival.txt"
+        ],
+        "expected_modes_sha256": "c14f5cdb53af4b0a2f67ba2e95142a7ffab6a95b5c8ce6d6e93e9884348c3037",
+        "expected_paths": 126,
+        "extra": [],
+        "matches_parent": false,
+        "missing": []
+      },
+      "completed_at_utc": "2026-08-24T12:50:14.981+00:00",
+      "parent": "6bde3618237cdae312e4e7fb006690be2a3ee0f6",
+      "pr": 1410,
+      "rejection_reason": "base_export_tree_mismatch",
+      "sha": "1c962d15a743a3c18401f0c788f0fd0cb3d9acf8",
+      "started_at_utc": "2026-08-24T12:50:14.379+00:00",
+      "task_id": "pr-1410"
+    },
+    {
+      "accepted": false,
+      "base_tree_check": {
+        "actual_paths": 125,
+        "blob_mismatches": [
+          ".git_archival.txt"
+        ],
+        "expected_modes_sha256": "89e18457666737b97033bb595b12e90982d93b26d568095265b8d5b3c736c1ac",
+        "expected_paths": 125,
+        "extra": [],
+        "matches_parent": false,
+        "missing": []
+      },
+      "completed_at_utc": "2026-08-24T12:50:16.676+00:00",
+      "parent": "e048efcb395443608d184a149c0adbca166cb833",
+      "pr": 1407,
+      "rejection_reason": "base_export_tree_mismatch",
+      "sha": "74007f67d203f902e88bdecba169786bf44a8aa2",
+      "started_at_utc": "2026-08-24T12:50:15.694+00:00",
+      "task_id": "pr-1407"
+    },
+    {
+      "accepted": false,
+      "base_tree_check": {
+        "actual_paths": 124,
+        "blob_mismatches": [
+          ".git_archival.txt"
+        ],
+        "expected_modes_sha256": "18dfdab13350211a5aa09e8f06117fd49349c9381d09c4d2de630d8c8507defa",
+        "expected_paths": 124,
+        "extra": [],
+        "matches_parent": false,
+        "missing": []
+      },
+      "completed_at_utc": "2026-08-24T12:50:18.143+00:00",
+      "parent": "75723b7720952ac0a4c7d3e277b6714ba55ded18",
+      "pr": 1401,
+      "rejection_reason": "base_export_tree_mismatch",
+      "sha": "e048efcb395443608d184a149c0adbca166cb833",
+      "started_at_utc": "2026-08-24T12:50:17.533+00:00",
+      "task_id": "pr-1401"
+    },
+    {
+      "accepted": false,
+      "base_tree_check": {
+        "actual_paths": 123,
+        "blob_mismatches": [
+          ".git_archival.txt"
+        ],
+        "expected_modes_sha256": "c319bfc3ca236cb7fa60c5d3ae018ea6409f7a0575a45944297bc14f7cfdb3bc",
+        "expected_paths": 123,
+        "extra": [],
+        "matches_parent": false,
+        "missing": []
+      },
+      "completed_at_utc": "2026-08-24T12:50:19.623+00:00",
+      "parent": "5820ce717ed3f6047409845004a3ec004ec1574d",
+      "pr": 1406,
+      "rejection_reason": "base_export_tree_mismatch",
+      "sha": "75723b7720952ac0a4c7d3e277b6714ba55ded18",
+      "started_at_utc": "2026-08-24T12:50:18.834+00:00",
+      "task_id": "pr-1406"
+    },
+    {
+      "accepted": false,
+      "base_tree_check": {
+        "actual_paths": 125,
+        "blob_mismatches": [
+          ".git_archival.txt"
+        ],
+        "expected_modes_sha256": "12fbabc3f975532af27a36741eeded4bd184b472b7980686f623d350061d5f37",
+        "expected_paths": 125,
+        "extra": [],
+        "matches_parent": false,
+        "missing": []
+      },
+      "completed_at_utc": "2026-08-24T12:50:25.587+00:00",
+      "parent": "2a76643e36aa7e07d13f9438857a7cff48b4a1d6",
+      "pr": 1380,
+      "rejection_reason": "base_export_tree_mismatch",
+      "sha": "1e07f46897488350bb44ed88f1c70d4d7461dde0",
+      "started_at_utc": "2026-08-24T12:50:22.567+00:00",
+      "task_id": "pr-1380"
+    },
+    {
+      "accepted": false,
+      "base_tree_check": {
+        "actual_paths": 124,
+        "blob_mismatches": [
+          ".git_archival.txt"
+        ],
+        "expected_modes_sha256": "39b87b4d5f888a8adcc98336be1655044a01316e4caa9ec6634bfb94b75f4906",
+        "expected_paths": 124,
+        "extra": [],
+        "matches_parent": false,
+        "missing": []
+      },
+      "completed_at_utc": "2026-08-24T12:50:28.523+00:00",
+      "parent": "e21793e90a25c7ea47a9c0369150067cc8322de0",
+      "pr": 1374,
+      "rejection_reason": "base_export_tree_mismatch",
+      "sha": "13105a64f2de2e257a537ad20c06ffdd1c9d7f94",
+      "started_at_utc": "2026-08-24T12:50:27.945+00:00",
+      "task_id": "pr-1374"
+    },
+    {
+      "accepted": false,
+      "base_tree_check": {
+        "actual_paths": 123,
+        "blob_mismatches": [
+          ".git_archival.txt"
+        ],
+        "expected_modes_sha256": "9eacf65a0a8dc4e75c35a29be1090fafe769f41811bf7502e66e7873dd34e196",
+        "expected_paths": 123,
+        "extra": [],
+        "matches_parent": false,
+        "missing": []
+      },
+      "completed_at_utc": "2026-08-24T12:50:30.517+00:00",
+      "parent": "ee0f19b696c60064c58cdc08b3265aef56d49ff8",
+      "pr": 1372,
+      "rejection_reason": "base_export_tree_mismatch",
+      "sha": "e21793e90a25c7ea47a9c0369150067cc8322de0",
+      "started_at_utc": "2026-08-24T12:50:28.830+00:00",
+      "task_id": "pr-1372"
+    },
+    {
+      "accepted": false,
+      "base_tree_check": {
+        "actual_paths": 121,
+        "blob_mismatches": [
+          ".git_archival.txt"
+        ],
+        "expected_modes_sha256": "b31c2fa658d1c3036777b18e380ace701847502029bd69b1887c2b90580d0c89",
+        "expected_paths": 121,
+        "extra": [],
+        "matches_parent": false,
+        "missing": []
+      },
+      "completed_at_utc": "2026-08-24T12:50:38.440+00:00",
+      "parent": "58cd3ae112abf36fcd8c1cdf2a55e21b3a5734d3",
+      "pr": 1365,
+      "rejection_reason": "base_export_tree_mismatch",
+      "sha": "1921da6eac6231b7bc058b076c0648b2d1b5c042",
+      "started_at_utc": "2026-08-24T12:50:37.295+00:00",
+      "task_id": "pr-1365"
+    },
+    {
+      "accepted": false,
+      "base_tree_check": {
+        "actual_paths": 122,
+        "blob_mismatches": [
+          ".git_archival.txt"
+        ],
+        "expected_modes_sha256": "600eec98c066c1670af169e3aa703c5667090ae6820f25a62ca8ff2d452e852c",
+        "expected_paths": 122,
+        "extra": [],
+        "matches_parent": false,
+        "missing": []
+      },
+      "completed_at_utc": "2026-08-24T12:50:41.388+00:00",
+      "parent": "876528893a10dc7cd866e5fa0e1165cb2ac5b83b",
+      "pr": 1331,
+      "rejection_reason": "base_export_tree_mismatch",
+      "sha": "5d6d21aa5e598c600a3610a4721a63e58d89dc5e",
+      "started_at_utc": "2026-08-24T12:50:40.034+00:00",
+      "task_id": "pr-1331"
+    },
+    {
+      "accepted": false,
+      "base_tree_check": {
+        "actual_paths": 121,
+        "blob_mismatches": [
+          ".git_archival.txt"
+        ],
+        "expected_modes_sha256": "ad2223677abc4578e858a4060553d0e918985c92cc689bb5afbb87a3ba3cb56f",
+        "expected_paths": 121,
+        "extra": [],
+        "matches_parent": false,
+        "missing": []
+      },
+      "completed_at_utc": "2026-08-24T12:50:44.911+00:00",
+      "parent": "53e632c5218b729da6ac37a35b4b68379dc18999",
+      "pr": 1328,
+      "rejection_reason": "base_export_tree_mismatch",
+      "sha": "6fda0a4e086b56d7058855e4c15112c8f58de74c",
+      "started_at_utc": "2026-08-24T12:50:43.216+00:00",
+      "task_id": "pr-1328"
+    },
+    {
+      "accepted": false,
+      "base_tree_check": {
+        "actual_paths": 120,
+        "blob_mismatches": [
+          ".git_archival.txt"
+        ],
+        "expected_modes_sha256": "a2f3e6e632259367854c3d6ea43b5f3c7b4b6e29dd4f14bf6cc6ed6b022e5873",
+        "expected_paths": 120,
+        "extra": [],
+        "matches_parent": false,
+        "missing": []
+      },
+      "completed_at_utc": "2026-08-24T12:50:49.461+00:00",
+      "parent": "f520d9a89f1fde6fdc5310ffe6c5d4c7467fb10b",
+      "pr": 1329,
+      "rejection_reason": "base_export_tree_mismatch",
+      "sha": "7373d88f9bef8a2ff70972f81e8d8b9dfb7c5653",
+      "started_at_utc": "2026-08-24T12:50:48.682+00:00",
+      "task_id": "pr-1329"
+    },
+    {
+      "accepted": false,
+      "base_tree_check": {
+        "actual_paths": 119,
+        "blob_mismatches": [
+          ".git_archival.txt"
+        ],
+        "expected_modes_sha256": "c89fb6367c27291a353e279f738601c80a16c274389bf8c69585ce94d5798367",
+        "expected_paths": 119,
+        "extra": [],
+        "matches_parent": false,
+        "missing": []
+      },
+      "completed_at_utc": "2026-08-24T12:50:50.906+00:00",
+      "parent": "69d6fd1c6af7fc25a90c31158fdf513240cab634",
+      "pr": 1330,
+      "rejection_reason": "base_export_tree_mismatch",
+      "sha": "f520d9a89f1fde6fdc5310ffe6c5d4c7467fb10b",
+      "started_at_utc": "2026-08-24T12:50:50.246+00:00",
+      "task_id": "pr-1330"
+    },
+    {
+      "accepted": false,
+      "base_tree_check": {
+        "actual_paths": 133,
+        "blob_mismatches": [
+          ".git_archival.txt"
+        ],
+        "expected_modes_sha256": "38a36cd4792d0d3c687960bd94a993e28955715c9431787fd30dbb4b33b1364b",
+        "expected_paths": 133,
+        "extra": [],
+        "matches_parent": false,
+        "missing": []
+      },
+      "completed_at_utc": "2026-08-24T12:50:52.034+00:00",
+      "parent": "dbb25ce34787a30e2ffa65685f6c689a269c3521",
+      "pr": 1323,
+      "rejection_reason": "base_export_tree_mismatch",
+      "sha": "bde3f58cfe7bfe29e8dbf3fa8b86e819fe7a93e4",
+      "started_at_utc": "2026-08-24T12:50:51.510+00:00",
+      "task_id": "pr-1323"
+    },
+    {
+      "accepted": false,
+      "base_tree_check": {
+        "actual_paths": 132,
+        "blob_mismatches": [
+          ".git_archival.txt"
+        ],
+        "expected_modes_sha256": "e81c42d0f718f13b7b581655d66f03ceb1129d13ff8db3ad6d977764a78fd8ef",
+        "expected_paths": 132,
+        "extra": [],
+        "matches_parent": false,
+        "missing": []
+      },
+      "completed_at_utc": "2026-08-24T12:50:53.831+00:00",
+      "parent": "fd7538f0e23a49ec34b636484de2d1b4b690c7fb",
+      "pr": 1321,
+      "rejection_reason": "base_export_tree_mismatch",
+      "sha": "dbb25ce34787a30e2ffa65685f6c689a269c3521",
+      "started_at_utc": "2026-08-24T12:50:52.341+00:00",
+      "task_id": "pr-1321"
+    },
+    {
+      "accepted": false,
+      "base_tree_check": {
+        "actual_paths": 131,
+        "blob_mismatches": [
+          ".git_archival.txt"
+        ],
+        "expected_modes_sha256": "def68bb4947a3ed997971db1a4a4a66ca3213816c8e85b32dce25ac0f2a1def4",
+        "expected_paths": 131,
+        "extra": [],
+        "matches_parent": false,
+        "missing": []
+      },
+      "completed_at_utc": "2026-08-24T12:50:57.461+00:00",
+      "parent": "09161fc9181bf94aa3bbc5509c663d736a9553dc",
+      "pr": 1320,
+      "rejection_reason": "base_export_tree_mismatch",
+      "sha": "fd7538f0e23a49ec34b636484de2d1b4b690c7fb",
+      "started_at_utc": "2026-08-24T12:50:54.962+00:00",
+      "task_id": "pr-1320"
+    },
+    {
+      "accepted": false,
+      "base_tree_check": {
+        "actual_paths": 130,
+        "blob_mismatches": [
+          ".git_archival.txt"
+        ],
+        "expected_modes_sha256": "dcfc59f487a52547b60fd69d5599cd02bf7974cf19f21cc3ea2535a78eb3ff50",
+        "expected_paths": 130,
+        "extra": [],
+        "matches_parent": false,
+        "missing": []
+      },
+      "completed_at_utc": "2026-08-24T12:51:00.214+00:00",
+      "parent": "689a0e64012d1e576ebd99e786a254bc537582c6",
+      "pr": 1319,
+      "rejection_reason": "base_export_tree_mismatch",
+      "sha": "09161fc9181bf94aa3bbc5509c663d736a9553dc",
+      "started_at_utc": "2026-08-24T12:50:58.185+00:00",
+      "task_id": "pr-1319"
+    },
+    {
+      "accepted": false,
+      "base_tree_check": {
+        "actual_paths": 129,
+        "blob_mismatches": [
+          ".git_archival.txt"
+        ],
+        "expected_modes_sha256": "83ef77c9c8a40ce481077a9c563658e4f7171f5eeeea171cd2e34d407d445c4b",
+        "expected_paths": 129,
+        "extra": [],
+        "matches_parent": false,
+        "missing": []
+      },
+      "completed_at_utc": "2026-08-24T12:51:01.820+00:00",
+      "parent": "0f045cd231f01716c9c81ac78fa2c237c0dd1933",
+      "pr": 1267,
+      "rejection_reason": "base_export_tree_mismatch",
+      "sha": "f5683b852b1e7ec1f26aabbb55aad332de79066d",
+      "started_at_utc": "2026-08-24T12:51:00.739+00:00",
+      "task_id": "pr-1267"
+    },
+    {
+      "accepted": false,
+      "base_tree_check": {
+        "actual_paths": 128,
+        "blob_mismatches": [
+          ".git_archival.txt"
+        ],
+        "expected_modes_sha256": "568e20438fda63a462ea2fc2d63d5a7732600ee2d22abfd3b6a230e971e9a275",
+        "expected_paths": 128,
+        "extra": [],
+        "matches_parent": false,
+        "missing": []
+      },
+      "completed_at_utc": "2026-08-24T12:51:02.910+00:00",
+      "parent": "feb7a4d892ebcb443736aa431c273fd1cd8ec1d8",
+      "pr": 1310,
+      "rejection_reason": "base_export_tree_mismatch",
+      "sha": "a8808a2b3ed2fd1b7c129908fd28ee7b7106a730",
+      "started_at_utc": "2026-08-24T12:51:02.254+00:00",
+      "task_id": "pr-1310"
+    },
+    {
+      "accepted": false,
+      "base_tree_check": {
+        "actual_paths": 125,
+        "blob_mismatches": [
+          ".git_archival.txt"
+        ],
+        "expected_modes_sha256": "d7e1af37fab78136087a6fa079a40b68f342887974b039f168afbac745a7218c",
+        "expected_paths": 125,
+        "extra": [],
+        "matches_parent": false,
+        "missing": []
+      },
+      "completed_at_utc": "2026-08-24T12:51:04.640+00:00",
+      "parent": "37ac3ef0888bbd9235d17cbc6d284856f5276b44",
+      "pr": 1303,
+      "rejection_reason": "base_export_tree_mismatch",
+      "sha": "7c9b31ea7b5565f2ef4a582999dfa6afd7e0f16b",
+      "started_at_utc": "2026-08-24T12:51:03.760+00:00",
+      "task_id": "pr-1303"
+    },
+    {
+      "accepted": false,
+      "base_tree_check": {
+        "actual_paths": 124,
+        "blob_mismatches": [
+          ".git_archival.txt"
+        ],
+        "expected_modes_sha256": "35ad6a42ecac5e9b999d720d95b0d169f931ba054963cd081ab2f7e4738c11bd",
+        "expected_paths": 124,
+        "extra": [],
+        "matches_parent": false,
+        "missing": []
+      },
+      "completed_at_utc": "2026-08-24T12:51:07.432+00:00",
+      "parent": "c83de6ae90d43280df63baa729d50d06826b3462",
+      "pr": 1285,
+      "rejection_reason": "base_export_tree_mismatch",
+      "sha": "edcaf04a4d6b1b92996de668af9f6fea266efba2",
+      "started_at_utc": "2026-08-24T12:51:06.108+00:00",
+      "task_id": "pr-1285"
+    },
+    {
+      "accepted": false,
+      "base_tree_check": {
+        "actual_paths": 122,
+        "blob_mismatches": [
+          ".git_archival.txt"
+        ],
+        "expected_modes_sha256": "cea39056e360dd5020502285b335e7f18ff8606af5ae4103cf37b0a4d8c342d2",
+        "expected_paths": 122,
+        "extra": [],
+        "matches_parent": false,
+        "missing": []
+      },
+      "completed_at_utc": "2026-08-24T12:51:09.892+00:00",
+      "parent": "82a14627fddbd0b2d802fbc574fa3b1ef010a801",
+      "pr": 1253,
+      "rejection_reason": "base_export_tree_mismatch",
+      "sha": "88e2896ca9351cd48711bd320571a832ae122cd5",
+      "started_at_utc": "2026-08-24T12:51:08.285+00:00",
+      "task_id": "pr-1253"
+    },
+    {
+      "accepted": false,
+      "base_tree_check": {
+        "actual_paths": 121,
+        "blob_mismatches": [
+          ".git_archival.txt"
+        ],
+        "expected_modes_sha256": "2d51370d2ff21a422c892379131c42bf7bfc725eea93926396a792880d695fc4",
+        "expected_paths": 121,
+        "extra": [],
+        "matches_parent": false,
+        "missing": []
+      },
+      "completed_at_utc": "2026-08-24T12:51:12.140+00:00",
+      "parent": "1b3898a4b8f61e959a337bb38ea1ab9c21eefcef",
+      "pr": 1268,
+      "rejection_reason": "base_export_tree_mismatch",
+      "sha": "2446e640caaef37c0aa14a39308a1b826466c1d9",
+      "started_at_utc": "2026-08-24T12:51:10.479+00:00",
+      "task_id": "pr-1268"
+    },
+    {
+      "accepted": false,
+      "base_tree_check": {
+        "actual_paths": 119,
+        "blob_mismatches": [
+          ".git_archival.txt"
+        ],
+        "expected_modes_sha256": "92acf94f6df4aa0e06fa4e6a4fd057dd3d1d80602b9be8ea1ee180c50be26ea4",
+        "expected_paths": 119,
+        "extra": [],
+        "matches_parent": false,
+        "missing": []
+      },
+      "completed_at_utc": "2026-08-24T12:51:14.138+00:00",
+      "parent": "09e35d448ef99f55b516f1440b4548c64fb2e6cf",
+      "pr": 1264,
+      "rejection_reason": "base_export_tree_mismatch",
+      "sha": "278d3a5bc6b271baccd0244b20b8a4016a6e35c4",
+      "started_at_utc": "2026-08-24T12:51:12.553+00:00",
+      "task_id": "pr-1264"
+    },
+    {
+      "accepted": false,
+      "base_tree_check": {
+        "actual_paths": 118,
+        "blob_mismatches": [
+          ".git_archival.txt"
+        ],
+        "expected_modes_sha256": "c6c3e45d67cbfd299229e32fba63bbbbe306a607a8cd2b75c93bf33673f80a1e",
+        "expected_paths": 118,
+        "extra": [],
+        "matches_parent": false,
+        "missing": []
+      },
+      "completed_at_utc": "2026-08-24T12:51:16.856+00:00",
+      "parent": "f590f44cfd43fbba0eb3c6747fa0f635f8f7affa",
+      "pr": 1263,
+      "rejection_reason": "base_export_tree_mismatch",
+      "sha": "d9ed5937fe0c2621c53e53e8c7a5ff4bd559de65",
+      "started_at_utc": "2026-08-24T12:51:15.009+00:00",
+      "task_id": "pr-1263"
+    },
+    {
+      "accepted": false,
+      "base_tree_check": {
+        "actual_paths": 118,
+        "blob_mismatches": [
+          ".git_archival.txt"
+        ],
+        "expected_modes_sha256": "c6c3e45d67cbfd299229e32fba63bbbbe306a607a8cd2b75c93bf33673f80a1e",
+        "expected_paths": 118,
+        "extra": [],
+        "matches_parent": false,
+        "missing": []
+      },
+      "completed_at_utc": "2026-08-24T12:51:19.080+00:00",
+      "parent": "b9084fab02c009a593b604562a69f36a5915c8e5",
+      "pr": 1255,
+      "rejection_reason": "base_export_tree_mismatch",
+      "sha": "f9ff9135b472c78a7333d6272c62b92217897464",
+      "started_at_utc": "2026-08-24T12:51:17.543+00:00",
+      "task_id": "pr-1255"
+    },
+    {
+      "accepted": false,
+      "base_tree_check": {
+        "actual_paths": 116,
+        "blob_mismatches": [
+          ".git_archival.txt"
+        ],
+        "expected_modes_sha256": "ce9c006842aa9de998384d2786e7f89530981d6e164a976c3da712ae1ce0fbf6",
+        "expected_paths": 116,
+        "extra": [],
+        "matches_parent": false,
+        "missing": []
+      },
+      "completed_at_utc": "2026-08-24T12:51:20.861+00:00",
+      "parent": "5b0a4e6ab80db0f28b2866a3376e87be04b84bcc",
+      "pr": 1221,
+      "rejection_reason": "base_export_tree_mismatch",
+      "sha": "26d8dd79570c8ca8cd92427a8b5074721f27995d",
+      "started_at_utc": "2026-08-24T12:51:20.220+00:00",
+      "task_id": "pr-1221"
+    },
+    {
+      "accepted": false,
+      "base_tree_check": {
+        "actual_paths": 121,
+        "blob_mismatches": [
+          ".git_archival.txt"
+        ],
+        "expected_modes_sha256": "3d0faa7f3f5916990c5dd19393d9da8bf5dc58a66d8275265a2032e21c61d8d8",
+        "expected_paths": 121,
+        "extra": [],
+        "matches_parent": false,
+        "missing": []
+      },
+      "completed_at_utc": "2026-08-24T12:51:25.459+00:00",
+      "parent": "01413df3db8e64437547f7fa6439a646fa116a98",
+      "pr": 1200,
+      "rejection_reason": "base_export_tree_mismatch",
+      "sha": "597c3a8adb5abeda66e0f6e9aed7fcaec26ee1a0",
+      "started_at_utc": "2026-08-24T12:51:25.030+00:00",
+      "task_id": "pr-1200"
+    },
+    {
+      "accepted": false,
+      "base_tree_check": {
+        "actual_paths": 120,
+        "blob_mismatches": [
+          ".git_archival.txt"
+        ],
+        "expected_modes_sha256": "a8c00b115994b6afe180e48ac5430cade008b3074f6be589dfdefe029b075585",
+        "expected_paths": 120,
+        "extra": [],
+        "matches_parent": false,
+        "missing": []
+      },
+      "completed_at_utc": "2026-08-24T12:51:26.571+00:00",
+      "parent": "d40d9f3c97302f3d9bfe7c72e4d5b542e041f3d8",
+      "pr": 1203,
+      "rejection_reason": "base_export_tree_mismatch",
+      "sha": "1fcd29f8641efbff7e1b2130a38a4404a899bd50",
+      "started_at_utc": "2026-08-24T12:51:26.069+00:00",
+      "task_id": "pr-1203"
+    },
+    {
+      "accepted": false,
+      "base_tree_check": {
+        "actual_paths": 119,
+        "blob_mismatches": [
+          ".git_archival.txt"
+        ],
+        "expected_modes_sha256": "0d45e24f59fb3ae4dafe9b4d5fbea3184544651c326d3fda4a8db1e97c6e824f",
+        "expected_paths": 119,
+        "extra": [],
+        "matches_parent": false,
+        "missing": []
+      },
+      "completed_at_utc": "2026-08-24T12:51:27.286+00:00",
+      "parent": "ea1037cc144aaf41a4256e6eb391fc76c775d82c",
+      "pr": 1201,
+      "rejection_reason": "base_export_tree_mismatch",
+      "sha": "079954ef405919968fb020921232509df3b0bcc9",
+      "started_at_utc": "2026-08-24T12:51:26.985+00:00",
+      "task_id": "pr-1201"
+    },
+    {
+      "accepted": false,
+      "base_tree_check": {
+        "actual_paths": 118,
+        "blob_mismatches": [
+          ".git_archival.txt"
+        ],
+        "expected_modes_sha256": "51cab64b194a40e20fafc915e85bf25200daa06abdefa4d6029918e403fc13ac",
+        "expected_paths": 118,
+        "extra": [],
+        "matches_parent": false,
+        "missing": []
+      },
+      "completed_at_utc": "2026-08-24T12:51:29.152+00:00",
+      "parent": "46a03dcef6d2698aa5934a1ee00d9523564dcd8c",
+      "pr": 1187,
+      "rejection_reason": "base_export_tree_mismatch",
+      "sha": "c2824ac30f315bfbc7398960c6831d68ecc9edb4",
+      "started_at_utc": "2026-08-24T12:51:28.880+00:00",
+      "task_id": "pr-1187"
+    },
+    {
+      "accepted": false,
+      "base_tree_check": {
+        "actual_paths": 116,
+        "blob_mismatches": [
+          ".git_archival.txt"
+        ],
+        "expected_modes_sha256": "c3f28d30031f4495037f4fc8a7f5bf784fc29d27dcf679e7b54329ecac20ec44",
+        "expected_paths": 116,
+        "extra": [],
+        "matches_parent": false,
+        "missing": []
+      },
+      "completed_at_utc": "2026-08-24T12:51:30.892+00:00",
+      "parent": "a37b556f7d762b7a6229b1fbf985965539571cd2",
+      "pr": 1165,
+      "rejection_reason": "base_export_tree_mismatch",
+      "sha": "0bf0678a224dc89f150eb55861700864bec85cf6",
+      "started_at_utc": "2026-08-24T12:51:30.369+00:00",
+      "task_id": "pr-1165"
+    },
+    {
+      "accepted": false,
+      "base_tree_check": {
+        "actual_paths": 126,
+        "blob_mismatches": [
+          ".git_archival.txt"
+        ],
+        "expected_modes_sha256": "3bc4f1b70a183c9eb758917dc3312eadb1ee12400745cd4afe52e8e4fe3e8195",
+        "expected_paths": 126,
+        "extra": [],
+        "matches_parent": false,
+        "missing": []
+      },
+      "completed_at_utc": "2026-08-24T12:51:33.743+00:00",
+      "parent": "d1aaeeed78c164ac87c0cff521bb7529baaf0eba",
+      "pr": 1120,
+      "rejection_reason": "base_export_tree_mismatch",
+      "sha": "c8b342d34fecee40e5d2cb20b527c3f526f87bad",
+      "started_at_utc": "2026-08-24T12:51:33.398+00:00",
+      "task_id": "pr-1120"
+    },
+    {
+      "accepted": false,
+      "base_tree_check": {
+        "actual_paths": 125,
+        "blob_mismatches": [
+          ".git_archival.txt"
+        ],
+        "expected_modes_sha256": "dcefba1c84c5f8fd16f9113d18d47308d43269d79fe0701c5563ee00b5d7df22",
+        "expected_paths": 125,
+        "extra": [],
+        "matches_parent": false,
+        "missing": []
+      },
+      "completed_at_utc": "2026-08-24T12:51:34.950+00:00",
+      "parent": "5a7d978d8a7050961f62159c63fd2b7ad7b1c7d2",
+      "pr": 1122,
+      "rejection_reason": "base_export_tree_mismatch",
+      "sha": "7d55876ed34bf74a9c402164c11bb1f28804fd12",
+      "started_at_utc": "2026-08-24T12:51:34.605+00:00",
+      "task_id": "pr-1122"
+    },
+    {
+      "accepted": false,
+      "base_tree_check": {
+        "actual_paths": 124,
+        "blob_mismatches": [
+          ".git_archival.txt"
+        ],
+        "expected_modes_sha256": "7e099b3cbd296d26cbcae5233e6aeed256c40af78e933c44ce9870e439a6569f",
+        "expected_paths": 124,
+        "extra": [],
+        "matches_parent": false,
+        "missing": []
+      },
+      "completed_at_utc": "2026-08-24T12:51:36.371+00:00",
+      "parent": "22ae8473fb88d6e585b05c709e81e1a46398a649",
+      "pr": 1117,
+      "rejection_reason": "base_export_tree_mismatch",
+      "sha": "a14e1859b820b4e090ccc7c2bc73e61fbdbaefb2",
+      "started_at_utc": "2026-08-24T12:51:35.994+00:00",
+      "task_id": "pr-1117"
+    },
+    {
+      "accepted": false,
+      "base_tree_check": {
+        "actual_paths": 124,
+        "blob_mismatches": [
+          ".git_archival.txt"
+        ],
+        "expected_modes_sha256": "7e099b3cbd296d26cbcae5233e6aeed256c40af78e933c44ce9870e439a6569f",
+        "expected_paths": 124,
+        "extra": [],
+        "matches_parent": false,
+        "missing": []
+      },
+      "completed_at_utc": "2026-08-24T12:51:37.446+00:00",
+      "parent": "5596c4f11d7b8758feda3513177a28fe7d725de9",
+      "pr": 1119,
+      "rejection_reason": "base_export_tree_mismatch",
+      "sha": "22ae8473fb88d6e585b05c709e81e1a46398a649",
+      "started_at_utc": "2026-08-24T12:51:37.139+00:00",
+      "task_id": "pr-1119"
+    },
+    {
+      "accepted": false,
+      "base_tree_check": {
+        "actual_paths": 122,
+        "blob_mismatches": [
+          ".git_archival.txt"
+        ],
+        "expected_modes_sha256": "029ac9ede81cfd8945c9bdd584a08288f21670497c453cedf88593aaf1b2584d",
+        "expected_paths": 122,
+        "extra": [],
+        "matches_parent": false,
+        "missing": []
+      },
+      "completed_at_utc": "2026-08-24T12:51:39.259+00:00",
+      "parent": "359c2db460f4410e86782a99eef06dabbfd96d34",
+      "pr": 1107,
+      "rejection_reason": "base_export_tree_mismatch",
+      "sha": "65ee286d6a98dbe88aba73b993532af86bffa143",
+      "started_at_utc": "2026-08-24T12:51:38.617+00:00",
+      "task_id": "pr-1107"
+    },
+    {
+      "accepted": false,
+      "base_tree_check": {
+        "actual_paths": 121,
+        "blob_mismatches": [
+          ".git_archival.txt"
+        ],
+        "expected_modes_sha256": "f2854e59e4f1c0c57ac42cdf9708a7b16f71969866ad59b4390f328662e3df17",
+        "expected_paths": 121,
+        "extra": [],
+        "matches_parent": false,
+        "missing": []
+      },
+      "completed_at_utc": "2026-08-24T12:51:42.249+00:00",
+      "parent": "5d9753a3b11228c72e8068f5e5daeeb728c6fc83",
+      "pr": 1099,
+      "rejection_reason": "base_export_tree_mismatch",
+      "sha": "c7308a66ef1f4e60f7dbfa75177634666817d861",
+      "started_at_utc": "2026-08-24T12:51:41.003+00:00",
+      "task_id": "pr-1099"
+    },
+    {
+      "accepted": false,
+      "base_tree_check": {
+        "actual_paths": 118,
+        "blob_mismatches": [
+          ".git_archival.txt"
+        ],
+        "expected_modes_sha256": "42bef0f76258e0ec2cd620c6df6ae1c84430958acd5890cda80595b5efdff7c8",
+        "expected_paths": 118,
+        "extra": [],
+        "matches_parent": false,
+        "missing": []
+      },
+      "completed_at_utc": "2026-08-24T12:51:49.809+00:00",
+      "parent": "9cf2ed5a6b1c6977a7f545f84d87b3dd63befe0a",
+      "pr": 1079,
+      "rejection_reason": "base_export_tree_mismatch",
+      "sha": "4fcd15bddbc96fd23d3218493c831a0e38b1cd86",
+      "started_at_utc": "2026-08-24T12:51:48.303+00:00",
+      "task_id": "pr-1079"
+    }
+  ],
+  "schema_version": 1,
+  "selection_rule_sha256": "99e982b6baad6951a5448e5d7539b86248177974143d7cc3952df67aece52ba3",
+  "started_at_utc": "2026-08-24T12:49:39.150+00:00",
+  "status": "running",
+  "target": 30
+}

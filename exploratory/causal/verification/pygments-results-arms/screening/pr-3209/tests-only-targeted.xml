@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?><testsuites name="pytest tests"><testsuite name="pytest" errors="0" failures="1" skipped="0" tests="1" time="0.204" timestamp="2026-08-24T08:11:59.658127-07:00" hostname="JoshP"><testcase classname="tests.snippets.yaml.2827.txt" name="" time="0.009"><failure message="The tokens produced by the &quot;yaml&quot; lexer differ from the expected ones in the file &quot;tests\snippets\yaml\2827.txt&quot;.&#10;Run `tox -- tests\snippets --update-goldens` to update it.&#10;&#10;  &#10;  Skipping 118 identical leading characters in diff, use -v to show&#10;  - 0'        Literal.Scalar.Plain&#10;  + 0'        Error&#10;    'baz'         Literal.Scalar.Plain&#10;    '\n'          Text.Whitespace">The tokens produced by the "yaml" lexer differ from the expected ones in the file "tests\snippets\yaml\2827.txt".
+Run `tox -- tests\snippets --update-goldens` to update it.
+
+  
+  Skipping 118 identical leading characters in diff, use -v to show
+  - 0'        Literal.Scalar.Plain
+  + 0'        Error
+    'baz'         Literal.Scalar.Plain
+    '\n'          Text.Whitespace</failure></testcase></testsuite></testsuites>

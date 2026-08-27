@@ -1,0 +1,155 @@
+diff --git a/pom.xml b/pom.xml
+index 4d3110736f9d8f76f1f4a9008483c2518696b13b..ee294398c77aab15b538b4e30ad4658861caba60 100644
+--- a/pom.xml
++++ b/pom.xml
+@@ -191,6 +191,15 @@
+         <role>Java Developer</role>
+       </roles>
+     </developer>
++    <developer>
++      <name>Rob Tompkins</name>
++      <id>chtompki</id>
++      <email>chtompki@apache.org</email>
++      <timezone>-5</timezone>
++      <roles>
++        <role>Java Developer</role>
++      </roles>
++    </developer>
+   </developers>
+   <contributors>
+     <contributor>
+diff --git a/src/changes/changes.xml b/src/changes/changes.xml
+index 025ba341be135e3e4e399ee7dd7655f3f9706975..969ffc830c8a7a20253a52199bd032f44d90bf47 100644
+--- a/src/changes/changes.xml
++++ b/src/changes/changes.xml
+@@ -46,6 +46,17 @@ The <action> type attribute can be add,update,fix,remove.
+   <body>
+ 
+   <release version="3.5" date="tba" description="tba">
++    <action issue="LANG-1252" type="fix" dev="chtompki" due-to="Rob Tompkins">Rename NumberUtils.isNumber, isCreatable to better reflect createNumber. Also, accommodated for "+" symbol as prefix in isCreatable and isNumber.</action>
++    <action issue="LANG-1262" type="update" dev="pschumacher" due-to="Ruslan Cheremin">CompareToBuilder.append(Object, Object, Comparator) method is too big to be inlined</action>
++    <action issue="LANG-1230" type="fix" dev="pschumacher" due-to="Philippe Marschall">Remove unnecessary synchronization from registry lookup in EqualsBuilder and HashCodeBuilder</action>
++    <action issue="LANG-1224" type="add" dev="pschumacher" due-to="Caleb Cushing">Extend RandomStringUtils with methods that generate strings between a min and max length</action>
++    <action issue="LANG-1214" type="fix" dev="pschumacher" due-to="Henry Tung">Handle "void" in ClassUtils.getClass()</action>
++    <action issue="LANG-1250" type="fix" dev="pschumacher" due-to="Glease Wang">SerializationUtils#deserialize has unnecessary code and a comment for that</action>
++    <action issue="LANG-1259" type="update" dev="britter" due-to="Dominik Stadler">JavaDoc for ArrayUtils.isNotEmpty() is slightly misleading</action>
++    <action issue="LANG-1257" type="add" dev="ggregory" due-to="Gary Gregory">Add APIs StringUtils.wrapIfMissing(String, char|String)</action>
++    <action issue="LANG-1190" type="fix" dev="pschumacher" due-to="pschumacher">TypeUtils.isAssignable throws NullPointerException when fromType has type variables and toType generic superclass specifies type variable</action>
++    <action issue="LANG-1226" type="fix" dev="pschumacher" due-to="pschumacher">StringUtils#normalizeSpace does not trim the string anymore</action>
++    <action issue="LANG-1251" type="fix" dev="pschumacher" due-to="Takuya Ueshin">SerializationUtils.ClassLoaderAwareObjectInputStream should use static initializer to initialize primitiveTypes map</action>
+     <action issue="LANG-1253" type="add" dev="ggregory" due-to="adilek">[GitHub issue #170] Add RandomUtils#nextBoolean() method</action>
+     <action issue="LANG-1247" type="update" dev="chas" due-to="Benoit Wiart">FastDatePrinter generates extra Date objects</action>
+     <action issue="LANG-1018" type="fix" dev="pschumacher" due-to="Nick Manley">Fix precision loss on NumberUtils.createNumber(String)</action>
+diff --git a/src/main/java/org/apache/commons/lang3/math/NumberUtils.java b/src/main/java/org/apache/commons/lang3/math/NumberUtils.java
+index 3d590576f154752ab5a852e6c1567021d20bb4ef..7d582de9eaa7894a4d76e36e828aeee0d7aa153a 100644
+--- a/src/main/java/org/apache/commons/lang3/math/NumberUtils.java
++++ b/src/main/java/org/apache/commons/lang3/math/NumberUtils.java
+@@ -21,6 +21,7 @@ import java.math.BigDecimal;
+ import java.math.BigInteger;
+ 
+ import org.apache.commons.lang3.StringUtils;
++import org.apache.commons.lang3.SystemUtils;
+ import org.apache.commons.lang3.Validate;
+ 
+ /**
+@@ -1349,9 +1350,9 @@ public class NumberUtils {
+      * <p>Checks whether the String a valid Java number.</p>
+      *
+      * <p>Valid numbers include hexadecimal marked with the <code>0x</code> or
+-     * <code>0X</code> qualifier, octal numbers, scientific notation and numbers 
+-     * marked with a type qualifier (e.g. 123L).</p>
+-     * 
++     * <code>0X</code> qualifier, octal numbers, scientific notation and
++     * numbers marked with a type qualifier (e.g. 123L).</p>
++     *
+      * <p>Non-hexadecimal strings beginning with a leading zero are
+      * treated as octal values. Thus the string <code>09</code> will return
+      * <code>false</code>, since <code>9</code> is not a valid octal value.
+@@ -1360,11 +1361,44 @@ public class NumberUtils {
+      * <p><code>null</code> and empty/blank {@code String} will return
+      * <code>false</code>.</p>
+      *
++     * <p>Note, {@link #createNumber(String)} should return a number for every
++     * input resuling in <code>true</code>.</p>
++     *
+      * @param str  the <code>String</code> to check
+      * @return <code>true</code> if the string is a correctly formatted number
+-     * @since 3.3 the code supports hex {@code 0Xhhh} and octal {@code 0ddd} validation
++     * @since 3.3 the code supports hex {@code 0Xhhh} an
++     *        octal {@code 0ddd} validation
++     * @deprecated This feature will be removed in Lang 4.0,
++     *             use {@link NumberUtils#isCreatable(String)} instead
+      */
++    @Deprecated
+     public static boolean isNumber(final String str) {
++        return isCreatable(str);
++    }
++
++    /**
++     * <p>Checks whether the String a valid Java number.</p>
++     *
++     * <p>Valid numbers include hexadecimal marked with the <code>0x</code> or
++     * <code>0X</code> qualifier, octal numbers, scientific notation and
++     * numbers marked with a type qualifier (e.g. 123L).</p>
++     *
++     * <p>Non-hexadecimal strings beginning with a leading zero are
++     * treated as octal values. Thus the string <code>09</code> will return
++     * <code>false</code>, since <code>9</code> is not a valid octal value.
++     * However, numbers beginning with {@code 0.} are treated as decimal.</p>
++     *
++     * <p><code>null</code> and empty/blank {@code String} will return
++     * <code>false</code>.</p>
++     *
++     * <p>Note, {@link #createNumber(String)} should return a number for every
++     * input resuling in <code>true</code>.</p>
++     *
++     * @param str  the <code>String</code> to check
++     * @return <code>true</code> if the string is a correctly formatted number
++     * @since 3.5 the code supports the "+" suffix on numbers except for integers in Java 1.6
++     */
++    public static boolean isCreatable(final String str) {
+         if (StringUtils.isEmpty(str)) {
+             return false;
+         }
+@@ -1375,7 +1409,8 @@ public class NumberUtils {
+         boolean allowSigns = false;
+         boolean foundDigit = false;
+         // deal with any possible sign up front
+-        final int start = (chars[0] == '-') ? 1 : 0;
++        final int start = (chars[0] == '-' || chars[0] == '+') ? 1 : 0;
++        final boolean hasLeadingPlusSign = (start == 1 && chars[0] == '+');
+         if (sz > start + 1 && chars[start] == '0') { // leading 0
+             if (
+                  (chars[start + 1] == 'x') || 
+@@ -1445,6 +1480,9 @@ public class NumberUtils {
+         }
+         if (i < chars.length) {
+             if (chars[i] >= '0' && chars[i] <= '9') {
++                if (SystemUtils.IS_JAVA_1_6 && hasLeadingPlusSign && !hasDecPoint) {
++                    return false;
++                }
+                 // no type qualifier, OK
+                 return true;
+             }
+@@ -1489,7 +1527,7 @@ public class NumberUtils {
+      * when calling one of those methods.</p>
+      *
+      * <p>Hexadecimal and scientific notations are <strong>not</strong> considered parsable.
+-     * See {@link #isNumber(String)} on those cases.</p>
++     * See {@link #isCreatable(String)} on those cases.</p>
+      *
+      * <p>{@code Null} and empty String will return <code>false</code>.</p>
+      *
+diff --git a/src/main/java/org/apache/commons/lang3/math/package-info.java b/src/main/java/org/apache/commons/lang3/math/package-info.java
+index fd6f8623d683df00f315dd8dd87effa8f4937396..16ca5b250713712a6fe71a7ebd06bc7ddeffa05b 100644
+--- a/src/main/java/org/apache/commons/lang3/math/package-info.java
++++ b/src/main/java/org/apache/commons/lang3/math/package-info.java
+@@ -26,7 +26,7 @@
+  * <p>There are two aspects of this package that should be highlighted.
+  * The first is {@link org.apache.commons.lang3.math.NumberUtils#createNumber(String)}, a method which does its best to convert a String into a {@link java.lang.Number} object.
+  * You have no idea what type of Number it will return, so you should call the relevant <code>xxxValue</code> method when you reach the point of needing a number.
+- * NumberUtils also has a related {@link org.apache.commons.lang3.math.NumberUtils#isNumber(String) isNumber(String)} method.</p>
++ * NumberUtils also has a related {@link org.apache.commons.lang3.math.NumberUtils#isCreatable(String)} method.</p>
+  *
+  * @since 2.0
+  */

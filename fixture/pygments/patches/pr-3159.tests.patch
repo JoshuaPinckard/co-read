@@ -1,0 +1,24 @@
+diff --git a/tests/snippets/twig/test_uppercase_variable_names.txt b/tests/snippets/twig/test_uppercase_variable_names.txt
+new file mode 100644
+index 0000000000000000000000000000000000000000..a27b327a4848f0f19a26e6229cbe15544c524c25
+--- /dev/null
++++ b/tests/snippets/twig/test_uppercase_variable_names.txt
+@@ -0,0 +1,18 @@
++---input---
++{{ MediaHelper.background(content.media, mediaRenderOptions) }}
++
++---tokens---
++'{{'          Comment.Preproc
++' '           Text
++'MediaHelper' Name.Variable
++'.background' Name.Variable
++'('           Operator
++'content'     Name.Variable
++'.media'      Name.Variable
++','           Operator
++' '           Text
++'mediaRenderOptions' Name.Variable
++')'           Operator
++' '           Text
++'}}'          Comment.Preproc
++'\n'          Other

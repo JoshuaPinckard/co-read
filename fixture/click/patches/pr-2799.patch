@@ -1,0 +1,256 @@
+diff --git a/src/click/__init__.py b/src/click/__init__.py
+index 1aa547c57af68954b3bcd6012873881030e53d91..f2360fa155edb0f8803f4f2e40c9763b35610446 100644
+--- a/src/click/__init__.py
++++ b/src/click/__init__.py
+@@ -19,6 +19,7 @@ from .decorators import command as command
+ from .decorators import confirmation_option as confirmation_option
+ from .decorators import group as group
+ from .decorators import help_option as help_option
++from .decorators import HelpOption as HelpOption
+ from .decorators import make_pass_decorator as make_pass_decorator
+ from .decorators import option as option
+ from .decorators import pass_context as pass_context
+diff --git a/src/click/core.py b/src/click/core.py
+index cc0d4603b442c72cf170d2090c7888ae59d9ba89..ec5b677b5a2e7f6dd0d060b663074ef7a4140b2e 100644
+--- a/src/click/core.py
++++ b/src/click/core.py
+@@ -1423,11 +1423,11 @@ class Group(Command):
+         ``chain`` is enabled.
+     :param kwargs: Other arguments passed to :class:`Command`.
+ 
+-    .. versionchanged:: 8.2
+-        Merged with and replaces the ``MultiCommand`` base class.
+-
+     .. versionchanged:: 8.0
+         The ``commands`` argument can be a list of command objects.
++
++    .. versionchanged:: 8.2
++        Merged with and replaces the ``MultiCommand`` base class.
+     """
+ 
+     allow_extra_args = True
+@@ -2593,7 +2593,9 @@ class Option(Parameter):
+         if name is None:
+             if not expose_value:
+                 return None, opts, secondary_opts
+-            raise TypeError("Could not determine name for option")
++            raise TypeError(
++                f"Could not determine name for option with declarations {decls!r}"
++            )
+ 
+         if not opts and not secondary_opts:
+             raise TypeError(
+@@ -2933,7 +2935,7 @@ class Argument(Parameter):
+         if not decls:
+             if not expose_value:
+                 return None, [], []
+-            raise TypeError("Could not determine name for argument")
++            raise TypeError("Argument is marked as exposed, but does not have a name.")
+         if len(decls) == 1:
+             name = arg = decls[0]
+             name = name.replace("-", "_").lower()
+diff --git a/src/click/decorators.py b/src/click/decorators.py
+index 3f77597ce2aaa615d8483599fcc37cab0dda6d68..901f831ad9c4ceb584e4af277eca6a36d1336a2d 100644
+--- a/src/click/decorators.py
++++ b/src/click/decorators.py
+@@ -2,6 +2,7 @@ from __future__ import annotations
+ 
+ import inspect
+ import typing as t
++from collections import abc
+ from functools import update_wrapper
+ from gettext import gettext as _
+ 
+@@ -524,32 +525,41 @@ def version_option(
+     return option(*param_decls, **kwargs)
+ 
+ 
+-def help_option(*param_decls: str, **kwargs: t.Any) -> t.Callable[[FC], FC]:
+-    """Add a ``--help`` option which immediately prints the help page
++class HelpOption(Option):
++    """Pre-configured ``--help`` option which immediately prints the help page
+     and exits the program.
++    """
+ 
+-    This is usually unnecessary, as the ``--help`` option is added to
+-    each command automatically unless ``add_help_option=False`` is
+-    passed.
++    def __init__(
++        self,
++        param_decls: abc.Sequence[str] | None = None,
++        **kwargs: t.Any,
++    ) -> None:
++        if not param_decls:
++            param_decls = ("--help",)
+ 
+-    :param param_decls: One or more option names. Defaults to the single
+-        value ``"--help"``.
+-    :param kwargs: Extra arguments are passed to :func:`option`.
+-    """
++        kwargs.setdefault("is_flag", True)
++        kwargs.setdefault("expose_value", False)
++        kwargs.setdefault("is_eager", True)
++        kwargs.setdefault("help", _("Show this message and exit."))
++        kwargs.setdefault("callback", self.show_help)
+ 
+-    def callback(ctx: Context, param: Parameter, value: bool) -> None:
+-        if not value or ctx.resilient_parsing:
+-            return
++        super().__init__(param_decls, **kwargs)
+ 
+-        echo(ctx.get_help(), color=ctx.color)
+-        ctx.exit()
++    @staticmethod
++    def show_help(ctx: Context, param: Parameter, value: bool) -> None:
++        """Callback that print the help page on ``<stdout>`` and exits."""
++        if value and not ctx.resilient_parsing:
++            echo(ctx.get_help(), color=ctx.color)
++            ctx.exit()
+ 
+-    if not param_decls:
+-        param_decls = ("--help",)
+ 
+-    kwargs.setdefault("is_flag", True)
+-    kwargs.setdefault("expose_value", False)
+-    kwargs.setdefault("is_eager", True)
+-    kwargs.setdefault("help", _("Show this message and exit."))
+-    kwargs["callback"] = callback
++def help_option(*param_decls: str, **kwargs: t.Any) -> t.Callable[[FC], FC]:
++    """Decorator for the pre-configured ``--help`` option defined above.
++
++    :param param_decls: One or more option names. Defaults to the single
++        value ``"--help"``.
++    :param kwargs: Extra arguments are passed to :func:`option`.
++    """
++    kwargs.setdefault("cls", HelpOption)
+     return option(*param_decls, **kwargs)
+diff --git a/src/click/exceptions.py b/src/click/exceptions.py
+index c7ebe81875cb7b8389dc2e01ba6107a95a9927f1..3bae1e762e2526b61d657e456ad4660fbedf3adb 100644
+--- a/src/click/exceptions.py
++++ b/src/click/exceptions.py
+@@ -6,6 +6,7 @@ from gettext import gettext as _
+ from gettext import ngettext
+ 
+ from ._compat import get_text_stderr
++from .globals import resolve_color_default
+ from .utils import echo
+ from .utils import format_filename
+ 
+@@ -30,6 +31,9 @@ class ClickException(Exception):
+ 
+     def __init__(self, message: str) -> None:
+         super().__init__(message)
++        # The context will be removed by the time we print the message, so cache
++        # the color settings here to be used later on (in `show`)
++        self.show_color: bool | None = resolve_color_default()
+         self.message = message
+ 
+     def format_message(self) -> str:
+@@ -42,7 +46,11 @@ class ClickException(Exception):
+         if file is None:
+             file = get_text_stderr()
+ 
+-        echo(_("Error: {message}").format(message=self.format_message()), file=file)
++        echo(
++            _("Error: {message}").format(message=self.format_message()),
++            file=file,
++            color=self.show_color,
++        )
+ 
+ 
+ class UsageError(ClickException):
+diff --git a/src/click/utils.py b/src/click/utils.py
+index 7ef90ddf9b8b87c8ebb797402dedb8a63b4600ed..ab2fe5889cee75d559092442696f9b23bf20ebfb 100644
+--- a/src/click/utils.py
++++ b/src/click/utils.py
+@@ -314,7 +314,7 @@ def echo(
+             out = strip_ansi(out)
+         elif WIN:
+             if auto_wrap_for_ansi is not None:
+-                file = auto_wrap_for_ansi(file)  # type: ignore
++                file = auto_wrap_for_ansi(file, color)  # type: ignore
+             elif not color:
+                 out = strip_ansi(out)
+ 
+diff --git a/tests/test_testing.py b/tests/test_testing.py
+index e67b3a91159fc0865a966d97c63a6390f76262a0..8665701b28c4afccfbab795650d72f66ba0b800f 100644
+--- a/tests/test_testing.py
++++ b/tests/test_testing.py
+@@ -5,6 +5,7 @@ from io import BytesIO
+ import pytest
+ 
+ import click
++from click.exceptions import ClickException
+ from click.testing import CliRunner
+ 
+ 
+@@ -199,6 +200,26 @@ def test_with_color():
+     assert not result.exception
+ 
+ 
++def test_with_color_errors():
++    class CLIError(ClickException):
++        def format_message(self) -> str:
++            return click.style(self.message, fg="red")
++
++    @click.command()
++    def cli():
++        raise CLIError("Red error")
++
++    runner = CliRunner()
++
++    result = runner.invoke(cli)
++    assert result.output == "Error: Red error\n"
++    assert result.exception
++
++    result = runner.invoke(cli, color=True)
++    assert result.output == f"Error: {click.style('Red error', fg='red')}\n"
++    assert result.exception
++
++
+ def test_with_color_but_pause_not_blocking():
+     @click.command()
+     def cli():
+diff --git a/tests/test_utils.py b/tests/test_utils.py
+index b8b65e2956675bfffd9f46424607938a7e351623..2ab175bec203369562e9e955f63dcbb1e42cc567 100644
+--- a/tests/test_utils.py
++++ b/tests/test_utils.py
+@@ -36,9 +36,7 @@ def test_echo(runner):
+ 
+ 
+ def test_echo_custom_file():
+-    import io
+-
+-    f = io.StringIO()
++    f = StringIO()
+     click.echo("hello", file=f)
+     assert f.getvalue() == "hello\n"
+ 
+@@ -209,7 +207,6 @@ def test_echo_via_pager(monkeypatch, capfd, cat, test):
+     assert out == expected_output
+ 
+ 
+-@pytest.mark.skipif(WIN, reason="Test does not make sense on Windows.")
+ def test_echo_color_flag(monkeypatch, capfd):
+     isatty = True
+     monkeypatch.setattr(click._compat, "isatty", lambda x: isatty)
+@@ -232,9 +229,16 @@ def test_echo_color_flag(monkeypatch, capfd):
+     assert out == f"{styled_text}\n"
+ 
+     isatty = False
+-    click.echo(styled_text)
+-    out, err = capfd.readouterr()
+-    assert out == f"{text}\n"
++    # Faking isatty() is not enough on Windows;
++    # the implementation caches the colorama wrapped stream
++    # so we have to use a new stream for each test
++    stream = StringIO()
++    click.echo(styled_text, file=stream)
++    assert stream.getvalue() == f"{text}\n"
++
++    stream = StringIO()
++    click.echo(styled_text, file=stream, color=True)
++    assert stream.getvalue() == f"{styled_text}\n"
+ 
+ 
+ def test_prompt_cast_default(capfd, monkeypatch):

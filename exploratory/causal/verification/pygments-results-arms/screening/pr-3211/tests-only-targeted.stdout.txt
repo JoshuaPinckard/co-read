@@ -1,0 +1,26 @@
+============================= test session starts =============================
+platform win32 -- Python 3.11.9, pytest-8.4.2, pluggy-1.6.0
+rootdir: C:\Users\joshp\AppData\Local\Temp\blast-radius-pygments-causal-opbff12g\screen-pr-3211-gpsdgacg\tests-only
+configfile: pyproject.toml
+collected 1 item
+
+tests\snippets\kusto\test_kusto.txt F                                    [100%]
+
+================================== FAILURES ===================================
+_____________________ tests\snippets\kusto\test_kusto.txt _____________________
+The tokens produced by the "kusto" lexer differ from the expected ones in the file "tests\snippets\kusto\test_kusto.txt".
+Run `tox -- tests\snippets --update-goldens` to update it.
+
+  
+  Skipping 544 identical leading characters in diff, use -v to show
+    tespace
+  - '..'          Punctuation
+  + '.'           Error
+  + '.'           Error
+    ' '           Text.Whitespace...
+  
+  ...Full output truncated (43 lines hidden), use '-vv' to show
+- generated xml file: C:\Users\joshp\Desktop\Blast-Radius\exploratory\causal\verification\pygments-results-arms\screening\pr-3211\tests-only-targeted.xml -
+=========================== short test summary info ===========================
+FAILED tests/snippets/kusto/test_kusto.txt::
+============================== 1 failed in 0.50s ==============================

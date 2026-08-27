@@ -1,0 +1,1 @@
+<?xml version="1.0" encoding="utf-8"?><testsuites name="pytest tests"><testsuite name="pytest" errors="0" failures="0" skipped="0" tests="1" time="0.082" timestamp="2026-08-24T08:23:58.206085-07:00" hostname="JoshP"><testcase classname="tests.snippets.tcl.test_variable_dash.txt" name="" time="0.006" /></testsuite></testsuites>

@@ -1,0 +1,172 @@
+diff --git a/.github/workflows/nightly.yaml b/.github/workflows/nightly.yaml
+new file mode 100644
+index 0000000000000000000000000000000000000000..8af3eb7ccc338e5b3cc8d074a2d6b2cc2df3efdd
+--- /dev/null
++++ b/.github/workflows/nightly.yaml
+@@ -0,0 +1,42 @@
++name: Nightly race tests
++on:
++  schedule:
++    - cron: '0 6 * * *'
++  workflow_dispatch:
++permissions: {}
++concurrency:
++  group: ${{ github.workflow }}
++  cancel-in-progress: false
++jobs:
++  race-tests:
++    name: ${{ matrix.name }}
++    runs-on: ${{ matrix.os || 'ubuntu-latest' }}
++    strategy:
++      fail-fast: false
++      matrix:
++        include:
++          - {name: Random 3.14, python: '3.14', tox: random}
++          - {name: Random 3.14t, python: '3.14t', tox: random}
++          - {name: Random 3.13, python: '3.13', tox: random}
++          - {name: Random 3.12, python: '3.12', tox: random}
++          - {name: Random 3.11, python: '3.11', tox: random}
++          - {name: Random 3.10, python: '3.10', tox: random}
++          - {name: Random Windows, python: '3.14', tox: random, os: windows-latest}
++          - {name: Random Mac, python: '3.14', tox: random, os: macos-latest}
++          - {name: Stress 3.14, python: '3.14', tox: stress-py3.14}
++          - {name: Stress 3.14t, python: '3.14t', tox: stress-py3.14t}
++          - {name: Stress Mac 3.14t, python: '3.14t', tox: stress-py3.14t, os: macos-latest}
++    steps:
++      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
++        with:
++          persist-credentials: false
++      - uses: astral-sh/setup-uv@cec208311dfd045dd5311c1add060b2062131d57 # v8.0.0
++        with:
++          enable-cache: true
++          prune-cache: false
++      - uses: actions/setup-python@a309ff8b426b58ec0e2a45f0f869d46889d02405 # v6.2.0
++        with:
++          python-version: ${{ matrix.python }}
++      - run: uv run --locked --no-default-groups --group dev tox run
++        env:
++          TOX_ENV: ${{ matrix.tox }}
+diff --git a/CHANGES.rst b/CHANGES.rst
+index 8c058d56649c048c9aea58957f5311bd45a37f05..f63e68be80ce35781ad1875ca276fb943bca2002 100644
+--- a/CHANGES.rst
++++ b/CHANGES.rst
+@@ -5,6 +5,11 @@ Version 8.4.2
+ 
+ Unreleased
+ 
++-   Fix Fish shell completion broken in ``8.4.0`` by :pr:`3126`. Newlines and
++    tabs in option help text are now escaped, keeping the original completion
++    format while still supporting multi-line help. :issue:`3502`
++    :issue:`3043` :pr:`3504` :pr:`3508`
++
+ 
+ Version 8.4.1
+ -------------
+diff --git a/docs/documentation.md b/docs/documentation.md
+index a031773344e6486b112a831fc3d9e5555f7acf0f..0004efd13959439093f063d9c48a2038139297f3 100644
+--- a/docs/documentation.md
++++ b/docs/documentation.md
+@@ -50,6 +50,46 @@ For subcommands, a short help snippet is generated. By default, it's the first s
+     invoke(cli, args=['--help'])
+ ```
+ 
++## Group Help Page
++
++The group help prints sub commands, options, epilog help, and arguments, and prints them together.
++
++```{eval-rst}
++.. click:example::
++
++    import click
++
++    @click.group(
++        help="Example Click app with subcommands, options, and positional arguments.",
++        epilog=("Examples:\n\n\b\n  python hello.py greet Alice --count 2\n"),
++    )
++    def cli() -> None:
++        """Run the example CLI."""
++
++    @cli.command()
++    @click.argument("name")
++    @click.option(
++        "--count",
++        default=1,
++        show_default=True,
++        type=click.IntRange(1, None),
++        help="Number of greetings to print.",
++    )
++    @click.option(
++        "--greeting",
++        default="Hello",
++        show_default=True,
++        help="Greeting prefix to use.",
++    )
++    def greet(name: str, count: int, greeting: str) -> None:
++        """Greet NAME one or more times."""
++        for _ in range(count):
++            click.echo(f"{greeting} {name}!")
++
++.. click:run::
++    invoke(cli, args=['--help'])
++```
++
+ ## Command Epilog Help
+ 
+ The help epilog is printed at the end of the help and is useful for showing example command usages or referencing additional help resources.
+diff --git a/src/click/shell_completion.py b/src/click/shell_completion.py
+index b01e290a96784495ac1b860b47dde47ef10aca77..f9da4a3aab35048825368c3653f7801ea17fb2d8 100644
+--- a/src/click/shell_completion.py
++++ b/src/click/shell_completion.py
+@@ -181,18 +181,14 @@ function %(complete_func)s;
+ COMP_CWORD=(commandline -t) %(prog_name)s);
+ 
+     for completion in $response;
+-        set -l metadata (string split \n $completion);
++        set -l metadata (string split "," $completion);
+ 
+         if test $metadata[1] = "dir";
+             __fish_complete_directories $metadata[2];
+         else if test $metadata[1] = "file";
+             __fish_complete_path $metadata[2];
+         else if test $metadata[1] = "plain";
+-            if test $metadata[3] != "_";
+-                echo $metadata[2]\t$metadata[3];
+-            else;
+-                echo $metadata[2];
+-            end;
++            echo $metadata[2];
+         end;
+     end;
+ end;
+@@ -423,19 +419,19 @@ class FishComplete(ShellComplete):
+ 
+     def format_completion(self, item: CompletionItem) -> str:
+         """
+-        .. versionchanged:: 8.4.0
+-            Escape newlines in value and help to fix completion errors with
+-            multi-line help strings.
++        .. versionchanged:: 8.4.2
++            Escape newlines and replace tabs with spaces in the help text to
++            fix completion errors with multi-line help strings.
+         """
+-        # The fish completion script splits each response line on literal
+-        # newlines, so any newline in the value or help would corrupt the
+-        # frame. Replace them with the two-character escape "\n" so the text
+-        # round-trips through fish without breaking the format. The "_"
+-        # sentinel for missing help mirrors :class:`ZshComplete`.
+-        help_ = item.help or "_"
+-        value = item.value.replace("\n", r"\n")
+-        help_escaped = help_.replace("\n", r"\n")
+-        return f"{item.type}\n{value}\n{help_escaped}"
++        # According to https://fishshell.com/docs/current/cmds/complete.html
++        # Command substitutions found in ARGUMENTS should return a newline-
++        # separated list of arguments, and each argument may optionally have a tab
++        # character followed by the argument description.
++        if item.help:
++            help_ = item.help.replace("\n", "\\n").replace("\t", " ")
++            return f"{item.type},{item.value}\t{help_}"
++
++        return f"{item.type},{item.value}"
+ 
+ 
+ ShellCompleteType = t.TypeVar("ShellCompleteType", bound="type[ShellComplete]")

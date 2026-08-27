@@ -1,0 +1,53 @@
+============================= test session starts =============================
+platform win32 -- Python 3.11.9, pytest-7.4.4, pluggy-unknown
+benchmark: 4.0.0 (defaults: timer=time.perf_counter disable_gc=False min_rounds=5 min_time=0.000005 max_time=1.0 calibration_precision=10 warmup=False warmup_iterations=100000)
+rootdir: C:\Users\joshp\AppData\Local\Temp\blast-radius-pluggy-causal\a504-buw7umwa\t
+configfile: tox.ini
+testpaths: testing
+plugins: benchmark-4.0.0
+collected 110 items
+
+testing\test_details.py ......                                           [  5%]
+testing\test_helpers.py ......                                           [ 10%]
+testing\test_hookcaller.py ......................                        [ 30%]
+testing\test_invocations.py ...........                                  [ 40%]
+testing\test_multicall.py ......................                         [ 60%]
+testing\test_pluginmanager.py .....................................      [ 94%]
+testing\test_result.py F                                                 [ 95%]
+testing\test_tracer.py ....                                              [ 99%]
+testing\test_warnings.py .                                               [100%]
+
+================================== FAILURES ===================================
+___________ test_exceptions_traceback_doesnt_get_longer_and_longer ____________
+
+    def test_exceptions_traceback_doesnt_get_longer_and_longer() -> None:
+        def bad() -> None:
+            1 / 0
+    
+        result = Result.from_call(bad)
+    
+        try:
+            result.get_result()
+        except Exception as exc:
+            tb1 = traceback.extract_tb(exc.__traceback__)
+    
+        try:
+            result.get_result()
+        except Exception as exc:
+            tb2 = traceback.extract_tb(exc.__traceback__)
+    
+        try:
+            result.get_result()
+        except Exception as exc:
+            tb3 = traceback.extract_tb(exc.__traceback__)
+    
+>       assert len(tb1) == len(tb2) == len(tb3)
+E       assert 4 == 6
+E        +  where 4 = len([<FrameSummary file C:\Users\joshp\AppData\Local\Temp\blast-radius-pluggy-causal\a504-buw7umwa\t\testing\test_result.p...le C:\Users\joshp\AppData\Local\Temp\blast-radius-pluggy-causal\a504-buw7umwa\t\testing\test_result.py, line 8 in bad>])
+E        +  and   6 = len([<FrameSummary file C:\Users\joshp\AppData\Local\Temp\blast-radius-pluggy-causal\a504-buw7umwa\t\testing\test_result.p...le C:\Users\joshp\AppData\Local\Temp\blast-radius-pluggy-causal\a504-buw7umwa\t\testing\test_result.py, line 8 in bad>])
+
+testing\test_result.py:27: AssertionError
+- generated xml file: C:\Users\joshp\Desktop\Blast-Radius\exploratory\causal\verification\pluggy-results-arms\pr-504\tests-only.xml -
+=========================== short test summary info ===========================
+FAILED testing/test_result.py::test_exceptions_traceback_doesnt_get_longer_and_longer
+======================== 1 failed, 109 passed in 0.40s ========================

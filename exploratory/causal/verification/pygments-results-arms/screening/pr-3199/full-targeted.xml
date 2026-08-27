@@ -1,0 +1,1 @@
+<?xml version="1.0" encoding="utf-8"?><testsuites name="pytest tests"><testsuite name="pytest" errors="0" failures="0" skipped="0" tests="1" time="0.187" timestamp="2026-08-24T08:19:38.468821-07:00" hostname="JoshP"><testcase classname="tests.examplefiles.go.3199.go" name="" time="0.004" /></testsuite></testsuites>

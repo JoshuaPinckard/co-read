@@ -1,0 +1,38 @@
+============================= test session starts =============================
+platform win32 -- Python 3.11.9, pytest-8.4.2, pluggy-1.6.0
+rootdir: C:\Users\joshp\AppData\Local\Temp\blast-radius-pygments-causal-opbff12g\screen-pr-2972-q8n7ocyb\tests-only
+configfile: pyproject.toml
+collected 2 items
+
+tests\snippets\tablegen\test_code_blocks.txt F                           [ 50%]
+tests\snippets\tablegen\test_comments.txt F                              [100%]
+
+================================== FAILURES ===================================
+________________ tests\snippets\tablegen\test_code_blocks.txt _________________
+The tokens produced by the "tablegen" lexer differ from the expected ones in the file "tests\snippets\tablegen\test_code_blocks.txt".
+Run `tox -- tests\snippets --update-goldens` to update it.
+
+  
+  Skipping 161 identical leading characters in diff, use -v to show
+  -           Punctuation
+  +           Text
+    '\n'          Text.Whitespace
+    
+    '  '          Text.Whitespace...
+  
+  ...Full output truncated (19 lines hidden), use '-vv' to show
+__________________ tests\snippets\tablegen\test_comments.txt __________________
+The tokens produced by the "tablegen" lexer differ from the expected ones in the file "tests\snippets\tablegen\test_comments.txt".
+Run `tox -- tests\snippets --update-goldens` to update it.
+
+  
+  Skipping 235 identical leading characters in diff, use -v to show
+  - ent.Single
+  + ent.SingleLine
+  ?           ++++
+    '\n'          Text.Whitespace
+- generated xml file: C:\Users\joshp\Desktop\Blast-Radius\exploratory\causal\verification\pygments-results-arms\screening\pr-2972\tests-only-targeted.xml -
+=========================== short test summary info ===========================
+FAILED tests/snippets/tablegen/test_code_blocks.txt::
+FAILED tests/snippets/tablegen/test_comments.txt::
+============================== 2 failed in 0.12s ==============================

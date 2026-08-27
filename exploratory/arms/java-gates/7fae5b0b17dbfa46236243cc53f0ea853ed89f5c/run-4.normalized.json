@@ -1,0 +1,1319 @@
+{
+  "normalization": "sorted (classname,name,outcome,failure/error type-or-message); timing omitted",
+  "normalized_sha256": "6a55f8c5369fb81014f3bc826ccc3db2454a2e95fa61713ee518e77bee9b6880",
+  "outcome_counts": {
+    "pass": 216
+  },
+  "parse_errors": [],
+  "reports": [
+    {
+      "bytes": 21494,
+      "path": "target/surefire-reports/TEST-org.apache.commons.lang3.StringUtilsTest.xml",
+      "sha256": "bf9e3966d554a3d11059891567940d8d0d5e276cf5ea1aa58306209b1383c3be"
+    },
+    {
+      "bytes": 17392,
+      "path": "target/surefire-reports/TEST-org.apache.commons.lang3.text.StrBuilderTest.xml",
+      "sha256": "08a933b50fc00dcd959626401dfd871ea93db58287a66821d6286c170f062923"
+    }
+  ],
+  "test_count": 216,
+  "tests": [
+    {
+      "classname": "org.apache.commons.lang3.StringUtilsTest",
+      "detail": "",
+      "name": "testAbbreviateMiddle",
+      "outcome": "pass"
+    },
+    {
+      "classname": "org.apache.commons.lang3.StringUtilsTest",
+      "detail": "",
+      "name": "testAbbreviate_StringInt",
+      "outcome": "pass"
+    },
+    {
+      "classname": "org.apache.commons.lang3.StringUtilsTest",
+      "detail": "",
+      "name": "testAbbreviate_StringIntInt",
+      "outcome": "pass"
+    },
+    {
+      "classname": "org.apache.commons.lang3.StringUtilsTest",
+      "detail": "",
+      "name": "testAppendIfMissing",
+      "outcome": "pass"
+    },
+    {
+      "classname": "org.apache.commons.lang3.StringUtilsTest",
+      "detail": "",
+      "name": "testAppendIfMissingIgnoreCase",
+      "outcome": "pass"
+    },
+    {
+      "classname": "org.apache.commons.lang3.StringUtilsTest",
+      "detail": "",
+      "name": "testCaseFunctions",
+      "outcome": "pass"
+    },
+    {
+      "classname": "org.apache.commons.lang3.StringUtilsTest",
+      "detail": "",
+      "name": "testCenter_StringInt",
+      "outcome": "pass"
+    },
+    {
+      "classname": "org.apache.commons.lang3.StringUtilsTest",
+      "detail": "",
+      "name": "testCenter_StringIntChar",
+      "outcome": "pass"
+    },
+    {
+      "classname": "org.apache.commons.lang3.StringUtilsTest",
+      "detail": "",
+      "name": "testCenter_StringIntString",
+      "outcome": "pass"
+    },
+    {
+      "classname": "org.apache.commons.lang3.StringUtilsTest",
+      "detail": "",
+      "name": "testChomp",
+      "outcome": "pass"
+    },
+    {
+      "classname": "org.apache.commons.lang3.StringUtilsTest",
+      "detail": "",
+      "name": "testChop",
+      "outcome": "pass"
+    },
+    {
+      "classname": "org.apache.commons.lang3.StringUtilsTest",
+      "detail": "",
+      "name": "testConstructor",
+      "outcome": "pass"
+    },
+    {
+      "classname": "org.apache.commons.lang3.StringUtilsTest",
+      "detail": "",
+      "name": "testDefaultIfBlank_CharBuffers",
+      "outcome": "pass"
+    },
+    {
+      "classname": "org.apache.commons.lang3.StringUtilsTest",
+      "detail": "",
+      "name": "testDefaultIfBlank_StringBuffers",
+      "outcome": "pass"
+    },
+    {
+      "classname": "org.apache.commons.lang3.StringUtilsTest",
+      "detail": "",
+      "name": "testDefaultIfBlank_StringBuilders",
+      "outcome": "pass"
+    },
+    {
+      "classname": "org.apache.commons.lang3.StringUtilsTest",
+      "detail": "",
+      "name": "testDefaultIfBlank_StringString",
+      "outcome": "pass"
+    },
+    {
+      "classname": "org.apache.commons.lang3.StringUtilsTest",
+      "detail": "",
+      "name": "testDefaultIfEmpty_CharBuffers",
+      "outcome": "pass"
+    },
+    {
+      "classname": "org.apache.commons.lang3.StringUtilsTest",
+      "detail": "",
+      "name": "testDefaultIfEmpty_StringBuffers",
+      "outcome": "pass"
+    },
+    {
+      "classname": "org.apache.commons.lang3.StringUtilsTest",
+      "detail": "",
+      "name": "testDefaultIfEmpty_StringBuilders",
+      "outcome": "pass"
+    },
+    {
+      "classname": "org.apache.commons.lang3.StringUtilsTest",
+      "detail": "",
+      "name": "testDefaultIfEmpty_StringString",
+      "outcome": "pass"
+    },
+    {
+      "classname": "org.apache.commons.lang3.StringUtilsTest",
+      "detail": "",
+      "name": "testDefault_String",
+      "outcome": "pass"
+    },
+    {
+      "classname": "org.apache.commons.lang3.StringUtilsTest",
+      "detail": "",
+      "name": "testDefault_StringString",
+      "outcome": "pass"
+    },
+    {
+      "classname": "org.apache.commons.lang3.StringUtilsTest",
+      "detail": "",
+      "name": "testDeleteWhitespace_String",
+      "outcome": "pass"
+    },
+    {
+      "classname": "org.apache.commons.lang3.StringUtilsTest",
+      "detail": "",
+      "name": "testDifferenceAt_StringArray",
+      "outcome": "pass"
+    },
+    {
+      "classname": "org.apache.commons.lang3.StringUtilsTest",
+      "detail": "",
+      "name": "testDifferenceAt_StringString",
+      "outcome": "pass"
+    },
+    {
+      "classname": "org.apache.commons.lang3.StringUtilsTest",
+      "detail": "",
+      "name": "testDifference_StringString",
+      "outcome": "pass"
+    },
+    {
+      "classname": "org.apache.commons.lang3.StringUtilsTest",
+      "detail": "",
+      "name": "testEMPTY",
+      "outcome": "pass"
+    },
+    {
+      "classname": "org.apache.commons.lang3.StringUtilsTest",
+      "detail": "",
+      "name": "testEscapeSurrogatePairs",
+      "outcome": "pass"
+    },
+    {
+      "classname": "org.apache.commons.lang3.StringUtilsTest",
+      "detail": "",
+      "name": "testEscapeSurrogatePairsLang858",
+      "outcome": "pass"
+    },
+    {
+      "classname": "org.apache.commons.lang3.StringUtilsTest",
+      "detail": "",
+      "name": "testGetCommonPrefix_StringArray",
+      "outcome": "pass"
+    },
+    {
+      "classname": "org.apache.commons.lang3.StringUtilsTest",
+      "detail": "",
+      "name": "testGetFuzzyDistance",
+      "outcome": "pass"
+    },
+    {
+      "classname": "org.apache.commons.lang3.StringUtilsTest",
+      "detail": "",
+      "name": "testGetFuzzyDistance_NullNullNull",
+      "outcome": "pass"
+    },
+    {
+      "classname": "org.apache.commons.lang3.StringUtilsTest",
+      "detail": "",
+      "name": "testGetFuzzyDistance_NullStringLocale",
+      "outcome": "pass"
+    },
+    {
+      "classname": "org.apache.commons.lang3.StringUtilsTest",
+      "detail": "",
+      "name": "testGetFuzzyDistance_StringNullLoclae",
+      "outcome": "pass"
+    },
+    {
+      "classname": "org.apache.commons.lang3.StringUtilsTest",
+      "detail": "",
+      "name": "testGetFuzzyDistance_StringStringNull",
+      "outcome": "pass"
+    },
+    {
+      "classname": "org.apache.commons.lang3.StringUtilsTest",
+      "detail": "",
+      "name": "testGetJaroWinklerDistance_NullNull",
+      "outcome": "pass"
+    },
+    {
+      "classname": "org.apache.commons.lang3.StringUtilsTest",
+      "detail": "",
+      "name": "testGetJaroWinklerDistance_NullString",
+      "outcome": "pass"
+    },
+    {
+      "classname": "org.apache.commons.lang3.StringUtilsTest",
+      "detail": "",
+      "name": "testGetJaroWinklerDistance_StringNull",
+      "outcome": "pass"
+    },
+    {
+      "classname": "org.apache.commons.lang3.StringUtilsTest",
+      "detail": "",
+      "name": "testGetJaroWinklerDistance_StringString",
+      "outcome": "pass"
+    },
+    {
+      "classname": "org.apache.commons.lang3.StringUtilsTest",
+      "detail": "",
+      "name": "testGetLevenshteinDistance_NullString",
+      "outcome": "pass"
+    },
+    {
+      "classname": "org.apache.commons.lang3.StringUtilsTest",
+      "detail": "",
+      "name": "testGetLevenshteinDistance_NullStringInt",
+      "outcome": "pass"
+    },
+    {
+      "classname": "org.apache.commons.lang3.StringUtilsTest",
+      "detail": "",
+      "name": "testGetLevenshteinDistance_StringNull",
+      "outcome": "pass"
+    },
+    {
+      "classname": "org.apache.commons.lang3.StringUtilsTest",
+      "detail": "",
+      "name": "testGetLevenshteinDistance_StringNullInt",
+      "outcome": "pass"
+    },
+    {
+      "classname": "org.apache.commons.lang3.StringUtilsTest",
+      "detail": "",
+      "name": "testGetLevenshteinDistance_StringString",
+      "outcome": "pass"
+    },
+    {
+      "classname": "org.apache.commons.lang3.StringUtilsTest",
+      "detail": "",
+      "name": "testGetLevenshteinDistance_StringStringInt",
+      "outcome": "pass"
+    },
+    {
+      "classname": "org.apache.commons.lang3.StringUtilsTest",
+      "detail": "",
+      "name": "testGetLevenshteinDistance_StringStringNegativeInt",
+      "outcome": "pass"
+    },
+    {
+      "classname": "org.apache.commons.lang3.StringUtilsTest",
+      "detail": "",
+      "name": "testIsAllLowerCase",
+      "outcome": "pass"
+    },
+    {
+      "classname": "org.apache.commons.lang3.StringUtilsTest",
+      "detail": "",
+      "name": "testIsAllUpperCase",
+      "outcome": "pass"
+    },
+    {
+      "classname": "org.apache.commons.lang3.StringUtilsTest",
+      "detail": "",
+      "name": "testIsAnyBlank",
+      "outcome": "pass"
+    },
+    {
+      "classname": "org.apache.commons.lang3.StringUtilsTest",
+      "detail": "",
+      "name": "testIsAnyEmpty",
+      "outcome": "pass"
+    },
+    {
+      "classname": "org.apache.commons.lang3.StringUtilsTest",
+      "detail": "",
+      "name": "testIsBlank",
+      "outcome": "pass"
+    },
+    {
+      "classname": "org.apache.commons.lang3.StringUtilsTest",
+      "detail": "",
+      "name": "testIsEmpty",
+      "outcome": "pass"
+    },
+    {
+      "classname": "org.apache.commons.lang3.StringUtilsTest",
+      "detail": "",
+      "name": "testIsNoneBlank",
+      "outcome": "pass"
+    },
+    {
+      "classname": "org.apache.commons.lang3.StringUtilsTest",
+      "detail": "",
+      "name": "testIsNoneEmpty",
+      "outcome": "pass"
+    },
+    {
+      "classname": "org.apache.commons.lang3.StringUtilsTest",
+      "detail": "",
+      "name": "testIsNotBlank",
+      "outcome": "pass"
+    },
+    {
+      "classname": "org.apache.commons.lang3.StringUtilsTest",
+      "detail": "",
+      "name": "testIsNotEmpty",
+      "outcome": "pass"
+    },
+    {
+      "classname": "org.apache.commons.lang3.StringUtilsTest",
+      "detail": "",
+      "name": "testJoin_ArrayCharSeparator",
+      "outcome": "pass"
+    },
+    {
+      "classname": "org.apache.commons.lang3.StringUtilsTest",
+      "detail": "",
+      "name": "testJoin_ArrayOfBytes",
+      "outcome": "pass"
+    },
+    {
+      "classname": "org.apache.commons.lang3.StringUtilsTest",
+      "detail": "",
+      "name": "testJoin_ArrayOfChars",
+      "outcome": "pass"
+    },
+    {
+      "classname": "org.apache.commons.lang3.StringUtilsTest",
+      "detail": "",
+      "name": "testJoin_ArrayOfDoubles",
+      "outcome": "pass"
+    },
+    {
+      "classname": "org.apache.commons.lang3.StringUtilsTest",
+      "detail": "",
+      "name": "testJoin_ArrayOfFloats",
+      "outcome": "pass"
+    },
+    {
+      "classname": "org.apache.commons.lang3.StringUtilsTest",
+      "detail": "",
+      "name": "testJoin_ArrayOfInts",
+      "outcome": "pass"
+    },
+    {
+      "classname": "org.apache.commons.lang3.StringUtilsTest",
+      "detail": "",
+      "name": "testJoin_ArrayOfLongs",
+      "outcome": "pass"
+    },
+    {
+      "classname": "org.apache.commons.lang3.StringUtilsTest",
+      "detail": "",
+      "name": "testJoin_ArrayOfShorts",
+      "outcome": "pass"
+    },
+    {
+      "classname": "org.apache.commons.lang3.StringUtilsTest",
+      "detail": "",
+      "name": "testJoin_ArrayString",
+      "outcome": "pass"
+    },
+    {
+      "classname": "org.apache.commons.lang3.StringUtilsTest",
+      "detail": "",
+      "name": "testJoin_IterableChar",
+      "outcome": "pass"
+    },
+    {
+      "classname": "org.apache.commons.lang3.StringUtilsTest",
+      "detail": "",
+      "name": "testJoin_IterableString",
+      "outcome": "pass"
+    },
+    {
+      "classname": "org.apache.commons.lang3.StringUtilsTest",
+      "detail": "",
+      "name": "testJoin_IteratorChar",
+      "outcome": "pass"
+    },
+    {
+      "classname": "org.apache.commons.lang3.StringUtilsTest",
+      "detail": "",
+      "name": "testJoin_IteratorString",
+      "outcome": "pass"
+    },
+    {
+      "classname": "org.apache.commons.lang3.StringUtilsTest",
+      "detail": "",
+      "name": "testJoin_Objectarray",
+      "outcome": "pass"
+    },
+    {
+      "classname": "org.apache.commons.lang3.StringUtilsTest",
+      "detail": "",
+      "name": "testJoin_Objects",
+      "outcome": "pass"
+    },
+    {
+      "classname": "org.apache.commons.lang3.StringUtilsTest",
+      "detail": "",
+      "name": "testLANG666",
+      "outcome": "pass"
+    },
+    {
+      "classname": "org.apache.commons.lang3.StringUtilsTest",
+      "detail": "",
+      "name": "testLang623",
+      "outcome": "pass"
+    },
+    {
+      "classname": "org.apache.commons.lang3.StringUtilsTest",
+      "detail": "",
+      "name": "testLeftPad_StringInt",
+      "outcome": "pass"
+    },
+    {
+      "classname": "org.apache.commons.lang3.StringUtilsTest",
+      "detail": "",
+      "name": "testLeftPad_StringIntChar",
+      "outcome": "pass"
+    },
+    {
+      "classname": "org.apache.commons.lang3.StringUtilsTest",
+      "detail": "",
+      "name": "testLeftPad_StringIntString",
+      "outcome": "pass"
+    },
+    {
+      "classname": "org.apache.commons.lang3.StringUtilsTest",
+      "detail": "",
+      "name": "testLengthString",
+      "outcome": "pass"
+    },
+    {
+      "classname": "org.apache.commons.lang3.StringUtilsTest",
+      "detail": "",
+      "name": "testLengthStringBuffer",
+      "outcome": "pass"
+    },
+    {
+      "classname": "org.apache.commons.lang3.StringUtilsTest",
+      "detail": "",
+      "name": "testLengthStringBuilder",
+      "outcome": "pass"
+    },
+    {
+      "classname": "org.apache.commons.lang3.StringUtilsTest",
+      "detail": "",
+      "name": "testLength_CharBuffer",
+      "outcome": "pass"
+    },
+    {
+      "classname": "org.apache.commons.lang3.StringUtilsTest",
+      "detail": "",
+      "name": "testNormalizeSpace",
+      "outcome": "pass"
+    },
+    {
+      "classname": "org.apache.commons.lang3.StringUtilsTest",
+      "detail": "",
+      "name": "testOverlay_StringStringIntInt",
+      "outcome": "pass"
+    },
+    {
+      "classname": "org.apache.commons.lang3.StringUtilsTest",
+      "detail": "",
+      "name": "testPrependIfMissing",
+      "outcome": "pass"
+    },
+    {
+      "classname": "org.apache.commons.lang3.StringUtilsTest",
+      "detail": "",
+      "name": "testPrependIfMissingIgnoreCase",
+      "outcome": "pass"
+    },
+    {
+      "classname": "org.apache.commons.lang3.StringUtilsTest",
+      "detail": "",
+      "name": "testRemoveEnd",
+      "outcome": "pass"
+    },
+    {
+      "classname": "org.apache.commons.lang3.StringUtilsTest",
+      "detail": "",
+      "name": "testRemoveEndIgnoreCase",
+      "outcome": "pass"
+    },
+    {
+      "classname": "org.apache.commons.lang3.StringUtilsTest",
+      "detail": "",
+      "name": "testRemovePattern",
+      "outcome": "pass"
+    },
+    {
+      "classname": "org.apache.commons.lang3.StringUtilsTest",
+      "detail": "",
+      "name": "testRemoveStart",
+      "outcome": "pass"
+    },
+    {
+      "classname": "org.apache.commons.lang3.StringUtilsTest",
+      "detail": "",
+      "name": "testRemoveStartIgnoreCase",
+      "outcome": "pass"
+    },
+    {
+      "classname": "org.apache.commons.lang3.StringUtilsTest",
+      "detail": "",
+      "name": "testRemove_String",
+      "outcome": "pass"
+    },
+    {
+      "classname": "org.apache.commons.lang3.StringUtilsTest",
+      "detail": "",
+      "name": "testRemove_char",
+      "outcome": "pass"
+    },
+    {
+      "classname": "org.apache.commons.lang3.StringUtilsTest",
+      "detail": "",
+      "name": "testRepeat_CharInt",
+      "outcome": "pass"
+    },
+    {
+      "classname": "org.apache.commons.lang3.StringUtilsTest",
+      "detail": "",
+      "name": "testRepeat_StringInt",
+      "outcome": "pass"
+    },
+    {
+      "classname": "org.apache.commons.lang3.StringUtilsTest",
+      "detail": "",
+      "name": "testRepeat_StringStringInt",
+      "outcome": "pass"
+    },
+    {
+      "classname": "org.apache.commons.lang3.StringUtilsTest",
+      "detail": "",
+      "name": "testReplaceChars_StringCharChar",
+      "outcome": "pass"
+    },
+    {
+      "classname": "org.apache.commons.lang3.StringUtilsTest",
+      "detail": "",
+      "name": "testReplaceChars_StringStringString",
+      "outcome": "pass"
+    },
+    {
+      "classname": "org.apache.commons.lang3.StringUtilsTest",
+      "detail": "",
+      "name": "testReplaceOnce_StringStringString",
+      "outcome": "pass"
+    },
+    {
+      "classname": "org.apache.commons.lang3.StringUtilsTest",
+      "detail": "",
+      "name": "testReplacePattern",
+      "outcome": "pass"
+    },
+    {
+      "classname": "org.apache.commons.lang3.StringUtilsTest",
+      "detail": "",
+      "name": "testReplace_StringStringArrayStringArray",
+      "outcome": "pass"
+    },
+    {
+      "classname": "org.apache.commons.lang3.StringUtilsTest",
+      "detail": "",
+      "name": "testReplace_StringStringArrayStringArrayBoolean",
+      "outcome": "pass"
+    },
+    {
+      "classname": "org.apache.commons.lang3.StringUtilsTest",
+      "detail": "",
+      "name": "testReplace_StringStringString",
+      "outcome": "pass"
+    },
+    {
+      "classname": "org.apache.commons.lang3.StringUtilsTest",
+      "detail": "",
+      "name": "testReplace_StringStringStringInt",
+      "outcome": "pass"
+    },
+    {
+      "classname": "org.apache.commons.lang3.StringUtilsTest",
+      "detail": "",
+      "name": "testReverseDelimited_StringChar",
+      "outcome": "pass"
+    },
+    {
+      "classname": "org.apache.commons.lang3.StringUtilsTest",
+      "detail": "",
+      "name": "testReverse_String",
+      "outcome": "pass"
+    },
+    {
+      "classname": "org.apache.commons.lang3.StringUtilsTest",
+      "detail": "",
+      "name": "testRightPad_StringInt",
+      "outcome": "pass"
+    },
+    {
+      "classname": "org.apache.commons.lang3.StringUtilsTest",
+      "detail": "",
+      "name": "testRightPad_StringIntChar",
+      "outcome": "pass"
+    },
+    {
+      "classname": "org.apache.commons.lang3.StringUtilsTest",
+      "detail": "",
+      "name": "testRightPad_StringIntString",
+      "outcome": "pass"
+    },
+    {
+      "classname": "org.apache.commons.lang3.StringUtilsTest",
+      "detail": "",
+      "name": "testRotate_StringInt",
+      "outcome": "pass"
+    },
+    {
+      "classname": "org.apache.commons.lang3.StringUtilsTest",
+      "detail": "",
+      "name": "testSplitByCharacterType",
+      "outcome": "pass"
+    },
+    {
+      "classname": "org.apache.commons.lang3.StringUtilsTest",
+      "detail": "",
+      "name": "testSplitByCharacterTypeCamelCase",
+      "outcome": "pass"
+    },
+    {
+      "classname": "org.apache.commons.lang3.StringUtilsTest",
+      "detail": "",
+      "name": "testSplitByWholeSeparatorPreserveAllTokens_StringStringInt",
+      "outcome": "pass"
+    },
+    {
+      "classname": "org.apache.commons.lang3.StringUtilsTest",
+      "detail": "",
+      "name": "testSplitByWholeString_StringStringBoolean",
+      "outcome": "pass"
+    },
+    {
+      "classname": "org.apache.commons.lang3.StringUtilsTest",
+      "detail": "",
+      "name": "testSplitByWholeString_StringStringBooleanInt",
+      "outcome": "pass"
+    },
+    {
+      "classname": "org.apache.commons.lang3.StringUtilsTest",
+      "detail": "",
+      "name": "testSplitPreserveAllTokens_String",
+      "outcome": "pass"
+    },
+    {
+      "classname": "org.apache.commons.lang3.StringUtilsTest",
+      "detail": "",
+      "name": "testSplitPreserveAllTokens_StringChar",
+      "outcome": "pass"
+    },
+    {
+      "classname": "org.apache.commons.lang3.StringUtilsTest",
+      "detail": "",
+      "name": "testSplitPreserveAllTokens_StringString_StringStringInt",
+      "outcome": "pass"
+    },
+    {
+      "classname": "org.apache.commons.lang3.StringUtilsTest",
+      "detail": "",
+      "name": "testSplit_String",
+      "outcome": "pass"
+    },
+    {
+      "classname": "org.apache.commons.lang3.StringUtilsTest",
+      "detail": "",
+      "name": "testSplit_StringChar",
+      "outcome": "pass"
+    },
+    {
+      "classname": "org.apache.commons.lang3.StringUtilsTest",
+      "detail": "",
+      "name": "testSplit_StringString_StringStringInt",
+      "outcome": "pass"
+    },
+    {
+      "classname": "org.apache.commons.lang3.StringUtilsTest",
+      "detail": "",
+      "name": "testStringUtilsCharSequenceContract",
+      "outcome": "pass"
+    },
+    {
+      "classname": "org.apache.commons.lang3.StringUtilsTest",
+      "detail": "",
+      "name": "testSwapCase_String",
+      "outcome": "pass"
+    },
+    {
+      "classname": "org.apache.commons.lang3.StringUtilsTest",
+      "detail": "",
+      "name": "testToEncodedString",
+      "outcome": "pass"
+    },
+    {
+      "classname": "org.apache.commons.lang3.StringUtilsTest",
+      "detail": "",
+      "name": "testToString",
+      "outcome": "pass"
+    },
+    {
+      "classname": "org.apache.commons.lang3.StringUtilsTest",
+      "detail": "",
+      "name": "testUnescapeSurrogatePairs",
+      "outcome": "pass"
+    },
+    {
+      "classname": "org.apache.commons.lang3.StringUtilsTest",
+      "detail": "",
+      "name": "testWrap_StringChar",
+      "outcome": "pass"
+    },
+    {
+      "classname": "org.apache.commons.lang3.StringUtilsTest",
+      "detail": "",
+      "name": "testWrap_StringString",
+      "outcome": "pass"
+    },
+    {
+      "classname": "org.apache.commons.lang3.text.StrBuilderTest",
+      "detail": "",
+      "name": "testAppendCharBuffer",
+      "outcome": "pass"
+    },
+    {
+      "classname": "org.apache.commons.lang3.text.StrBuilderTest",
+      "detail": "",
+      "name": "testAppendToCharBuffer",
+      "outcome": "pass"
+    },
+    {
+      "classname": "org.apache.commons.lang3.text.StrBuilderTest",
+      "detail": "",
+      "name": "testAppendToStringBuffer",
+      "outcome": "pass"
+    },
+    {
+      "classname": "org.apache.commons.lang3.text.StrBuilderTest",
+      "detail": "",
+      "name": "testAppendToStringBuilder",
+      "outcome": "pass"
+    },
+    {
+      "classname": "org.apache.commons.lang3.text.StrBuilderTest",
+      "detail": "",
+      "name": "testAppendToWriter",
+      "outcome": "pass"
+    },
+    {
+      "classname": "org.apache.commons.lang3.text.StrBuilderTest",
+      "detail": "",
+      "name": "testAsBuilder",
+      "outcome": "pass"
+    },
+    {
+      "classname": "org.apache.commons.lang3.text.StrBuilderTest",
+      "detail": "",
+      "name": "testAsReader",
+      "outcome": "pass"
+    },
+    {
+      "classname": "org.apache.commons.lang3.text.StrBuilderTest",
+      "detail": "",
+      "name": "testAsTokenizer",
+      "outcome": "pass"
+    },
+    {
+      "classname": "org.apache.commons.lang3.text.StrBuilderTest",
+      "detail": "",
+      "name": "testAsWriter",
+      "outcome": "pass"
+    },
+    {
+      "classname": "org.apache.commons.lang3.text.StrBuilderTest",
+      "detail": "",
+      "name": "testCapacity",
+      "outcome": "pass"
+    },
+    {
+      "classname": "org.apache.commons.lang3.text.StrBuilderTest",
+      "detail": "",
+      "name": "testCapacityAndLength",
+      "outcome": "pass"
+    },
+    {
+      "classname": "org.apache.commons.lang3.text.StrBuilderTest",
+      "detail": "",
+      "name": "testChaining",
+      "outcome": "pass"
+    },
+    {
+      "classname": "org.apache.commons.lang3.text.StrBuilderTest",
+      "detail": "",
+      "name": "testCharAt",
+      "outcome": "pass"
+    },
+    {
+      "classname": "org.apache.commons.lang3.text.StrBuilderTest",
+      "detail": "",
+      "name": "testClear",
+      "outcome": "pass"
+    },
+    {
+      "classname": "org.apache.commons.lang3.text.StrBuilderTest",
+      "detail": "",
+      "name": "testConstructors",
+      "outcome": "pass"
+    },
+    {
+      "classname": "org.apache.commons.lang3.text.StrBuilderTest",
+      "detail": "",
+      "name": "testContains_StrMatcher",
+      "outcome": "pass"
+    },
+    {
+      "classname": "org.apache.commons.lang3.text.StrBuilderTest",
+      "detail": "",
+      "name": "testContains_String",
+      "outcome": "pass"
+    },
+    {
+      "classname": "org.apache.commons.lang3.text.StrBuilderTest",
+      "detail": "",
+      "name": "testContains_char",
+      "outcome": "pass"
+    },
+    {
+      "classname": "org.apache.commons.lang3.text.StrBuilderTest",
+      "detail": "",
+      "name": "testDeleteAll_StrMatcher",
+      "outcome": "pass"
+    },
+    {
+      "classname": "org.apache.commons.lang3.text.StrBuilderTest",
+      "detail": "",
+      "name": "testDeleteAll_String",
+      "outcome": "pass"
+    },
+    {
+      "classname": "org.apache.commons.lang3.text.StrBuilderTest",
+      "detail": "",
+      "name": "testDeleteAll_char",
+      "outcome": "pass"
+    },
+    {
+      "classname": "org.apache.commons.lang3.text.StrBuilderTest",
+      "detail": "",
+      "name": "testDeleteCharAt",
+      "outcome": "pass"
+    },
+    {
+      "classname": "org.apache.commons.lang3.text.StrBuilderTest",
+      "detail": "",
+      "name": "testDeleteFirst_StrMatcher",
+      "outcome": "pass"
+    },
+    {
+      "classname": "org.apache.commons.lang3.text.StrBuilderTest",
+      "detail": "",
+      "name": "testDeleteFirst_String",
+      "outcome": "pass"
+    },
+    {
+      "classname": "org.apache.commons.lang3.text.StrBuilderTest",
+      "detail": "",
+      "name": "testDeleteFirst_char",
+      "outcome": "pass"
+    },
+    {
+      "classname": "org.apache.commons.lang3.text.StrBuilderTest",
+      "detail": "",
+      "name": "testDeleteIntInt",
+      "outcome": "pass"
+    },
+    {
+      "classname": "org.apache.commons.lang3.text.StrBuilderTest",
+      "detail": "",
+      "name": "testEndsWith",
+      "outcome": "pass"
+    },
+    {
+      "classname": "org.apache.commons.lang3.text.StrBuilderTest",
+      "detail": "",
+      "name": "testEnsureCapacity",
+      "outcome": "pass"
+    },
+    {
+      "classname": "org.apache.commons.lang3.text.StrBuilderTest",
+      "detail": "",
+      "name": "testEquals",
+      "outcome": "pass"
+    },
+    {
+      "classname": "org.apache.commons.lang3.text.StrBuilderTest",
+      "detail": "",
+      "name": "testEqualsIgnoreCase",
+      "outcome": "pass"
+    },
+    {
+      "classname": "org.apache.commons.lang3.text.StrBuilderTest",
+      "detail": "",
+      "name": "testGetChars",
+      "outcome": "pass"
+    },
+    {
+      "classname": "org.apache.commons.lang3.text.StrBuilderTest",
+      "detail": "",
+      "name": "testGetCharsIntIntCharArrayInt",
+      "outcome": "pass"
+    },
+    {
+      "classname": "org.apache.commons.lang3.text.StrBuilderTest",
+      "detail": "",
+      "name": "testGetSetNewLineText",
+      "outcome": "pass"
+    },
+    {
+      "classname": "org.apache.commons.lang3.text.StrBuilderTest",
+      "detail": "",
+      "name": "testGetSetNullText",
+      "outcome": "pass"
+    },
+    {
+      "classname": "org.apache.commons.lang3.text.StrBuilderTest",
+      "detail": "",
+      "name": "testHashCode",
+      "outcome": "pass"
+    },
+    {
+      "classname": "org.apache.commons.lang3.text.StrBuilderTest",
+      "detail": "",
+      "name": "testIndexOfLang294",
+      "outcome": "pass"
+    },
+    {
+      "classname": "org.apache.commons.lang3.text.StrBuilderTest",
+      "detail": "",
+      "name": "testIndexOf_StrMatcher",
+      "outcome": "pass"
+    },
+    {
+      "classname": "org.apache.commons.lang3.text.StrBuilderTest",
+      "detail": "",
+      "name": "testIndexOf_StrMatcher_int",
+      "outcome": "pass"
+    },
+    {
+      "classname": "org.apache.commons.lang3.text.StrBuilderTest",
+      "detail": "",
+      "name": "testIndexOf_String",
+      "outcome": "pass"
+    },
+    {
+      "classname": "org.apache.commons.lang3.text.StrBuilderTest",
+      "detail": "",
+      "name": "testIndexOf_String_int",
+      "outcome": "pass"
+    },
+    {
+      "classname": "org.apache.commons.lang3.text.StrBuilderTest",
+      "detail": "",
+      "name": "testIndexOf_char",
+      "outcome": "pass"
+    },
+    {
+      "classname": "org.apache.commons.lang3.text.StrBuilderTest",
+      "detail": "",
+      "name": "testIndexOf_char_int",
+      "outcome": "pass"
+    },
+    {
+      "classname": "org.apache.commons.lang3.text.StrBuilderTest",
+      "detail": "",
+      "name": "testIsEmpty",
+      "outcome": "pass"
+    },
+    {
+      "classname": "org.apache.commons.lang3.text.StrBuilderTest",
+      "detail": "",
+      "name": "testLang294",
+      "outcome": "pass"
+    },
+    {
+      "classname": "org.apache.commons.lang3.text.StrBuilderTest",
+      "detail": "",
+      "name": "testLang295",
+      "outcome": "pass"
+    },
+    {
+      "classname": "org.apache.commons.lang3.text.StrBuilderTest",
+      "detail": "",
+      "name": "testLang412Left",
+      "outcome": "pass"
+    },
+    {
+      "classname": "org.apache.commons.lang3.text.StrBuilderTest",
+      "detail": "",
+      "name": "testLang412Right",
+      "outcome": "pass"
+    },
+    {
+      "classname": "org.apache.commons.lang3.text.StrBuilderTest",
+      "detail": "",
+      "name": "testLastIndexOf_StrMatcher",
+      "outcome": "pass"
+    },
+    {
+      "classname": "org.apache.commons.lang3.text.StrBuilderTest",
+      "detail": "",
+      "name": "testLastIndexOf_StrMatcher_int",
+      "outcome": "pass"
+    },
+    {
+      "classname": "org.apache.commons.lang3.text.StrBuilderTest",
+      "detail": "",
+      "name": "testLastIndexOf_String",
+      "outcome": "pass"
+    },
+    {
+      "classname": "org.apache.commons.lang3.text.StrBuilderTest",
+      "detail": "",
+      "name": "testLastIndexOf_String_int",
+      "outcome": "pass"
+    },
+    {
+      "classname": "org.apache.commons.lang3.text.StrBuilderTest",
+      "detail": "",
+      "name": "testLastIndexOf_char",
+      "outcome": "pass"
+    },
+    {
+      "classname": "org.apache.commons.lang3.text.StrBuilderTest",
+      "detail": "",
+      "name": "testLastIndexOf_char_int",
+      "outcome": "pass"
+    },
+    {
+      "classname": "org.apache.commons.lang3.text.StrBuilderTest",
+      "detail": "",
+      "name": "testLeftString",
+      "outcome": "pass"
+    },
+    {
+      "classname": "org.apache.commons.lang3.text.StrBuilderTest",
+      "detail": "",
+      "name": "testLength",
+      "outcome": "pass"
+    },
+    {
+      "classname": "org.apache.commons.lang3.text.StrBuilderTest",
+      "detail": "",
+      "name": "testMidString",
+      "outcome": "pass"
+    },
+    {
+      "classname": "org.apache.commons.lang3.text.StrBuilderTest",
+      "detail": "",
+      "name": "testMinimizeCapacity",
+      "outcome": "pass"
+    },
+    {
+      "classname": "org.apache.commons.lang3.text.StrBuilderTest",
+      "detail": "",
+      "name": "testReadFromCharBuffer",
+      "outcome": "pass"
+    },
+    {
+      "classname": "org.apache.commons.lang3.text.StrBuilderTest",
+      "detail": "",
+      "name": "testReadFromCharBufferAppendsToEnd",
+      "outcome": "pass"
+    },
+    {
+      "classname": "org.apache.commons.lang3.text.StrBuilderTest",
+      "detail": "",
+      "name": "testReadFromReadable",
+      "outcome": "pass"
+    },
+    {
+      "classname": "org.apache.commons.lang3.text.StrBuilderTest",
+      "detail": "",
+      "name": "testReadFromReadableAppendsToEnd",
+      "outcome": "pass"
+    },
+    {
+      "classname": "org.apache.commons.lang3.text.StrBuilderTest",
+      "detail": "",
+      "name": "testReadFromReader",
+      "outcome": "pass"
+    },
+    {
+      "classname": "org.apache.commons.lang3.text.StrBuilderTest",
+      "detail": "",
+      "name": "testReadFromReaderAppendsToEnd",
+      "outcome": "pass"
+    },
+    {
+      "classname": "org.apache.commons.lang3.text.StrBuilderTest",
+      "detail": "",
+      "name": "testReplaceAll_StrMatcher_String",
+      "outcome": "pass"
+    },
+    {
+      "classname": "org.apache.commons.lang3.text.StrBuilderTest",
+      "detail": "",
+      "name": "testReplaceAll_String_String",
+      "outcome": "pass"
+    },
+    {
+      "classname": "org.apache.commons.lang3.text.StrBuilderTest",
+      "detail": "",
+      "name": "testReplaceAll_char_char",
+      "outcome": "pass"
+    },
+    {
+      "classname": "org.apache.commons.lang3.text.StrBuilderTest",
+      "detail": "",
+      "name": "testReplaceFirst_StrMatcher_String",
+      "outcome": "pass"
+    },
+    {
+      "classname": "org.apache.commons.lang3.text.StrBuilderTest",
+      "detail": "",
+      "name": "testReplaceFirst_String_String",
+      "outcome": "pass"
+    },
+    {
+      "classname": "org.apache.commons.lang3.text.StrBuilderTest",
+      "detail": "",
+      "name": "testReplaceFirst_char_char",
+      "outcome": "pass"
+    },
+    {
+      "classname": "org.apache.commons.lang3.text.StrBuilderTest",
+      "detail": "",
+      "name": "testReplace_StrMatcher_String_int_int_int_VaryCount",
+      "outcome": "pass"
+    },
+    {
+      "classname": "org.apache.commons.lang3.text.StrBuilderTest",
+      "detail": "",
+      "name": "testReplace_StrMatcher_String_int_int_int_VaryEndIndex",
+      "outcome": "pass"
+    },
+    {
+      "classname": "org.apache.commons.lang3.text.StrBuilderTest",
+      "detail": "",
+      "name": "testReplace_StrMatcher_String_int_int_int_VaryMatcher",
+      "outcome": "pass"
+    },
+    {
+      "classname": "org.apache.commons.lang3.text.StrBuilderTest",
+      "detail": "",
+      "name": "testReplace_StrMatcher_String_int_int_int_VaryReplace",
+      "outcome": "pass"
+    },
+    {
+      "classname": "org.apache.commons.lang3.text.StrBuilderTest",
+      "detail": "",
+      "name": "testReplace_StrMatcher_String_int_int_int_VaryStartIndex",
+      "outcome": "pass"
+    },
+    {
+      "classname": "org.apache.commons.lang3.text.StrBuilderTest",
+      "detail": "",
+      "name": "testReplace_int_int_String",
+      "outcome": "pass"
+    },
+    {
+      "classname": "org.apache.commons.lang3.text.StrBuilderTest",
+      "detail": "",
+      "name": "testReverse",
+      "outcome": "pass"
+    },
+    {
+      "classname": "org.apache.commons.lang3.text.StrBuilderTest",
+      "detail": "",
+      "name": "testRightString",
+      "outcome": "pass"
+    },
+    {
+      "classname": "org.apache.commons.lang3.text.StrBuilderTest",
+      "detail": "",
+      "name": "testSetCharAt",
+      "outcome": "pass"
+    },
+    {
+      "classname": "org.apache.commons.lang3.text.StrBuilderTest",
+      "detail": "",
+      "name": "testSetLength",
+      "outcome": "pass"
+    },
+    {
+      "classname": "org.apache.commons.lang3.text.StrBuilderTest",
+      "detail": "",
+      "name": "testSize",
+      "outcome": "pass"
+    },
+    {
+      "classname": "org.apache.commons.lang3.text.StrBuilderTest",
+      "detail": "",
+      "name": "testStartsWith",
+      "outcome": "pass"
+    },
+    {
+      "classname": "org.apache.commons.lang3.text.StrBuilderTest",
+      "detail": "",
+      "name": "testSubSequenceIntInt",
+      "outcome": "pass"
+    },
+    {
+      "classname": "org.apache.commons.lang3.text.StrBuilderTest",
+      "detail": "",
+      "name": "testSubstringInt",
+      "outcome": "pass"
+    },
+    {
+      "classname": "org.apache.commons.lang3.text.StrBuilderTest",
+      "detail": "",
+      "name": "testSubstringIntInt",
+      "outcome": "pass"
+    },
+    {
+      "classname": "org.apache.commons.lang3.text.StrBuilderTest",
+      "detail": "",
+      "name": "testToCharArray",
+      "outcome": "pass"
+    },
+    {
+      "classname": "org.apache.commons.lang3.text.StrBuilderTest",
+      "detail": "",
+      "name": "testToCharArrayIntInt",
+      "outcome": "pass"
+    },
+    {
+      "classname": "org.apache.commons.lang3.text.StrBuilderTest",
+      "detail": "",
+      "name": "testToString",
+      "outcome": "pass"
+    },
+    {
+      "classname": "org.apache.commons.lang3.text.StrBuilderTest",
+      "detail": "",
+      "name": "testToStringBuffer",
+      "outcome": "pass"
+    },
+    {
+      "classname": "org.apache.commons.lang3.text.StrBuilderTest",
+      "detail": "",
+      "name": "testToStringBuilder",
+      "outcome": "pass"
+    },
+    {
+      "classname": "org.apache.commons.lang3.text.StrBuilderTest",
+      "detail": "",
+      "name": "testTrim",
+      "outcome": "pass"
+    }
+  ]
+}
