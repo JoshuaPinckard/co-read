@@ -267,7 +267,9 @@ an agents paper. This amendment precedes the first draw.**
 
 **Amendment 3, the preregistered transfer prediction. Drafted 2026-08-26
 before any draw, from `exploratory/models/HAZARD.md` and its frozen
-instrument. Pending PI approval.**
+instrument. APPROVED by the PI 2026-08-26, before any draw. The PI withheld
+standing pilot-launch authority: the pilot starts only on an explicit
+per-launch word, even after all gates clear.**
 
 The P6 transfer claim becomes a number. The conflict hazard fitted on 23,428
 human merges is `logit(p) = -5.955 + 0.234 * log(1 + combined changed

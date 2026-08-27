@@ -1,0 +1,19 @@
+Two local gap-closers before mentor review. Both compute from data already on disk plus the task-owned bare mirrors (read-only, scratch copies for any materialization). No cloud, no agents, no network.
+
+## 1. The historical-tree check on the counterexample
+
+Click merge c63c70dabd3f86ca68678b4f00951f78f52d0270 is the study's wild counterexample (exploratory/arms/PERMISSIVE-SITES.md site 6): both sides byte-disjoint, git merges cleanly, integrated canonical sources fail parent 2's focal test tests/test_options.py::test_show_default_boolean_flag_value in both reruns. Open question: what did HISTORY ship?
+
+From the pallets/click mirror: materialize the RECORDED merge commit's tree in a scratch worktree, and also the MECHANICAL merge-tree result of its two parents. Compare the two tree hashes. Then run the single focal test on the recorded tree under the frozen Python site-validation environment (SITES.md records the interpreter, pytest version, env policy - reuse it exactly). Answer three things: (a) recorded tree == mechanical tree? (b) does the recorded tree pass or fail that focal test? (c) therefore, which story is true: history shipped the failure, the human repaired beyond the mechanical merge, or the canonical-source construction differs from the recorded merge in a way that explains the divergence (if so, name the differing paths). Also run the focal test on both parents for the baseline. This is one merge and one test; be exact, quote pytest output.
+
+## 2. Per-repo over-block extension
+
+The 69.4% over-block rate exists only for Click. The permissive mining already recovered per-side changed-path sets for pygments/pygments, gohugoio/hugo, and apache/commons-lang (PERMISSIVE-SITES.md records the exact recovery commands). Compute for each of those three repositories the same census Click has: same-file concurrent (merge, path) units across ALL divergent two-parent merges (clean and conflicted), and the fraction that did not textually conflict (units in clean merges are nonconflicting by definition; units in conflicted merges classify by the miner's conflict-path list in corpus/conflicts/<slug>.jsonl). Report per repo: units, nonconflicting units, over-block rate, with the same unit definition as exploratory/conflicts/SEMANTIC.md section "Merge census and over-block rate" (exact path, --no-renames coordinates - state and hold one rename convention consistently, and if you use rename-aware paths instead, justify against the Click precedent and report the sensitivity).
+
+LABEL: this is a post-hoc computation - the mined data predates the hypothesis file's H1 scoring, so it scores H1 as post-hoc evidence, stated plainly in the report.
+
+## Output
+
+exploratory/conflicts/CLOSERS.md: first line = the counterexample verdict (recorded tree passes/fails, matches/differs from mechanical) and the three new over-block rates. Then full evidence: tree hashes, pytest output verbatim for the focal runs, per-repo unit tables with denominators, the rename-convention statement, the post-hoc label. "Claims that could NOT be verified", "What would change this verdict", per-claim confidence with reasons.
+
+Read-only on mirrors and corpus. Do not modify fixture/, prompts/, existing results, or instruments/arms/. Do not fabricate.

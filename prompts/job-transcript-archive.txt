@@ -1,0 +1,13 @@
+Build the PRIVATE raw-transcript archive. PI approved: the frozen transcript corpus must be preserved byte-faithfully before the live directory drifts from its recorded hashes. NEVER published, NEVER committed - local file plus a PROVENANCE row only.
+
+The freezes to honor (find their manifests; both jobs recorded a frozen-prefix manifest and a corpus SHA-256):
+1. The build-params freeze: 6,290 JSONL byte prefixes, 4,151,991,960 bytes, corpus SHA-256 dcba21bb558eb1cc32dfc29a92b46817c2b8050d56c685bec7234ba2501c7458 (exploratory/build-params/, manifest location recorded there or in its instruments).
+2. The oscillation freeze: 5,943 prefixes, SHA-256 7cc5c524928d6e771d91f0351037cc72ae9284085f61ce0549742c89dacac5ac (exploratory/oscillation/).
+
+Method: locate each freeze's per-file manifest (path, ordinal, frozen byte length). For each entry, read exactly the frozen prefix length from the live file at C:/Users/joshp/.claude/projects/... and write it into the archive. Recompute the corpus digest with the freeze's own recorded rule and REQUIRE it to equal the recorded SHA-256 - if a file has shrunk or vanished so the prefix cannot be reproduced, record the failure per file and report the corpus as partially reproducible with exact counts; do not substitute bytes. If the manifest itself cannot be located for a freeze, say so and archive nothing for it rather than approximating.
+
+Archive format: one tar per freeze at C:/Users/joshp/Desktop/Blast-Radius-private/transcript-archive/<freeze-name>.tar (create the directory; it is OUTSIDE the repository on purpose), containing the prefix files under their original relative paths plus the manifest. Record each tar's SHA-256 and byte size.
+
+Output exploratory/artifact/ARCHIVE-REPORT.md: per freeze - manifest found where, entries reproduced / failed, corpus digest MATCH or MISMATCH against the recorded value, tar path + SHA-256 + size. Add one row per tar to PROVENANCE.md (edit it: a "Raw transcript archive (private)" row pointing at the local path and hash, explicitly marked never-published). "Claims that could NOT be verified", "What would change this verdict", per-claim confidence.
+
+Read-only on the transcript corpus. No commit, no push. Do not fabricate.

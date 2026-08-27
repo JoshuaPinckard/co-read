@@ -1,0 +1,11 @@
+Credential-scan the harvest-reports corpus for publication. The PI approved publishing the 114 frozen files under corpus/harvest-reports/ AFTER a credential scan and his personal read-through. Your job is the scan and the read-through package. DO NOT commit, DO NOT push.
+
+Scan every byte of every file under corpus/harvest-reports/ (reports, copied code, configs, MANIFEST.json) for: private keys, tokens (gh[pousr]_, sk-, AKIA, xox, Bearer, task/session tokens), passwords or secrets in URLs or assignments, email addresses, absolute paths beyond the already-public C:/Users/joshp root, internal hostnames/ports/endpoints, customer or third-party names, and anything reading as operationally sensitive for a live company (deployment details, security-boundary specifics an attacker could use, unreleased product facts). The engine reports discuss a real production system, so judgment calls are expected: for each hit give file:line, the quoted snippet, and a verdict - redact (with proposed replacement), exclude the file, or publish-as-is with justification.
+
+Output exploratory/artifact/REPORTS-SCAN.md:
+1. First line: N files scanned, M bytes, hits by verdict (redact/exclude/keep).
+2. The full hit table.
+3. THE READ-THROUGH PACKAGE for the PI: a one-line-per-file index of all 114 files (name, size, one-clause description of what it contains) so he can skim and veto per item, with the files needing his eyes most flagged first.
+4. "Claims that could NOT be verified", "What would change this verdict", per-claim confidence.
+
+Read-only on the corpus. Do not fabricate. Do not modify anything outside exploratory/artifact/.
