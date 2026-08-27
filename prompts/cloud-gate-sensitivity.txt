@@ -1,0 +1,23 @@
+Measure the TEST-GATE SENSITIVITY. This instrument is preregistered in HYPOTHESES.md Amendment 2: "inject known semantic breaks that merge cleanly and measure the fraction the repository suite catches. The safety story of every winning arm is 'tests stand behind integration' and that wall currently has no measured load rating. Prediction: catch rate below 1.0 and above 0.5, stated before measurement."
+
+## The population
+
+Clean merges in fixture/click with same-file concurrency, as enumerated by exploratory/arms/PERMISSIVE-SITES.md and its census method. Use the mined corpus rows (corpus/conflicts/) plus the pallets/click bare mirror (read-only; scratch copies only) to materialize each merge's mechanical merge tree.
+
+## The injection
+
+For each evaluated merge, materialize the mechanical merge tree, then inject one known semantic break using the existing perturbation operator (instruments/ has the AST operator used by the causal sweeps; reuse it, do not rewrite it) applied to a function that (a) exists in the merged tree and (b) is reachable from at least one side's changed files. Injection must be recorded exactly: file, function, byte range, and the pre/post content hash.
+
+Fix the selection rule BEFORE running: state how you choose which function to perturb per merge, deterministically, without reference to outcomes.
+
+## The measurement
+
+Run the repository's own suite on the injected tree. CATCH = suite goes red. MISS = suite stays green despite the injected break. Report catch rate with numerator and denominator, per merge and pooled. Also report, for each miss, the file and function that went undetected, since a systematic pattern in misses (for example: error paths, rarely exercised branches) is itself a finding.
+
+Budget: 3 hours total. Pilot on 5 merges to measure per-merge cost, then set an outcome-blind cap and state how many candidates were beyond it. No silent truncation.
+
+## Output
+
+exploratory/gate/SENSITIVITY.md: catch rate first with denominators; the fixed selection rule; per-merge table; the miss analysis; whether the preregistered prediction (0.5 < catch rate < 1.0) held, stated plainly either way. Mandatory: "Claims that could NOT be verified", "What would change this verdict", per-claim confidence with reasons. Also emit exploratory/gate/sensitivity.json.
+
+Do not fabricate. A miss is data, not a failure of your work. Do not modify fixture/, prompts/, or existing results.
