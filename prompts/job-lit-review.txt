@@ -1,0 +1,31 @@
+Literature verification pass for the paper. Network use is expected and required: verify against the actual publications (arXiv, DOI landing pages, publisher pages, project sites), never from memory. Every claim about a paper must carry the URL you verified it at. Where a source cannot be reached, say NOT VERIFIED rather than guessing.
+
+## 1. The conflict-rate reconciliation (highest priority)
+
+Our mined base rate is 416/25,073 (1.66%) over ALL two-parent merges, 2.34% conditioned on both sides nonempty. Prior literature reportedly finds high single digits to teens. Verify what these actually report, with each study's exact population and denominator:
+
+- Ghiotto, Accioly, et al. (IEEE TSE, "On the Nature of Merge Conflicts" or similar; the large multi-project Java study) - conflict rate, population (which merges counted), and CRITICALLY: what they measured about conflict anatomy (chunk counts, sizes, LOC?) - our novelty sentence claims nobody measured byte-level anatomy and it must survive contact with what Ghiotto actually measured.
+- Kasi and Sarma, Cassandra (ASE 2013 or similar) - reported conflict frequency and population.
+- Accioly et al. (Empirical Software Engineering / SPE, semistructured merge studies) - conflict rates and denominators.
+- Brun, Holmes, Ernst, Notkin (ESEC/FSE 2011, speculative merging) - their textual conflict rate, and their clean-merge test/build failure rates (our H2's precedent numbers).
+- Any other frequently cited merge-conflict-rate study you find while verifying these (e.g., Zimmermann's or Leßenich/Apel work) - include with the same fields.
+
+Deliverable: a table - study, exact citation, population, denominator definition, reported rate(s) - and one paragraph stating which of our conditionings (all two-parent merges; both-sides nonempty; both-sides common file) most closely matches each study, so the reconciliation paragraph can be written with confidence. If their populations are merge SCENARIOS from continuous integration replay rather than historical merge commits, say so explicitly - that distinction likely explains most of the gap.
+
+## 2. Pin the 2026 coordination-system citations
+
+The repository contains an earlier verification log confirming these exist (search exploratory/ and the design documents for it: Claim Plane, ATM, CoAgent, STORM, Shepherd/CooperBench). Find that log first, then re-verify each on the web now: exact title, full author list, arXiv id or venue, year. These appear in the paper's Literature Review and must be citable exactly. Same for the file-locking prose claim: verify STORM names file-granularity false rejection as its own failure mode (quote the sentence with its location).
+
+## 3. The remaining reference list
+
+Verify and produce paste-ready entries (the draft's citation style: Author surnames, initials, year, title, venue) for: Kung and Robinson 1981 (TODS 6(2), page range); Zimmermann, Weissgerber, Diehl, Zeller ICSE 2004; the Rolfsnes/Moonen co-change measures paper (the draft carries a [verify venue] marker: SANER 2016 vs an ASE 2016 39-measures paper - resolve which is which and which we mean by "confidence and support in the top class"); Mimram and Di Giusto categorical patch theory (venue and year); Angiuli, Morehouse, Licata, Harper ICFP 2014; Darcs patch theory (citable form); Pijul (citable form); Niedermayr et al. pseudo-tested methods; Vera-Perez et al. Descartes (extreme mutation) - the last two support the test-gate sensitivity instrument.
+
+## 4. Novelty audit
+
+Given what you verified in 1: state plainly whether any prior work (a) measures conflicted-region sizes in BYTES with byte-range intersection between the two sides, (b) computes the over-block counterfactual (fraction of same-file concurrent units that did not conflict), (c) validates change impact by intervention rather than proxy-vs-proxy. For each, either "none found" with your search basis, or the work that does it, quoted. Our claims narrow to whatever survives.
+
+## Output
+
+exploratory/lit/LITERATURE.md: the rate-reconciliation table first, then the pinned 2026 citations, the paste-ready reference list, the novelty audit, "Claims that could NOT be verified" (with what you searched), "What would change this verdict", per-claim confidence with reasons. Every verified fact carries its URL.
+
+Do not modify the paper draft or any existing result. Do not fabricate - an unverifiable citation stays unverifiable.

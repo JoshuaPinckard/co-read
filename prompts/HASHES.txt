@@ -16,6 +16,7 @@ a81111fd5964c1b32833c4249eece2333e34ed552ff01f3b2196c57446305d34  job-harvest-co
 a05b371c0a6ff769a84aea319f8bb4f2c50ae7feebd629f40f762aec802ddf78  job-hazard-model.txt  5071 bytes
 6127df5f9550da03bbcbc84e78f0fe710ac20503eea699ae227d1773cba4e2df  job-hazard-upgrade.txt  3795 bytes
 4244f560e9ca5f0c65a48038be1c64c6480bfdcd1ff8422f506406558a8ccdd1  job-java-runner.txt  2976 bytes
+9197b251c4aecb72b76ea6e05db5fe3cbe0f04059db064342956e12fa84b46ee  job-lit-review.txt  4427 bytes
 4ba218983d53cb65f5f64b0302adb477035b3cc64c279ec1799b785ba74d6a5c  job-local-closers.txt  3265 bytes
 db4e04ef2020f58480e4a63fca9c622ee261ffc4b6bfc34b53afa51459ab43e3  job-normalization.txt  3067 bytes
 bdf952f5732222652857f34228d045d740b87e89364e64f1f7e5357a1b26c223  job-oscillation.txt  4813 bytes

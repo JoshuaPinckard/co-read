@@ -15,7 +15,8 @@ LEAN-Bench `PROVENANCE.md`.)
 | `corpus/conflicts/` | Derived by the deterministic miner from named clones | Miner determinism check (double run, byte-identical) required by the job spec | `exploratory/conflicts/MINING.md` when it lands |
 | `prompts/*.txt` | This project's worker prompts, frozen from session scratchpads | SHA-256 per file; first-wave prompts lost and disclosed | `prompts/HASHES.txt`, `prompts/README.md` |
 | `LICENSE`, `NOTICE` | Apache-2.0 text fetched from apache.org | 202 lines; sha256 recorded at fetch | commit message at introduction |
-| Transcript corpus (read in place, never copied) | `~/.claude/projects` | Frozen byte-prefixes per analysis with corpus-level SHA-256 stated in each result | e.g. `exploratory/oscillation/RESULTS.md` |
+| Transcript corpus (analysis source; read in place, never imported into this repository) | `~/.claude/projects` | Frozen byte-prefixes per analysis with corpus-level SHA-256 stated in each result | e.g. `exploratory/oscillation/RESULTS.md` |
+| Raw transcript archive (private) — `build-params.tar` | Frozen byte-prefix reproduction from `C:/Users/joshp/.claude/projects`; local private artifact, **never published and never committed** | tar SHA-256 `db9d6a4f14074142290af1f9b6f011cdd95ad62945b986761ceeb09e95c66aa8`; 4,144,128,000 bytes; corpus SHA-256 **MISMATCH** vs `dcba21bb558eb1cc32dfc29a92b46817c2b8050d56c685bec7234ba2501c7458` because 6,137 / 6,290 entries were reproduced and 153 failed | Local only: `C:/Users/joshp/Desktop/Blast-Radius-private/transcript-archive/build-params.tar`; `exploratory/artifact/ARCHIVE-REPORT.md` |
 
 Development history: the full working record is the `main` branch; `public` is
 the curated branch; `_local-record` is the safety ref. Nothing in this table is
